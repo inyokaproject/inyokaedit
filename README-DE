@@ -1,0 +1,22 @@
+Abhängigkeiten
+--------------
+sudo apt-get install libqt4-gui libqt4-webkit
+
+Vor dem ersten Start
+--------------------
+Vor dem ersten Start müssen (einmalig) alle wichtigen CSS Stylesheets, Icons etc. von Inyoka heruntergeladen werden,
+damit die (offline) Vorschau funktioniert. Hierzu bitte das Skript '''GetInyokaStyles.sh''' ausführen:
+./GetInyokaStyles.sh
+
+Starten von InyokaEdit
+----------------------
+InyokaEdit muss immer über das Terminal (./InyokaEdit) gestartet werden. Falls der Editor über Klick/Doppelklick gestartet wird, werden die CSS-Styles, Bidler etc. nicht gefunden und die Vorschau funktioniert nicht.
+
+Einstellungen
+-------------
+Nachdem InyokaEdit das erste Mal gestartet wurde, befindet sich im Homeverzeichnis des aktuellen Benutzers im
+Ordner '''~/.config/InyokaEdit''' die Datei '''InyokaEdit.conf'''. Diese Datei kann bei Bedarf geändert werden,
+um die Codevervollständigung zu de-/aktivieren bzw. die Vorschau nicht im Editor, sondern im Browser anzeigen
+zu lassen. Hierzu muss hinter die Variablen "codecompletion" bzw. "previewineditor" true (für aktiviert) oder
+false geschrieben werden. Nachdem man Werte geändert hat, muss der Editor neu gestartet werden, damit die 
+Änderungen aktiv werden.

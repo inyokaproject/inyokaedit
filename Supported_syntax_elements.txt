@@ -1,0 +1,130 @@
+
+SUPPORTED
+---------
+
+[[Vorlage(Getestet, Ubuntuversion)]]
+[[Vorlage(Getestet, general)]]
+[[Vorlage(Baustelle, Datum, "Bearbeiter")]]
+[[Vorlage(Fortgeschritten)]]
+[[Vorlage(Pakete, "foo bar")]]
+[[Vorlage(Ausbaufähig, "Begründung")]]
+[[Vorlage(Fehlerhaft, "Begründung")]]
+[[Vorlage(Verlassen, "Begründung")]]
+[[Vorlage(Archiviert, "Text")]]
+[[Vorlage(Kopie, Seite, Autor)]]
+[[Vorlage(Überarbeitung, Datum, Seite, Autor)]]
+[[Vorlage(Fremd, Paket, "Kommentar")]]
+[[Vorlage(Fremd, Quelle, "Kommentar")]]
+[[Vorlage(Fremd, Software, "Kommentar")]]
+[[Vorlage(Award, "Preis", Link, Preiskategorie, "Preisträger" )]]
+[[Vorlage(PPA, PPA-Besitzer, PPA-Name)]]
+[[Vorlage(Fremdquelle-auth, URL zum PGP-Key)]]
+[[Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer)]]
+[[Vorlage(Fremdquelle, URL, Ubuntuversion(en), Komponente(n) )]]
+[[Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]
+[[Vorlage(Fremdpaket, "Anbieter", URL zu einer Downloadübersicht, Ubuntuversion(en))]]
+[[Vorlage(Fremdpaket, "Anbieter", dl, URL zu EINEM Download, Ubuntuversion(en))]]
+[[Vorlage(Tasten, TASTE)]]
+[[Vorlage(Tasten, TASTE + TASTE + ...)]]
+
+{{{#!vorlage Wissen 
+Text
+}}}
+
+{{{#!vorlage Hinweis
+Text
+}}}
+
+{{{#!vorlage Warnung
+Text
+}}}
+
+{{{#!vorlage Befehl
+Text
+}}}
+
+{{{#!vorlage Paketinstallation
+paket
+}}}
+
+{{{#!vorlage Experten
+Hintergrundinformation
+}}}
+
+[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, "Beschreibung", left|right, *-style)]]
+
+[[Vorlage(Bildersammlung, BILDHÖHE
+Bild1.jpg, "Beschreibung 1"
+Bild2.png, "Beschreibung 2"
+)]]
+
+
+= Überschrift =
+'''fett'''
+''kursiv''
+`Monotype`
+__unterstrichen__
+--(durchstreichen)--
+^^(hochgestellt)^^
+,,(tiefgestellt),,
+~+(größer)+~
+~-(kleiner)-~
+[:Wikiseite:]
+[:Wikiseite:Text]
+[URL]
+[URL Text]
+[Interwiki:Suchbegriff:]
+[user:Benutzer:]
+[[Inhaltsverzeichnis(X)]]		NUR 1. EBENE
+#tag: tag1, tag2
+{de}, {dl}, {Übersicht}, {en} usw...
+
+{{{
+Code
+}}}	
+
+{{{#!code Sprache			NO SYNTAX HIGHLIGHTING!
+Quelltext
+}}}
+
+{{{#!vorlage Tabelle
+Zelle 1
+Zelle 2
++++
+Zelle 3
+Zelle 4
+}}}
+
+[[Bild(name.png, Größe, Ausrichtung)]]
+[[Anker(Name)]]
+[#Anker Text]
+[1]    Link zum Anker in Wissensblock
+## Kommentar
+
+
+MISSING ELEMENTS
+----------------
+
+[size=X]Text[/size]
+[color=#ABCDEF]Farbe[/color]
+[color=red]Farbe[/color]
+[[Anhang(name_des_anhangs.txt)]]
+> Zitat
+[[Datum(YYYY-MM-DDTHH:MM:SSZ)]]
+* Punkt 1
+* Punkt 2
+1. Punkt 1
+1. Punkt 2
+\\ und  ⏎ oder [[BR]]
+((Fußnote))	[1]
+
+{{|<title="Hinweis:" class="box notice">
+Dies ist ein Hinweis im Rohformat.
+|}}
+
+{{{#!vorlage Uebersicht
+...
+...
+
+...
+}}}
