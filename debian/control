@@ -1,0 +1,16 @@
+Source: inyokaedit
+Section: doc
+Priority: extra
+Maintainer: Martin Rabeneck <martinrabeneck@gmx.net>
+Build-Depends: debhelper (>= 7.0.50~), cdbs (>= 0.4.8),
+ libqt4-dev (>= 4:4.7.0), qt4-qmake (>= 4:4.7.0),
+ libqtwebkit-dev (>= 2.0~), libqtgui4 (>= 4:4.7.0)
+Standards-Version: 3.9.1
+Homepage: https://launchpad.net/inyokaedit
+
+Package: inyokaedit
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Editor für das uu.de Wiki
+ Ein Editor mit Vorschau-Funktion für das Wiki
+ von ubuntuusers.de.

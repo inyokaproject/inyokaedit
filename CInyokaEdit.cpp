@@ -60,9 +60,9 @@ CInyokaEdit::CInyokaEdit(const QString &name)
     //setCentralWidget(myeditor);
     setCentralWidget(mytabwidget);
     mytabwidget->setTabPosition(QTabWidget::West);
-    mytabwidget->addTab(myeditor, "Rohformat");
+    mytabwidget->addTab(myeditor, trUtf8("Rohformat"));
 
-    mytabwidget->addTab(mywebview, "Vorschau");
+    mytabwidget->addTab(mywebview, trUtf8("Vorschau"));
     if (ineditorpreview == false)
         mytabwidget->setTabEnabled(mytabwidget->indexOf(mywebview), false);
 
