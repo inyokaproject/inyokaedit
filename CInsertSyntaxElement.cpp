@@ -266,7 +266,7 @@ std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElemen
     }
     // Unkonwn element
     else
-        return "<strong>ERROR: Unknown syntax element</strong>";
+        return sSelectedText;
 
 }
 
@@ -312,9 +312,10 @@ std::string CInsertSyntaxElement::GetInyokaHeading(const int index, const std::s
             break;
         }
     }
-    else{
-        return "<strong>ERROR: Unknown heading</strong>";
-    }
+
+    // Return selcted text if something went wrong
+    return sSelectedText;
+
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -613,6 +614,6 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
     }
 
     else{
-        return "<strong>ERROR: Unknown interwiki-link</strong>";
+        return sSelectedText;
     }
 }

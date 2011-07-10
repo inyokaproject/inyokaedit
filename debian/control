@@ -2,9 +2,9 @@ Source: inyokaedit
 Section: doc
 Priority: extra
 Maintainer: Martin Rabeneck <martinrabeneck@gmx.net>
-Build-Depends: debhelper (>= 7.0.50~), cdbs (>= 0.4.8),
- libqt4-dev (>= 4:4.7.0), qt4-qmake (>= 4:4.7.0),
- libqtwebkit-dev (>= 2.0~), libqtgui4 (>= 4:4.7.0)
+Build-Depends: debhelper (>= 7.0.50~), cdbs (>= 0.4.62),
+ libqt4-dev (>= 4:4.6.2), qt4-qmake (>= 4:4.6.2),
+ libqtwebkit-dev (>= 2.0~), libqtgui4 (>= 4:4.6.2)
 Standards-Version: 3.9.1
 Homepage: https://launchpad.net/inyokaedit
 

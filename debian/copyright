@@ -1,6 +1,6 @@
 This work was packaged for Debian by:
 
-    Martin Rabeneck <martinrabeneck@gmx.net> on Sun, 05 Jun 2011 12:47:02 +0200
+    Thorsten Roth <elthoro@gmx.de> on Sun, 10 Jul 2011 17:40:02 +0200
 
 It was downloaded from:
 
@@ -36,7 +36,7 @@ Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
 
 The Debian packaging is:
 
-    Copyright (C) 2011 Martin Rabeneck <martinrabeneck@gmx.net>
+    Copyright (C) 2011 Thorsten Roth <elthoro@gmx.de>
 
 and is licensed under the GPL version 3, see above.
 

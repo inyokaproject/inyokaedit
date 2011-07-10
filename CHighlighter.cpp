@@ -119,7 +119,7 @@ CHighlighter::CHighlighter(QTextDocument *parent)
 
     // Comments (## comment)
     singleLineCommentFormat.setForeground(Qt::gray);
-    myrule.pattern = QRegExp("##[^\n]*");
+    myrule.pattern = QRegExp("^##[^\n]*");
     myrule.format = singleLineCommentFormat;
     highlightingRules.append(myrule); // Collecting highlighting rules
 

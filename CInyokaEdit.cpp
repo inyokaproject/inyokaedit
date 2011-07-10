@@ -57,7 +57,6 @@ CInyokaEdit::CInyokaEdit(const QString &name)
     createMenus();
     createToolBars();
 
-    //setCentralWidget(myeditor);
     setCentralWidget(mytabwidget);
     mytabwidget->setTabPosition(QTabWidget::West);
     mytabwidget->addTab(myeditor, trUtf8("Rohformat"));
@@ -832,10 +831,25 @@ void CInyokaEdit::previewInyokaPage(){
 // Headings (combobox in toolbar)
 void CInyokaEdit::insertDropDownHeading(const int iSelection){
 
+    bool bSelected = false;
+    if (myeditor->textCursor().selectedText() != ""){
+        bSelected = true;
+    }
+
     myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInyokaHeading(iSelection, myeditor->textCursor().selectedText().toStdString()).c_str()));
+
+    // Select text "Überschrift" if no text was selected
+    if (bSelected == false && iSelection > 1) {
+        QTextCursor textCursor = myeditor->textCursor();
+        textCursor.setPosition( myeditor->textCursor().position() - QString(trUtf8("Überschrift")).length() - iSelection);
+        textCursor.setPosition( myeditor->textCursor().position() - iSelection, QTextCursor::KeepAnchor );
+        myeditor->setTextCursor( textCursor );
+    }
 
     // Reset selection
     headingsBox->setCurrentIndex(0);
+
+    myeditor->setFocus();
 }
 
 // Macro (combobox in toolbar)
@@ -883,19 +897,23 @@ void CInyokaEdit::insertDropDownTextmacro(const int iSelection){
             insertTextSample("Tabelle");
             break;
         }
-        // Reset selction
+        // Reset selection
         textmacrosBox->setCurrentIndex(0);
+
+        myeditor->setFocus();
     }
 }
 
 // Insert text sample / syntax element
 void CInyokaEdit::insertTextSample(const QString &sMenuEntry){
     myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetElementInyokaCode(sMenuEntry.toStdString(), myeditor->textCursor().selectedText().toStdString()).c_str()));
+    myeditor->setFocus();
 }
 
 // Insert interwiki-link
 void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
     myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInterwikiLink(sMenuEntry.toStdString(), myeditor->textCursor().selectedText().toStdString()).c_str()));
+    myeditor->setFocus();
 }
 
 // -----------------------------------------------------------------------------------------------
