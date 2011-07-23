@@ -34,6 +34,8 @@
 #include "CDownloadArticle.h"
 #include "CTextEditor.h"
 #include "CInsertSyntaxElement.h"
+#include "qtfindreplacedialog/finddialog.h"
+#include "qtfindreplacedialog/findreplacedialog.h"
 
 // Qt classes
 class QAction;
@@ -46,6 +48,8 @@ class QFile;
 // Own classes
 class CParser;
 class CDownloadArticle;
+class FindDialog;
+class FindReplaceDialog;
 
 class CInyokaEdit : public QMainWindow
 {
@@ -70,6 +74,9 @@ private slots:
     bool save();
     bool saveAs();
     void about();
+
+    void findDialog();
+    void findReplaceDialog();
 
     // Called when text in editor was changed
     void documentWasModified();
@@ -122,6 +129,9 @@ private:
     QTabWidget *mytabwidget;
     QWebView *mywebview;
 
+    FindDialog *m_findDialog;
+    FindReplaceDialog *m_findReplaceDialog;
+
     const QString sAppName;
     QString sCurFile;  // Current file
     QString sInyokaUrl;
@@ -160,6 +170,10 @@ private:
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
+    QAction *searchAct;
+    QAction *replaceAct;
+    QAction *findNextAct;
+    QAction *findPreviousAct;
     QAction *aboutAct;
 
     // Inyoka editor toolbar

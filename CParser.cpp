@@ -859,18 +859,20 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 for (int i = 1; i < sListElements.size(); i++){
                     sOutput += "<li>\n"
                                "<p>\n";
-                    if (sListElements[i] == "oneiric")
+                    if (sListElements[i].toLower() == "oneiric")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
-                    else if (sListElements[i] == "natty")
+                    else if (sListElements[i].toLower() == "natty")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
-                    else if (sListElements[i] == "maverick")
+                    else if (sListElements[i].toLower() == "maverick")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
-                    else if (sListElements[i] == "lucid")
+                    else if (sListElements[i].toLower() == "lucid")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
-                    else if (sListElements[i] == "karmic")
+                    else if (sListElements[i].toLower() == "karmic")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Karmic_Koala\" class=\"internal\"> Ubuntu Karmic Koala 9.10 </a>\n";
-                    else if (sListElements[i] == "hardy")
+                    else if (sListElements[i].toLower() == "hardy")
                         sOutput += "<a href=\"http://" + sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
+                    else
+                        sOutput +=  "Unknown Ubuntu Version\n";
 
                     sOutput += "</p>\n"
                                "</li>\n";

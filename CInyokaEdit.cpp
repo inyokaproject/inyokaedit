@@ -44,6 +44,27 @@ CInyokaEdit::CInyokaEdit(const QString &name)
              << "Vorlage(Tasten, TASTE)]]" << trUtf8("Bild(name.png, Größe, Ausrichtung)]]") << "Anker(Name)]]" << "[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, \"Beschreibung\", left|right)]]"
              << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
 
+    // Font settings for editor
+    QFont font;
+    font.setFamily("Monospace");
+    font.setFixedPitch(true);
+    font.setPointSize(10.5);
+
+    // Editor object (objects have to be create before find/replace)
+    myeditor = new CTextEditor;
+    myeditor->setFont(font);
+    myeditor->setAcceptRichText(false); // Paste plain text only
+    myeditor->setCompleter(mycompleter);
+
+    // Find / replace (objects have to be create before readSettings!)
+    m_findDialog = new FindDialog(this);
+    m_findDialog->setModal(false);
+    m_findDialog->setTextEdit(myeditor);
+
+    m_findReplaceDialog = new FindReplaceDialog(this);
+    m_findReplaceDialog->setModal(false);
+    m_findReplaceDialog->setTextEdit(myeditor);
+
     // Load settings from config file
     readSettings();
 
@@ -82,18 +103,6 @@ CInyokaEdit::~CInyokaEdit(){
 
 void CInyokaEdit::setupEditor()
 {
-    // Font settings for editor
-    QFont font;
-    font.setFamily("Monospace");
-    font.setFixedPitch(true);
-    font.setPointSize(10.5);
-
-    // Editor object
-    myeditor = new CTextEditor;
-    myeditor->setFont(font);
-    myeditor->setAcceptRichText(false); // Paste plain text only
-    myeditor->setCompleter(mycompleter);
-
     // Text changed
     connect(myeditor->document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));
@@ -119,6 +128,7 @@ void CInyokaEdit::setupEditor()
     mywebview = new QWebView(this);
 
     myInsertSyntaxElement = new CInsertSyntaxElement;
+
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -139,6 +149,9 @@ void CInyokaEdit::readSettings()
     ineditorpreview = settings.value("previewineditor", true).toBool();
 
     sInyokaUrl = settings.value("inyokaurl", "wiki.ubuntuusers.de").toString();
+
+    m_findDialog->readSettings(settings);
+    m_findReplaceDialog->readSettings(settings);
 }
 
 // Save settings (close event)
@@ -150,6 +163,9 @@ void CInyokaEdit::writeSettings()
     settings.setValue("codecompletion", codecompletion);
     settings.setValue("previewineditor", ineditorpreview);
     settings.setValue("inyokaurl", sInyokaUrl);
+
+    m_findDialog->writeSettings(settings);
+    m_findReplaceDialog->writeSettings(settings);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -177,7 +193,7 @@ void CInyokaEdit::createActions()
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
     // Save file as...
-    saveAsAct = new QAction(trUtf8("Speichern &unter..."), this);
+    saveAsAct = new QAction(trUtf8("Speichern unter..."), this);
     saveAsAct->setShortcuts(QKeySequence::SaveAs);
     saveAsAct->setStatusTip(trUtf8("Speichert das Dokument unter neuem Namen"));
     connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
@@ -188,35 +204,59 @@ void CInyokaEdit::createActions()
     exitAct->setStatusTip(trUtf8("Beendet die Anwendung"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-    // Edit: cut
-    cutAct = new QAction(QIcon(":/images/edit-cut.png"), trUtf8("&Ausschneiden"), this);
+    // Edit: Cut
+    cutAct = new QAction(QIcon(":/images/edit-cut.png"), trUtf8("Ausschneiden"), this);
     cutAct->setShortcuts(QKeySequence::Cut);
     cutAct->setStatusTip(trUtf8("Schneidet den markierten Text aus"));
     connect(cutAct, SIGNAL(triggered()), myeditor, SLOT(cut()));
 
-    // Edit: copy
-    copyAct = new QAction(QIcon(":/images/edit-copy.png"), trUtf8("&Kopieren"), this);
+    // Edit: Copy
+    copyAct = new QAction(QIcon(":/images/edit-copy.png"), trUtf8("Kopieren"), this);
     copyAct->setShortcuts(QKeySequence::Copy);
     copyAct->setStatusTip(trUtf8("Kopiert den markierten Inhalt in die Zwischenablage"));
     connect(copyAct, SIGNAL(triggered()), myeditor, SLOT(copy()));
 
-    // Edit: paste
-    pasteAct = new QAction(QIcon(":/images/edit-paste.png"), trUtf8("&Einfügen"), this);
+    // Edit: Paste
+    pasteAct = new QAction(QIcon(":/images/edit-paste.png"), trUtf8("Einfügen"), this);
     pasteAct->setShortcuts(QKeySequence::Paste);
     pasteAct->setStatusTip(trUtf8("Fügt den Inhalt der Zwischenablage ein"));
     connect(pasteAct, SIGNAL(triggered()), myeditor, SLOT(paste()));
 
-    // Edit: undo
-    undoAct = new QAction(QIcon(":/images/edit-undo.png"), trUtf8("&Rückgängig"), this);
+    // Edit: Undo
+    undoAct = new QAction(QIcon(":/images/edit-undo.png"), trUtf8("Rückgängig"), this);
     undoAct->setShortcuts(QKeySequence::Undo);
     undoAct->setStatusTip(trUtf8("Änderungen rückgängig machen"));
     connect(undoAct, SIGNAL(triggered()), myeditor, SLOT(undo()));
 
-    // Edit: redo
-    redoAct = new QAction(QIcon(":/images/edit-redo.png"), trUtf8("&Wiederherstellen"), this);
+    // Edit: Redo
+    redoAct = new QAction(QIcon(":/images/edit-redo.png"), trUtf8("Wiederherstellen"), this);
     redoAct->setShortcuts(QKeySequence::Redo);
     redoAct->setStatusTip(trUtf8("Rückgängig gemachte Änderungen wiederherstellen"));
     connect(redoAct, SIGNAL(triggered()), myeditor, SLOT(redo()));
+
+    // Edit: Search
+    searchAct = new QAction(QIcon(":/images/edit-find.png"), trUtf8("Suchen..."), this);
+    searchAct->setShortcuts(QKeySequence::Find);
+    searchAct->setStatusTip(trUtf8("Suchen"));
+    connect(searchAct, SIGNAL(triggered()), this, SLOT(findDialog()));
+
+    // Edit: Replace
+    replaceAct = new QAction(QIcon(":/images/edit-find-replace.png"), trUtf8("Ersetzen..."), this);
+    replaceAct->setShortcuts(QKeySequence::Replace);
+    replaceAct->setStatusTip(trUtf8("Ersetzen"));
+    connect(replaceAct, SIGNAL(triggered()), this, SLOT(findReplaceDialog()));
+
+    // Edit: Find next
+    findNextAct = new QAction(QIcon(":/images/go-down.png"), trUtf8("Weitersuchen"), this);
+    findNextAct->setShortcuts(QKeySequence::FindNext);
+    findNextAct->setStatusTip(trUtf8("Weitersuchen (vorwärts)"));
+    connect(findNextAct, SIGNAL(triggered()), m_findDialog, SLOT(findNext()));
+
+    // Edit: Find previous
+    findPreviousAct = new QAction(QIcon(":/images/go-up.png"), trUtf8("Rückwärts weitersuchen"), this);
+    findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
+    findPreviousAct->setStatusTip(trUtf8("Weitersuchen (rückwärts)"));
+    connect(findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
 
     // Open about windwow
     aboutAct = new QAction(trUtf8("&Über"), this);
@@ -239,13 +279,13 @@ void CInyokaEdit::createActions()
             redoAct, SLOT(setEnabled(bool)));
 
     // Show html preview
-    previewAct = new QAction(QIcon(":/images/preview.png"), trUtf8("&Vorschau"), this);
+    previewAct = new QAction(QIcon(":/images/preview.png"), trUtf8("Vorschau"), this);
     previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
     previewAct->setStatusTip(trUtf8("Vorschau der Inyokaseite öffnen"));
     connect(previewAct, SIGNAL(triggered()), this, SLOT(previewInyokaPage()));
 
     // Download Inyoka article
-    downloadArticleAct = new QAction(QIcon(":/images/network-receive.png"), trUtf8("&Inyokaartikel herunterladen"), this);
+    downloadArticleAct = new QAction(QIcon(":/images/network-receive.png"), trUtf8("Inyokaartikel herunterladen"), this);
     downloadArticleAct->setStatusTip(trUtf8("Lädt den Rohtext eines bestehenden Inyoka Wikiartikels herunter"));
     downloadArticleAct->setPriority(QAction::LowPriority);
     connect(downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
@@ -254,7 +294,7 @@ void CInyokaEdit::createActions()
     mySigMapTextSamples = new QSignalMapper(this);
 
     // Insert bold element
-    boldAct = new QAction(QIcon(":/images/format-text-bold.png"), trUtf8("&Fett"), this);
+    boldAct = new QAction(QIcon(":/images/format-text-bold.png"), trUtf8("Fett"), this);
     boldAct->setStatusTip(trUtf8("Fett - Dateinamen, Verzeichnisse, Paketnamen, Formatnamen"));
     boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
     boldAct->setPriority(QAction::LowPriority);
@@ -262,7 +302,7 @@ void CInyokaEdit::createActions()
     connect(boldAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert italic element
-    italicAct = new QAction(QIcon(":/images/format-text-italic.png"), trUtf8("&Kursiv"), this);
+    italicAct = new QAction(QIcon(":/images/format-text-italic.png"), trUtf8("Kursiv"), this);
     italicAct->setStatusTip(trUtf8("Kursiv - Menüelemente, Schaltflächen, G-Conf-Schlüssel, immer in Anführungszeichen!"));
     italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
     italicAct->setPriority(QAction::LowPriority);
@@ -270,35 +310,35 @@ void CInyokaEdit::createActions()
     connect(italicAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert monotype element
-    monotypeAct = new QAction(QIcon(":/images/monotype.png"), trUtf8("&Monotype"), this);
+    monotypeAct = new QAction(QIcon(":/images/monotype.png"), trUtf8("Monotype"), this);
     monotypeAct->setStatusTip(trUtf8("Befehle und ihre Optionen, Terminalausgaben im Fließtext, Module, Benutzer, Gruppen"));
     monotypeAct->setPriority(QAction::LowPriority);
     mySigMapTextSamples->setMapping(monotypeAct, "Monotype");
     connect(monotypeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert wiki link
-    wikilinkAct = new QAction(QIcon(":/images/go-next.png"), trUtf8("&Link Wikiseite"), this);
+    wikilinkAct = new QAction(QIcon(":/images/go-next.png"), trUtf8("Link Wikiseite"), this);
     wikilinkAct->setStatusTip(trUtf8("Link auf eine Wikiseite"));
     wikilinkAct->setPriority(QAction::LowPriority);
     mySigMapTextSamples->setMapping(wikilinkAct, "Wikilink");
     connect(wikilinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert extern link
-    externLinkAct = new QAction(QIcon(":/images/internet-web-browser.png"), trUtf8("&Link extern"), this);
+    externLinkAct = new QAction(QIcon(":/images/internet-web-browser.png"), trUtf8("Link extern"), this);
     externLinkAct->setStatusTip(trUtf8("Link auf eine externe Webseite, immer mit Fahne z.B. {de}, {en}!"));
     externLinkAct->setPriority(QAction::LowPriority);
     mySigMapTextSamples->setMapping(externLinkAct, "ExternerLink");
     connect(externLinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert image
-    imageAct = new QAction(QIcon(":/images/image-x-generic.png"), trUtf8("&Bild einfügen"), this);
+    imageAct = new QAction(QIcon(":/images/image-x-generic.png"), trUtf8("Bild einfügen"), this);
     imageAct->setStatusTip(trUtf8("Ein Bild einfügen"));
     imageAct->setPriority(QAction::LowPriority);
     mySigMapTextSamples->setMapping(imageAct, "EinfachesBild");
     connect(imageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
 
     // Insert code block
-    codeblockAct = new QAction(QIcon(":/images/code.png"), trUtf8("&Codeblock"), this);
+    codeblockAct = new QAction(QIcon(":/images/code.png"), trUtf8("Codeblock"), this);
     codeblockAct->setStatusTip(trUtf8("Codeblock - Terminalausgaben, Auszüge aus Konfigurationsdateien"));
     codeblockAct->setPriority(QAction::LowPriority);
     mySigMapTextSamples->setMapping(codeblockAct, "Codeblock");
@@ -629,6 +669,11 @@ void CInyokaEdit::createMenus()
     editMenu->addAction(cutAct);
     editMenu->addAction(copyAct);
     editMenu->addAction(pasteAct);
+    editMenu->addSeparator();
+    editMenu->addAction(searchAct);
+    editMenu->addAction(replaceAct);
+    editMenu->addAction(findNextAct);
+    editMenu->addAction(findPreviousAct);
 
     // Insert text sample menu
     insertTextSampleMenu = menuBar()->addMenu(trUtf8("&Textbausteine"));
@@ -1033,6 +1078,16 @@ void CInyokaEdit::showMessageBox(const QString &sMessagetext, const QString &sTy
         QMessageBox::information(this, sAppName, sMessagetext);
     }
 }
+
+
+void CInyokaEdit::findDialog(){
+    m_findDialog->show();
+}
+
+void CInyokaEdit::findReplaceDialog(){
+    m_findReplaceDialog->show();
+}
+
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------

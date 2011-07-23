@@ -55,5 +55,9 @@
         <file>images/interwiki/sourceforge.png</file>
         <file>images/interwiki/user.png</file>
         <file>images/interwiki/isbn.png</file>
+        <file>images/edit-find-replace.png</file>
+        <file>images/edit-find.png</file>
+        <file>images/go-down.png</file>
+        <file>images/go-up.png</file>
     </qresource>
 </RCC>
