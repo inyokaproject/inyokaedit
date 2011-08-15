@@ -29,7 +29,7 @@
 
 #include "CInyokaEdit.h"
 
-CInyokaEdit::CInyokaEdit(const QString &name)
+CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
     : mycompleter(0), sAppName(name)
 {
     QStringList wordlist;
@@ -91,6 +91,11 @@ CInyokaEdit::CInyokaEdit(const QString &name)
 
     // Application icon
     setWindowIcon(QIcon(":/images/uu-text-editor.png"));
+
+    // Open file if command line argument parsed
+    if (argc >= 2) {
+        loadFile(argv[1]);
+    }
 
     statusBar()->showMessage(trUtf8("Bereit"));
 }
@@ -1176,8 +1181,11 @@ bool CInyokaEdit::saveAs()
 void CInyokaEdit::about()
 {
     QMessageBox::about(this, trUtf8("Über %1").arg(sAppName),
-                       trUtf8("<b>%1</b> ist ein Editor für Inyoka Artikel.<br /><br />"
-                              "Die Anwendung verwendet Icons aus dem Tango-Projekt (<a href=\"http://tango.freedesktop.org\">http://tango.freedesktop.org</a>).").arg(sAppName));
+                       trUtf8("<b>%1</b> - Editor für das uu.de Wiki<br />"
+                              "Version: 0.0.2<br /><br />"
+                              "&copy; 2011, die Autoren von %2<br />"
+                              "Lizenz: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
+                              "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sAppName));
 }
 
 void CInyokaEdit::documentWasModified()

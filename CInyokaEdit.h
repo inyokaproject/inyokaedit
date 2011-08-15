@@ -56,7 +56,7 @@ class CInyokaEdit : public QMainWindow
     Q_OBJECT
 
 public:
-    CInyokaEdit(const QString &sAppName);   // Constructor
+    CInyokaEdit(const QString &sAppName, int argc, char **argv);   // Constructor
     ~CInyokaEdit();  // Desstructor
 
 public slots:

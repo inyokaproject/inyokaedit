@@ -1,3 +1,13 @@
+inyokaedit (0.0.2~ppa1) natty; urgency=low
+
+  * CHANGELOG: Used changelog file ;-)
+
+  * main.cpp, CInyokaEdit.cpp: Open file from command line argument
+
+  * CInyokaEdit.cpp: Updated about dialog
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 15 Aug 2011 22:25:04 +0200
+
 inyokaedit (0.0.1~ppa2) maverick; urgency=low
 
   * Initial release
