@@ -20,36 +20,43 @@
 ****************************************************************************/
 
 /***************************************************************************
-* File Name:  main.cpp
-* Purpose:    Main function, start application
+* File Name:  CProgressDialog.h
+* Purpose:    Class definition of style download progress dialog
 ***************************************************************************/
 
-#include <QApplication>
+#ifndef CPROGRESSDIALOG_H
+#define CPROGRESSDIALOG_H
 
-// For global translation (Qt MessageBox etc.)
-#include <QTranslator>
-#include <QLocale>
-#include <QLibraryInfo>
+#include <QDialog>
+#include <QProcess>
 
-#include "CInyokaEdit.h"
-
-int main(int argc, char *argv[])
-{
-    // Resource file (images, icons)
-    Q_INIT_RESOURCE(inyokaeditresources);
-
-    // New application
-    QApplication app(argc, argv);
-    app.setApplicationName("InyokaEdit");
-
-    // Load global translation
-    QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&qtTranslator);
-
-    // New object of InyokaEdit
-    CInyokaEdit myInyokaEdit(app.applicationName(), app.argc(), app.argv());
-    myInyokaEdit.show();
-
-    return app.exec();
+namespace Ui {
+    class CProgressDialog;
 }
+
+class QCloseEvent;
+
+class CProgressDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit CProgressDialog(QWidget *parent = 0, QString sDownloadFolder = "");
+    ~CProgressDialog();
+
+private slots:
+    void showMessage();
+    void showErrorMessage();
+
+    void DownloadSciptFinished();
+    void on_pushButtonClosProc_clicked();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
+private:
+    Ui::CProgressDialog *ui;
+    QProcess *myProc;
+};
+
+#endif // CPROGRESSDIALOG_H

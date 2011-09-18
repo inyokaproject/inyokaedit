@@ -19,6 +19,13 @@
 #
 
 PROJECT="${1}"
+
+if [ ! -d ${PROJECT} ]
+  then
+    echo "Creating main folder..."
+    mkdir -p ${PROJECT}
+fi
+
 cd ${PROJECT}
 
 if [ ! -d styles ]
@@ -731,6 +738,6 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/06/wikilink.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/21/06/expand.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/49/online-community.png
 
-cd ..
-cd ..
-cd ..
+cd ${PROJECT}
+
+echo "DOWNLOAD FINISHED"

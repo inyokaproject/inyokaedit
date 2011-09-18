@@ -92,15 +92,41 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
     // Application icon
     setWindowIcon(QIcon(":/images/uu-text-editor.png"));
 
+    // Download style files if folder ./InyokaEdit doesn't exist
+    QDir myDir(QDir::homePath() + "/.InyokaEdit");
+    if (!myDir.exists()){
+        DownloadStyles(myDir);
+    }
+
     // Open file if command line argument parsed
     if (argc >= 2) {
-        loadFile(argv[1]);
+        QString tmpstr = argv[1];
+
+        // Download inyoka styles
+        if (tmpstr == "--dlstyles"){
+            DownloadStyles(myDir);
+        }
+        else {
+            loadFile(argv[1]);
+        }
     }
 
     statusBar()->showMessage(trUtf8("Bereit"));
 }
 
 CInyokaEdit::~CInyokaEdit(){
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::DownloadStyles(QDir myDirectory)
+{
+    int iRet = QMessageBox::question(this, trUtf8("Styles herunterladen"), trUtf8("Damit die Vorschaufunktion korrekt funktioniert, müssen einige Ressourcen von Inyoka heruntergeladen werden. Dieser Vorgang kann einige Minuten dauern.\n\nMöchten Sie die Ressourcen jetzt herunterladen?"), QMessageBox::Yes | QMessageBox::No);
+    if (iRet == QMessageBox::Yes){
+        myDownloadProgress = new CProgressDialog(this, myDirectory.absolutePath());
+        myDownloadProgress->open();
+    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1152,7 +1178,7 @@ void CInyokaEdit::newFile()
 void CInyokaEdit::open()
 {
     if (maybeSave()) {
-        QString sFileName = QFileDialog::getOpenFileName(this);
+        QString sFileName = QFileDialog::getOpenFileName(this, trUtf8("Datei öffnen"), QDir::homePath());  // File dialog opens home dir
         if (!sFileName.isEmpty()){
             loadFile(sFileName);
             mytabwidget->setCurrentIndex(mytabwidget->indexOf(myeditor));
@@ -1171,7 +1197,7 @@ bool CInyokaEdit::save()
 
 bool CInyokaEdit::saveAs()
 {
-    QString sFileName = QFileDialog::getSaveFileName(this);
+    QString sFileName = QFileDialog::getSaveFileName(this, trUtf8("Datei speichern"), QDir::homePath());  // File dialog opens home dir
     if (sFileName.isEmpty())
         return false;
 
@@ -1182,7 +1208,7 @@ void CInyokaEdit::about()
 {
     QMessageBox::about(this, trUtf8("Über %1").arg(sAppName),
                        trUtf8("<b>%1</b> - Editor für das uu.de Wiki<br />"
-                              "Version: 0.0.2<br /><br />"
+                              "Version: 0.0.3<br /><br />"
                               "&copy; 2011, die Autoren von %2<br />"
                               "Lizenz: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
                               "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sAppName));

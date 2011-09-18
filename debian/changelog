@@ -1,3 +1,13 @@
+inyokaedit (0.0.3~ppa1) natty; urgency=low
+
+  * Another try to realize Open with...
+
+  * File dialog opens home directory
+
+  * Show download progress at first startup
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 18 Aug 2011 22:25:04 +0200
+
 inyokaedit (0.0.2~ppa1) natty; urgency=low
 
   * CHANGELOG: Used changelog file ;-)

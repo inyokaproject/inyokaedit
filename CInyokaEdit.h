@@ -20,7 +20,7 @@
 ****************************************************************************/
 
 /***************************************************************************
-* File Name:  InyokaEdit.h
+* File Name:  CInyokaEdit.h
 * Purpose:    Class definition main application
 ***************************************************************************/
 
@@ -34,6 +34,7 @@
 #include "CDownloadArticle.h"
 #include "CTextEditor.h"
 #include "CInsertSyntaxElement.h"
+#include "CProgressDialog.h"
 #include "qtfindreplacedialog/finddialog.h"
 #include "qtfindreplacedialog/findreplacedialog.h"
 
@@ -44,6 +45,7 @@ class QComboBox;
 class QSignalMapper;
 class QWebView;
 class QFile;
+class QDir;
 
 // Own classes
 class CParser;
@@ -118,6 +120,8 @@ private:
     void setCurrentFile(const QString &sFileName);
     QString strippedName(const QString &sFullFileName);
 
+    void DownloadStyles(QDir myDirectory);
+
     // Objects
     CTextEditor *myeditor;
     QCompleter *mycompleter;
@@ -125,6 +129,7 @@ private:
     CParser *myparser;            // Parser text to HTML
     CDownloadArticle *myDownloadModule; // Download of exsiting inyoka articles
     CInsertSyntaxElement *myInsertSyntaxElement;
+    CProgressDialog *myDownloadProgress;
 
     QTabWidget *mytabwidget;
     QWebView *mywebview;

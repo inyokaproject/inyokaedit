@@ -2,7 +2,7 @@
 Name=InyokaEdit
 GenericName=Inyoka Markup Editor
 Comment=Edit and preview Inyoka markup
-Exec=inyokaedit
+Exec=inyokaedit %U
 Terminal=false
 Type=Application
 StartupNotify=true

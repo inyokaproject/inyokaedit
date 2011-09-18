@@ -1,5 +1,4 @@
 GetInyokaStyles /usr/lib/inyokaedit
 inyokaedit.desktop /usr/share/applications
 images/uu-text-editor.png /usr/share/pixmaps
-InyokaEdit /usr/bin
 inyokaedit /usr/bin
