@@ -48,7 +48,7 @@ private slots:
     void showMessage();
     void showErrorMessage();
 
-    void DownloadSciptFinished();
+    void DownloadScriptFinished();
     void on_pushButtonClosProc_clicked();
 
 protected:

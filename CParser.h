@@ -28,6 +28,7 @@
 #define CPARSER_H
 
 #include <QWidget>
+#include <QDir>
 
 #include "CInyokaEdit.h"
 
@@ -35,6 +36,7 @@
 class QString;
 class QTextDocument;
 class QFile;
+class QDir;
 
 class CParser : public QObject
 {
@@ -42,7 +44,7 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser(QTextDocument *rawDocument, const QString &sUrlToWiki);
+    CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir);
     // Destructor
     ~CParser();
 
@@ -90,6 +92,7 @@ private:
     QStringList sListFlags;
 
     const QString sWikiUrl;
+    QDir TmpFileDir;
     bool bShowedMsgBoxAlready;
 
 };

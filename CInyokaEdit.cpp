@@ -92,10 +92,10 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
     // Application icon
     setWindowIcon(QIcon(":/images/uu-text-editor.png"));
 
-    // Download style files if folder ./InyokaEdit doesn't exist
-    QDir myDir(QDir::homePath() + "/.InyokaEdit");
-    if (!myDir.exists()){
-        DownloadStyles(myDir);
+    // Download style files if preview/styles/imgages folder doesn't exist
+    // (Default: /home/user/.InyokaEdit)
+    if (!StylesAndImagesDir.exists()){
+        DownloadStyles(StylesAndImagesDir);
     }
 
     // Open file if command line argument parsed
@@ -104,7 +104,7 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
 
         // Download inyoka styles
         if (tmpstr == "--dlstyles"){
-            DownloadStyles(myDir);
+            DownloadStyles(StylesAndImagesDir);
         }
         else {
             loadFile(argv[1]);
@@ -145,7 +145,7 @@ void CInyokaEdit::setupEditor()
     myhighlighter = new CHighlighter(myeditor->document());
 
     // Parser object
-    myparser = new CParser(myeditor->document(), sInyokaUrl);
+    myparser = new CParser(myeditor->document(), sInyokaUrl, StylesAndImagesDir);
     // Connect signals from parser with functions
     connect(myparser, SIGNAL(callShowPreview(QString)),
             this, SLOT(showHtmlPreview(QString)));
@@ -181,6 +181,9 @@ void CInyokaEdit::readSettings()
 
     sInyokaUrl = settings.value("inyokaurl", "wiki.ubuntuusers.de").toString();
 
+    QString tmpDir = settings.value("StylesImgPreviewDir", QDir::homePath() + "/.InyokaEdit").toString();
+    StylesAndImagesDir.setPath(tmpDir);
+
     m_findDialog->readSettings(settings);
     m_findReplaceDialog->readSettings(settings);
 }
@@ -194,6 +197,7 @@ void CInyokaEdit::writeSettings()
     settings.setValue("codecompletion", codecompletion);
     settings.setValue("previewineditor", ineditorpreview);
     settings.setValue("inyokaurl", sInyokaUrl);
+    settings.setValue("StylesImgPreviewDir", StylesAndImagesDir.absolutePath());
 
     m_findDialog->writeSettings(settings);
     m_findReplaceDialog->writeSettings(settings);
@@ -1087,10 +1091,10 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
 
     if (ineditorpreview == false){
         // Open html-file in system web browser
-        QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath () + "/" + filename));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
     }
     else{
-        mywebview->load(QUrl::fromLocalFile(QDir::currentPath () + "/" + filename));
+        mywebview->load(QUrl::fromLocalFile(filename));
         mytabwidget->setCurrentIndex(mytabwidget->indexOf(mywebview));
         mywebview->reload();
     }
@@ -1208,7 +1212,7 @@ void CInyokaEdit::about()
 {
     QMessageBox::about(this, trUtf8("Über %1").arg(sAppName),
                        trUtf8("<b>%1</b> - Editor für das uu.de Wiki<br />"
-                              "Version: 0.0.3<br /><br />"
+                              "Version: 0.0.3~ppa2<br /><br />"
                               "&copy; 2011, die Autoren von %2<br />"
                               "Lizenz: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
                               "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sAppName));

@@ -47,7 +47,7 @@ CProgressDialog::CProgressDialog(QWidget *parent, QString sDownloadFolder) :
     connect(myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
     connect(myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
 
-    connect(myProc, SIGNAL(finished(int)), this, SLOT(DownloadSciptFinished()) );
+    connect(myProc, SIGNAL(finished(int)), this, SLOT(DownloadScriptFinished()) );
 }
 
 CProgressDialog::~CProgressDialog()
@@ -84,7 +84,7 @@ void CProgressDialog::showErrorMessage()
 
 // -----------------------------------------------------------------------------------------------
 
-void CProgressDialog::DownloadSciptFinished()
+void CProgressDialog::DownloadScriptFinished()
 {
     this->close();
 }

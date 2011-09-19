@@ -140,6 +140,7 @@ private:
     const QString sAppName;
     QString sCurFile;  // Current file
     QString sInyokaUrl;
+    QDir StylesAndImagesDir;
 
     // Menus and toolbars
     QMenu *fileMenu;

@@ -1,3 +1,9 @@
+inyokaedit (0.0.3~ppa2) natty; urgency=low
+
+  * Bug fix: Preview was stored in wrong folder /home/user/Documents, fixed to /home/user/.InyokaEdit
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 19 Aug 2011 21:13:36 +0200
+
 inyokaedit (0.0.3~ppa1) natty; urgency=low
 
   * Another try to realize Open with...

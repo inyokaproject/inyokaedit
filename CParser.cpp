@@ -25,12 +25,13 @@
 ***************************************************************************/
 
 #include <QtGui>
+#include <QDebug>
 
 #include "CParser.h"
 
 // Constructor
-CParser::CParser(QTextDocument *rawDocument, const QString &sUrlToWiki)
-    : rawText(rawDocument), sWikiUrl(sUrlToWiki)
+CParser::CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir)
+    : rawText(rawDocument), sWikiUrl(sUrlToWiki), TmpFileDir(TmpFileOutputDir)
 {
     // Initialize possible interwiki links
     sListInterwikiKey << "apt";
@@ -205,7 +206,8 @@ CParser::~CParser()
 bool CParser::genOutput(const QString sActFile)
 {
     // File for temporary html output
-    QFile tmphtmlfile("tmpinyoka.html");
+    QFile tmphtmlfile(TmpFileDir.absolutePath() + "/tmpinyoka.html");
+
     // No write permission
     if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
         // Call message box from CInyokaEdit
@@ -379,7 +381,7 @@ bool CParser::genOutput(const QString sActFile)
     tmphtmlfile.close();
 
     // Call showPreview function from CInyokaEdit
-    emit callShowPreview(tmphtmlfile.fileName());
+    emit callShowPreview(QFileInfo(tmphtmlfile).filePath());
 
     return true;
 }
