@@ -740,4 +740,5 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/49/online-communi
 
 cd ${PROJECT}
 
+sleep 2
 echo "DOWNLOAD FINISHED"

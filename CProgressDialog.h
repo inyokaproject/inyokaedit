@@ -30,6 +30,8 @@
 #include <QDialog>
 #include <QProcess>
 
+#include "CInyokaEdit.h"
+
 namespace Ui {
     class CProgressDialog;
 }
@@ -41,7 +43,7 @@ class CProgressDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CProgressDialog(QWidget *parent = 0, QString sDownloadFolder = "");
+    explicit CProgressDialog(const QString &sScriptname, QWidget *parent = 0, QString sDownloadFolder = "");
     ~CProgressDialog();
 
 private slots:

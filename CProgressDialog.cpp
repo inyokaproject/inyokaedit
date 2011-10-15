@@ -30,7 +30,7 @@
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog(QWidget *parent, QString sDownloadFolder) :
+CProgressDialog::CProgressDialog(const QString &sScriptname, QWidget *parent, QString sDownloadFolder) :
     QDialog(parent),
     ui(new Ui::CProgressDialog)
 {
@@ -40,8 +40,17 @@ CProgressDialog::CProgressDialog(QWidget *parent, QString sDownloadFolder) :
     if (sDownloadFolder == ""){
         sDownloadFolder = QDir::homePath() + "/.InyokaEdit";
     }
-    myProc = new QProcess();
-    myProc->start("/usr/lib/inyokaedit/GetInyokaStyles", QStringList() << sDownloadFolder);
+
+    try
+    {
+        myProc = new QProcess();
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myProc - bad_alloc caught: " << ba.what() << std::endl;
+      return;
+    }
+    myProc->start(sScriptname, QStringList() << sDownloadFolder);
 
     // Show output
     connect(myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
@@ -53,7 +62,10 @@ CProgressDialog::CProgressDialog(QWidget *parent, QString sDownloadFolder) :
 CProgressDialog::~CProgressDialog()
 {
     myProc->kill();
+    delete myProc;
+    myProc = NULL;
     delete ui;
+    ui = NULL;
 }
 
 // -----------------------------------------------------------------------------------------------

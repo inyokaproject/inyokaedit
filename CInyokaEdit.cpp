@@ -27,10 +27,12 @@
 #include <QtGui>
 #include <QtWebKit/QWebView>
 
+#include <cstdlib>  // system()
+
 #include "CInyokaEdit.h"
 
-CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
-    : mycompleter(0), sAppName(name)
+CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
+    : myCompleter(0), sAppName(name)
 {
     QStringList wordlist;
     wordlist << "Inhaltsverzeichnis(1)]]" << "Vorlage(Getestet, Ubuntuversion)]]" << "Vorlage(Baustelle, Datum, \"Bearbeiter\")]]"
@@ -51,26 +53,54 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
     font.setPointSize(10.5);
 
     // Editor object (objects have to be create before find/replace)
-    myeditor = new CTextEditor;
-    myeditor->setFont(font);
-    myeditor->setAcceptRichText(false); // Paste plain text only
-    myeditor->setCompleter(mycompleter);
+    try
+    {
+        myEditor = new CTextEditor;
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myEditor - bad_alloc caught: " << ba.what() << std::endl;
+    }
+    myEditor->setFont(font);
+    myEditor->setAcceptRichText(false); // Paste plain text only
+    myEditor->setCompleter(myCompleter);
 
     // Find / replace (objects have to be create before readSettings!)
-    m_findDialog = new FindDialog(this);
+    try
+    {
+        m_findDialog = new FindDialog(this);
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: m_findDialog - bad_alloc caught: " << ba.what() << std::endl;
+    }
     m_findDialog->setModal(false);
-    m_findDialog->setTextEdit(myeditor);
+    m_findDialog->setTextEdit(myEditor);
 
-    m_findReplaceDialog = new FindReplaceDialog(this);
+    try
+    {
+        m_findReplaceDialog = new FindReplaceDialog(this);
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: m_findReplaceDialog - bad_alloc caught: " << ba.what() << std::endl;
+    }
     m_findReplaceDialog->setModal(false);
-    m_findReplaceDialog->setTextEdit(myeditor);
+    m_findReplaceDialog->setTextEdit(myEditor);
 
     // Load settings from config file
     readSettings();
 
-    mycompleter = new QCompleter(wordlist, this);
-    mycompleter->setCaseSensitivity(Qt::CaseInsensitive);
-    mycompleter->setWrapAround(false);
+    try
+    {
+        myCompleter = new QCompleter(wordlist, this);
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myCompleter - bad_alloc caught: " << ba.what() << std::endl;
+    }
+    myCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    myCompleter->setWrapAround(false);
 
     // Setup gui, menus, actions, toolbar...
     setupEditor();
@@ -78,13 +108,13 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
     createMenus();
     createToolBars();
 
-    setCentralWidget(mytabwidget);
-    mytabwidget->setTabPosition(QTabWidget::West);
-    mytabwidget->addTab(myeditor, trUtf8("Rohformat"));
+    setCentralWidget(myTabwidget);
+    myTabwidget->setTabPosition(QTabWidget::West);
+    myTabwidget->addTab(myEditor, trUtf8("Rohformat"));
 
-    mytabwidget->addTab(mywebview, trUtf8("Vorschau"));
+    myTabwidget->addTab(myWebview, trUtf8("Vorschau"));
     if (ineditorpreview == false)
-        mytabwidget->setTabEnabled(mytabwidget->indexOf(mywebview), false);
+        myTabwidget->setTabEnabled(myTabwidget->indexOf(myWebview), false);
 
     setCurrentFile("");
     setUnifiedTitleAndToolBarOnMac(true);
@@ -115,17 +145,46 @@ CInyokaEdit::CInyokaEdit(const QString &name, int argc, char **argv)
 }
 
 CInyokaEdit::~CInyokaEdit(){
+    delete myInsertSyntaxElement;
+    myInsertSyntaxElement = NULL;
+    delete myWebview;
+    myWebview = NULL;
+    delete myTabwidget;
+    myTabwidget = NULL;
+    delete myDownloadModule;
+    myDownloadModule = NULL;
+    delete myParser;
+    myParser = NULL;
+    delete myCompleter;
+    myCompleter = NULL;
+    delete m_findReplaceDialog;
+    m_findReplaceDialog = NULL;
+    delete m_findDialog;
+    m_findDialog = NULL;
+
+//    delete myEditor;
+//    myEditor = NULL;
+//    delete myHighlighter;
+//    myHighlighter = NULL;
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CInyokaEdit::DownloadStyles(QDir myDirectory)
+void CInyokaEdit::DownloadStyles(const QDir myDirectory)
 {
     int iRet = QMessageBox::question(this, trUtf8("Styles herunterladen"), trUtf8("Damit die Vorschaufunktion korrekt funktioniert, müssen einige Ressourcen von Inyoka heruntergeladen werden. Dieser Vorgang kann einige Minuten dauern.\n\nMöchten Sie die Ressourcen jetzt herunterladen?"), QMessageBox::Yes | QMessageBox::No);
     if (iRet == QMessageBox::Yes){
-        myDownloadProgress = new CProgressDialog(this, myDirectory.absolutePath());
-        myDownloadProgress->open();
+        try
+        {
+            myArticleDownloadProgress = new CProgressDialog("/usr/lib/inyokaedit/GetInyokaStyles", this, myDirectory.absolutePath());
+        }
+        catch (std::bad_alloc& ba)
+        {
+          std::cerr << "ERROR: myDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
+          return;
+        }
+        myArticleDownloadProgress->open();
     }
 }
 
@@ -135,37 +194,81 @@ void CInyokaEdit::DownloadStyles(QDir myDirectory)
 void CInyokaEdit::setupEditor()
 {
     // Text changed
-    connect(myeditor->document(), SIGNAL(contentsChanged()),
+    connect(myEditor->document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));
     // Send code completion state (in-/active) to myeditor
     connect(this, SIGNAL(sendCodeCompState(bool)),
-            myeditor, SLOT(getcodecomplState(bool)));
+            myEditor, SLOT(getcodecomplState(bool)));
 
     // Activate syntax highlighting
-    myhighlighter = new CHighlighter(myeditor->document());
+    try
+    {
+        myHighlighter = new CHighlighter(myEditor->document());
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myHighlighter - bad_alloc caught: " << ba.what() << std::endl;
+    }
 
     // Parser object
-    myparser = new CParser(myeditor->document(), sInyokaUrl, StylesAndImagesDir);
+    try
+    {
+        myParser = new CParser(myEditor->document(), sInyokaUrl, StylesAndImagesDir);
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myParser - bad_alloc caught: " << ba.what() << std::endl;
+    }
+
     // Connect signals from parser with functions
-    connect(myparser, SIGNAL(callShowPreview(QString)),
+    connect(myParser, SIGNAL(callShowPreview(QString)),
             this, SLOT(showHtmlPreview(QString)));
-    connect(myparser, SIGNAL(callShowMessageBox(QString,QString)),
+    connect(myParser, SIGNAL(callShowMessageBox(QString,QString)),
             this, SLOT(showMessageBox(QString,QString)));
 
     // Article download module object
-    myDownloadModule = new CDownloadArticle();
+    try
+    {
+        myDownloadModule = new CDownloadArticle();
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myDownloadModule - bad_alloc caught: " << ba.what() << std::endl;
+    }
 
-    mytabwidget = new QTabWidget;
-    mywebview = new QWebView(this);
+    try
+    {
+        myTabwidget = new QTabWidget;
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myTabwidget - bad_alloc caught: " << ba.what() << std::endl;
+    }
 
-    myInsertSyntaxElement = new CInsertSyntaxElement;
+    try
+    {
+        myWebview = new QWebView(this);
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myWebview - bad_alloc caught: " << ba.what() << std::endl;
+    }
+
+    try
+    {
+        myInsertSyntaxElement = new CInsertSyntaxElement;
+    }
+    catch (std::bad_alloc& ba)
+    {
+      std::cerr << "ERROR: myInsertSyntaxElement - bad_alloc caught: " << ba.what() << std::endl;
+    }
 
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-// Load settings from confog file
+// Load settings from config file
 void CInyokaEdit::readSettings()
 {
     QSettings settings(sAppName, sAppName + "-Config");
@@ -243,31 +346,31 @@ void CInyokaEdit::createActions()
     cutAct = new QAction(QIcon(":/images/edit-cut.png"), trUtf8("Ausschneiden"), this);
     cutAct->setShortcuts(QKeySequence::Cut);
     cutAct->setStatusTip(trUtf8("Schneidet den markierten Text aus"));
-    connect(cutAct, SIGNAL(triggered()), myeditor, SLOT(cut()));
+    connect(cutAct, SIGNAL(triggered()), myEditor, SLOT(cut()));
 
     // Edit: Copy
     copyAct = new QAction(QIcon(":/images/edit-copy.png"), trUtf8("Kopieren"), this);
     copyAct->setShortcuts(QKeySequence::Copy);
     copyAct->setStatusTip(trUtf8("Kopiert den markierten Inhalt in die Zwischenablage"));
-    connect(copyAct, SIGNAL(triggered()), myeditor, SLOT(copy()));
+    connect(copyAct, SIGNAL(triggered()), myEditor, SLOT(copy()));
 
     // Edit: Paste
     pasteAct = new QAction(QIcon(":/images/edit-paste.png"), trUtf8("Einfügen"), this);
     pasteAct->setShortcuts(QKeySequence::Paste);
     pasteAct->setStatusTip(trUtf8("Fügt den Inhalt der Zwischenablage ein"));
-    connect(pasteAct, SIGNAL(triggered()), myeditor, SLOT(paste()));
+    connect(pasteAct, SIGNAL(triggered()), myEditor, SLOT(paste()));
 
     // Edit: Undo
     undoAct = new QAction(QIcon(":/images/edit-undo.png"), trUtf8("Rückgängig"), this);
     undoAct->setShortcuts(QKeySequence::Undo);
     undoAct->setStatusTip(trUtf8("Änderungen rückgängig machen"));
-    connect(undoAct, SIGNAL(triggered()), myeditor, SLOT(undo()));
+    connect(undoAct, SIGNAL(triggered()), myEditor, SLOT(undo()));
 
     // Edit: Redo
     redoAct = new QAction(QIcon(":/images/edit-redo.png"), trUtf8("Wiederherstellen"), this);
     redoAct->setShortcuts(QKeySequence::Redo);
     redoAct->setStatusTip(trUtf8("Rückgängig gemachte Änderungen wiederherstellen"));
-    connect(redoAct, SIGNAL(triggered()), myeditor, SLOT(redo()));
+    connect(redoAct, SIGNAL(triggered()), myEditor, SLOT(redo()));
 
     // Edit: Search
     searchAct = new QAction(QIcon(":/images/edit-find.png"), trUtf8("Suchen..."), this);
@@ -301,16 +404,16 @@ void CInyokaEdit::createActions()
     // Set / initialize / connect cut / copy / redo / undo
     cutAct->setEnabled(false);
     copyAct->setEnabled(false);
-    connect(myeditor, SIGNAL(copyAvailable(bool)),
+    connect(myEditor, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
-    connect(myeditor, SIGNAL(copyAvailable(bool)),
+    connect(myEditor, SIGNAL(copyAvailable(bool)),
             copyAct, SLOT(setEnabled(bool)));
 
     undoAct->setEnabled(false);
-    connect(myeditor, SIGNAL(undoAvailable(bool)),
+    connect(myEditor, SIGNAL(undoAvailable(bool)),
             undoAct, SLOT(setEnabled(bool)));
     redoAct->setEnabled(false);
-    connect(myeditor, SIGNAL(redoAvailable(bool)),
+    connect(myEditor, SIGNAL(redoAvailable(bool)),
             redoAct, SLOT(setEnabled(bool)));
 
     // Show html preview
@@ -896,11 +999,11 @@ void CInyokaEdit::createToolBars()
 // Call parser
 void CInyokaEdit::previewInyokaPage(){
     if (sCurFile != ""){
-        myparser->genOutput("");
+        myParser->genOutput("");
     }
     else{
         QFileInfo fi(sCurFile);
-        myparser->genOutput(fi.fileName());
+        myParser->genOutput(fi.fileName());
     }
 }
 
@@ -912,24 +1015,24 @@ void CInyokaEdit::previewInyokaPage(){
 void CInyokaEdit::insertDropDownHeading(const int iSelection){
 
     bool bSelected = false;
-    if (myeditor->textCursor().selectedText() != ""){
+    if (myEditor->textCursor().selectedText() != ""){
         bSelected = true;
     }
 
-    myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInyokaHeading(iSelection, myeditor->textCursor().selectedText().toStdString()).c_str()));
+    myEditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInyokaHeading(iSelection, myEditor->textCursor().selectedText().toStdString()).c_str()));
 
     // Select text "Überschrift" if no text was selected
     if (bSelected == false && iSelection > 1) {
-        QTextCursor textCursor = myeditor->textCursor();
-        textCursor.setPosition( myeditor->textCursor().position() - QString(trUtf8("Überschrift")).length() - iSelection);
-        textCursor.setPosition( myeditor->textCursor().position() - iSelection, QTextCursor::KeepAnchor );
-        myeditor->setTextCursor( textCursor );
+        QTextCursor textCursor = myEditor->textCursor();
+        textCursor.setPosition( myEditor->textCursor().position() - QString(trUtf8("Überschrift")).length() - iSelection);
+        textCursor.setPosition( myEditor->textCursor().position() - iSelection, QTextCursor::KeepAnchor );
+        myEditor->setTextCursor( textCursor );
     }
 
     // Reset selection
     headingsBox->setCurrentIndex(0);
 
-    myeditor->setFocus();
+    myEditor->setFocus();
 }
 
 // Macro (combobox in toolbar)
@@ -980,20 +1083,20 @@ void CInyokaEdit::insertDropDownTextmacro(const int iSelection){
         // Reset selection
         textmacrosBox->setCurrentIndex(0);
 
-        myeditor->setFocus();
+        myEditor->setFocus();
     }
 }
 
 // Insert text sample / syntax element
 void CInyokaEdit::insertTextSample(const QString &sMenuEntry){
-    myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetElementInyokaCode(sMenuEntry.toStdString(), myeditor->textCursor().selectedText().toStdString()).c_str()));
-    myeditor->setFocus();
+    myEditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetElementInyokaCode(sMenuEntry.toStdString(), myEditor->textCursor().selectedText().toStdString()).c_str()));
+    myEditor->setFocus();
 }
 
 // Insert interwiki-link
 void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
-    myeditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInterwikiLink(sMenuEntry.toStdString(), myeditor->textCursor().selectedText().toStdString()).c_str()));
-    myeditor->setFocus();
+    myEditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetInterwikiLink(sMenuEntry.toStdString(), myEditor->textCursor().selectedText().toStdString()).c_str()));
+    myEditor->setFocus();
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1001,11 +1104,11 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 // DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
 void CInyokaEdit::downloadArticle()
-{
-    int iReturnValue;
+{ 
+    int iReturnValue = 0;
     QString sTmpArticle("");
-    QString sitename("");
-    QString namesuffix("?action=export&format=raw");
+    QString sSitename("");
+    QString sNamesuffix("?action=export&format=raw");
 
     if (!maybeSave()) {
         return;
@@ -1014,29 +1117,29 @@ void CInyokaEdit::downloadArticle()
         bool ok; // Buttons of input dialog (click on "OK" -> ok = true, click on "Cancel" -> ok = false)
 
         // Show input dialog
-        sitename = QInputDialog::getText(this, sAppName,
+        sSitename = QInputDialog::getText(this, sAppName,
                                          trUtf8("Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:"), QLineEdit::Normal,
                                          trUtf8("Baustelle/MeinArtikel"), &ok);
 
         // Click on "cancel" or string is empty
-        if (ok == false || sitename.isEmpty())
+        if (ok == false || sSitename.isEmpty())
             return;
 
         // Replace non valid characters
-        sitename.replace(trUtf8("ä"), "a", Qt::CaseInsensitive);
-        sitename.replace(trUtf8("ö"), "o", Qt::CaseInsensitive);
-        sitename.replace(trUtf8("ü"), "u", Qt::CaseInsensitive);
-        sitename.replace(" ", "_");
+        sSitename.replace(trUtf8("ä"), "a", Qt::CaseInsensitive);
+        sSitename.replace(trUtf8("ö"), "o", Qt::CaseInsensitive);
+        sSitename.replace(trUtf8("ü"), "u", Qt::CaseInsensitive);
+        sSitename.replace(" ", "_");
 
         // Start download
-        iReturnValue = myDownloadModule->StartDownload(sInyokaUrl.toStdString(), sitename.toStdString().append(namesuffix.toStdString()));
+        iReturnValue = myDownloadModule->StartDownload(sInyokaUrl.toStdString(), sSitename.toStdString().append(sNamesuffix.toStdString()));
 
         // Get raw text or error message
         sTmpArticle = QString::fromUtf8(myDownloadModule->getRawText().c_str());
 
         // Error occured
         if (iReturnValue < 0){
-            QMessageBox::critical(this, sAppName, trUtf8("Beim Herunterladen ist ein Fehler aufgetreten:\n\n%1")
+            QMessageBox::critical(this, sAppName, trUtf8("Beim Herunterladen des Artikels ist ein Fehler aufgetreten:\n\n%1")
                                   .arg(sTmpArticle));
         }
         // Everything ok
@@ -1045,12 +1148,12 @@ void CInyokaEdit::downloadArticle()
             // Article not found (does not exist)
             if (sTmpArticle.startsWith("HTTP/1.0 404 Not Found", Qt::CaseInsensitive)
                     || sTmpArticle.startsWith("HTTP/1.1 404 Not Found", Qt::CaseInsensitive)){
-                QMessageBox::warning(this, sAppName, trUtf8("Die Seite \"%1\" wurde nicht gefunden.").arg(sitename));
+                QMessageBox::warning(this, sAppName, trUtf8("Die Seite \"%1\" wurde nicht gefunden.").arg(sSitename));
             }
             // Article is not in public wiki (e.g. wiki.ubuntuusers.de/ubuntuusers/intern)
             else if (sTmpArticle.startsWith("HTTP/1.0 302 Moved Temporarily", Qt::CaseInsensitive)
                      || sTmpArticle.startsWith("HTTP/1.1 302 Moved Temporarily", Qt::CaseInsensitive)){
-                QMessageBox::warning(this, sAppName, trUtf8("Der Zugriff auf die Seite \"%1\" wurde verweigert.").arg(sitename));
+                QMessageBox::warning(this, sAppName, trUtf8("Der Zugriff auf die Seite \"%1\" wurde verweigert.").arg(sSitename));
             }
             else {
                 // Connection ok (ubuntuuser)
@@ -1071,15 +1174,122 @@ void CInyokaEdit::downloadArticle()
 #ifndef QT_NO_CURSOR
                 QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-                myeditor->setPlainText(sTmpArticle);
-                myeditor->document()->setModified(true);
+                myEditor->setPlainText(sTmpArticle);
+                myEditor->document()->setModified(true);
                 documentWasModified();
 #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
 #endif
 
+                downloadImages(sSitename);
+
             }
-            mytabwidget->setCurrentIndex(mytabwidget->indexOf(myeditor));
+            myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::downloadImages(const QString &sArticlename)
+{
+    QString sMetadata("");
+    QStringList sListTmp, sListMetadata;
+    const QString sNamesuffix("?action=metaexport");
+    const QString sScriptName("tmpDlScript");
+
+    // Start download
+    int iRet = myDownloadModule->StartDownload(sInyokaUrl.toStdString(), sArticlename.toStdString().append(sNamesuffix.toStdString()));
+
+    // Get raw text or error message
+    sMetadata = QString::fromUtf8(myDownloadModule->getRawText().c_str());
+
+    // Error occured
+    if (iRet < 0){
+        QMessageBox::critical(this, sAppName, trUtf8("Fehler bei Attachment-Check:\n\n%1")
+                              .arg(sMetadata));
+    }
+    // Everything ok
+    else{
+        // Connection ok (ubuntuuser)
+        if (sMetadata.startsWith("HTTP/1.0 200 OK", Qt::CaseInsensitive)){
+            QString sEndOfHeader("Connection: close");
+            int myindex = sMetadata.lastIndexOf(sEndOfHeader);
+            if (myindex > 0)
+                sMetadata.remove(0, myindex + 2 + QString(sEndOfHeader + "\n\n").length());
+        }
+        // Connection ok (open-slx)
+        else if (sMetadata.startsWith("HTTP/1.1 200 OK", Qt::CaseInsensitive)){
+            QString sEndOfHeader("Access-Control-Allow-Origin: *");
+            int myindex = sMetadata.lastIndexOf(sEndOfHeader);
+            if (myindex > 0)
+                sMetadata.remove(0, myindex + 2 + QString(sEndOfHeader + "\n\n").length());
+        }
+
+        // Copy metadata line by line in list
+        sListTmp << sMetadata.split("\n");
+
+        // Get only attachments from this article
+        for (int i = 0; i < sListTmp.size(); i++) {
+            if (sListTmp[i].startsWith("X-Attach: " + sArticlename + "/", Qt::CaseInsensitive)) {
+                sListMetadata << sListTmp[i];
+            }
+        }
+
+        // If attachments exist
+        if (sListMetadata.size() > 0) {
+            iRet = QMessageBox::question(this, sAppName, trUtf8("Am Artikel angehängte Bilder ebenfalls herunterladen?"), QMessageBox::Yes, QMessageBox::No);
+
+            if (iRet == QMessageBox::Yes) {
+                // File for download script
+                QFile tmpScriptfile(StylesAndImagesDir.absolutePath() + "/" + sScriptName);
+
+                // No write permission
+                if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
+                    QMessageBox::warning(this, sAppName, trUtf8("Es konnte keine temporäre Download-Datei erstellt werden!"));
+                    return;
+                }
+
+                // Stream for output in file
+                QTextStream scriptOutputstream(&tmpScriptfile);
+                scriptOutputstream << "#!/bin/bash\n"
+                                      "# Temporary script for downloading images from an article\n"
+                                      "#\n\necho \"Downloading images...\"\n"
+                                      "cd " << StylesAndImagesDir.absolutePath() << endl;
+
+                // Write wget download lines
+                QString sTmp("");
+                for (int j = 0; j < sListMetadata.size(); j++) {
+                    // Trim image infos lines
+                    sListMetadata[j].remove(0, 10);  // Remove "X-Attach: "
+
+                    // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
+                    scriptOutputstream << "wget -nv http://" << sInyokaUrl << "/_image?target=" << sListMetadata[j].toLower() << endl;
+                    sTmp = sListMetadata[j].remove(sArticlename + "/", Qt::CaseInsensitive);
+                    scriptOutputstream << "mv _image?target=" << sArticlename.toLower() << "%2F" << sTmp << " " << sTmp << endl;
+                }
+                scriptOutputstream << "sleep 2\n"
+                                      "echo \"Finished image download.\"" << endl;
+
+                // Make script executable
+                QString sCommand = "chmod +x " + StylesAndImagesDir.absolutePath() + "/" + sScriptName;
+                std::system(sCommand.toStdString().c_str());
+
+                tmpScriptfile.close();
+
+                // Start download script
+                try
+                {
+                    QString sTmpFilePath = StylesAndImagesDir.absolutePath() + "/" + sScriptName;
+                    myImageDownloadProgress = new CProgressDialog(sTmpFilePath, this, StylesAndImagesDir.absolutePath());
+                }
+                catch (std::bad_alloc& ba)
+                {
+                  std::cerr << "ERROR: myDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
+                  return;
+                }
+                myImageDownloadProgress->open();
+            }
         }
     }
 }
@@ -1094,9 +1304,9 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
         QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
     }
     else{
-        mywebview->load(QUrl::fromLocalFile(filename));
-        mytabwidget->setCurrentIndex(mytabwidget->indexOf(mywebview));
-        mywebview->reload();
+        myWebview->load(QUrl::fromLocalFile(filename));
+        myTabwidget->setCurrentIndex(myTabwidget->indexOf(myWebview));
+        myWebview->reload();
     }
 }
 
@@ -1173,9 +1383,9 @@ void CInyokaEdit::findReplaceDialog(){
 void CInyokaEdit::newFile()
 {
     if (maybeSave()) {
-        myeditor->clear();
+        myEditor->clear();
         setCurrentFile("");
-        mytabwidget->setCurrentIndex(mytabwidget->indexOf(myeditor));
+        myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
     }
 }
 
@@ -1185,7 +1395,7 @@ void CInyokaEdit::open()
         QString sFileName = QFileDialog::getOpenFileName(this, trUtf8("Datei öffnen"), QDir::homePath());  // File dialog opens home dir
         if (!sFileName.isEmpty()){
             loadFile(sFileName);
-            mytabwidget->setCurrentIndex(mytabwidget->indexOf(myeditor));
+            myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
         }
     }
 }
@@ -1220,13 +1430,13 @@ void CInyokaEdit::about()
 
 void CInyokaEdit::documentWasModified()
 {
-    setWindowModified(myeditor->document()->isModified());
+    setWindowModified(myEditor->document()->isModified());
 }
 
 // Handle unsaved files
 bool CInyokaEdit::maybeSave()
 {
-    if (myeditor->document()->isModified()) {
+    if (myEditor->document()->isModified()) {
         QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, sAppName,
                                    trUtf8("Die Datei wurde geändert.\n"
@@ -1256,7 +1466,7 @@ void CInyokaEdit::loadFile(const QString &sFileName)
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-    myeditor->setPlainText(in.readAll());
+    myEditor->setPlainText(in.readAll());
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
@@ -1281,7 +1491,7 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-    out << myeditor->toPlainText();
+    out << myEditor->toPlainText();
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
@@ -1294,7 +1504,7 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
 void CInyokaEdit::setCurrentFile(const QString &sFileName)
 {
     sCurFile = sFileName;
-    myeditor->document()->setModified(false);
+    myEditor->document()->setModified(false);
     setWindowModified(false);
 
     QString sShownName = sCurFile;

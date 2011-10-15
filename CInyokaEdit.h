@@ -28,6 +28,8 @@
 #define CINYOKAEDIT_H
 
 #include <QMainWindow>
+//#include <new>  // bad_alloc
+#include <iostream>
 
 #include "CHighlighter.h"
 #include "CParser.h"
@@ -52,13 +54,14 @@ class CParser;
 class CDownloadArticle;
 class FindDialog;
 class FindReplaceDialog;
+class CProgressDialog;
 
 class CInyokaEdit : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    CInyokaEdit(const QString &sAppName, int argc, char **argv);   // Constructor
+    CInyokaEdit(const QString &sAppName, const int argc, char **argv);   // Constructor
     ~CInyokaEdit();  // Desstructor
 
 public slots:
@@ -90,6 +93,7 @@ private slots:
     // Preview / Download toolbar
     void previewInyokaPage();
     void downloadArticle();
+    void downloadImages(const QString &sArticlename);
 
     // Insert text sample menu
     void insertTextSample(const QString &sMenuEntry);
@@ -120,19 +124,20 @@ private:
     void setCurrentFile(const QString &sFileName);
     QString strippedName(const QString &sFullFileName);
 
-    void DownloadStyles(QDir myDirectory);
+    void DownloadStyles(const QDir myDirectory);
 
     // Objects
-    CTextEditor *myeditor;
-    QCompleter *mycompleter;
-    CHighlighter *myhighlighter;  // Syntax highlighting
-    CParser *myparser;            // Parser text to HTML
+    CTextEditor *myEditor;
+    QCompleter *myCompleter;
+    CHighlighter *myHighlighter;  // Syntax highlighting
+    CParser *myParser;            // Parser text to HTML
     CDownloadArticle *myDownloadModule; // Download of exsiting inyoka articles
     CInsertSyntaxElement *myInsertSyntaxElement;
-    CProgressDialog *myDownloadProgress;
+    CProgressDialog *myArticleDownloadProgress;
+    CProgressDialog *myImageDownloadProgress;
 
-    QTabWidget *mytabwidget;
-    QWebView *mywebview;
+    QTabWidget *myTabwidget;
+    QWebView *myWebview;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
