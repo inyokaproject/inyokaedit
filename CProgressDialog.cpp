@@ -48,7 +48,7 @@ CProgressDialog::CProgressDialog(const QString &sScriptname, QWidget *parent, QS
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myProc - bad_alloc caught: " << ba.what() << std::endl;
-      return;
+      exit (-1);
     }
     myProc->start(sScriptname, QStringList() << sDownloadFolder);
 

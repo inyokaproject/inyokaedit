@@ -60,6 +60,8 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myEditor - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: TextEditor"));
+      exit (-1);
     }
     myEditor->setFont(font);
     myEditor->setAcceptRichText(false); // Paste plain text only
@@ -73,6 +75,8 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: m_findDialog - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: FindDialog"));
+      exit (-1);
     }
     m_findDialog->setModal(false);
     m_findDialog->setTextEdit(myEditor);
@@ -84,6 +88,8 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: m_findReplaceDialog - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: FindReplaceDialog"));
+      exit (-1);
     }
     m_findReplaceDialog->setModal(false);
     m_findReplaceDialog->setTextEdit(myEditor);
@@ -98,6 +104,8 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myCompleter - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: Completer"));
+      exit (-1);
     }
     myCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     myCompleter->setWrapAround(false);
@@ -113,7 +121,7 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     myTabwidget->addTab(myEditor, trUtf8("Rohformat"));
 
     myTabwidget->addTab(myWebview, trUtf8("Vorschau"));
-    if (ineditorpreview == false)
+    if (bPreviewInEditor == false)
         myTabwidget->setTabEnabled(myTabwidget->indexOf(myWebview), false);
 
     setCurrentFile("");
@@ -181,8 +189,9 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
         }
         catch (std::bad_alloc& ba)
         {
-          std::cerr << "ERROR: myDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-          return;
+          std::cerr << "ERROR: myArticleDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
+          QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: ArticleDownloadProgress"));
+          exit (-1);
         }
         myArticleDownloadProgress->open();
     }
@@ -208,6 +217,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myHighlighter - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: Highlighter"));
+      exit (-1);
     }
 
     // Parser object
@@ -218,6 +229,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myParser - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: Parser"));
+      exit (-1);
     }
 
     // Connect signals from parser with functions
@@ -234,6 +247,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myDownloadModule - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: DownloadModule"));
+      exit (-1);
     }
 
     try
@@ -243,6 +258,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myTabwidget - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: TabWidget"));
+      exit (-1);
     }
 
     try
@@ -252,6 +269,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myWebview - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: Webview"));
+      exit (-1);
     }
 
     try
@@ -261,6 +280,8 @@ void CInyokaEdit::setupEditor()
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: myInsertSyntaxElement - bad_alloc caught: " << ba.what() << std::endl;
+      QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: InsertSyntaxElement"));
+      exit (-1);
     }
 
 }
@@ -277,15 +298,17 @@ void CInyokaEdit::readSettings()
     resize(size);
     move(pos);
 
-    codecompletion = settings.value("codecompletion", true).toBool();
-    emit sendCodeCompState(codecompletion);
+    bCodeCompletion = settings.value("codecompletion", true).toBool();
+    emit sendCodeCompState(bCodeCompletion);
 
-    ineditorpreview = settings.value("previewineditor", true).toBool();
+    bPreviewInEditor = settings.value("previewineditor", true).toBool();
 
     sInyokaUrl = settings.value("inyokaurl", "wiki.ubuntuusers.de").toString();
 
     QString tmpDir = settings.value("StylesImgPreviewDir", QDir::homePath() + "/.InyokaEdit").toString();
     StylesAndImagesDir.setPath(tmpDir);
+
+    bAutomaticImageDownload = settings.value("automaticimagedownload", false).toBool();
 
     m_findDialog->readSettings(settings);
     m_findReplaceDialog->readSettings(settings);
@@ -297,10 +320,11 @@ void CInyokaEdit::writeSettings()
     QSettings settings(sAppName, sAppName + "-Config");
     settings.setValue("pos", pos());
     settings.setValue("size", size());
-    settings.setValue("codecompletion", codecompletion);
-    settings.setValue("previewineditor", ineditorpreview);
+    settings.setValue("codecompletion", bCodeCompletion);
+    settings.setValue("previewineditor", bPreviewInEditor);
     settings.setValue("inyokaurl", sInyokaUrl);
     settings.setValue("StylesImgPreviewDir", StylesAndImagesDir.absolutePath());
+    settings.setValue("automaticimagedownload", bAutomaticImageDownload);
 
     m_findDialog->writeSettings(settings);
     m_findReplaceDialog->writeSettings(settings);
@@ -1193,105 +1217,111 @@ void CInyokaEdit::downloadArticle()
 
 void CInyokaEdit::downloadImages(const QString &sArticlename)
 {
+    int iRet = 0;
+    QByteArray tempResult;
     QString sMetadata("");
     QStringList sListTmp, sListMetadata;
-    const QString sNamesuffix("?action=metaexport");
     const QString sScriptName("tmpDlScript");
 
-    // Start download
-    int iRet = myDownloadModule->StartDownload(sInyokaUrl.toStdString(), sArticlename.toStdString().append(sNamesuffix.toStdString()));
+    // Start metadata download
+    QProcess procDownloadMetadata;
+    procDownloadMetadata.start("wget -O - http://" + sInyokaUrl + "/" + sArticlename + "?action=metaexport");
 
-    // Get raw text or error message
-    sMetadata = QString::fromUtf8(myDownloadModule->getRawText().c_str());
-
-    // Error occured
-    if (iRet < 0){
-        QMessageBox::critical(this, sAppName, trUtf8("Fehler bei Attachment-Check:\n\n%1")
-                              .arg(sMetadata));
+    if (!procDownloadMetadata.waitForStarted()) {
+        QMessageBox::critical(this, sAppName, trUtf8("Kann Download der Metadaten nicht starten."));
+        return;
     }
-    // Everything ok
-    else{
-        // Connection ok (ubuntuuser)
-        if (sMetadata.startsWith("HTTP/1.0 200 OK", Qt::CaseInsensitive)){
-            QString sEndOfHeader("Connection: close");
-            int myindex = sMetadata.lastIndexOf(sEndOfHeader);
-            if (myindex > 0)
-                sMetadata.remove(0, myindex + 2 + QString(sEndOfHeader + "\n\n").length());
-        }
-        // Connection ok (open-slx)
-        else if (sMetadata.startsWith("HTTP/1.1 200 OK", Qt::CaseInsensitive)){
-            QString sEndOfHeader("Access-Control-Allow-Origin: *");
-            int myindex = sMetadata.lastIndexOf(sEndOfHeader);
-            if (myindex > 0)
-                sMetadata.remove(0, myindex + 2 + QString(sEndOfHeader + "\n\n").length());
-        }
+    if (!procDownloadMetadata.waitForFinished()) {
+        QMessageBox::critical(this, sAppName, trUtf8("Fehler beim Download der Metadaten."));
+        return;
+    }
 
-        // Copy metadata line by line in list
-        sListTmp << sMetadata.split("\n");
+    tempResult = procDownloadMetadata.readAll();
+    sMetadata = QString::fromLocal8Bit(tempResult);
 
-        // Get only attachments from this article
-        for (int i = 0; i < sListTmp.size(); i++) {
-            if (sListTmp[i].startsWith("X-Attach: " + sArticlename + "/", Qt::CaseInsensitive)) {
-                sListMetadata << sListTmp[i];
-            }
+    // Site does not exist etc.
+    if (sMetadata == "") {
+        QMessageBox::information(this, sAppName, trUtf8("Es konnten keine Metadaten gefunden werden."));
+        return;
+    }
+
+    // Copy metadata line by line in list
+    sListTmp << sMetadata.split("\n");
+
+    // Get only attachments article metadata
+    for (int i = 0; i < sListTmp.size(); i++) {
+        if (sListTmp[i].startsWith("X-Attach: " + sArticlename + "/", Qt::CaseInsensitive)) {
+            sListMetadata << sListTmp[i];
+            //qDebug() << sListTmp[i];
         }
+    }
 
-        // If attachments exist
-        if (sListMetadata.size() > 0) {
+    // If attachments exist
+    if (sListMetadata.size() > 0) {
+
+        // Ask if images should be downloaded (if not enabled by default in settings)
+        if (bAutomaticImageDownload == false) {
             iRet = QMessageBox::question(this, sAppName, trUtf8("Am Artikel angehängte Bilder ebenfalls herunterladen?"), QMessageBox::Yes, QMessageBox::No);
+        }
+        else {
+            iRet = QMessageBox::Yes;
+        }
 
-            if (iRet == QMessageBox::Yes) {
-                // File for download script
-                QFile tmpScriptfile(StylesAndImagesDir.absolutePath() + "/" + sScriptName);
+        if (iRet == QMessageBox::Yes) {
 
-                // No write permission
-                if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
-                    QMessageBox::warning(this, sAppName, trUtf8("Es konnte keine temporäre Download-Datei erstellt werden!"));
-                    return;
-                }
+            // File for download script
+            QFile tmpScriptfile(StylesAndImagesDir.absolutePath() + "/" + sScriptName);
 
-                // Stream for output in file
-                QTextStream scriptOutputstream(&tmpScriptfile);
-                scriptOutputstream << "#!/bin/bash\n"
-                                      "# Temporary script for downloading images from an article\n"
-                                      "#\n\necho \"Downloading images...\"\n"
-                                      "cd " << StylesAndImagesDir.absolutePath() << endl;
-
-                // Write wget download lines
-                QString sTmp("");
-                for (int j = 0; j < sListMetadata.size(); j++) {
-                    // Trim image infos lines
-                    sListMetadata[j].remove(0, 10);  // Remove "X-Attach: "
-
-                    // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
-                    scriptOutputstream << "wget -nv http://" << sInyokaUrl << "/_image?target=" << sListMetadata[j].toLower() << endl;
-                    sTmp = sListMetadata[j].remove(sArticlename + "/", Qt::CaseInsensitive);
-                    scriptOutputstream << "mv _image?target=" << sArticlename.toLower() << "%2F" << sTmp << " " << sTmp << endl;
-                }
-                scriptOutputstream << "sleep 2\n"
-                                      "echo \"Finished image download.\"" << endl;
-
-                // Make script executable
-                QString sCommand = "chmod +x " + StylesAndImagesDir.absolutePath() + "/" + sScriptName;
-                std::system(sCommand.toStdString().c_str());
-
-                tmpScriptfile.close();
-
-                // Start download script
-                try
-                {
-                    QString sTmpFilePath = StylesAndImagesDir.absolutePath() + "/" + sScriptName;
-                    myImageDownloadProgress = new CProgressDialog(sTmpFilePath, this, StylesAndImagesDir.absolutePath());
-                }
-                catch (std::bad_alloc& ba)
-                {
-                  std::cerr << "ERROR: myDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-                  return;
-                }
-                myImageDownloadProgress->open();
+            // No write permission
+            if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
+                QMessageBox::warning(this, sAppName, trUtf8("Es konnte keine temporäre Download-Datei erstellt werden!"));
+                return;
             }
+
+            // Stream for output in file
+            QTextStream scriptOutputstream(&tmpScriptfile);
+            scriptOutputstream << "#!/bin/bash\n"
+                                  "# Temporary script for downloading images from an article\n"
+                                  "#\n\necho \"Downloading images...\"\n"
+                                  "cd " << StylesAndImagesDir.absolutePath() << endl;
+
+            // Write wget download lines
+            QString sTmp("");
+            for (int j = 0; j < sListMetadata.size(); j++) {
+                // Trim image infos lines
+                sListMetadata[j].remove(0, 10);  // Remove "X-Attach: "
+
+                // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
+                sTmp = sListMetadata[j];
+                sTmp = sTmp.remove(sArticlename + "/", Qt::CaseInsensitive);
+                scriptOutputstream << "wget -nv http://" << sInyokaUrl << "/_image?target=" << sListMetadata[j].toLower() << " -O " << sTmp << endl;
+            }
+            scriptOutputstream << "sleep 2\n"
+                                  "echo \"Finished image download.\"\n" << endl;
+
+            tmpScriptfile.close();
+
+            // Make script executable
+            QString sCommand = "chmod +x " + StylesAndImagesDir.absolutePath() + "/" + sScriptName;
+            std::system(sCommand.toStdString().c_str());
+
+            // Start download script
+            try
+            {
+                QString sTmpFilePath = StylesAndImagesDir.absolutePath() + "/" + sScriptName;
+                myImageDownloadProgress = new CProgressDialog(sTmpFilePath, this, StylesAndImagesDir.absolutePath());
+                }
+            catch (std::bad_alloc& ba)
+            {
+                std::cerr << "ERROR: myImageDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
+                QMessageBox::critical(this, sAppName, trUtf8("Fehler bei der Speicherallokierung: ImageDownloadProgress"));
+                exit (-1);
+            }
+
+            myImageDownloadProgress->open();
         }
     }
+
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1299,7 +1329,7 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
 
     statusBar()->showMessage(trUtf8("Öffne Vorschau"));
 
-    if (ineditorpreview == false){
+    if (bPreviewInEditor == false){
         // Open html-file in system web browser
         QDesktopServices::openUrl(QUrl::fromLocalFile(filename));
     }
@@ -1422,7 +1452,7 @@ void CInyokaEdit::about()
 {
     QMessageBox::about(this, trUtf8("Über %1").arg(sAppName),
                        trUtf8("<b>%1</b> - Editor für das uu.de Wiki<br />"
-                              "Version: 0.0.3~ppa2<br /><br />"
+                              "Version: 0.0.4<br /><br />"
                               "&copy; 2011, die Autoren von %2<br />"
                               "Lizenz: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
                               "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sAppName));

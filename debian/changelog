@@ -1,3 +1,11 @@
+inyokaedit (0.0.4~ppa1) natty; urgency=low
+
+  * Added option to download images of articles (Closes: #847258)
+
+  * Minor changes (exception handling, using wget for metadata download)
+
+ -- Thorsten Roth <elthoro@gmx.de>  Wed, 19 Oct 2011 19:47:23 +0200
+
 inyokaedit (0.0.3~ppa2) natty; urgency=low
 
   * Bug fix: Preview was stored in wrong folder /home/user/Documents, fixed to /home/user/.InyokaEdit

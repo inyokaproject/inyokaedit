@@ -112,9 +112,6 @@ private:
     void readSettings();
     void writeSettings();
 
-    bool codecompletion; // Code completion ist active inactive
-    bool ineditorpreview;
-
     bool maybeSave();
 
     // Load / save file
@@ -143,9 +140,13 @@ private:
     FindReplaceDialog *m_findReplaceDialog;
 
     const QString sAppName;
-    QString sCurFile;  // Current file
-    QString sInyokaUrl;
+    QString sCurFile;      // Current file
+
+    bool bCodeCompletion;  // Enable / disable code completion
+    bool bPreviewInEditor; // Enable / disable preview in edior
+    QString sInyokaUrl;    // Url to inyoka
     QDir StylesAndImagesDir;
+    bool bAutomaticImageDownload;  // Enable / disable download of article images
 
     // Menus and toolbars
     QMenu *fileMenu;
