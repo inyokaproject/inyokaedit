@@ -1,7 +1,6 @@
  HEADERS     = CInyokaEdit.h \
                CHighlighter.h \
                CParser.h \
-               CDownloadArticle.h \
                CTextEditor.h \
                CInsertSyntaxElement.h \
                qtfindreplacedialog/findreplaceform.h \
@@ -14,7 +13,6 @@
                CInyokaEdit.cpp \
                CHighlighter.cpp \
                CParser.cpp \
-               CDownloadArticle.cpp \
                CTextEditor.cpp \
                CInsertSyntaxElement.cpp \
                qtfindreplacedialog/findreplaceform.cpp \

@@ -703,10 +703,10 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
             sListLink = sTmpLink.split(":");
 
             if (sListLink[1] != ""){
-                sMyDoc.replace(myindex, iLength, "<a href=\"http://" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[1] + "</a>");
+                sMyDoc.replace(myindex, iLength, "<a href=\"" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[1] + "</a>");
             }
             else {
-                sMyDoc.replace(myindex, iLength, "<a href=\"http://" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[0] + "</a>");
+                sMyDoc.replace(myindex, iLength, "<a href=\"" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[0] + "</a>");
             }
         }
 
@@ -715,7 +715,7 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
             sTmpLink.remove("user:");
             sListLink.clear();
             sListLink = sTmpLink.split(":");
-            QString sTmpUrl = "http://" + sWikiUrl;
+            QString sTmpUrl = sWikiUrl;
             sTmpUrl.remove("wiki.");
 
             if (sListLink[1] != ""){
@@ -805,7 +805,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         }
 
         // One editor
-        QString sTmpUrl = "http://" + sWikiUrl;
+        QString sTmpUrl = sWikiUrl;
         sTmpUrl.remove("wiki.");
         if (sListElements.size() == 3){
             QString sLinkUser1 = "<a href=\"" + sTmpUrl + "/user/" + sListElements[2] + "/ \" class=\"crosslink user\">" + sListElements[2] + "</a>";
@@ -860,18 +860,18 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 for (int i = 1; i < sListElements.size(); i++){
                     sOutput += "<li>\n"
                                "<p>\n";
-                    if (sListElements[i].toLower() == "oneiric")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
+                    if (sListElements[i].toLower() == "precise")
+                        sOutput += "<a href=\"" + sWikiUrl + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
+                    else if (sListElements[i].toLower() == "oneiric")
+                        sOutput += "<a href=\"" + sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
                     else if (sListElements[i].toLower() == "natty")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
+                        sOutput += "<a href=\"" + sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
                     else if (sListElements[i].toLower() == "maverick")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
+                        sOutput += "<a href=\"" + sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
                     else if (sListElements[i].toLower() == "lucid")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
-                    else if (sListElements[i].toLower() == "karmic")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Karmic_Koala\" class=\"internal\"> Ubuntu Karmic Koala 9.10 </a>\n";
+                        sOutput += "<a href=\"" + sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
                     else if (sListElements[i].toLower() == "hardy")
-                        sOutput += "<a href=\"http://" + sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
+                        sOutput += "<a href=\"" + sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
                     else
                         sOutput +=  "Unknown Ubuntu Version\n";
 
@@ -1050,7 +1050,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         sOutput = "<div class=\"box warning\">\n";
         sOutput += "<h3 class=\"box warning\">" + trUtf8("Achtung!") + "</h3>\n";
         sOutput += "<div class=\"contents\">\n";
-        QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
+        QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
         sOutput += "<p>" + trUtf8("Diese Seite wird aktuell überarbeitet. Bitte hier keine Änderungen mehr vornehmen, sondern in %1!").arg(sTmpLink) + "</p>\n";
         sOutput += "</div>\n"
                    "</div>\n";
@@ -1073,17 +1073,17 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sListElements[i].replace(" ", "_");
             }
 
-            QString sTmpUrl = "http://" + sWikiUrl;
+            QString sTmpUrl = sWikiUrl;
             sTmpUrl.remove("wiki.");
             // Generate output
             sOutput += "<ul>";
             sOutput += "<li><p>" + trUtf8("geplante Fertigstellung:") + " " + sListElements[1] + "</p></li>\n";
-            QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
+            QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
             sOutput += "<li><p>" + trUtf8("derzeit gültiger Artikel:") + " " + sTmpLink + "</p></li>\n";
             QString sTmpLink2 = " <a href=\"" + sTmpUrl + "/user/" + sListElements[3] + "\" class=\"crosslink user\"> " + sListElements[3] + " </a>";
             sOutput += "<li><p>" + trUtf8("Bearbeiter:") + sTmpLink2 + "</p></li>\n";
             sOutput += "</ul>\n";
-            QString sTmpLink3 = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
             sOutput += "<p>" + trUtf8("Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.").arg(sTmpLink3) + "</p>\n";
         }
 
@@ -1104,15 +1104,15 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
             // Packet
             if (sListElements[1] == trUtf8("Paket")){
-                sOutput += "<p><a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput += "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             // Source
             else if (sListElements[1] == trUtf8("Quelle")){
-                sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             //Software
             else if (sListElements[1] == trUtf8("Software")){
-                sOutput += "<p><a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
+                sOutput += "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
             }
 
             // Remark available
@@ -1148,7 +1148,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             sOutput += "<div class=\"box warning\">\n";
             sOutput += "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n";
             sOutput += "<div class=\"contents\">\n";
-            sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n<hr />";
+            sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n<hr />";
             QString sTmpLink = "<img src=\"img/interwiki/ppa.png\" class=\"image-default\" alt=\"PPA\" /> <a href=\"https://launchpad.net/~" + sListElements[1] + "/+archive/" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("PPA Beschreibung") + "</a>";
             QString sTmpLink2 = "<a href=\"https://launchpad.net/~" + sListElements[1] + "\" class=\"interwiki interwiki-lpuser\">" + sListElements[1] + "</a>";
             sOutput += "<p>" + trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
@@ -1167,7 +1167,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sListElements[1].remove("key");
                 sListElements[1].remove(" ");
 
-                QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man den Signierungsschlüssel mit folgendem Befehl importieren:").arg(sTmpLink);
                 sOutput += "</p>\n"
                            "<div class=\"bash\">\n"
@@ -1178,9 +1178,9 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             }
             // Url
             else{
-                QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 QString sTmpLink2 = "<a href=\"" + sListElements[1] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("Signierungsschlüssel herunterladen") + "</a>";
-                QString sTmpLink3 = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
+                QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man entweder den %2 und in der %3 oder folgenden Befehl ausführen:").arg(sTmpLink).arg(sTmpLink2).arg(sTmpLink3) + "</p>\n";
                 sOutput += "<div class=\"bash\">\n"
                            "<div class=\"contents\">\n"
@@ -1198,13 +1198,13 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         if (sListElements.size() >= 3){
 
             // Generate output
-            QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
-            QString sTmpLink2 = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
-            sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man die folgenden %2:") + "</p>\n";
+            QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink2 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
+            sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man die folgenden %2:").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
             sOutput += "<div class=\"box warning\">\n"
                        "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n"
                        "<div class=\"contents\">\n";
-            QString sTmpLink3 = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
             sOutput += "<p>" + trUtf8("Zusätzliche %3 können das System gefährden.").arg(sTmpLink3) + "</p>\n"
                        "</div>\n"
                        "</div>\n"
@@ -1240,7 +1240,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             if (!(sListElements[2].startsWith("http")) && sListElements[2] != "dl"){
                 // LAUNCHPAD
                 if (sListElements[1] == "launchpad"){
-                    sOutput = "<p>" + trUtf8("Beim <a href=\"http://%1/Launchpad\" class=\"internal\">Launchpad</a>-Projekt "
+                    sOutput = "<p>" + trUtf8("Beim <a href=\"%1/Launchpad\" class=\"internal\">Launchpad</a>-Projekt "
                                      "<a href=\"https://launchpad.net/%2\" class=\"interwiki interwiki-launchpad\">%3</a> "
                                      "werden <a href=\"https://launchpad.net/%4/+download\" class=\"interwiki interwiki-launchpad\">DEB-Pakete</a> "
                                      "angeboten. ")
@@ -1305,14 +1305,14 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sOutput += trUtf8("Die Pakete können für %1 heruntergeladen werden. ").arg(sUbuntuVersions);
             }
         }
-        QString sTmpLink = "<a href=\"http://" + sWikiUrl + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
+        QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
         sOutput += trUtf8("Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.").arg(sTmpLink) + "</p>\n";
 
         // Warning box
         sOutput += "<div class=\"box warning\">\n"
                    "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n"
                    "<div class=\"contents\"\n"
-                   "<p><a href=\"http://" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden.") + "</p>\n"
+                   "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden.") + "</p>\n"
                    "</div>\n</div>\n";
 
     }
@@ -1471,7 +1471,7 @@ QString CParser::generateTags(QTextBlock actParagraph){
         // Remove spaces and generate output
         for (int i = 0; i < sListElements.size(); i++){
             sListElements[i].remove(" ");
-            sOutput += " <a href=\"http://" + sWikiUrl + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
+            sOutput += " <a href=\"" + sWikiUrl + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
             if (i < sListElements.size()-1)
                 sOutput += ",";
         }

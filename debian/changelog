@@ -1,3 +1,15 @@
+inyokaedit (0.0.5~ppa1) natty; urgency=low
+
+  * Changed save folder of settings file
+
+  * File dialogs open last used folder
+
+  * Replaced CDownloadArticle with simple wget call
+
+  * Bigger application icon
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Oct 2011 20:37:44 +0200
+
 inyokaedit (0.0.4~ppa1) natty; urgency=low
 
   * Added option to download images of articles (Closes: #847258)

@@ -33,7 +33,6 @@
 
 #include "CHighlighter.h"
 #include "CParser.h"
-#include "CDownloadArticle.h"
 #include "CTextEditor.h"
 #include "CInsertSyntaxElement.h"
 #include "CProgressDialog.h"
@@ -91,7 +90,7 @@ private slots:
     void insertDropDownTextmacro(const int iSelection);
 
     // Preview / Download toolbar
-    void previewInyokaPage();
+    void previewInyokaPage(const int iIndex = 999);
     void downloadArticle();
     void downloadImages(const QString &sArticlename);
 
@@ -142,10 +141,12 @@ private:
     const QString sAppName;
     QString sCurFile;      // Current file
 
+    QSettings *mySettings;
     bool bCodeCompletion;  // Enable / disable code completion
     bool bPreviewInEditor; // Enable / disable preview in edior
     QString sInyokaUrl;    // Url to inyoka
     QDir StylesAndImagesDir;
+    QDir LastOpenedDir;
     bool bAutomaticImageDownload;  // Enable / disable download of article images
 
     // Menus and toolbars

@@ -9,7 +9,6 @@
         <file>images/edit-redo.png</file>
         <file>images/edit-undo.png</file>
         <file>images/preview.png</file>
-        <file>images/uu-text-editor.png</file>
         <file>images/code.png</file>
         <file>images/go-next.png</file>
         <file>images/format-text-italic.png</file>
@@ -59,5 +58,6 @@
         <file>images/edit-find.png</file>
         <file>images/go-down.png</file>
         <file>images/go-up.png</file>
+        <file>images/inyokaedit_64x64.png</file>
     </qresource>
 </RCC>

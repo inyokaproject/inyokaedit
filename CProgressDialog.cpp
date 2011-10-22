@@ -30,7 +30,7 @@
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog(const QString &sScriptname, QWidget *parent, QString sDownloadFolder) :
+CProgressDialog::CProgressDialog(const QString &sScriptname, const QString &sAppname, QWidget *parent, QString sDownloadFolder) :
     QDialog(parent),
     ui(new Ui::CProgressDialog)
 {
@@ -38,7 +38,7 @@ CProgressDialog::CProgressDialog(const QString &sScriptname, QWidget *parent, QS
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     if (sDownloadFolder == ""){
-        sDownloadFolder = QDir::homePath() + "/.InyokaEdit";
+        sDownloadFolder = QDir::homePath() + "/." + sAppname;
     }
 
     try
