@@ -24,10 +24,10 @@
 * Purpose:    Main application, gui definition, editor functions
 ***************************************************************************/
 
+#define sVERSION "0.0.5"
+
 #include <QtGui>
 #include <QtWebKit/QWebView>
-
-#include <cstdlib>  // system()
 
 #include "CInyokaEdit.h"
 
@@ -155,7 +155,11 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
         QString tmpstr = argv[1];
 
         // Download inyoka styles
-        if (tmpstr == "--dlstyles"){
+        if (tmpstr == "--version"){
+            std::cout << argv[0] << "\t Version: " << sVERSION << std::endl;
+            exit(0);
+        }
+        else if (tmpstr == "--dlstyles"){
             DownloadStyles(StylesAndImagesDir);
         }
         else {
@@ -1212,10 +1216,18 @@ void CInyokaEdit::downloadArticle()
 
         if (!procDownloadRawtext.waitForStarted()) {
             QMessageBox::critical(this, sAppName, trUtf8("Kann Download des Rohformats des Artikels nicht starten."));
+            procDownloadRawtext.kill();
+            #ifndef QT_NO_CURSOR
+                QApplication::restoreOverrideCursor();
+            #endif
             return;
         }
         if (!procDownloadRawtext.waitForFinished()) {
             QMessageBox::critical(this, sAppName, trUtf8("Fehler beim Download des Rohtexts des Artikels."));
+            procDownloadRawtext.kill();
+            #ifndef QT_NO_CURSOR
+                QApplication::restoreOverrideCursor();
+            #endif
             return;
         }
 
@@ -1259,10 +1271,12 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
     if (!procDownloadMetadata.waitForStarted()) {
         QMessageBox::critical(this, sAppName, trUtf8("Kann Download der Metadaten nicht starten."));
+        procDownloadMetadata.kill();
         return;
     }
     if (!procDownloadMetadata.waitForFinished()) {
         QMessageBox::critical(this, sAppName, trUtf8("Fehler beim Download der Metadaten."));
+        procDownloadMetadata.kill();
         return;
     }
 
@@ -1332,8 +1346,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
             tmpScriptfile.close();
 
             // Make script executable
-            QString sCommand = "chmod +x " + StylesAndImagesDir.absolutePath() + "/" + sScriptName;
-            std::system(sCommand.toStdString().c_str());
+            tmpScriptfile.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner | QFile::ReadGroup | QFile::ExeGroup | QFile::ReadOther | QFile::ExeOther);
 
             // Start download script
             try
@@ -1506,10 +1519,10 @@ void CInyokaEdit::about()
 {
     QMessageBox::about(this, trUtf8("Über %1").arg(sAppName),
                        trUtf8("<b>%1</b> - Editor für das uu.de Wiki<br />"
-                              "Version: 0.0.5<br /><br />"
-                              "&copy; 2011, die Autoren von %2<br />"
+                              "Version: %2<br /><br />"
+                              "&copy; 2011, die Autoren von %3<br />"
                               "Lizenz: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
-                              "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sAppName));
+                              "Die Anwendung verwendet Icons aus dem <a href=\"http://tango.freedesktop.org\">Tango-Projekt</a>.").arg(sAppName).arg(sVERSION).arg(sAppName));
 }
 
 void CInyokaEdit::documentWasModified()
