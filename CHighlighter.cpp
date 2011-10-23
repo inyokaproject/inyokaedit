@@ -57,14 +57,15 @@ CHighlighter::CHighlighter(QTextDocument *parent)
     highlightingRules.append(myrule);
 
     // Define interwiki link keywords
-    interwikiLinksPatterns << "\\bapt\\b" << "\\baskubuntu\\b" << "\\bbehind\\b" << "\\bbug\\b" << "\\bcalendar\\b"
-            << "\\bcanonical\\b" << "\\bdebian\\b" << "\\bdebian_de\\b" << "\\bean\\b" << "\\bedubuntu\\b" << "\\bfb\\b"
-            << "\\bforum\\b" << "\\bfreshmeat\\b" << "\\bgetdeb\\b" << "\\bgoogle\\b" << "\\bgooglecode\\b" << "\\bholarse\\b"
-            << "\\bidentica\\b" << "\\bikhaya\\b" << "\\bisbn\\b" << "\\bkubuntu\\b" << "\\bkubuntu-de\\b" << "\\blaunchpad\\b"
-            << "\\blinuxgaming\\b" << "\\blpuser\\b" << "\\bosm\\b" << "\\bpackages\\b" << "\\bpaste\\b" << "\\bplanet\\b"
-            << "\\bplaydeb\\b" << "\\bpost\\b" << "\\bsourceforge\\b" << "\\bticket\\b" << "\\btopic\\b" << "\\btwitter\\b"
-            << "\\bubuntu\\b" << "\\bubuntustudio\\b" << "\\bubuntu_doc\\b" << "\\bubuntu_fr\\b" << "\\bubuntuone\\b" << "\\buser\\b"
-            << "\\bwikibooks\\b" << "\\bwikimedia\\b" << "\\bwikipedia\\b" << "\\bwikipedia_en\\b" << "\\bxubuntu\\b" << "\\byoutube\\b";
+    interwikiLinksPatterns << "\\bapt\\b" << "\\baskubuntu\\b" << "\\bbehind\\b" << "\\bbug\\b" << "\\bcalendar\\b" << "\\bcanonical\\b"
+            << "\\bcanonicalblog\\b" << "\\bdebian\\b" << "\\bdebian_de\\b" << "\\bdropbox\\b" << "\\bean\\b" << "\\bedubuntu\\b"
+            << "\\bfb\\b" << "\\bforum\\b" << "\\bfreshmeat\\b" << "\\bgetdeb\\b" << "\\bgoogle\\b" << "\\bgplus\\b" << "\\bgooglecode\\b"
+            << "\\bholarse\\b" << "\\biawm\\b" << "\\bidentica\\b" << "\\bikhaya\\b" << "\\bisbn\\b" << "\\bkubuntu\\b" << "\\bkubuntu-de\\b"
+            << "\\bkubuntu_doc\\b" << "\\blaunchpad\\b" << "\\blastfm\\b" << "\\bliflg\\b" << "\\blinuxgaming\\b" << "\\blpuser\\b"
+            << "\\blubuntu\\b" << "\\bosm\\b" << "\\bpackages\\b" << "\\bpaste\\b" << "\\bplanet\\b" << "\\bplaydeb\\b" << "\\bpost\\b"
+            << "\\bsourceforge\\b" << "\\bticket\\b" << "\\btopic\\b" << "\\btwitter\\b" << "\\bubuntu\\b" << "\\bubuntustudio\\b"
+            << "\\bubuntu_doc\\b" << "\\bubuntu_fr\\b" << "\\bubuntuone\\b" << "\\buser\\b" << "\\bwikibooks\\b" << "\\bwikimedia\\b"
+            << "\\bwikipedia\\b" << "\\bwikipedia_en\\b" << "\\bxubuntu\\b" << "\\byoutube\\b";
 
     // Format Interwiki Links
     interwikiLinksFormat.setForeground(Qt::blue);

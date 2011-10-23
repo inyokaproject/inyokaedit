@@ -59,5 +59,14 @@
         <file>images/go-down.png</file>
         <file>images/go-up.png</file>
         <file>images/inyokaedit_64x64.png</file>
+        <file>images/question.png</file>
+        <file>images/interwiki/canonicalblog.png</file>
+        <file>images/interwiki/dropbox.png</file>
+        <file>images/interwiki/gplus.png</file>
+        <file>images/interwiki/iawm.png</file>
+        <file>images/interwiki/kubuntu_doc.png</file>
+        <file>images/interwiki/lastfm.png</file>
+        <file>images/interwiki/liflg.jpg</file>
+        <file>images/interwiki/lubuntu.png</file>
     </qresource>
 </RCC>

@@ -10,7 +10,7 @@ Homepage: https://launchpad.net/inyokaedit
 
 Package: inyokaedit
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Editor für das uu.de Wiki
- Ein Editor mit Vorschau-Funktion für das Wiki
- von ubuntuusers.de.
+Depends: ${shlibs:Depends}, ${misc:Depends}, wget
+Description: Editor fuer Inyoka-Wikis
+ Ein Editor mit Vorschau-Funktion fuer Wikis,
+ die auf Inyoka basieren.

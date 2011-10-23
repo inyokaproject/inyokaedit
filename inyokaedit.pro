@@ -23,6 +23,6 @@
  RESOURCES   = inyokaeditresources.qrc
  QT         += webkit
 
-FORMS       += qtfindreplacedialog/findreplaceform.ui \
+ FORMS      += qtfindreplacedialog/findreplaceform.ui \
                qtfindreplacedialog/findreplacedialog.ui \
                CProgressDialog.ui

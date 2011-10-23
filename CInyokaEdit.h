@@ -77,6 +77,7 @@ private slots:
     void open();
     bool save();
     bool saveAs();
+    void reportBug();
     void about();
 
     void findDialog();
@@ -188,6 +189,7 @@ private:
     QAction *findNextAct;
     QAction *findPreviousAct;
     QAction *aboutAct;
+    QAction *reportBugAct;
 
     // Inyoka editor toolbar
     QAction *boldAct;
@@ -255,6 +257,7 @@ private:
 
     // Canonical, Ubuntu, Derivate
     QAction *iWikiCanonical;
+    QAction *iWikiCanonicalblog;
     QAction *iWikiPackages;
     QAction *iWikiApt;
     QAction *iWikiUbuntu;
@@ -264,7 +267,9 @@ private:
     QAction *iWikiUbuntuone;
     QAction *iWikiKubuntu;
     QAction *iWikiKubuntuDe;
+    QAction *iWikiKubuntuDoc;
     QAction *iWikiXubuntu;
+    QAction *iWikiLubuntu;
     QAction *iWikiUbuntustudio;
     QAction *iWikiEdubuntu;
     QAction *iWikiDebian;
@@ -287,12 +292,17 @@ private:
     QAction *iWikiSourceforge;
 
     // Misc
+    QAction *iWikiDropbox;
     QAction *iWikiEan;
     QAction *iWikiFb;
     QAction *iWikiGoogle;
+    QAction *iWikiGplus;
     QAction *iWikiHolarse;
     QAction *iWikiIdentica;
+    QAction *iWikiInternetWayback;
     QAction *iWikiIsbn;
+    QAction *iWikiLastfm;
+    QAction *iWikiLiflg;
     QAction *iWikiLinuxgaming;
     QAction *iWikiOsm;
     QAction *iWikiTwitter;

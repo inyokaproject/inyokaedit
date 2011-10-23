@@ -390,6 +390,12 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
         else
             return "[canonical:" + sSelectedText + ":]";
     }
+    else if (sElement == "iWikiCanonicalblog"){
+        if (sSelectedText == "")
+            return "[canonicalblog:Seitenname:Text]";
+        else
+            return "[canonicalblog:" + sSelectedText + ":]";
+    }
     else if (sElement == "iWikiPackages"){
         if (sSelectedText == "")
             return "[packages:Paketname:Text]";
@@ -438,11 +444,23 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
         else
             return "[kubuntu:" + sSelectedText + ":]";
     }
+    else if (sElement == "iWikiKubuntuDoc"){
+        if (sSelectedText == "")
+            return "[kubuntu_doc:Wikiseite:Text]";
+        else
+            return "[kubuntu_doc:" + sSelectedText + ":]";
+    }
     else if (sElement == "iWikiKubuntuDe"){
         if (sSelectedText == "")
             return "[kubuntu-de:Wikiseite:Text]";
         else
             return "[kubuntu-de:" + sSelectedText + ":]";
+    }
+    else if (sElement == "iWikiLubuntu"){
+        if (sSelectedText == "")
+            return "[lubuntu:Seite:Text]";
+        else
+            return "[lubuntu:" + sSelectedText + ":]";
     }
     else if (sElement == "iWikiXubuntu"){
         if (sSelectedText == "")
@@ -552,6 +570,12 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
     }
 
     // Misc
+    else if (sElement == "iWikiDropbox"){
+        if (sSelectedText == "")
+            return "[dropbox:Pfad:]";
+        else
+            return "[dropbox:" + sSelectedText + ":]";
+    }
     else if (sElement == "iWikiEan"){
         if (sSelectedText == "")
             return "[ean:Nummer:]";
@@ -570,6 +594,12 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
         else
             return "[google:" + sSelectedText + ":]";
     }
+    else if (sElement == "iWikiGplus"){
+        if (sSelectedText == "")
+            return "[gplus:Seite:Text]";
+        else
+            return "[gplus:" + sSelectedText + ":]";
+    }
     else if (sElement == "iWikiHolarse"){
         if (sSelectedText == "")
             return "[holarse:Seite:Text]";
@@ -582,11 +612,29 @@ std::string CInsertSyntaxElement::GetInterwikiLink(const std::string sElement, c
         else
             return "[identica:" + sSelectedText + ":]";
     }
+    else if (sElement == "iWikiInternetWayback"){
+        if (sSelectedText == "")
+            return "[iawm:Website:Text]";
+        else
+            return "[iawm:" + sSelectedText + ":]";
+    }
     else if (sElement == "iWikiIsbn"){
         if (sSelectedText == "")
             return "[isbn:Nummer:Text]";
         else
             return "[isbn:" + sSelectedText + ":]";
+    }
+    else if (sElement == "iWikiLastfm"){
+        if (sSelectedText == "")
+            return "[lastfm:Gruppe:Text]";
+        else
+            return "[lastfm:" + sSelectedText + ":]";
+    }
+    else if (sElement == "iWikiLiflg"){
+        if (sSelectedText == "")
+            return "[liflg:Seite:Text]";
+        else
+            return "[liflg:" + sSelectedText + ":]";
     }
     else if (sElement == "iWikiLinuxgaming"){
         if (sSelectedText == "")

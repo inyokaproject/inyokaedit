@@ -421,9 +421,14 @@ void CInyokaEdit::createActions()
     connect(findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
 
     // Open about windwow
-    aboutAct = new QAction(trUtf8("&Über"), this);
+    aboutAct = new QAction(QIcon(":images/question.png"), trUtf8("&Über") + " " + sAppName, this);
     aboutAct->setStatusTip(trUtf8("Zeigt die Infobox dieser Anwendung"));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+
+    // Report a bug using apport
+    reportBugAct = new QAction(QIcon(":images/interwiki/bug.png"), trUtf8("Fehler melden"), this);
+    reportBugAct->setStatusTip(trUtf8("Fehler melden - Hierzu wird ein Launchpad-Account benötigt!"));
+    connect(reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
 
     // Set / initialize / connect cut / copy / redo / undo
     cutAct->setEnabled(false);
@@ -692,6 +697,9 @@ void CInyokaEdit::createActions()
     iWikiCanonical = new QAction(QIcon(":/images/interwiki/canonical.png"), trUtf8("Canonical"), this);
     mySigMapInterWikiLinks->setMapping(iWikiCanonical, "iWikiCanonical");
     connect(iWikiCanonical, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiCanonicalblog = new QAction(QIcon(":/images/interwiki/canonicalblog.png"), trUtf8("Canonical Blog"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiCanonicalblog, "iWikiCanonicalblog");
+    connect(iWikiCanonicalblog, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiPackages = new QAction(QIcon(":/images/interwiki/packages.png"), trUtf8("Packages"), this);
     mySigMapInterWikiLinks->setMapping(iWikiPackages, "iWikiPackages");
     connect(iWikiPackages, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
@@ -719,9 +727,15 @@ void CInyokaEdit::createActions()
     iWikiKubuntuDe = new QAction(QIcon(":/images/interwiki/kubuntu-de.png"), trUtf8("Dt. Kubuntuwiki"), this);
     mySigMapInterWikiLinks->setMapping(iWikiKubuntuDe, "iWikiKubuntuDe");
     connect(iWikiKubuntuDe, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiKubuntuDoc = new QAction(QIcon(":/images/interwiki/kubuntu_doc.png"), trUtf8("Kubuntuwiki"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiKubuntuDoc, "iWikiKubuntuDoc");
+    connect(iWikiKubuntuDoc, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiXubuntu = new QAction(QIcon(":/images/interwiki/xubuntu.png"), trUtf8("Xubuntu"), this);
     mySigMapInterWikiLinks->setMapping(iWikiXubuntu, "iWikiXubuntu");
     connect(iWikiXubuntu, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiLubuntu = new QAction(QIcon(":/images/interwiki/lubuntu.png"), trUtf8("Lubuntu"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiLubuntu, "iWikiLubuntu");
+    connect(iWikiLubuntu, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiUbuntustudio = new QAction(QIcon(":/images/interwiki/ubuntustudio.png"), trUtf8("Ubuntu Studio"), this);
     mySigMapInterWikiLinks->setMapping(iWikiUbuntustudio, "iWikiUbuntustudio");
     connect(iWikiUbuntustudio, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
@@ -776,6 +790,9 @@ void CInyokaEdit::createActions()
     connect(iWikiSourceforge, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
 
     // Misc
+    iWikiDropbox = new QAction(QIcon(":/images/interwiki/dropbox.png"), trUtf8("Dropbox"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiDropbox, "iWikiDropbox");
+    connect(iWikiDropbox, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiEan = new QAction(QIcon(":/images/interwiki/ean.png"), trUtf8("EAN"), this);
     mySigMapInterWikiLinks->setMapping(iWikiEan, "iWikiEan");
     connect(iWikiEan, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
@@ -785,15 +802,27 @@ void CInyokaEdit::createActions()
     iWikiGoogle = new QAction(trUtf8("Google"), this);
     mySigMapInterWikiLinks->setMapping(iWikiGoogle, "iWikiGoogle");
     connect(iWikiGoogle, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiGplus = new QAction(QIcon(":/images/interwiki/gplus.png"), trUtf8("Google+"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiGplus, "iWikiGplus");
+    connect(iWikiGplus, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiHolarse = new QAction(QIcon(":/images/interwiki/holarse.png"), trUtf8("Holarse"), this);
     mySigMapInterWikiLinks->setMapping(iWikiHolarse, "iWikiHolarse");
     connect(iWikiHolarse, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiIdentica = new QAction(QIcon(":/images/interwiki/identica.png"), trUtf8("Identica"), this);
     mySigMapInterWikiLinks->setMapping(iWikiIdentica, "iWikiIdentica");
     connect(iWikiIdentica, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiInternetWayback = new QAction(QIcon(":/images/interwiki/iawm.png"), trUtf8("Internet Wayback Machine"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiInternetWayback, "iWikiInternetWayback");
+    connect(iWikiInternetWayback, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiIsbn = new QAction(QIcon(":/images/interwiki/isbn.png"), trUtf8("ISBN"), this);
     mySigMapInterWikiLinks->setMapping(iWikiIsbn, "iWikiIsbn");
     connect(iWikiIsbn, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiLastfm = new QAction(QIcon(":/images/interwiki/lastfm.png"), trUtf8("Last.fm"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiLastfm, "iWikiLastfm");
+    connect(iWikiLastfm, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
+    iWikiLiflg = new QAction(QIcon(":/images/interwiki/liflg.jpg"), trUtf8("Linux Installers"), this);
+    mySigMapInterWikiLinks->setMapping(iWikiLiflg, "iWikiLiflg");
+    connect(iWikiLiflg, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
     iWikiLinuxgaming = new QAction(QIcon(":/images/interwiki/linuxgaming.png"), trUtf8("Linux Gaming"), this);
     mySigMapInterWikiLinks->setMapping(iWikiLinuxgaming, "iWikiLinuxgaming");
     connect(iWikiLinuxgaming, SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
@@ -882,7 +911,7 @@ void CInyokaEdit::createMenus()
     iWikiMenu = menuBar()->addMenu(trUtf8("&InterWiki-Links"));
 
     // Inyoka
-    iWikiMenuInyoka = iWikiMenu->addMenu(trUtf8("Inyoka"));
+    iWikiMenuInyoka = iWikiMenu->addMenu(QIcon(":images/interwiki/user.png"), trUtf8("Inyoka"));
     iWikiMenuInyoka->addAction(iWikiForum);
     iWikiMenuInyoka->addAction(iWikiTopic);
     iWikiMenuInyoka->addAction(iWikiPost);
@@ -895,8 +924,9 @@ void CInyokaEdit::createMenus()
     iWikiMenuInyoka->addAction(iWikiPlanet);
 
     // Canonical, Ubuntu, Derivate
-    iWikiMenuCanonical = iWikiMenu->addMenu(trUtf8("Canonical, Ubuntu, Derivate"));
+    iWikiMenuCanonical = iWikiMenu->addMenu(QIcon(":images/interwiki/canonical.png"), trUtf8("Canonical, Ubuntu, Derivate"));
     iWikiMenuCanonical->addAction(iWikiCanonical);
+    iWikiMenuCanonical->addAction(iWikiCanonicalblog);
     iWikiMenuCanonical->addAction(iWikiPackages);
     iWikiMenuCanonical->addAction(iWikiApt);
     iWikiMenuCanonical->addAction(iWikiUbuntu);
@@ -906,21 +936,23 @@ void CInyokaEdit::createMenus()
     iWikiMenuCanonical->addAction(iWikiUbuntuone);
     iWikiMenuCanonical->addAction(iWikiKubuntu);
     iWikiMenuCanonical->addAction(iWikiKubuntuDe);
+    iWikiMenuCanonical->addAction(iWikiKubuntuDoc);
     iWikiMenuCanonical->addAction(iWikiXubuntu);
+    iWikiMenuCanonical->addAction(iWikiLubuntu);
     iWikiMenuCanonical->addAction(iWikiUbuntustudio);
     iWikiMenuCanonical->addAction(iWikiEdubuntu);
     iWikiMenuCanonical->addAction(iWikiDebian);
     iWikiMenuCanonical->addAction(iWikiDebian_de);
 
     // Wikimedia
-    iWikiMenuWikimedia = iWikiMenu->addMenu(trUtf8("Wikimedia"));
+    iWikiMenuWikimedia = iWikiMenu->addMenu(QIcon(":images/interwiki/wikimedia.png"), trUtf8("Wikimedia"));
     iWikiMenuWikimedia->addAction(iWikiWikipedia);
     iWikiMenuWikimedia->addAction(iWikiWikipedia_en);
     iWikiMenuWikimedia->addAction(iWikiWikibooks);
     iWikiMenuWikimedia->addAction(iWikiWikimedia);
 
     // Source & project hoster, bugtracker
-    iWikiMenuHoster = iWikiMenu->addMenu(trUtf8("Bugtracker, Projekthoster"));
+    iWikiMenuHoster = iWikiMenu->addMenu(QIcon(":images/interwiki/launchpad.png"), trUtf8("Bugtracker, Projekthoster"));
     iWikiMenuHoster->addAction(iWikiFreshmeat);
     iWikiMenuHoster->addAction(iWikiGetdeb);
     iWikiMenuHoster->addAction(iWikiGooglecode);
@@ -931,13 +963,18 @@ void CInyokaEdit::createMenus()
     iWikiMenuHoster->addAction(iWikiSourceforge);
 
     // Misc
-    iWikiMenuMisc = iWikiMenu->addMenu(trUtf8("Sonstige"));
+    iWikiMenuMisc = iWikiMenu->addMenu(QIcon(":images/interwiki/youtube.png"), trUtf8("Sonstige"));
+    iWikiMenuMisc->addAction(iWikiDropbox);
     iWikiMenuMisc->addAction(iWikiEan);
     iWikiMenuMisc->addAction(iWikiFb);
     iWikiMenuMisc->addAction(iWikiGoogle);
+    iWikiMenuMisc->addAction(iWikiGplus);
     iWikiMenuMisc->addAction(iWikiHolarse);
     iWikiMenuMisc->addAction(iWikiIdentica);
+    iWikiMenuMisc->addAction(iWikiInternetWayback);
     iWikiMenuMisc->addAction(iWikiIsbn);
+    iWikiMenuMisc->addAction(iWikiLastfm);
+    iWikiMenuMisc->addAction(iWikiLiflg);
     iWikiMenuMisc->addAction(iWikiLinuxgaming);
     iWikiMenuMisc->addAction(iWikiOsm);
     iWikiMenuMisc->addAction(iWikiTwitter);
@@ -945,6 +982,7 @@ void CInyokaEdit::createMenus()
 
     // Help menu
     helpMenu = menuBar()->addMenu(trUtf8("&Hilfe"));
+    helpMenu->addAction(reportBugAct);
     helpMenu->addAction(aboutAct);
 }
 
@@ -1139,11 +1177,9 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 
 void CInyokaEdit::downloadArticle()
 { 
-    //int iReturnValue = 0;
     QString sTmpArticle("");
     QString sSitename("");
     QByteArray tempResult;
-    //QString sNamesuffix("?action=export&format=raw");
 
     if (!maybeSave()) {
         return;
@@ -1355,6 +1391,25 @@ void CInyokaEdit::findDialog(){
 
 void CInyokaEdit::findReplaceDialog(){
     m_findReplaceDialog->show();
+}
+
+// -----------------------------------------------------------------------------------------------
+// Report a bug via Apport to Launchpad
+
+void CInyokaEdit::reportBug(){
+
+    // Start apport
+    QProcess procApport;
+    procApport.start("ubuntu-bug inyokaedit");
+
+    if (!procApport.waitForStarted()) {
+        QMessageBox::critical(this, sAppName, trUtf8("Problem beim Aufruf von Apport festgestellt."));
+        return;
+    }
+    if (!procApport.waitForFinished()) {
+        QMessageBox::critical(this, sAppName, trUtf8("Problem beim Ausführen von Apport."));
+        return;
+    }
 }
 
 

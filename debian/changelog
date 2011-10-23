@@ -8,6 +8,10 @@ inyokaedit (0.0.5~ppa1) natty; urgency=low
 
   * Bigger application icon
 
+  * Reporting bugs via apport
+
+  * Added missing interwiki links
+
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Oct 2011 20:37:44 +0200
 
 inyokaedit (0.0.4~ppa1) natty; urgency=low
