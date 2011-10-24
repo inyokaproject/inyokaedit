@@ -144,7 +144,7 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
     // Application icon
     setWindowIcon(QIcon(":/images/inyokaedit_64x64.png"));
 
-    // Download style files if preview/styles/imgages folder doesn't exist (/home/user/.InyokaEdit)
+    // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
     if (!StylesAndImagesDir.exists() || !QDir(StylesAndImagesDir.absolutePath() + "/img").exists() ||
         !QDir(StylesAndImagesDir.absolutePath() + "/styles").exists() || !QDir(StylesAndImagesDir.absolutePath() + "/Wiki").exists()){
         DownloadStyles(StylesAndImagesDir);
@@ -166,6 +166,13 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
             loadFile(argv[1]);
         }
     }
+
+    // Restore window and toolbar settings
+    // Settings have to be restored after toolbars are created!
+    mySettings->beginGroup("Window");
+    restoreGeometry(mySettings->value("Geometry").toByteArray());
+    restoreState(mySettings->value("WindowState").toByteArray());  // Restore toolbar position etc.
+    mySettings->endGroup();
 
     statusBar()->showMessage(trUtf8("Bereit"));
 }
@@ -296,11 +303,6 @@ void CInyokaEdit::setupEditor()
 // Load settings from config file
 void CInyokaEdit::readSettings()
 {
-    QPoint pos = mySettings->value("Position", QPoint(200, 200)).toPoint();
-    QSize size = mySettings->value("Size", QSize(400, 400)).toSize();
-    resize(size);
-    move(pos);
-
     bCodeCompletion = mySettings->value("CodeCompletion", true).toBool();
     emit sendCodeCompState(bCodeCompletion);
 
@@ -322,8 +324,6 @@ void CInyokaEdit::readSettings()
 // Save settings (close event)
 void CInyokaEdit::writeSettings()
 {
-    mySettings->setValue("Position", pos());
-    mySettings->setValue("Size", size());
     mySettings->setValue("CodeCompletion", bCodeCompletion);
     mySettings->setValue("PreviewInEditor", bPreviewInEditor);
     mySettings->setValue("InyokaUrl", sInyokaUrl);
@@ -332,6 +332,12 @@ void CInyokaEdit::writeSettings()
 
     m_findDialog->writeSettings(*mySettings);
     m_findReplaceDialog->writeSettings(*mySettings);
+
+    // Save toolbar position etc.
+    mySettings->beginGroup("Window");
+    mySettings->setValue("Geometry", saveGeometry());
+    mySettings->setValue("WindowState", saveState());
+    mySettings->endGroup();
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -365,7 +371,7 @@ void CInyokaEdit::createActions()
     connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
 
     // Exit application
-    exitAct = new QAction(trUtf8("B&eenden"), this);
+    exitAct = new QAction(trUtf8("Beenden"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip(trUtf8("Beendet die Anwendung"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
@@ -425,7 +431,7 @@ void CInyokaEdit::createActions()
     connect(findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
 
     // Open about windwow
-    aboutAct = new QAction(QIcon(":images/question.png"), trUtf8("&Über") + " " + sAppName, this);
+    aboutAct = new QAction(QIcon(":images/question.png"), trUtf8("Über") + " " + sAppName, this);
     aboutAct->setStatusTip(trUtf8("Zeigt die Infobox dieser Anwendung"));
     connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
@@ -998,12 +1004,14 @@ void CInyokaEdit::createToolBars()
 {
     // File tool bar
     fileToolBar = addToolBar(trUtf8("Datei"));
+    fileToolBar->setObjectName("fileToolBar");
     fileToolBar->addAction(newAct);
     fileToolBar->addAction(openAct);
     fileToolBar->addAction(saveAct);
 
     // Edit tool bar
     editToolBar = addToolBar(trUtf8("Bearbeiten"));
+    editToolBar->setObjectName("editToolBar");
     editToolBar->addAction(cutAct);
     editToolBar->addAction(copyAct);
     editToolBar->addAction(pasteAct);
@@ -1013,12 +1021,14 @@ void CInyokaEdit::createToolBars()
 
     // Preview DL bar
     previewDlBar = addToolBar(trUtf8("Vorschau / Download"));
+    previewDlBar->setObjectName("previewDlBar");
     previewDlBar->addAction(previewAct);
     previewDlBar->addAction(downloadArticleAct);
 
     // Inyoka tool bar
     addToolBarBreak(Qt::TopToolBarArea);  // second tool bar area under first one
     inyokaeditorBar = addToolBar(trUtf8("Editor"));
+    inyokaeditorBar->setObjectName("inyokaeditorBar");
     inyokaeditorBar->addAction(boldAct);
     inyokaeditorBar->addAction(italicAct);
     inyokaeditorBar->addAction(monotypeAct);
@@ -1029,6 +1039,7 @@ void CInyokaEdit::createToolBars()
 
     // Tool bar for combo boxes (samples and macros)
     comboboxBar = addToolBar(trUtf8("Vorlagen und Makros"));
+    comboboxBar->setObjectName("comboboxBar");
     comboboxBar->addWidget(headingsBox);
     // Headings combo box
     headingsBox->addItem(trUtf8("Überschrift"));
