@@ -29,6 +29,8 @@
 
 #include <QDialog>
 #include <QProcess>
+#include <QtGui/QCloseEvent>
+#include <QDir>
 
 #include "CInyokaEdit.h"
 

@@ -24,9 +24,6 @@
 * Purpose:    Shows a modal window with download progress messages
 ***************************************************************************/
 
-#include <QtGui/QCloseEvent>
-#include <QDir>
-
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 

@@ -28,9 +28,9 @@
 #define CINYOKAEDIT_H
 
 #include <QMainWindow>
-//#include <new>  // bad_alloc
 #include <iostream>
 
+#include "CSettings.h"
 #include "CHighlighter.h"
 #include "CParser.h"
 #include "CTextEditor.h"
@@ -54,6 +54,7 @@ class CDownloadArticle;
 class FindDialog;
 class FindReplaceDialog;
 class CProgressDialog;
+class CSettings;
 
 class CInyokaEdit : public QMainWindow
 {
@@ -132,6 +133,7 @@ private:
     CInsertSyntaxElement *myInsertSyntaxElement;
     CProgressDialog *myArticleDownloadProgress;
     CProgressDialog *myImageDownloadProgress;
+    CSettings *mySettings;
 
     QTabWidget *myTabwidget;
     QWebView *myWebview;
@@ -142,13 +144,7 @@ private:
     const QString sAppName;
     QString sCurFile;      // Current file
 
-    QSettings *mySettings;
-    bool bCodeCompletion;  // Enable / disable code completion
-    bool bPreviewInEditor; // Enable / disable preview in edior
-    QString sInyokaUrl;    // Url to inyoka
     QDir StylesAndImagesDir;
-    QDir LastOpenedDir;
-    bool bAutomaticImageDownload;  // Enable / disable download of article images
 
     // Menus and toolbars
     QMenu *fileMenu;
@@ -310,8 +306,6 @@ private:
 
     QSignalMapper *mySigMapInterWikiLinks;
 
-signals:
-    void sendCodeCompState(bool);
 };
 
 #endif // CINYOKAEDIT_H

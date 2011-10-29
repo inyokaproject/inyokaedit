@@ -28,6 +28,7 @@
 #define CPARSER_H
 
 #include <QWidget>
+#include <QtGui>
 #include <QDir>
 
 #include "CInyokaEdit.h"

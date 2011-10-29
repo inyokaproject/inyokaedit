@@ -24,8 +24,6 @@
 * Purpose:    Parse plain text with inyoka syntax to html code
 ***************************************************************************/
 
-#include <QtGui>
-
 #include "CParser.h"
 
 // Constructor

@@ -8,7 +8,8 @@
                qtfindreplacedialog/findreplace_global.h \
                qtfindreplacedialog/findform.h \
                qtfindreplacedialog/finddialog.h \
-               CProgressDialog.h
+               CProgressDialog.h \
+               CSettings.h
  SOURCES     = main.cpp \
                CInyokaEdit.cpp \
                CHighlighter.cpp \
@@ -19,7 +20,8 @@
                qtfindreplacedialog/findreplacedialog.cpp \
                qtfindreplacedialog/findform.cpp \
                qtfindreplacedialog/finddialog.cpp \
-               CProgressDialog.cpp
+               CProgressDialog.cpp \
+               CSettings.cpp
  RESOURCES   = inyokaeditresources.qrc
  QT         += webkit
 
