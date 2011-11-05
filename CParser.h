@@ -20,7 +20,7 @@
 ****************************************************************************/
 
 /***************************************************************************
-* File Name:  CParser.cpp
+* File Name:  CParser.h
 * Purpose:    Class definition for parser
 ***************************************************************************/
 
@@ -45,7 +45,7 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir);
+    CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl);
     // Destructor
     ~CParser();
 

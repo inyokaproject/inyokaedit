@@ -27,120 +27,16 @@
 #include "CParser.h"
 
 // Constructor
-CParser::CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir)
+CParser::CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl)
     : rawText(rawDocument), sWikiUrl(sUrlToWiki), TmpFileDir(TmpFileOutputDir)
 {
-    // Initialize possible interwiki links
-    sListInterwikiKey << "apt";
-    sListInterwikiLink << "apt:";
-    sListInterwikiKey << "askubuntu";
-    sListInterwikiLink << "http://askubuntu.com/questions/";
-    sListInterwikiKey << "behind";
-    sListInterwikiLink << "http://behind.ubuntuusers.de/";
-    sListInterwikiKey << "bug";
-    sListInterwikiLink << "https://launchpad.net/bugs/";
-    sListInterwikiKey << "calendar";
-    sListInterwikiLink << "http://ubuntuusers.de/calendar/";
-    sListInterwikiKey << "canonical";
-    sListInterwikiLink << "http://www.canonical.com/content/";
-    sListInterwikiKey << "canonicalblog";
-    sListInterwikiLink << "http://blog.canonical.com/";
-    sListInterwikiKey << "debian";
-    sListInterwikiLink << "http://wiki.debian.org/";
-    sListInterwikiKey << "debian_de";
-    sListInterwikiLink << "http://wiki.debian.org/de/";
-    sListInterwikiKey << "dropbox";
-    sListInterwikiLink << "http://dl.dropbox.com/u/";
-    sListInterwikiKey << "ean";
-    sListInterwikiLink << "http://www.google.com/search?as_q=ean&safe=off&btnG=Google-Suche#q=ean+";
-    sListInterwikiKey << "edubuntu";
-    sListInterwikiLink << "http://www.edubuntu.org/";
-    sListInterwikiKey << "fb";
-    sListInterwikiLink << "http://www.facebook.com/";
-    sListInterwikiKey << "forum";
-    sListInterwikiLink << "http://forum.ubuntuusers.de/forum/";
-    sListInterwikiKey << "freshmeat";
-    sListInterwikiLink << "http://freshmeat.net/projects/";
-    sListInterwikiKey << "getdeb";
-    sListInterwikiLink << "http://www.getdeb.net/software/";
-    sListInterwikiKey << "google";
-    sListInterwikiLink << "http://www.google.de/search?q=";
-    sListInterwikiKey << "gplus";
-    sListInterwikiLink << "https://plus.google.com/";
-    sListInterwikiKey << "googlecode";
-    sListInterwikiLink << "http://code.google.com/p/";
-    sListInterwikiKey << "holarse";
-    sListInterwikiLink << "http://www.holarse-linuxgaming.de/wiki/";
-    sListInterwikiKey << "identica";
-    sListInterwikiLink << "http://identi.ca/";
-    sListInterwikiKey << "iawm";
-    sListInterwikiLink << "http://wayback.archive.org/web/*/http://";
-    sListInterwikiKey << "ikhaya";
-    sListInterwikiLink << "http://ikhaya.ubuntuusers.de/";
-    sListInterwikiKey << "isbn";
-    sListInterwikiLink << "http://bookzilla.org/shop/action/advancedSearch?action=search&numbers=";
-    sListInterwikiKey << "kubuntu";
-    sListInterwikiLink << "http://kubuntu.org/";
-    sListInterwikiKey << "kubuntu-de";
-    sListInterwikiLink << "http://wiki.kubuntu-de.org/";
-    sListInterwikiKey << "kubuntu_doc";
-    sListInterwikiLink << "https://wiki.kubuntu.org/";
-    sListInterwikiKey << "lastfm";
-    sListInterwikiLink << "http://www.lastfm.de/group/";
-    sListInterwikiKey << "launchpad";
-    sListInterwikiLink << "https://launchpad.net/";
-    sListInterwikiKey << "liflg";
-    sListInterwikiLink << "http://liflg.org/?catid=";
-    sListInterwikiKey << "linuxgaming";
-    sListInterwikiLink << "http://wiki.linuxgaming.de/index.php/";
-    sListInterwikiKey << "lpuser";
-    sListInterwikiLink << "https://launchpad.net/~";
-    sListInterwikiKey << "lubuntu";
-    sListInterwikiLink << "http://www.lubuntu.net/";
-    sListInterwikiKey << "osm";
-    sListInterwikiLink << "http://wiki.openstreetmap.org/wiki/";
-    sListInterwikiKey << "packages";
-    sListInterwikiLink << "http://packages.ubuntu.com/search?suite=default&section=all&arch=any&searchon=names&keywords=";
-    sListInterwikiKey << "paste";
-    sListInterwikiLink << "http://paste.ubuntuusers.de/";
-    sListInterwikiKey << "planet";
-    sListInterwikiLink << "http://planet.ubuntuusers.de/#article_";
-    sListInterwikiKey << "playdeb";
-    sListInterwikiLink << "http://www.playdeb.net/software/";
-    sListInterwikiKey << "post";
-    sListInterwikiLink << "http://forum.ubuntuusers.de/post/";
-    sListInterwikiKey << "sourceforge";
-    sListInterwikiLink << "http://sourceforge.net/projects/";
-    sListInterwikiKey << "ticket";
-    sListInterwikiLink << "http://trac.inyokaproject.org/ticket/";
-    sListInterwikiKey << "topic";
-    sListInterwikiLink << "http://forum.ubuntuusers.de/topic/";
-    sListInterwikiKey << "twitter";
-    sListInterwikiLink << "http://twitter.com/";
-    sListInterwikiKey << "ubuntu";
-    sListInterwikiLink << "https://wiki.ubuntu.com/";
-    sListInterwikiKey << "ubuntustudio";
-    sListInterwikiLink << "http://ubuntustudio.org/";
-    sListInterwikiKey << "ubuntu_doc";
-    sListInterwikiLink << "https://help.ubuntu.com/";
-    sListInterwikiKey << "ubuntu_fr";
-    sListInterwikiLink << "http://doc.ubuntu-fr.org/";
-    sListInterwikiKey << "ubuntuone";
-    sListInterwikiLink << "http://ubuntuone.com/p/";
-    sListInterwikiKey << "wikibooks";
-    sListInterwikiLink << "http://de.wikibooks.org/wiki/";
-    sListInterwikiKey << "wikimedia";
-    sListInterwikiLink << "http://commons.wikimedia.org/wiki/";
-    sListInterwikiKey << "wikipedia";
-    sListInterwikiLink << "http://de.wikipedia.org/wiki/";
-    sListInterwikiKey << "wikipedia_en";
-    sListInterwikiLink << "http://en.wikipedia.org/wiki/";
-    sListInterwikiKey << "xubuntu";
-    sListInterwikiLink << "http://www.xubuntu.org/";
-    sListInterwikiKey << "youtube";
-    sListInterwikiLink << "http://www.youtube.com/watch?v=";
-
-    // ----------------------------------------------------------------------------------------------------
+    // Copy interwiki links to lists
+    for (int i = 0; i < sListIWiki.size(); i++) {
+        for (int j = 0; j < sListIWiki[i].size(); j++) {
+            sListInterwikiKey << sListIWiki[i][j];
+            sListInterwikiLink << sListIWikiUrl[i][j];
+        }
+    }
 
     // Initialize possible text formats
     sListFormatStart << "'''";          // BOLD
@@ -695,7 +591,7 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
 
         // Interwiki links
         for (int i = 0; i < sListInterwikiKey.size(); i++){
-            if (sTmpLink.startsWith(sListInterwikiKey[i] + ":") && sTmpLink.count(':') == 2){
+            if (sTmpLink.startsWith(sListInterwikiKey[i] + ":") && sTmpLink.count(':') == 2 && !sTmpLink.startsWith("user:")){
                 sTmpLink.remove(sListInterwikiKey[i] + ":");
                 sListLink.clear();
                 sListLink = sTmpLink.split(":");

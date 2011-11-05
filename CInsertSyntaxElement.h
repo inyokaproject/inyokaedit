@@ -35,8 +35,6 @@ public:
     CInsertSyntaxElement();
 
     std::string GetElementInyokaCode(const std::string sElement, const std::string sSelectedText);
-    std::string GetInyokaHeading(const int index, const std::string sSelectedText);
-    std::string GetInterwikiLink(const std::string sElement, const std::string sSelectedText);
 
 };
 

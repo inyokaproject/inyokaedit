@@ -51,10 +51,16 @@ public:
 
     void setLastOpenedDir(const QDir LastDir);
 
+    // General
     QString getInyokaUrl() const;
     bool getAutomaticImageDownload() const;
     bool getPreviewInEditor() const;
     QDir getLastOpenedDir() const;
+
+    // Font
+    float getFontsize() const;
+
+    // Window state
     QByteArray getWindowState() const;
     QByteArray getWindowGeometry() const;
 
@@ -66,17 +72,23 @@ private:
 
     QSettings *mySettingsObject;
 
+    // General
     bool bCodeCompletion;  // Enable / disable code completion
     bool bPreviewInEditor; // Enable / disable preview in edior
     QString sInyokaUrl;    // Url to inyoka
     QDir LastOpenedDir;
     bool bAutomaticImageDownload;  // Enable / disable download of article images
-    QByteArray aWindowState;
-    QByteArray aWindowGeometry;
 
+    // Font
+    float iFontsize;
+
+    // Find/replace dialogs
     FindDialog *pFDialog;
     FindReplaceDialog *pFRDialog;
 
+    // Window state
+    QByteArray aWindowState;
+    QByteArray aWindowGeometry;
 };
 
 #endif // CSETTINGS_H

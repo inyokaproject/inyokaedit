@@ -17,56 +17,12 @@
         <file>images/internet-web-browser.png</file>
         <file>images/monotype.png</file>
         <file>images/network-receive.png</file>
-        <file>images/interwiki/askubuntu.png</file>
-        <file>images/interwiki/canonical.png</file>
-        <file>images/interwiki/debian.png</file>
-        <file>images/interwiki/debian_de.png</file>
-        <file>images/interwiki/ean.png</file>
-        <file>images/interwiki/edubuntu.png</file>
-        <file>images/interwiki/kubuntu.png</file>
-        <file>images/interwiki/linuxgaming.png</file>
-        <file>images/interwiki/osm.png</file>
-        <file>images/interwiki/packages.png</file>
-        <file>images/interwiki/playdeb.png</file>
-        <file>images/interwiki/ticket.png</file>
-        <file>images/interwiki/fb.png</file>
-        <file>images/interwiki/freshmeat.png</file>
-        <file>images/interwiki/getdeb.png</file>
-        <file>images/interwiki/holarse.png</file>
-        <file>images/interwiki/identica.png</file>
-        <file>images/interwiki/kubuntu-de.png</file>
-        <file>images/interwiki/twitter.png</file>
-        <file>images/interwiki/ubuntu.png</file>
-        <file>images/interwiki/ubuntu_doc.png</file>
-        <file>images/interwiki/ubuntu_fr.png</file>
-        <file>images/interwiki/ubuntuone.png</file>
-        <file>images/interwiki/ubuntustudio.png</file>
-        <file>images/interwiki/wikibooks.png</file>
-        <file>images/interwiki/wikimedia.png</file>
-        <file>images/interwiki/xubuntu.png</file>
-        <file>images/interwiki/youtube.png</file>
-        <file>images/interwiki/bug.png</file>
-        <file>images/interwiki/googlecode.png</file>
-        <file>images/interwiki/wikipedia.png</file>
-        <file>images/interwiki/wikipedia_en.png</file>
-        <file>images/interwiki/launchpad.png</file>
-        <file>images/interwiki/lpuser.png</file>
-        <file>images/interwiki/sourceforge.png</file>
-        <file>images/interwiki/user.png</file>
-        <file>images/interwiki/isbn.png</file>
         <file>images/edit-find-replace.png</file>
         <file>images/edit-find.png</file>
         <file>images/go-down.png</file>
         <file>images/go-up.png</file>
         <file>images/inyokaedit_64x64.png</file>
         <file>images/question.png</file>
-        <file>images/interwiki/canonicalblog.png</file>
-        <file>images/interwiki/dropbox.png</file>
-        <file>images/interwiki/gplus.png</file>
-        <file>images/interwiki/iawm.png</file>
-        <file>images/interwiki/kubuntu_doc.png</file>
-        <file>images/interwiki/lastfm.png</file>
-        <file>images/interwiki/liflg.jpg</file>
-        <file>images/interwiki/lubuntu.png</file>
+        <file>images/bug.png</file>
     </qresource>
 </RCC>

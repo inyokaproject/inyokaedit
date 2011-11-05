@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate the interwiki-links menu in InyokaEdit.
+  In addition to that "type" and "url" is used for parsing the interwiki-links.
+  
+  If you edit this file don't forget to mask ampersands: & -> &amp;
+-->
+<menu>
+  <group name="Inyoka" icon="user.png">
+    <iwikilink type="forum" url="http://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
+    <iwikilink type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
+    <iwikilink type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
+    <iwikilink type="user" url="NOT FOUND" name="User" icon="user.png" />
+    <iwikilink type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
+    <iwikilink type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
+    <iwikilink type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
+    <iwikilink type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
+    <iwikilink type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
+    <iwikilink type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
+  </group>
+  <group name="Canonical, Ubuntu, Derivate" icon="canonical.png">
+    <iwikilink type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
+    <iwikilink type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
+    <iwikilink type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
+    <iwikilink type="apt" url="apt:" name="Apt" icon="" />
+    <iwikilink type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
+    <iwikilink type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
+    <iwikilink type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
+    <iwikilink type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
+    <iwikilink type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <iwikilink type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
+    <iwikilink type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
+    <iwikilink type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />
+    <iwikilink type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
+    <iwikilink type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
+    <iwikilink type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
+    <iwikilink type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
+    <iwikilink type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
+    <iwikilink type="debian_de" url="http://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
+  </group>
+  <group name="Wikimedia" icon="wikimedia.png">
+    <iwikilink type="wikipedia" url="http://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
+    <iwikilink type="wikipedia_en" url="http://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
+    <iwikilink type="wikibooks" url="http://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
+    <iwikilink type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
+  </group>
+  <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
+    <iwikilink type="freshmeat" url="http://freshmeat.net/projects/" name="Freshmeat" icon="freshmeat.png" />
+    <iwikilink type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
+    <iwikilink type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
+    <iwikilink type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
+    <iwikilink type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
+    <iwikilink type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />
+    <iwikilink type="playdeb" url="http://www.playdeb.net/software/" name="PlayDeb" icon="playdeb.png" />
+    <iwikilink type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
+  </group>
+  <group name="Misc" icon="youtube.png">
+    <iwikilink type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
+    <iwikilink type="ean" url="http://www.google.com/search?as_q=ean&amp;safe=off&amp;btnG=Google-Suche#q=ean+" name="EAN" icon="ean.png" />
+    <iwikilink type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
+    <iwikilink type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
+    <iwikilink type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
+    <iwikilink type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
+    <iwikilink type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
+    <iwikilink type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
+    <iwikilink type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
+    <iwikilink type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
+    <iwikilink type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
+    <iwikilink type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
+    <iwikilink type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <iwikilink type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
+    <iwikilink type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
+  </group>
+</menu>

@@ -30,6 +30,7 @@
 #include <QMainWindow>
 #include <iostream>
 
+#include "CInterwiki.h"
 #include "CSettings.h"
 #include "CHighlighter.h"
 #include "CParser.h"
@@ -81,9 +82,6 @@ private slots:
     void reportBug();
     void about();
 
-    void findDialog();
-    void findReplaceDialog();
-
     // Called when text in editor was changed
     void documentWasModified();
 
@@ -91,7 +89,7 @@ private slots:
     void insertDropDownHeading(const int iSelection);
     void insertDropDownTextmacro(const int iSelection);
 
-    // Preview / Download toolbar
+    // Preview / download toolbar
     void previewInyokaPage(const int iIndex = 999);
     void downloadArticle();
     void downloadImages(const QString &sArticlename);
@@ -103,6 +101,8 @@ private slots:
     void insertInterwikiLink(const QString &sMenuEntry);
 
 private:
+    void createObjects();
+
     // Build gui
     void setupEditor();
     void createActions();
@@ -134,6 +134,7 @@ private:
     CProgressDialog *myArticleDownloadProgress;
     CProgressDialog *myImageDownloadProgress;
     CSettings *mySettings;
+    CInterWiki *myInterWikiLinks;
 
     QTabWidget *myTabwidget;
     QWebView *myWebview;
@@ -146,6 +147,10 @@ private:
 
     QDir StylesAndImagesDir;
 
+    QStringList sListCompleter;
+
+    bool bLogging;
+
     // Menus and toolbars
     QMenu *fileMenu;
     QMenu *editMenu;
@@ -157,11 +162,7 @@ private:
     QMenu *insertMiscelementMenu;
     QMenu *insertImageMenu;
     QMenu *iWikiMenu;
-    QMenu *iWikiMenuInyoka;
-    QMenu *iWikiMenuCanonical;
-    QMenu *iWikiMenuWikimedia;
-    QMenu *iWikiMenuHoster;
-    QMenu *iWikiMenuMisc;
+    QList<QMenu *> iWikiGroups;
 
     QToolBar *fileToolBar;
     QToolBar *editToolBar;
@@ -239,71 +240,7 @@ private:
     QSignalMapper *mySigMapTextSamples;
 
     // Inter-Wiki Links
-    // Inyoka
-    QAction *iWikiForum;
-    QAction *iWikiTopic;
-    QAction *iWikiPost;
-    QAction *iWikiUser;
-    QAction *iWikiIkhaya;
-    QAction *iWikiCalendar;
-    QAction *iWikiTicket;
-    QAction *iWikiBehind;
-    QAction *iWikiPaste;
-    QAction *iWikiPlanet;
-
-    // Canonical, Ubuntu, Derivate
-    QAction *iWikiCanonical;
-    QAction *iWikiCanonicalblog;
-    QAction *iWikiPackages;
-    QAction *iWikiApt;
-    QAction *iWikiUbuntu;
-    QAction *iWikiUbuntu_doc;
-    QAction *iWikiAskubuntu;
-    QAction *iWikiUbuntu_fr;
-    QAction *iWikiUbuntuone;
-    QAction *iWikiKubuntu;
-    QAction *iWikiKubuntuDe;
-    QAction *iWikiKubuntuDoc;
-    QAction *iWikiXubuntu;
-    QAction *iWikiLubuntu;
-    QAction *iWikiUbuntustudio;
-    QAction *iWikiEdubuntu;
-    QAction *iWikiDebian;
-    QAction *iWikiDebian_de;
-
-    // Wikimedia
-    QAction *iWikiWikipedia;
-    QAction *iWikiWikipedia_en;
-    QAction *iWikiWikibooks;
-    QAction *iWikiWikimedia;
-
-    // Source & project hoster, bugtracker
-    QAction *iWikiFreshmeat;
-    QAction *iWikiGetdeb;
-    QAction *iWikiGooglecode;
-    QAction *iWikiLaunchpad;
-    QAction *iWikiBug;
-    QAction *iWikiLpuser;
-    QAction *iWikiPlaydeb;
-    QAction *iWikiSourceforge;
-
-    // Misc
-    QAction *iWikiDropbox;
-    QAction *iWikiEan;
-    QAction *iWikiFb;
-    QAction *iWikiGoogle;
-    QAction *iWikiGplus;
-    QAction *iWikiHolarse;
-    QAction *iWikiIdentica;
-    QAction *iWikiInternetWayback;
-    QAction *iWikiIsbn;
-    QAction *iWikiLastfm;
-    QAction *iWikiLiflg;
-    QAction *iWikiLinuxgaming;
-    QAction *iWikiOsm;
-    QAction *iWikiTwitter;
-    QAction *iWikiYoutube;
-
+    QList<QList<QAction *> > iWikiLinksActions;
     QSignalMapper *mySigMapInterWikiLinks;
 
 };

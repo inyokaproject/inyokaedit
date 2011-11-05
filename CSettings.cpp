@@ -28,7 +28,7 @@
 
 CSettings::CSettings(const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog) :
     pFDialog(&FDialog), pFRDialog(&FRDialog)
-{    
+{
 
     QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath());
 
@@ -49,39 +49,58 @@ CSettings::~CSettings(){
     mySettingsObject = NULL;
 }
 
+// -----------------------------------------------------------------------------------------------
 
 void CSettings::readSettings(){
+
+    // General settings
     bCodeCompletion = mySettingsObject->value("CodeCompletion", true).toBool();
     emit sendCodeCompState(bCodeCompletion);
-
     bPreviewInEditor = mySettingsObject->value("PreviewInEditor", true).toBool();
-
     sInyokaUrl = mySettingsObject->value("InyokaUrl", "http://wiki.ubuntuusers.de").toString();
     if (sInyokaUrl.endsWith("/")) {
         sInyokaUrl.remove(sInyokaUrl.length()-1, 1);
     }
-
     LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
-
     bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
 
+    // Font settings
+    mySettingsObject->beginGroup("Font");
+    // Used string for font size because float isn't saved human readable...
+    QString sFontsize = mySettingsObject->value("FontSize", "10.5").toString();
+    iFontsize = sFontsize.toFloat();
+    if (iFontsize < 0) { iFontsize = -iFontsize; }
+    if (0 == iFontsize) { iFontsize = 10.5; }
+    mySettingsObject->endGroup();
+
+    // Find/replace dialogs
+    pFDialog->readSettings(*mySettingsObject);
+    pFRDialog->readSettings(*mySettingsObject);
+
+    // Window state
     mySettingsObject->beginGroup("Window");
     aWindowGeometry = mySettingsObject->value("Geometry").toByteArray();
     aWindowState = mySettingsObject->value("WindowState").toByteArray();  // Restore toolbar position etc.
     mySettingsObject->endGroup();
-
-    pFDialog->readSettings(*mySettingsObject);
-    pFRDialog->readSettings(*mySettingsObject);
 }
 
+// -----------------------------------------------------------------------------------------------
 
 void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
+
+    // General settings
     mySettingsObject->setValue("CodeCompletion", bCodeCompletion);
     mySettingsObject->setValue("PreviewInEditor", bPreviewInEditor);
     mySettingsObject->setValue("InyokaUrl", sInyokaUrl);
     mySettingsObject->setValue("LastOpenedDir", LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", bAutomaticImageDownload);
 
+    // Font settings
+    mySettingsObject->beginGroup("Font");
+    mySettingsObject->setValue("FontSize", QString::number(iFontsize));
+    mySettingsObject->endGroup();
+
+    // Find/replace dialogs
     pFDialog->writeSettings(*mySettingsObject);
     pFRDialog->writeSettings(*mySettingsObject);
 
@@ -90,8 +109,10 @@ void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
     mySettingsObject->setValue("Geometry", WinGeometry);
     mySettingsObject->setValue("WindowState", WinState);
     mySettingsObject->endGroup();
-
 }
+
+// -----------------------------------------------------------------------------------------------
+// Get / set methods
 
 QString CSettings::getInyokaUrl() const {
     return sInyokaUrl;
@@ -112,6 +133,14 @@ QDir CSettings::getLastOpenedDir() const {
 void CSettings::setLastOpenedDir(const QDir LastDir) {
     LastOpenedDir = LastDir;
 }
+
+// ----------------------------------------------------
+
+float CSettings::getFontsize() const {
+    return iFontsize;
+}
+
+// ----------------------------------------------------
 
 QByteArray CSettings::getWindowGeometry() const {
     return aWindowGeometry;
