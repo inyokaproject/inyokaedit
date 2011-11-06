@@ -32,10 +32,10 @@
 
 #include <QStringList>
 #include <QXmlSimpleReader>
+#include <QMessageBox>
 
-class CInterWiki : public QObject
+class CInterWiki
 {
-    Q_OBJECT
 
 public:
     CInterWiki(const QString &sName);
@@ -46,9 +46,6 @@ public:
     QList<QStringList> getInterwikiLinksUrls() const;
     QList<QStringList> getInterwikiLinksNames() const;
     QList<QStringList> getInterwikiLinksIcons() const;
-
-signals:
-    void callShowMessageBox(const QString &, const QString &);
 
 private:
     QXmlInputSource *myXmlSource;

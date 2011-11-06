@@ -29,6 +29,7 @@
 
 #include <QDir>
 #include <QSettings>
+#include <QMessageBox>
 
 #include <iostream>
 #include <stdlib.h>
@@ -37,9 +38,8 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 
 
-class CSettings : public QObject
+class CSettings
 {
-    Q_OBJECT
 
 public:
     CSettings(const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog);
@@ -52,6 +52,7 @@ public:
     void setLastOpenedDir(const QDir LastDir);
 
     // General
+    bool getCodeCompletion() const;
     QString getInyokaUrl() const;
     bool getAutomaticImageDownload() const;
     bool getPreviewInEditor() const;
@@ -63,10 +64,6 @@ public:
     // Window state
     QByteArray getWindowState() const;
     QByteArray getWindowGeometry() const;
-
-signals:
-    void callShowMessageBox(const QString &, const QString &);
-    void sendCodeCompState(bool);
 
 private:
 

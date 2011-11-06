@@ -87,7 +87,12 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
             DownloadStyles(StylesAndImagesDir);
         }
         else {
-            loadFile(argv[1]);
+            if ("--log" != sTmp) {
+                loadFile(argv[1]);
+            }
+            else if ("--log" == sTmp && argc >= 3) {
+                loadFile(argv[2]);
+            }
         }
     }
 
@@ -143,9 +148,6 @@ void CInyokaEdit::createObjects() {
 
     try
     {
-        myEditor = new CTextEditor;  // Has to be create before find/replace
-        if (bLogging) { std::clog << "Created myEditor" << std::endl; }
-
         m_findDialog = new FindDialog(this);  // Has to be create before readSettings
         m_findReplaceDialog = new FindReplaceDialog(this);
         if (bLogging) { std::clog << "Created find/replace dialogs" << std::endl; }
@@ -155,6 +157,9 @@ void CInyokaEdit::createObjects() {
         // Load settings from config file
         mySettings->readSettings();
         if (bLogging) { std::clog << "Read settings" << std::endl; }
+
+        myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
+        if (bLogging) { std::clog << "Created myEditor" << std::endl; }
 
         myCompleter = new QCompleter(sListCompleter, this);
         if (bLogging) { std::clog << "Created myCompleter" << std::endl; }
@@ -217,17 +222,9 @@ void CInyokaEdit::setupEditor()
     myCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     myCompleter->setWrapAround(false);
 
-    // Send code completion state (in-/active) to myeditor
-    connect(mySettings, SIGNAL(sendCodeCompState(bool)),
-            myEditor, SLOT(getcodecomplState(bool)));
-    connect(mySettings, SIGNAL(callShowMessageBox(QString,QString)),
-            this, SLOT(showMessageBox(QString,QString)));
-
     // Connect signals from parser with functions
     connect(myParser, SIGNAL(callShowPreview(QString)),
             this, SLOT(showHtmlPreview(QString)));
-    connect(myParser, SIGNAL(callShowMessageBox(QString,QString)),
-            this, SLOT(showMessageBox(QString,QString)));
 
     setCentralWidget(myTabwidget);
     myTabwidget->setTabPosition(QTabWidget::West);
@@ -236,9 +233,6 @@ void CInyokaEdit::setupEditor()
     myTabwidget->addTab(myWebview, trUtf8("Vorschau"));
     if (false == mySettings->getPreviewInEditor())
         myTabwidget->setTabEnabled(myTabwidget->indexOf(myWebview), false);
-
-    connect(myInterWikiLinks, SIGNAL(callShowMessageBox(QString,QString)),
-            this, SLOT(showMessageBox(QString,QString)));
 
     setCurrentFile("");
     setUnifiedTitleAndToolBarOnMac(true);
@@ -1189,20 +1183,6 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
         myWebview->load(QUrl::fromLocalFile(filename));
         myTabwidget->setCurrentIndex(myTabwidget->indexOf(myWebview));
         myWebview->reload();
-    }
-}
-
-
-void CInyokaEdit::showMessageBox(const QString &sMessagetext, const QString &sType){
-
-    if ("warning" == sType){
-        QMessageBox::warning(this, sAppName, sMessagetext);
-    }
-    else if ("critical" == sType){
-        QMessageBox::critical(this, sAppName, sMessagetext);
-    }
-    else {
-        QMessageBox::information(this, sAppName, sMessagetext);
     }
 }
 

@@ -34,7 +34,7 @@ CInterWiki::CInterWiki(const QString &sName)
     if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
         // Call message box from CInyokaEdit
         std::cerr << "ERROR: Can not open \"" << XmlFile.fileName().toStdString() << "\"." << std::endl;
-        emit callShowMessageBox("Can not open \"" + XmlFile.fileName() + "\"!", "critical");
+        QMessageBox::critical(0, sName, "Can not open \"" + XmlFile.fileName() + "\".");
         exit (-5);
     }
 
@@ -47,7 +47,7 @@ CInterWiki::CInterWiki(const QString &sName)
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: myXmlSource - bad_alloc caught: " << ba.what() << std::endl;
-        emit callShowMessageBox("ERROR: bad_alloc XmlSource", "critical");
+        QMessageBox::critical(0, sName, "ERROR: bad_alloc XmlSource");
         exit (-6);
     }
 
@@ -58,7 +58,7 @@ CInterWiki::CInterWiki(const QString &sName)
     bool ok = myXmlReader.parse(myXmlSource);
     if (!ok) {
         std::cerr << "ERROR: Parsing \"" << XmlFile.fileName().toStdString() << "\"failed." << std::endl;
-        emit callShowMessageBox("Error while parsing \"" + XmlFile.fileName() + "\".", "critical");
+        QMessageBox::critical(0, sName, "Error while parsing \"" + XmlFile.fileName() + "\".");
         exit (-7);
     }
 

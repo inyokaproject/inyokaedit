@@ -39,8 +39,8 @@ CSettings::CSettings(const QDir SettingsDir, const QString &sName, FindDialog &F
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: mySettings - bad_alloc caught: " << ba.what() << std::endl;
-      emit callShowMessageBox(trUtf8("Fehler bei der Speicherallokierung: QSettings"), "critical");
-      exit (-1);
+      QMessageBox::critical(0, sName, "Failed to allocate the requested storage space: mySettings");
+      exit (-10);
     }
 }
 
@@ -55,7 +55,6 @@ void CSettings::readSettings(){
 
     // General settings
     bCodeCompletion = mySettingsObject->value("CodeCompletion", true).toBool();
-    emit sendCodeCompState(bCodeCompletion);
     bPreviewInEditor = mySettingsObject->value("PreviewInEditor", true).toBool();
     sInyokaUrl = mySettingsObject->value("InyokaUrl", "http://wiki.ubuntuusers.de").toString();
     if (sInyokaUrl.endsWith("/")) {
@@ -116,6 +115,10 @@ void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
 
 QString CSettings::getInyokaUrl() const {
     return sInyokaUrl;
+}
+
+bool CSettings::getCodeCompletion() const {
+    return bCodeCompletion;
 }
 
 bool CSettings::getAutomaticImageDownload() const {

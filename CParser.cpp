@@ -120,7 +120,7 @@ bool CParser::genOutput(const QString sActFile)
     // No write permission
     if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
         // Call message box from CInyokaEdit
-        emit callShowMessageBox(trUtf8("Es konnte keine temporäre HTML-Datei erstellt werden!"), "warning");
+        QMessageBox::warning(0, "Warning", trUtf8("Es konnte keine temporäre HTML-Datei erstellt werden!"));
         return false;
     }
 
@@ -1320,7 +1320,7 @@ QString CParser::parseTableOfContents(QTextBlock tabofcontents){
 
     /*
     if (sLine == "" || sLine != "1"){
-        emit callShowMessageBox("InyokaEdit unterstützt in der Vorschau derzeit nur die Anzeige der ersten Überschriftenebene.", "info");
+        QMessageBox::information(0, "Information", trUtf8("Die Vorschau unterstützt derzeit nur die Anzeige der ersten Überschriftenebene."));
     }
     */
 
@@ -1767,7 +1767,7 @@ QString CParser::parseCodeBlock(QString actParagraph){
     // Syntax highlighting
     else{
         if (bShowedMsgBoxAlready == false){
-            emit callShowMessageBox("Die Vorschau von InyokaEdit unterstützt kein Syntax-Highlighting im Codeblock.", "info");
+            QMessageBox::information(0, "Information", trUtf8("Die Vorschau von InyokaEdit unterstützt derzeit noch kein Syntax-Highlighting im Codeblock."));
             bShowedMsgBoxAlready = true;
         }
 

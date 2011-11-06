@@ -30,6 +30,7 @@
 #include <QWidget>
 #include <QtGui>
 #include <QDir>
+#include <QMessageBox>
 
 #include "CInyokaEdit.h"
 
@@ -54,7 +55,6 @@ public:
 
 signals:
     void callShowPreview(const QString &);
-    void callShowMessageBox(const QString &, const QString &);
 
 private:
 

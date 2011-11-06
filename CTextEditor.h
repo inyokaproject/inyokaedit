@@ -55,14 +55,11 @@ class CTextEditor : public QTextEdit
     Q_OBJECT
 
 public:
-    CTextEditor(QWidget *parent = 0);
+    CTextEditor(bool bCompleter, QWidget *parent = 0);
     ~CTextEditor();
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
-
-public slots:
-        void getcodecomplState(bool);
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -73,11 +70,9 @@ private slots:
 
 private:
     QString textUnderCursor() const;
-    bool codeCompState;
-
-private:
     QCompleter *c;
 
+    bool bCodeCompState;
 };
 
 #endif // CTEXTEDITOR_H

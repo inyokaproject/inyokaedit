@@ -56,8 +56,8 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-CTextEditor::CTextEditor(QWidget *parent)
-    : QTextEdit(parent), c(0)
+CTextEditor::CTextEditor(bool bCompleter, QWidget *parent)
+    : QTextEdit(parent), c(0), bCodeCompState(bCompleter)
 {
 }
 
@@ -150,8 +150,13 @@ void CTextEditor::keyPressEvent(QKeyEvent *e)
         return;
     }
     */
-    if (!isShortcut && (hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
-                        || eow.contains(e->text().right(1)) || codeCompState == false)) {
+
+    if (false == bCodeCompState) {
+        c->popup()->hide();
+        return;
+    }
+    else if (!isShortcut && (hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
+                        || eow.contains(e->text().right(1)))) {
         c->popup()->hide();
         return;
     }
@@ -166,9 +171,4 @@ void CTextEditor::keyPressEvent(QKeyEvent *e)
                 + c->popup()->verticalScrollBar()->sizeHint().width());
     c->complete(cr); // popup it up!
 
-}
-
-// --------------------------------------------------------------------------------------------
-void CTextEditor::getcodecomplState(bool mystate){
-    codeCompState = mystate;
 }

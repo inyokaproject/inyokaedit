@@ -67,7 +67,6 @@ public:
 
 public slots:
     void showHtmlPreview(const QString &filename);
-    void showMessageBox(const QString &messagetext, const QString &type);
 
 protected:
     // Event when program will close
