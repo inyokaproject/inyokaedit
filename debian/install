@@ -26,7 +26,7 @@ images/interwiki/identica.png /usr/share/inyokaedit/iWikiLinks/identica.png
 images/interwiki/internet-news-reader.png /usr/share/inyokaedit/iWikiLinks/internet-news-reader.png
 images/interwiki/internet.png /usr/share/inyokaedit/iWikiLinks/internet.png
 images/interwiki/isbn.png /usr/share/inyokaedit/iWikiLinks/isbn.png
-images/interwiki/iWikiLinks.xml /usr/share/inyokaedit/iWikiLinks/iWikiLinks.png
+images/interwiki/iWikiLinks.xml /usr/share/inyokaedit/iWikiLinks/iWikiLinks.xml
 images/interwiki/kubuntu-de.png /usr/share/inyokaedit/iWikiLinks/kubuntu-de.png
 images/interwiki/kubuntu.png /usr/share/inyokaedit/iWikiLinks/kubuntu.png
 images/interwiki/kubuntu_doc.png /usr/share/inyokaedit/iWikiLinks/kubuntu_doc.png
@@ -40,7 +40,6 @@ images/interwiki/office-calendar.png /usr/share/inyokaedit/iWikiLinks/office-cal
 images/interwiki/osm.png /usr/share/inyokaedit/iWikiLinks/osm.png
 images/interwiki/packages.png /usr/share/inyokaedit/iWikiLinks/packages.png
 images/interwiki/playdeb.png /usr/share/inyokaedit/iWikiLinks/playdeb.png
-images/interwiki/search.png /usr/share/inyokaedit/iWikiLinks/search.png
 images/interwiki/sourceforge.png /usr/share/inyokaedit/iWikiLinks/sourceforge.png
 images/interwiki/ticket.png /usr/share/inyokaedit/iWikiLinks/ticket.png
 images/interwiki/twitter.png /usr/share/inyokaedit/iWikiLinks/twitter.png
