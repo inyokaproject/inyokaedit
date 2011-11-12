@@ -28,6 +28,7 @@
 #define CINYOKAEDIT_H
 
 #include <QMainWindow>
+#include <QWebHistory>
 #include <iostream>
 
 #include "CInterwiki.h"
@@ -90,6 +91,7 @@ private slots:
 
     // Preview / download toolbar
     void previewInyokaPage(const int iIndex = 999);
+    void loadPreviewFinished(bool bSuccess);
     void downloadArticle();
     void downloadImages(const QString &sArticlename);
 

@@ -234,6 +234,9 @@ void CInyokaEdit::setupEditor()
     if (false == mySettings->getPreviewInEditor())
         myTabwidget->setTabEnabled(myTabwidget->indexOf(myWebview), false);
 
+    connect(myWebview, SIGNAL(loadFinished(bool)),
+            this, SLOT(loadPreviewFinished(bool)));
+
     setCurrentFile("");
     setUnifiedTitleAndToolBarOnMac(true);
 
@@ -1174,6 +1177,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 void CInyokaEdit::showHtmlPreview(const QString &filename){
 
     statusBar()->showMessage(trUtf8("Öffne Vorschau"));
+    myWebview->history()->clear();  // Clear history (clicked links)
 
     if (false == mySettings->getPreviewInEditor()){
         // Open html-file in system web browser
@@ -1181,8 +1185,16 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
     }
     else{
         myWebview->load(QUrl::fromLocalFile(filename));
+    }
+}
+
+// Wait until loading has finished
+void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
+    if (bSuccess) {
         myTabwidget->setCurrentIndex(myTabwidget->indexOf(myWebview));
-        myWebview->reload();
+    }
+    else {
+        QMessageBox::warning(this, sAppName, trUtf8("Fehler beim Laden der Vorschau."));
     }
 }
 
