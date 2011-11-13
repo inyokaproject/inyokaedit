@@ -62,6 +62,7 @@ void CSettings::readSettings(){
     }
     LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
     bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
+    sConfVersion = mySettingsObject->value("ConfVersion", "0.0.0").toString();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -70,6 +71,21 @@ void CSettings::readSettings(){
     iFontsize = sFontsize.toFloat();
     if (iFontsize < 0) { iFontsize = -iFontsize; }
     if (0 == iFontsize) { iFontsize = 10.5; }
+    mySettingsObject->endGroup();
+
+    // Recent files
+    mySettingsObject->beginGroup("RecentFiles");
+    iMaxLastOpenedFiles = mySettingsObject->value("NumberOfRecentFiles", 5).toInt();
+    if (iMaxLastOpenedFiles < 0) { iMaxLastOpenedFiles = 0; }
+    if (iMaxLastOpenedFiles > cMAXFILES) { iMaxLastOpenedFiles = cMAXFILES; }
+    QString sTmpFile;
+    for (int i = 0; i < iMaxLastOpenedFiles; i++) {
+        sTmpFile = mySettingsObject->value("File_" + QString::number(i), "").toString();
+        if (sTmpFile != "") {
+            sListRecentFiles << sTmpFile;
+        }
+    }
+    sListRecentFiles.removeDuplicates();
     mySettingsObject->endGroup();
 
     // Find/replace dialogs
@@ -93,10 +109,24 @@ void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
     mySettingsObject->setValue("InyokaUrl", sInyokaUrl);
     mySettingsObject->setValue("LastOpenedDir", LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", bAutomaticImageDownload);
+    mySettingsObject->setValue("ConfVersion", sConfVersion);
 
     // Font settings
     mySettingsObject->beginGroup("Font");
     mySettingsObject->setValue("FontSize", QString::number(iFontsize));
+    mySettingsObject->endGroup();
+
+    // Recent files
+    mySettingsObject->beginGroup("RecentFiles");
+    mySettingsObject->setValue("NumberOfRecentFiles", iMaxLastOpenedFiles);
+    for (int i = 0; i < cMAXFILES; i++) {
+        if (i < sListRecentFiles.size()) {
+            mySettingsObject->setValue("File_" + QString::number(i), sListRecentFiles[i]);
+        }
+        else {
+            mySettingsObject->setValue("File_" + QString::number(i), "");
+        }
+    }
     mySettingsObject->endGroup();
 
     // Find/replace dialogs
@@ -137,10 +167,47 @@ void CSettings::setLastOpenedDir(const QDir LastDir) {
     LastOpenedDir = LastDir;
 }
 
+QString CSettings::getConfVersion() const {
+    return sConfVersion;
+}
+
+void CSettings::setConfVersion(const QString &sNewVersion) {
+    sConfVersion = sNewVersion;
+}
+
 // ----------------------------------------------------
 
 float CSettings::getFontsize() const {
     return iFontsize;
+}
+
+// ----------------------------------------------------
+
+unsigned short CSettings::getNumOfRecentFiles() const {
+    return (unsigned short)iMaxLastOpenedFiles;
+}
+
+unsigned short CSettings::getMaxNumOfRecentFiles() const {
+    return (unsigned short)cMAXFILES;
+}
+
+QStringList CSettings::getRecentFiles() const {
+    return sListRecentFiles;
+}
+
+void CSettings::setRecentFiles(const QStringList &sListNewRecent) {
+    unsigned short iCnt;
+    if (sListNewRecent.size() > cMAXFILES) {
+        iCnt = cMAXFILES;
+    }
+    else {
+        iCnt = sListNewRecent.size();
+    }
+
+    sListRecentFiles.clear();
+    for (int i = 0; i < iCnt; i++) {
+        sListRecentFiles << sListNewRecent[i];
+    }
 }
 
 // ----------------------------------------------------

@@ -25,6 +25,8 @@
     <iwikilink type="apt" url="apt:" name="Apt" icon="" />
     <iwikilink type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <iwikilink type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
+    <iwikilink type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
+    <iwikilink type="ubuntuforums" url="http://ubuntuforums.org/" name="Ubuntuforums.org" icon="ubuntuforums.png" />
     <iwikilink type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
     <iwikilink type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
     <iwikilink type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
@@ -45,7 +47,7 @@
     <iwikilink type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
   </group>
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
-    <iwikilink type="freshmeat" url="http://freshmeat.net/projects/" name="Freshmeat" icon="freshmeat.png" />
+    <iwikilink type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
     <iwikilink type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
     <iwikilink type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
     <iwikilink type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />

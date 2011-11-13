@@ -88,7 +88,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/20/dropbox.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/18/ean.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/17/edubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/18/fb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/09/freshmeat.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/44/freshmeat.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/18/getdeb.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/37/gplus.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/getdeb.png
@@ -110,6 +110,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/18/linuxgaming.pn
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/lpuser.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/18/lpuser.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/19/lubuntu.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/45/ml.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/09/osm.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/16/packages.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/09/playdeb.png
@@ -122,6 +123,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/18/ubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/20/17/ubuntustudio.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/16/ubuntu_doc.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/09/ubuntu_fr.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/45/ubuntuforums.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/16/ubuntuone.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/09/wikibooks.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/user.png
@@ -161,7 +163,7 @@ fi
 cd flags
 
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/download.png
-mv download.png dl.png
+cp download.png dl.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/cz.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/40/eo.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/da.png
@@ -181,7 +183,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/pt.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ro.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/pl.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/24/flag-nw.png
-mv flag-nw.png nw.png
+cp flag-nw.png nw.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/nl.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/rs.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ru.png
@@ -216,7 +218,7 @@ cd Icons
 
 # Linux
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/ubuntu_.png
-mv ubuntu_.png ubuntu.png
+cp ubuntu_.png ubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/kubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/edubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/gobuntu.png
@@ -231,7 +233,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/20/28/gnome.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/gnu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/debian.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/redhat_.png
-mv redhat_.png redhat.png
+cp redhat_.png redhat.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/tux.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/suse.png
 
@@ -734,12 +736,12 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/07/topic-solved-l
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/04/system-users.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/04/internet.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/13/wiki_icon_retouched24_braun.png
-mv wiki_icon_retouched24_braun.png wiki.png
+cp wiki_icon_retouched24_braun.png wiki.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/09/wochenrueckblick.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/03/usercp-password.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/03/usercp-subscriptions.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/06/pre.png
-mv pre.png code.png
+cp pre.png code.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/07/download.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/06/user_link.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/06/wikilink.png

@@ -57,6 +57,8 @@ public:
     bool getAutomaticImageDownload() const;
     bool getPreviewInEditor() const;
     QDir getLastOpenedDir() const;
+    QString getConfVersion() const;
+    void setConfVersion(const QString &sNewVersion);
 
     // Font
     float getFontsize() const;
@@ -64,6 +66,12 @@ public:
     // Window state
     QByteArray getWindowState() const;
     QByteArray getWindowGeometry() const;
+
+    // Recent files
+    unsigned short getNumOfRecentFiles() const;
+    unsigned short getMaxNumOfRecentFiles() const;
+    QStringList getRecentFiles() const;
+    void setRecentFiles(const QStringList &sListNewRecent);
 
 private:
 
@@ -75,6 +83,7 @@ private:
     QString sInyokaUrl;    // Url to inyoka
     QDir LastOpenedDir;
     bool bAutomaticImageDownload;  // Enable / disable download of article images
+    QString sConfVersion;
 
     // Font
     float iFontsize;
@@ -86,6 +95,11 @@ private:
     // Window state
     QByteArray aWindowState;
     QByteArray aWindowGeometry;
+
+    // Last opened
+    static const unsigned short cMAXFILES = 10;
+    int iMaxLastOpenedFiles;
+    QStringList sListRecentFiles;
 };
 
 #endif // CSETTINGS_H

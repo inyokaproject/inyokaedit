@@ -1,3 +1,13 @@
+inyokaedit (0.0.7~ppa1) oneiric; urgency=low
+
+  * Open recent files menu entry
+
+  * Updated man file
+
+  * Made clumsy code completion working again
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 12 Nov 2011 22:37:49 +0200
+
 inyokaedit (0.0.6~ppa1) natty; urgency=low
 
   * Importing interwiki links via xml file in menu and parser

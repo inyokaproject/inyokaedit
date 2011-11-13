@@ -24,7 +24,7 @@
 * Purpose:    Main application, gui definition, editor functions
 ***************************************************************************/
 
-#define sVERSION "0.0.6"
+#define sVERSION "0.0.7"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -94,6 +94,11 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
                 loadFile(argv[2]);
             }
         }
+    }
+
+    // In config file an older version was found
+    if (sVERSION != mySettings->getConfVersion()) {
+        DownloadStyles(StylesAndImagesDir);
     }
 
     statusBar()->showMessage(trUtf8("Bereit"));
@@ -267,6 +272,25 @@ void CInyokaEdit::createActions()
         openAct->setShortcuts(QKeySequence::Open);
         openAct->setStatusTip(trUtf8("Öffnet eine Datei"));
         connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+
+        // Open recent files
+        mySigMapLastOpenedFiles = new QSignalMapper(this);
+        for (int i = 0; i < mySettings->getMaxNumOfRecentFiles(); i++) {
+            if (i < mySettings->getRecentFiles().size()) {
+                LastOpenedFilesAct << new QAction(mySettings->getRecentFiles()[i], this);
+            }
+            else {
+                LastOpenedFilesAct << new QAction("EMPTY", this);
+                LastOpenedFilesAct[i]->setVisible(false);
+            }
+            mySigMapLastOpenedFiles->setMapping(LastOpenedFilesAct[i], i);
+            connect(LastOpenedFilesAct[i], SIGNAL(triggered()), mySigMapLastOpenedFiles, SLOT(map()));
+        }
+        connect(mySigMapLastOpenedFiles, SIGNAL(mapped(int)), this, SLOT(openRecentFile(int)));
+
+        // Clear recent files list
+        clearRecentFilesAct = new QAction(trUtf8("Liste leeren"), this);
+        connect(clearRecentFilesAct, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
 
         // Save file
         saveAct = new QAction(QIcon(":/images/document-save.png"), trUtf8("&Speichern"), this);
@@ -656,6 +680,13 @@ void CInyokaEdit::createMenus()
     fileMenu = menuBar()->addMenu(trUtf8("&Datei"));
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
+    fileMenuLastOpened = fileMenu->addMenu(trUtf8("Zu&letzt geöffnete Dateien"));
+    fileMenuLastOpened->addActions(LastOpenedFilesAct);
+    fileMenuLastOpened->addSeparator();
+    fileMenuLastOpened->addAction(clearRecentFilesAct);
+    if (0 == mySettings->getRecentFiles().size()) {
+        fileMenuLastOpened->setEnabled(false);
+    }
     fileMenu->addAction(saveAct);
     fileMenu->addAction(saveAsAct);
     fileMenu->addSeparator();
@@ -824,9 +855,11 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
             exit (-8);
         }
         myArticleDownloadProgress->open();
-    }
 
-    if (bLogging) { std::clog << "Downloaded styles" << std::endl; }
+        mySettings->setConfVersion(sVERSION);
+
+        if (bLogging) { std::clog << "Downloaded styles" << std::endl; }
+    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1199,6 +1232,63 @@ void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
 }
 
 // -----------------------------------------------------------------------------------------------
+// Open recent opened file
+
+void CInyokaEdit::openRecentFile(int iEntry) {
+    if (maybeSave()) {
+        loadFile(mySettings->getRecentFiles()[iEntry]);
+    }
+}
+
+void CInyokaEdit::updateRecentFiles(const QString &sFileName) {
+
+    QStringList sListTmp;
+
+    if (sFileName != "_-CL3AR#R3C3NT#F!L35-_") {
+        sListTmp = mySettings->getRecentFiles();
+
+        // Remove entry if exists
+        if (sListTmp.contains(sFileName)) {
+            sListTmp.removeAll(sFileName);
+        }
+        // Add file name to list
+        sListTmp.push_front(sFileName);
+
+        // Remove all entries from end, if list is too long
+        while (sListTmp.size() > mySettings->getMaxNumOfRecentFiles() || sListTmp.size() > mySettings->getNumOfRecentFiles()) {
+            sListTmp.removeLast();
+        }
+
+        for (int i = 0; i < mySettings->getMaxNumOfRecentFiles(); i++) {
+            // Set list menu entries
+            if (i < sListTmp.size()) {
+                LastOpenedFilesAct[i]->setText(sListTmp[i]);
+                LastOpenedFilesAct[i]->setVisible(true);
+            }
+            else {
+                LastOpenedFilesAct[i]->setVisible(false);
+            }
+
+        }
+        if (sListTmp.size() > 0) {
+            fileMenuLastOpened->setEnabled(true);
+        }
+    }
+
+    // Clear list
+    else {
+        sListTmp.clear();
+        fileMenuLastOpened->setEnabled(false);
+    }
+
+    mySettings->setRecentFiles(sListTmp);
+}
+
+void CInyokaEdit::clearRecentFiles(){
+    updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
+}
+
+// -----------------------------------------------------------------------------------------------
 // Report a bug via Apport to Launchpad
 
 void CInyokaEdit::reportBug(){
@@ -1345,7 +1435,7 @@ void CInyokaEdit::loadFile(const QString &sFileName)
     // No permission to read
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, sAppName,
-                             trUtf8("Kann Datei %1 nicht lesen:\n%2.")
+                             trUtf8("Kann Datei %1 nicht öffnen:\n%2.")
                              .arg(sFileName)
                              .arg(file.errorString()));
         return;
@@ -1360,6 +1450,7 @@ void CInyokaEdit::loadFile(const QString &sFileName)
     QApplication::restoreOverrideCursor();
 #endif
 
+    updateRecentFiles(sFileName);
     setCurrentFile(sFileName);
     statusBar()->showMessage(trUtf8("Datei geladen"), 2000);
 }
@@ -1385,6 +1476,7 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
     QApplication::restoreOverrideCursor();
 #endif
 
+    updateRecentFiles(sFileName);
     setCurrentFile(sFileName);
     statusBar()->showMessage(trUtf8("Datei gespeichert"), 2000);
     return true;

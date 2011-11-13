@@ -77,6 +77,8 @@ private slots:
     // Functions file menu/toolbar
     void newFile();
     void open();
+    void openRecentFile(int iEntry);
+    void clearRecentFiles();
     bool save();
     bool saveAs();
     void reportBug();
@@ -120,6 +122,8 @@ private:
     void loadFile(const QString &sFileName);
     bool saveFile(const QString &sFileName);
 
+    void updateRecentFiles(const QString &sFileName);
+
     void setCurrentFile(const QString &sFileName);
     QString strippedName(const QString &sFullFileName);
 
@@ -154,6 +158,7 @@ private:
 
     // Menus and toolbars
     QMenu *fileMenu;
+    QMenu *fileMenuLastOpened;
     QMenu *editMenu;
     QMenu *helpMenu;
     QMenu *insertTextSampleMenu;
@@ -174,11 +179,16 @@ private:
     // File menu / file toolbar
     QAction *newAct;
     QAction *openAct;
+    QList<QAction *> LastOpenedFilesAct;
+    QSignalMapper *mySigMapLastOpenedFiles;
+    QAction *clearRecentFilesAct;
     QAction *saveAct;
     QAction *saveAsAct;
     QAction *undoAct;
     QAction *redoAct;
     QAction *exitAct;
+
+    // Edit menu
     QAction *cutAct;
     QAction *copyAct;
     QAction *pasteAct;
@@ -186,6 +196,8 @@ private:
     QAction *replaceAct;
     QAction *findNextAct;
     QAction *findPreviousAct;
+
+    // Help menu
     QAction *aboutAct;
     QAction *reportBugAct;
 
