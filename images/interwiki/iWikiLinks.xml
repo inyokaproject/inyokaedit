@@ -26,7 +26,9 @@
     <iwikilink type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <iwikilink type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
     <iwikilink type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
-    <iwikilink type="ubuntuforums" url="http://ubuntuforums.org/" name="Ubuntuforums.org" icon="ubuntuforums.png" />
+    <iwikilink type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
+    <iwikilink type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
+    <iwikilink type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
     <iwikilink type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
     <iwikilink type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
     <iwikilink type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />

@@ -123,7 +123,9 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/18/ubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/20/17/ubuntustudio.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/16/ubuntu_doc.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/09/ubuntu_fr.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/45/ubuntuforums.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/46/uf_forum.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/46/uf_member.png
+wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/46/uf_thread.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/16/ubuntuone.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/09/wikibooks.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/user.png
