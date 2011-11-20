@@ -59,6 +59,7 @@ public:
     QDir getLastOpenedDir() const;
     QString getConfVersion() const;
     void setConfVersion(const QString &sNewVersion);
+    bool getShowStatusbar() const;
 
     // Font
     float getFontsize() const;
@@ -84,6 +85,7 @@ private:
     QDir LastOpenedDir;
     bool bAutomaticImageDownload;  // Enable / disable download of article images
     QString sConfVersion;
+    bool bShowStatusbar;
 
     // Font
     float iFontsize;

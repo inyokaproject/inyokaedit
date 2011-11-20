@@ -43,6 +43,7 @@ CInterWiki::CInterWiki(const QString &sName)
     try
     {
         myXmlSource = new QXmlInputSource(&XmlFile);
+        myHandler = new IWikiLinksParser;
     }
     catch (std::bad_alloc& ba)
     {
@@ -51,7 +52,6 @@ CInterWiki::CInterWiki(const QString &sName)
         exit (-6);
     }
 
-    IWikiLinksParser *myHandler = new IWikiLinksParser;
     myXmlReader.setContentHandler(myHandler);
     myXmlReader.setErrorHandler(myHandler);
 

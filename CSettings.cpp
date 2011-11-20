@@ -63,6 +63,7 @@ void CSettings::readSettings(){
     LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
     bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
     sConfVersion = mySettingsObject->value("ConfVersion", "0.0.0").toString();
+    bShowStatusbar = mySettingsObject->value("ShowStatusbar", true).toBool();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -110,6 +111,7 @@ void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
     mySettingsObject->setValue("LastOpenedDir", LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", bAutomaticImageDownload);
     mySettingsObject->setValue("ConfVersion", sConfVersion);
+    mySettingsObject->setValue("ShowStatusbar", bShowStatusbar);
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -173,6 +175,10 @@ QString CSettings::getConfVersion() const {
 
 void CSettings::setConfVersion(const QString &sNewVersion) {
     sConfVersion = sNewVersion;
+}
+
+bool CSettings::getShowStatusbar() const {
+    return bShowStatusbar;
 }
 
 // ----------------------------------------------------

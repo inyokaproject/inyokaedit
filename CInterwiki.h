@@ -37,6 +37,8 @@
 class CInterWiki
 {
 
+class IWikiLinksParser;
+
 public:
     CInterWiki(const QString &sName);
 
@@ -49,6 +51,7 @@ public:
 
 private:
     QXmlInputSource *myXmlSource;
+    IWikiLinksParser *myHandler;
 
     QStringList sListGroups;
     QStringList sListGroupIcons;

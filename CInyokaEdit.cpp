@@ -24,7 +24,7 @@
 * Purpose:    Main application, gui definition, editor functions
 ***************************************************************************/
 
-#define sVERSION "0.0.7"
+#define sVERSION "0.0.8"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -101,7 +101,9 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
         DownloadStyles(StylesAndImagesDir);
     }
 
-    statusBar()->showMessage(trUtf8("Bereit"));
+    if (mySettings->getShowStatusbar()) {
+        statusBar()->showMessage(trUtf8("Bereit"));
+    }
     if (bLogging) { std::clog << "Created CInyokaEdit" << std::endl; }
 }
 
@@ -244,6 +246,11 @@ void CInyokaEdit::setupEditor()
 
     setCurrentFile("");
     setUnifiedTitleAndToolBarOnMac(true);
+
+    // Hide statusbar, if option is false
+    if (false == mySettings->getShowStatusbar()) {
+        setStatusBar(0);
+    }
 
     // Restore window and toolbar settings
     // Settings have to be restored after toolbars are created!
@@ -494,12 +501,10 @@ void CInyokaEdit::createActions()
 
         // Insert heading
         headingsBox = new QComboBox();
-        headingsBox->setStatusTip(trUtf8("Überschrift einfügen"));
         headingsBox->setStatusTip(trUtf8("Überschrift einfügen - Es werden bis zu 5 Stufen unterstützt"));
 
         // Insert sample
         textmacrosBox = new QComboBox();
-        textmacrosBox->setStatusTip(trUtf8("Textbaustein einfügen"));
         textmacrosBox->setStatusTip(trUtf8("Textbaustein einfügen"));
 
         insertUnderConstructionAct = new QAction(trUtf8("Baustelle"), this);
@@ -1209,7 +1214,9 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 // -----------------------------------------------------------------------------------------------
 void CInyokaEdit::showHtmlPreview(const QString &filename){
 
-    statusBar()->showMessage(trUtf8("Öffne Vorschau"));
+    if (mySettings->getShowStatusbar()) {
+        statusBar()->showMessage(trUtf8("Öffne Vorschau"));
+    }
     myWebview->history()->clear();  // Clear history (clicked links)
 
     if (false == mySettings->getPreviewInEditor()){
@@ -1452,7 +1459,9 @@ void CInyokaEdit::loadFile(const QString &sFileName)
 
     updateRecentFiles(sFileName);
     setCurrentFile(sFileName);
-    statusBar()->showMessage(trUtf8("Datei geladen"), 2000);
+    if (mySettings->getShowStatusbar()) {
+        statusBar()->showMessage(trUtf8("Datei geladen"), 2000);
+    }
 }
 
 bool CInyokaEdit::saveFile(const QString &sFileName)
@@ -1478,7 +1487,9 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
 
     updateRecentFiles(sFileName);
     setCurrentFile(sFileName);
-    statusBar()->showMessage(trUtf8("Datei gespeichert"), 2000);
+    if (mySettings->getShowStatusbar()) {
+        statusBar()->showMessage(trUtf8("Datei gespeichert"), 2000);
+    }
     return true;
 }
 
