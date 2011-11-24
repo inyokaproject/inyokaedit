@@ -507,6 +507,9 @@ void CInyokaEdit::createActions()
         textmacrosBox = new QComboBox();
         textmacrosBox->setStatusTip(trUtf8("Textbaustein einfügen"));
 
+        textformatBox = new QComboBox();
+        textformatBox->setStatusTip(trUtf8("Textformat einfügen"));
+
         insertUnderConstructionAct = new QAction(trUtf8("Baustelle"), this);
         insertUnderConstructionAct->setStatusTip(trUtf8("Baustelle Textbaustein einfügen - Nur in Artikeln zu verwenden, die gerade in der Baustelle erstellt werden"));
         mySigMapTextSamples->setMapping(insertUnderConstructionAct, "Baustelle");
@@ -806,9 +809,9 @@ void CInyokaEdit::createToolBars()
     inyokaeditorBar->addAction(codeblockAct);
 
     // Tool bar for combo boxes (samples and macros)
-    comboboxBar = addToolBar(trUtf8("Vorlagen und Makros"));
-    comboboxBar->setObjectName("comboboxBar");
-    comboboxBar->addWidget(headingsBox);
+    samplesmacrosBar = addToolBar(trUtf8("Vorlagen und Makros"));
+    samplesmacrosBar->setObjectName("samplesmacrosBar");
+    samplesmacrosBar->addWidget(headingsBox);
     // Headings combo box
     headingsBox->addItem(trUtf8("Überschrift"));
     headingsBox->insertSeparator(1);
@@ -821,7 +824,7 @@ void CInyokaEdit::createToolBars()
             this, SLOT(insertDropDownHeading(int)));
 
     // Macros combo box
-    comboboxBar->addWidget(textmacrosBox);
+    samplesmacrosBar->addWidget(textmacrosBox);
     textmacrosBox->addItem(trUtf8("Textbausteine"));
     textmacrosBox->insertSeparator(1);
     textmacrosBox->addItem(trUtf8("Baustelle"));
@@ -838,6 +841,17 @@ void CInyokaEdit::createToolBars()
     textmacrosBox->addItem(trUtf8("Tabelle"));
     connect(textmacrosBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextmacro(int)));
+
+    // Text format combo box
+    samplesmacrosBar->addWidget(textformatBox);
+    textformatBox->addItem(trUtf8("Textformat"));
+    textformatBox->insertSeparator(1);
+    textformatBox->addItem(trUtf8("Verzeichnisse"));
+    textformatBox->addItem(trUtf8("Menüs"));
+    textformatBox->addItem(trUtf8("Dateien"));
+    textformatBox->addItem(trUtf8("Befehl"));
+    connect(textformatBox, SIGNAL(activated(int)),
+            this, SLOT(insertDropDownTextformat(int)));
 
     if (bLogging) { std::clog << "Created toolbars" << std::endl; }
 }
@@ -904,7 +918,7 @@ void CInyokaEdit::insertDropDownHeading(const int iSelection){
             sHeadTag.append("=");
         }
 
-        // Some text is selected
+        // Some text was selected
         if (myEditor->textCursor().selectedText() != "") {
             myEditor->insertPlainText(sHeadTag + " " + myEditor->textCursor().selectedText() + " " + sHeadTag);
         }
@@ -912,10 +926,10 @@ void CInyokaEdit::insertDropDownHeading(const int iSelection){
         else {
             myEditor->insertPlainText(sHeadTag + " " + sHeading + " " + sHeadTag);
 
-            QTextCursor textCursor = myEditor->textCursor();
-            textCursor.setPosition( myEditor->textCursor().position() - sHeading.length() - iSelection);
-            textCursor.setPosition( myEditor->textCursor().position() - iSelection, QTextCursor::KeepAnchor );
-            myEditor->setTextCursor( textCursor );
+            QTextCursor myTextCursor = myEditor->textCursor();
+            myTextCursor.setPosition( myEditor->textCursor().position() - sHeading.length() - iSelection);
+            myTextCursor.setPosition( myEditor->textCursor().position() - iSelection, QTextCursor::KeepAnchor );
+            myEditor->setTextCursor( myTextCursor );
         }
     }
 
@@ -972,6 +986,78 @@ void CInyokaEdit::insertDropDownTextmacro(const int iSelection){
         }
         // Reset selection
         textmacrosBox->setCurrentIndex(0);
+
+        myEditor->setFocus();
+    }
+}
+
+// Text format (combobox in toolbar)
+void CInyokaEdit::insertDropDownTextformat(const int iSelection){
+
+    bool bSelected = false;
+    QString sInsertedText = "";
+    unsigned short iFormatLength;
+
+    // Some text was selected
+    if (myEditor->textCursor().selectedText() != "") {
+        bSelected = true;
+    }
+
+    if (iSelection != 0 && iSelection != 1) {
+        // -1 because of separator (considered as "item")
+        switch (iSelection-1) {
+        default:
+        case 1:  // Folders
+            if (bSelected) {
+                myEditor->insertPlainText("'''" + myEditor->textCursor().selectedText() + "'''");
+            }
+            else {
+                sInsertedText = trUtf8("Verzeichnisse");
+                iFormatLength = 3;
+                myEditor->insertPlainText("'''" + sInsertedText + "'''");
+            }
+            break;
+        case 2:  // Menus
+            if (bSelected) {
+                myEditor->insertPlainText("''\"" + myEditor->textCursor().selectedText() + "\"''");
+            }
+            else {
+                sInsertedText = trUtf8("Menü -> Untermenü -> Menübefehl");
+                iFormatLength = 3;
+                myEditor->insertPlainText("''\"" + sInsertedText + "\"''");
+            }
+            break;
+        case 3:  // Files
+            if (bSelected) {
+                myEditor->insertPlainText("'''" + myEditor->textCursor().selectedText() + "'''");
+            }
+            else {
+                sInsertedText = trUtf8("Dateien");
+                iFormatLength = 3;
+                myEditor->insertPlainText("'''" + sInsertedText + "'''");
+            }
+            break;
+        case 4:  // Commands
+            if (bSelected) {
+                myEditor->insertPlainText("`" + myEditor->textCursor().selectedText() + "`");
+            }
+            else {
+                sInsertedText = trUtf8("Befehl");
+                iFormatLength = 1;
+                myEditor->insertPlainText("`" + sInsertedText + "`");
+            }
+            break;
+        }
+
+        // Reset selection
+        textformatBox->setCurrentIndex(0);
+
+        if (!bSelected) {
+            QTextCursor myTextCursor = myEditor->textCursor();
+            myTextCursor.setPosition( myEditor->textCursor().position() - sInsertedText.length() - iFormatLength);
+            myTextCursor.setPosition( myEditor->textCursor().position() - iFormatLength, QTextCursor::KeepAnchor );
+            myEditor->setTextCursor( myTextCursor );
+        }
 
         myEditor->setFocus();
     }

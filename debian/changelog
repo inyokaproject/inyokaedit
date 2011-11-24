@@ -1,5 +1,7 @@
 inyokaedit (0.0.8~ppa1) oneiric; urgency=low
 
+  * Added combobox for text format
+
   * Possibility to hide statusbar
 
   * Added interwiki links

@@ -90,6 +90,7 @@ private slots:
     // Functions in inyoka toolbar
     void insertDropDownHeading(const int iSelection);
     void insertDropDownTextmacro(const int iSelection);
+    void insertDropDownTextformat(const int iSelection);
 
     // Preview / download toolbar
     void previewInyokaPage(const int iIndex = 999);
@@ -173,7 +174,7 @@ private:
     QToolBar *fileToolBar;
     QToolBar *editToolBar;
     QToolBar *inyokaeditorBar;
-    QToolBar *comboboxBar;
+    QToolBar *samplesmacrosBar;
     QToolBar *previewDlBar;
 
     // File menu / file toolbar
@@ -217,6 +218,7 @@ private:
     // Combobox toolbar
     QComboBox *headingsBox;
     QComboBox *textmacrosBox;
+    QComboBox *textformatBox;
 
     // Text samples menu
     QAction *insertUnderConstructionAct;
