@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
     // Load app translation if it exists
     QTranslator myAppTranslator;
-    myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share" + app.applicationName().toLower() + "/lang");
+    myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share/" + app.applicationName().toLower() + "/lang");
     app.installTranslator(&myAppTranslator);
 
     // New object of InyokaEdit

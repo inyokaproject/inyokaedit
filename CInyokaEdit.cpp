@@ -1167,19 +1167,19 @@ void CInyokaEdit::downloadArticle()
         procDownloadRawtext.start("wget -O - " + mySettings->getInyokaUrl() + "/" + sSitename + "?action=export&format=raw");
 
         if (!procDownloadRawtext.waitForStarted()) {
-            QMessageBox::critical(this, sAppName, tr("Could not start the download of the raw format of article.", "Msg: Problem while downloading article"));
-            procDownloadRawtext.kill();
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
+            QMessageBox::critical(this, sAppName, tr("Could not start the download of the raw format of article.", "Msg: Problem while downloading article"));
+            procDownloadRawtext.kill();
             return;
         }
         if (!procDownloadRawtext.waitForFinished()) {
-            QMessageBox::critical(this, sAppName, tr("Error while downloading raw format of article.", "Msg: Problem while downloading article"));
-            procDownloadRawtext.kill();
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
+            QMessageBox::critical(this, sAppName, tr("Error while downloading raw format of article.", "Msg: Problem while downloading article"));
+            procDownloadRawtext.kill();
             return;
         }
 
@@ -1188,6 +1188,9 @@ void CInyokaEdit::downloadArticle()
 
         // Site does not exist etc.
         if ("" == sTmpArticle) {
+            #ifndef QT_NO_CURSOR
+                QApplication::restoreOverrideCursor();
+            #endif
             QMessageBox::information(this, sAppName, tr("Could not download the article.", "Msg: Can not download raw format"));
             return;
         }
