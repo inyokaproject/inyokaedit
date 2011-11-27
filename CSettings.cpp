@@ -38,8 +38,8 @@ CSettings::CSettings(const QDir SettingsDir, const QString &sName, FindDialog &F
     }
     catch (std::bad_alloc& ba)
     {
-      std::cerr << "ERROR: mySettings - bad_alloc caught: " << ba.what() << std::endl;
-      QMessageBox::critical(0, sName, "Failed to allocate the requested storage space: mySettings");
+      std::cerr << "ERROR: Caught bad_alloc in \"CSettings\": " << ba.what() << std::endl;
+      QMessageBox::critical(0, sName, "Error while memory allocation: CSettings");
       exit (-10);
     }
 }

@@ -32,11 +32,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Lade Styles...</string>
+   <string>Load styles...</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="InyokaEditResources.qrc">
-    <normaloff>:/images/uu-text-editor.png</normaloff>:/images/uu-text-editor.png</iconset>
+   <iconset resource="inyokaeditresources.qrc">
+    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -70,12 +70,12 @@
     </rect>
    </property>
    <property name="text">
-    <string>Abbrechen</string>
+    <string>Cancel</string>
    </property>
   </widget>
  </widget>
  <resources>
-  <include location="InyokaEditResources.qrc"/>
+  <include location="inyokaeditresources.qrc"/>
  </resources>
  <connections/>
 </ui>

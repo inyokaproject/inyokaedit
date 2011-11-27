@@ -119,19 +119,20 @@ bool CParser::genOutput(const QString sActFile)
 
     // No write permission
     if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
-        // Call message box from CInyokaEdit
-        QMessageBox::warning(0, "Warning", trUtf8("Es konnte keine temporäre HTML-Datei erstellt werden!"));
+        QMessageBox::warning(0, "Warning", tr("Could not create temporary HTML file!"), "Msg: Could not create preview html file");
         return false;
     }
 
     // Stream for output in file
     QTextStream tmpoutputstream(&tmphtmlfile);
+    tmpoutputstream.setCodec("UTF-8");
+    tmpoutputstream.setAutoDetectUnicode(true);
 
     // File name
     QFileInfo fi(sActFile);
     QString sFilename;
     if (sActFile == "")
-        sFilename = trUtf8("Unbenannt");
+        sFilename = tr("Untitled", "No file name set");
     else
         sFilename = fi.fileName();
 
@@ -143,7 +144,7 @@ bool CParser::genOutput(const QString sActFile)
                       "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
                       "<head>\n"
                       "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
-                      "<title>InyokaEdit - Vorschau: " + sFilename + "</title>\n"
+                      "<title>InyokaEdit - " + sFilename + "</title>\n"
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/main-sprite.css\" />\n"
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/markup2.css\" />\n"
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/wiki.css\" />\n"
@@ -203,9 +204,9 @@ bool CParser::genOutput(const QString sActFile)
         else if (it.text().trimmed().startsWith("#tag:") || it.text().trimmed().startsWith("# tag:")){
             sWikitags = generateTags(it);
         }
-        // Headings
+        // Headline
         else if (it.text().trimmed().startsWith("=")){
-            sHtmlBody += parseHeading(it);
+            sHtmlBody += parseHeadline(it);
         }
         // Text sample
         else if (it.text().trimmed().startsWith(trUtf8("{{{#!vorlage"), Qt::CaseSensitive)){
@@ -496,13 +497,13 @@ void CParser::replaceKeys(QTextDocument *myRawDoc){
             //    sTmpKey += "<span class=\"key\"><</span>";
             //}
             else if (sListTmpKeys[i] == "sz"){
-                sTmpKey += trUtf8("<span class=\"key\">&szlig;</span>");
+                sTmpKey += QString::fromUtf8("<span class=\"key\">&szlig;</span>");
             }
             else if (sListTmpKeys[i] == "gleich"){
-                sTmpKey += trUtf8("<span class=\"key\">=</span>");
+                sTmpKey += QString::fromUtf8("<span class=\"key\">=</span>");
             }
             else if (sListTmpKeys[i] == "num" || sListTmpKeys[i] == trUtf8("num-taste") || sListTmpKeys[i] == trUtf8("num-Taste") || sListTmpKeys[i] == trUtf8("num-lock-taste") || sListTmpKeys[i] == trUtf8("num-Lock-Taste")){
-                sTmpKey += trUtf8("<span class=\"key\">num &dArr;</span>");
+                sTmpKey += QString::fromUtf8("<span class=\"key\">num &dArr;</span>");
             }
             else if (sListTmpKeys[i] == "fragezeichen"){
                 sTmpKey += "<span class=\"key\">?</span>";
@@ -511,7 +512,7 @@ void CParser::replaceKeys(QTextDocument *myRawDoc){
                 sTmpKey += "<span class=\"key\">Pause</span>";
             }
             else if (sListTmpKeys[i] == "rollen" || sListTmpKeys[i] == "bildlauf"){
-                sTmpKey += trUtf8("<span class=\"key\">&dArr; Rollen</span>");
+                sTmpKey += QString::fromUtf8("<span class=\"key\">&dArr; Rollen</span>");
             }
             else if (sListTmpKeys[i] == "slash"){
                 sTmpKey += "<span class=\"key\">/</span>";
@@ -523,7 +524,7 @@ void CParser::replaceKeys(QTextDocument *myRawDoc){
                 sTmpKey += "<span class=\"key\">PANIC</span>";
             }
             else if (sListTmpKeys[i] == "koelsch"){
-                sTmpKey += trUtf8("<span class=\"key\">K&ouml;lsch</span>");
+                sTmpKey += QString::fromUtf8("<span class=\"key\">K&ouml;lsch</span>");
             }
             else if (sListTmpKeys[i] == "lmt" || sListTmpKeys[i] == "lmb"){
                 sTmpKey += "<img src=\"img/wiki/mouse_left.png\" alt=\"linke Maustaste\" class=\"image-default\" />";
@@ -650,8 +651,8 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
             sMyDoc.replace(myindex, iLength, sOutput);
         }
 
-        // Extern links
-        else if (sTmpLink.startsWith("http://")){
+        // External links
+        else if (sTmpLink.startsWith("http://") || sTmpLink.startsWith("https://")){
             int iSpace = sTmpLink.indexOf(" ", 0);
             QString sHref = sTmpLink;
             sHref.remove(iSpace, sHref.length()-iSpace);
@@ -701,7 +702,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         sListElements[i] = sListElements[i].trimmed();
     }
 
-    // LOT (Baustelle)
+    // Under construction (Baustelle)
     if (sListElements[0] == trUtf8("Baustelle") || sListElements[0] == trUtf8("InArbeit")){
         sOutput = "<div class=\"box workinprogress\">\n"
                   "<h3 class=\"box workinprogress\">";
@@ -847,7 +848,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
     }
     // -----------------------------------------------------------------------------------------------
 
-    // PACKET-MACRO (Pakete-Makro)  -- OBSOLETE --
+    // PACKAGE-LIST (Pakete-Makro)  -- OBSOLETE --
     else if (sListElements[0] == trUtf8("Pakete")){
 
         // Generate output
@@ -929,7 +930,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
     }
     // -----------------------------------------------------------------------------------------------
 
-    // ARCHIVIED (Archiviert)
+    // ARCHIVED (Archiviert)
     else if (sListElements[0] == trUtf8("Archiviert")){
 
         // Generate output
@@ -1004,7 +1005,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
     }
     // -----------------------------------------------------------------------------------------------
 
-    // FOREIGN SOURCE / PACKET / SOFTWARE (Fremdquellen / -pakete / -software
+    // THIRD-PARTY SOURCE / PACKAGE / SOFTWARE WARNING (Fremdquellen / -pakete / -software Warnung)
     else if (sListElements[0] == trUtf8("Fremd")){
         sOutput = "<div class=\"box warning\">\n";
         sOutput += "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n";
@@ -1012,7 +1013,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
         if (sListElements.size() >= 2){
 
-            // Packet
+            // Package
             if (sListElements[1] == trUtf8("Paket")){
                 sOutput += "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
@@ -1068,7 +1069,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
     }
     // -----------------------------------------------------------------------------------------------
 
-    // AUTHENTICATE FOREIGN SOURCE (Fremdquelle authentifizieren)
+    // AUTHENTICATE THIRD-PARTY REPO (Fremdquelle authentifizieren)
     else if (sListElements[0] == trUtf8("Fremdquelle-auth")){
         if (sListElements.size() == 2){
 
@@ -1103,7 +1104,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
     // -----------------------------------------------------------------------------------------------
 
-    // FOREIGN SOURCE (Fremdquelle)
+    // THIRD-PARTY REPO (Fremdquelle)
     else if (sListElements[0] == trUtf8("Fremdquelle")){
         if (sListElements.size() >= 3){
 
@@ -1142,7 +1143,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
     // -----------------------------------------------------------------------------------------------
 
-    // FOREIGN PACKET (Fremdpaket)
+    // THIRD-PARTY PACKAGE (Fremdpaket)
     else if (sListElements[0] == trUtf8("Fremdpaket")){
         if (sListElements.size() >= 3){
 
@@ -1320,12 +1321,12 @@ QString CParser::parseTableOfContents(QTextBlock tabofcontents){
 
     /*
     if (sLine == "" || sLine != "1"){
-        QMessageBox::information(0, "Information", trUtf8("Die Vorschau unterstützt derzeit nur die Anzeige der ersten Überschriftenebene."));
+        QMessageBox::information(0, "Information", tr("The preview of table of contents does not supports sub headlines currently.", "Msg: Table of contents does bot support sub headlines"));
     }
     */
 
     QTextBlock curBlock = rawText->firstBlock();
-    QStringList sListHeadingsLevel1, sListHeadingsLevel1_Links;
+    QStringList sListHeadlineLevel1, sListHeadlineLevel1_Links;
     QString sTmpString;
 
     for(; curBlock.isValid() && !(rawText->lastBlock() < curBlock); curBlock = curBlock.next()) {
@@ -1334,24 +1335,24 @@ QString CParser::parseTableOfContents(QTextBlock tabofcontents){
 
             sTmpString.remove("=");
             sTmpString = sTmpString.trimmed();
-            sListHeadingsLevel1 << sTmpString;
+            sListHeadlineLevel1 << sTmpString;
 
             // Replace characters for valid links (ä, ü, ö, spaces)
             sTmpString.replace(" ", "-");
-            sTmpString.replace(trUtf8("Ä"), "Ae");
-            sTmpString.replace(trUtf8("Ü"), "Ue");
-            sTmpString.replace(trUtf8("Ö"), "Oe");
-            sTmpString.replace(trUtf8("ä"), "ae");
-            sTmpString.replace(trUtf8("ü"), "ue");
-            sTmpString.replace(trUtf8("ö"), "oe");
-            sListHeadingsLevel1_Links << sTmpString;
+            sTmpString.replace(QString::fromUtf8("Ä"), "Ae");
+            sTmpString.replace(QString::fromUtf8("Ü"), "Ue");
+            sTmpString.replace(QString::fromUtf8("Ö"), "Oe");
+            sTmpString.replace(QString::fromUtf8("ä"), "ae");
+            sTmpString.replace(QString::fromUtf8("ü"), "ue");
+            sTmpString.replace(QString::fromUtf8("ö"), "oe");
+            sListHeadlineLevel1_Links << sTmpString;
         }
     }
 
     sOutput = "<div class=\"toc\">\n<div class=\"head\">" + trUtf8("Inhaltsverzeichnis") + "</div>\n<ol class=\"arabic\">\n";
 
-    for (int i = 0; i < sListHeadingsLevel1.size(); i++){
-        sOutput += "<li>\n<a href=\"#" + sListHeadingsLevel1_Links[i] + "\" class=\"crosslink\">" + sListHeadingsLevel1[i] + "</a>\n</li>\n";
+    for (int i = 0; i < sListHeadlineLevel1.size(); i++){
+        sOutput += "<li>\n<a href=\"#" + sListHeadlineLevel1_Links[i] + "\" class=\"crosslink\">" + sListHeadlineLevel1[i] + "</a>\n</li>\n";
     }
 
     sOutput += "</ol>\n</div>\n";
@@ -1393,31 +1394,31 @@ QString CParser::generateTags(QTextBlock actParagraph){
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-// Headings
-QString CParser::parseHeading(QTextBlock actParagraph){
+// Headline
+QString CParser::parseHeadline(QTextBlock actParagraph){
     QString sParagraph = actParagraph.text();
-    QString sOutput("<strong>FOUND WRONG FORMATET HEADING</strong>\n");
+    QString sOutput("<strong>FOUND WRONG FORMATED HEADLINE</strong>\n");
     QString sLink("");
-    unsigned short usHeadingLevel = 5;
+    unsigned short usHeadlineLevel = 5;
 
     // Remove spaces at beginning and end
     sParagraph = sParagraph.trimmed();
 
     // Order is important! First level 5, 4, 3, 2, 1
     if (sParagraph.startsWith("=====")){
-        usHeadingLevel = 5;
+        usHeadlineLevel = 5;
     }
     else if (sParagraph.startsWith("====")){
-        usHeadingLevel = 4;
+        usHeadlineLevel = 4;
     }
     else if (sParagraph.startsWith("===")){
-        usHeadingLevel = 3;
+        usHeadlineLevel = 3;
     }
     else if (sParagraph.startsWith("==")){
-        usHeadingLevel = 2;
+        usHeadlineLevel = 2;
     }
     else if (sParagraph.startsWith("=")){
-        usHeadingLevel = 1;
+        usHeadlineLevel = 1;
     }
 
     // Remove = and spaces at beginning and end
@@ -1427,15 +1428,15 @@ QString CParser::parseHeading(QTextBlock actParagraph){
     // Replace characters for valid link
     sLink = sParagraph;
     sLink.replace(" ", "-");
-    sLink.replace(trUtf8("Ä"), "Ae");
-    sLink.replace(trUtf8("Ü"), "Ue");
-    sLink.replace(trUtf8("Ö"), "Oe");
-    sLink.replace(trUtf8("ä"), "ae");
-    sLink.replace(trUtf8("ü"), "ue");
-    sLink.replace(trUtf8("ö"), "oe");
+    sLink.replace(QString::fromUtf8("Ä"), "Ae");
+    sLink.replace(QString::fromUtf8("Ü"), "Ue");
+    sLink.replace(QString::fromUtf8("Ö"), "Oe");
+    sLink.replace(QString::fromUtf8("ä"), "ae");
+    sLink.replace(QString::fromUtf8("ü"), "ue");
+    sLink.replace(QString::fromUtf8("ö"), "oe");
 
-    // usHeadingLevel + 1 !!!
-    sOutput = "<h" + QString::number(usHeadingLevel+1) + " id=\"" + sLink + "\">" + sParagraph + " <a href=\"#" + sLink + "\" class=\"headerlink\"> &para;</a></h" + QString::number(usHeadingLevel+1) + ">\n";
+    // usHeadlineLevel + 1 !!!
+    sOutput = "<h" + QString::number(usHeadlineLevel+1) + " id=\"" + sLink + "\">" + sParagraph + " <a href=\"#" + sLink + "\" class=\"headerlink\"> &para;</a></h" + QString::number(usHeadlineLevel+1) + ">\n";
 
     return sOutput;
 }
@@ -1767,7 +1768,7 @@ QString CParser::parseCodeBlock(QString actParagraph){
     // Syntax highlighting
     else{
         if (bShowedMsgBoxAlready == false){
-            QMessageBox::information(0, "Information", trUtf8("Die Vorschau von InyokaEdit unterstützt derzeit noch kein Syntax-Highlighting im Codeblock."));
+            QMessageBox::information(0, "Information", tr("The preview does not support syntax highlighting in code block currently."));
             bShowedMsgBoxAlready = true;
         }
 
@@ -2020,12 +2021,12 @@ void CParser::replaceAnchor(QTextDocument *myRawDoc){
 
         // Replace characters for valid links (ä, ü, ö, spaces)
         sTmpAnchor.replace(" ", "-");
-        sTmpAnchor.replace(trUtf8("Ä"), "Ae");
-        sTmpAnchor.replace(trUtf8("Ü"), "Ue");
-        sTmpAnchor.replace(trUtf8("Ö"), "Oe");
-        sTmpAnchor.replace(trUtf8("ä"), "ae");
-        sTmpAnchor.replace(trUtf8("ü"), "ue");
-        sTmpAnchor.replace(trUtf8("ö"), "oe");
+        sTmpAnchor.replace(QString::fromUtf8("Ä"), "Ae");
+        sTmpAnchor.replace(QString::fromUtf8("Ü"), "Ue");
+        sTmpAnchor.replace(QString::fromUtf8("Ö"), "Oe");
+        sTmpAnchor.replace(QString::fromUtf8("ä"), "ae");
+        sTmpAnchor.replace(QString::fromUtf8("ü"), "ue");
+        sTmpAnchor.replace(QString::fromUtf8("ö"), "oe");
 
         sOutput = "<a id=\"" + sTmpAnchor + "\" href=\"#" + sTmpAnchor + "\" class=\"crosslink anchor\"> </a>";
 

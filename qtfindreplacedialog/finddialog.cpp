@@ -10,7 +10,7 @@ FindDialog::FindDialog(QWidget *parent) :
     FindReplaceDialog(parent)
 {
     ui->findReplaceForm->hideReplaceWidgets();
-    setWindowTitle(trUtf8("Suchen"));
+    setWindowTitle(tr("Search", "GUI: Search dialog title"));
 }
 
 FindDialog::~FindDialog()

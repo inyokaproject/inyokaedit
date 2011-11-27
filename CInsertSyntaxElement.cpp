@@ -28,42 +28,48 @@
 
 CInsertSyntaxElement::CInsertSyntaxElement()
 {
+    sSampleBegin_1  = "[[Vorlage(";
+    sSampleBegin_11 = "[[Bild(";
+    sSampleBegin_12 = "[[Inhaltsverzeichnis(";
+    sSampleEnd_1    = ")]]\n";
+    sSampleBegin_2  = "{{{#!vorlage ";
+    sSampleEnd_2    = "}}}\n";
 }
 
 std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElement, const std::string sSelectedText){
 
     // Toolbar buttons
-    if (sElement == "Fett"){
+    if (sElement == "boldAct"){
         if (sSelectedText == "")
             return "'''Fett'''";
         else
             return "'''" + sSelectedText + "'''";
     }
-    else if (sElement == "Kursiv"){
+    else if (sElement == "italicAct"){
         if (sSelectedText == "")
             return "''Kursiv''";
         else
             return "''" + sSelectedText + "''";
     }
-    else if (sElement == "Monotype"){
+    else if (sElement == "monotypeAct"){
         if (sSelectedText == "")
             return "`Monotype`";
         else
             return "`" + sSelectedText + "`";
     }
-    else if (sElement == "Wikilink"){
+    else if (sElement == "wikilinkAct"){
         if (sSelectedText == "")
             return "[:Seitenname:]";
         else
             return "[:" + sSelectedText + ":]";
     }
-    else if (sElement == "ExternerLink"){
+    else if (sElement == "externalLinkAct"){
         if (sSelectedText == "")
             return "[http://www.example.org/]";
         else
             return "[" + sSelectedText + "]";
     }
-    else if (sElement == "Codeblock"){
+    else if (sElement == "codeblockAct"){
         if (sSelectedText == "")
             return "{{{\nCode\n}}}";
         else
@@ -71,21 +77,21 @@ std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElemen
     }
 
     // Menu / dropdown menu items
-    else if (sElement == "Baustelle"){
+    else if (sElement == "insertUnderConstructionAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Baustelle, Datum, \"Bearbeiter\")]]\n";
+            return sSampleBegin_1 + "Baustelle, Datum, \"Bearbeiter\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Baustelle, " + sSelectedText + ")]]";
+            return sSampleBegin_1 + "Baustelle, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Getestet"){
+    else if (sElement == "insertTestedForAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Getestet, )]]\n";
+            return sSampleBegin_1 + "Getestet, " + sSampleEnd_1;
         else
-            return "[[Vorlage(Getestet, " + sSelectedText + ")]]";
+            return sSampleBegin_1 + "Getestet, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Wissensblock"){
+    else if (sElement == "insertKnowledgeAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Wissen\n"
+            return sSampleBegin_2 + "Wissen\n"
                     "[:Anwendungen_hinzufügen:Anwendungen hinzufügen]\n"
                     "[:Pakete installieren: Installation von Programmen]\n"
                     "[:Paketquellen freischalten: Bearbeiten von Paketquellen]\n"
@@ -98,171 +104,167 @@ std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElemen
                     "[:Autostart: Automatischer Start von Programmen]\n"
                     "[:Menüeditor: Programme zum Menü hinzufügen]\n"
                     "[:sudo: Root-Rechte]\n"
-                    "[:Rechte: Rechte für Dateien und Ordner ändern]\n"
-                    "}}}\n";
+                    "[:Rechte: Rechte für Dateien und Ordner ändern]\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Wissen\n, " + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Wissen\n, " + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "Inhaltsverzeichnis"){
+    else if (sElement == "insertTableOfContentsAct"){
         if (sSelectedText == "")
-            return "[[Inhaltsverzeichnis(2)]]\n";
+            return sSampleBegin_12 + "2" + sSampleEnd_1;
         else
-            return "[[Inhaltsverzeichnis(" + sSelectedText + ")]]";
+            return sSampleBegin_12 + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Expertenmarkierung"){
+    else if (sElement == "insertAdvancedAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fortgeschritten)]]\n";
+            return sSampleBegin_1 + "Fortgeschritten" + sSampleEnd_1;
         else
-            return sSelectedText + "[[Vorlage(Fortgeschritten)]]";
+            return sSelectedText + sSampleBegin_1 + "Fortgeschritten" + sSampleEnd_1;
     }
-    else if (sElement == "Preis"){
+    else if (sElement == "insertAwardAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Award, \"Preis\", Link, Preiskategorie, \"Preisträger\")]]\n";
+            return sSampleBegin_1 + "Award, \"Preis\", Link, Preiskategorie, \"Preisträger\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Award, " + sSelectedText + ")]]";
+            return sSampleBegin_1 + "Award, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Shellbefehl"){
+    else if (sElement == "insertBashCommandAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Befehl\nShell-Befehl\n}}}\n";
+            return sSampleBegin_2 + "Befehl\nShell-Befehl\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Befehl\n" + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Befehl\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "Hinweisbox"){
+    else if (sElement == "insertNoticeAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Hinweis\nHinweistext\n}}}\n";
+            return sSampleBegin_2 + "Hinweis\nHinweistext\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Hinweis\n" + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Hinweis\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "Warnbox"){
+    else if (sElement == "insertWarningAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Warnung\nWarnungstext\n}}}\n";
+            return sSampleBegin_2 + "Warnung\nWarnungstext\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Warnung\n" + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Warnung\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "Experteninfo"){
+    else if (sElement == "insertExpertsAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Experten\nHintergrundinformation\n}}}\n";
+            return sSampleBegin_2 + "Experten\nHintergrundinformation\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Experten\n" + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Experten\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "EinfachesBild"){
+    else if (sElement == "imageAct"){
         if (sSelectedText == "")
-            return "[[Bild(Bild.png, 200 (optional), left|right (optional))]]";
+            return sSampleBegin_11 + "Bild.png, 200 (optional), left|right (optional)" + sSampleEnd_1;
         else
-            return "[[Bild(" + sSelectedText + ")]]";
+            return sSampleBegin_11 + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Bildunterschrift"){
+    else if (sElement == "insertImageUnderlineAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style(optional) )]]\n";
+            return sSampleBegin_1 + "Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style(optional) " + sSampleEnd_1;
         else
-            return "[[Vorlage(Bildunterschrift, " + sSelectedText + ")]]";
+            return sSampleBegin_1 + "Bildunterschrift, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "BildersammlungUmbruch"){
+    else if (sElement == "insertImageCollectionAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Bildersammlung, Bildhöhe (optional)\n"
+            return sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n"
                     "Bild1.jpg, \"Beschreibung 1\"\n"
                     "Bild2.png, \"Beschreibung 2\"\n"
-                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n"
-                    ")]]\n";
+                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + sSampleEnd_1;
         else
-            return "[[Vorlage(Bildersammlung, Bildhöhe (optional)\n" + sSelectedText + "\n)]]";
+            return sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n" + sSelectedText + "\n" + sSampleEnd_1;
     }
-    else if (sElement == "BildersammlungFliesstext"){
+    else if (sElement == "insertImageCollectionInTextAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Bildersammlung, left|right, Bildhöhe (optional)\n"
+            return sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n"
                     "Bild1.jpg, \"Beschreibung 1\"\n"
                     "Bild2.png, \"Beschreibung 2\"\n"
-                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n"
-                    ")]]\n";
+                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + sSampleEnd_1;
         else
-            return "[[Vorlage(Bildersammlung, left|right, Bildhöhe (optional)\n" + sSelectedText + "\n)]]";
+            return sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n" + sSelectedText + "\n" + sSampleEnd_1;
     }
-    else if (sElement == "Paketemakro"){
+    else if (sElement == "insertPackageListAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Pakete, paket1, paket2)]]\n";
+            return sSampleBegin_1 + "Pakete, paket1, paket2" + sSampleEnd_1;
         else
-            return "[[Vorlage(Pakete, " + sSelectedText + ")]]\n";
+            return sSampleBegin_1 + "Pakete, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Paketinstallation"){
+    else if (sElement == "insertPackageInstallAct"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Paketinstallation\n"
+            return sSampleBegin_2 + "Paketinstallation\n"
                     "paketname1, Information (optional)\n"
-                    "paketname2, Information (optional)\n"
-                    "}}}\n";
+                    "paketname2, Information (optional)\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Paketinstallation\n" + sSelectedText + "\n}}}\n";
+            return sSampleBegin_2 + "Paketinstallation\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
-    else if (sElement == "Ppavorlage"){
+    else if (sElement == "insertPPAAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(PPA, PPA-Besitzer, PPA-Name)]]\n";
+            return sSampleBegin_1 + "PPA, PPA-Besitzer, PPA-Name" + sSampleEnd_1;
         else
-            return "[[Vorlage(PPA, " + sSelectedText + ")]]\n";
+            return sSampleBegin_1 + "PPA, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Fremdquellenvorlage"){
+    else if (sElement == "insertThirdPartyRepoAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremdquelle, URL zur Fremdquelle, Ubuntuversionen (optional), Komponent/en (optional) )]]\n";
+            return sSampleBegin_1 + "Fremdquelle, URL zur Fremdquelle, Ubuntuversionen (optional), Komponent/en (optional) " + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremdquelle, " + sSelectedText + ")]]\n";
+            return sSampleBegin_1 + "Fremdquelle, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Fremdquellenauth"){
+    else if (sElement == "insertThirdPartyRepoAuthAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer ODER Link zum PGP-Schlüssel)]]\n";
+            return sSampleBegin_1 + "Fremdquelle-auth, key PGP-Schlüsselnummer ODER Link zum PGP-Schlüssel" + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremdquelle-auth, " + sSelectedText + ")]]\n";
+            return sSampleBegin_1 + "Fremdquelle-auth, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Fremdpaket"){
+    else if (sElement == "insertThirdPartyPackageAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremdpaket, (Projekthoster, Projektname) ODER (\"Anbieter\", URL Downloadübersicht), Ubuntuversion/en (optional) )]]\n";
+            return sSampleBegin_1 + "Fremdpaket, (Projekthoster, Projektname) ODER (\"Anbieter\", URL Downloadübersicht), Ubuntuversion/en (optional) " + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremdpaket, " + sSelectedText + ")]]\n";
+            return sSampleBegin_1 + "Fremdpaket, " + sSelectedText + sSampleEnd_1;
     }
-    else if (sElement == "Ausbaufaehig"){
+    else if (sElement == "insertImprovableAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Ausbaufähig, \"Begründung\")]]\n";
+            return sSampleBegin_1 + "Ausbaufähig, \"Begründung\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Ausbaufähig, \"" + sSelectedText + "\")]]\n";
+            return sSampleBegin_1 + "Ausbaufähig, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if (sElement == "Fehlerhaft"){
+    else if (sElement == "insertFixMeAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fehlerhaft, \"Begründung\")]]\n";
+            return sSampleBegin_1 + "Fehlerhaft, \"Begründung\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Fehlerhaft, \"" + sSelectedText + "\")]]\n";
+            return sSampleBegin_1 + "Fehlerhaft, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if (sElement == "Verlassen"){
+    else if (sElement == "insertLeftAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Verlassen, \"Begründung\")]]\n";
+            return sSampleBegin_1 + "Verlassen, \"Begründung\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Verlassen, \"" + sSelectedText + "\")]]\n";
+            return sSampleBegin_1 + "Verlassen, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if(sElement == "Fremdpaketewarnung"){
+    else if(sElement == "insertThirdPartyPackageWarningAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremd, Paket, \"Kommentar\")]]";
+            return sSampleBegin_1 + "Fremd, Paket, \"Kommentar\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremd, Paket, \"" + sSelectedText + "\")]]";
+            return sSampleBegin_1 + "Fremd, Paket, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if(sElement == "Fremdquellewarnung"){
+    else if(sElement == "insertThirdPartyRepoWarningAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremd, Quelle, \"Kommentar\")]]";
+            return sSampleBegin_1 + "Fremd, Quelle, \"Kommentar\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremd, Quelle, \"" + sSelectedText + "\")]]";
+            return sSampleBegin_1 + "Fremd, Quelle, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if(sElement == "Fremdsoftwarewarnung"){
+    else if(sElement == "insertThirdPartySoftwareWarningAct"){
         if (sSelectedText == "")
-            return "[[Vorlage(Fremd, Software, \"Kommentar\")]]";
+            return sSampleBegin_1 + "Fremd, Software, \"Kommentar\"" + sSampleEnd_1;
         else
-            return "[[Vorlage(Fremd, Software, \"" + sSelectedText + "\")]]";
+            return sSampleBegin_1 + "Fremd, Software, \"" + sSelectedText + "\"" + sSampleEnd_1;
     }
-    else if(sElement == "Tasten"){
+    else if(sElement == "Keys"){
         if (sSelectedText == "")
-            return "[[Vorlage(Tasten, )]]";
+            return sSampleBegin_1 + "Tasten, " + sSampleEnd_1;
         else
-            return "[[Vorlage(Tasten, " + sSelectedText + ")]]";
+            return sSampleBegin_1 + "Tasten, " + sSelectedText + sSampleEnd_1;
     }
-    else if(sElement == "Tabelle"){
+    else if(sElement == "Table"){
         if (sSelectedText == "")
-            return "{{{#!vorlage Tabelle\n[:Wiki/Syntax/Tabellen:]\n}}}";
+            return sSampleBegin_2 + "Tabelle\n[:Wiki/Syntax/Tabellen:]\n" + sSampleEnd_2;
         else
-            return "{{{#!vorlage Tabelle\n" + sSelectedText + "\n}}}";
+            return sSampleBegin_2 + "Tabelle\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
     // Unkonwn element
     else

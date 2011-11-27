@@ -158,7 +158,7 @@ void FindReplaceForm::find(bool next) {
     if (result) {
         showError("");
     } else {
-        showError(trUtf8("Gesuchter Ausdruck nicht gefunden"));
+        showError(tr("Could not find your expression"));
         // move to the beginning of the document for the next find
         textCursor.setPosition(0);
         textEdit->setTextCursor(textCursor);
@@ -181,7 +181,7 @@ void FindReplaceForm::replaceAll() {
         find();
         i++;
     }
-    showMessage(trUtf8("Ersetzte Wörter: %1").arg(i));
+    showMessage(tr("Replaced expressions: %1", "GUI: Search and replace dialog").arg(i));
 }
 
 void FindReplaceForm::writeSettings(QSettings &settings, const QString &prefix) {

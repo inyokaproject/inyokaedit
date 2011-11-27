@@ -88,7 +88,7 @@ private slots:
     void documentWasModified();
 
     // Functions in inyoka toolbar
-    void insertDropDownHeading(const int iSelection);
+    void insertDropDownHeadline(const int iSelection);
     void insertDropDownTextmacro(const int iSelection);
     void insertDropDownTextformat(const int iSelection);
 
@@ -173,9 +173,9 @@ private:
 
     QToolBar *fileToolBar;
     QToolBar *editToolBar;
+    QToolBar *previewDlBar;
     QToolBar *inyokaeditorBar;
     QToolBar *samplesmacrosBar;
-    QToolBar *previewDlBar;
 
     // File menu / file toolbar
     QAction *newAct;
@@ -207,7 +207,7 @@ private:
     QAction *italicAct;
     QAction *monotypeAct;
     QAction *wikilinkAct;
-    QAction *externLinkAct;
+    QAction *externalLinkAct;
     QAction *imageAct;
     QAction *codeblockAct;
 
@@ -216,41 +216,41 @@ private:
     QAction *downloadArticleAct;
 
     // Combobox toolbar
-    QComboBox *headingsBox;
+    QComboBox *headlineBox;
     QComboBox *textmacrosBox;
     QComboBox *textformatBox;
 
     // Text samples menu
     QAction *insertUnderConstructionAct;
-    QAction *insertTestedAct;
+    QAction *insertTestedForAct;
     QAction *insertKnowledgeAct;
-    QAction *insertTableOfContentAct;
-    QAction *insertExpertboxAct;
-    QAction *insertAwardboxAct;
+    QAction *insertTableOfContentsAct;
+    QAction *insertAdvancedAct;
+    QAction *insertAwardAct;
 
-    QAction *insertCommandAct;
-    QAction *insertHintAct;
+    QAction *insertBashCommandAct;
+    QAction *insertNoticeAct;
     QAction *insertWarningAct;
-    QAction *insertExpertinfoAct;
+    QAction *insertExpertsAct;
 
     QAction *insertImageAct;
-    QAction *insertImageSubscriptionAct;
+    QAction *insertImageUnderlineAct;
     QAction *insertImageCollectionAct;
     QAction *insertImageCollectionInTextAct;
 
-    QAction *insertPackageMacroAct;
+    QAction *insertPackageListAct;
     QAction *insertPackageInstallAct;
-    QAction *insertPpaSampleAct;
-    QAction *insertForeignSourceSampleAct;
-    QAction *insertForeignAuthSampleAct;
-    QAction *insertForeignPackageSampleAct;
+    QAction *insertPPAAct;
+    QAction *insertThirdPartyRepoAct;
+    QAction *insertThirdPartyRepoAuthAct;
+    QAction *insertThirdPartyPackageAct;
 
-    QAction *insertExpandableAct;
-    QAction *insertFaultyAct;
+    QAction *insertImprovableAct;
+    QAction *insertFixMeAct;
     QAction *insertLeftAct;
-    QAction *insertPackageWarningAct;
-    QAction *insertSourceWaringAct;
-    QAction *insertSoftwareWarningAct;
+    QAction *insertThirdPartyPackageWarningAct;
+    QAction *insertThirdPartyRepoWarningAct;
+    QAction *insertThirdPartySoftwareWarningAct;
 
     QSignalMapper *mySigMapTextSamples;
 

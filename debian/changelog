@@ -1,12 +1,14 @@
 inyokaedit (0.0.8~ppa1) oneiric; urgency=low
 
+  * Translated all GUI strings into english, added german translation
+
   * Added combobox for text format
 
   * Possibility to hide statusbar
 
   * Added interwiki links
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 20 Nov 2011 20:16:12 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 27 Nov 2011 22:50:12 +0200
 
 inyokaedit (0.0.7~ppa1) oneiric; urgency=low
 

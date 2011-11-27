@@ -71,8 +71,8 @@ private:
     QString parseTableOfContents(QTextBlock tabofcontents);
     // Generate tags (#tag: ...)
     QString generateTags(QTextBlock actParagraph);
-    // Parse heading
-    QString parseHeading(QTextBlock actParagraph);
+    // Parse headline
+    QString parseHeadline(QTextBlock actParagraph);
     // Parse text samples ({{{#!vorlage)
     QString parseTextSample(QString actParagraph);
     // Parse code blocks ({{{ and {{{#!code)

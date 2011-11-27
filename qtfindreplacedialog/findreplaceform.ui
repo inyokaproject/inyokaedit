@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Suchen</string>
+   <string>Search</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../inyokaeditresources.qrc">
+    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -23,7 +27,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Suchen</string>
+            <string>Search:</string>
            </property>
            <property name="buddy">
             <cstring>textToFind</cstring>
@@ -36,7 +40,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="replaceLabel">
            <property name="text">
-            <string>Ersetzen:</string>
+            <string>Replace:</string>
            </property>
            <property name="buddy">
             <cstring>textToReplace</cstring>
@@ -62,13 +66,13 @@
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Suchrichtung</string>
+          <string>Search direction</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QRadioButton" name="downRadioButton">
             <property name="text">
-             <string>Vorwärts</string>
+             <string>Forward</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -78,7 +82,7 @@
           <item>
            <widget class="QRadioButton" name="upRadioButton">
             <property name="text">
-             <string>Rückwärts</string>
+             <string>Backward</string>
             </property>
            </widget>
           </item>
@@ -88,20 +92,20 @@
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Optionen</string>
+          <string>Options</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QCheckBox" name="caseCheckBox">
             <property name="text">
-             <string>Groß-/Kleinschreibung</string>
+             <string>Case sensitive</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="wholeCheckBox">
             <property name="text">
-             <string>Nur ganze Wörter</string>
+             <string>Match cases</string>
             </property>
            </widget>
           </item>
@@ -111,14 +115,14 @@
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Der Suchtext kann als regulärer Ausdruck interpretiert werden.&lt;/span&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Searched expressions can be interpreted as regular expression.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans'; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Informationen zur Syntax von regulären Ausdrücken gibt es bspw. hier:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt;&quot;&gt;Syntax information for regular expressions can be found here:&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://doc.trolltech.com/qregexp.html&quot;&gt;&lt;span style=&quot; font-family:'Sans'; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://doc.trolltech.com/qregexp.html&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
-             <string>Regulärer Ausdruck</string>
+             <string>Regular expressions</string>
             </property>
            </widget>
           </item>
@@ -140,14 +144,14 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Suchen</string>
+        <string>Search</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="closeButton">
        <property name="text">
-        <string>Schließen</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
@@ -157,7 +161,7 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Ersetzen</string>
+        <string>Replace</string>
        </property>
       </widget>
      </item>
@@ -167,7 +171,7 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Alle ersetzen</string>
+        <string>Replace all</string>
        </property>
       </widget>
      </item>
@@ -199,6 +203,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>findButton</tabstop>
   <tabstop>closeButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../inyokaeditresources.qrc"/>
+ </resources>
  <connections/>
 </ui>

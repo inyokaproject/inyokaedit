@@ -36,6 +36,13 @@ public:
 
     std::string GetElementInyokaCode(const std::string sElement, const std::string sSelectedText);
 
+private:
+    std::string sSampleBegin_1;
+    std::string sSampleBegin_11;
+    std::string sSampleBegin_12;
+    std::string sSampleEnd_1;
+    std::string sSampleBegin_2;
+    std::string sSampleEnd_2;
 };
 
 #endif // CINSERTSYNTAXELEMENT_H

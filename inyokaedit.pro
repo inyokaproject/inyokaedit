@@ -31,3 +31,8 @@
  FORMS      += qtfindreplacedialog/findreplaceform.ui \
                qtfindreplacedialog/findreplacedialog.ui \
                CProgressDialog.ui
+
+CODECFORSRC  = UTF-8
+CODECFORTR   = UTF-8
+
+TRANSLATIONS = lang/inyokaedit_de.ts

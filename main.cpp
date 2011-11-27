@@ -42,10 +42,19 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName("InyokaEdit");
 
+    QTextCodec::setCodecForCStrings( QTextCodec::codecForName( "UTF-8" ) );
+    QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
+    QTextCodec::setCodecForTr( QTextCodec::codecForName("UTF-8") );
+
     // Load global translation
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
+
+    // Load app translation if it exists
+    QTranslator myAppTranslator;
+    myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share" + app.applicationName().toLower() + "/lang");
+    app.installTranslator(&myAppTranslator);
 
     // New object of InyokaEdit
     CInyokaEdit myInyokaEdit(app.applicationName(), app.argc(), app.argv());

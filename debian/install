@@ -5,6 +5,7 @@ inyokaedit /usr/bin
 man/de/man1/inyokaedit.1.gz /usr/share/man/de/man1
 apport/inyokaedit-crashdb.conf /etc/apport/crashdb.conf.d
 apport/source_inyokaedit.py /usr/share/apport/package-hooks
+lang/inyokaedit_de.qm /usr/share/inyokaedit/lang
 images/interwiki/askubuntu.png /usr/share/inyokaedit/iWikiLinks
 images/interwiki/bug.png /usr/share/inyokaedit/iWikiLinks
 images/interwiki/canonical.png /usr/share/inyokaedit/iWikiLinks

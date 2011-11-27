@@ -44,7 +44,8 @@ CProgressDialog::CProgressDialog(const QString &sScriptname, const QString &sApp
     }
     catch (std::bad_alloc& ba)
     {
-      std::cerr << "ERROR: myProc - bad_alloc caught: " << ba.what() << std::endl;
+      std::cerr << "ERROR: Caught bad_alloc in \"CProgressDialog\": " << ba.what() << std::endl;
+      QMessageBox::critical(0, sAppname, "Error while memory allocation: CProgressDialog");
       exit (-1);
     }
     myProc->start(sScriptname, QStringList() << sDownloadFolder);
