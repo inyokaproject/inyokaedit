@@ -158,7 +158,7 @@ std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElemen
     }
     else if (sElement == "insertImageUnderlineAct"){
         if (sSelectedText == "")
-            return sSampleBegin_1 + "Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style(optional) " + sSampleEnd_1;
+            return sSampleBegin_1 + "Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style (optional) " + sSampleEnd_1;
         else
             return sSampleBegin_1 + "Bildunterschrift, " + sSelectedText + sSampleEnd_1;
     }

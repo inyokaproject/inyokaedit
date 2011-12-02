@@ -261,8 +261,9 @@ bool CParser::genOutput(const QString sActFile)
         // Everything else
         else{
             // Filter comments (##)
-            if (!(it.text().trimmed().startsWith("##")))
-                sHtmlBody += "<p>" + it.text() + "</p>";
+            if (!(it.text().trimmed().startsWith("##")) && it.text() != "" && it.text() != "\n") {
+                sHtmlBody += "<p>" + it.text() + "</p>\n";
+            }
         }
     }
 
@@ -1934,6 +1935,7 @@ void CParser::replaceImages(QTextDocument *myRawDoc){
         sListTmpImageInfo << sTmpImage.split(",");
 
         sImageUrl = sListTmpImageInfo[0].trimmed();
+        sImageUrl = TmpFileDir.absolutePath() + "/" + sImageUrl;
         for (int i = 1; i < sListTmpImageInfo.length(); i++){
             // Found integer (width)
             if (sListTmpImageInfo[i].trimmed().toUInt() != 0){
@@ -1982,7 +1984,7 @@ void CParser::replaceImages(QTextDocument *myRawDoc){
         }
 
         // HTML code
-        sTmpImage = "<a href=\"" + sImageUrl + "\" class=\"crosslink\">\n";
+        sTmpImage = "<a href=\"" + sImageUrl + "\" class=\"crosslink\">";
         sTmpImage += "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl + "\" height=\"" + QString::number(tmpH) + "\" width=\"" + QString::number(tmpW) + "\" ";
         sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
 
