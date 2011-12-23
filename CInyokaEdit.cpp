@@ -30,10 +30,16 @@
 #include <QtWebKit/QWebView>
 
 #include "CInyokaEdit.h"
+#include "ui_CInyokaEdit.h"
 
-CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
-    : myCompleter(0), sAppName(name)
+CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::CInyokaEdit),
+    myCompleter(0),
+    sAppName(name)
 {
+    ui->setupUi(this);
+
     bLogging = false;
 
     // Check for command line arguments
@@ -105,47 +111,15 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv)
         statusBar()->showMessage(tr("Ready", "GUI: Statusbar"));
     }
     if (bLogging) { std::clog << "Created CInyokaEdit" << std::endl; }
+
+
+
+    ui->aboutAct->setText(ui->aboutAct->text() + " " + sAppName);
 }
 
-// -----------------------------------------------------------------------------------------------
-
-CInyokaEdit::~CInyokaEdit(){
-
-    if (myInsertSyntaxElement != NULL) { delete myInsertSyntaxElement; }
-    myInsertSyntaxElement = NULL;
-    if (bLogging) { std::clog << "Deleted myInsertSyntaxElement" << std::endl; }
-
-    if (myWebview != NULL) { delete myWebview; }
-    myWebview = NULL;
-    if (bLogging) { std::clog << "Deleted myWebview" << std::endl; }
-
-    if (myTabwidget != NULL) { delete myTabwidget; }
-    myTabwidget = NULL;
-    if (bLogging) { std::clog << "Deleted myTabwidget" << std::endl; }
-
-    if (myParser != NULL) { delete myParser; }
-    myParser = NULL;
-    if (bLogging) { std::clog << "Deleted myParser" << std::endl; }
-
-    if (myCompleter != NULL) { delete myCompleter; }
-    myCompleter = NULL;
-    if (bLogging) { std::clog << "Deleted myCompleter" << std::endl; }
-
-    if (mySettings != NULL) { delete mySettings; }
-    mySettings = NULL;
-    if (bLogging) { std::clog << "Deleted mySettings" << std::endl; }
-
-    if (m_findReplaceDialog != NULL) { delete m_findReplaceDialog; }
-    m_findReplaceDialog = NULL;
-    if (m_findDialog != NULL) { delete m_findDialog; }
-    m_findDialog = NULL;
-    if (bLogging) { std::clog << "Deleted find/replace dialogs" << std::endl; }
-
-//    delete myEditor;
-//    myEditor = NULL;
-//    delete myHighlighter;
-//    myHighlighter = NULL;
-    if (bLogging) { std::clog << "Deleted CInyokaEdit" << std::endl; }
+CInyokaEdit::~CInyokaEdit()
+{
+    delete ui;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -180,8 +154,11 @@ void CInyokaEdit::createObjects() {
         myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), StylesAndImagesDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
         if (bLogging) { std::clog << "Created myParser" << std::endl; }
 
-        myTabwidget = new QTabWidget;
-        if (bLogging) { std::clog << "Created myTabwidget" << std::endl; }
+        //myTabwidgetDocuments = new QTabWidget;
+        //if (bLogging) { std::clog << "Created myTabwidgetDocuments" << std::endl; }
+        myTabwidgetRawPreview = new QTabWidget;
+        if (bLogging) { std::clog << "Created myTabwidgetRawPreview" << std::endl; }
+
         myWebview = new QWebView(this);
         if (bLogging) { std::clog << "Created myWebview" << std::endl; }
 
@@ -191,7 +168,7 @@ void CInyokaEdit::createObjects() {
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createObjects()\": " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "createActions()");
+        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - createObjects()");
         exit (-1);
     }
 
@@ -233,13 +210,23 @@ void CInyokaEdit::setupEditor()
     connect(myParser, SIGNAL(callShowPreview(QString)),
             this, SLOT(showHtmlPreview(QString)));
 
-    setCentralWidget(myTabwidget);
-    myTabwidget->setTabPosition(QTabWidget::West);
-    myTabwidget->addTab(myEditor, tr("Raw format", "GUI: Vertical tab"));
+    /*
+    setCentralWidget(myTabwidgetDocuments);
+    myTabwidgetDocuments->setTabPosition(QTabWidget::North);
+    myTabwidgetDocuments->setTabsClosable(true);
+    myTabwidgetDocuments->setMovable(true);
+    myTabwidgetDocuments->setDocumentMode(true);
 
-    myTabwidget->addTab(myWebview, tr("Preview", "GUI: Vertical tab"));
+    myTabwidgetDocuments->addTab(myTabwidgetRawPreview, tr("Untitled"));
+    */
+
+    setCentralWidget(myTabwidgetRawPreview);
+    myTabwidgetRawPreview->setTabPosition(QTabWidget::West);
+    myTabwidgetRawPreview->addTab(myEditor, tr("Raw format"));
+
+    myTabwidgetRawPreview->addTab(myWebview, tr("Preview"));
     if (false == mySettings->getPreviewInEditor())
-        myTabwidget->setTabEnabled(myTabwidget->indexOf(myWebview), false);
+        myTabwidgetRawPreview->setTabEnabled(myTabwidgetRawPreview->indexOf(myWebview), false);
 
     connect(myWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
@@ -269,16 +256,12 @@ void CInyokaEdit::createActions()
     // File menu
     try {
         // New file
-        newAct = new QAction(QIcon(":/images/document-new.png"), tr("&New", "GUI: File menu"), this);
-        newAct->setShortcuts(QKeySequence::New);
-        newAct->setStatusTip(tr("Create a new file", "GUI: Status tip"));
-        connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
+        ui->newAct->setShortcuts(QKeySequence::New);
+        connect(ui->newAct, SIGNAL(triggered()), this, SLOT(newFile()));
 
         // Open file
-        openAct = new QAction(QIcon(":/images/document-open.png"), tr("&Open...", "GUI: File menu"), this);
-        openAct->setShortcuts(QKeySequence::Open);
-        openAct->setStatusTip(tr("Open a file", "GUI: Status tip"));
-        connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+        ui->openAct->setShortcuts(QKeySequence::Open);
+        connect(ui->openAct, SIGNAL(triggered()), this, SLOT(open()));
 
         // Open recent files
         mySigMapLastOpenedFiles = new QSignalMapper(this);
@@ -296,362 +279,237 @@ void CInyokaEdit::createActions()
         connect(mySigMapLastOpenedFiles, SIGNAL(mapped(int)), this, SLOT(openRecentFile(int)));
 
         // Clear recent files list
-        clearRecentFilesAct = new QAction(tr("Clear list", "GUI: File menu"), this);
+        clearRecentFilesAct = new QAction(tr("Clear list"), this);
         connect(clearRecentFilesAct, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
 
         // Save file
-        saveAct = new QAction(QIcon(":/images/document-save.png"), tr("&Save", "GUI: File menu"), this);
-        saveAct->setShortcuts(QKeySequence::Save);
-        saveAct->setStatusTip(tr("Save current document", "GUI: Status tip"));
-        connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+        ui->saveAct->setShortcuts(QKeySequence::Save);
+        connect(ui->saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
         // Save file as...
-        saveAsAct = new QAction(tr("Save as...", "GUI: File menu"), this);
-        saveAsAct->setShortcuts(QKeySequence::SaveAs);
-        saveAsAct->setStatusTip(tr("Save current document under a new name", "GUI: Status tip"));
-        connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
+        ui->saveAsAct->setShortcuts(QKeySequence::SaveAs);
+        connect(ui->saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
 
         // Exit application
-        exitAct = new QAction(tr("Quit", "GUI: File menu"), this);
-        exitAct->setShortcuts(QKeySequence::Quit);
-        exitAct->setStatusTip(tr("Quit the application", "GUI: File menu"));
-        connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+        ui->exitAct->setShortcuts(QKeySequence::Quit);
+        connect(ui->exitAct, SIGNAL(triggered()), this, SLOT(close()));
     }
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / file menu: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / file menu");
+        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / file menu");
         exit (-2);
     }
 
-    // Edit menu
-    try {
-        // Edit: Cut
-        cutAct = new QAction(QIcon(":/images/edit-cut.png"), tr("Cut", "GUI: Edit menu"), this);
-        cutAct->setShortcuts(QKeySequence::Cut);
-        cutAct->setStatusTip(tr("Cut highlighted text", "GUI: Status tip"));
-        connect(cutAct, SIGNAL(triggered()), myEditor, SLOT(cut()));
+    // ---------------------------------------------------------------------------------------------
+    // EDIT MENU
 
-        // Edit: Copy
-        copyAct = new QAction(QIcon(":/images/edit-copy.png"), tr("Copy", "GUI: Edit menu"), this);
-        copyAct->setShortcuts(QKeySequence::Copy);
-        copyAct->setStatusTip(tr("Copy highlighted text to clipboard", "GUI: Status tip"));
-        connect(copyAct, SIGNAL(triggered()), myEditor, SLOT(copy()));
+    // Cut
+    ui->cutAct->setShortcuts(QKeySequence::Cut);
+    connect(ui->cutAct, SIGNAL(triggered()), myEditor, SLOT(cut()));
 
-        // Edit: Paste
-        pasteAct = new QAction(QIcon(":/images/edit-paste.png"), tr("Paste", "GUI: Edit menu"), this);
-        pasteAct->setShortcuts(QKeySequence::Paste);
-        pasteAct->setStatusTip(tr("Paste text from clipboard", "GUI: Status tip"));
-        connect(pasteAct, SIGNAL(triggered()), myEditor, SLOT(paste()));
+    // Copy
+    ui->copyAct->setShortcuts(QKeySequence::Copy);
+    connect(ui->copyAct, SIGNAL(triggered()), myEditor, SLOT(copy()));
 
-        // Edit: Undo
-        undoAct = new QAction(QIcon(":/images/edit-undo.png"), tr("Undo", "GUI: Edit menu"), this);
-        undoAct->setShortcuts(QKeySequence::Undo);
-        undoAct->setStatusTip(tr("Undo changes", "GUI: Status tip"));
-        connect(undoAct, SIGNAL(triggered()), myEditor, SLOT(undo()));
+    // Paste
+    ui->pasteAct->setShortcuts(QKeySequence::Paste);
+    connect(ui->pasteAct, SIGNAL(triggered()), myEditor, SLOT(paste()));
 
-        // Edit: Redo
-        redoAct = new QAction(QIcon(":/images/edit-redo.png"), tr("Redo", "GUI: Edit menu"), this);
-        redoAct->setShortcuts(QKeySequence::Redo);
-        redoAct->setStatusTip(tr("Redo changes", "GUI: Status tip"));
-        connect(redoAct, SIGNAL(triggered()), myEditor, SLOT(redo()));
+    // Undo
+    ui->undoAct->setShortcuts(QKeySequence::Undo);
+    connect(ui->undoAct, SIGNAL(triggered()), myEditor, SLOT(undo()));
 
-        // Edit: Find
-        searchAct = new QAction(QIcon(":/images/edit-find.png"), tr("Find...", "GUI: Edit menu"), this);
-        searchAct->setShortcuts(QKeySequence::Find);
-        searchAct->setStatusTip(tr("Find text", "GUI: Status tip"));
-        connect(searchAct, SIGNAL(triggered()), m_findDialog, SLOT(show()));
+    // Redo
+    ui->redoAct->setShortcuts(QKeySequence::Redo);
+    connect(ui->redoAct, SIGNAL(triggered()), myEditor, SLOT(redo()));
 
-        // Edit: Replace
-        replaceAct = new QAction(QIcon(":/images/edit-find-replace.png"), tr("Replace...", "GUI: Edit menu"), this);
-        replaceAct->setShortcuts(QKeySequence::Replace);
-        replaceAct->setStatusTip(tr("Replace text", "GUI: Status tip"));
-        connect(replaceAct, SIGNAL(triggered()), m_findReplaceDialog, SLOT(show()));
+    // Find
+    ui->searchAct->setShortcuts(QKeySequence::Find);
+    connect(ui->searchAct, SIGNAL(triggered()), m_findDialog, SLOT(show()));
 
-        // Edit: Find next
-        findNextAct = new QAction(QIcon(":/images/go-down.png"), tr("Find next", "GUI: Edit menu"), this);
-        findNextAct->setShortcuts(QKeySequence::FindNext);
-        findNextAct->setStatusTip(tr("Find next (search forward)", "GUI: Status tip"));
-        connect(findNextAct, SIGNAL(triggered()), m_findDialog, SLOT(findNext()));
+    // Replace
+    ui->replaceAct->setShortcuts(QKeySequence::Replace);
+    connect(ui->replaceAct, SIGNAL(triggered()), m_findReplaceDialog, SLOT(show()));
 
-        // Edit: Find previous
-        findPreviousAct = new QAction(QIcon(":/images/go-up.png"), tr("Find previous", "GUI: Edit menu"), this);
-        findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-        findPreviousAct->setStatusTip(tr("Find previous (search backward)", "GUI: Status tip"));
-        connect(findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
-    }
-    catch (std::bad_alloc& ba)
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / edit menu: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / edit menu");
-        exit (-3);
-    }
+    // Find next
+    ui->findNextAct->setShortcuts(QKeySequence::FindNext);
+    connect(ui->findNextAct, SIGNAL(triggered()), m_findDialog, SLOT(findNext()));
 
-    // About menu
-    try {
-        // Report a bug using apport
-        reportBugAct = new QAction(QIcon(":images/bug.png"), tr("Report bug", "GUI: About menu"), this);
-        reportBugAct->setStatusTip(tr("Report a bug - For this a launchpad account is needed!", "GUI: Status tip"));
-        connect(reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
+    // Find previous
+    ui->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
+    connect(ui->findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
 
-        // Open about windwow
-        aboutAct = new QAction(QIcon(":images/question.png"), tr("About", "GUI: About menu") + " " + sAppName, this);
-        aboutAct->setStatusTip(tr("Shows the about box of this application", "GUI: Status tip"));
-        connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
-    }
-    catch (std::bad_alloc& ba)
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / about menu: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / about menu");
-        exit (-4);
-    }
 
     // Set / initialize / connect cut / copy / redo / undo
-    cutAct->setEnabled(false);
-    copyAct->setEnabled(false);
+    ui->cutAct->setEnabled(false);
+    ui->copyAct->setEnabled(false);
     connect(myEditor, SIGNAL(copyAvailable(bool)),
-            cutAct, SLOT(setEnabled(bool)));
+            ui->cutAct, SLOT(setEnabled(bool)));
     connect(myEditor, SIGNAL(copyAvailable(bool)),
-            copyAct, SLOT(setEnabled(bool)));
+            ui->copyAct, SLOT(setEnabled(bool)));
 
-    undoAct->setEnabled(false);
+    ui->undoAct->setEnabled(false);
     connect(myEditor, SIGNAL(undoAvailable(bool)),
-            undoAct, SLOT(setEnabled(bool)));
-    redoAct->setEnabled(false);
+            ui->undoAct, SLOT(setEnabled(bool)));
+    ui->redoAct->setEnabled(false);
     connect(myEditor, SIGNAL(redoAvailable(bool)),
-            redoAct, SLOT(setEnabled(bool)));
+            ui->redoAct, SLOT(setEnabled(bool)));
 
-    try {
-        // Show html preview
-        previewAct = new QAction(QIcon(":/images/preview.png"), tr("Open preview", "GUI: Inyoka toolbar"), this);
-        previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
-        previewAct->setStatusTip(tr("Open preview of current article", "GUI: Status tip"));
-        connect(previewAct, SIGNAL(triggered()), this, SLOT(previewInyokaPage()));
+    // ---------------------------------------------------------------------------------------------
 
-        // Click on tabs of widget - int = index of tab
-        connect(myTabwidget, SIGNAL(currentChanged(int)), this, SLOT(previewInyokaPage(int)));
+    // Show html preview
+    ui->previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
+    connect(ui->previewAct, SIGNAL(triggered()), this, SLOT(previewInyokaPage()));
 
-        // Download Inyoka article
-        downloadArticleAct = new QAction(QIcon(":/images/network-receive.png"), tr("Download raw format", "GUI: Inyoka toolbar"), this);
-        downloadArticleAct->setStatusTip(tr("Downloads raw format of an existing Inyoka article", "GUI: Status tip"));
-        downloadArticleAct->setPriority(QAction::LowPriority);
-        connect(downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
-    }
-    catch (std::bad_alloc& ba)
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / inyoka toolbar: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / inyoka toolbar");
-        exit (-5);
-    }
+    // Click on tabs of widget - int = index of tab
+    connect(myTabwidgetRawPreview, SIGNAL(currentChanged(int)), this, SLOT(previewInyokaPage(int)));
 
-    // Insert syntax elements
+    // Download Inyoka article
+    connect(ui->downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
+
+    // ---------------------------------------------------------------------------------------------
+
     try {
         mySigMapTextSamples = new QSignalMapper(this);
 
-        // Insert bold element
-        boldAct = new QAction(QIcon(":/images/format-text-bold.png"), tr("Bold", "GUI: Editor toolbar"), this);
-        boldAct->setStatusTip(tr("Bold - File names, folders, packages, file extensions", "GUI: Status tip"));
-        boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
-        boldAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(boldAct, "boldAct");
-        connect(boldAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert italic element
-        italicAct = new QAction(QIcon(":/images/format-text-italic.png"), tr("Italic", "GUI: Editor toolbar"), this);
-        italicAct->setStatusTip(tr("Italic - Menu entries, buttons, G-Conf keys - Always enclosed by quotation marks!", "GUI: Status tip"));
-        italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
-        italicAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(italicAct, "italicAct");
-        connect(italicAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert monotype element
-        monotypeAct = new QAction(QIcon(":/images/monotype.png"), tr("Monotype", "GUI: Editor toolbar"), this);
-        monotypeAct->setStatusTip(tr("Monotype - Commands and their options, console outputs in continuous text, modules, users, groups", "GUI: Status tip"));
-        monotypeAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(monotypeAct, "monotypeAct");
-        connect(monotypeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert wiki link
-        wikilinkAct = new QAction(QIcon(":/images/go-next.png"), tr("Link to wiki page", "GUI: Editor toolbar"), this);
-        wikilinkAct->setStatusTip(tr("Link to an Inyoka wiki page", "GUI: Status tip"));
-        wikilinkAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(wikilinkAct, "wikilinkAct");
-        connect(wikilinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert extern link
-        externalLinkAct = new QAction(QIcon(":/images/internet-web-browser.png"), tr("External link", "GUI: Editor toolbar"), this);
-        externalLinkAct->setStatusTip(tr("Link to an external website - always with flag e.g. {en}, {de}!", "GUI: Status tip"));
-        externalLinkAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(externalLinkAct, "externalLinkAct");
-        connect(externalLinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert image
-        imageAct = new QAction(QIcon(":/images/image-x-generic.png"), tr("Insert image", "GUI: Editor toolbar"), this);
-        imageAct->setStatusTip(tr("Insert an image", "GUI: Status tip"));
-        imageAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(imageAct, "imageAct");
-        connect(imageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        // Insert code block
-        codeblockAct = new QAction(QIcon(":/images/code.png"), tr("Code block", "GUI: Editor toolbar"), this);
-        codeblockAct->setStatusTip(tr("Code block - Console output, extract of config files", "GUI: Status tip"));
-        codeblockAct->setPriority(QAction::LowPriority);
-        mySigMapTextSamples->setMapping(codeblockAct, "codeblockAct");
-        connect(codeblockAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
         // Insert headline
         headlineBox = new QComboBox();
-        headlineBox->setStatusTip(tr("Insert a headline - 5 headline steps are supported", "GUI: Status tip"));
+        headlineBox->setStatusTip(tr("Insert a headline - 5 headline steps are supported"));
 
         // Insert sample
         textmacrosBox = new QComboBox();
-        textmacrosBox->setStatusTip(tr("Insert text sample", "GUI: Status tip"));
+        textmacrosBox->setStatusTip(tr("Insert text sample"));
 
         // Insert text format
         textformatBox = new QComboBox();
-        textformatBox->setStatusTip(tr("Insert text format", "GUI: Status tip"));
-
-        insertUnderConstructionAct = new QAction(tr("Under construction", "GUI: Text samples menu - Under construction"), this);
-        insertUnderConstructionAct->setStatusTip(tr("Insert \"Under construction\" sample - Only for articles which are currently under construction", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertUnderConstructionAct, "insertUnderConstructionAct");
-        connect(insertUnderConstructionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertTestedForAct = new QAction(tr("Tested for", "GUI: Text samples menu - Tested for"), this);
-        insertTestedForAct->setStatusTip(tr("Insert \"Tested for\" sample - Indicates if an article was tested", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertTestedForAct, "insertTestedForAct");
-        connect(insertTestedForAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertKnowledgeAct = new QAction(tr("Knowledge block", "GUI: Text samples menu - Knowledge block"), this);
-        insertKnowledgeAct->setStatusTip(tr("Insert \"Knowledge block\" sample - Reference to elementary articles which are helpful for the understanding of an article", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertKnowledgeAct, "insertKnowledgeAct");
-        connect(insertKnowledgeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertTableOfContentsAct = new QAction(tr("Table of contents", "GUI: Text samples menu - Table of contents"), this);
-        insertTableOfContentsAct->setStatusTip(tr("Insert \"Table of contents\" sample", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertTableOfContentsAct, "insertTableOfContentsAct");
-        connect(insertTableOfContentsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertAdvancedAct = new QAction(tr("Advanced label", "GUI: Text samples menu - Advanced label"), this);
-        insertAdvancedAct->setStatusTip(tr("Insert \"Advanced label\" sample - Indicates that an article is recommended for advanced users only", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertAdvancedAct, "insertAdvancedAct");
-        connect(insertAdvancedAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertAwardAct = new QAction(tr("Award label", "GUI: Text samples menu - Award label"), this);
-        insertAwardAct->setStatusTip(tr("Insert \"Award label\" sample - For awarded applications", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertAwardAct, "insertAwardAct");
-        connect(insertAwardAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertBashCommandAct = new QAction(tr("Bash command", "GUI: Text samples menu - Bash command"), this);
-        insertBashCommandAct->setStatusTip(tr("Insert \"Bash command\" sample", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertBashCommandAct, "insertBashCommandAct");
-        connect(insertBashCommandAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertNoticeAct = new QAction(tr("Notice box", "GUI: Text samples menu - Notice box"), this);
-        insertNoticeAct->setStatusTip(tr("Insert \"Notice box\" sample - Accentuate a special circumstance", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertNoticeAct, "insertNoticeAct");
-        connect(insertNoticeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertWarningAct = new QAction(tr("Warning box", "GUI: Text samples menu - Warning box"), this);
-        insertWarningAct->setStatusTip(tr("Insert \"Warning box\" sample - Notice for potential risks", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertWarningAct, "insertWarningAct");
-        connect(insertWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertExpertsAct = new QAction(tr("Experts information", "GUI: Text samples menu - Experts info box"), this);
-        insertExpertsAct->setStatusTip(tr("Insert \"Experts info\" sample - Providing background information", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertExpertsAct, "insertExpertsAct");
-        connect(insertExpertsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertImageAct = new QAction(tr("Image", "GUI: Text samples menu - Simple image"), this);
-        insertImageAct->setStatusTip(tr("Insert an image sample", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertImageAct, "imageAct");  // insertImageAct = imageAct !
-        connect(insertImageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertImageUnderlineAct = new QAction(tr("Image with underline", "GUI: Text samples menu - Image with underline"), this);
-        insertImageUnderlineAct->setStatusTip(tr("Insert an image with underline", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertImageUnderlineAct, "insertImageUnderlineAct");
-        connect(insertImageUnderlineAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertImageCollectionAct = new QAction(tr("Image collection (with wordwrap)", "GUI: Text samples menu - Image collection (with wordwrap)"), this);
-        insertImageCollectionAct->setStatusTip(tr("Insert an image collection (with wordwrap) sample - Depending on the browser width, automatic word wrapping will be used to align the images", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertImageCollectionAct, "insertImageCollectionAct");
-        connect(insertImageCollectionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertImageCollectionInTextAct = new QAction(tr("Image collection (continuous text)", "GUI: Text samples menu - Image collection (continuous text)"), this);
-        insertImageCollectionInTextAct->setStatusTip(tr("Insert an image collection (continuous text) sample - Text flows round the collection (max. 3 images, width per image: 200px)", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertImageCollectionInTextAct, "insertImageCollectionInTextAct");
-        connect(insertImageCollectionInTextAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertPackageListAct = new QAction(tr("Package macro (obsolete!)", "GUI: Text samples menu - Package macro"), this);
-        insertPackageListAct->setStatusTip(tr("Insert \"Package macro\" - This macro is obsolete and shall be used only in exceptional cases", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertPackageListAct, "insertPackageListAct");
-        connect(insertPackageListAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertPackageInstallAct = new QAction(tr("Package installation", "GUI: Text samples menu - Package installation"), this);
-        insertPackageInstallAct->setStatusTip(tr("Insert \"Package installation\" sample - Create a package list with installation button", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertPackageInstallAct, "insertPackageInstallAct");
-        connect(insertPackageInstallAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertPPAAct = new QAction(tr("PPA sample", "GUI: Text samples menu - PPA sample"), this);
-        insertPPAAct->setStatusTip(tr("Insert PPA sample - Create a sample for using a Launchpad-PPA, including warning and link to PPA source"));
-        mySigMapTextSamples->setMapping(insertPPAAct, "insertPPAAct");
-        connect(insertPPAAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartyRepoAct = new QAction(tr("Third-party repository", "GUI: Text samples menu - Third-party repo"), this);
-        insertThirdPartyRepoAct->setStatusTip(tr("Insert \"Third-party repo\" sample - Create a sample for using third-party repositories (not Ubuntu or Launchpad)", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartyRepoAct, "insertThirdPartyRepoAct");
-        connect(insertThirdPartyRepoAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartyRepoAuthAct = new QAction(tr("Authenticate third-party repo", "GUI: Text samples menu - Authenticate third-party repo"), this);
-        insertThirdPartyRepoAuthAct->setStatusTip(tr("Insert a sample for authenticating third-party repositories", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartyRepoAuthAct, "insertThirdPartyRepoAuthAct");
-        connect(insertThirdPartyRepoAuthAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartyPackageAct = new QAction(tr("Third-party package", "GUI: Text samples menu - Third-party package"), this);
-        insertThirdPartyPackageAct->setStatusTip(tr("Insert \"Third-party package\" sample - Create a sample for installing DEB-Packages from third-party repos", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartyPackageAct, "insertThirdPartyPackageAct");
-        connect(insertThirdPartyPackageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertImprovableAct = new QAction(tr("Improvable label", "GUI: Text samples menu - Improvable"), this);
-        insertImprovableAct->setStatusTip(tr("Insert \"Improvable\" sample - Article is incomplete or could be extended", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertImprovableAct, "insertImprovableAct");
-        connect(insertImprovableAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertFixMeAct = new QAction(tr("Fix me label", "GUI: Text samples menu - Fix me"), this);
-        insertFixMeAct->setStatusTip(tr("Insert \"Fix Me\" sample - Article contains descriptions or paragraphs which are not correct (any more)", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertFixMeAct, "insertFixMeAct");
-        connect(insertFixMeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertLeftAct = new QAction(tr("Left label", "GUI: Text samples menu - Article is left"), this);
-        insertLeftAct->setStatusTip(tr("Insert \"Left\" sample - Only for articles under construction which are left by primal author", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertLeftAct, "insertLeftAct");
-        connect(insertLeftAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartyPackageWarningAct = new QAction(tr("Third-party package warning", "GUI: Text samples menu - Third-party package warning"), this);
-        insertThirdPartyPackageWarningAct->setStatusTip(tr("Insert \"Third-party package warning\" sample - For packages from third-party repositories", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartyPackageWarningAct, "insertThirdPartyPackageWarningAct");
-        connect(insertThirdPartyPackageWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartyRepoWarningAct = new QAction(tr("Third-party repository warning", "GUI: Text samples menu - Third-party repo warning"), this);
-        insertThirdPartyRepoWarningAct->setStatusTip(tr("Insert \"Third-party repo warning\" sample - For packages which are installed from third-party repositories", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartyRepoWarningAct, "insertThirdPartyRepoWarningAct");
-        connect(insertThirdPartyRepoWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        insertThirdPartySoftwareWarningAct = new QAction(tr("Third-party software warning", "GUI: Text samples menu - Third-party software warning"), this);
-        insertThirdPartySoftwareWarningAct->setStatusTip(tr("Insert \"Third-party software warning\" sample - Only for software which is installed completly without package repositories", "GUI: Status tip"));
-        mySigMapTextSamples->setMapping(insertThirdPartySoftwareWarningAct, "insertThirdPartySoftwareWarningAct");
-        connect(insertThirdPartySoftwareWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
-
-        connect(mySigMapTextSamples, SIGNAL(mapped(QString)), this, SLOT(insertTextSample(QString)));
+        textformatBox->setStatusTip(tr("Insert text format"));
     }
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / text samples: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / text samples");
+        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / combo boxes");
         exit (-6);
     }
 
     // ---------------------------------------------------------------------------------------------
-    // INTERWIKI-LINKS ACTIONS
+    // INSERT SYNTAX ELEMENTS
+
+    // Insert bold element
+    ui->boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
+    mySigMapTextSamples->setMapping(ui->boldAct, "boldAct");
+    connect(ui->boldAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert italic element
+    ui->italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
+    mySigMapTextSamples->setMapping(ui->italicAct, "italicAct");
+    connect(ui->italicAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert monotype element
+    mySigMapTextSamples->setMapping(ui->monotypeAct, "monotypeAct");
+    connect(ui->monotypeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert wiki link
+    mySigMapTextSamples->setMapping(ui->wikilinkAct, "wikilinkAct");
+    connect(ui->wikilinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert extern link
+    mySigMapTextSamples->setMapping(ui->externalLinkAct, "externalLinkAct");
+    connect(ui->externalLinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert image
+    mySigMapTextSamples->setMapping(ui->imageAct, "imageAct");
+    connect(ui->imageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // Insert code block
+    mySigMapTextSamples->setMapping(ui->codeblockAct, "codeblockAct");
+    connect(ui->codeblockAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    // ---------------------------------------------------------------------------------------------
+    // TEXT SAMPLES
+
+    mySigMapTextSamples->setMapping(ui->insertUnderConstructionAct, "insertUnderConstructionAct");
+    connect(ui->insertUnderConstructionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertTestedForAct, "insertTestedForAct");
+    connect(ui->insertTestedForAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertKnowledgeAct, "insertKnowledgeAct");
+    connect(ui->insertKnowledgeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertTableOfContentsAct, "insertTableOfContentsAct");
+    connect(ui->insertTableOfContentsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertAdvancedAct, "insertAdvancedAct");
+    connect(ui->insertAdvancedAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertAwardAct, "insertAwardAct");
+    connect(ui->insertAwardAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertImageAct, "imageAct");  // insertImageAct = imageAct !
+    connect(ui->insertImageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertImageUnderlineAct, "insertImageUnderlineAct");
+    connect(ui->insertImageUnderlineAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertImageCollectionAct, "insertImageCollectionAct");
+    connect(ui->insertImageCollectionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertImageCollectionInTextAct, "insertImageCollectionInTextAct");
+    connect(ui->insertImageCollectionInTextAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertBashCommandAct, "insertBashCommandAct");
+    connect(ui->insertBashCommandAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertNoticeAct, "insertNoticeAct");
+    connect(ui->insertNoticeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertWarningAct, "insertWarningAct");
+    connect(ui->insertWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertExpertsAct, "insertExpertsAct");
+    connect(ui->insertExpertsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertPackageListAct, "insertPackageListAct");
+    connect(ui->insertPackageListAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertPackageInstallAct, "insertPackageInstallAct");
+    connect(ui->insertPackageInstallAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertPPAAct, "insertPPAAct");
+    connect(ui->insertPPAAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartyRepoAct, "insertThirdPartyRepoAct");
+    connect(ui->insertThirdPartyRepoAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartyRepoAuthAct, "insertThirdPartyRepoAuthAct");
+    connect(ui->insertThirdPartyRepoAuthAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartyPackageAct, "insertThirdPartyPackageAct");
+    connect(ui->insertThirdPartyPackageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertImprovableAct, "insertImprovableAct");
+    connect(ui->insertImprovableAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertFixMeAct, "insertFixMeAct");
+    connect(ui->insertFixMeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertLeftAct, "insertLeftAct");
+    connect(ui->insertLeftAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartyPackageWarningAct, "insertThirdPartyPackageWarningAct");
+    connect(ui->insertThirdPartyPackageWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartyRepoWarningAct, "insertThirdPartyRepoWarningAct");
+    connect(ui->insertThirdPartyRepoWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    mySigMapTextSamples->setMapping(ui->insertThirdPartySoftwareWarningAct, "insertThirdPartySoftwareWarningAct");
+    connect(ui->insertThirdPartySoftwareWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+
+    connect(mySigMapTextSamples, SIGNAL(mapped(QString)), this, SLOT(insertTextSample(QString)));
+
+    // ---------------------------------------------------------------------------------------------
+    // INTERWIKI LINKS MENU
 
     try {
         mySigMapInterWikiLinks = new QSignalMapper(this);
@@ -672,9 +530,19 @@ void CInyokaEdit::createActions()
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / interwiki actions: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "\"createActions()\" / interwiki actions");
+        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / interwiki actions");
         exit (-7);
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // ABOUT MENU
+
+    // Report a bug using apport
+    connect(ui->reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
+
+    // Open about windwow
+    connect(ui->aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+
 
     if (bLogging) { std::clog << "Created actions" << std::endl; }
 }
@@ -686,84 +554,21 @@ void CInyokaEdit::createActions()
 void CInyokaEdit::createMenus()
 {
     // File menu
-    fileMenu = menuBar()->addMenu(tr("&File", "GUI: File menu"));
-    fileMenu->addAction(newAct);
-    fileMenu->addAction(openAct);
-    fileMenuLastOpened = fileMenu->addMenu(tr("Open &recent", "GUI: File menu"));
-    fileMenuLastOpened->addActions(LastOpenedFilesAct);
-    fileMenuLastOpened->addSeparator();
-    fileMenuLastOpened->addAction(clearRecentFilesAct);
+    ui->fileMenuLastOpened->addActions(LastOpenedFilesAct);
+    ui->fileMenuLastOpened->addSeparator();
+    ui->fileMenuLastOpened->addAction(clearRecentFilesAct);
     if (0 == mySettings->getRecentFiles().size()) {
-        fileMenuLastOpened->setEnabled(false);
+        ui->fileMenuLastOpened->setEnabled(false);
     }
-    fileMenu->addAction(saveAct);
-    fileMenu->addAction(saveAsAct);
-    fileMenu->addSeparator();
-    fileMenu->addAction(exitAct);
-
-    // Edit menu
-    editMenu = menuBar()->addMenu(tr("&Edit", "GUI: Edit menu"));
-    editMenu->addAction(undoAct);
-    editMenu->addAction(redoAct);
-    editMenu->addSeparator();
-    editMenu->addAction(cutAct);
-    editMenu->addAction(copyAct);
-    editMenu->addAction(pasteAct);
-    editMenu->addSeparator();
-    editMenu->addAction(searchAct);
-    editMenu->addAction(replaceAct);
-    editMenu->addAction(findNextAct);
-    editMenu->addAction(findPreviousAct);
-
-    // Insert text sample menu
-    insertTextSampleMenu = menuBar()->addMenu(tr("&Text samples", "GUI: Text samples menu"));
-    insertBeginningMenu = insertTextSampleMenu->addMenu(tr("Beginning of an article", "Text samples menu: Beginning"));
-    insertBeginningMenu->addAction(insertUnderConstructionAct);
-    insertBeginningMenu->addAction(insertTestedForAct);
-    insertBeginningMenu->addAction(insertKnowledgeAct);
-    insertBeginningMenu->addAction(insertTableOfContentsAct);
-    insertBeginningMenu->addAction(insertAdvancedAct);
-    insertBeginningMenu->addAction(insertAwardAct);
-
-    insertImageMenu = insertTextSampleMenu->addMenu(tr("Images", "Text samples menu: Images"));
-    insertImageMenu->addAction(insertImageAct);
-    insertImageMenu->addAction(insertImageUnderlineAct);
-    insertImageMenu->addAction(insertImageCollectionAct);
-    insertImageMenu->addAction(insertImageCollectionInTextAct);
-
-    insertFormatingHelpMenu = insertTextSampleMenu->addMenu(tr("General formating samples", "Text samples menu: General formats"));
-    insertFormatingHelpMenu->addAction(insertBashCommandAct);
-    insertFormatingHelpMenu->addAction(insertNoticeAct);
-    insertFormatingHelpMenu->addAction(insertWarningAct);
-    insertFormatingHelpMenu->addAction(insertExpertsAct);
-
-    insertPacketinstallationMenu = insertTextSampleMenu->addMenu(tr("Package installation", "Text samples menu: Packages"));
-    insertPacketinstallationMenu->addAction(insertPackageInstallAct);
-    insertPacketinstallationMenu->addAction(insertPPAAct);
-    insertPacketinstallationMenu->addAction(insertThirdPartyRepoAct);
-    insertPacketinstallationMenu->addAction(insertThirdPartyRepoAuthAct);
-    insertPacketinstallationMenu->addAction(insertThirdPartyPackageAct);
-    insertPacketinstallationMenu->addAction(insertPackageListAct);
-
-    insertMiscelementMenu = insertTextSampleMenu->addMenu(tr("Misc samples", "Text samples menu: Misc samples"));
-    insertMiscelementMenu->addAction(insertImprovableAct);
-    insertMiscelementMenu->addAction(insertFixMeAct);
-    insertMiscelementMenu->addAction(insertLeftAct);
-    insertMiscelementMenu->addAction(insertThirdPartyPackageWarningAct);
-    insertMiscelementMenu->addAction(insertThirdPartyRepoWarningAct);
-    insertMiscelementMenu->addAction(insertThirdPartySoftwareWarningAct);
 
     // Insert interwiki-links menu
-    iWikiMenu = menuBar()->addMenu(tr("&InterWiki-Links", "GUI: InterWiki links menu"));
     for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
-        iWikiGroups.append(iWikiMenu->addMenu(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
 
     // Help menu
-    helpMenu = menuBar()->addMenu(tr("&Help", "GUI: About menu"));
-    helpMenu->addAction(reportBugAct);
-    helpMenu->addAction(aboutAct);
+
 
     if (bLogging) { std::clog << "Created menus" << std::endl; }
 }
@@ -774,48 +579,12 @@ void CInyokaEdit::createMenus()
 // Generate tool bars
 void CInyokaEdit::createToolBars()
 {
-    // File tool bar
-    fileToolBar = addToolBar(tr("File", "GUI: File toolbar"));
-    fileToolBar->setObjectName("fileToolBar");
-    fileToolBar->addAction(newAct);
-    fileToolBar->addAction(openAct);
-    fileToolBar->addAction(saveAct);
-
-    // Edit tool bar
-    editToolBar = addToolBar(tr("Edit", "GUI: Edit toolbar"));
-    editToolBar->setObjectName("editToolBar");
-    editToolBar->addAction(cutAct);
-    editToolBar->addAction(copyAct);
-    editToolBar->addAction(pasteAct);
-    editToolBar->addSeparator();
-    editToolBar->addAction(undoAct);
-    editToolBar->addAction(redoAct);
-
-    // Preview DL bar
-    previewDlBar = addToolBar(tr("Preview / Download", "GUI: Preview / download toolbar"));
-    previewDlBar->setObjectName("previewDlBar");
-    previewDlBar->addAction(previewAct);
-    previewDlBar->addAction(downloadArticleAct);
-
-    // Inyoka tool bar
-    addToolBarBreak(Qt::TopToolBarArea);  // second tool bar area under first one
-    inyokaeditorBar = addToolBar(tr("Inyoka editor", "GUI: Inyoka editor toolbar"));
-    inyokaeditorBar->setObjectName("inyokaeditorBar");
-    inyokaeditorBar->addAction(boldAct);
-    inyokaeditorBar->addAction(italicAct);
-    inyokaeditorBar->addAction(monotypeAct);
-    inyokaeditorBar->addAction(wikilinkAct);
-    inyokaeditorBar->addAction(externalLinkAct);
-    inyokaeditorBar->addAction(imageAct);
-    inyokaeditorBar->addAction(codeblockAct);
 
     // Tool bar for combo boxes (samples and macros)
-    samplesmacrosBar = addToolBar(tr("Samples and macros", "GUI: Samples and macros toolbar"));
-    samplesmacrosBar->setObjectName("samplesmacrosBar");
-    samplesmacrosBar->addWidget(headlineBox);
+    ui->samplesmacrosBar->addWidget(headlineBox);
 
     // Headline combo box
-    QString sHeadline = tr("Headline", "GUI: Headline combo box");
+    QString sHeadline = tr("Headline");
     QString sHeadlineStep = tr("Step", "GUI: Headline combo box");
     headlineBox->addItem(sHeadline);
     headlineBox->insertSeparator(1);
@@ -828,8 +597,8 @@ void CInyokaEdit::createToolBars()
             this, SLOT(insertDropDownHeadline(int)));
 
     // Macros combo box
-    samplesmacrosBar->addWidget(textmacrosBox);
-    textmacrosBox->addItem(tr("Text macros", "GUI: Text macros combo box"));
+    ui->samplesmacrosBar->addWidget(textmacrosBox);
+    textmacrosBox->addItem(tr("Text macros", "GUI: Text macro combo box"));
     textmacrosBox->insertSeparator(1);
     textmacrosBox->addItem(tr("Under construction", "GUI: Text macro combo box - Work in progress"));
     textmacrosBox->addItem(tr("Table of contents", "GUI: Text macro combo box - Table of contents"));
@@ -847,7 +616,7 @@ void CInyokaEdit::createToolBars()
             this, SLOT(insertDropDownTextmacro(int)));
 
     // Text format combo box
-    samplesmacrosBar->addWidget(textformatBox);
+    ui->samplesmacrosBar->addWidget(textformatBox);
     textformatBox->addItem(tr("Text format", "GUI: Text format combo box"));
     textformatBox->insertSeparator(1);
     textformatBox->addItem(tr("Folders", "GUI: Text format folders"));
@@ -874,7 +643,7 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
         catch (std::bad_alloc& ba)
         {
             std::cerr << "ERROR: myArticleDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-            QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "ArticleDownloadProgress");
+            QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - myArticleDownloadProgress");
             exit (-8);
         }
         myArticleDownloadProgress->open();
@@ -893,18 +662,18 @@ void CInyokaEdit::previewInyokaPage(const int iIndex){
 
     // Call parser if iIndex == index of myWebview -> Click on tab preview
     // or if iIndex == 999 -> Default parameter value when calling the function (e.g.) by clicking on button preview
-    if (myTabwidget->indexOf(myWebview) == iIndex || 999 == iIndex) {
+    if (myTabwidgetRawPreview->indexOf(myWebview) == iIndex || 999 == iIndex) {
 
         // Disable editor and insert samples/macros toolbars
-        editMenu->setDisabled(true);
-        insertTextSampleMenu->setDisabled(true);
-        iWikiMenu->setDisabled(true);
-        editToolBar->setDisabled(true);
-        inyokaeditorBar->setDisabled(true);
-        samplesmacrosBar->setDisabled(true);
-        previewAct->setDisabled(true);
+        ui->editMenu->setDisabled(true);
+        ui->insertTextSampleMenu->setDisabled(true);
+        ui->iWikiMenu->setDisabled(true);
+        ui->editToolBar->setDisabled(true);
+        ui->inyokaeditorBar->setDisabled(true);
+        ui->samplesmacrosBar->setDisabled(true);
+        ui->previewAct->setDisabled(true);
 
-        if ("" == sCurFile || tr("Untitled", "No file name set") == sCurFile){
+        if ("" == sCurFile || tr("Untitled") == sCurFile){
             myParser->genOutput("");
         }
         else{
@@ -914,13 +683,13 @@ void CInyokaEdit::previewInyokaPage(const int iIndex){
     }
     else {
         // Enable editor and insert samples/macros toolbars again
-        editMenu->setEnabled(true);
-        insertTextSampleMenu->setEnabled(true);
-        iWikiMenu->setEnabled(true);
-        editToolBar->setEnabled(true);
-        inyokaeditorBar->setEnabled(true);
-        samplesmacrosBar->setEnabled(true);
-        previewAct->setEnabled(true);
+        ui->editMenu->setEnabled(true);
+        ui->insertTextSampleMenu->setEnabled(true);
+        ui->iWikiMenu->setEnabled(true);
+        ui->editToolBar->setEnabled(true);
+        ui->inyokaeditorBar->setEnabled(true);
+        ui->samplesmacrosBar->setEnabled(true);
+        ui->previewAct->setEnabled(true);
     }
 }
 
@@ -1121,7 +890,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
     }
     // Problem with indices
     else {
-        QMessageBox::warning(this, sAppName, tr("Error while inserting InterWiki link.", "Msg: Error interwiki indice"));
+        QMessageBox::warning(this, sAppName, "Error while inserting InterWiki link: InterWiki indice");
     }
 
     myEditor->setFocus();
@@ -1132,7 +901,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 // DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
 void CInyokaEdit::downloadArticle()
-{ 
+{
     QString sTmpArticle("");
     QString sSitename("");
     QByteArray tempResult;
@@ -1145,7 +914,7 @@ void CInyokaEdit::downloadArticle()
 
         // Show input dialog
         sSitename = QInputDialog::getText(this, sAppName,
-                                          tr("Please insert name of the article which should be downloaded:", "Msg: Input dialog DL article"), QLineEdit::Normal,
+                                          tr("Please insert name of the article which should be downloaded:"), QLineEdit::Normal,
                                           tr("Category/Article", "Msg: Input dialog DL article example text"), &ok);
 
         // Click on "cancel" or string is empty
@@ -1205,7 +974,7 @@ void CInyokaEdit::downloadArticle()
 #endif
 
         downloadImages(sSitename);
-        myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
+        myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
     }
 }
 
@@ -1312,7 +1081,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
             catch (std::bad_alloc& ba)
             {
                 std::cerr << "ERROR: Caught bad_alloc in \"downloadImages()\": " << ba.what() << std::endl;
-                QMessageBox::critical(this, sAppName, tr("Error while memory allocation: ", "Msg: Bad alloc") + "ImageDownloadProgress");
+                QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - myImageDownloadProgress");
                 exit (-9);
             }
 
@@ -1342,7 +1111,7 @@ void CInyokaEdit::showHtmlPreview(const QString &filename){
 // Wait until loading has finished
 void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
     if (bSuccess) {
-        myTabwidget->setCurrentIndex(myTabwidget->indexOf(myWebview));
+        myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myWebview));
     }
     else {
         QMessageBox::warning(this, sAppName, tr("Error while loading preview.", "Msg box"));
@@ -1389,14 +1158,14 @@ void CInyokaEdit::updateRecentFiles(const QString &sFileName) {
 
         }
         if (sListTmp.size() > 0) {
-            fileMenuLastOpened->setEnabled(true);
+            ui->fileMenuLastOpened->setEnabled(true);
         }
     }
 
     // Clear list
     else {
         sListTmp.clear();
-        fileMenuLastOpened->setEnabled(false);
+        ui->fileMenuLastOpened->setEnabled(false);
     }
 
     mySettings->setRecentFiles(sListTmp);
@@ -1477,7 +1246,7 @@ void CInyokaEdit::newFile()
     if (maybeSave()) {
         myEditor->clear();
         setCurrentFile("");
-        myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
+        myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
     }
 }
 
@@ -1489,7 +1258,7 @@ void CInyokaEdit::open()
             QFileInfo tmpFI(sFileName);
             mySettings->setLastOpenedDir(tmpFI.absoluteDir());
             loadFile(sFileName);
-            myTabwidget->setCurrentIndex(myTabwidget->indexOf(myEditor));
+            myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
         }
     }
 }
@@ -1614,7 +1383,7 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
     updateRecentFiles(sFileName);
     setCurrentFile(sFileName);
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("File saved", "GUI: Status bar"), 2000);
+        statusBar()->showMessage(tr("File saved"), 2000);
     }
     return true;
 }
@@ -1627,7 +1396,7 @@ void CInyokaEdit::setCurrentFile(const QString &sFileName)
 
     QString sShownName = sCurFile;
     if (sCurFile.isEmpty())
-        sShownName = tr("Untitled", "No file name set");
+        sShownName = tr("Untitled");
     setWindowFilePath(sShownName);
 }
 

@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CInyokaEdit</class>
+ <widget class="QMainWindow" name="CInyokaEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>528</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="inyokaeditresources.qrc">
+    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>528</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="fileMenu">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="fileMenuLastOpened">
+     <property name="title">
+      <string>Open &amp;recent</string>
+     </property>
+    </widget>
+    <addaction name="newAct"/>
+    <addaction name="openAct"/>
+    <addaction name="fileMenuLastOpened"/>
+    <addaction name="saveAct"/>
+    <addaction name="saveAsAct"/>
+    <addaction name="separator"/>
+    <addaction name="exitAct"/>
+   </widget>
+   <widget class="QMenu" name="editMenu">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="undoAct"/>
+    <addaction name="redoAct"/>
+    <addaction name="separator"/>
+    <addaction name="cutAct"/>
+    <addaction name="copyAct"/>
+    <addaction name="pasteAct"/>
+    <addaction name="separator"/>
+    <addaction name="searchAct"/>
+    <addaction name="replaceAct"/>
+    <addaction name="findNextAct"/>
+    <addaction name="findPreviousAct"/>
+   </widget>
+   <widget class="QMenu" name="insertTextSampleMenu">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;Text samples</string>
+    </property>
+    <widget class="QMenu" name="insertImageMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Images</string>
+     </property>
+     <addaction name="insertImageAct"/>
+     <addaction name="insertImageUnderlineAct"/>
+     <addaction name="insertImageCollectionAct"/>
+     <addaction name="insertImageCollectionInTextAct"/>
+    </widget>
+    <widget class="QMenu" name="insertBeginningMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Beginning of an article</string>
+     </property>
+     <addaction name="insertUnderConstructionAct"/>
+     <addaction name="insertTestedForAct"/>
+     <addaction name="insertKnowledgeAct"/>
+     <addaction name="insertTableOfContentsAct"/>
+     <addaction name="insertAdvancedAct"/>
+     <addaction name="insertAwardAct"/>
+    </widget>
+    <widget class="QMenu" name="insertFormatingHelpMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;General formating samples</string>
+     </property>
+     <addaction name="insertBashCommandAct"/>
+     <addaction name="insertNoticeAct"/>
+     <addaction name="insertWarningAct"/>
+     <addaction name="insertExpertsAct"/>
+    </widget>
+    <widget class="QMenu" name="insertPacketinstallationMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Package installation</string>
+     </property>
+     <addaction name="insertPackageInstallAct"/>
+     <addaction name="insertPPAAct"/>
+     <addaction name="insertThirdPartyRepoAct"/>
+     <addaction name="insertThirdPartyRepoAuthAct"/>
+     <addaction name="insertThirdPartyPackageAct"/>
+     <addaction name="insertPackageListAct"/>
+    </widget>
+    <widget class="QMenu" name="insertMiscElementMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Misc samples</string>
+     </property>
+     <addaction name="insertImprovableAct"/>
+     <addaction name="insertFixMeAct"/>
+     <addaction name="insertLeftAct"/>
+     <addaction name="insertThirdPartyPackageWarningAct"/>
+     <addaction name="insertThirdPartyRepoWarningAct"/>
+     <addaction name="insertThirdPartySoftwareWarningAct"/>
+    </widget>
+    <addaction name="insertBeginningMenu"/>
+    <addaction name="insertImageMenu"/>
+    <addaction name="insertFormatingHelpMenu"/>
+    <addaction name="insertPacketinstallationMenu"/>
+    <addaction name="insertMiscElementMenu"/>
+   </widget>
+   <widget class="QMenu" name="iWikiMenu">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>&amp;InterWiki-Links</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="helpMenu">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="reportBugAct"/>
+    <addaction name="aboutAct"/>
+   </widget>
+   <addaction name="fileMenu"/>
+   <addaction name="editMenu"/>
+   <addaction name="insertTextSampleMenu"/>
+   <addaction name="iWikiMenu"/>
+   <addaction name="helpMenu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="fileToolBar">
+   <property name="windowTitle">
+    <string>File</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="newAct"/>
+   <addaction name="openAct"/>
+   <addaction name="saveAct"/>
+  </widget>
+  <widget class="QToolBar" name="editToolBar">
+   <property name="windowTitle">
+    <string>Edit</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="cutAct"/>
+   <addaction name="copyAct"/>
+   <addaction name="pasteAct"/>
+   <addaction name="separator"/>
+   <addaction name="undoAct"/>
+   <addaction name="redoAct"/>
+  </widget>
+  <widget class="QToolBar" name="previewDlBar">
+   <property name="windowTitle">
+    <string>Preview / Download</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="previewAct"/>
+   <addaction name="downloadArticleAct"/>
+  </widget>
+  <widget class="QToolBar" name="inyokaeditorBar">
+   <property name="windowTitle">
+    <string>Inyoka editor</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="boldAct"/>
+   <addaction name="italicAct"/>
+   <addaction name="monotypeAct"/>
+   <addaction name="wikilinkAct"/>
+   <addaction name="externalLinkAct"/>
+   <addaction name="imageAct"/>
+   <addaction name="codeblockAct"/>
+  </widget>
+  <widget class="QToolBar" name="samplesmacrosBar">
+   <property name="windowTitle">
+    <string>Samples and macros</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="reportBugAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+   </property>
+   <property name="text">
+    <string>Report bug</string>
+   </property>
+   <property name="toolTip">
+    <string>Report a bug - For this a launchpad account is needed!</string>
+   </property>
+  </action>
+  <action name="aboutAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/question.png</normaloff>:/images/question.png</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="toolTip">
+    <string>Shows the about box of this application</string>
+   </property>
+  </action>
+  <action name="newAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/document-new.png</normaloff>:/images/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new file</string>
+   </property>
+  </action>
+  <action name="openAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/document-open.png</normaloff>:/images/document-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a file</string>
+   </property>
+  </action>
+  <action name="saveAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/document-save.png</normaloff>:/images/document-save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save current document</string>
+   </property>
+  </action>
+  <action name="saveAsAct">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save current document under a new name</string>
+   </property>
+  </action>
+  <action name="exitAct">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit the application</string>
+   </property>
+  </action>
+  <action name="undoAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-undo.png</normaloff>:/images/edit-undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo changes</string>
+   </property>
+  </action>
+  <action name="redoAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-redo.png</normaloff>:/images/edit-redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo changes</string>
+   </property>
+  </action>
+  <action name="cutAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-cut.png</normaloff>:/images/edit-cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="toolTip">
+    <string>Cut highlighted text</string>
+   </property>
+  </action>
+  <action name="copyAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-copy.png</normaloff>:/images/edit-copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy highlighted text</string>
+   </property>
+  </action>
+  <action name="pasteAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-paste.png</normaloff>:/images/edit-paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste text from clipboard</string>
+   </property>
+  </action>
+  <action name="searchAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-find.png</normaloff>:/images/edit-find.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find...</string>
+   </property>
+   <property name="toolTip">
+    <string>Find text</string>
+   </property>
+  </action>
+  <action name="replaceAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-find-replace.png</normaloff>:/images/edit-find-replace.png</iconset>
+   </property>
+   <property name="text">
+    <string>Replace...</string>
+   </property>
+   <property name="toolTip">
+    <string>Replace text</string>
+   </property>
+  </action>
+  <action name="findNextAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find next</string>
+   </property>
+   <property name="toolTip">
+    <string>Find next (search forward)</string>
+   </property>
+  </action>
+  <action name="findPreviousAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-up.png</normaloff>:/images/go-up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find previous</string>
+   </property>
+   <property name="toolTip">
+    <string>Find previous (search backward)</string>
+   </property>
+  </action>
+  <action name="previewAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/preview.png</normaloff>:/images/preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open preview</string>
+   </property>
+   <property name="toolTip">
+    <string>Open preview of current article</string>
+   </property>
+  </action>
+  <action name="downloadArticleAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/network-receive.png</normaloff>:/images/network-receive.png</iconset>
+   </property>
+   <property name="text">
+    <string>Download raw format</string>
+   </property>
+   <property name="toolTip">
+    <string>Downloads raw format of an existing Inyoka article</string>
+   </property>
+  </action>
+  <action name="boldAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/format-text-bold.png</normaloff>:/images/format-text-bold.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bold</string>
+   </property>
+   <property name="toolTip">
+    <string>Bold - File names, folders, packages, file extensions</string>
+   </property>
+  </action>
+  <action name="italicAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/format-text-italic.png</normaloff>:/images/format-text-italic.png</iconset>
+   </property>
+   <property name="text">
+    <string>Italic</string>
+   </property>
+   <property name="toolTip">
+    <string>Italic - Menu entries, buttons, G-Conf keys - Always enclosed by quotation marks!</string>
+   </property>
+  </action>
+  <action name="monotypeAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/monotype.png</normaloff>:/images/monotype.png</iconset>
+   </property>
+   <property name="text">
+    <string>Monotype</string>
+   </property>
+   <property name="toolTip">
+    <string>Monotype - Commands and their options, console outputs in continuous text, modules, users, groups</string>
+   </property>
+  </action>
+  <action name="wikilinkAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-next.png</normaloff>:/images/go-next.png</iconset>
+   </property>
+   <property name="text">
+    <string>Link to wikipage</string>
+   </property>
+   <property name="toolTip">
+    <string>Link to an Inyoka wiki page</string>
+   </property>
+  </action>
+  <action name="externalLinkAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/internet-web-browser.png</normaloff>:/images/internet-web-browser.png</iconset>
+   </property>
+   <property name="text">
+    <string>External link</string>
+   </property>
+   <property name="toolTip">
+    <string>Link to an external website - always with flag e.g. {en}, {de}!</string>
+   </property>
+  </action>
+  <action name="imageAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/image-x-generic.png</normaloff>:/images/image-x-generic.png</iconset>
+   </property>
+   <property name="text">
+    <string>Insert image</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert an image</string>
+   </property>
+  </action>
+  <action name="codeblockAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/code.png</normaloff>:/images/code.png</iconset>
+   </property>
+   <property name="text">
+    <string>Code block</string>
+   </property>
+   <property name="toolTip">
+    <string>Code block - Console output, extract of config files</string>
+   </property>
+  </action>
+  <action name="insertUnderConstructionAct">
+   <property name="text">
+    <string>Under construction</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Under construction&quot; sample - Only for articles which are currently under construction</string>
+   </property>
+  </action>
+  <action name="insertTestedForAct">
+   <property name="text">
+    <string>Tested for</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Tested for&quot; sample - Indicates if an article was tested</string>
+   </property>
+  </action>
+  <action name="insertKnowledgeAct">
+   <property name="text">
+    <string>Knowledge block</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Knowledge block&quot; sample - Reference to elementary articles which are helpful for the understanding of an article</string>
+   </property>
+  </action>
+  <action name="insertTableOfContentsAct">
+   <property name="text">
+    <string>Table of contents</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Table of contents&quot; sample</string>
+   </property>
+  </action>
+  <action name="insertAdvancedAct">
+   <property name="text">
+    <string>Advanced label</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Advanced label&quot; sample - Indicates that an article is recommended for advanced users only</string>
+   </property>
+  </action>
+  <action name="insertAwardAct">
+   <property name="text">
+    <string>Award label</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Award label&quot; sample - For awarded applications</string>
+   </property>
+  </action>
+  <action name="insertImageAct">
+   <property name="text">
+    <string>Image</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert an image sample</string>
+   </property>
+  </action>
+  <action name="insertImageUnderlineAct">
+   <property name="text">
+    <string>Image with underline</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert an image with underline</string>
+   </property>
+  </action>
+  <action name="insertImageCollectionAct">
+   <property name="text">
+    <string>Image collection (with wordwrap)</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert an image collection (with wordwrap) sample - Depending on the browser width, automatic word wrapping will be used to align the images</string>
+   </property>
+  </action>
+  <action name="insertImageCollectionInTextAct">
+   <property name="text">
+    <string>Image collection (continuous text)</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert an image collection (continuous text) sample - Text flows round the collection (max. 3 images, width per image: 200px)</string>
+   </property>
+  </action>
+  <action name="insertBashCommandAct">
+   <property name="text">
+    <string>Bash command</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Bash command&quot; sample</string>
+   </property>
+  </action>
+  <action name="insertNoticeAct">
+   <property name="text">
+    <string>Notice box</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Notice box&quot; sample - Accentuate a special circumstance</string>
+   </property>
+  </action>
+  <action name="insertWarningAct">
+   <property name="text">
+    <string>Warning box</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Warning box&quot; sample - Notice for potential risks</string>
+   </property>
+  </action>
+  <action name="insertExpertsAct">
+   <property name="text">
+    <string>Experts information</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Experts info&quot; sample - Providing background information</string>
+   </property>
+  </action>
+  <action name="insertPackageInstallAct">
+   <property name="text">
+    <string>Package installation</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Package installation&quot; sample - Create a package list with installation button</string>
+   </property>
+  </action>
+  <action name="insertPPAAct">
+   <property name="text">
+    <string>PPA sample</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert PPA sample - Create a sample for using a Launchpad-PPA, including warning and link to PPA source</string>
+   </property>
+  </action>
+  <action name="insertThirdPartyRepoAct">
+   <property name="text">
+    <string>Third-party repository</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Third-party repo&quot; sample - Create a sample for using third-party repositories (not Ubuntu or Launchpad)</string>
+   </property>
+  </action>
+  <action name="insertThirdPartyRepoAuthAct">
+   <property name="text">
+    <string>Authenticate third-party repo</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert a sample for authenticating third-party repositories</string>
+   </property>
+  </action>
+  <action name="insertThirdPartyPackageAct">
+   <property name="text">
+    <string>Third-party package</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Third-party package&quot; sample - Create a sample for installing DEB-Packages from third-party repos</string>
+   </property>
+  </action>
+  <action name="insertPackageListAct">
+   <property name="text">
+    <string>Package macro (obsolete!)</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Package macro&quot; - This macro is obsolete and shall be used only in exceptional cases</string>
+   </property>
+  </action>
+  <action name="insertImprovableAct">
+   <property name="text">
+    <string>Improvable label</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Improvable&quot; sample - Article is incomplete or could be extended</string>
+   </property>
+  </action>
+  <action name="insertFixMeAct">
+   <property name="text">
+    <string>Fix me label</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Fix Me&quot; sample - Article contains descriptions or paragraphs which are not correct (any more)</string>
+   </property>
+  </action>
+  <action name="insertLeftAct">
+   <property name="text">
+    <string>Left label</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Left&quot; sample - Only for articles under construction which are left by primal author</string>
+   </property>
+  </action>
+  <action name="insertThirdPartyPackageWarningAct">
+   <property name="text">
+    <string>Third-party package warning</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Third-party package warning&quot; sample - For packages from third-party repositories</string>
+   </property>
+  </action>
+  <action name="insertThirdPartyRepoWarningAct">
+   <property name="text">
+    <string>Third-party repository warning</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Third-party repo warning&quot; sample - For packages which are installed from third-party repositories</string>
+   </property>
+  </action>
+  <action name="insertThirdPartySoftwareWarningAct">
+   <property name="text">
+    <string>Third-party software warning</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completly without package repositories</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="inyokaeditresources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

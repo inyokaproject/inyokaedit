@@ -42,8 +42,6 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 
 // Qt classes
-class QAction;
-class QMenu;
 class QComboBox;
 class QSignalMapper;
 class QWebView;
@@ -58,14 +56,19 @@ class FindReplaceDialog;
 class CProgressDialog;
 class CSettings;
 
+
+namespace Ui {
+    class CInyokaEdit;
+}
+
 class CInyokaEdit : public QMainWindow
 {
     Q_OBJECT
-
+    
 public:
-    CInyokaEdit(const QString &sAppName, const int argc, char **argv);   // Constructor
+    explicit CInyokaEdit(const QString &sAppName, const int argc, char **argv, QWidget *parent = 0);   // Constructor
     ~CInyokaEdit();  // Desstructor
-
+    
 public slots:
     void showHtmlPreview(const QString &filename);
 
@@ -105,6 +108,8 @@ private slots:
     void insertInterwikiLink(const QString &sMenuEntry);
 
 private:
+    Ui::CInyokaEdit *ui;
+
     void createObjects();
 
     // Build gui
@@ -142,7 +147,8 @@ private:
     CSettings *mySettings;
     CInterWiki *myInterWikiLinks;
 
-    QTabWidget *myTabwidget;
+    //QTabWidget *myTabwidgetDocuments;
+    QTabWidget *myTabwidgetRawPreview;
     QWebView *myWebview;
 
     FindDialog *m_findDialog;
@@ -157,101 +163,20 @@ private:
 
     bool bLogging;
 
-    // Menus and toolbars
-    QMenu *fileMenu;
-    QMenu *fileMenuLastOpened;
-    QMenu *editMenu;
-    QMenu *helpMenu;
-    QMenu *insertTextSampleMenu;
-    QMenu *insertBeginningMenu;
-    QMenu *insertFormatingHelpMenu;
-    QMenu *insertPacketinstallationMenu;
-    QMenu *insertMiscelementMenu;
-    QMenu *insertImageMenu;
-    QMenu *iWikiMenu;
-    QList<QMenu *> iWikiGroups;
-
-    QToolBar *fileToolBar;
-    QToolBar *editToolBar;
-    QToolBar *previewDlBar;
-    QToolBar *inyokaeditorBar;
-    QToolBar *samplesmacrosBar;
-
-    // File menu / file toolbar
-    QAction *newAct;
-    QAction *openAct;
+    // File menu: Last opened files list and clear list
     QList<QAction *> LastOpenedFilesAct;
     QSignalMapper *mySigMapLastOpenedFiles;
     QAction *clearRecentFilesAct;
-    QAction *saveAct;
-    QAction *saveAsAct;
-    QAction *undoAct;
-    QAction *redoAct;
-    QAction *exitAct;
 
-    // Edit menu
-    QAction *cutAct;
-    QAction *copyAct;
-    QAction *pasteAct;
-    QAction *searchAct;
-    QAction *replaceAct;
-    QAction *findNextAct;
-    QAction *findPreviousAct;
+    // InterWiki links menu group list
+    QList<QMenu *> iWikiGroups;
 
-    // Help menu
-    QAction *aboutAct;
-    QAction *reportBugAct;
-
-    // Inyoka editor toolbar
-    QAction *boldAct;
-    QAction *italicAct;
-    QAction *monotypeAct;
-    QAction *wikilinkAct;
-    QAction *externalLinkAct;
-    QAction *imageAct;
-    QAction *codeblockAct;
-
-    // Preview / download toolbar
-    QAction *previewAct;
-    QAction *downloadArticleAct;
-
-    // Combobox toolbar
+    // Comboboxes for samplesmacrosBar toolbar
     QComboBox *headlineBox;
     QComboBox *textmacrosBox;
     QComboBox *textformatBox;
 
-    // Text samples menu
-    QAction *insertUnderConstructionAct;
-    QAction *insertTestedForAct;
-    QAction *insertKnowledgeAct;
-    QAction *insertTableOfContentsAct;
-    QAction *insertAdvancedAct;
-    QAction *insertAwardAct;
-
-    QAction *insertBashCommandAct;
-    QAction *insertNoticeAct;
-    QAction *insertWarningAct;
-    QAction *insertExpertsAct;
-
-    QAction *insertImageAct;
-    QAction *insertImageUnderlineAct;
-    QAction *insertImageCollectionAct;
-    QAction *insertImageCollectionInTextAct;
-
-    QAction *insertPackageListAct;
-    QAction *insertPackageInstallAct;
-    QAction *insertPPAAct;
-    QAction *insertThirdPartyRepoAct;
-    QAction *insertThirdPartyRepoAuthAct;
-    QAction *insertThirdPartyPackageAct;
-
-    QAction *insertImprovableAct;
-    QAction *insertFixMeAct;
-    QAction *insertLeftAct;
-    QAction *insertThirdPartyPackageWarningAct;
-    QAction *insertThirdPartyRepoWarningAct;
-    QAction *insertThirdPartySoftwareWarningAct;
-
+    // Text samples signal mapper
     QSignalMapper *mySigMapTextSamples;
 
     // Inter-Wiki Links
