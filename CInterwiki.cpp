@@ -26,15 +26,22 @@
 
 #include "CInterwiki.h"
 
-CInterWiki::CInterWiki(const QString &sName)
+CInterWiki::CInterWiki(const QApplication *pApp)
 {
+
+// Debug and "no instal" option
+#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
+    QFile XmlFile(pApp->applicationDirPath() + "/iWikiLinks/iWikiLinks.xml");
+// Release
+#else
     QFile XmlFile("/usr/share/" + sName.toLower() + "/iWikiLinks/iWikiLinks.xml");
+#endif
 
     // Check if file exist and it's readable
     if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
         // Call message box from CInyokaEdit
         std::cerr << "ERROR: Can not open \"" << XmlFile.fileName().toStdString() << "\"." << std::endl;
-        QMessageBox::critical(0, sName, "Can not open \"" + XmlFile.fileName() + "\".");
+        QMessageBox::critical(0, pApp->applicationName(), "Can not open \"" + XmlFile.fileName() + "\".");
         exit (-5);
     }
 
@@ -48,7 +55,7 @@ CInterWiki::CInterWiki(const QString &sName)
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: myXmlSource - bad_alloc caught: " << ba.what() << std::endl;
-        QMessageBox::critical(0, sName, "ERROR: bad_alloc XmlSource");
+        QMessageBox::critical(0, pApp->applicationName(), "ERROR: bad_alloc XmlSource");
         exit (-6);
     }
 
@@ -58,7 +65,7 @@ CInterWiki::CInterWiki(const QString &sName)
     bool ok = myXmlReader.parse(myXmlSource);
     if (!ok) {
         std::cerr << "ERROR: Parsing \"" << XmlFile.fileName().toStdString() << "\"failed." << std::endl;
-        QMessageBox::critical(0, sName, "Error while parsing \"" + XmlFile.fileName() + "\".");
+        QMessageBox::critical(0, pApp->applicationName(), "Error while parsing \"" + XmlFile.fileName() + "\".");
         exit (-7);
     }
 

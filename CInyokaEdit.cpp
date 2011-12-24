@@ -32,22 +32,22 @@
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidget *parent) :
+CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CInyokaEdit),
-    myCompleter(0),
-    sAppName(name)
+    pApp(ptrApp),
+    myCompleter(0)
 {
     ui->setupUi(this);
 
     bLogging = false;
 
     // Check for command line arguments
-    if (argc >= 2) {
-        QString sTmp = argv[1];
+    if (pApp->argc() >= 2) {
+        QString sTmp = pApp->argv()[1];
 
         if ("--version"== sTmp) {
-            std::cout << argv[0] << "\t Version: " << sVERSION << std::endl;
+            std::cout << pApp->argv()[0] << "\t Version: " << sVERSION << std::endl;
             exit(0);
         }
         else if ("--log" == sTmp) {
@@ -67,7 +67,7 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidg
                    << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
 
     // Set config and styles/images path
-    StylesAndImagesDir = QDir::homePath() + "/." + sAppName;
+    StylesAndImagesDir = QDir::homePath() + "/." + pApp->applicationName();
 
     // Create all objects (after definition of StylesAndImagesDir)
     createObjects();
@@ -85,8 +85,8 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidg
     }
 
     // Download styles or open file from command line argument
-    if (argc >= 2) {
-        QString sTmp = argv[1];
+    if (pApp->argc() >= 2) {
+        QString sTmp = pApp->argv()[1];
 
         // Download inyoka styles
         if ("--dlstyles" == sTmp){
@@ -94,10 +94,10 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidg
         }
         else {
             if ("--log" != sTmp) {
-                loadFile(argv[1]);
+                loadFile(pApp->argv()[1]);
             }
-            else if ("--log" == sTmp && argc >= 3) {
-                loadFile(argv[2]);
+            else if ("--log" == sTmp && pApp->argc() >= 3) {
+                loadFile(pApp->argv()[2]);
             }
         }
     }
@@ -114,7 +114,7 @@ CInyokaEdit::CInyokaEdit(const QString &name, const int argc, char **argv, QWidg
 
 
 
-    ui->aboutAct->setText(ui->aboutAct->text() + " " + sAppName);
+    ui->aboutAct->setText(ui->aboutAct->text() + " " + pApp->applicationName());
 }
 
 CInyokaEdit::~CInyokaEdit()
@@ -133,7 +133,7 @@ void CInyokaEdit::createObjects() {
         m_findReplaceDialog = new FindReplaceDialog(this);
         if (bLogging) { std::clog << "Created find/replace dialogs" << std::endl; }
 
-        mySettings = new CSettings(StylesAndImagesDir, sAppName, *m_findDialog, *m_findReplaceDialog);
+        mySettings = new CSettings(StylesAndImagesDir, pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
         if (bLogging) { std::clog << "Created mySettings" << std::endl; }
         // Load settings from config file
         mySettings->readSettings();
@@ -145,7 +145,7 @@ void CInyokaEdit::createObjects() {
         myCompleter = new QCompleter(sListCompleter, this);
         if (bLogging) { std::clog << "Created myCompleter" << std::endl; }
 
-        myInterWikiLinks = new CInterWiki(sAppName);  // Has to be created before parser
+        myInterWikiLinks = new CInterWiki(pApp);  // Has to be created before parser
         if (bLogging) { std::clog << "Created myInterWikiLinks" << std::endl; }
 
         myHighlighter = new CHighlighter(myEditor->document());
@@ -168,7 +168,7 @@ void CInyokaEdit::createObjects() {
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createObjects()\": " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - createObjects()");
+        QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - createObjects()");
         exit (-1);
     }
 
@@ -181,7 +181,7 @@ void CInyokaEdit::createObjects() {
 void CInyokaEdit::setupEditor()
 {
     // Application icon
-    setWindowIcon(QIcon(":/images/" + sAppName.toLower() + "_64x64.png"));
+    setWindowIcon(QIcon(":/images/" + pApp->applicationName().toLower() + "_64x64.png"));
 
     // Font settings for editor
     QFont font;
@@ -297,7 +297,7 @@ void CInyokaEdit::createActions()
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / file menu: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / file menu");
+        QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / file menu");
         exit (-2);
     }
 
@@ -388,7 +388,7 @@ void CInyokaEdit::createActions()
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / text samples: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / combo boxes");
+        QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / combo boxes");
         exit (-6);
     }
 
@@ -519,7 +519,13 @@ void CInyokaEdit::createActions()
         for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
             iWikiLinksActions << emptyActionList;
             for (int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++) {
+// Debug and "no instal" option
+#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
+                iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+// Release
+#else
                 iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+#endif
                 mySigMapInterWikiLinks->setMapping(iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j));
                 connect(iWikiLinksActions[i][j], SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
             }
@@ -530,7 +536,7 @@ void CInyokaEdit::createActions()
     catch (std::bad_alloc& ba)
     {
         std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / interwiki actions: " << ba.what() << std::endl;
-        QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - \"createActions()\" / interwiki actions");
+        QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / interwiki actions");
         exit (-7);
     }
 
@@ -563,7 +569,13 @@ void CInyokaEdit::createMenus()
 
     // Insert interwiki-links menu
     for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
+// Debug and "no instal" option
+#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
+        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+// Release
+#else
         iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+#endif
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
 
@@ -638,12 +650,18 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
     if (QMessageBox::Yes== iRet){
         try
         {
-            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + sAppName.toLower() + "/GetInyokaStyles", sAppName, this, myDirectory.absolutePath());
+// Debug and "no instal" option
+#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
+            myArticleDownloadProgress = new CProgressDialog(pApp->applicationDirPath() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
+// Release
+#else
+            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + sAppName.toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
+#endif
         }
         catch (std::bad_alloc& ba)
         {
             std::cerr << "ERROR: myArticleDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-            QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - myArticleDownloadProgress");
+            QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - myArticleDownloadProgress");
             exit (-8);
         }
         myArticleDownloadProgress->open();
@@ -890,7 +908,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
     }
     // Problem with indices
     else {
-        QMessageBox::warning(this, sAppName, "Error while inserting InterWiki link: InterWiki indice");
+        QMessageBox::warning(this, pApp->applicationName(), "Error while inserting InterWiki link: InterWiki indice");
     }
 
     myEditor->setFocus();
@@ -913,7 +931,7 @@ void CInyokaEdit::downloadArticle()
         bool ok; // Buttons of input dialog (click on "OK" -> ok = true, click on "Cancel" -> ok = false)
 
         // Show input dialog
-        sSitename = QInputDialog::getText(this, sAppName,
+        sSitename = QInputDialog::getText(this, pApp->applicationName(),
                                           tr("Please insert name of the article which should be downloaded:"), QLineEdit::Normal,
                                           tr("Category/Article", "Msg: Input dialog DL article example text"), &ok);
 
@@ -939,7 +957,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::critical(this, sAppName, tr("Could not start the download of the raw format of article.", "Msg: Problem while downloading article"));
+            QMessageBox::critical(this, pApp->applicationName(), tr("Could not start the download of the raw format of article.", "Msg: Problem while downloading article"));
             procDownloadRawtext.kill();
             return;
         }
@@ -947,7 +965,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::critical(this, sAppName, tr("Error while downloading raw format of article.", "Msg: Problem while downloading article"));
+            QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading raw format of article.", "Msg: Problem while downloading article"));
             procDownloadRawtext.kill();
             return;
         }
@@ -960,7 +978,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::information(this, sAppName, tr("Could not download the article.", "Msg: Can not download raw format"));
+            QMessageBox::information(this, pApp->applicationName(), tr("Could not download the article.", "Msg: Can not download raw format"));
             return;
         }
 
@@ -994,12 +1012,12 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
     procDownloadMetadata.start("wget -O - " + mySettings->getInyokaUrl() + "/" + sArticlename + "?action=metaexport");
 
     if (!procDownloadMetadata.waitForStarted()) {
-        QMessageBox::critical(this, sAppName, tr("Could not start download of the meta data.", "Msg: Problem starting meta data download"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Could not start download of the meta data.", "Msg: Problem starting meta data download"));
         procDownloadMetadata.kill();
         return;
     }
     if (!procDownloadMetadata.waitForFinished()) {
-        QMessageBox::critical(this, sAppName, tr("Error while downloading meta data.", "Msg: Problem while downloading meta data"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading meta data.", "Msg: Problem while downloading meta data"));
         procDownloadMetadata.kill();
         return;
     }
@@ -1009,7 +1027,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
     // Site does not exist etc.
     if ("" == sMetadata) {
-        QMessageBox::information(this, sAppName, tr("Could not find meta data.", "Msg: No meta data found"));
+        QMessageBox::information(this, pApp->applicationName(), tr("Could not find meta data.", "Msg: No meta data found"));
         return;
     }
 
@@ -1029,7 +1047,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
         // Ask if images should be downloaded (if not enabled by default in settings)
         if (false == mySettings->getAutomaticImageDownload()) {
-            iRet = QMessageBox::question(this, sAppName, tr("Do you want to download the images which are attached to the article?", "Msg: DL aricle images"), QMessageBox::Yes, QMessageBox::No);
+            iRet = QMessageBox::question(this, pApp->applicationName(), tr("Do you want to download the images which are attached to the article?", "Msg: DL aricle images"), QMessageBox::Yes, QMessageBox::No);
         }
         else {
             iRet = QMessageBox::Yes;
@@ -1042,7 +1060,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
             // No write permission
             if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
-                QMessageBox::warning(this, sAppName, tr("Could not create temporary download file!", "Msg: Problem creating DL script"));
+                QMessageBox::warning(this, pApp->applicationName(), tr("Could not create temporary download file!", "Msg: Problem creating DL script"));
                 return;
             }
 
@@ -1076,12 +1094,12 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
             try
             {
                 QString sTmpFilePath = StylesAndImagesDir.absolutePath() + "/" + sScriptName;
-                myImageDownloadProgress = new CProgressDialog(sTmpFilePath, sAppName, this, StylesAndImagesDir.absolutePath());
+                myImageDownloadProgress = new CProgressDialog(sTmpFilePath, pApp->applicationName(), this, StylesAndImagesDir.absolutePath());
                 }
             catch (std::bad_alloc& ba)
             {
                 std::cerr << "ERROR: Caught bad_alloc in \"downloadImages()\": " << ba.what() << std::endl;
-                QMessageBox::critical(this, sAppName, "Error while memory allocation: bad_alloc - myImageDownloadProgress");
+                QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - myImageDownloadProgress");
                 exit (-9);
             }
 
@@ -1114,7 +1132,7 @@ void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
         myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myWebview));
     }
     else {
-        QMessageBox::warning(this, sAppName, tr("Error while loading preview.", "Msg box"));
+        QMessageBox::warning(this, pApp->applicationName(), tr("Error while loading preview.", "Msg box"));
     }
 }
 
@@ -1182,14 +1200,14 @@ void CInyokaEdit::reportBug(){
 
     // Start apport
     QProcess procApport;
-    procApport.start("ubuntu-bug " + sAppName.toLower());
+    procApport.start("ubuntu-bug " + pApp->applicationName().toLower());
 
     if (!procApport.waitForStarted()) {
-        QMessageBox::critical(this, sAppName, tr("Error while starting Apport.", "Msg box"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport.", "Msg box"));
         return;
     }
     if (!procApport.waitForFinished()) {
-        QMessageBox::critical(this, sAppName, tr("Error while executing Apport.", "Msg box"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while executing Apport.", "Msg box"));
         return;
     }
 }
@@ -1286,12 +1304,12 @@ bool CInyokaEdit::saveAs()
 
 void CInyokaEdit::about()
 {
-    QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg(sAppName),
+    QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg(pApp->applicationName()),
                        tr("<b>%1</b> - Editor for Inyoka-based portals<br />"
                           "Version: %2<br /><br />"
                           "&copy; 2011, the %3 authors<br />"
                           "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
-                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(sAppName).arg(sVERSION).arg(sAppName));
+                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(pApp->applicationName()).arg(sVERSION).arg(pApp->applicationName()));
 }
 
 void CInyokaEdit::documentWasModified()
@@ -1313,7 +1331,7 @@ bool CInyokaEdit::maybeSave()
             sTempCurFileName = tempCurFile.fileName();
         }
 
-        ret = QMessageBox::warning(this, sAppName,
+        ret = QMessageBox::warning(this, pApp->applicationName(),
                                    tr("The document \"%1\" has been modified.\n"
                                       "Do you want to save your changes or discard them?", "Msg: Unsaved <sTempCurFileName>").arg(sTempCurFileName),
                                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
@@ -1330,7 +1348,7 @@ void CInyokaEdit::loadFile(const QString &sFileName)
     QFile file(sFileName);
     // No permission to read
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, sAppName,
+        QMessageBox::warning(this, pApp->applicationName(),
                              tr("The file \"%1\" could not be opened:\n%2.", "Msg: Can not open file, <sFileName>, <ErrorString>")
                              .arg(sFileName)
                              .arg(file.errorString()));
@@ -1361,7 +1379,7 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
     QFile file(sFileName);
     // No write permission
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, sAppName,
+        QMessageBox::warning(this, pApp->applicationName(),
                              tr("The file \"%1\" could not be saved:\n%2.", "Msg: Can not save file, <sFileName>, <ErrorString>")
                              .arg(sFileName)
                              .arg(file.errorString()));

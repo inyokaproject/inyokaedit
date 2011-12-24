@@ -66,7 +66,7 @@ class CInyokaEdit : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit CInyokaEdit(const QString &sAppName, const int argc, char **argv, QWidget *parent = 0);   // Constructor
+    explicit CInyokaEdit(QApplication *ptrApp, QWidget *parent = 0);   // Constructor
     ~CInyokaEdit();  // Desstructor
     
 public slots:
@@ -109,6 +109,7 @@ private slots:
 
 private:
     Ui::CInyokaEdit *ui;
+    QApplication *pApp;
 
     void createObjects();
 
@@ -154,7 +155,6 @@ private:
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
 
-    const QString sAppName;
     QString sCurFile;      // Current file
 
     QDir StylesAndImagesDir;

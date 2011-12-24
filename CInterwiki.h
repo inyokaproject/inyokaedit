@@ -33,6 +33,7 @@
 #include <QStringList>
 #include <QXmlSimpleReader>
 #include <QMessageBox>
+#include <QApplication>
 
 class CInterWiki
 {
@@ -40,7 +41,7 @@ class CInterWiki
 class IWikiLinksParser;
 
 public:
-    CInterWiki(const QString &sName);
+    CInterWiki(const QApplication *pApp);
 
     QStringList getInterwikiLinksGroups() const;
     QStringList getInterwikiLinksGroupIcons() const;

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     app.installTranslator(&myAppTranslator);
 
     // New object of InyokaEdit
-    CInyokaEdit myInyokaEdit(app.applicationName(), app.argc(), app.argv());
+    CInyokaEdit myInyokaEdit(&app);
     myInyokaEdit.show();
 
     return app.exec();
