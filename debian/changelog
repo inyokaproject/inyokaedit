@@ -1,3 +1,13 @@
+inyokaedit (0.0.9~ppa1) lucid; urgency=low
+
+  * Added hunspell-based spell checker
+
+  * Separated gui definition from CInyokaEdit.cpp into CInyokaEdit.ui
+
+  * Added ifdefs for debugging and not packaged installations
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 26 Dec 2011 00:27:53 +0200
+
 inyokaedit (0.0.8~ppa1) oneiric; urgency=low
 
   * Translated all GUI strings into english, added german translation

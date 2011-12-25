@@ -64,6 +64,7 @@ void CSettings::readSettings(){
     bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
     sConfVersion = mySettingsObject->value("ConfVersion", "0.0.0").toString();
     bShowStatusbar = mySettingsObject->value("ShowStatusbar", true).toBool();
+    sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -112,6 +113,7 @@ void CSettings::writeSettings(QByteArray WinGeometry, QByteArray WinState){
     mySettingsObject->setValue("AutomaticImageDownload", bAutomaticImageDownload);
     mySettingsObject->setValue("ConfVersion", sConfVersion);
     mySettingsObject->setValue("ShowStatusbar", bShowStatusbar);
+    mySettingsObject->setValue("SpellCheckerLanguage", sSpellCheckerLanguage);
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -179,6 +181,10 @@ void CSettings::setConfVersion(const QString &sNewVersion) {
 
 bool CSettings::getShowStatusbar() const {
     return bShowStatusbar;
+}
+
+QString CSettings::getSpellCheckerLanguage() const {
+    return sSpellCheckerLanguage;
 }
 
 // ----------------------------------------------------

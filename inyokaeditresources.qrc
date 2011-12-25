@@ -24,5 +24,6 @@
         <file>images/inyokaedit_64x64.png</file>
         <file>images/question.png</file>
         <file>images/bug.png</file>
+        <file>images/spellchecker.png</file>
     </qresource>
 </RCC>

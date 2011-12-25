@@ -37,6 +37,10 @@ fi
 cd styles
 
 echo "Downloading css files..."
+rm markup.css
+rm markup2.css
+rm wiki.css
+rm main-sprite.css
 wget -nv -N http://static.cdn.ubuntu-de.org/style/markup.css
 mv markup.css markup2.css
 wget -nv -N http://static.cdn.ubuntu-de.org/style/wiki.css

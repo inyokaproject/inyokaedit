@@ -24,7 +24,7 @@
 * Purpose:    Main application, gui definition, editor functions
 ***************************************************************************/
 
-#define sVERSION "0.0.8"
+#define sVERSION "0.0.9"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -112,9 +112,6 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     }
     if (bLogging) { std::clog << "Created CInyokaEdit" << std::endl; }
 
-
-
-    ui->aboutAct->setText(ui->aboutAct->text() + " " + pApp->applicationName());
 }
 
 CInyokaEdit::~CInyokaEdit()
@@ -244,6 +241,8 @@ void CInyokaEdit::setupEditor()
     restoreGeometry(mySettings->getWindowGeometry());
     restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
 
+    ui->aboutAct->setText(ui->aboutAct->text() + " " + pApp->applicationName());
+
     if (bLogging) { std::clog << "Editor setup completed" << std::endl; }
 }
 
@@ -355,6 +354,9 @@ void CInyokaEdit::createActions()
     ui->redoAct->setEnabled(false);
     connect(myEditor, SIGNAL(redoAvailable(bool)),
             ui->redoAct, SLOT(setEnabled(bool)));
+
+    // Spell checker
+    connect(ui->spellCheckerAct, SIGNAL(triggered()), this, SLOT(checkSpelling()));
 
     // ---------------------------------------------------------------------------------------------
 
@@ -646,7 +648,7 @@ void CInyokaEdit::createToolBars()
 
 void CInyokaEdit::DownloadStyles(const QDir myDirectory)
 {
-    int iRet = QMessageBox::question(this, tr("Download styles", "Msg: Title DL styles"), tr("In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.\n\nDo you want to download these files now?", "Msg: DL styles"), QMessageBox::Yes | QMessageBox::No);
+    int iRet = QMessageBox::question(this, tr("Download styles"), tr("In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
     if (QMessageBox::Yes== iRet){
         try
         {
@@ -957,7 +959,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::critical(this, pApp->applicationName(), tr("Could not start the download of the raw format of article.", "Msg: Problem while downloading article"));
+            QMessageBox::critical(this, pApp->applicationName(), tr("Could not start the download of the raw format of article."));
             procDownloadRawtext.kill();
             return;
         }
@@ -965,7 +967,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading raw format of article.", "Msg: Problem while downloading article"));
+            QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading raw format of article."));
             procDownloadRawtext.kill();
             return;
         }
@@ -978,7 +980,7 @@ void CInyokaEdit::downloadArticle()
             #ifndef QT_NO_CURSOR
                 QApplication::restoreOverrideCursor();
             #endif
-            QMessageBox::information(this, pApp->applicationName(), tr("Could not download the article.", "Msg: Can not download raw format"));
+            QMessageBox::information(this, pApp->applicationName(), tr("Could not download the article."));
             return;
         }
 
@@ -1012,12 +1014,12 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
     procDownloadMetadata.start("wget -O - " + mySettings->getInyokaUrl() + "/" + sArticlename + "?action=metaexport");
 
     if (!procDownloadMetadata.waitForStarted()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Could not start download of the meta data.", "Msg: Problem starting meta data download"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Could not start download of the meta data."));
         procDownloadMetadata.kill();
         return;
     }
     if (!procDownloadMetadata.waitForFinished()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading meta data.", "Msg: Problem while downloading meta data"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading meta data."));
         procDownloadMetadata.kill();
         return;
     }
@@ -1027,7 +1029,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
     // Site does not exist etc.
     if ("" == sMetadata) {
-        QMessageBox::information(this, pApp->applicationName(), tr("Could not find meta data.", "Msg: No meta data found"));
+        QMessageBox::information(this, pApp->applicationName(), tr("Could not find meta data."));
         return;
     }
 
@@ -1047,7 +1049,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
         // Ask if images should be downloaded (if not enabled by default in settings)
         if (false == mySettings->getAutomaticImageDownload()) {
-            iRet = QMessageBox::question(this, pApp->applicationName(), tr("Do you want to download the images which are attached to the article?", "Msg: DL aricle images"), QMessageBox::Yes, QMessageBox::No);
+            iRet = QMessageBox::question(this, pApp->applicationName(), tr("Do you want to download the images which are attached to the article?"), QMessageBox::Yes, QMessageBox::No);
         }
         else {
             iRet = QMessageBox::Yes;
@@ -1060,7 +1062,7 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
 
             // No write permission
             if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
-                QMessageBox::warning(this, pApp->applicationName(), tr("Could not create temporary download file!", "Msg: Problem creating DL script"));
+                QMessageBox::warning(this, pApp->applicationName(), tr("Could not create temporary download file!"));
                 return;
             }
 
@@ -1132,7 +1134,7 @@ void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
         myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myWebview));
     }
     else {
-        QMessageBox::warning(this, pApp->applicationName(), tr("Error while loading preview.", "Msg box"));
+        QMessageBox::warning(this, pApp->applicationName(), tr("Error while loading preview."));
     }
 }
 
@@ -1194,6 +1196,109 @@ void CInyokaEdit::clearRecentFiles(){
 }
 
 // -----------------------------------------------------------------------------------------------
+// Spell checker
+
+void CInyokaEdit::checkSpelling()
+{
+    QString dictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
+    if (!QFile::exists(dictPath + ".dic") || !QFile::exists(dictPath + ".aff")) {
+        QMessageBox::critical(this, pApp->applicationName(), "Error: Spell checker dictionary file does not exist!");
+        return;
+    }
+
+    QString userDict= StylesAndImagesDir.absolutePath() + "/userDict_" + mySettings->getSpellCheckerLanguage() + ".txt";
+    if (!QFile::exists(userDict)) {
+        QFile userDictFile(userDict);
+        if( userDictFile.open(QIODevice::WriteOnly) ) {
+            userDictFile.close();
+        }
+        else {
+            QMessageBox::warning(0, pApp->applicationName(), "User dictionary file could not be created.");
+        }
+    }
+    CSpellChecker *spellChecker = new CSpellChecker(dictPath, userDict);
+    CSpellCheckDialog *checkDialog = new CSpellCheckDialog(spellChecker, this);
+
+    QTextCharFormat highlightFormat;
+    highlightFormat.setBackground(QBrush(QColor("#ff6060")));
+    highlightFormat.setForeground(QBrush(QColor("#000000")));
+    // Alternative format
+    //highlightFormat.setUnderlineColor(QColor("red"));
+    //highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+
+    // Save the position of the current cursor
+    QTextCursor oldCursor = myEditor->textCursor();
+
+    // Create a new cursor to walk through the text
+    QTextCursor cursor(myEditor->document());
+
+    // Don't call cursor.beginEditBlock(), as this prevents the rewdraw after changes to the content
+    // cursor.beginEditBlock();
+    while(!cursor.atEnd()) {
+        QCoreApplication::processEvents();
+        cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+        QString word = cursor.selectedText();
+
+        // Workaround for better recognition of words punctuation etc. does not belong to words
+        while(!word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position()) {
+            int cursorPos = cursor.position();
+            cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
+            cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
+            word = cursor.selectedText();
+        }
+
+        if(!word.isEmpty() && !spellChecker->spell(word)) {
+            QTextCursor tmpCursor(cursor);
+            tmpCursor.setPosition(cursor.anchor());
+            myEditor->setTextCursor(tmpCursor);
+            myEditor->ensureCursorVisible();
+
+            // Highlight the unknown word
+            QTextEdit::ExtraSelection es;
+            es.cursor = cursor;
+            es.format = highlightFormat;
+
+            QList<QTextEdit::ExtraSelection> esList;
+            esList << es;
+            myEditor->setExtraSelections(esList);
+            QCoreApplication::processEvents();
+
+            // Ask user what to do
+            CSpellCheckDialog::SpellCheckAction spellResult = checkDialog->checkWord(word);
+
+            // Reset the word highlight
+            esList.clear();
+            myEditor->setExtraSelections(esList);
+            QCoreApplication::processEvents();
+
+            if(spellResult == CSpellCheckDialog::AbortCheck)
+                break;
+
+            switch(spellResult) {
+                case CSpellCheckDialog::ReplaceOnce:
+                    cursor.insertText(checkDialog->replacement());
+                    break;
+
+                default:
+                    break;
+            }
+            QCoreApplication::processEvents();
+        }
+        cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
+    }
+
+    //cursor.endEditBlock();
+    myEditor->setTextCursor(oldCursor);
+
+    if (spellChecker != NULL) { delete spellChecker; }
+    spellChecker = NULL;
+    if (checkDialog != NULL) { delete checkDialog; }
+    checkDialog = NULL;
+
+    QMessageBox::information(this, pApp->applicationName(), tr("Spell check has finished."));
+}
+
+// -----------------------------------------------------------------------------------------------
 // Report a bug via Apport to Launchpad
 
 void CInyokaEdit::reportBug(){
@@ -1203,11 +1308,11 @@ void CInyokaEdit::reportBug(){
     procApport.start("ubuntu-bug " + pApp->applicationName().toLower());
 
     if (!procApport.waitForStarted()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport.", "Msg box"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport."));
         return;
     }
     if (!procApport.waitForFinished()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while executing Apport.", "Msg box"));
+        QMessageBox::critical(this, pApp->applicationName(), tr("Error while executing Apport."));
         return;
     }
 }

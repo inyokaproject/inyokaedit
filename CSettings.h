@@ -60,6 +60,7 @@ public:
     QString getConfVersion() const;
     void setConfVersion(const QString &sNewVersion);
     bool getShowStatusbar() const;
+    QString getSpellCheckerLanguage() const;
 
     // Font
     float getFontsize() const;
@@ -86,6 +87,7 @@ private:
     bool bAutomaticImageDownload;  // Enable / disable download of article images
     QString sConfVersion;
     bool bShowStatusbar;
+    QString sSpellCheckerLanguage;
 
     // Font
     float iFontsize;

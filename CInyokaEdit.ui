@@ -200,6 +200,8 @@
    <addaction name="separator"/>
    <addaction name="undoAct"/>
    <addaction name="redoAct"/>
+   <addaction name="separator"/>
+   <addaction name="spellCheckerAct"/>
   </widget>
   <widget class="QToolBar" name="previewDlBar">
    <property name="windowTitle">
@@ -741,6 +743,18 @@
    </property>
    <property name="toolTip">
     <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completly without package repositories</string>
+   </property>
+  </action>
+  <action name="spellCheckerAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/spellchecker.png</normaloff>:/images/spellchecker.png</iconset>
+   </property>
+   <property name="text">
+    <string>Spell checker</string>
+   </property>
+   <property name="toolTip">
+    <string>Spell checker</string>
    </property>
   </action>
  </widget>

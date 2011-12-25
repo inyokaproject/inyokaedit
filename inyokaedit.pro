@@ -1,47 +1,54 @@
- HEADERS      = CInyokaEdit.h \
-                CHighlighter.h \
-                CTextEditor.h \
-                CInsertSyntaxElement.h \
-                qtfindreplacedialog/findreplaceform.h \
-                qtfindreplacedialog/findreplacedialog.h \
-                qtfindreplacedialog/findreplace_global.h \
-                qtfindreplacedialog/findform.h \
-                qtfindreplacedialog/finddialog.h \
-                CProgressDialog.h \
-                CSettings.h \
-                CInterwiki.h \
-                CParser.h
+ HEADERS      += CInyokaEdit.h \
+                 CHighlighter.h \
+                 CTextEditor.h \
+                 CInsertSyntaxElement.h \
+                 qtfindreplacedialog/findreplaceform.h \
+                 qtfindreplacedialog/findreplacedialog.h \
+                 qtfindreplacedialog/findreplace_global.h \
+                 qtfindreplacedialog/findform.h \
+                 qtfindreplacedialog/finddialog.h \
+                 CProgressDialog.h \
+                 CSettings.h \
+                 CInterwiki.h \
+                 CParser.h \
+                 CSpellChecker.h \
+                 CSpellCheckDialog.h
 
- SOURCES      = main.cpp \
-                CInyokaEdit.cpp \
-                CHighlighter.cpp \
-                CTextEditor.cpp \
-                CInsertSyntaxElement.cpp \
-                qtfindreplacedialog/findreplaceform.cpp \
-                qtfindreplacedialog/findreplacedialog.cpp \
-                qtfindreplacedialog/findform.cpp \
-                qtfindreplacedialog/finddialog.cpp \
-                CProgressDialog.cpp \
-                CSettings.cpp \
-                CInterwiki.cpp \
-                CParser.cpp
+ SOURCES      += main.cpp \
+                 CInyokaEdit.cpp \
+                 CHighlighter.cpp \
+                 CTextEditor.cpp \
+                 CInsertSyntaxElement.cpp \
+                 qtfindreplacedialog/findreplaceform.cpp \
+                 qtfindreplacedialog/findreplacedialog.cpp \
+                 qtfindreplacedialog/findform.cpp \
+                 qtfindreplacedialog/finddialog.cpp \
+                 CProgressDialog.cpp \
+                 CSettings.cpp \
+                 CInterwiki.cpp \
+                 CParser.cpp \
+                 CSpellChecker.cpp \
+                 CSpellCheckDialog.cpp
 
- RESOURCES    = inyokaeditresources.qrc
+ RESOURCES     = inyokaeditresources.qrc
 
- QT          += core \
-                gui \
-                webkit \
-                xml
+ QT           += core \
+                 gui \
+                 webkit \
+                 xml
 
- FORMS       += CInyokaEdit.ui \
-                qtfindreplacedialog/findreplaceform.ui \
-                qtfindreplacedialog/findreplacedialog.ui \
-                CProgressDialog.ui
+ FORMS        += CInyokaEdit.ui \
+                 qtfindreplacedialog/findreplaceform.ui \
+                 qtfindreplacedialog/findreplacedialog.ui \
+                 CProgressDialog.ui \
+                 CSpellCheckDialog.ui
 
- CODECFORSRC  = UTF-8
- CODECFORTR   = UTF-8
+ CODECFORSRC   = UTF-8
+ CODECFORTR    = UTF-8
 
- TRANSLATIONS = lang/inyokaedit_de.ts
+ LIBS         += -lhunspell
+
+ TRANSLATIONS += lang/inyokaedit_de.ts
 
  # After changing defines clean all and run qmake again
- #DEFINES += NO_INSTALL
+ #DEFINES      += NO_INSTALL

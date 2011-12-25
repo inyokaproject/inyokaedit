@@ -40,6 +40,8 @@
 #include "CProgressDialog.h"
 #include "qtfindreplacedialog/finddialog.h"
 #include "qtfindreplacedialog/findreplacedialog.h"
+#include "CSpellChecker.h"
+#include "CSpellCheckDialog.h"
 
 // Qt classes
 class QComboBox;
@@ -75,6 +77,9 @@ public slots:
 protected:
     // Event when program will close
     void closeEvent(QCloseEvent *event);
+
+protected slots:
+    void checkSpelling();
 
 private slots:
     // Functions file menu/toolbar
