@@ -1196,7 +1196,7 @@ void CInyokaEdit::clearRecentFiles(){
 }
 
 // -----------------------------------------------------------------------------------------------
-// Spell checker
+// Spell checker (original code form http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell)
 
 void CInyokaEdit::checkSpelling()
 {
@@ -1232,7 +1232,7 @@ void CInyokaEdit::checkSpelling()
     // Create a new cursor to walk through the text
     QTextCursor cursor(myEditor->document());
 
-    // Don't call cursor.beginEditBlock(), as this prevents the rewdraw after changes to the content
+    // Don't call cursor.beginEditBlock(), as this prevents the redraw after changes to the content
     // cursor.beginEditBlock();
     while(!cursor.atEnd()) {
         QCoreApplication::processEvents();

@@ -24,6 +24,7 @@ FindReplaceForm::FindReplaceForm(QWidget *parent) :
     ui(new Ui::FindReplaceForm), textEdit(0)
 {
     ui->setupUi(this);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->errorLabel->setText("");
 

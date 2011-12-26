@@ -24,6 +24,8 @@
 * Purpose:    Show spell checker dialog with spellimg suggestions
 ***************************************************************************/
 
+// Original code form http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
+
 #include "CSpellCheckDialog.h"
 #include "ui_CSpellCheckDialog.h"
 

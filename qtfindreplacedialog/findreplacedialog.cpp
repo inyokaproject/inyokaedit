@@ -11,6 +11,7 @@ FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
     ui(new Ui::FindReplaceDialog)
 {
     ui->setupUi(this);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 FindReplaceDialog::~FindReplaceDialog()

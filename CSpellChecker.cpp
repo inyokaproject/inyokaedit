@@ -24,6 +24,8 @@
 * Purpose:    Spell checker (using hunspell)
 ***************************************************************************/
 
+// Original code form http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
+
 #include "CSpellChecker.h"
 
 #include <QFile>

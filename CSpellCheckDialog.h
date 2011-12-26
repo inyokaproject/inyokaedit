@@ -24,6 +24,8 @@
 * Purpose:    Class definition spell checker dialog
 ***************************************************************************/
 
+// Original code form http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
+
 #ifndef CSPELLCHECKDIALOG_H
 #define CSPELLCHECKDIALOG_H
 
