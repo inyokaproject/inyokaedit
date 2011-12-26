@@ -34,7 +34,7 @@ CInterWiki::CInterWiki(const QApplication *pApp)
     QFile XmlFile(pApp->applicationDirPath() + "/iWikiLinks/iWikiLinks.xml");
 // Release
 #else
-    QFile XmlFile("/usr/share/" + sName.toLower() + "/iWikiLinks/iWikiLinks.xml");
+    QFile XmlFile("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml");
 #endif
 
     // Check if file exist and it's readable
