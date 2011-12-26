@@ -1723,12 +1723,12 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     <message>
         <location filename="../CSpellCheckDialog.ui" line="69"/>
         <source>Add to dictionary</source>
-        <translation>Hinzufügen zu Dict</translation>
+        <translation>Zu Dict hinzufügen</translation>
     </message>
     <message>
         <location filename="../CSpellCheckDialog.ui" line="76"/>
         <source>Replace once</source>
-        <translation>Einmal ignorieren</translation>
+        <translation>Einmal ersetzen</translation>
     </message>
     <message>
         <location filename="../CSpellCheckDialog.ui" line="83"/>
