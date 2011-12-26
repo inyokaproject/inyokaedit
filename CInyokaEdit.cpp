@@ -526,7 +526,7 @@ void CInyokaEdit::createActions()
                 iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
 // Release
 #else
-                iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+                iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
 #endif
                 mySigMapInterWikiLinks->setMapping(iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j));
                 connect(iWikiLinksActions[i][j], SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
@@ -576,7 +576,7 @@ void CInyokaEdit::createMenus()
         iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
 // Release
 #else
-        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + sAppName.toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
 #endif
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
@@ -657,7 +657,7 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
             myArticleDownloadProgress = new CProgressDialog(pApp->applicationDirPath() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
 // Release
 #else
-            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + sAppName.toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
+            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
 #endif
         }
         catch (std::bad_alloc& ba)
