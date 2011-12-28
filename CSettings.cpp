@@ -71,8 +71,7 @@ void CSettings::readSettings(){
     // Used string for font size because float isn't saved human readable...
     QString sFontsize = mySettingsObject->value("FontSize", "10.5").toString();
     iFontsize = sFontsize.toFloat();
-    if (iFontsize < 0) { iFontsize = -iFontsize; }
-    if (0 == iFontsize) { iFontsize = 10.5; }
+    if (iFontsize <= 0) { iFontsize = 10.5; }
     mySettingsObject->endGroup();
 
     // Recent files

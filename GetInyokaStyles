@@ -133,6 +133,7 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/46/uf_thread.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/16/ubuntuone.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/09/wikibooks.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/user.png
+cp user.png user-xmas.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/09/wikimedia.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/18/wikipedia.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/search.png

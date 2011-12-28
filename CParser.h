@@ -82,6 +82,9 @@ private:
     // Parse List *
     QString parseList(QString actParagraph);
 
+    // Insert a box
+    QString insertBox(const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "");
+
     // Text from editor
     QTextDocument *rawText, *copyOfrawText;
 

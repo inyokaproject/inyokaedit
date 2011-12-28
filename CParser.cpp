@@ -119,7 +119,7 @@ bool CParser::genOutput(const QString sActFile)
 
     // No write permission
     if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(0, "Warning", tr("Could not create temporary HTML file!"), "Msg: Could not create preview html file");
+        QMessageBox::warning(0, "Warning", tr("Could not create temporary HTML file!"));
         return false;
     }
 
@@ -683,7 +683,6 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
 
 // MACROS [[Vorlage(...)]]
 QString CParser::parseMacro(QTextBlock actParagraph){
-    //QString CParser::convertBlock(QString actParagraph){
 
     QString sParagraph = actParagraph.text();
     //QString sParagraph = actParagraph;
@@ -705,69 +704,97 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
     // Under construction (Baustelle)
     if (sListElements[0] == trUtf8("Baustelle") || sListElements[0] == trUtf8("InArbeit")){
-        sOutput = "<div class=\"box workinprogress\">\n"
-                  "<h3 class=\"box workinprogress\">";
-        sOutput += trUtf8("Artikel in Arbeit");
-        sOutput += "</h3>\n"
-                   "<div class=\"contents\">\n";
 
-        // Replace possible spaces
-        for (int i = 1; i < sListElements.size(); i++){
-            sListElements[i].replace(" ", "_");
+        // Get and check date
+        QString sDate;
+        if (sListElements.size() >= 2) {
+            // Extract date
+            QStringList sListDate = sListElements[1].split(".");
+            // Wrong date format
+            if (3 != sListDate.size()) {
+                sDate = "";
+            }
+            // Correct number of date elements
+            else {
+                // Wrong date
+                if (sListDate[0].toInt() <= 0 || sListDate[0].toInt() > 31 ||
+                        sListDate[1].toInt() <= 0 || sListDate[1].toInt() > 12 ||
+                        sListDate[2].toInt() <= 0){
+                    sDate = "";
+                }
+                // Correct date
+                else {
+                    // Add 0 to date if < 10
+                    for (int i = 0; i < sListDate.size(); i++) {
+                        if (sListDate[i].toInt() < 10) {
+                            sListDate[i] = "0" + sListDate[i];
+                        }
+                    }
+                    sDate = sListDate[0] + "." + sListDate[1] + "." + sListDate[2];
+                }
+            }
+
+            QString sTmpUrl = sWikiUrl;
+            sTmpUrl.remove("wiki.");
+            QString sLinkUser("");
+            int iCntUser;
+            if (sDate == "") {
+                iCntUser = 1;  // Entry with index 1 = first user (no correct date given)
+            }
+            else {
+                iCntUser = 2;  // Entry after date = first user
+            }
+
+            // Generate user list
+            for (; iCntUser < sListElements.size(); iCntUser++) {
+                // Replace possible spaces
+                sListElements[iCntUser].replace(" ", "_");
+                sLinkUser += "<a href=\"" + sTmpUrl + "/user/" + sListElements[iCntUser] + "/ \" class=\"crosslink user\">" + sListElements[iCntUser] + "</a>";
+                // Comma or "and" between users
+                if (iCntUser == sListElements.size() - 2) {
+                    sLinkUser += " " + trUtf8("und") + " ";
+                }
+                else {
+                    sLinkUser += ", ";
+                }
+            }
+            sOutput = trUtf8("Dieser Artikel wird momentan von %1 erstellt.").arg(sLinkUser);
+
+            if (sDate != "") {
+                sOutput += " " + trUtf8("Als Fertigstellungsdatum wurde der %1 angegeben.").arg(sDate);
+            }
+            else {
+                sOutput += " " + trUtf8("Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.");
+            }
+        }
+        // No parameter given
+        else {
+            sOutput = trUtf8("Dieser Artikel wird momentan erstellt. Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.");
         }
 
-        // One editor
-        QString sTmpUrl = sWikiUrl;
-        sTmpUrl.remove("wiki.");
-        if (sListElements.size() == 3){
-            QString sLinkUser1 = "<a href=\"" + sTmpUrl + "/user/" + sListElements[2] + "/ \" class=\"crosslink user\">" + sListElements[2] + "</a>";
-            sOutput += "<p>" + trUtf8("Dieser Artikel wird momentan überarbeitet von %1 erstellt.").arg(sLinkUser1);
-        }
-        // Two editors
-        else if (sListElements.size() >= 4){
-            QString sLinkUser2 = "<a href=\"" + sTmpUrl + "/user/" + sListElements[2] + "/ \" class=\"crosslink user\">" + sListElements[2] + "</a>";
-            QString sLinkUser3 = "<a href=\"" + sTmpUrl + "/user/" + sListElements[3] + "/ \" class=\"crosslink user\">" + sListElements[3] + "</a>";
-            sOutput += "<p>" + trUtf8("Dieser Artikel wird momentan überarbeitet von %1 und %2 erstellt.").arg(sLinkUser2).arg(sLinkUser3);
-        }
-
-        sOutput += " " + trUtf8("Als Fertigstellungsdatum wurde der %1 angegeben.").arg(sListElements[1]);
-        sOutput += "</p>\n"
-                   "<hr />\n";
-        sOutput += "<p><strong>" + trUtf8("Achtung:") + " </strong>\n";
-        sOutput += trUtf8("Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen.");
-        sOutput += "</p>\n"
-                   "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box workinprogress",
+                            trUtf8("Artikel in Arbeit"),
+                            sOutput,
+                            trUtf8("Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen."));
 
     }
     // -----------------------------------------------------------------------------------------------
 
     // TESTED (Getestet)
     else if(sListElements[0] == trUtf8("Getestet")){
-        sOutput = "<div class=\"box tested_for\">\n"
-                  "<h3 class=\"box tested_for\">";
-        sOutput += trUtf8("Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:");
-        sOutput += "</h3>\n"
-                   "<div class=\"contents\">\n";
 
         if (sListElements.size() >= 2){
             // Article untested
             if (sListElements[1] == "" || sListElements[1] == " "){
-                sOutput += "<p>";
-                sOutput += trUtf8("Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.");
-                sOutput += "</p>"
-                           "</div>\n"
-                           "</div>\n";
+                sOutput = trUtf8("Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.");
             }
             // Tested "general"
             else if (sListElements[1] == trUtf8("general")){
-                sOutput += "<p>" + trUtf8("Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.") + "</p>\n";
-                sOutput += "</div>\n"
-                           "</div>\n";
+                sOutput = trUtf8("Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.");
             }
             // Article tested with ubuntu versions
             else{
-                sOutput += "<ul>\n";
+                sOutput = "<ul>\n";
 
                 for (int i = 1; i < sListElements.size(); i++){
                     sOutput += "<li>\n"
@@ -785,67 +812,55 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                     else if (sListElements[i].toLower() == "hardy")
                         sOutput += "<a href=\"" + sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
                     else
-                        sOutput +=  "Unknown Ubuntu Version\n";
+                        sOutput +=  "Unknown Version\n";
 
                     sOutput += "</p>\n"
                                "</li>\n";
                 }
-                sOutput += "</ul>\n"
-                           "</div>\n"
-                           "</div>\n";
+                sOutput += "</ul>\n";
             }
         }
         else {
-            sOutput += "<p>";
-            sOutput += trUtf8("Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.");
-            sOutput += "</p>"
-                       "</div>\n"
-                       "</div>\n";
+            sOutput = trUtf8("Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.");
         }
+
+        sOutput = insertBox("box tested_for",
+                            trUtf8("Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:"),
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
     // ADVANCED (Fortgeschritten)
     else if (sListElements[0] == trUtf8("Fortgeschritten")){
-        // Generate output
-        sOutput = "<div class=\"box advanced\">\n"
-                  "<h3 class=\"box advanced\">";
-        sOutput += trUtf8("Artikel für fortgeschrittene Anwender");
-        sOutput += "</h3>\n"
-                   "<div class=\"contents\">\n"
-                   "<p>";
-        sOutput += trUtf8("Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist daher nur für fortgeschrittene Benutzer gedacht.");
-        sOutput += "</p>\n"
-                   "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box advanced",
+                            trUtf8("Artikel für fortgeschrittene Anwender"),
+                            trUtf8("Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist daher nur für fortgeschrittene Benutzer gedacht."));
     }
     // -----------------------------------------------------------------------------------------------
 
     // AWARD (Auszeichnung)
     else if (sListElements[0] == trUtf8("Award")){
 
-        sOutput = "<div class=\"box award\">\n"
-                  "<h3 class=\"box award\">";
-        if (sListElements.size() >= 4){
-            sOutput += sListElements[1] + "</h3>\n"
-                       "<div class=\"contents\">\n"
-                       "<p>";
-            QString sTmpAwardLink = "<a href=\"" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + sListElements[1] + "</a>";
-            sOutput += trUtf8("Diese Anwendung hat die Auszeichnung %1 in der Kategorie %2 gewonnen.").arg(sTmpAwardLink).arg(sListElements[3]);
-            if(sListElements.size() == 5){
-                sOutput += " ";
-                sOutput += trUtf8("Die Auszeichnung wurde an %1 überreicht.").arg(sListElements[4]);
-                sOutput += "</p></div>\n";
-            }
-            else{
-                sOutput += "</p></div>\n";
-            }
-        }
-        else{
-            sOutput += "</h3>\n";
-        }
-        sOutput += "</div>\n";
+        QString sAward("");
 
+        if (sListElements.size() < 4){
+            sAward = "Award";
+            sOutput = "";
+        }
+        else {
+            sAward = sListElements[1];
+            QString sTmpAwardLink = "<a href=\"" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + sListElements[1] + "</a>";
+            sOutput = trUtf8("Diese Anwendung hat die Auszeichnung %1 in der Kategorie %2 gewonnen.").arg(sTmpAwardLink).arg(sListElements[3]);
+
+            // Awardee defined?
+            if(sListElements.size() >= 5){
+                sOutput += " " + trUtf8("Die Auszeichnung wurde an %1 überreicht.").arg(sListElements[4]);
+            }
+        }
+
+        sOutput = insertBox("box award",
+                            sAward,
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
@@ -870,115 +885,86 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 
     // IMPROVABLE (Ausbaufähig)
     else if (sListElements[0] == trUtf8("Ausbaufähig")){
-
-        // Generate output
-        sOutput = "<div class=\"box improvable\">\n"
-                  "<h3 class=\"box improvable\">";
-        sOutput += trUtf8("Ausbaufähige Anleitung");
-        sOutput += "</h3>\n"
-                   "<div class=\"contents\">\n"
-                   "<p>";
-        sOutput += trUtf8("Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas verbessern kannst, dann editiere den Beitrag, um die Qualität des Wikis noch weiter zu verbessern.");
-        sOutput += "</p>\n";
-
-        // Remark available
-        if (sListElements.size() == 2){
-            if (sListElements[1] != "" && sListElements[1] != " "){
-                sOutput += "<hr />\n<p><strong>" + trUtf8("Anmerkung:") + "</strong> " + sListElements[1] + "</p>\n";
-            }
+        sOutput = "";
+        // Remark available?
+        if (sListElements.size() >= 2){
+            sOutput = sListElements[1];
         }
 
-        sOutput += "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box improvable",
+                            trUtf8("Ausbaufähige Anleitung"),
+                            trUtf8("Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas verbessern kannst, dann editiere den Beitrag, um die Qualität des Wikis noch weiter zu verbessern."),
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
     // FIXME (Fehlerhaft)
     else if (sListElements[0] == trUtf8("Fehlerhaft")){
-
-        sOutput = "<div class=\"box fixme\">\n";
-        sOutput += "<h3 class=\"box fixme\">" + trUtf8("Fehlerhafte Anleitung") +  "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
-        sOutput += "<p>" + trUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, nimm dir bitte die Zeit und bessere sie aus.") + "</p>\n";
-
-        // Remark available
-        if (sListElements.size() == 2){
-            if (sListElements[1] != "" && sListElements[1] != " ")
-                sOutput += "<hr />\n<p><strong>" + trUtf8("Anmerkung:") + "</strong> "  + sListElements[1] + "</p>\n";
+        sOutput = "";
+        // Remark available?
+        if (sListElements.size() >= 2){
+            sOutput = sListElements[1];
         }
 
-        sOutput += "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box fixme",
+                            trUtf8("Fehlerhafte Anleitung"),
+                            trUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, nimm dir bitte die Zeit und bessere sie aus."),
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
     // LEFT (Verlassen)
     else if (sListElements[0] == trUtf8("Verlassen")){
-
-        // Generate output
-        sOutput = "<div class=\"box left\">\n";
-        sOutput += "<h3 class=\"box left\">" + trUtf8("Verlassene Anleitung") +  "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
-        sOutput += "<p>" + trUtf8("Dieser Artikel wurde von seinem Ersteller verlassen und wird nicht mehr weiter von ihm gepflegt. Wenn Du den Artikel fertigstellen oder erweitern kannst, dann bessere ihn bitte aus.") + "</p>\n";
-        // Remark available
-        if (sListElements.size() == 2){
-            if (sListElements[1] != "" && sListElements[1] != " ")
-                sOutput += "<hr />\n<p><strong>" + trUtf8("Anmerkung:") + "</strong> " + sListElements[1] + "</p>\n";
+        sOutput = "";
+        // Remark available?
+        if (sListElements.size() >= 2){
+            sOutput = sListElements[1];
         }
 
-        sOutput += "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box left",
+                            trUtf8("Verlassene Anleitung"),
+                            trUtf8("Dieser Artikel wurde von seinem Ersteller verlassen und wird nicht mehr weiter von ihm gepflegt. Wenn Du den Artikel fertigstellen oder erweitern kannst, dann bessere ihn bitte aus."),
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
     // ARCHIVED (Archiviert)
     else if (sListElements[0] == trUtf8("Archiviert")){
-
-        // Generate output
-        sOutput = "<div class=\"box improvable\">\n";
-        sOutput += "<h3 class=\"box improvable\">" + trUtf8("Archivierte Anleitung") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
-        sOutput += "<p>" + trUtf8("Dieser Artikel wurde archiviert, da er - oder Teile daraus - nur noch unter einer älteren Ubuntu-Version nutzbar ist. Diese Anleitung wird vom Wiki-Team weder auf Richtigkeit überprüft noch anderweitig gepflegt. Zusätzlich wurde der Artikel für weitere Änderungen gesperrt.") + "</p>\n";
-        // Remark available
-        if (sListElements.size() == 2){
-            if (sListElements[1] != "" && sListElements[1] != " ")
-                sOutput += "<hr />\n<p><strong>"+ trUtf8("Anmerkung:") + "</strong> " + sListElements[1] + "</p>\n";
+        sOutput = "";
+        // Remark available?
+        if (sListElements.size() >= 2){
+            sOutput = sListElements[1];
         }
 
-        sOutput += "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box improvable",
+                            trUtf8("Archivierte Anleitung"),
+                            trUtf8("Dieser Artikel wurde archiviert, da er - oder Teile daraus - nur noch unter einer älteren Ubuntu-Version nutzbar ist. Diese Anleitung wird vom Wiki-Team weder auf Richtigkeit überprüft noch anderweitig gepflegt. Zusätzlich wurde der Artikel für weitere Änderungen gesperrt."),
+                            sOutput);
     }
     // -----------------------------------------------------------------------------------------------
 
     // COPY (Kopie)
-    else if (sListElements[0] == trUtf8("Kopie") && sListElements.size() >= 2){
-
-        // Replace possible spaces
-        for (int i = 1; i < sListElements.size(); i++){
-            sListElements[i].replace(" ", "_");
+    else if (sListElements[0] == trUtf8("Kopie")){
+        sOutput = "";
+        // Generate temp. link
+        if (sListElements.size() >= 2) {
+            // Replace possible spaces
+            sListElements[1].replace(" ", "_");
+            sOutput = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
         }
 
-        // Generate output
-        sOutput = "<div class=\"box warning\">\n";
-        sOutput += "<h3 class=\"box warning\">" + trUtf8("Achtung!") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
-        QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
-        sOutput += "<p>" + trUtf8("Diese Seite wird aktuell überarbeitet. Bitte hier keine Änderungen mehr vornehmen, sondern in %1!").arg(sTmpLink) + "</p>\n";
-        sOutput += "</div>\n"
-                   "</div>\n";
-
+        sOutput = insertBox("box warning",
+                            trUtf8("Achtung!"),
+                            trUtf8("Diese Seite wird aktuell überarbeitet. Bitte hier keine Änderungen mehr vornehmen, sondern in %1!").arg(sOutput));
     }
     // -----------------------------------------------------------------------------------------------
 
     // WORK IN PROGRESS (Überarbeitung)
     else if (sListElements[0] == trUtf8("Überarbeitung")){
-        sOutput = "<div class=\"box workinprogress\">\n";
-        sOutput += "<h3 class=\"box workinprogress\">" + trUtf8("Artikel wird überarbeitet") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
-        sOutput += "<p>" + trUtf8("Dieser Artikel wird momentan überarbeitet.") + "</p>\n";
+        sOutput = trUtf8("Dieser Artikel wird momentan überarbeitet.");
 
         // Correct number of elements?
-        if (sListElements.size() == 4){
+        if (sListElements.size() >= 4){
 
             // Replace possible spaces
             for (int i = 1; i < sListElements.size(); i++){
@@ -989,61 +975,71 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             sTmpUrl.remove("wiki.");
             // Generate output
             sOutput += "<ul>";
-            sOutput += "<li><p>" + trUtf8("geplante Fertigstellung:") + " " + sListElements[1] + "</p></li>\n";
+            sOutput += "<li><p>" + trUtf8("Geplante Fertigstellung:") + " " + sListElements[1] + "</p></li>\n";
             QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
-            sOutput += "<li><p>" + trUtf8("derzeit gültiger Artikel:") + " " + sTmpLink + "</p></li>\n";
-            QString sTmpLink2 = " <a href=\"" + sTmpUrl + "/user/" + sListElements[3] + "\" class=\"crosslink user\"> " + sListElements[3] + " </a>";
+            sOutput += "<li><p>" + trUtf8("Derzeit gültiger Artikel:") + " " + sTmpLink + "</p></li>\n";
+
+            // Generate user list
+            QString sTmpLink2("");
+            for (int i = 3; i < sListElements.size(); i++) {
+                sTmpLink2 += "<a href=\"" + sTmpUrl + "/user/" + sListElements[i] + "/ \" class=\"crosslink user\">" + sListElements[i] + "</a>";
+                // Comma or "and" between users
+                if (i == sListElements.size() - 2) {
+                    sTmpLink2 += " " + trUtf8("und") + " ";
+                }
+                else {
+                    sTmpLink2 += ", ";
+                }
+            }
             sOutput += "<li><p>" + trUtf8("Bearbeiter:") + sTmpLink2 + "</p></li>\n";
             sOutput += "</ul>\n";
             QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
             sOutput += "<p>" + trUtf8("Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.").arg(sTmpLink3) + "</p>\n";
         }
 
-        sOutput += "<hr />\n";
-        sOutput += "<p><strong>" + trUtf8("Achtung") + ": </strong>" + trUtf8("Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen!") + "</p>\n";
-        sOutput += "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box workinprogress",
+                            trUtf8("Artikel wird überarbeitet"),
+                            sOutput,
+                            trUtf8("Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen!"));
     }
     // -----------------------------------------------------------------------------------------------
 
     // THIRD-PARTY SOURCE / PACKAGE / SOFTWARE WARNING (Fremdquellen / -pakete / -software Warnung)
     else if (sListElements[0] == trUtf8("Fremd")){
-        sOutput = "<div class=\"box warning\">\n";
-        sOutput += "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n";
+        QString sRemark("");
+        sOutput = "";
 
         if (sListElements.size() >= 2){
-
             // Package
             if (sListElements[1] == trUtf8("Paket")){
-                sOutput += "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             // Source
             else if (sListElements[1] == trUtf8("Quelle")){
-                sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             //Software
             else if (sListElements[1] == trUtf8("Software")){
-                sOutput += "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
             }
-
             // Remark available
             if (sListElements.size() >= 3){
-                if (sListElements[2].startsWith(" "))
-                    sListElements[2].remove(0, 1);
-                if (sListElements[2] != "" && sListElements[2] != " "){
-                    sOutput += "<hr />\n";
-                    sOutput += "<p><strong>" + trUtf8("Anmerkung") + ": </strong>" + sListElements[2] + "</p>";
-                }
+                    sRemark = sListElements[2];
             }
         }
 
-        sOutput += "</div>\n</div>\n";
+        sOutput = insertBox("box warning",
+                            trUtf8("Hinweis!"),
+                            sOutput,
+                            sRemark);
     }
     // -----------------------------------------------------------------------------------------------
 
     // PPA
     else if (sListElements[0] == trUtf8("PPA")){
+        QString sOutsideBox("");
+        QString sRemark("");
+        sOutput = "";
         if (sListElements.size() == 3){
             // Replace possible spaces
             for (int i = 1; i < sListElements.size(); i++){
@@ -1051,22 +1047,17 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             }
 
             // Generate output
-            sOutput = "<ul>\n"
-                      "<li>\n";
-            sOutput += "<p><strong>ppa:" + sListElements[1] + "/" + sListElements[2] + "</strong></p>\n";
-            sOutput += "</li>\n"
-                       "</ul>";
+            sOutsideBox = "<ul>\n<li>\n";
+            sOutsideBox += "<p><strong>ppa:" + sListElements[1] + "/" + sListElements[2] + "</strong></p>\n";
+            sOutsideBox += "</li>\n</ul>";
 
-            sOutput += "<div class=\"box warning\">\n";
-            sOutput += "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n";
-            sOutput += "<div class=\"contents\">\n";
-            sOutput += "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n<hr />";
+            sOutput = trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.");
             QString sTmpLink = "<img src=\"img/interwiki/ppa.png\" class=\"image-default\" alt=\"PPA\" /> <a href=\"https://launchpad.net/~" + sListElements[1] + "/+archive/" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("PPA Beschreibung") + "</a>";
             QString sTmpLink2 = "<a href=\"https://launchpad.net/~" + sListElements[1] + "\" class=\"interwiki interwiki-lpuser\">" + sListElements[1] + "</a>";
-            sOutput += "<p>" + trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
-            sOutput += "</div>\n"
-                       "</div>\n";
+            sRemark = trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2);
         }
+
+        sOutput = sOutsideBox + insertBox("box warning", trUtf8("Hinweis!"), sOutput, sRemark);
     }
     // -----------------------------------------------------------------------------------------------
 
@@ -1113,14 +1104,13 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
             QString sTmpLink2 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
             sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man die folgenden %2:").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
-            sOutput += "<div class=\"box warning\">\n"
-                       "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n"
-                       "<div class=\"contents\">\n";
+
             QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
-            sOutput += "<p>" + trUtf8("Zusätzliche %3 können das System gefährden.").arg(sTmpLink3) + "</p>\n"
-                       "</div>\n"
-                       "</div>\n"
-                       "<div class=\"thirpartyrepo-outer\">\n"
+            sOutput += insertBox("box warning",
+                                trUtf8("Hinweis!"),
+                                trUtf8("Zusätzliche %1 können das System gefährden.").arg(sTmpLink3));
+
+            sOutput += "<div class=\"thirpartyrepo-outer\">\n"
                        "<div class=\"contents\">\n"
                        "<div class=\"selector\">\n"
                        "<strong>" + trUtf8("Version:") + " </strong>" + sListElements[2] + "\n"
@@ -1221,12 +1211,9 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         sOutput += trUtf8("Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.").arg(sTmpLink) + "</p>\n";
 
         // Warning box
-        sOutput += "<div class=\"box warning\">\n"
-                   "<h3 class=\"box warning\">" + trUtf8("Hinweis!") + "</h3>\n"
-                   "<div class=\"contents\"\n"
-                   "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden.") + "</p>\n"
-                   "</div>\n</div>\n";
-
+        sOutput += insertBox("box warning",
+                             trUtf8("Hinweis!"),
+                             "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
     }
     // -----------------------------------------------------------------------------------------------
 
@@ -1309,7 +1296,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-// Inhaltsverzeichnis erstellen
+// Create table of contents
 QString CParser::parseTableOfContents(QTextBlock tabofcontents){
 
     QString sLine = tabofcontents.text();
@@ -1457,64 +1444,56 @@ QString CParser::parseTextSample(QString actParagraph){
         sListElements[i] = sListElements[i].trimmed();
     }
 
-    QString sOutput("<strong>FOUND UNKNOWN ITEM: {{{#!vorlage " + sListElements[0] + "</strong>\n");
+    QString sOutput("<strong>ERROR: Found unknown item: {{{#!vorlage " + sListElements[0] + "</strong>\n");
 
     // KNOWLEGE BOX (Wissensblock)
     if (sListElements[0] == trUtf8("Wissen")){
-        sOutput = "<div class=\"box knowledge\">\n";
-        sOutput += "<h3 class=\"box knowledge\">" + trUtf8("Zum Verständnis dieses Artikels sind folgende Seiten hilfreich:") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n"
-                   "<ol class=\"arabic\">\n";
 
+        sOutput = "<ol class=\"arabic\">\n";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += "<li>\n<p><a id=\"source-" + QString::number(i) + "\" href=\"#source-" + QString::number(i) + "\" class=\"crosslink anchor\"> </a>\n" + sListElements[i] + "</p>\n</li>\n";
         }
+        sOutput += "</ol>\n";
 
-        sOutput += "</ol>\n"
-                   "</div>\n"
-                   "</div>\n";
+        sOutput = insertBox("box knowledge",
+                            trUtf8("Zum Verständnis dieses Artikels sind folgende Seiten hilfreich:"),
+                            sOutput);
     }
 
     // WARNING (Warnung)
     else if (sListElements[0] == trUtf8("Warnung")){
-        sOutput = "<div class=\"box warning\">\n";
-        sOutput += "<h3 class=\"box warning\">" + trUtf8("Achtung!") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n"
-                   "<p>";
+        sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
         }
-        sOutput += "</p>\n"
-                   "</div>\n"
-                   "</div>\n";
+
+        sOutput = insertBox("box warning",
+                            trUtf8("Achtung!"),
+                            sOutput);
     }
 
     // NOTICE (Hinweis)
     else if (sListElements[0] == trUtf8("Hinweis")){
-        sOutput = "<div class=\"box notice\">\n";
-        sOutput += "<h3 class=\"box notice\">" + trUtf8("Hinweis:") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n"
-                   "<p>";
+        sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
         }
-        sOutput += "</p>\n"
-                   "</div>\n"
-                   "</div>\n";
+
+        sOutput = insertBox("box notice",
+                            trUtf8("Hinweis:"),
+                            sOutput);
     }
 
     // EXPERT-INFO (Experteninformationen)
     else if (sListElements[0] == trUtf8("Experten")){
-        sOutput = "<div class=\"box experts\">\n";
-        sOutput += "<h3 class=\"box experts\">" + trUtf8("Experten-Info:") + "</h3>\n";
-        sOutput += "<div class=\"contents\">\n"
-                   "<p>";
+        sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
         }
-        sOutput += "</p>\n"
-                   "</div>\n"
-                   "</div>\n";
+
+        sOutput = insertBox("box experts",
+                            trUtf8("Experten-Info:"),
+                            sOutput);
     }
 
     // BASH (Befehl)
@@ -1717,8 +1696,6 @@ QString CParser::parseTextSample(QString actParagraph){
                     sOutput += sTmpTD + ">" + sListElements[i] + "</td>\n";
                 }
 
-
-
                 // Normal cell without style info
                 else{
                     if (i == 1)
@@ -1728,7 +1705,6 @@ QString CParser::parseTextSample(QString actParagraph){
                     sOutput += "<td>" + sListElements[i] + "</td>\n";
                 }
             }
-
 
         }
 
@@ -1840,7 +1816,7 @@ QString CParser::parseImageCollection(QString actParagraph){
                 return "<strong>ERROR: Image collection</strong>\n";
         }
 
-        // Not in Fliesstext
+        // With word wrap
         if (sImageCollAlign == "" && i > 0){
 
             if (i == 1)
@@ -1862,7 +1838,7 @@ QString CParser::parseImageCollection(QString actParagraph){
     if (sImageCollAlign == "")
         sOutput += "<div style=\"clear: both\">\n<div class=\"contents\"> </div>\n</div>";
 
-    // In Fliesstext
+    // In continuous text
     if (sImageCollAlign != ""){
         sOutput = "<table style=\"float: " + sImageCollAlign + "; clear: both; border: none\">\n<tbody>\n<tr style=\"background-color: #E2C889\">\n";
         for (int i = 1; i < sListElements.length(); i++){
@@ -2107,4 +2083,26 @@ QString CParser::parseList(QString actParagraph){
     sOutput += "</ul>";
 
     return sOutput;
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// Insert box
+QString CParser::insertBox(const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark) {
+    QString sReturn("");
+
+    // Generate output
+    sReturn = "<div class=\"" + sClass + "\">\n";
+    sReturn += "<h3 class=\"" + sClass + "\">" + sHeadline +  "</h3>\n";
+    sReturn += "<div class=\"contents\">\n";
+    sReturn += "<p>" + sContents + "</p>\n";
+    // Remark available
+    if (sRemark != "" && sRemark != " "){
+        sReturn += "<hr />\n<p><strong>" + trUtf8("Anmerkung:") + "</strong> " + sRemark + "</p>\n";
+    }
+    sReturn += "</div>\n"
+               "</div>\n";
+
+    return sReturn;
 }

@@ -108,7 +108,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     }
 
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("Ready", "GUI: Statusbar"));
+        statusBar()->showMessage(tr("Ready"));
     }
     if (bLogging) { std::clog << "Created CInyokaEdit" << std::endl; }
 
@@ -581,9 +581,6 @@ void CInyokaEdit::createMenus()
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
 
-    // Help menu
-
-
     if (bLogging) { std::clog << "Created menus" << std::endl; }
 }
 
@@ -593,7 +590,6 @@ void CInyokaEdit::createMenus()
 // Generate tool bars
 void CInyokaEdit::createToolBars()
 {
-
     // Tool bar for combo boxes (samples and macros)
     ui->samplesmacrosBar->addWidget(headlineBox);
 
