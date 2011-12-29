@@ -1,8 +1,14 @@
+inyokaedit (0.0.9~ppa3) lucid; urgency=low
+
+  * Version count up to ppa3 because of Launchpad problem...
+
+ -- Thorsten Roth <elthoro@gmx.de>  Thu, 29 Dec 2011 19:41:23 +0200
+
 inyokaedit (0.0.9~ppa2) lucid; urgency=low
 
   * Changed Qt dependencies and added Qt packages for Lucid.
 
- -- Thorsten Roth <elthoro@gmx.de>  Wed, 29 Dec 2011 23:12:11 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Wed, 28 Dec 2011 23:12:11 +0200
 
 inyokaedit (0.0.9~ppa1) lucid; urgency=low
 
