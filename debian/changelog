@@ -1,3 +1,9 @@
+inyokaedit (0.0.9~ppa2) lucid; urgency=low
+
+  * Changed Qt dependencies and added Qt packages for Lucid.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Wed, 29 Dec 2011 23:12:11 +0200
+
 inyokaedit (0.0.9~ppa1) lucid; urgency=low
 
   * Added hunspell-based spell checker
