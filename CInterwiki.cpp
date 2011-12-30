@@ -28,14 +28,16 @@
 
 CInterWiki::CInterWiki(const QApplication *pApp)
 {
+    QFile XmlFile;
 
-// Debug and "no instal" option
-#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
-    QFile XmlFile(pApp->applicationDirPath() + "/iWikiLinks/iWikiLinks.xml");
-// Release
-#else
-    QFile XmlFile("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml");
-#endif
+    // Path from normal installation
+    if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml")) {
+        XmlFile.setFileName("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml");
+    }
+    // No installation: Use app path
+    else {
+        XmlFile.setFileName(pApp->applicationDirPath() + "/iWikiLinks/iWikiLinks.xml");
+    }
 
     // Check if file exist and it's readable
     if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {

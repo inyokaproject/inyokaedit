@@ -63,7 +63,7 @@ void CSettings::readSettings(){
     LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
     bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
     sConfVersion = mySettingsObject->value("ConfVersion", "0.0.0").toString();
-    bShowStatusbar = mySettingsObject->value("ShowStatusbar", true).toBool();
+    bShowStatusbar = mySettingsObject->value("ShowStatusbar", false).toBool();
     sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
 
     // Font settings

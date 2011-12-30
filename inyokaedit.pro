@@ -10,9 +10,11 @@
                  CProgressDialog.h \
                  CSettings.h \
                  CInterwiki.h \
-                 CParser.h \
-                 CSpellChecker.h \
+                 CParser.h
+unix {
+ HEADERS      += CSpellChecker.h \
                  CSpellCheckDialog.h
+}
 
  SOURCES      += main.cpp \
                  CInyokaEdit.cpp \
@@ -26,9 +28,11 @@
                  CProgressDialog.cpp \
                  CSettings.cpp \
                  CInterwiki.cpp \
-                 CParser.cpp \
-                 CSpellChecker.cpp \
+                 CParser.cpp
+unix {
+ SOURCES      += CSpellChecker.cpp \
                  CSpellCheckDialog.cpp
+}
 
  RESOURCES     = inyokaeditresources.qrc
 
@@ -46,9 +50,8 @@
  CODECFORSRC   = UTF-8
  CODECFORTR    = UTF-8
 
+unix {
  LIBS         += -lhunspell
+}
 
  TRANSLATIONS += lang/inyokaedit_de.ts
-
- # After changing defines clean all and run qmake again
- #DEFINES      += NO_INSTALL

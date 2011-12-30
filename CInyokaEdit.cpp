@@ -521,13 +521,15 @@ void CInyokaEdit::createActions()
         for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
             iWikiLinksActions << emptyActionList;
             for (int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++) {
-// Debug and "no instal" option
-#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
-                iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-// Release
-#else
-                iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-#endif
+                // Path from normal installation
+                if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
+                    iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+                }
+                // No installation: Use app path
+                else {
+                    iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+                }
+
                 mySigMapInterWikiLinks->setMapping(iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j));
                 connect(iWikiLinksActions[i][j], SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
             }
@@ -570,14 +572,15 @@ void CInyokaEdit::createMenus()
     }
 
     // Insert interwiki-links menu
-    for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
-// Debug and "no instal" option
-#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
-        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
-// Release
-#else
-        iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
-#endif
+    for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {        
+        // Path from normal installation
+        if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+        }
+        // No installation: Use app path
+        else {
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+        }
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
 
@@ -648,13 +651,14 @@ void CInyokaEdit::DownloadStyles(const QDir myDirectory)
     if (QMessageBox::Yes== iRet){
         try
         {
-// Debug and "no instal" option
-#if defined(NO_INSTALL) || !defined(QT_NO_DEBUG)
-            myArticleDownloadProgress = new CProgressDialog(pApp->applicationDirPath() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
-// Release
-#else
-            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
-#endif
+            // Path from normal installation
+            if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles")) {
+                myArticleDownloadProgress = new CProgressDialog("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
+            }
+            // No installation: Use app path
+            else {
+                myArticleDownloadProgress = new CProgressDialog(pApp->applicationDirPath() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
+            }
         }
         catch (std::bad_alloc& ba)
         {
@@ -1196,6 +1200,8 @@ void CInyokaEdit::clearRecentFiles(){
 
 void CInyokaEdit::checkSpelling()
 {
+
+#if not defined _WIN32
     QString dictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
     if (!QFile::exists(dictPath + ".dic") || !QFile::exists(dictPath + ".aff")) {
         QMessageBox::critical(this, pApp->applicationName(), "Error: Spell checker dictionary file does not exist!");
@@ -1292,27 +1298,37 @@ void CInyokaEdit::checkSpelling()
     checkDialog = NULL;
 
     QMessageBox::information(this, pApp->applicationName(), tr("Spell check has finished."));
+
+// Windows
+#else
+    QMessageBox::information(this, pApp->applicationName(), tr("Spell checker is currently not supported for windows."));
+#endif
 }
 
 // -----------------------------------------------------------------------------------------------
-// Report a bug via Apport to Launchpad
+// Report a bug
 
 void CInyokaEdit::reportBug(){
+    // Ubuntu: Using Apport
+    if (QFile::exists("/usr/bin/ubuntu-bug")) {
+        // Start apport
+        QProcess procApport;
+        procApport.start("ubuntu-bug " + pApp->applicationName().toLower());
 
-    // Start apport
-    QProcess procApport;
-    procApport.start("ubuntu-bug " + pApp->applicationName().toLower());
-
-    if (!procApport.waitForStarted()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport."));
-        return;
+        if (!procApport.waitForStarted()) {
+            QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport."));
+            return;
+        }
+        if (!procApport.waitForFinished()) {
+            QMessageBox::critical(this, pApp->applicationName(), tr("Error while executing Apport."));
+            return;
+        }
     }
-    if (!procApport.waitForFinished()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while executing Apport."));
-        return;
+    // Not Ubuntu: Load Launchpad bug tracker
+    else {
+        QDesktopServices::openUrl(QUrl("https://bugs.launchpad.net/inyokaedit"));
     }
 }
-
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
