@@ -4,7 +4,6 @@
                  CInsertSyntaxElement.h \
                  qtfindreplacedialog/findreplaceform.h \
                  qtfindreplacedialog/findreplacedialog.h \
-                 qtfindreplacedialog/findreplace_global.h \
                  qtfindreplacedialog/findform.h \
                  qtfindreplacedialog/finddialog.h \
                  CProgressDialog.h \
@@ -36,6 +35,8 @@ unix {
 
  RESOURCES     = inyokaeditresources.qrc
 
+ TEMPLATE      = app
+
  QT           += core \
                  gui \
                  webkit \
@@ -52,6 +53,10 @@ unix {
 
 unix {
  LIBS         += -lhunspell
+}
+
+win32 {
+ RC_FILE = inyokaedit.rc
 }
 
  TRANSLATIONS += lang/inyokaedit_de.ts

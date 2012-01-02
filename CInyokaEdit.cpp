@@ -24,7 +24,7 @@
 * Purpose:    Main application, gui definition, editor functions
 ***************************************************************************/
 
-#define sVERSION "0.0.9"
+#define sVERSION "0.1.0"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -78,10 +78,13 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     createMenus();
     createToolBars();
 
+    bool bDialogShowed = false;
     // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
     if (!StylesAndImagesDir.exists() || !QDir(StylesAndImagesDir.absolutePath() + "/img").exists() ||
         !QDir(StylesAndImagesDir.absolutePath() + "/styles").exists() || !QDir(StylesAndImagesDir.absolutePath() + "/Wiki").exists()){
+        StylesAndImagesDir.mkdir(StylesAndImagesDir.absolutePath());  // Create folder because user may not start download. Folder is needed for preview.
         DownloadStyles(StylesAndImagesDir);
+        bDialogShowed = true;
     }
 
     // Download styles or open file from command line argument
@@ -103,7 +106,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     }
 
     // In config file an older version was found
-    if (sVERSION != mySettings->getConfVersion()) {
+    if (sVERSION != mySettings->getConfVersion() && !bDialogShowed) {
         DownloadStyles(StylesAndImagesDir);
     }
 
@@ -975,6 +978,8 @@ void CInyokaEdit::downloadArticle()
         tempResult = procDownloadRawtext.readAll();
         sTmpArticle = QString::fromUtf8(tempResult);
 
+        sTmpArticle.replace("\r\r\n", "\n");  // Replace windows specific newlines
+
         // Site does not exist etc.
         if ("" == sTmpArticle) {
             #ifndef QT_NO_CURSOR
@@ -1071,13 +1076,14 @@ void CInyokaEdit::downloadImages(const QString &sArticlename)
             scriptOutputstream << "#!/bin/bash\n"
                                   "# Temporary script for downloading images from an article\n"
                                   "#\n\necho \"Downloading images...\"\n"
-                                  "cd " << StylesAndImagesDir.absolutePath() << endl;
+                                  "cd \"" << StylesAndImagesDir.absolutePath() << "\"" << endl;  // "..." impoartant for windows because folder can contain white spaces!
 
             // Write wget download lines
             QString sTmp("");
             for (int j = 0; j < sListMetadata.size(); j++) {
                 // Trim image infos lines
-                sListMetadata[j].remove(0, 10);  // Remove "X-Attach: "
+                sListMetadata[j].remove("X-Attach: ");  // Remove "X-Attach: "
+                sListMetadata[j].remove("\r");  // Remove windows specific newline \r
 
                 // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
                 sTmp = sListMetadata[j];
