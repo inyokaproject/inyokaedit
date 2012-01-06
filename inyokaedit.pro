@@ -9,7 +9,8 @@
                  CProgressDialog.h \
                  CSettings.h \
                  CInterwiki.h \
-                 CParser.h
+                 CParser.h \
+                 CDownload.h
 unix {
  HEADERS      += CSpellChecker.h \
                  CSpellCheckDialog.h
@@ -27,7 +28,8 @@ unix {
                  CProgressDialog.cpp \
                  CSettings.cpp \
                  CInterwiki.cpp \
-                 CParser.cpp
+                 CParser.cpp \
+                 CDownload.cpp
 unix {
  SOURCES      += CSpellChecker.cpp \
                  CSpellCheckDialog.cpp

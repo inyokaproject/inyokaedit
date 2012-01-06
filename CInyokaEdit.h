@@ -40,6 +40,7 @@
 #include "CProgressDialog.h"
 #include "qtfindreplacedialog/finddialog.h"
 #include "qtfindreplacedialog/findreplacedialog.h"
+#include "CDownload.h"
 
 // Spell checker currently not under windows
 #if not defined _WIN32
@@ -56,11 +57,11 @@ class QDir;
 
 // Own classes
 class CParser;
-class CDownloadArticle;
 class FindDialog;
 class FindReplaceDialog;
 class CProgressDialog;
 class CSettings;
+class CDownload;
 
 
 namespace Ui {
@@ -74,9 +75,12 @@ class CInyokaEdit : public QMainWindow
 public:
     explicit CInyokaEdit(QApplication *ptrApp, QWidget *parent = 0);   // Constructor
     ~CInyokaEdit();  // Desstructor
+
+    bool maybeSave();
     
 public slots:
     void showHtmlPreview(const QString &filename);
+    void DisplayArticleText(const QString &sArticleText);
 
 protected:
     // Event when program will close
@@ -107,8 +111,6 @@ private slots:
     // Preview / download toolbar
     void previewInyokaPage(const int iIndex = 999);
     void loadPreviewFinished(bool bSuccess);
-    void downloadArticle();
-    void downloadImages(const QString &sArticlename);
 
     // Insert text sample menu
     void insertTextSample(const QString &sMenuEntry);
@@ -132,8 +134,6 @@ private:
     void readSettings();
     void writeSettings();
 
-    bool maybeSave();
-
     // Load / save file
     void loadFile(const QString &sFileName);
     bool saveFile(const QString &sFileName);
@@ -143,19 +143,15 @@ private:
     void setCurrentFile(const QString &sFileName);
     QString strippedName(const QString &sFullFileName);
 
-    void DownloadStyles(const QDir myDirectory);
-
     // Objects
     CTextEditor *myEditor;
     QCompleter *myCompleter;
     CHighlighter *myHighlighter;  // Syntax highlighting
     CParser *myParser;            // Parser text to HTML
-    CDownloadArticle *myDownloadModule; // Download of exsiting inyoka articles
     CInsertSyntaxElement *myInsertSyntaxElement;
-    CProgressDialog *myArticleDownloadProgress;
-    CProgressDialog *myImageDownloadProgress;
     CSettings *mySettings;
     CInterWiki *myInterWikiLinks;
+    CDownload *myDownloadModule;
 
     //QTabWidget *myTabwidgetDocuments;
     QTabWidget *myTabwidgetRawPreview;

@@ -70,20 +70,22 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     StylesAndImagesDir = QDir::homePath() + "/." + pApp->applicationName();
 
     // Create all objects (after definition of StylesAndImagesDir)
-    createObjects();
+    this->createObjects();
 
     // Setup gui, menus, actions, toolbar...
-    setupEditor();
-    createActions();
-    createMenus();
-    createToolBars();
+    this->setupEditor();
+    this->createActions();
+    this->createMenus();
+    this->createToolBars();
 
     bool bDialogShowed = false;
     // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
     if (!StylesAndImagesDir.exists() || !QDir(StylesAndImagesDir.absolutePath() + "/img").exists() ||
         !QDir(StylesAndImagesDir.absolutePath() + "/styles").exists() || !QDir(StylesAndImagesDir.absolutePath() + "/Wiki").exists()){
         StylesAndImagesDir.mkdir(StylesAndImagesDir.absolutePath());  // Create folder because user may not start download. Folder is needed for preview.
-        DownloadStyles(StylesAndImagesDir);
+        if(myDownloadModule->LoadInyokaStyles()) {
+            mySettings->setConfVersion(sVERSION);
+        }
         bDialogShowed = true;
     }
 
@@ -93,7 +95,9 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
 
         // Download inyoka styles
         if ("--dlstyles" == sTmp){
-            DownloadStyles(StylesAndImagesDir);
+            if(myDownloadModule->LoadInyokaStyles()) {
+                mySettings->setConfVersion(sVERSION);
+            }
         }
         else {
             if ("--log" != sTmp) {
@@ -107,11 +111,13 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
 
     // In config file an older version was found
     if (sVERSION != mySettings->getConfVersion() && !bDialogShowed) {
-        DownloadStyles(StylesAndImagesDir);
+        if(myDownloadModule->LoadInyokaStyles()) {
+            mySettings->setConfVersion(sVERSION);
+        }
     }
 
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("Ready"));
+        this->statusBar()->showMessage(tr("Ready"));
     }
     if (bLogging) { std::clog << "Created CInyokaEdit" << std::endl; }
 
@@ -139,6 +145,9 @@ void CInyokaEdit::createObjects() {
         mySettings->readSettings();
         if (bLogging) { std::clog << "Read settings" << std::endl; }
 
+        myDownloadModule = new CDownload(this, this, pApp->applicationName(), pApp->applicationDirPath(), StylesAndImagesDir, mySettings->getInyokaUrl(), mySettings->getAutomaticImageDownload());
+        if (bLogging) { std::clog << "Created myDownloadModule" << std::endl; }
+
         myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
         if (bLogging) { std::clog << "Created myEditor" << std::endl; }
 
@@ -151,7 +160,7 @@ void CInyokaEdit::createObjects() {
         myHighlighter = new CHighlighter(myEditor->document());
         if (bLogging) { std::clog << "Created myHighlighter" << std::endl; }
 
-        myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), StylesAndImagesDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
+        myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), StylesAndImagesDir, myInterWikiLinks->GetInterwikiLinks(), myInterWikiLinks->GetInterwikiLinksUrls());
         if (bLogging) { std::clog << "Created myParser" << std::endl; }
 
         //myTabwidgetDocuments = new QTabWidget;
@@ -181,7 +190,7 @@ void CInyokaEdit::createObjects() {
 void CInyokaEdit::setupEditor()
 {
     // Application icon
-    setWindowIcon(QIcon(":/images/" + pApp->applicationName().toLower() + "_64x64.png"));
+    this->setWindowIcon(QIcon(":/images/" + pApp->applicationName().toLower() + "_64x64.png"));
 
     // Font settings for editor
     QFont font;
@@ -231,18 +240,21 @@ void CInyokaEdit::setupEditor()
     connect(myWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
 
-    setCurrentFile("");
-    setUnifiedTitleAndToolBarOnMac(true);
+    this->setCurrentFile("");
+    this->setUnifiedTitleAndToolBarOnMac(true);
+
+    connect(myDownloadModule, SIGNAL(SendArticleText(QString)),
+            this, SLOT(DisplayArticleText(QString)));
 
     // Hide statusbar, if option is false
     if (false == mySettings->getShowStatusbar()) {
-        setStatusBar(0);
+        this->setStatusBar(0);
     }
 
     // Restore window and toolbar settings
     // Settings have to be restored after toolbars are created!
-    restoreGeometry(mySettings->getWindowGeometry());
-    restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
+    this->restoreGeometry(mySettings->getWindowGeometry());
+    this->restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
 
     ui->aboutAct->setText(ui->aboutAct->text() + " " + pApp->applicationName());
 
@@ -371,7 +383,7 @@ void CInyokaEdit::createActions()
     connect(myTabwidgetRawPreview, SIGNAL(currentChanged(int)), this, SLOT(previewInyokaPage(int)));
 
     // Download Inyoka article
-    connect(ui->downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
+    connect(ui->downloadArticleAct, SIGNAL(triggered()), myDownloadModule, SLOT(DownloadArticle()));
 
     // ---------------------------------------------------------------------------------------------
 
@@ -521,16 +533,16 @@ void CInyokaEdit::createActions()
         QList <QAction *> emptyActionList;
         emptyActionList.clear();
 
-        for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
+        for (int i = 0; i < myInterWikiLinks->GetInterwikiLinksGroups().size(); i++) {
             iWikiLinksActions << emptyActionList;
-            for (int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++) {
+            for (int j = 0; j < myInterWikiLinks->GetInterwikiLinksNames()[i].size(); j++) {
                 // Path from normal installation
                 if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
-                    iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+                    iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksIcons()[i][j]), myInterWikiLinks->GetInterwikiLinksNames()[i][j], this);
                 }
                 // No installation: Use app path
                 else {
-                    iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+                    iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksIcons()[i][j]), myInterWikiLinks->GetInterwikiLinksNames()[i][j], this);
                 }
 
                 mySigMapInterWikiLinks->setMapping(iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j));
@@ -575,14 +587,14 @@ void CInyokaEdit::createMenus()
     }
 
     // Insert interwiki-links menu
-    for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {        
+    for (int i = 0; i < myInterWikiLinks->GetInterwikiLinksGroups().size(); i++) {
         // Path from normal installation
         if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
-            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksGroupIcons()[i]), myInterWikiLinks->GetInterwikiLinksGroups()[i]));
         }
         // No installation: Use app path
         else {
-            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksGroupIcons()[i]), myInterWikiLinks->GetInterwikiLinksGroups()[i]));
         }
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
@@ -643,38 +655,6 @@ void CInyokaEdit::createToolBars()
             this, SLOT(insertDropDownTextformat(int)));
 
     if (bLogging) { std::clog << "Created toolbars" << std::endl; }
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CInyokaEdit::DownloadStyles(const QDir myDirectory)
-{
-    int iRet = QMessageBox::question(this, tr("Download styles"), tr("In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
-    if (QMessageBox::Yes== iRet){
-        try
-        {
-            // Path from normal installation
-            if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles")) {
-                myArticleDownloadProgress = new CProgressDialog("/usr/share/" + pApp->applicationName().toLower() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
-            }
-            // No installation: Use app path
-            else {
-                myArticleDownloadProgress = new CProgressDialog(pApp->applicationDirPath() + "/GetInyokaStyles", pApp->applicationName(), this, myDirectory.absolutePath());
-            }
-        }
-        catch (std::bad_alloc& ba)
-        {
-            std::cerr << "ERROR: myArticleDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-            QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - myArticleDownloadProgress");
-            exit (-8);
-        }
-        myArticleDownloadProgress->open();
-
-        mySettings->setConfVersion(sVERSION);
-
-        if (bLogging) { std::clog << "Downloaded styles" << std::endl; }
-    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -897,7 +877,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
             QString sText = tr("Text", "Interwiki links: Common text");
 
             // Insert InterWiki-Link
-            myEditor->insertPlainText("[" + myInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + sSitename + ":" + sText + "]");
+            myEditor->insertPlainText("[" + myInterWikiLinks->GetInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + sSitename + ":" + sText + "]");
 
             // Select site name in InterWiki-Link
             QTextCursor textCursor = myEditor->textCursor();
@@ -908,7 +888,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
         // Some text is selected
         else {
             // Insert InterWiki-Link with selected text
-            myEditor->insertPlainText("[" + myInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + myEditor->textCursor().selectedText() + ":]");
+            myEditor->insertPlainText("[" + myInterWikiLinks->GetInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + myEditor->textCursor().selectedText() + ":]");
         }
     }
     // Problem with indices
@@ -921,207 +901,20 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
-// DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
-void CInyokaEdit::downloadArticle()
-{
-    QString sTmpArticle("");
-    QString sSitename("");
-    QByteArray tempResult;
-
-    if (!maybeSave()) {
-        return;
-    }
-    else{
-        bool ok; // Buttons of input dialog (click on "OK" -> ok = true, click on "Cancel" -> ok = false)
-
-        // Show input dialog
-        sSitename = QInputDialog::getText(this, pApp->applicationName(),
-                                          tr("Please insert name of the article which should be downloaded:"), QLineEdit::Normal,
-                                          tr("Category/Article", "Msg: Input dialog DL article example text"), &ok);
-
-        // Click on "cancel" or string is empty
-        if (false == ok || sSitename.isEmpty())
-            return;
-
-        // Replace non valid characters
-        sSitename.replace(QString::fromUtf8("ä"), "a", Qt::CaseInsensitive);
-        sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
-        sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
-        sSitename.replace(" ", "_");
-
-#ifndef QT_NO_CURSOR
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
-
-        // Start article download
-        QProcess procDownloadRawtext;
-        procDownloadRawtext.start("wget -O - " + mySettings->getInyokaUrl() + "/" + sSitename + "?action=export&format=raw");
-
-        if (!procDownloadRawtext.waitForStarted()) {
-            #ifndef QT_NO_CURSOR
-                QApplication::restoreOverrideCursor();
-            #endif
-            QMessageBox::critical(this, pApp->applicationName(), tr("Could not start the download of the raw format of article."));
-            procDownloadRawtext.kill();
-            return;
-        }
-        if (!procDownloadRawtext.waitForFinished()) {
-            #ifndef QT_NO_CURSOR
-                QApplication::restoreOverrideCursor();
-            #endif
-            QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading raw format of article."));
-            procDownloadRawtext.kill();
-            return;
-        }
-
-        tempResult = procDownloadRawtext.readAll();
-        sTmpArticle = QString::fromUtf8(tempResult);
-
-        sTmpArticle.replace("\r\r\n", "\n");  // Replace windows specific newlines
-
-        // Site does not exist etc.
-        if ("" == sTmpArticle) {
-            #ifndef QT_NO_CURSOR
-                QApplication::restoreOverrideCursor();
-            #endif
-            QMessageBox::information(this, pApp->applicationName(), tr("Could not download the article."));
-            return;
-        }
-
-        myEditor->setPlainText(sTmpArticle);
-        myEditor->document()->setModified(true);
-        documentWasModified();
-
-
-#ifndef QT_NO_CURSOR
-        QApplication::restoreOverrideCursor();
-#endif
-
-        downloadImages(sSitename);
-        myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
-    }
+void CInyokaEdit::DisplayArticleText(const QString &sArticleText) {
+    myEditor->setPlainText(sArticleText);
+    myEditor->document()->setModified(true);
+    this->documentWasModified();
+    myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
 }
 
 // -----------------------------------------------------------------------------------------------
-// DOWNLOAD IN ARTICLES INCLUDED IMAGES
-
-void CInyokaEdit::downloadImages(const QString &sArticlename)
-{
-    int iRet = 0;
-    QByteArray tempResult;
-    QString sMetadata("");
-    QStringList sListTmp, sListMetadata;
-    const QString sScriptName("tmpDlScript");
-
-    // Start metadata download
-    QProcess procDownloadMetadata;
-    procDownloadMetadata.start("wget -O - " + mySettings->getInyokaUrl() + "/" + sArticlename + "?action=metaexport");
-
-    if (!procDownloadMetadata.waitForStarted()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Could not start download of the meta data."));
-        procDownloadMetadata.kill();
-        return;
-    }
-    if (!procDownloadMetadata.waitForFinished()) {
-        QMessageBox::critical(this, pApp->applicationName(), tr("Error while downloading meta data."));
-        procDownloadMetadata.kill();
-        return;
-    }
-
-    tempResult = procDownloadMetadata.readAll();
-    sMetadata = QString::fromLocal8Bit(tempResult);
-
-    // Site does not exist etc.
-    if ("" == sMetadata) {
-        QMessageBox::information(this, pApp->applicationName(), tr("Could not find meta data."));
-        return;
-    }
-
-    // Copy metadata line by line in list
-    sListTmp << sMetadata.split("\n");
-
-    // Get only attachments article metadata
-    for (int i = 0; i < sListTmp.size(); i++) {
-        if (sListTmp[i].startsWith("X-Attach: " + sArticlename + "/", Qt::CaseInsensitive)) {
-            sListMetadata << sListTmp[i];
-            //qDebug() << sListTmp[i];
-        }
-    }
-
-    // If attachments exist
-    if (sListMetadata.size() > 0) {
-
-        // Ask if images should be downloaded (if not enabled by default in settings)
-        if (false == mySettings->getAutomaticImageDownload()) {
-            iRet = QMessageBox::question(this, pApp->applicationName(), tr("Do you want to download the images which are attached to the article?"), QMessageBox::Yes, QMessageBox::No);
-        }
-        else {
-            iRet = QMessageBox::Yes;
-        }
-
-        if (QMessageBox::Yes == iRet) {
-
-            // File for download script
-            QFile tmpScriptfile(StylesAndImagesDir.absolutePath() + "/" + sScriptName);
-
-            // No write permission
-            if (!tmpScriptfile.open(QFile::WriteOnly | QFile::Text)) {
-                QMessageBox::warning(this, pApp->applicationName(), tr("Could not create temporary download file!"));
-                return;
-            }
-
-            // Stream for output in file
-            QTextStream scriptOutputstream(&tmpScriptfile);
-            scriptOutputstream << "#!/bin/bash\n"
-                                  "# Temporary script for downloading images from an article\n"
-                                  "#\n\necho \"Downloading images...\"\n"
-                                  "cd \"" << StylesAndImagesDir.absolutePath() << "\"" << endl;  // "..." impoartant for windows because folder can contain white spaces!
-
-            // Write wget download lines
-            QString sTmp("");
-            for (int j = 0; j < sListMetadata.size(); j++) {
-                // Trim image infos lines
-                sListMetadata[j].remove("X-Attach: ");  // Remove "X-Attach: "
-                sListMetadata[j].remove("\r");  // Remove windows specific newline \r
-
-                // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
-                sTmp = sListMetadata[j];
-                sTmp = sTmp.remove(sArticlename + "/", Qt::CaseInsensitive);
-                scriptOutputstream << "wget -nv " << mySettings->getInyokaUrl() << "/_image?target=" << sListMetadata[j].toLower() << " -O " << sTmp << endl;
-            }
-            scriptOutputstream << "sleep 2\n"
-                                  "echo \"Finished image download.\"\n" << endl;
-
-            tmpScriptfile.close();
-
-            // Make script executable
-            tmpScriptfile.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner | QFile::ReadGroup | QFile::ExeGroup | QFile::ReadOther | QFile::ExeOther);
-
-            // Start download script
-            try
-            {
-                QString sTmpFilePath = StylesAndImagesDir.absolutePath() + "/" + sScriptName;
-                myImageDownloadProgress = new CProgressDialog(sTmpFilePath, pApp->applicationName(), this, StylesAndImagesDir.absolutePath());
-                }
-            catch (std::bad_alloc& ba)
-            {
-                std::cerr << "ERROR: Caught bad_alloc in \"downloadImages()\": " << ba.what() << std::endl;
-                QMessageBox::critical(this, pApp->applicationName(), "Error while memory allocation: bad_alloc - myImageDownloadProgress");
-                exit (-9);
-            }
-
-            myImageDownloadProgress->open();
-        }
-    }
-
-}
-
 // -----------------------------------------------------------------------------------------------
 void CInyokaEdit::showHtmlPreview(const QString &filename){
 
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("Opening preview", "GUI: Status bar"));
+        this->statusBar()->showMessage(tr("Opening preview", "GUI: Status bar"));
     }
     myWebview->history()->clear();  // Clear history (clicked links)
 
@@ -1148,8 +941,8 @@ void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
 // Open recent opened file
 
 void CInyokaEdit::openRecentFile(int iEntry) {
-    if (maybeSave()) {
-        loadFile(mySettings->getRecentFiles()[iEntry]);
+    if (this->maybeSave()) {
+        this->loadFile(mySettings->getRecentFiles()[iEntry]);
     }
 }
 
@@ -1198,7 +991,7 @@ void CInyokaEdit::updateRecentFiles(const QString &sFileName) {
 }
 
 void CInyokaEdit::clearRecentFiles(){
-    updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
+    this->updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1319,7 +1112,7 @@ void CInyokaEdit::reportBug(){
     if (QFile::exists("/usr/bin/ubuntu-bug")) {
         // Start apport
         QProcess procApport;
-        procApport.start("ubuntu-bug " + pApp->applicationName().toLower());
+        procApport.start("ubuntu-bug", QStringList() << pApp->applicationName().toLower());
 
         if (!procApport.waitForStarted()) {
             QMessageBox::critical(this, pApp->applicationName(), tr("Error while starting Apport."));
@@ -1384,21 +1177,21 @@ void CInyokaEdit::reportBug(){
 
 void CInyokaEdit::newFile()
 {
-    if (maybeSave()) {
+    if (this->maybeSave()) {
         myEditor->clear();
-        setCurrentFile("");
+        this->setCurrentFile("");
         myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
     }
 }
 
 void CInyokaEdit::open()
 {
-    if (maybeSave()) {
+    if (this->maybeSave()) {
         QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file", "GUI: Open file dialog"), mySettings->getLastOpenedDir().absolutePath());  // File dialog opens last used folder
         if (!sFileName.isEmpty()){
             QFileInfo tmpFI(sFileName);
             mySettings->setLastOpenedDir(tmpFI.absoluteDir());
-            loadFile(sFileName);
+            this->loadFile(sFileName);
             myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
         }
     }
@@ -1407,9 +1200,9 @@ void CInyokaEdit::open()
 bool CInyokaEdit::save()
 {
     if (sCurFile.isEmpty()) {
-        return saveAs();
+        return this->saveAs();
     } else {
-        return saveFile(sCurFile);
+        return this->saveFile(sCurFile);
     }
 }
 
@@ -1422,7 +1215,7 @@ bool CInyokaEdit::saveAs()
     QFileInfo tmpFI(sFileName);
     mySettings->setLastOpenedDir(tmpFI.absoluteDir());
 
-    return saveFile(sFileName);
+    return this->saveFile(sFileName);
 }
 
 void CInyokaEdit::about()
@@ -1437,7 +1230,7 @@ void CInyokaEdit::about()
 
 void CInyokaEdit::documentWasModified()
 {
-    setWindowModified(myEditor->document()->isModified());
+    this->setWindowModified(myEditor->document()->isModified());
 }
 
 // Handle unsaved files
@@ -1490,10 +1283,10 @@ void CInyokaEdit::loadFile(const QString &sFileName)
     QApplication::restoreOverrideCursor();
 #endif
 
-    updateRecentFiles(sFileName);
-    setCurrentFile(sFileName);
+    this->updateRecentFiles(sFileName);
+    this->setCurrentFile(sFileName);
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("File loaded", "GUI: Status bar"), 2000);
+        this->statusBar()->showMessage(tr("File loaded", "GUI: Status bar"), 2000);
     }
 }
 
@@ -1521,10 +1314,10 @@ bool CInyokaEdit::saveFile(const QString &sFileName)
     QApplication::restoreOverrideCursor();
 #endif
 
-    updateRecentFiles(sFileName);
-    setCurrentFile(sFileName);
+    this->updateRecentFiles(sFileName);
+    this->setCurrentFile(sFileName);
     if (mySettings->getShowStatusbar()) {
-        statusBar()->showMessage(tr("File saved"), 2000);
+        this->statusBar()->showMessage(tr("File saved"), 2000);
     }
     return true;
 }
@@ -1533,12 +1326,12 @@ void CInyokaEdit::setCurrentFile(const QString &sFileName)
 {
     sCurFile = sFileName;
     myEditor->document()->setModified(false);
-    setWindowModified(false);
+    this->setWindowModified(false);
 
     QString sShownName = sCurFile;
     if (sCurFile.isEmpty())
         sShownName = tr("Untitled");
-    setWindowFilePath(sShownName);
+    this->setWindowFilePath(sShownName);
 }
 
 QString CInyokaEdit::strippedName(const QString &sFullFileName)
@@ -1549,7 +1342,7 @@ QString CInyokaEdit::strippedName(const QString &sFullFileName)
 // Close event (File -> Close or X)
 void CInyokaEdit::closeEvent(QCloseEvent *event)
 {
-    if (maybeSave()) {
+    if (this->maybeSave()) {
         mySettings->writeSettings(saveGeometry(), saveState());
         event->accept();
     } else {

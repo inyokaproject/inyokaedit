@@ -46,7 +46,7 @@ public:
 
 protected:
     // Apply highlighting rules
-    void highlightBlock(const QString &text);
+    void highlightBlock(const QString &sText);
 
 private:
     struct HighlightingRule
@@ -55,17 +55,17 @@ private:
         QTextCharFormat format;
     };
     // Collects highlighting rules
-    QVector<HighlightingRule> highlightingRules;
+    QVector<HighlightingRule> m_highlightingRules;
 
-    QTextCharFormat headingsFormat;
-    QTextCharFormat interwikiLinksFormat;
-    QTextCharFormat linksFormat;
-    QTextCharFormat tablecellsFormat;
-    QTextCharFormat macrosFormat;
-    QTextCharFormat parserFormat;
-    QTextCharFormat textformatFormat;
-    QTextCharFormat singleLineCommentFormat;
-    QTextCharFormat flagsFormat;
+    QTextCharFormat m_headingsFormat;
+    QTextCharFormat m_interwikiLinksFormat;
+    QTextCharFormat m_linksFormat;
+    QTextCharFormat m_tablecellsFormat;
+    QTextCharFormat m_macrosFormat;
+    QTextCharFormat m_parserFormat;
+    QTextCharFormat m_textformatFormat;
+    QTextCharFormat m_singleLineCommentFormat;
+    QTextCharFormat m_flagsFormat;
 
 };
 

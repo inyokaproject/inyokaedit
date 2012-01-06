@@ -93,7 +93,6 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/18/ean.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/17/edubuntu.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/18/fb.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/44/freshmeat.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/18/getdeb.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/37/gplus.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/getdeb.png
 wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/googlecode.png
@@ -681,7 +680,6 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/preferences-sy
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/preferences-system.png
 
 # Oxygen - Anwendungen
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/52/12/k3b.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/12/konversation.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/06/partitionmanager.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/12/kaffeine.png
@@ -736,7 +734,6 @@ wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/03/usercp-prefere
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/03/usercp-profile.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/03/usercp-wikipage.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/06/anchor.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/08/download.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/06/mark.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/06/picture.png
 wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/07/topic-solved-locked.png

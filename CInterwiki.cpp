@@ -51,8 +51,8 @@ CInterWiki::CInterWiki(const QApplication *pApp)
 
     try
     {
-        myXmlSource = new QXmlInputSource(&XmlFile);
-        myHandler = new IWikiLinksParser;
+        m_myXmlSource = new QXmlInputSource(&XmlFile);
+        m_myHandler = new CIWikiLinksParser;
     }
     catch (std::bad_alloc& ba)
     {
@@ -61,22 +61,22 @@ CInterWiki::CInterWiki(const QApplication *pApp)
         exit (-6);
     }
 
-    myXmlReader.setContentHandler(myHandler);
-    myXmlReader.setErrorHandler(myHandler);
+    myXmlReader.setContentHandler(m_myHandler);
+    myXmlReader.setErrorHandler(m_myHandler);
 
-    bool ok = myXmlReader.parse(myXmlSource);
+    bool ok = myXmlReader.parse(m_myXmlSource);
     if (!ok) {
         std::cerr << "ERROR: Parsing \"" << XmlFile.fileName().toStdString() << "\"failed." << std::endl;
         QMessageBox::critical(0, pApp->applicationName(), "Error while parsing \"" + XmlFile.fileName() + "\".");
         exit (-7);
     }
 
-    sListGroups = myHandler->sListGroups_2;
-    sListGroupIcons = myHandler->sListGroupIcons_2;
-    sListInterWikiLinks = myHandler->sListInterWikiLinks_2;
-    sListInterWikiLinksUrls = myHandler->sListInterWikiLinksUrls_2;
-    sListInterWikiLinksNames = myHandler->sListInterWikiLinksNames_2;
-    sListInterWikiLinksIcons = myHandler->sListInterWikiLinksIcons_2;
+    m_sListGroups = m_myHandler->m_sListGroups_2;
+    m_sListGroupIcons = m_myHandler->m_sListGroupIcons_2;
+    m_sListInterWikiLinks = m_myHandler->m_sListInterWikiLinks_2;
+    m_sListInterWikiLinksUrls = m_myHandler->m_sListInterWikiLinksUrls_2;
+    m_sListInterWikiLinksNames = m_myHandler->m_sListInterWikiLinksNames_2;
+    m_sListInterWikiLinksIcons = m_myHandler->m_sListInterWikiLinksIcons_2;
 
     /*
     for (int i = 0; i < sListGroups.size(); i++) {
@@ -90,50 +90,49 @@ CInterWiki::CInterWiki(const QApplication *pApp)
 
 // -----------------------------------------------------------------------------------------------
 
-QStringList CInterWiki::getInterwikiLinksGroups() const {
-    return sListGroups;
+QStringList CInterWiki::GetInterwikiLinksGroups() const {
+    return m_sListGroups;
 }
 
-QStringList CInterWiki::getInterwikiLinksGroupIcons() const {
-    return sListGroupIcons;
+QStringList CInterWiki::GetInterwikiLinksGroupIcons() const {
+    return m_sListGroupIcons;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinks() const {
-    return sListInterWikiLinks;
+QList<QStringList> CInterWiki::GetInterwikiLinks() const {
+    return m_sListInterWikiLinks;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksUrls() const {
-    return sListInterWikiLinksUrls;
+QList<QStringList> CInterWiki::GetInterwikiLinksUrls() const {
+    return m_sListInterWikiLinksUrls;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksNames() const {
-    return sListInterWikiLinksNames;
+QList<QStringList> CInterWiki::GetInterwikiLinksNames() const {
+    return m_sListInterWikiLinksNames;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksIcons() const {
-    return sListInterWikiLinksIcons;
+QList<QStringList> CInterWiki::GetInterwikiLinksIcons() const {
+    return m_sListInterWikiLinksIcons;
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::IWikiLinksParser::startDocument() {
-    bInInterWikiLink = false;
+bool CInterWiki::CIWikiLinksParser::startDocument() {
+    m_bInInterWikiLink = false;
     return true;
 }
 
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::IWikiLinksParser::endElement( const QString&, const QString&, const QString &name ) {
-    if( name == "menu" ) {
-        bInInterWikiLink = false;
+bool CInterWiki::CIWikiLinksParser::endElement( const QString&, const QString&, const QString &sName ) {
+    if( "menu" == sName ) {
+        m_bInInterWikiLink = false;
     }
-
-    else if (name == "group") {
-        sListInterWikiLinks_2 << tmpListiWikiLinks;
-        sListInterWikiLinksUrls_2 << tmpListiWikiUrls;
-        sListInterWikiLinksNames_2 << tmpListiWikiNames;
-        sListInterWikiLinksIcons_2 << tmpListiWikiIcons;
+    else if ( "group" == sName ) {
+        m_sListInterWikiLinks_2 << m_tmpListiWikiLinks;
+        m_sListInterWikiLinksUrls_2 << m_tmpListiWikiUrls;
+        m_sListInterWikiLinksNames_2 << m_tmpListiWikiNames;
+        m_sListInterWikiLinksIcons_2 << m_tmpListiWikiIcons;
     }
 
     return true;
@@ -141,33 +140,33 @@ bool CInterWiki::IWikiLinksParser::endElement( const QString&, const QString&, c
 
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::IWikiLinksParser::startElement( const QString&, const QString&, const QString &name, const QXmlAttributes &attrs ) {
+bool CInterWiki::CIWikiLinksParser::startElement( const QString&, const QString&, const QString &sElement, const QXmlAttributes &attrs ) {
     QString sGroupName, sGroupIcon, sType, sUrl, sName, sIcon;
 
     // Found group
-    if( bInInterWikiLink && name == "group" ) {
-        tmpListiWikiLinks.clear();
-        tmpListiWikiUrls.clear();
-        tmpListiWikiNames.clear();
-        tmpListiWikiIcons.clear();
+    if( m_bInInterWikiLink && "group" == sElement ) {
+        m_tmpListiWikiLinks.clear();
+        m_tmpListiWikiUrls.clear();
+        m_tmpListiWikiNames.clear();
+        m_tmpListiWikiIcons.clear();
 
         sGroupName = "GROUPNAME NOT FOUND";
         sGroupIcon = "NO ICON";
 
         for( int i = 0; i < attrs.count(); i++ ) {
-            if( attrs.localName( i ) == "name" ) {
+            if( "name" == attrs.localName( i ) ) {
                 sGroupName = attrs.value( i );
             }
-            else if( attrs.localName( i ) == "icon" ) {
+            else if( "icon"== attrs.localName( i ) ) {
                 sGroupIcon = attrs.value( i );
             }
         }
-        sListGroups_2 << sGroupName;
-        sListGroupIcons_2 << sGroupIcon;
+        m_sListGroups_2 << sGroupName;
+        m_sListGroupIcons_2 << sGroupIcon;
     }
 
     // Found interwikilink
-    else if( bInInterWikiLink && name == "iwikilink" ) {
+    else if( m_bInInterWikiLink && "iwikilink" == sElement ) {
 
         sType = "TYPE NOT FOUND";
         sUrl = "URL NOT FOUND";
@@ -175,29 +174,29 @@ bool CInterWiki::IWikiLinksParser::startElement( const QString&, const QString&,
         sIcon = "ICON NOT FOUND";
 
         for( int i = 0; i < attrs.count(); i++ ) {
-            if( attrs.localName( i ) == "type" ) {
+            if( "type" == attrs.localName( i ) ) {
                 sType = attrs.value( i );
             }
-            else if( attrs.localName( i ) == "url" ) {
+            else if( "url" == attrs.localName( i ) ) {
                 sUrl = attrs.value( i );
             }
-            else if( attrs.localName( i ) == "name" ) {
+            else if( "name" == attrs.localName( i ) ) {
                 sName = attrs.value( i );
             }
-            else if( attrs.localName( i ) == "icon" ) {
+            else if( "icon" == attrs.localName( i ) ) {
                 sIcon = attrs.value( i );
             }
         }
 
-        tmpListiWikiLinks << sType;
-        tmpListiWikiUrls << sUrl;
-        tmpListiWikiNames << sName;
-        tmpListiWikiIcons << sIcon;
+        m_tmpListiWikiLinks << sType;
+        m_tmpListiWikiUrls << sUrl;
+        m_tmpListiWikiNames << sName;
+        m_tmpListiWikiIcons << sIcon;
     }
 
     // Found start of document
-    else if( name == "menu" ) {
-        bInInterWikiLink = true;
+    else if( "menu" == sElement ) {
+        m_bInInterWikiLink = true;
     }
 
     return true;

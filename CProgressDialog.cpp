@@ -27,69 +27,69 @@
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog(const QString &sScriptname, const QString &sAppname, QWidget *parent, QString sDownloadFolder) :
-    QDialog(parent),
-    ui(new Ui::CProgressDialog)
+CProgressDialog::CProgressDialog(const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent) :
+    QDialog(pParent),
+    m_pUi(new Ui::CProgressDialog)
 {
-    ui->setupUi(this);
+    m_pUi->setupUi(this);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    if (sDownloadFolder == ""){
-        sDownloadFolder = QDir::homePath() + "/." + sAppname;
+    if (sListArguments.size() == 0){
+        sListArguments << QDir::homePath() + "/." + sAppName;
     }
 
     try
     {
-        myProc = new QProcess();
+        m_myProc = new QProcess();
     }
     catch (std::bad_alloc& ba)
     {
       std::cerr << "ERROR: Caught bad_alloc in \"CProgressDialog\": " << ba.what() << std::endl;
-      QMessageBox::critical(0, sAppname, "Error while memory allocation: CProgressDialog");
+      QMessageBox::critical(0, sAppName, "Error while memory allocation: CProgressDialog");
       exit (-1);
     }
-    myProc->start(sScriptname, QStringList() << sDownloadFolder);
+    m_myProc->start(sScriptname, sListArguments);
 
     // Show output
-    connect(myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
-    connect(myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
+    connect(m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(ShowMessage()) );
+    connect(m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(ShowErrorMessage()) );
 
-    connect(myProc, SIGNAL(finished(int)), this, SLOT(DownloadScriptFinished()) );
+    connect(m_myProc, SIGNAL(finished(int)), this, SLOT(DownloadScriptFinished()) );
 }
 
 CProgressDialog::~CProgressDialog()
 {
-    myProc->kill();
-    delete myProc;
-    myProc = NULL;
-    delete ui;
-    ui = NULL;
+    m_myProc->kill();
+    delete m_myProc;
+    m_myProc = NULL;
+    delete m_pUi;
+    m_pUi = NULL;
 }
 
 // -----------------------------------------------------------------------------------------------
 
-void CProgressDialog::closeEvent(QCloseEvent *event)
+void CProgressDialog::closeEvent(QCloseEvent *pEvent)
 {
-    myProc->kill();   // Kill download process
-    event->accept();  // Close window
+    m_myProc->kill();   // Kill download process
+    pEvent->accept();  // Close window
 }
 
 // -----------------------------------------------------------------------------------------------
 
 // Show message
-void CProgressDialog::showMessage()
+void CProgressDialog::ShowMessage()
 {
-    QByteArray strdata = myProc->readAllStandardOutput();
-    ui->textEditProcessOut->setTextColor(Qt::black);
-    ui->textEditProcessOut->append(strdata);
+    QByteArray strdata = m_myProc->readAllStandardOutput();
+    m_pUi->textEditProcessOut->setTextColor(Qt::black);
+    m_pUi->textEditProcessOut->append(strdata);
 }
 
 // Show error message
-void CProgressDialog::showErrorMessage()
+void CProgressDialog::ShowErrorMessage()
 {
-    QByteArray strdata = myProc->readAllStandardError();
-    ui->textEditProcessOut->setTextColor(Qt::darkGray);
-    ui->textEditProcessOut->append(strdata);
+    QByteArray strdata = m_myProc->readAllStandardError();
+    m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
+    m_pUi->textEditProcessOut->append(strdata);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void CProgressDialog::DownloadScriptFinished()
 // -----------------------------------------------------------------------------------------------
 
 // Click on cancel button
-void CProgressDialog::on_pushButtonClosProc_clicked()
+void CProgressDialog::ClickedCloseProcess()
 {
     this->close();  // Send close event
 }

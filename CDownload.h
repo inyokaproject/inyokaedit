@@ -20,47 +20,45 @@
 ****************************************************************************/
 
 /***************************************************************************
-* File Name:  CProgressDialog.h
-* Purpose:    Class definition of style download progress dialog
+* File Name:  CDownload.h
+* Purpose:    Class definition download functions
 ***************************************************************************/
 
-#ifndef CPROGRESSDIALOG_H
-#define CPROGRESSDIALOG_H
-
-#include <QDialog>
-#include <QProcess>
-#include <QtGui/QCloseEvent>
-#include <QDir>
+#ifndef CDOWNLOAD_H
+#define CDOWNLOAD_H
 
 #include "CInyokaEdit.h"
 
-namespace Ui {
-    class CProgressDialog;
-}
+class CInyokaEdit;
 
-class QCloseEvent;
-
-class CProgressDialog : public QDialog
+class CDownload : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit CProgressDialog(const QString &sScriptname, QStringList sListArguments, const QString &sAppname, QWidget *pParent = 0);
-    ~CProgressDialog();
+    CDownload(QWidget *pParent, CInyokaEdit *pInyokaEdit, const QString &sAppName, const QString &sAppDir, const QDir StylesDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload);
 
-private slots:
-    void ShowMessage();
-    void ShowErrorMessage();
+    bool LoadInyokaStyles();
 
-    void DownloadScriptFinished();
-    void ClickedCloseProcess();
+public slots:
+    void DownloadArticle();
 
-protected:
-    void closeEvent(QCloseEvent *pEvent);
+signals:
+    void SendArticleText(const QString &);
 
 private:
-    Ui::CProgressDialog *m_pUi;
-    QProcess *m_myProc;
+    void DownloadImages(const QString &sArticlename);
+
+    QWidget *m_pParent;
+    CInyokaEdit *m_pInyokaEdit;
+    QString m_sAppName;
+    QString m_sAppDir;
+    QDir m_StylesDir;
+    QString m_sInyokaUrl;
+    bool m_bAutomaticImageDownload;
+
+    QString m_sWinBashFolder;
+    QString m_sWget;
 };
 
-#endif // CPROGRESSDIALOG_H
+#endif // CDOWNLOAD_H

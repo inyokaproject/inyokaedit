@@ -38,35 +38,35 @@
 class CInterWiki
 {
 
-class IWikiLinksParser;
+class CIWikiLinksParser;
 
 public:
     CInterWiki(const QApplication *pApp);
 
-    QStringList getInterwikiLinksGroups() const;
-    QStringList getInterwikiLinksGroupIcons() const;
-    QList<QStringList> getInterwikiLinks() const;
-    QList<QStringList> getInterwikiLinksUrls() const;
-    QList<QStringList> getInterwikiLinksNames() const;
-    QList<QStringList> getInterwikiLinksIcons() const;
+    QStringList GetInterwikiLinksGroups() const;
+    QStringList GetInterwikiLinksGroupIcons() const;
+    QList<QStringList> GetInterwikiLinks() const;
+    QList<QStringList> GetInterwikiLinksUrls() const;
+    QList<QStringList> GetInterwikiLinksNames() const;
+    QList<QStringList> GetInterwikiLinksIcons() const;
 
 private:
-    QXmlInputSource *myXmlSource;
-    IWikiLinksParser *myHandler;
+    QXmlInputSource *m_myXmlSource;
+    CIWikiLinksParser *m_myHandler;
 
-    QStringList sListGroups;
-    QStringList sListGroupIcons;
-    QList<QStringList> sListInterWikiLinks;
-    QList<QStringList> sListInterWikiLinksUrls;
-    QList<QStringList> sListInterWikiLinksNames;
-    QList<QStringList> sListInterWikiLinksIcons;
+    QStringList m_sListGroups;
+    QStringList m_sListGroupIcons;
+    QList<QStringList> m_sListInterWikiLinks;
+    QList<QStringList> m_sListInterWikiLinksUrls;
+    QList<QStringList> m_sListInterWikiLinksNames;
+    QList<QStringList> m_sListInterWikiLinksIcons;
 
-    class IWikiLinksParser;
+    class CIWikiLinksParser;
 };
 
 // -----------------------------------------------------------------------------------------------
 
-class CInterWiki::IWikiLinksParser : public QXmlDefaultHandler
+class CInterWiki::CIWikiLinksParser : public QXmlDefaultHandler
 {
     friend class CInterWiki;
 
@@ -76,19 +76,19 @@ public:
     bool startElement( const QString&, const QString&, const QString &name, const QXmlAttributes &attrs );
 
 private:
-    bool bInInterWikiLink;
+    bool m_bInInterWikiLink;
 
-    QStringList tmpListiWikiLinks;
-    QStringList tmpListiWikiUrls;
-    QStringList tmpListiWikiNames;
-    QStringList tmpListiWikiIcons;
+    QStringList m_tmpListiWikiLinks;
+    QStringList m_tmpListiWikiUrls;
+    QStringList m_tmpListiWikiNames;
+    QStringList m_tmpListiWikiIcons;
 
-    QStringList sListGroups_2;
-    QStringList sListGroupIcons_2;
-    QList<QStringList> sListInterWikiLinks_2;
-    QList<QStringList> sListInterWikiLinksUrls_2;
-    QList<QStringList> sListInterWikiLinksNames_2;
-    QList<QStringList> sListInterWikiLinksIcons_2;
+    QStringList m_sListGroups_2;
+    QStringList m_sListGroupIcons_2;
+    QList<QStringList> m_sListInterWikiLinks_2;
+    QList<QStringList> m_sListInterWikiLinksUrls_2;
+    QList<QStringList> m_sListInterWikiLinksNames_2;
+    QList<QStringList> m_sListInterWikiLinksIcons_2;
 };
 
 #endif // CINTERWIKI_H

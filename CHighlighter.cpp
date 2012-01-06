@@ -28,33 +28,33 @@
 
 #include "CHighlighter.h"
 
-CHighlighter::CHighlighter(QTextDocument *parent)
-    : QSyntaxHighlighter(parent)
+CHighlighter::CHighlighter(QTextDocument *pParent)
+    : QSyntaxHighlighter(pParent)
 {
-    HighlightingRule myrule;
+    HighlightingRule myRule;
     QStringList interwikiLinksPatterns, macroPatterns, parserPatterns, textformatPatterns, flagsPatterns;
 
     // Headings (= Heading =)
-    headingsFormat.setFontWeight(QFont::Bold);
-    headingsFormat.setForeground(Qt::darkGreen);
+    m_headingsFormat.setFontWeight(QFont::Bold);
+    m_headingsFormat.setForeground(Qt::darkGreen);
     // 1-5 = at beginning and end, between A-Z, a-z, 0-9 (\\w), space (\\s), :, ", !, -, _, +, "
     //myrule.pattern = QRegExp("={1,5}[A-Za-z0-9\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
-    myrule.pattern = QRegExp("={1,5}[\\w\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
-    myrule.format = headingsFormat;
-    highlightingRules.append(myrule);  // Collecting highlighting rules
+    myRule.pattern = QRegExp("={1,5}[\\w\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
+    myRule.format = m_headingsFormat;
+    m_highlightingRules.append(myRule);  // Collecting highlighting rules
 
     // Links (everything between [...])
-    linksFormat.setForeground(Qt::darkBlue);
+    m_linksFormat.setForeground(Qt::darkBlue);
     // 1-5 = at beginning and end, between A-Z, a-z, 0-9, space, -, _, #
-    myrule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
-    myrule.format = linksFormat;
-    highlightingRules.append(myrule);  // Collecting highlighting rules
+    myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
+    myRule.format = m_linksFormat;
+    m_highlightingRules.append(myRule);  // Collecting highlighting rules
 
     // Cells style in tables
-    tablecellsFormat.setForeground(Qt::darkMagenta);
-    myrule.pattern = QRegExp("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
-    myrule.format = tablecellsFormat;
-    highlightingRules.append(myrule);
+    m_tablecellsFormat.setForeground(Qt::darkMagenta);
+    myRule.pattern = QRegExp("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+    myRule.format = m_tablecellsFormat;
+    m_highlightingRules.append(myRule);
 
     // Define interwiki link keywords
     interwikiLinksPatterns << "\\bapt\\b" << "\\baskubuntu\\b" << "\\bbehind\\b" << "\\bbug\\b" << "\\bcalendar\\b" << "\\bcanonical\\b"
@@ -68,12 +68,12 @@ CHighlighter::CHighlighter(QTextDocument *parent)
             << "\\bwikipedia\\b" << "\\bwikipedia_en\\b" << "\\bxubuntu\\b" << "\\byoutube\\b";
 
     // Format Interwiki Links
-    interwikiLinksFormat.setForeground(Qt::blue);
+    m_interwikiLinksFormat.setForeground(Qt::blue);
     // Collecting highlighting rules
-    foreach (const QString &pattern, interwikiLinksPatterns) {
-        myrule.pattern = QRegExp(pattern, Qt::CaseSensitive);
-        myrule.format = interwikiLinksFormat;
-        highlightingRules.append(myrule);
+    foreach (const QString &sPattern, interwikiLinksPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_interwikiLinksFormat;
+        m_highlightingRules.append(myRule);
     }
 
     // Define macro keywords ([[Vorlage(...) etc.)
@@ -81,25 +81,25 @@ CHighlighter::CHighlighter(QTextDocument *parent)
             << QRegExp::escape(trUtf8("[[Anker(")) << QRegExp::escape(trUtf8("[[Anhang(")) << QRegExp::escape(")]]");
 
     // Format macros
-    macrosFormat.setForeground(Qt::darkCyan);
+    m_macrosFormat.setForeground(Qt::darkCyan);
     // Collecting highlighting rules
-    foreach (const QString &pattern, macroPatterns) {
-        myrule.pattern = QRegExp(pattern, Qt::CaseSensitive);
-        myrule.format = macrosFormat;
-        highlightingRules.append(myrule);
+    foreach (const QString &sPattern, macroPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_macrosFormat;
+        m_highlightingRules.append(myRule);
     }
 
     // Define submission keywords
     parserPatterns << QRegExp::escape(trUtf8("{{{#!vorlage")) << QRegExp::escape("{{{#!code") << QRegExp::escape("{{{") << QRegExp::escape("}}}");
 
     // Format submissions
-    parserFormat.setForeground(Qt::darkRed);
-    parserFormat.setFontWeight(QFont::Bold);
+    m_parserFormat.setForeground(Qt::darkRed);
+    m_parserFormat.setFontWeight(QFont::Bold);
     // Collecting highlighting rules
-    foreach (const QString &pattern, parserPatterns) {
-        myrule.pattern = QRegExp(pattern, Qt::CaseSensitive);
-        myrule.format = parserFormat;
-        highlightingRules.append(myrule);
+    foreach (const QString &sPattern, parserPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_parserFormat;
+        m_highlightingRules.append(myRule);
     }
 
     // Define textformat keywords (Bold, italic etc.)
@@ -110,19 +110,19 @@ CHighlighter::CHighlighter(QTextDocument *parent)
             << QRegExp::escape("\\\\") << QRegExp::escape("#tag:") << QRegExp::escape("# tag:") << QRegExp::escape("+++");
 
     // Format textformats
-    textformatFormat.setForeground(Qt::red);
+    m_textformatFormat.setForeground(Qt::red);
     // Collecting highlighting rules
-    foreach (const QString &pattern, textformatPatterns) {
-        myrule.pattern = QRegExp(pattern, Qt::CaseSensitive);
-        myrule.format = textformatFormat;
-        highlightingRules.append(myrule);
+    foreach (const QString &sPattern, textformatPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_textformatFormat;
+        m_highlightingRules.append(myRule);
     }
 
     // Comments (## comment)
-    singleLineCommentFormat.setForeground(Qt::gray);
-    myrule.pattern = QRegExp("^##[^\n]*");
-    myrule.format = singleLineCommentFormat;
-    highlightingRules.append(myrule); // Collecting highlighting rules
+    m_singleLineCommentFormat.setForeground(Qt::gray);
+    myRule.pattern = QRegExp("^##[^\n]*");
+    myRule.format = m_singleLineCommentFormat;
+    m_highlightingRules.append(myRule); // Collecting highlighting rules
 
     // Define flags
     flagsPatterns << QRegExp::escape("{de}") << QRegExp::escape("{ch}")<< QRegExp::escape("{zh}") << QRegExp::escape("{cl}")
@@ -135,12 +135,12 @@ CHighlighter::CHighlighter(QTextDocument *parent)
             << QRegExp::escape("{eo}") << QRegExp::escape("{hu}") << QRegExp::escape("{dl}") << QRegExp::escape(trUtf8("{Übersicht}"));
 
     // Format flags
-    flagsFormat.setForeground(Qt::darkYellow);
+    m_flagsFormat.setForeground(Qt::darkYellow);
     // Collecting highlighting rules
-    foreach (const QString &pattern, flagsPatterns) {
-        myrule.pattern = QRegExp(pattern, Qt::CaseSensitive);
-        myrule.format = flagsFormat;
-        highlightingRules.append(myrule);
+    foreach (const QString &sPattern, flagsPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_flagsFormat;
+        m_highlightingRules.append(myRule);
     }
 }
 
@@ -192,17 +192,17 @@ CHighlighter::~CHighlighter(){
 ****************************************************************************/
 
 // Apply collected highlighting rules
-void CHighlighter::highlightBlock(const QString &text)
+void CHighlighter::highlightBlock(const QString &sText)
 {
     // Go through each highlighting rule
     // rules for every syntax element had been appended in constructor
-    foreach (const HighlightingRule &myrule, highlightingRules) {
-        QRegExp express(myrule.pattern);
-        int index = express.indexIn(text);
-        while (index >= 0) {
-            int length = express.matchedLength();
-            setFormat(index, length, myrule.format);
-            index = express.indexIn(text, index + length);
+    foreach (const HighlightingRule &myRule, m_highlightingRules) {
+        QRegExp express(myRule.pattern);
+        int nIndex = express.indexIn(sText);
+        while (nIndex >= 0) {
+            int nLength = express.matchedLength();
+            this->setFormat(nIndex, nLength, myRule.format);
+            nIndex = express.indexIn(sText, nIndex + nLength);
         }
     }
     setCurrentBlockState(0);
