@@ -51,10 +51,10 @@ CProgressDialog::CProgressDialog(const QString &sScriptname, QStringList sListAr
     m_myProc->start(sScriptname, sListArguments);
 
     // Show output
-    connect(m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(ShowMessage()) );
-    connect(m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(ShowErrorMessage()) );
+    connect(m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
+    connect(m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
 
-    connect(m_myProc, SIGNAL(finished(int)), this, SLOT(DownloadScriptFinished()) );
+    connect(m_myProc, SIGNAL(finished(int)), this, SLOT(downloadScriptFinished()) );
 }
 
 CProgressDialog::~CProgressDialog()
@@ -77,7 +77,7 @@ void CProgressDialog::closeEvent(QCloseEvent *pEvent)
 // -----------------------------------------------------------------------------------------------
 
 // Show message
-void CProgressDialog::ShowMessage()
+void CProgressDialog::showMessage()
 {
     QByteArray strdata = m_myProc->readAllStandardOutput();
     m_pUi->textEditProcessOut->setTextColor(Qt::black);
@@ -85,7 +85,7 @@ void CProgressDialog::ShowMessage()
 }
 
 // Show error message
-void CProgressDialog::ShowErrorMessage()
+void CProgressDialog::showErrorMessage()
 {
     QByteArray strdata = m_myProc->readAllStandardError();
     m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
@@ -94,7 +94,7 @@ void CProgressDialog::ShowErrorMessage()
 
 // -----------------------------------------------------------------------------------------------
 
-void CProgressDialog::DownloadScriptFinished()
+void CProgressDialog::downloadScriptFinished()
 {
     this->close();
 }
@@ -102,7 +102,7 @@ void CProgressDialog::DownloadScriptFinished()
 // -----------------------------------------------------------------------------------------------
 
 // Click on cancel button
-void CProgressDialog::ClickedCloseProcess()
+void CProgressDialog::on_pushButtonClosProc_clicked()
 {
     this->close();  // Send close event
 }

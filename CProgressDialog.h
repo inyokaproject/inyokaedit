@@ -49,11 +49,11 @@ public:
     ~CProgressDialog();
 
 private slots:
-    void ShowMessage();
-    void ShowErrorMessage();
+    void showMessage();
+    void showErrorMessage();
 
-    void DownloadScriptFinished();
-    void ClickedCloseProcess();
+    void downloadScriptFinished();
+    void on_pushButtonClosProc_clicked();
 
 protected:
     void closeEvent(QCloseEvent *pEvent);

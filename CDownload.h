@@ -36,26 +36,21 @@ class CDownload : public QObject
     Q_OBJECT
 
 public:
-    CDownload(QWidget *pParent, CInyokaEdit *pInyokaEdit, const QString &sAppName, const QString &sAppDir, const QDir StylesDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload);
+    CDownload(QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir);
 
-    bool LoadInyokaStyles();
-
-public slots:
-    void DownloadArticle();
+    bool loadInyokaStyles();
+    void downloadArticle(const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload);
 
 signals:
-    void SendArticleText(const QString &);
+    void sendArticleText(const QString &);
 
 private:
-    void DownloadImages(const QString &sArticlename);
+    void downloadImages(const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload);
 
     QWidget *m_pParent;
-    CInyokaEdit *m_pInyokaEdit;
     QString m_sAppName;
     QString m_sAppDir;
     QDir m_StylesDir;
-    QString m_sInyokaUrl;
-    bool m_bAutomaticImageDownload;
 
     QString m_sWinBashFolder;
     QString m_sWget;

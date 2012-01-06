@@ -34,10 +34,11 @@
 #include <QStringList>
 #include <QDebug>
 #include <QMessageBox>
+#include <QCoreApplication>
 
 #include <hunspell/hunspell.hxx>
 
-CSpellChecker::CSpellChecker(const QString &dictionaryPath, const QString &userDictionary)
+CSpellChecker::CSpellChecker(const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent)
 {
     _userDictionary = userDictionary;
 
@@ -78,12 +79,92 @@ CSpellChecker::CSpellChecker(const QString &dictionaryPath, const QString &userD
     } else {
         qDebug() << "User dictionary not set.";
     }
+
+    m_pCheckDialog = new CSpellCheckDialog(this, pParent);
 }
 
 
 CSpellChecker::~CSpellChecker()
 {
     delete _hunspell;
+}
+
+
+void CSpellChecker::start(CTextEditor *pEditor)
+{
+    QTextCharFormat highlightFormat;
+    highlightFormat.setBackground(QBrush(QColor("#ff6060")));
+    highlightFormat.setForeground(QBrush(QColor("#000000")));
+    // Alternative format
+    //highlightFormat.setUnderlineColor(QColor("red"));
+    //highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
+
+    // Save the position of the current cursor
+    QTextCursor oldCursor = pEditor->textCursor();
+
+    // Create a new cursor to walk through the text
+    QTextCursor cursor(pEditor->document());
+
+    // Don't call cursor.beginEditBlock(), as this prevents the redraw after changes to the content
+    // cursor.beginEditBlock();
+    while(!cursor.atEnd()) {
+        QCoreApplication::processEvents();
+        cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+        QString word = cursor.selectedText();
+
+        // Workaround for better recognition of words punctuation etc. does not belong to words
+        while(!word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position()) {
+            int cursorPos = cursor.position();
+            cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
+            cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
+            word = cursor.selectedText();
+        }
+
+        if(!word.isEmpty() && !this->spell(word)) {
+            QTextCursor tmpCursor(cursor);
+            tmpCursor.setPosition(cursor.anchor());
+            pEditor->setTextCursor(tmpCursor);
+            pEditor->ensureCursorVisible();
+
+            // Highlight the unknown word
+            QTextEdit::ExtraSelection es;
+            es.cursor = cursor;
+            es.format = highlightFormat;
+
+            QList<QTextEdit::ExtraSelection> esList;
+            esList << es;
+            pEditor->setExtraSelections(esList);
+            QCoreApplication::processEvents();
+
+            // Ask user what to do
+            CSpellCheckDialog::SpellCheckAction spellResult = m_pCheckDialog->checkWord(word);
+
+            // Reset the word highlight
+            esList.clear();
+            pEditor->setExtraSelections(esList);
+            QCoreApplication::processEvents();
+
+            if(spellResult == CSpellCheckDialog::AbortCheck)
+                break;
+
+            switch(spellResult) {
+                case CSpellCheckDialog::ReplaceOnce:
+                    cursor.insertText(m_pCheckDialog->replacement());
+                    break;
+
+                default:
+                    break;
+            }
+            QCoreApplication::processEvents();
+        }
+        cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
+    }
+
+    if (m_pCheckDialog != NULL) { delete m_pCheckDialog; }
+    m_pCheckDialog = NULL;
+
+    //cursor.endEditBlock();
+    pEditor->setTextCursor(oldCursor);
 }
 
 

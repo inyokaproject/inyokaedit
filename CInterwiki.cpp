@@ -90,27 +90,27 @@ CInterWiki::CInterWiki(const QApplication *pApp)
 
 // -----------------------------------------------------------------------------------------------
 
-QStringList CInterWiki::GetInterwikiLinksGroups() const {
+QStringList CInterWiki::getInterwikiLinksGroups() const {
     return m_sListGroups;
 }
 
-QStringList CInterWiki::GetInterwikiLinksGroupIcons() const {
+QStringList CInterWiki::getInterwikiLinksGroupIcons() const {
     return m_sListGroupIcons;
 }
 
-QList<QStringList> CInterWiki::GetInterwikiLinks() const {
+QList<QStringList> CInterWiki::getInterwikiLinks() const {
     return m_sListInterWikiLinks;
 }
 
-QList<QStringList> CInterWiki::GetInterwikiLinksUrls() const {
+QList<QStringList> CInterWiki::getInterwikiLinksUrls() const {
     return m_sListInterWikiLinksUrls;
 }
 
-QList<QStringList> CInterWiki::GetInterwikiLinksNames() const {
+QList<QStringList> CInterWiki::getInterwikiLinksNames() const {
     return m_sListInterWikiLinksNames;
 }
 
-QList<QStringList> CInterWiki::GetInterwikiLinksIcons() const {
+QList<QStringList> CInterWiki::getInterwikiLinksIcons() const {
     return m_sListInterWikiLinksIcons;
 }
 

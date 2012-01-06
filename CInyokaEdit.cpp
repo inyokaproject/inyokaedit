@@ -69,7 +69,13 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     // Set config and styles/images path
     StylesAndImagesDir = QDir::homePath() + "/." + pApp->applicationName();
 
-    // Create all objects (after definition of StylesAndImagesDir)
+    // Create folder for downloaded article images
+    m_tmpPreviewImgDir = StylesAndImagesDir.absolutePath() + "/tmpImages";
+    if (!m_tmpPreviewImgDir.exists()) {
+        m_tmpPreviewImgDir.mkdir(m_tmpPreviewImgDir.absolutePath());
+    }
+
+    // Create all objects (after definition of StylesAndImagesDir AND m_tmpPreviewImgDir)
     this->createObjects();
 
     // Setup gui, menus, actions, toolbar...
@@ -83,7 +89,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
     if (!StylesAndImagesDir.exists() || !QDir(StylesAndImagesDir.absolutePath() + "/img").exists() ||
         !QDir(StylesAndImagesDir.absolutePath() + "/styles").exists() || !QDir(StylesAndImagesDir.absolutePath() + "/Wiki").exists()){
         StylesAndImagesDir.mkdir(StylesAndImagesDir.absolutePath());  // Create folder because user may not start download. Folder is needed for preview.
-        if(myDownloadModule->LoadInyokaStyles()) {
+        if(myDownloadModule->loadInyokaStyles()) {
             mySettings->setConfVersion(sVERSION);
         }
         bDialogShowed = true;
@@ -95,7 +101,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
 
         // Download inyoka styles
         if ("--dlstyles" == sTmp){
-            if(myDownloadModule->LoadInyokaStyles()) {
+            if(myDownloadModule->loadInyokaStyles()) {
                 mySettings->setConfVersion(sVERSION);
             }
         }
@@ -111,7 +117,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
 
     // In config file an older version was found
     if (sVERSION != mySettings->getConfVersion() && !bDialogShowed) {
-        if(myDownloadModule->LoadInyokaStyles()) {
+        if(myDownloadModule->loadInyokaStyles()) {
             mySettings->setConfVersion(sVERSION);
         }
     }
@@ -145,7 +151,7 @@ void CInyokaEdit::createObjects() {
         mySettings->readSettings();
         if (bLogging) { std::clog << "Read settings" << std::endl; }
 
-        myDownloadModule = new CDownload(this, this, pApp->applicationName(), pApp->applicationDirPath(), StylesAndImagesDir, mySettings->getInyokaUrl(), mySettings->getAutomaticImageDownload());
+        myDownloadModule = new CDownload(this, pApp->applicationName(), pApp->applicationDirPath(), StylesAndImagesDir);
         if (bLogging) { std::clog << "Created myDownloadModule" << std::endl; }
 
         myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
@@ -160,7 +166,7 @@ void CInyokaEdit::createObjects() {
         myHighlighter = new CHighlighter(myEditor->document());
         if (bLogging) { std::clog << "Created myHighlighter" << std::endl; }
 
-        myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), StylesAndImagesDir, myInterWikiLinks->GetInterwikiLinks(), myInterWikiLinks->GetInterwikiLinksUrls());
+        myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), StylesAndImagesDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
         if (bLogging) { std::clog << "Created myParser" << std::endl; }
 
         //myTabwidgetDocuments = new QTabWidget;
@@ -243,8 +249,8 @@ void CInyokaEdit::setupEditor()
     this->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
 
-    connect(myDownloadModule, SIGNAL(SendArticleText(QString)),
-            this, SLOT(DisplayArticleText(QString)));
+    connect(myDownloadModule, SIGNAL(sendArticleText(QString)),
+            this, SLOT(displayArticleText(QString)));
 
     // Hide statusbar, if option is false
     if (false == mySettings->getShowStatusbar()) {
@@ -383,7 +389,7 @@ void CInyokaEdit::createActions()
     connect(myTabwidgetRawPreview, SIGNAL(currentChanged(int)), this, SLOT(previewInyokaPage(int)));
 
     // Download Inyoka article
-    connect(ui->downloadArticleAct, SIGNAL(triggered()), myDownloadModule, SLOT(DownloadArticle()));
+    connect(ui->downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
 
     // ---------------------------------------------------------------------------------------------
 
@@ -533,16 +539,16 @@ void CInyokaEdit::createActions()
         QList <QAction *> emptyActionList;
         emptyActionList.clear();
 
-        for (int i = 0; i < myInterWikiLinks->GetInterwikiLinksGroups().size(); i++) {
+        for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
             iWikiLinksActions << emptyActionList;
-            for (int j = 0; j < myInterWikiLinks->GetInterwikiLinksNames()[i].size(); j++) {
+            for (int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++) {
                 // Path from normal installation
                 if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
-                    iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksIcons()[i][j]), myInterWikiLinks->GetInterwikiLinksNames()[i][j], this);
+                    iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
                 }
                 // No installation: Use app path
                 else {
-                    iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksIcons()[i][j]), myInterWikiLinks->GetInterwikiLinksNames()[i][j], this);
+                    iWikiLinksActions[i] << new QAction(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
                 }
 
                 mySigMapInterWikiLinks->setMapping(iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j));
@@ -587,14 +593,14 @@ void CInyokaEdit::createMenus()
     }
 
     // Insert interwiki-links menu
-    for (int i = 0; i < myInterWikiLinks->GetInterwikiLinksGroups().size(); i++) {
+    for (int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++) {
         // Path from normal installation
         if (QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks")) {
-            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksGroupIcons()[i]), myInterWikiLinks->GetInterwikiLinksGroups()[i]));
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
         }
         // No installation: Use app path
         else {
-            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->GetInterwikiLinksGroupIcons()[i]), myInterWikiLinks->GetInterwikiLinksGroups()[i]));
+            iWikiGroups.append(ui->iWikiMenu->addMenu(QIcon(pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksGroupIcons()[i]), myInterWikiLinks->getInterwikiLinksGroups()[i]));
         }
         iWikiGroups[i]->addActions(iWikiLinksActions[i]);
     }
@@ -859,7 +865,7 @@ void CInyokaEdit::insertDropDownTextformat(const int iSelection){
 
 // Insert text sample / syntax element
 void CInyokaEdit::insertTextSample(const QString &sMenuEntry){
-    myEditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->GetElementInyokaCode(sMenuEntry.toStdString(), myEditor->textCursor().selectedText().toStdString()).c_str()));
+    myEditor->insertPlainText(QString::fromUtf8(myInsertSyntaxElement->getElementInyokaCode(sMenuEntry.toStdString(), myEditor->textCursor().selectedText().toStdString()).c_str()));
     myEditor->setFocus();
 }
 
@@ -877,7 +883,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
             QString sText = tr("Text", "Interwiki links: Common text");
 
             // Insert InterWiki-Link
-            myEditor->insertPlainText("[" + myInterWikiLinks->GetInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + sSitename + ":" + sText + "]");
+            myEditor->insertPlainText("[" + myInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + sSitename + ":" + sText + "]");
 
             // Select site name in InterWiki-Link
             QTextCursor textCursor = myEditor->textCursor();
@@ -888,7 +894,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
         // Some text is selected
         else {
             // Insert InterWiki-Link with selected text
-            myEditor->insertPlainText("[" + myInterWikiLinks->GetInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + myEditor->textCursor().selectedText() + ":]");
+            myEditor->insertPlainText("[" + myInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + myEditor->textCursor().selectedText() + ":]");
         }
     }
     // Problem with indices
@@ -902,7 +908,16 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CInyokaEdit::DisplayArticleText(const QString &sArticleText) {
+void CInyokaEdit::downloadArticle() {
+    if (!this->maybeSave()) {
+        return;
+    }
+    else {
+        myDownloadModule->downloadArticle(m_tmpPreviewImgDir, mySettings->getInyokaUrl(), mySettings->getAutomaticImageDownload());
+    }
+}
+
+void CInyokaEdit::displayArticleText(const QString &sArticleText) {
     myEditor->setPlainText(sArticleText);
     myEditor->document()->setModified(true);
     this->documentWasModified();
@@ -995,11 +1010,9 @@ void CInyokaEdit::clearRecentFiles(){
 }
 
 // -----------------------------------------------------------------------------------------------
-// Spell checker (original code form http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell)
 
 void CInyokaEdit::checkSpelling()
 {
-
 #if not defined _WIN32
     QString dictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
     if (!QFile::exists(dictPath + ".dic") || !QFile::exists(dictPath + ".aff")) {
@@ -1017,84 +1030,11 @@ void CInyokaEdit::checkSpelling()
             QMessageBox::warning(0, pApp->applicationName(), "User dictionary file could not be created.");
         }
     }
-    CSpellChecker *spellChecker = new CSpellChecker(dictPath, userDict);
-    CSpellCheckDialog *checkDialog = new CSpellCheckDialog(spellChecker, this);
-
-    QTextCharFormat highlightFormat;
-    highlightFormat.setBackground(QBrush(QColor("#ff6060")));
-    highlightFormat.setForeground(QBrush(QColor("#000000")));
-    // Alternative format
-    //highlightFormat.setUnderlineColor(QColor("red"));
-    //highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
-
-    // Save the position of the current cursor
-    QTextCursor oldCursor = myEditor->textCursor();
-
-    // Create a new cursor to walk through the text
-    QTextCursor cursor(myEditor->document());
-
-    // Don't call cursor.beginEditBlock(), as this prevents the redraw after changes to the content
-    // cursor.beginEditBlock();
-    while(!cursor.atEnd()) {
-        QCoreApplication::processEvents();
-        cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
-        QString word = cursor.selectedText();
-
-        // Workaround for better recognition of words punctuation etc. does not belong to words
-        while(!word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position()) {
-            int cursorPos = cursor.position();
-            cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
-            cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
-            word = cursor.selectedText();
-        }
-
-        if(!word.isEmpty() && !spellChecker->spell(word)) {
-            QTextCursor tmpCursor(cursor);
-            tmpCursor.setPosition(cursor.anchor());
-            myEditor->setTextCursor(tmpCursor);
-            myEditor->ensureCursorVisible();
-
-            // Highlight the unknown word
-            QTextEdit::ExtraSelection es;
-            es.cursor = cursor;
-            es.format = highlightFormat;
-
-            QList<QTextEdit::ExtraSelection> esList;
-            esList << es;
-            myEditor->setExtraSelections(esList);
-            QCoreApplication::processEvents();
-
-            // Ask user what to do
-            CSpellCheckDialog::SpellCheckAction spellResult = checkDialog->checkWord(word);
-
-            // Reset the word highlight
-            esList.clear();
-            myEditor->setExtraSelections(esList);
-            QCoreApplication::processEvents();
-
-            if(spellResult == CSpellCheckDialog::AbortCheck)
-                break;
-
-            switch(spellResult) {
-                case CSpellCheckDialog::ReplaceOnce:
-                    cursor.insertText(checkDialog->replacement());
-                    break;
-
-                default:
-                    break;
-            }
-            QCoreApplication::processEvents();
-        }
-        cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
-    }
-
-    //cursor.endEditBlock();
-    myEditor->setTextCursor(oldCursor);
+    CSpellChecker *spellChecker = new CSpellChecker(dictPath, userDict, this);
+    spellChecker->start(myEditor);
 
     if (spellChecker != NULL) { delete spellChecker; }
     spellChecker = NULL;
-    if (checkDialog != NULL) { delete checkDialog; }
-    checkDialog = NULL;
 
     QMessageBox::information(this, pApp->applicationName(), tr("Spell check has finished."));
 
@@ -1218,21 +1158,6 @@ bool CInyokaEdit::saveAs()
     return this->saveFile(sFileName);
 }
 
-void CInyokaEdit::about()
-{
-    QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg(pApp->applicationName()),
-                       tr("<b>%1</b> - Editor for Inyoka-based portals<br />"
-                          "Version: %2<br /><br />"
-                          "&copy; 2011, the %3 authors<br />"
-                          "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
-                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(pApp->applicationName()).arg(sVERSION).arg(pApp->applicationName()));
-}
-
-void CInyokaEdit::documentWasModified()
-{
-    this->setWindowModified(myEditor->document()->isModified());
-}
-
 // Handle unsaved files
 bool CInyokaEdit::maybeSave()
 {
@@ -1334,10 +1259,29 @@ void CInyokaEdit::setCurrentFile(const QString &sFileName)
     this->setWindowFilePath(sShownName);
 }
 
-QString CInyokaEdit::strippedName(const QString &sFullFileName)
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// Set modified flag for window
+void CInyokaEdit::documentWasModified()
 {
-    return QFileInfo(sFullFileName).fileName();
+    this->setWindowModified(myEditor->document()->isModified());
 }
+
+// -----------------------------------------------------------------------------------------------
+
+// About info box
+void CInyokaEdit::about()
+{
+    QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg(pApp->applicationName()),
+                       tr("<b>%1</b> - Editor for Inyoka-based portals<br />"
+                          "Version: %2<br /><br />"
+                          "&copy; 2011, the %3 authors<br />"
+                          "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
+                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(pApp->applicationName()).arg(sVERSION).arg(pApp->applicationName()));
+}
+
+// -----------------------------------------------------------------------------------------------
 
 // Close event (File -> Close or X)
 void CInyokaEdit::closeEvent(QCloseEvent *event)

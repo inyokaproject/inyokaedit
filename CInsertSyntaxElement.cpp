@@ -36,7 +36,7 @@ CInsertSyntaxElement::CInsertSyntaxElement()
     sSampleEnd_2    = "}}}\n";
 }
 
-std::string CInsertSyntaxElement::GetElementInyokaCode(const std::string sElement, const std::string sSelectedText){
+std::string CInsertSyntaxElement::getElementInyokaCode(const std::string sElement, const std::string sSelectedText){
 
     // Toolbar buttons
     if (sElement == "boldAct"){

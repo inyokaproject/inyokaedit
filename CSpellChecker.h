@@ -31,14 +31,20 @@
 
 #include <QString>
 
+#include "CSpellCheckDialog.h"
+#include "CTextEditor.h"
+
 class Hunspell;
+class CTextEditor;
+class CSpellCheckDialog;
 
 class CSpellChecker
 {
 public:
-    CSpellChecker(const QString &dictionaryPath, const QString &userDictionary);
+    CSpellChecker(const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent);
     ~CSpellChecker();
 
+    void start(CTextEditor *pEditor);
     bool spell(const QString &word);
     QStringList suggest(const QString &word);
     void ignoreWord(const QString &word);
@@ -50,6 +56,7 @@ private:
     QString _userDictionary;
     QString _encoding;
     QTextCodec *_codec;
+    CSpellCheckDialog *m_pCheckDialog;
 };
 
 #endif // CSPELLCHECKER_H

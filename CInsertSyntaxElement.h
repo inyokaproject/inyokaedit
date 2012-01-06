@@ -34,7 +34,7 @@ class CInsertSyntaxElement
 public:
     CInsertSyntaxElement();
 
-    std::string GetElementInyokaCode(const std::string sElement, const std::string sSelectedText);
+    std::string getElementInyokaCode(const std::string sElement, const std::string sSelectedText);
 
 private:
     std::string sSampleBegin_1;

@@ -46,7 +46,7 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl);
+    CParser(QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl);
     // Destructor
     ~CParser();
 
@@ -86,18 +86,19 @@ private:
     QString insertBox(const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "");
 
     // Text from editor
-    QTextDocument *rawText, *copyOfrawText;
+    QTextDocument *m_pRawText, *m_pCopyOfrawText;
 
     // List for interwiki links (keywords, Url)
-    QStringList sListInterwikiKey, sListInterwikiLink;
+    QStringList m_sListInterwikiKey, m_sListInterwikiLink;
     // List for text formats (start keyword, end keyword, start HTML code, end HTML code)
-    QStringList sListFormatStart, sListFormatEnd, sListFormatHtmlStart, sListFormatHtmlEnd;
+    QStringList m_sListFormatStart, m_sListFormatEnd, m_sListFormatHtmlStart, m_sListFormatHtmlEnd;
     // List for flags
-    QStringList sListFlags;
+    QStringList m_sListFlags;
 
-    const QString sWikiUrl;
-    QDir TmpFileDir;
-    bool bShowedMsgBoxAlready;
+    const QString m_sWikiUrl;
+    QDir m_tmpFileDir;
+    QDir m_tmpImgDir;
+    bool m_bShowedMsgBoxAlready;
 
 };
 

@@ -80,7 +80,7 @@ public:
     
 public slots:
     void showHtmlPreview(const QString &filename);
-    void DisplayArticleText(const QString &sArticleText);
+    void displayArticleText(const QString &sArticleText);
 
 protected:
     // Event when program will close
@@ -107,6 +107,8 @@ private slots:
     void insertDropDownHeadline(const int iSelection);
     void insertDropDownTextmacro(const int iSelection);
     void insertDropDownTextformat(const int iSelection);
+
+    void downloadArticle();
 
     // Preview / download toolbar
     void previewInyokaPage(const int iIndex = 999);
@@ -141,7 +143,6 @@ private:
     void updateRecentFiles(const QString &sFileName);
 
     void setCurrentFile(const QString &sFileName);
-    QString strippedName(const QString &sFullFileName);
 
     // Objects
     CTextEditor *myEditor;
@@ -163,6 +164,7 @@ private:
     QString sCurFile;      // Current file
 
     QDir StylesAndImagesDir;
+    QDir m_tmpPreviewImgDir;
 
     QStringList sListCompleter;
 

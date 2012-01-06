@@ -27,81 +27,81 @@
 #include "CParser.h"
 
 // Constructor
-CParser::CParser(QTextDocument *rawDocument, const QString &sUrlToWiki, const QDir TmpFileOutputDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl)
-    : rawText(rawDocument), sWikiUrl(sUrlToWiki), TmpFileDir(TmpFileOutputDir)
+CParser::CParser(QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl)
+    : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki), m_tmpFileDir(tmpFileOutputDir), m_tmpImgDir(tmpImgDir)
 {
     // Copy interwiki links to lists
     for (int i = 0; i < sListIWiki.size(); i++) {
         for (int j = 0; j < sListIWiki[i].size(); j++) {
-            sListInterwikiKey << sListIWiki[i][j];
-            sListInterwikiLink << sListIWikiUrl[i][j];
+            m_sListInterwikiKey << sListIWiki[i][j];
+            m_sListInterwikiLink << sListIWikiUrl[i][j];
         }
     }
 
     // Initialize possible text formats
-    sListFormatStart << "'''";          // BOLD
-    sListFormatEnd << "'''";
-    sListFormatHtmlStart << "<strong>";
-    sListFormatHtmlEnd << "</strong>";
-    sListFormatStart << "''";           // ITALIC
-    sListFormatEnd << "''";
-    sListFormatHtmlStart << "<em>";
-    sListFormatHtmlEnd << "</em>";
-    sListFormatStart << "`";            // MONOTYPE
-    sListFormatEnd << "`";
-    sListFormatHtmlStart << "<code>";
-    sListFormatHtmlEnd << "</code>";
-    sListFormatStart << "__";           // UNDERLINE
-    sListFormatEnd << "__";
-    sListFormatHtmlStart << "<span class=\"underline\">";
-    sListFormatHtmlEnd << "</span>";
-    sListFormatStart << "--(";          // STRIKE OUT
-    sListFormatEnd << ")--";
-    sListFormatHtmlStart << "<del>";
-    sListFormatHtmlEnd << "</del>";
-    sListFormatStart << "^^(";          // RISED TEXT
-    sListFormatEnd << ")^^";
-    sListFormatHtmlStart << "<sup>";
-    sListFormatHtmlEnd << "</sup>";
-    sListFormatStart << ",,(";          // LOWERED TEXT
-    sListFormatEnd << "),,";
-    sListFormatHtmlStart << "<sub>";
-    sListFormatHtmlEnd << "</sub>";
-    sListFormatStart << "~+(";          // BIGGER
-    sListFormatEnd << ")+~";
-    sListFormatHtmlStart << "<big>";
-    sListFormatHtmlEnd << "</big>";
-    sListFormatStart << "~-(";          // SMALLER
-    sListFormatEnd << ")-~";
-    sListFormatHtmlStart << "<small>";
-    sListFormatHtmlEnd << "</small>";
+    m_sListFormatStart << "'''";          // BOLD
+    m_sListFormatEnd << "'''";
+    m_sListFormatHtmlStart << "<strong>";
+    m_sListFormatHtmlEnd << "</strong>";
+    m_sListFormatStart << "''";           // ITALIC
+    m_sListFormatEnd << "''";
+    m_sListFormatHtmlStart << "<em>";
+    m_sListFormatHtmlEnd << "</em>";
+    m_sListFormatStart << "`";            // MONOTYPE
+    m_sListFormatEnd << "`";
+    m_sListFormatHtmlStart << "<code>";
+    m_sListFormatHtmlEnd << "</code>";
+    m_sListFormatStart << "__";           // UNDERLINE
+    m_sListFormatEnd << "__";
+    m_sListFormatHtmlStart << "<span class=\"underline\">";
+    m_sListFormatHtmlEnd << "</span>";
+    m_sListFormatStart << "--(";          // STRIKE OUT
+    m_sListFormatEnd << ")--";
+    m_sListFormatHtmlStart << "<del>";
+    m_sListFormatHtmlEnd << "</del>";
+    m_sListFormatStart << "^^(";          // RISED TEXT
+    m_sListFormatEnd << ")^^";
+    m_sListFormatHtmlStart << "<sup>";
+    m_sListFormatHtmlEnd << "</sup>";
+    m_sListFormatStart << ",,(";          // LOWERED TEXT
+    m_sListFormatEnd << "),,";
+    m_sListFormatHtmlStart << "<sub>";
+    m_sListFormatHtmlEnd << "</sub>";
+    m_sListFormatStart << "~+(";          // BIGGER
+    m_sListFormatEnd << ")+~";
+    m_sListFormatHtmlStart << "<big>";
+    m_sListFormatHtmlEnd << "</big>";
+    m_sListFormatStart << "~-(";          // SMALLER
+    m_sListFormatEnd << ")-~";
+    m_sListFormatHtmlStart << "<small>";
+    m_sListFormatHtmlEnd << "</small>";
     /*
-    sListFormatStart << "[size=+\d+]";  // DEFINED SIZE
-    sListFormatEnd << "[/size]";
-    sListFormatHtmlStart << "<span style=\"font-size: %1\">";
-    sListFormatHtmlEnd << "</span>";
+    m_sListFormatStart << "[size=+\d+]";  // DEFINED SIZE
+    m_sListFormatEnd << "[/size]";
+    m_sListFormatHtmlStart << "<span style=\"font-size: %1\">";
+    m_sListFormatHtmlEnd << "</span>";
     */
     /*
-    sListFormatStart << "[color=#+[0-9A-F]{5,5}]";  // DEFINED COLOR (hex)
-    sListFormatEnd << "[/color]|";
-    sListFormatHtmlStart << "<span style=\"color: %1\">";
-    sListFormatHtmlEnd << "</span>";
+    m_sListFormatStart << "[color=#+[0-9A-F]{5,5}]";  // DEFINED COLOR (hex)
+    m_sListFormatEnd << "[/color]|";
+    m_sListFormatHtmlStart << "<span style=\"color: %1\">";
+    m_sListFormatHtmlEnd << "</span>";
     */
     /*
-    sListFormatStart << "[color=[a-z]{3,8}]";               // DEFINED COLOR (word)
-    sListFormatEnd << "[/color]";
-    sListFormatHtmlStart << "<span-]+\[/color\] style=\"color: %1\">";
-    sListFormatHtmlEnd << "</span>";
+    m_sListFormatStart << "[color=[a-z]{3,8}]";               // DEFINED COLOR (word)
+    m_sListFormatEnd << "[/color]";
+    m_sListFormatHtmlStart << "<span-]+\[/color\] style=\"color: %1\">";
+    m_sListFormatHtmlEnd << "</span>";
     */
 
     // ----------------------------------------------------------------------------------------------------
 
     // Initialize possible flags
-    sListFlags << "cz" << "da" << "de" << "en" << "eo" << "es" << "fi" << "fr" << "hr" << "hu" << "it" << "ja" <<
+    m_sListFlags << "cz" << "da" << "de" << "en" << "eo" << "es" << "fi" << "fr" << "hr" << "hu" << "it" << "ja" <<
             "ko" << "lv" << "nl" << "nw" << "pl" << "pt" << "ro" << "rs" << "ru" << "sk" << "sv" << "tr" << "zh" <<
             "at" << "ch" << "gb" << "us" << "cl" << "dl";
 
-    bShowedMsgBoxAlready = false;
+    m_bShowedMsgBoxAlready = false;
 }
 
 // Destructor
@@ -115,7 +115,7 @@ CParser::~CParser()
 bool CParser::genOutput(const QString sActFile)
 {
     // File for temporary html output
-    QFile tmphtmlfile(TmpFileDir.absolutePath() + "/tmpinyoka.html");
+    QFile tmphtmlfile(m_tmpFileDir.absolutePath() + "/tmpinyoka.html");
 
     // No write permission
     if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
@@ -163,33 +163,33 @@ bool CParser::genOutput(const QString sActFile)
                       "<div id=\"page\">\n");
 
     // Need a copy otherwise text in editor will be changed
-    copyOfrawText = rawText->clone();
+    m_pCopyOfrawText = m_pRawText->clone();
 
     // Replace all links
-    replaceLinks(copyOfrawText);
+    replaceLinks(m_pCopyOfrawText);
 
     // Replace text format
-    replaceTextformat(copyOfrawText);
+    replaceTextformat(m_pCopyOfrawText);
 
     // Replace flags
-    replaceFlags(copyOfrawText);
+    replaceFlags(m_pCopyOfrawText);
 
     // Replace keys
-    replaceKeys(copyOfrawText);
+    replaceKeys(m_pCopyOfrawText);
 
     // Replace images
-    replaceImages(copyOfrawText);
+    replaceImages(m_pCopyOfrawText);
 
     // Replace anchor
-    replaceAnchor(copyOfrawText);
+    replaceAnchor(m_pCopyOfrawText);
 
     // Get first text block
-    QTextBlock it = copyOfrawText->firstBlock();
+    QTextBlock it = m_pCopyOfrawText->firstBlock();
     QString sHtmlBody, sWikitags;
     QString sSample;
 
     // Go through each text block and call depending parse function
-    for(; it.isValid() && !(copyOfrawText->lastBlock() < it); it = it.next()) {
+    for(; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it); it = it.next()) {
         // Macro samples
         if (it.text().trimmed().startsWith(trUtf8("[[Vorlage("), Qt::CaseSensitive) &&
             !(it.text().trimmed().startsWith(trUtf8("[[Vorlage(Tasten"), Qt::CaseSensitive)) &&
@@ -212,7 +212,7 @@ bool CParser::genOutput(const QString sActFile)
         else if (it.text().trimmed().startsWith(trUtf8("{{{#!vorlage"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
-            for (; it.isValid() && !(copyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
+            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
                 sSample += "§" + it.text();
             }
             sHtmlBody += parseTextSample(sSample);
@@ -222,7 +222,7 @@ bool CParser::genOutput(const QString sActFile)
         else if (it.text().trimmed() == trUtf8("{{{") || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
-            for (; it.isValid() && !(copyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
+            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
                 sSample += "§" + it.text();
             }
             sHtmlBody += parseCodeBlock(sSample);
@@ -231,7 +231,7 @@ bool CParser::genOutput(const QString sActFile)
         else if (it.text().trimmed().startsWith(trUtf8("[[Vorlage(Bildersammlung"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
-            for (; it.isValid() && !(copyOfrawText->lastBlock() < it) && it.text().trimmed() != ")]]"; it = it.next()){
+            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != ")]]"; it = it.next()){
                 sSample += "§" + it.text();
             }
             sHtmlBody += parseImageCollection(sSample);
@@ -241,7 +241,7 @@ bool CParser::genOutput(const QString sActFile)
             sSample = it.text();
             it = it.next();
             QTextBlock tmpBlock = it;  // Next to last block
-            for (; it.isValid() && !(copyOfrawText->lastBlock() < it); it = it.next()){
+            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it); it = it.next()){
 
                 if (it.text().trimmed().startsWith("* ") || it.text().trimmed().startsWith("1. ")){
                     sSample += "§" + it.text();
@@ -252,7 +252,7 @@ bool CParser::genOutput(const QString sActFile)
                     break;
                 }
 
-                if (it == copyOfrawText->lastBlock())
+                if (it == m_pCopyOfrawText->lastBlock())
                     break;
             }
             sHtmlBody += parseList(sSample);
@@ -310,8 +310,8 @@ void CParser::replaceTextformat(QTextDocument *myRawDoc)
     QString sFormatedText, sTmpRegExp; //, sTmpText;
     int myindex;
 
-    for(int i = 0; i < sListFormatStart.size(); i++){
-        sTmpRegExp = QRegExp::escape(sListFormatStart[i]) + variableText + QRegExp::escape(sListFormatEnd[i]);
+    for(int i = 0; i < m_sListFormatStart.size(); i++){
+        sTmpRegExp = QRegExp::escape(m_sListFormatStart[i]) + variableText + QRegExp::escape(m_sListFormatEnd[i]);
 
         patternTextformat.setPattern(sTmpRegExp);
         myindex = patternTextformat.indexIn(sMyDoc);
@@ -337,9 +337,9 @@ void CParser::replaceTextformat(QTextDocument *myRawDoc)
             else {
             */
                 // Remove syntax element
-                sFormatedText.remove(sListFormatStart[i]);
-                sFormatedText.remove(sListFormatEnd[i]);
-                sMyDoc.replace(myindex, iLength, sListFormatHtmlStart[i] + sFormatedText + sListFormatHtmlEnd[i]);
+                sFormatedText.remove(m_sListFormatStart[i]);
+                sFormatedText.remove(m_sListFormatEnd[i]);
+                sMyDoc.replace(myindex, iLength, m_sListFormatHtmlStart[i] + sFormatedText + m_sListFormatHtmlEnd[i]);
             //}
 
             // Go on with RegExp-Search
@@ -373,7 +373,7 @@ void CParser::replaceFlags(QTextDocument *myRawDoc){
             sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/overview.png\" alt=\"&#123;" + trUtf8("Übersicht") + "&#125;\" />");
         }
         else if (sTmpFlag.length() == 2){
-            if (sListFlags.contains(sTmpFlag)){
+            if (m_sListFlags.contains(sTmpFlag)){
                 sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/" + sTmpFlag + ".png\" alt=\"&#123;" + sTmpFlag + "&#125;\" />");
             }
         }
@@ -592,17 +592,17 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
         sTmpLink.remove("]");
 
         // Interwiki links
-        for (int i = 0; i < sListInterwikiKey.size(); i++){
-            if (sTmpLink.startsWith(sListInterwikiKey[i] + ":") && sTmpLink.count(':') == 2 && !sTmpLink.startsWith("user:")){
-                sTmpLink.remove(sListInterwikiKey[i] + ":");
+        for (int i = 0; i < m_sListInterwikiKey.size(); i++){
+            if (sTmpLink.startsWith(m_sListInterwikiKey[i] + ":") && sTmpLink.count(':') == 2 && !sTmpLink.startsWith("user:")){
+                sTmpLink.remove(m_sListInterwikiKey[i] + ":");
                 sListLink.clear();
                 sListLink = sTmpLink.split(":");
 
                 if (sListLink[1] != ""){
-                    sMyDoc.replace(myindex, iLength, "<a href=\"" + sListInterwikiLink[i] + "" + sListLink[0] + "\" class=\"interwiki interwiki-" + sListInterwikiKey[i] + "\">" + sListLink[1] + "</a>");
+                    sMyDoc.replace(myindex, iLength, "<a href=\"" + m_sListInterwikiLink[i] + "" + sListLink[0] + "\" class=\"interwiki interwiki-" + m_sListInterwikiKey[i] + "\">" + sListLink[1] + "</a>");
                 }
                 else{
-                    sMyDoc.replace(myindex, iLength, "<a href=\"" + sListInterwikiLink[i] + sListLink[0] + "\" class=\"interwiki interwiki-" + sListInterwikiKey[i] + "\">" + sListLink[0] + "</a>");
+                    sMyDoc.replace(myindex, iLength, "<a href=\"" + m_sListInterwikiLink[i] + sListLink[0] + "\" class=\"interwiki interwiki-" + m_sListInterwikiKey[i] + "\">" + sListLink[0] + "</a>");
                 }
                 break;
             }
@@ -615,10 +615,10 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
             sListLink = sTmpLink.split(":");
 
             if (sListLink[1] != ""){
-                sMyDoc.replace(myindex, iLength, "<a href=\"" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[1] + "</a>");
+                sMyDoc.replace(myindex, iLength, "<a href=\"" + m_sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[1] + "</a>");
             }
             else {
-                sMyDoc.replace(myindex, iLength, "<a href=\"" + sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[0] + "</a>");
+                sMyDoc.replace(myindex, iLength, "<a href=\"" + m_sWikiUrl + "/" + sListLink[0] + "\" class=\"internal\">" + sListLink[0] + "</a>");
             }
         }
 
@@ -627,7 +627,7 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
             sTmpLink.remove("user:");
             sListLink.clear();
             sListLink = sTmpLink.split(":");
-            QString sTmpUrl = sWikiUrl;
+            QString sTmpUrl = m_sWikiUrl;
             sTmpUrl.remove("wiki.");
 
             if (sListLink[1] != ""){
@@ -734,7 +734,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 }
             }
 
-            QString sTmpUrl = sWikiUrl;
+            QString sTmpUrl = m_sWikiUrl;
             sTmpUrl.remove("wiki.");
             QString sLinkUser("");
             int iCntUser;
@@ -800,17 +800,17 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                     sOutput += "<li>\n"
                                "<p>\n";
                     if (sListElements[i].toLower() == "precise")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
                     else if (sListElements[i].toLower() == "oneiric")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
                     else if (sListElements[i].toLower() == "natty")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
                     else if (sListElements[i].toLower() == "maverick")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
                     else if (sListElements[i].toLower() == "lucid")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
                     else if (sListElements[i].toLower() == "hardy")
-                        sOutput += "<a href=\"" + sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
+                        sOutput += "<a href=\"" + m_sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
                     else
                         sOutput +=  "Unknown Version\n";
 
@@ -950,7 +950,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         if (sListElements.size() >= 2) {
             // Replace possible spaces
             sListElements[1].replace(" ", "_");
-            sOutput = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
+            sOutput = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
         }
 
         sOutput = insertBox("box warning",
@@ -971,12 +971,12 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sListElements[i].replace(" ", "_");
             }
 
-            QString sTmpUrl = sWikiUrl;
+            QString sTmpUrl = m_sWikiUrl;
             sTmpUrl.remove("wiki.");
             // Generate output
             sOutput += "<ul>";
             sOutput += "<li><p>" + trUtf8("Geplante Fertigstellung:") + " " + sListElements[1] + "</p></li>\n";
-            QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
+            QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
             sOutput += "<li><p>" + trUtf8("Derzeit gültiger Artikel:") + " " + sTmpLink + "</p></li>\n";
 
             // Generate user list
@@ -993,7 +993,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             }
             sOutput += "<li><p>" + trUtf8("Bearbeiter:") + sTmpLink2 + "</p></li>\n";
             sOutput += "</ul>\n";
-            QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
             sOutput += "<p>" + trUtf8("Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.").arg(sTmpLink3) + "</p>\n";
         }
 
@@ -1012,15 +1012,15 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         if (sListElements.size() >= 2){
             // Package
             if (sListElements[1] == trUtf8("Paket")){
-                sOutput = "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             // Source
             else if (sListElements[1] == trUtf8("Quelle")){
-                sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             //Software
             else if (sListElements[1] == trUtf8("Software")){
-                sOutput = "<p><a href=\"" + sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
             }
             // Remark available
             if (sListElements.size() >= 3){
@@ -1051,7 +1051,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             sOutsideBox += "<p><strong>ppa:" + sListElements[1] + "/" + sListElements[2] + "</strong></p>\n";
             sOutsideBox += "</li>\n</ul>";
 
-            sOutput = trUtf8("Zusätzliche") + " <a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.");
+            sOutput = trUtf8("Zusätzliche") + " <a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.");
             QString sTmpLink = "<img src=\"img/interwiki/ppa.png\" class=\"image-default\" alt=\"PPA\" /> <a href=\"https://launchpad.net/~" + sListElements[1] + "/+archive/" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("PPA Beschreibung") + "</a>";
             QString sTmpLink2 = "<a href=\"https://launchpad.net/~" + sListElements[1] + "\" class=\"interwiki interwiki-lpuser\">" + sListElements[1] + "</a>";
             sRemark = trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2);
@@ -1070,7 +1070,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sListElements[1].remove("key");
                 sListElements[1].remove(" ");
 
-                QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man den Signierungsschlüssel mit folgendem Befehl importieren:").arg(sTmpLink);
                 sOutput += "</p>\n"
                            "<div class=\"bash\">\n"
@@ -1081,9 +1081,9 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             }
             // Url
             else{
-                QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 QString sTmpLink2 = "<a href=\"" + sListElements[1] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("Signierungsschlüssel herunterladen") + "</a>";
-                QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
+                QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man entweder den %2 und in der %3 oder folgenden Befehl ausführen:").arg(sTmpLink).arg(sTmpLink2).arg(sTmpLink3) + "</p>\n";
                 sOutput += "<div class=\"bash\">\n"
                            "<div class=\"contents\">\n"
@@ -1101,11 +1101,11 @@ QString CParser::parseMacro(QTextBlock actParagraph){
         if (sListElements.size() >= 3){
 
             // Generate output
-            QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
-            QString sTmpLink2 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
+            QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink2 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
             sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man die folgenden %2:").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
 
-            QString sTmpLink3 = "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
             sOutput += insertBox("box warning",
                                 trUtf8("Hinweis!"),
                                 trUtf8("Zusätzliche %1 können das System gefährden.").arg(sTmpLink3));
@@ -1146,7 +1146,7 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                                      "<a href=\"https://launchpad.net/%2\" class=\"interwiki interwiki-launchpad\">%3</a> "
                                      "werden <a href=\"https://launchpad.net/%4/+download\" class=\"interwiki interwiki-launchpad\">DEB-Pakete</a> "
                                      "angeboten. ")
-                            .arg(sWikiUrl)
+                            .arg(m_sWikiUrl)
                             .arg(sListElements[2])
                             .arg(sListElements[2])
                             .arg(sListElements[2]);
@@ -1207,13 +1207,13 @@ QString CParser::parseMacro(QTextBlock actParagraph){
                 sOutput += trUtf8("Die Pakete können für %1 heruntergeladen werden. ").arg(sUbuntuVersions);
             }
         }
-        QString sTmpLink = "<a href=\"" + sWikiUrl + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
+        QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
         sOutput += trUtf8("Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.").arg(sTmpLink) + "</p>\n";
 
         // Warning box
         sOutput += insertBox("box warning",
                              trUtf8("Hinweis!"),
-                             "<a href=\"" + sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
+                             "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
     }
     // -----------------------------------------------------------------------------------------------
 
@@ -1313,11 +1313,11 @@ QString CParser::parseTableOfContents(QTextBlock tabofcontents){
     }
     */
 
-    QTextBlock curBlock = rawText->firstBlock();
+    QTextBlock curBlock = m_pRawText->firstBlock();
     QStringList sListHeadlineLevel1, sListHeadlineLevel1_Links;
     QString sTmpString;
 
-    for(; curBlock.isValid() && !(rawText->lastBlock() < curBlock); curBlock = curBlock.next()) {
+    for(; curBlock.isValid() && !(m_pRawText->lastBlock() < curBlock); curBlock = curBlock.next()) {
         if (curBlock.text().startsWith("= ") || curBlock.text().startsWith(" = ")){
             sTmpString = curBlock.text();
 
@@ -1370,7 +1370,7 @@ QString CParser::generateTags(QTextBlock actParagraph){
         // Remove spaces and generate output
         for (int i = 0; i < sListElements.size(); i++){
             sListElements[i].remove(" ");
-            sOutput += " <a href=\"" + sWikiUrl + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
+            sOutput += " <a href=\"" + m_sWikiUrl + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
             if (i < sListElements.size()-1)
                 sOutput += ",";
         }
@@ -1744,9 +1744,9 @@ QString CParser::parseCodeBlock(QString actParagraph){
     }
     // Syntax highlighting
     else{
-        if (bShowedMsgBoxAlready == false){
+        if (m_bShowedMsgBoxAlready == false){
             QMessageBox::information(0, "Information", tr("The preview does not support syntax highlighting in code block currently."));
-            bShowedMsgBoxAlready = true;
+            m_bShowedMsgBoxAlready = true;
         }
 
         //int iNumberOfLines = sListElements.size()-1;
@@ -1911,7 +1911,13 @@ void CParser::replaceImages(QTextDocument *myRawDoc){
         sListTmpImageInfo << sTmpImage.split(",");
 
         sImageUrl = sListTmpImageInfo[0].trimmed();
-        sImageUrl = TmpFileDir.absolutePath() + "/" + sImageUrl;
+        if (sImageUrl.startsWith("Wiki/")) {
+            sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+        }
+        else if (QFile(m_tmpImgDir.absolutePath() + "/" + sImageUrl).exists()) {
+            sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+        }
+        //sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
         for (int i = 1; i < sListTmpImageInfo.length(); i++){
             // Found integer (width)
             if (sListTmpImageInfo[i].trimmed().toUInt() != 0){

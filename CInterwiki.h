@@ -43,12 +43,12 @@ class CIWikiLinksParser;
 public:
     CInterWiki(const QApplication *pApp);
 
-    QStringList GetInterwikiLinksGroups() const;
-    QStringList GetInterwikiLinksGroupIcons() const;
-    QList<QStringList> GetInterwikiLinks() const;
-    QList<QStringList> GetInterwikiLinksUrls() const;
-    QList<QStringList> GetInterwikiLinksNames() const;
-    QList<QStringList> GetInterwikiLinksIcons() const;
+    QStringList getInterwikiLinksGroups() const;
+    QStringList getInterwikiLinksGroupIcons() const;
+    QList<QStringList> getInterwikiLinks() const;
+    QList<QStringList> getInterwikiLinksUrls() const;
+    QList<QStringList> getInterwikiLinksNames() const;
+    QList<QStringList> getInterwikiLinksIcons() const;
 
 private:
     QXmlInputSource *m_myXmlSource;
