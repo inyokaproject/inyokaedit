@@ -3,6 +3,134 @@
 <TS version="2.0" language="de_DE">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
+    <name>CDownload</name>
+    <message>
+        <location filename="../CDownload.cpp" line="50"/>
+        <source>Download styles</source>
+        <translation>Styles herunterladen</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="50"/>
+        <source>In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.
+
+Do you want to download these files now?</source>
+        <translation>Damit die Vorschaufunktion korrekt funktioniert, müssen einige Ressourcen von Inyoka heruntergeladen werden. Dieser Vorgang kann einige Minuten dauern.
+
+Möchten Sie die Ressourcen jetzt herunterladen?</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="93"/>
+        <source>Please insert name of the article which should be downloaded:</source>
+        <translation>Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="94"/>
+        <source>Category/Article</source>
+        <comment>Msg: Input dialog DL article example text</comment>
+        <translation>Baustelle/Artikel</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="118"/>
+        <source>Could not start the download of the raw format of article.</source>
+        <translation>Kann Download des Rohformats des Artikels nicht starten.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="126"/>
+        <source>Error while downloading raw format of article.</source>
+        <translation>Fehler beim Download des Rohtexts des Artikels.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="141"/>
+        <source>Could not download the article.</source>
+        <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="170"/>
+        <source>Could not start download of the meta data.</source>
+        <translation>Kann Download der Metadaten nicht starten.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="175"/>
+        <source>Error while downloading meta data.</source>
+        <translation>Fehler beim Download der Metadaten.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="185"/>
+        <source>Could not find meta data.</source>
+        <translation>Es konnten keine Metadaten gefunden werden.</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="205"/>
+        <source>Do you want to download the images which are attached to the article?</source>
+        <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
+    </message>
+    <message>
+        <location filename="../CDownload.cpp" line="218"/>
+        <source>Could not create temporary download file!</source>
+        <translation>Es konnte keine temporäre Download-Datei erstellt werden!</translation>
+    </message>
+</context>
+<context>
+    <name>CFileOperations</name>
+    <message>
+        <location filename="../CFileOperations.cpp" line="68"/>
+        <source>Open file</source>
+        <comment>GUI: Open file dialog</comment>
+        <translation>Datei öffnen</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="103"/>
+        <source>Save file</source>
+        <comment>GUI: Save file dialog</comment>
+        <translation>Datei speichern</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="123"/>
+        <source>Untitled</source>
+        <comment>No file name set</comment>
+        <translation>Unbenannt</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="131"/>
+        <source>The document &quot;%1&quot; has been modified.
+Do you want to save your changes or discard them?</source>
+        <comment>Msg: Unsaved &lt;sTempCurFileName&gt;</comment>
+        <translation>Das Dokument &quot;%1&quot; ist geändert worden.
+Möchten Sie die Änderungen speichern oder verwerfen?</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="151"/>
+        <source>The file &quot;%1&quot; could not be opened:
+%2.</source>
+        <comment>Msg: Can not open file, &lt;sFileName&gt;, &lt;ErrorString&gt;</comment>
+        <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
+%2.</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="172"/>
+        <source>File loaded</source>
+        <translation>Datei geladen</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="185"/>
+        <source>The file &quot;%1&quot; could not be saved:
+%2.</source>
+        <comment>Msg: Can not save file, &lt;sFileName&gt;, &lt;ErrorString&gt;</comment>
+        <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
+%2.</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="206"/>
+        <source>File saved</source>
+        <translation>Datei gespeichert</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="228"/>
+        <source>Untitled</source>
+        <translation>Unbenannt</translation>
+    </message>
+</context>
+<context>
     <name>CHighlighter</name>
     <message>
         <location filename="../CHighlighter.cpp" line="80"/>
@@ -91,37 +219,37 @@ Bild2.png, &quot;Beschreibung 2&quot;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="225"/>
+        <location filename="../CInyokaEdit.cpp" line="249"/>
         <source>Raw format</source>
         <translation>Rohformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="227"/>
+        <location filename="../CInyokaEdit.cpp" line="251"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="284"/>
+        <location filename="../CInyokaEdit.cpp" line="311"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="383"/>
+        <location filename="../CInyokaEdit.cpp" line="410"/>
         <source>Insert a headline - 5 headline steps are supported</source>
         <translation>Überschrift einfügen - Es werden bis zu 5 Stufen unterstützt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="387"/>
+        <location filename="../CInyokaEdit.cpp" line="414"/>
         <source>Insert text sample</source>
         <translation>Textbaustein einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="391"/>
+        <location filename="../CInyokaEdit.cpp" line="418"/>
         <source>Insert text format</source>
         <translation>Textformat einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="617"/>
+        <location filename="../CInyokaEdit.cpp" line="644"/>
         <source>Text macros</source>
         <comment>GUI: Text macro combo box</comment>
         <translation>Textbausteine</translation>
@@ -723,326 +851,207 @@ Bild2.png, &quot;Beschreibung 2&quot;
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="604"/>
+        <location filename="../CInyokaEdit.cpp" line="631"/>
         <source>Step</source>
         <comment>GUI: Headline combo box</comment>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="619"/>
+        <location filename="../CInyokaEdit.cpp" line="646"/>
         <source>Under construction</source>
         <comment>GUI: Text macro combo box - Work in progress</comment>
         <translation>Baustelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="620"/>
+        <location filename="../CInyokaEdit.cpp" line="647"/>
         <source>Table of contents</source>
         <comment>GUI: Text macro combo box - Table of contents</comment>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="621"/>
+        <location filename="../CInyokaEdit.cpp" line="648"/>
         <source>Tested for</source>
         <comment>GUI: Text macro combo box - Tested for</comment>
         <translation>Getestet</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="622"/>
+        <location filename="../CInyokaEdit.cpp" line="649"/>
         <source>Package installation</source>
         <comment>GUI: Text macro combo box - Package installation</comment>
         <translation>Paketinstallation</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="623"/>
+        <location filename="../CInyokaEdit.cpp" line="650"/>
         <source>Bash command</source>
         <comment>GUI: Text macro combo box - Bash command</comment>
         <translation>Shell Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="624"/>
+        <location filename="../CInyokaEdit.cpp" line="651"/>
         <source>PPA sample</source>
         <comment>GUI: Text macro combo box - PPA sample</comment>
         <translation>PPA-Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="625"/>
+        <location filename="../CInyokaEdit.cpp" line="652"/>
         <source>Notice box</source>
         <comment>GUI: Text macro combo box - Notice box</comment>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="626"/>
+        <location filename="../CInyokaEdit.cpp" line="653"/>
         <source>Third-party repo warning</source>
         <comment>GUI: Text macro combo box - Third-party repo warning</comment>
         <translation>Fremdquellen-Warnung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="627"/>
+        <location filename="../CInyokaEdit.cpp" line="654"/>
         <source>Warning box</source>
         <comment>GUI: Text macro combo box - Warning box</comment>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="628"/>
+        <location filename="../CInyokaEdit.cpp" line="655"/>
         <source>Experts information</source>
         <comment>GUI: Text macro combo box - Experts info box</comment>
         <translation>Experten-Info</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="629"/>
+        <location filename="../CInyokaEdit.cpp" line="656"/>
         <source>Keys</source>
         <comment>GUI: Text macro combo box - Keys</comment>
         <translation>Tasten</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="630"/>
+        <location filename="../CInyokaEdit.cpp" line="657"/>
         <source>Table</source>
         <comment>GUI: Text macro combo box - Table</comment>
         <translation>Tabelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="636"/>
+        <location filename="../CInyokaEdit.cpp" line="663"/>
         <source>Text format</source>
         <comment>GUI: Text format combo box</comment>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="638"/>
+        <location filename="../CInyokaEdit.cpp" line="665"/>
         <source>Folders</source>
         <comment>GUI: Text format folders</comment>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="639"/>
+        <location filename="../CInyokaEdit.cpp" line="666"/>
         <source>Menu entries</source>
         <comment>GUI: Text format menu entries</comment>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="640"/>
+        <location filename="../CInyokaEdit.cpp" line="667"/>
         <source>Files</source>
         <comment>GUI: Text format files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="641"/>
+        <location filename="../CInyokaEdit.cpp" line="668"/>
         <source>Command</source>
         <comment>GUI: Text format command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="699"/>
-        <location filename="../CInyokaEdit.cpp" line="1540"/>
+        <location filename="../CInyokaEdit.cpp" line="694"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="940"/>
-        <source>Please insert name of the article which should be downloaded:</source>
-        <translation>Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="965"/>
-        <source>Could not start the download of the raw format of article.</source>
-        <translation>Kann Download des Rohformats des Artikels nicht starten.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="973"/>
-        <source>Error while downloading raw format of article.</source>
-        <translation>Fehler beim Download des Rohtexts des Artikels.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="988"/>
-        <source>Could not download the article.</source>
-        <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1022"/>
-        <source>Could not start download of the meta data.</source>
-        <translation>Kann Download der Metadaten nicht starten.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1027"/>
-        <source>Error while downloading meta data.</source>
-        <translation>Fehler beim Download der Metadaten.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1037"/>
-        <source>Could not find meta data.</source>
-        <translation>Es konnten keine Metadaten gefunden werden.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1057"/>
-        <source>Do you want to download the images which are attached to the article?</source>
-        <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1070"/>
-        <source>Could not create temporary download file!</source>
-        <translation>Es konnte keine temporäre Download-Datei erstellt werden!</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1143"/>
+        <location filename="../CInyokaEdit.cpp" line="969"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1306"/>
+        <location filename="../CInyokaEdit.cpp" line="1001"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung beendet.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1310"/>
+        <location filename="../CInyokaEdit.cpp" line="1005"/>
         <source>Spell checker is currently not supported for windows.</source>
         <translation>Die Rechtschreibüberprüfung wird zur Zeit noch nicht unter Windows unterstützt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1325"/>
+        <location filename="../CInyokaEdit.cpp" line="1020"/>
         <source>Error while starting Apport.</source>
         <translation>Problem beim Aufruf von Apport festgestellt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1329"/>
+        <location filename="../CInyokaEdit.cpp" line="1024"/>
         <source>Error while executing Apport.</source>
         <translation>Problem beim Ausführen von Apport.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1450"/>
-        <source>Untitled</source>
-        <comment>No file name set</comment>
-        <translation>Unbenannt</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1527"/>
-        <source>File saved</source>
-        <translation>Datei gespeichert</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="603"/>
-        <location filename="../CInyokaEdit.cpp" line="727"/>
+        <location filename="../CInyokaEdit.cpp" line="630"/>
+        <location filename="../CInyokaEdit.cpp" line="722"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="114"/>
+        <location filename="../CInyokaEdit.cpp" line="126"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="653"/>
-        <source>Download styles</source>
-        <translation>Styles herunterladen</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="653"/>
-        <source>In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.
-
-Do you want to download these files now?</source>
-        <translation>Damit die Vorschaufunktion korrekt funktioniert, müssen einige Ressourcen von Inyoka heruntergeladen werden. Dieser Vorgang kann einige Minuten dauern.
-
-Möchten Sie die Ressourcen jetzt herunterladen?</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="829"/>
+        <location filename="../CInyokaEdit.cpp" line="824"/>
         <source>Folders</source>
         <comment>Text format: Folders</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="839"/>
+        <location filename="../CInyokaEdit.cpp" line="834"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <comment>Text format: Menu entries example</comment>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="849"/>
+        <location filename="../CInyokaEdit.cpp" line="844"/>
         <source>Files</source>
         <comment>GUI: Text format: Files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="859"/>
+        <location filename="../CInyokaEdit.cpp" line="854"/>
         <source>Command</source>
         <comment>Text format: Command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="896"/>
+        <location filename="../CInyokaEdit.cpp" line="891"/>
         <source>Sitename</source>
         <comment>InterWiki links: Common sitename</comment>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="897"/>
+        <location filename="../CInyokaEdit.cpp" line="892"/>
         <source>Text</source>
         <comment>Interwiki links: Common text</comment>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="941"/>
-        <source>Category/Article</source>
-        <comment>Msg: Input dialog DL article example text</comment>
-        <translation>Baustelle/Artikel</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1124"/>
+        <location filename="../CInyokaEdit.cpp" line="950"/>
         <source>Opening preview</source>
         <comment>GUI: Status bar</comment>
         <translation>Öffne Vorschau</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1397"/>
-        <source>Open file</source>
-        <comment>GUI: Open file dialog</comment>
-        <translation>Datei öffnen</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1418"/>
-        <source>Save file</source>
-        <comment>GUI: Save file dialog</comment>
-        <translation>Datei speichern</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1430"/>
+        <location filename="../CInyokaEdit.cpp" line="1049"/>
         <source>About %1</source>
         <comment>About dialog &lt;sAppName&gt;</comment>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1431"/>
+        <location filename="../CInyokaEdit.cpp" line="1050"/>
         <source>&lt;b&gt;%1&lt;/b&gt; - Editor for Inyoka-based portals&lt;br /&gt;Version: %2&lt;br /&gt;&lt;br /&gt;&amp;copy; 2011, the %3 authors&lt;br /&gt;Licence: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
         <comment>About dialog text, &lt;sAppName&gt;, &lt;sVERSION&gt;, &lt;sAppName&gt;</comment>
         <translation>&lt;b&gt;%1&lt;/b&gt; - Editor für Inyoka-basierende Portale&lt;br /&gt;Version: %2&lt;br /&gt;&lt;br /&gt;&amp;copy; 2011, die Autoren von %3&lt;br /&gt;Lizenz: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Die Anwendung verwendet Icons aus dem &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango-Projekt&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1506"/>
-        <source>The file &quot;%1&quot; could not be saved:
-%2.</source>
-        <comment>Msg: Can not save file, &lt;sFileName&gt;, &lt;ErrorString&gt;</comment>
-        <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
-%2.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1458"/>
-        <source>The document &quot;%1&quot; has been modified.
-Do you want to save your changes or discard them?</source>
-        <comment>Msg: Unsaved &lt;sTempCurFileName&gt;</comment>
-        <translation>Das Dokument &quot;%1&quot; ist geändert worden.
-Möchten Sie die Änderungen speichern oder verwerfen?</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1475"/>
-        <source>The file &quot;%1&quot; could not be opened:
-%2.</source>
-        <comment>Msg: Can not open file, &lt;sFileName&gt;, &lt;ErrorString&gt;</comment>
-        <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
-%2.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="1496"/>
-        <source>File loaded</source>
-        <comment>GUI: Status bar</comment>
-        <translation>Datei geladen</translation>
     </message>
 </context>
 <context>
@@ -1317,7 +1326,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="2102"/>
+        <location filename="../CParser.cpp" line="2108"/>
         <source>Anmerkung:</source>
         <translation type="unfinished"></translation>
     </message>

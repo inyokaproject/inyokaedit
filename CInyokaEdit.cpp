@@ -107,10 +107,10 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp, QWidget *parent) :
         }
         else {
             if ("--log" != sTmp) {
-                loadFile(pApp->argv()[1]);
+                myFileOperations->loadFile(pApp->argv()[1]);
             }
             else if ("--log" == sTmp && pApp->argc() >= 3) {
-                loadFile(pApp->argv()[2]);
+                myFileOperations->loadFile(pApp->argv()[2]);
             }
         }
     }
@@ -156,6 +156,9 @@ void CInyokaEdit::createObjects() {
 
         myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
         if (bLogging) { std::clog << "Created myEditor" << std::endl; }
+
+        myFileOperations = new CFileOperations(this, myEditor, mySettings, pApp->applicationName());
+        if (bLogging) { std::clog << "Created myFileOperations" << std::endl; }
 
         myCompleter = new QCompleter(sListCompleter, this);
         if (bLogging) { std::clog << "Created myCompleter" << std::endl; }
@@ -225,6 +228,12 @@ void CInyokaEdit::setupEditor()
     connect(myParser, SIGNAL(callShowPreview(QString)),
             this, SLOT(showHtmlPreview(QString)));
 
+    connect(myFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
+            this, SLOT(receiveMenuLastOpenedState(bool)));
+
+    connect(myFileOperations, SIGNAL(setStatusbarMessage(QString)),
+            this, SLOT(receiveStatusbarMessage(QString)));
+
     /*
     setCentralWidget(myTabwidgetDocuments);
     myTabwidgetDocuments->setTabPosition(QTabWidget::North);
@@ -246,7 +255,7 @@ void CInyokaEdit::setupEditor()
     connect(myWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
 
-    this->setCurrentFile("");
+    myFileOperations->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
 
     connect(myDownloadModule, SIGNAL(sendArticleText(QString)),
@@ -277,12 +286,12 @@ void CInyokaEdit::createActions()
     try {
         // New file
         ui->newAct->setShortcuts(QKeySequence::New);
-        connect(ui->newAct, SIGNAL(triggered()), this, SLOT(newFile()));
+        connect(ui->newAct, SIGNAL(triggered()), myFileOperations, SLOT(newFile()));
 
         // Open file
         ui->openAct->setShortcuts(QKeySequence::Open);
-        connect(ui->openAct, SIGNAL(triggered()), this, SLOT(open()));
-
+        connect(ui->openAct, SIGNAL(triggered()), myFileOperations, SLOT(open()));
+/*
         // Open recent files
         mySigMapLastOpenedFiles = new QSignalMapper(this);
         for (int i = 0; i < mySettings->getMaxNumOfRecentFiles(); i++) {
@@ -296,19 +305,19 @@ void CInyokaEdit::createActions()
             mySigMapLastOpenedFiles->setMapping(LastOpenedFilesAct[i], i);
             connect(LastOpenedFilesAct[i], SIGNAL(triggered()), mySigMapLastOpenedFiles, SLOT(map()));
         }
-        connect(mySigMapLastOpenedFiles, SIGNAL(mapped(int)), this, SLOT(openRecentFile(int)));
-
+        connect(mySigMapLastOpenedFiles, SIGNAL(mapped(int)), myFileOperations, SLOT(openRecentFile(int)));
+*/
         // Clear recent files list
         clearRecentFilesAct = new QAction(tr("Clear list"), this);
-        connect(clearRecentFilesAct, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
+        connect(clearRecentFilesAct, SIGNAL(triggered()), myFileOperations, SLOT(clearRecentFiles()));
 
         // Save file
         ui->saveAct->setShortcuts(QKeySequence::Save);
-        connect(ui->saveAct, SIGNAL(triggered()), this, SLOT(save()));
+        connect(ui->saveAct, SIGNAL(triggered()), myFileOperations, SLOT(save()));
 
         // Save file as...
         ui->saveAsAct->setShortcuts(QKeySequence::SaveAs);
-        connect(ui->saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
+        connect(ui->saveAsAct, SIGNAL(triggered()), myFileOperations, SLOT(saveAs()));
 
         // Exit application
         ui->exitAct->setShortcuts(QKeySequence::Quit);
@@ -585,7 +594,7 @@ void CInyokaEdit::createActions()
 void CInyokaEdit::createMenus()
 {
     // File menu
-    ui->fileMenuLastOpened->addActions(LastOpenedFilesAct);
+    ui->fileMenuLastOpened->addActions(myFileOperations->getLastOpenedFiles());
     ui->fileMenuLastOpened->addSeparator();
     ui->fileMenuLastOpened->addAction(clearRecentFilesAct);
     if (0 == mySettings->getRecentFiles().size()) {
@@ -682,11 +691,11 @@ void CInyokaEdit::previewInyokaPage(const int iIndex){
         ui->samplesmacrosBar->setDisabled(true);
         ui->previewAct->setDisabled(true);
 
-        if ("" == sCurFile || tr("Untitled") == sCurFile){
+        if ("" == myFileOperations->getCurrentFile() || tr("Untitled") == myFileOperations->getCurrentFile()){
             myParser->genOutput("");
         }
         else{
-            QFileInfo fi(sCurFile);
+            QFileInfo fi(myFileOperations->getCurrentFile());
             myParser->genOutput(fi.fileName());
         }
     }
@@ -906,10 +915,20 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry){
 }
 
 // -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::receiveMenuLastOpenedState(bool bEnabled) {
+    ui->fileMenuLastOpened->setEnabled(bEnabled);
+}
+
+void CInyokaEdit::receiveStatusbarMessage(const QString &sMessage) {
+    this->statusBar()->showMessage(sMessage, 2000);
+}
+
+// -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 void CInyokaEdit::downloadArticle() {
-    if (!this->maybeSave()) {
+    if (!myFileOperations->maybeSave()) {
         return;
     }
     else {
@@ -921,7 +940,6 @@ void CInyokaEdit::displayArticleText(const QString &sArticleText) {
     myEditor->setPlainText(sArticleText);
     myEditor->document()->setModified(true);
     this->documentWasModified();
-    myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -953,62 +971,6 @@ void CInyokaEdit::loadPreviewFinished(bool bSuccess) {
 }
 
 // -----------------------------------------------------------------------------------------------
-// Open recent opened file
-
-void CInyokaEdit::openRecentFile(int iEntry) {
-    if (this->maybeSave()) {
-        this->loadFile(mySettings->getRecentFiles()[iEntry]);
-    }
-}
-
-void CInyokaEdit::updateRecentFiles(const QString &sFileName) {
-
-    QStringList sListTmp;
-
-    if (sFileName != "_-CL3AR#R3C3NT#F!L35-_") {
-        sListTmp = mySettings->getRecentFiles();
-
-        // Remove entry if exists
-        if (sListTmp.contains(sFileName)) {
-            sListTmp.removeAll(sFileName);
-        }
-        // Add file name to list
-        sListTmp.push_front(sFileName);
-
-        // Remove all entries from end, if list is too long
-        while (sListTmp.size() > mySettings->getMaxNumOfRecentFiles() || sListTmp.size() > mySettings->getNumOfRecentFiles()) {
-            sListTmp.removeLast();
-        }
-
-        for (int i = 0; i < mySettings->getMaxNumOfRecentFiles(); i++) {
-            // Set list menu entries
-            if (i < sListTmp.size()) {
-                LastOpenedFilesAct[i]->setText(sListTmp[i]);
-                LastOpenedFilesAct[i]->setVisible(true);
-            }
-            else {
-                LastOpenedFilesAct[i]->setVisible(false);
-            }
-
-        }
-        if (sListTmp.size() > 0) {
-            ui->fileMenuLastOpened->setEnabled(true);
-        }
-    }
-
-    // Clear list
-    else {
-        sListTmp.clear();
-        ui->fileMenuLastOpened->setEnabled(false);
-    }
-
-    mySettings->setRecentFiles(sListTmp);
-}
-
-void CInyokaEdit::clearRecentFiles(){
-    this->updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
-}
-
 // -----------------------------------------------------------------------------------------------
 
 void CInyokaEdit::checkSpelling()
@@ -1072,199 +1034,10 @@ void CInyokaEdit::reportBug(){
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-/****************************************************************************
- ****************************************************************************
- **
- ** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
- ** All rights reserved.
- ** Contact: Nokia Corporation (qt-info@nokia.com)
- **
- ** This code is part of the examples of the Qt Toolkit.
- **
- ** $QT_BEGIN_LICENSE:BSD$
- ** You may use this code under the terms of the BSD license as follows:
- **
- ** "Redistribution and use in source and binary forms, with or without
- ** modification, are permitted provided that the following conditions are
- ** met:
- **   * Redistributions of source code must retain the above copyright
- **     notice, this list of conditions and the following disclaimer.
- **   * Redistributions in binary form must reproduce the above copyright
- **     notice, this list of conditions and the following disclaimer in
- **     the documentation and/or other materials provided with the
- **     distribution.
- **   * Neither the name of Nokia Corporation and its Subsidiary(-ies) nor
- **     the names of its contributors may be used to endorse or promote
- **     products derived from this software without specific prior written
- **     permission.
- **
- ** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- ** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- ** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
- ** $QT_END_LICENSE$
- **
- ****************************************************************************/
-
-// FILE FUNCTIONS (open, save, load...)
-
-void CInyokaEdit::newFile()
-{
-    if (this->maybeSave()) {
-        myEditor->clear();
-        this->setCurrentFile("");
-        myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
-    }
-}
-
-void CInyokaEdit::open()
-{
-    if (this->maybeSave()) {
-        QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file", "GUI: Open file dialog"), mySettings->getLastOpenedDir().absolutePath());  // File dialog opens last used folder
-        if (!sFileName.isEmpty()){
-            QFileInfo tmpFI(sFileName);
-            mySettings->setLastOpenedDir(tmpFI.absoluteDir());
-            this->loadFile(sFileName);
-            myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
-        }
-    }
-}
-
-bool CInyokaEdit::save()
-{
-    if (sCurFile.isEmpty()) {
-        return this->saveAs();
-    } else {
-        return this->saveFile(sCurFile);
-    }
-}
-
-bool CInyokaEdit::saveAs()
-{
-    QString sFileName = QFileDialog::getSaveFileName(this, tr("Save file", "GUI: Save file dialog"), mySettings->getLastOpenedDir().absolutePath());  // File dialog opens last used folder
-    if (sFileName.isEmpty())
-        return false;
-
-    QFileInfo tmpFI(sFileName);
-    mySettings->setLastOpenedDir(tmpFI.absoluteDir());
-
-    return this->saveFile(sFileName);
-}
-
-// Handle unsaved files
-bool CInyokaEdit::maybeSave()
-{
-    if (myEditor->document()->isModified()) {
-        QMessageBox::StandardButton ret;
-        QString sTempCurFileName;
-        if ("" == sCurFile){
-            sTempCurFileName = tr("Untitled", "No file name set");
-        }
-        else {
-            QFileInfo tempCurFile(sCurFile);
-            sTempCurFileName = tempCurFile.fileName();
-        }
-
-        ret = QMessageBox::warning(this, pApp->applicationName(),
-                                   tr("The document \"%1\" has been modified.\n"
-                                      "Do you want to save your changes or discard them?", "Msg: Unsaved <sTempCurFileName>").arg(sTempCurFileName),
-                                   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        if (QMessageBox::Save == ret)
-            return save();
-        else if (QMessageBox::Cancel == ret)
-            return false;
-    }
-    return true;
-}
-
-void CInyokaEdit::loadFile(const QString &sFileName)
-{
-    QFile file(sFileName);
-    // No permission to read
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, pApp->applicationName(),
-                             tr("The file \"%1\" could not be opened:\n%2.", "Msg: Can not open file, <sFileName>, <ErrorString>")
-                             .arg(sFileName)
-                             .arg(file.errorString()));
-        return;
-    }
-
-    QTextStream in(&file);
-    in.setCodec("UTF-8");
-    in.setAutoDetectUnicode(true);
-
-#ifndef QT_NO_CURSOR
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
-    myEditor->setPlainText(in.readAll());
-#ifndef QT_NO_CURSOR
-    QApplication::restoreOverrideCursor();
-#endif
-
-    this->updateRecentFiles(sFileName);
-    this->setCurrentFile(sFileName);
-    if (mySettings->getShowStatusbar()) {
-        this->statusBar()->showMessage(tr("File loaded", "GUI: Status bar"), 2000);
-    }
-}
-
-bool CInyokaEdit::saveFile(const QString &sFileName)
-{
-    QFile file(sFileName);
-    // No write permission
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, pApp->applicationName(),
-                             tr("The file \"%1\" could not be saved:\n%2.", "Msg: Can not save file, <sFileName>, <ErrorString>")
-                             .arg(sFileName)
-                             .arg(file.errorString()));
-        return false;
-    }
-
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out.setAutoDetectUnicode(true);
-
-#ifndef QT_NO_CURSOR
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
-    out << myEditor->toPlainText();
-#ifndef QT_NO_CURSOR
-    QApplication::restoreOverrideCursor();
-#endif
-
-    this->updateRecentFiles(sFileName);
-    this->setCurrentFile(sFileName);
-    if (mySettings->getShowStatusbar()) {
-        this->statusBar()->showMessage(tr("File saved"), 2000);
-    }
-    return true;
-}
-
-void CInyokaEdit::setCurrentFile(const QString &sFileName)
-{
-    sCurFile = sFileName;
-    myEditor->document()->setModified(false);
-    this->setWindowModified(false);
-
-    QString sShownName = sCurFile;
-    if (sCurFile.isEmpty())
-        sShownName = tr("Untitled");
-    this->setWindowFilePath(sShownName);
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
 // Set modified flag for window
 void CInyokaEdit::documentWasModified()
 {
+    myTabwidgetRawPreview->setCurrentIndex(myTabwidgetRawPreview->indexOf(myEditor));
     this->setWindowModified(myEditor->document()->isModified());
 }
 
@@ -1286,7 +1059,7 @@ void CInyokaEdit::about()
 // Close event (File -> Close or X)
 void CInyokaEdit::closeEvent(QCloseEvent *event)
 {
-    if (this->maybeSave()) {
+    if (myFileOperations->maybeSave()) {
         mySettings->writeSettings(saveGeometry(), saveState());
         event->accept();
     } else {

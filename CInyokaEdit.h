@@ -41,6 +41,7 @@
 #include "qtfindreplacedialog/finddialog.h"
 #include "qtfindreplacedialog/findreplacedialog.h"
 #include "CDownload.h"
+#include "CFileOperations.h"
 
 // Spell checker currently not under windows
 #if not defined _WIN32
@@ -62,7 +63,7 @@ class FindReplaceDialog;
 class CProgressDialog;
 class CSettings;
 class CDownload;
-
+class CFileOperations;
 
 namespace Ui {
     class CInyokaEdit;
@@ -75,8 +76,6 @@ class CInyokaEdit : public QMainWindow
 public:
     explicit CInyokaEdit(QApplication *ptrApp, QWidget *parent = 0);   // Constructor
     ~CInyokaEdit();  // Desstructor
-
-    bool maybeSave();
     
 public slots:
     void showHtmlPreview(const QString &filename);
@@ -90,18 +89,15 @@ protected slots:
     void checkSpelling();
 
 private slots:
-    // Functions file menu/toolbar
-    void newFile();
-    void open();
-    void openRecentFile(int iEntry);
-    void clearRecentFiles();
-    bool save();
-    bool saveAs();
+    // About menu
     void reportBug();
     void about();
 
     // Called when text in editor was changed
     void documentWasModified();
+
+    void receiveMenuLastOpenedState(bool bEnabled);
+    void receiveStatusbarMessage(const QString &sMessage);
 
     // Functions in inyoka toolbar
     void insertDropDownHeadline(const int iSelection);
@@ -136,17 +132,10 @@ private:
     void readSettings();
     void writeSettings();
 
-    // Load / save file
-    void loadFile(const QString &sFileName);
-    bool saveFile(const QString &sFileName);
-
-    void updateRecentFiles(const QString &sFileName);
-
-    void setCurrentFile(const QString &sFileName);
-
     // Objects
     CTextEditor *myEditor;
     QCompleter *myCompleter;
+    CFileOperations *myFileOperations;
     CHighlighter *myHighlighter;  // Syntax highlighting
     CParser *myParser;            // Parser text to HTML
     CInsertSyntaxElement *myInsertSyntaxElement;
@@ -161,8 +150,6 @@ private:
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
 
-    QString sCurFile;      // Current file
-
     QDir StylesAndImagesDir;
     QDir m_tmpPreviewImgDir;
 
@@ -170,9 +157,7 @@ private:
 
     bool bLogging;
 
-    // File menu: Last opened files list and clear list
-    QList<QAction *> LastOpenedFilesAct;
-    QSignalMapper *mySigMapLastOpenedFiles;
+    // File menu: Clear recent opened files list
     QAction *clearRecentFilesAct;
 
     // InterWiki links menu group list
