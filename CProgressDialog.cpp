@@ -96,6 +96,12 @@ void CProgressDialog::showErrorMessage()
 
 void CProgressDialog::downloadScriptFinished()
 {
+#if defined _WIN32
+    QProcess killWinBash;
+    // Kill bash if button "Cancel" was clicked, needed because bash.exe is started via batch file...
+    killWinBash.start("taskkill", QStringList() << "/F" << "/IM" << "bash.exe");
+#endif
+
     this->close();
 }
 

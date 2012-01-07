@@ -61,7 +61,11 @@ bool CDownload::loadInyokaStyles() {
             }
             // No installation: Use app path
             else {
+#if defined _WIN32
+                myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "GetInyokaStyles.bat ", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+#else
                 myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+#endif
             }
         }
         catch (std::bad_alloc& ba)
@@ -251,8 +255,12 @@ void CDownload::downloadImages(const QString &sArticlename, const QDir ImgDir, c
             try
             {
                 QString sTmpFilePath = ImgDir.absolutePath() + "/" + sScriptName;
+#if defined _WIN32
+                myImageDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << sTmpFilePath << ImgDir.absolutePath(), m_sAppName, m_pParent);
+#else
                 myImageDownloadProgress = new CProgressDialog(sTmpFilePath, QStringList() << ImgDir.absolutePath(), m_sAppName, m_pParent);
-                }
+#endif
+            }
             catch (std::bad_alloc& ba)
             {
                 std::cerr << "ERROR: Caught bad_alloc in \"downloadImages()\": " << ba.what() << std::endl;
