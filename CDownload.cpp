@@ -62,7 +62,11 @@ bool CDownload::loadInyokaStyles() {
             // No installation: Use app path
             else {
 #if defined _WIN32
-                myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "GetInyokaStyles.bat ", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+                if (QFile::exists(m_StylesDir.absolutePath() + "/GetInyokaStyles")) {
+                    QFile::remove(m_StylesDir.absolutePath() + "/GetInyokaStyles");
+                    QFile::copy(m_sAppDir + "/GetInyokaStyles", m_StylesDir.absolutePath() + "/GetInyokaStyles");
+                }
+                myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
 #else
                 myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
 #endif

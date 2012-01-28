@@ -165,6 +165,10 @@ bool CParser::genOutput(const QString sActFile)
     // Need a copy otherwise text in editor will be changed
     m_pCopyOfrawText = m_pRawText->clone();
 
+
+    replaceHyperlinks(m_pCopyOfrawText);
+
+
     // Replace all links
     replaceLinks(m_pCopyOfrawText);
 
@@ -575,7 +579,51 @@ void CParser::replaceKeys(QTextDocument *myRawDoc){
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-// REPLACE ALL LINKS
+// EXTERNAL HYPERLINKS
+void CParser::replaceHyperlinks( QTextDocument *myRawDoc )
+{
+    QRegExp findHyperlink( "\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn|git|dict|nntp|irc|rsync|smb|apt)\\b://" );
+    QString sMyDoc = myRawDoc->toPlainText();
+    int nIndex;
+    int nLength;
+    QString sTmpLink;
+    int nSpace;
+
+    nIndex = findHyperlink.indexIn( sMyDoc );
+    while ( nIndex >= 0 )
+    {
+        nLength = sMyDoc.indexOf( "]", nIndex ) - nIndex + 1;  // Find end of link "]"
+        sTmpLink = sMyDoc.mid( nIndex, nLength );
+        //qDebug() << "FOUND: " << sTmpLink;
+
+        sTmpLink.remove( "[" );
+        sTmpLink.remove( "]" );
+
+        nSpace = sTmpLink.indexOf( " ", 0 );
+        // Link with description
+        if ( nSpace != -1 )
+        {
+            QString sHref = sTmpLink;
+            sMyDoc.replace( nIndex, nLength, "<a href=\"" + sHref.remove( nSpace, nLength ) + "\" rel=\"nofollow\" class=\"external\">" + sTmpLink.remove( 0, nSpace + 1 ) + "</a>" );
+        }
+        // Plain link
+        else
+        {
+            sMyDoc.replace( nIndex, nLength, "<a href=\"" + sTmpLink + "\" rel=\"nofollow\" class=\"external\">" + sTmpLink + "</a>" );
+        }
+
+        // Go on with next
+        nIndex = findHyperlink.indexIn( sMyDoc, nIndex + nLength );
+    }
+
+    // Replace myRawDoc with document with HTML links
+    myRawDoc->setPlainText( sMyDoc );
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// REPLACE LINKS
 void CParser::replaceLinks(QTextDocument *myRawDoc){
 
     QRegExp findLink("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#&]+\\]{1,1}");
@@ -650,19 +698,6 @@ void CParser::replaceLinks(QTextDocument *myRawDoc){
 
             sOutput = "<a href=\"#" + sAnchorName + "\" class=\"crosslink\">" + sAnchorText.trimmed() + "</a>";
             sMyDoc.replace(myindex, iLength, sOutput);
-        }
-
-        // External links
-        else if (sTmpLink.startsWith("http://") || sTmpLink.startsWith("https://")){
-            int iSpace = sTmpLink.indexOf(" ", 0);
-            QString sHref = sTmpLink;
-            sHref.remove(iSpace, sHref.length()-iSpace);
-            if (iSpace != -1){
-                sMyDoc.replace(myindex, iLength, "<a href=\"" + sHref + "\" rel=\"nofollow\" class=\"external\">" + sTmpLink.remove(0, iSpace) + "</a>");
-            }
-            else{
-                sMyDoc.replace(myindex, iLength, "<a href=\"" + sHref + "\" rel=\"nofollow\" class=\"external\">" + sHref + "</a>");
-            }
         }
 
         // Link to knowledge box (is a number)

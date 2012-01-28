@@ -58,6 +58,7 @@ signals:
 
 private:
 
+    void replaceHyperlinks( QTextDocument *myRawDoc );
     void replaceLinks(QTextDocument *myRawDoc);
     void replaceTextformat(QTextDocument *myRawDoc);
     void replaceFlags(QTextDocument *myRawDoc);
