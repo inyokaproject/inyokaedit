@@ -10,7 +10,7 @@
     <iwikilink type="forum" url="http://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
     <iwikilink type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
     <iwikilink type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
-    <iwikilink type="user" url="NOT FOUND" name="User" icon="user.png" />
+    <iwikilink type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
     <iwikilink type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
     <iwikilink type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
     <iwikilink type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />

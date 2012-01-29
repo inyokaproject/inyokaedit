@@ -11,7 +11,8 @@
                  CInterwiki.h \
                  CParser.h \
                  CDownload.h \
-                 CFileOperations.h
+                 CFileOperations.h \
+                 CParseLinks.h
 unix {
  HEADERS      += CSpellChecker.h \
                  CSpellCheckDialog.h
@@ -31,7 +32,8 @@ unix {
                  CInterwiki.cpp \
                  CParser.cpp \
                  CDownload.cpp \
-                 CFileOperations.cpp
+                 CFileOperations.cpp \
+                 CParseLinks.cpp
 unix {
  SOURCES      += CSpellChecker.cpp \
                  CSpellCheckDialog.cpp

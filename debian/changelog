@@ -1,8 +1,18 @@
 inyokaedit (0.1.0~ppa1) lucid; urgency=low
 
+  * Separated link parser into CParseLinks
+
+  * Fixed bug #826344 (Some signs break link syntax) and #883811
+
+  * Separated file functions into CFileOperations
+
+  * Separated download functions into CDownload
+
+  * Cleaned up parser
+
   * Fixes for running InyokaEdit under Windows
 
- -- Thorsten Roth <elthoro@gmx.de>  Mon, 02 Jan 2012 21:14:12 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Jan 2012 17:47:54 +0200
 
 inyokaedit (0.0.9~ppa3) lucid; urgency=low
 

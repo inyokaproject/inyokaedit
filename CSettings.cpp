@@ -44,9 +44,13 @@ CSettings::CSettings(const QDir SettingsDir, const QString &sName, FindDialog &F
     }
 }
 
-CSettings::~CSettings(){
-    delete mySettingsObject;
-    mySettingsObject = NULL;
+CSettings::~CSettings()
+{
+    if ( mySettingsObject )
+    {
+        delete mySettingsObject;
+        mySettingsObject = NULL;
+    }
 }
 
 // -----------------------------------------------------------------------------------------------

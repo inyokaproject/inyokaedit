@@ -33,12 +33,15 @@
 #include <QMessageBox>
 
 #include "CInyokaEdit.h"
+#include "CParseLinks.h"
 
 // Qt classes
 class QString;
 class QTextDocument;
 class QFile;
 class QDir;
+
+class CParseLinks;
 
 class CParser : public QObject
 {
@@ -57,14 +60,10 @@ signals:
     void callShowPreview(const QString &);
 
 private:
-
-    void replaceHyperlinks( QTextDocument *myRawDoc );
-    void replaceLinks(QTextDocument *myRawDoc);
     void replaceTextformat(QTextDocument *myRawDoc);
     void replaceFlags(QTextDocument *myRawDoc);
     void replaceKeys(QTextDocument *myRawDoc);
     void replaceImages(QTextDocument *myRawDoc);
-    void replaceAnchor(QTextDocument *myRawDoc);
 
     // Parse Macros ([[Vorlage(...) etc.)
     QString parseMacro(QTextBlock actParagraph);
@@ -89,12 +88,12 @@ private:
     // Text from editor
     QTextDocument *m_pRawText, *m_pCopyOfrawText;
 
-    // List for interwiki links (keywords, Url)
-    QStringList m_sListInterwikiKey, m_sListInterwikiLink;
     // List for text formats (start keyword, end keyword, start HTML code, end HTML code)
     QStringList m_sListFormatStart, m_sListFormatEnd, m_sListFormatHtmlStart, m_sListFormatHtmlEnd;
     // List for flags
     QStringList m_sListFlags;
+
+    CParseLinks *m_pLinkParser;
 
     const QString m_sWikiUrl;
     QDir m_tmpFileDir;
