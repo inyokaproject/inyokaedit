@@ -596,36 +596,44 @@ QString CParser::parseMacro(QTextBlock actParagraph){
     QString sOutput("<strong>ERROR: Found unknown item [[Vorlage(" + sListElements[0] + "</strong>\n");
 
     // Remove every quote sign and spaces before / behind strings (trimmed)
-    for (int i = 0; i < sListElements.size(); i++){
+    for ( int i = 0; i < sListElements.size(); i++ )
+    {
         sListElements[i].remove("\"");
         sListElements[i] = sListElements[i].trimmed();
     }
 
     // Under construction (Baustelle)
-    if (sListElements[0] == trUtf8("Baustelle") || sListElements[0] == trUtf8("InArbeit")){
-
+    if ( sListElements[0] == trUtf8("Baustelle") || sListElements[0] == trUtf8("InArbeit") )
+    {
         // Get and check date
         QString sDate;
-        if (sListElements.size() >= 2) {
+        if ( sListElements.size() >= 2 )
+        {
             // Extract date
             QStringList sListDate = sListElements[1].split(".");
             // Wrong date format
-            if (3 != sListDate.size()) {
+            if ( 3 != sListDate.size() )
+            {
                 sDate = "";
             }
             // Correct number of date elements
-            else {
+            else
+            {
                 // Wrong date
-                if (sListDate[0].toInt() <= 0 || sListDate[0].toInt() > 31 ||
+                if ( sListDate[0].toInt() <= 0 || sListDate[0].toInt() > 31 ||
                         sListDate[1].toInt() <= 0 || sListDate[1].toInt() > 12 ||
-                        sListDate[2].toInt() <= 0){
+                        sListDate[2].toInt() <= 0 )
+                {
                     sDate = "";
                 }
                 // Correct date
-                else {
+                else
+                {
                     // Add 0 to date if < 10
-                    for (int i = 0; i < sListDate.size(); i++) {
-                        if (sListDate[i].toInt() < 10) {
+                    for ( int i = 0; i < sListDate.size(); i++ )
+                    {
+                        if ( sListDate[i].toInt() < 10 && !sListDate[i].startsWith("0") )
+                        {
                             sListDate[i] = "0" + sListDate[i];
                         }
                     }
@@ -637,10 +645,12 @@ QString CParser::parseMacro(QTextBlock actParagraph){
             sTmpUrl.remove("wiki.");
             QString sLinkUser("");
             int iCntUser;
-            if (sDate == "") {
+            if ( sDate == "" )
+            {
                 iCntUser = 1;  // Entry with index 1 = first user (no correct date given)
             }
-            else {
+            else
+            {
                 iCntUser = 2;  // Entry after date = first user
             }
 

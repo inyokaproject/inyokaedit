@@ -262,7 +262,10 @@ std::string CInsertSyntaxElement::getElementInyokaCode(const std::string sElemen
     }
     else if(sElement == "Table"){
         if (sSelectedText == "")
-            return sSampleBegin_2 + "Tabelle\n[:Wiki/Syntax/Tabellen:]\n" + sSampleEnd_2;
+            return sSampleBegin_2 + "Tabelle\n<-2 rowclass=\"titel\">Titel\n+++\n" +
+                   "<rowclass=\"kopf\">Kopf\nKopf2\n+++\n" +
+                   "foo\nbar\n+++\n<rowclass=\"highlight\">foo2\nbar2\n+++\n" +
+                    "<-2 :>Mehr Infos: [:Wiki/Tabellen:]\n" + sSampleEnd_2;
         else
             return sSampleBegin_2 + "Tabelle\n" + sSelectedText + "\n" + sSampleEnd_2;
     }
