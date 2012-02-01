@@ -1,3 +1,11 @@
+inyokaedit (0.2.0~ppa1) oneiric; urgency=low
+
+  * Fixed bug #924525 (Improve table template)
+
+  * Fixed bug #925013 (Dates with/without leading 0)
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 01 Feb 2012 19:55:12 +0200
+
 inyokaedit (0.1.0~ppa1) lucid; urgency=low
 
   * Separated link parser into CParseLinks
