@@ -53,18 +53,18 @@ class CTextEditor : public QTextEdit
     Q_OBJECT
 
 public:
-    CTextEditor(bool bCompleter, QWidget *parent = 0);
+    CTextEditor( bool bCompleter, QWidget *parent = 0 );
     ~CTextEditor();
 
-    void setCompleter(QCompleter *c);
+    void setCompleter( QCompleter *c );
     QCompleter *completer() const;
 
 protected:
-    void keyPressEvent(QKeyEvent *e);
-    void focusInEvent(QFocusEvent *e);
+    void keyPressEvent( QKeyEvent *e );
+    void focusInEvent( QFocusEvent *e );
 
 private slots:
-    void insertCompletion(const QString &completion);
+    void insertCompletion( const QString &completion );
 
 private:
     QString textUnderCursor() const;

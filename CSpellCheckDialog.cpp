@@ -33,45 +33,49 @@
 
 #include "CSpellChecker.h"
 
-CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *spellChecker, QWidget *parent) :
+CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent ) :
     QDialog(parent),
-    ui(new Ui::CSpellCheckDialog)
+    m_pU( new Ui::CSpellCheckDialog )
 {
-    ui->setupUi(this);
+    m_pUi->setupUi(this);
     _spellChecker = spellChecker;
 
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    connect(ui->listWidget, SIGNAL(currentTextChanged(QString)), ui->ledtReplaceWith, SLOT(setText(QString)));
+    connect(m_pUi->listWidget, SIGNAL(currentTextChanged(QString)), m_pUi->ledtReplaceWith, SLOT(setText(QString)));
 
-    connect(ui->btnAddToDict, SIGNAL(clicked()), this, SLOT(addToDict()));
-    connect(ui->btnReplaceOnce, SIGNAL(clicked()), this, SLOT(replaceOnce()));
-    connect(ui->btnReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAll()));
-    connect(ui->btnIgnoreOnce, SIGNAL(clicked()), this, SLOT(ignoreOnce()));
-    connect(ui->btnIgnoreAll, SIGNAL(clicked()), this, SLOT(ignoreAll()));
-    connect(ui->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(m_pUi->btnAddToDict, SIGNAL(clicked()), this, SLOT(addToDict()));
+    connect(m_pUi->btnReplaceOnce, SIGNAL(clicked()), this, SLOT(replaceOnce()));
+    connect(m_pUi->btnReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAll()));
+    connect(m_pUi->btnIgnoreOnce, SIGNAL(clicked()), this, SLOT(ignoreOnce()));
+    connect(m_pUi->btnIgnoreAll, SIGNAL(clicked()), this, SLOT(ignoreAll()));
+    connect(m_pUi->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 
 CSpellCheckDialog::~CSpellCheckDialog()
 {
-    delete ui;
+    if ( m_pUi != NULL )
+    {
+        delete m_pUi;
+    }
+    m_pUi = NULL;
 }
 
 
-CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(const QString &word)
+CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord( const QString &word )
 {
     _unkownWord = word;
-    ui->lblUnknownWord->setText(QString("<b>%1</b>").arg(_unkownWord));
+    m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(_unkownWord));
 
-    ui->ledtReplaceWith->clear();
+    m_pUi->ledtReplaceWith->clear();
 
     QStringList suggestions = _spellChecker->suggest(word);
-    ui->listWidget->clear();
-    ui->listWidget->addItems(suggestions);
+    m_pUi->listWidget->clear();
+    m_pUi->listWidget->addItems(suggestions);
 
     if(suggestions.count() > 0)
-        ui->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
+        m_pUi->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
 
     _returnCode = AbortCheck;
     QDialog::exec();
@@ -81,7 +85,7 @@ CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(const QString &
 
 QString CSpellCheckDialog::replacement() const
 {
-    return ui->ledtReplaceWith->text();
+    return m_pUi->ledtReplaceWith->text();
 }
 
 

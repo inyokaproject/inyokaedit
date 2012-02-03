@@ -41,13 +41,13 @@ class CHighlighter : public QSyntaxHighlighter
 
 public:
     // Constructor
-    CHighlighter(QTextDocument *parent = 0);
+    CHighlighter( QTextDocument *parent = 0 );
     // Destrcutor
     ~CHighlighter();
 
 protected:
     // Apply highlighting rules
-    void highlightBlock(const QString &sText);
+    void highlightBlock( const QString &sText );
 
 private:
     struct HighlightingRule

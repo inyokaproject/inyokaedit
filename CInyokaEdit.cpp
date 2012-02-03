@@ -376,6 +376,7 @@ void CInyokaEdit::createActions()
     // ---------------------------------------------------------------------------------------------
     // TOOLS MENU
     // Spell checker
+    m_pUi->spellCheckerAct->setShortcut(Qt::Key_F7);
     connect(m_pUi->spellCheckerAct, SIGNAL(triggered()), this, SLOT(checkSpelling()));
 
     // Download styles

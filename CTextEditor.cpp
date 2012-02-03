@@ -54,8 +54,10 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-CTextEditor::CTextEditor(bool bCompleter, QWidget *parent)
-    : QTextEdit(parent), c(0), bCodeCompState(bCompleter)
+CTextEditor::CTextEditor( bool bCompleter, QWidget *parent ) :
+    QTextEdit(parent),
+    c(0),
+    bCodeCompState(bCompleter)
 {
 }
 
@@ -63,7 +65,7 @@ CTextEditor::~CTextEditor()
 {
 }
 
-void CTextEditor::setCompleter(QCompleter *completer)
+void CTextEditor::setCompleter( QCompleter *completer )
 {
     if (c)
         QObject::disconnect(c, 0, this, 0);
@@ -85,7 +87,7 @@ QCompleter *CTextEditor::completer() const
     return c;
 }
 
-void CTextEditor::insertCompletion(const QString& completion)
+void CTextEditor::insertCompletion( const QString& completion )
 {
     if (c->widget() != this)
         return;
@@ -104,14 +106,14 @@ QString CTextEditor::textUnderCursor() const
     return tc.selectedText();
 }
 
-void CTextEditor::focusInEvent(QFocusEvent *e)
+void CTextEditor::focusInEvent( QFocusEvent *e )
 {
     if (c)
         c->setWidget(this);
     QTextEdit::focusInEvent(e);
 }
 
-void CTextEditor::keyPressEvent(QKeyEvent *e)
+void CTextEditor::keyPressEvent( QKeyEvent *e )
 {
 
     if (c && c->popup()->isVisible()) {

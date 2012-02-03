@@ -44,15 +44,15 @@ class CSpellCheckDialog : public QDialog
     Q_OBJECT
 
 public:
-    enum SpellCheckAction {AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict};
+    enum SpellCheckAction { AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict };
 
-    explicit CSpellCheckDialog(CSpellChecker *spellChecker, QWidget *parent = 0);
+    explicit CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent = 0 );
     ~CSpellCheckDialog();
 
     QString replacement() const;
 
 public slots:
-    SpellCheckAction checkWord(const QString &word);
+    SpellCheckAction checkWord( const QString &word );
 
 protected slots:
     void ignoreOnce();
@@ -62,7 +62,7 @@ protected slots:
     void addToDict();
 
 private:
-    Ui::CSpellCheckDialog *ui;
+    Ui::CSpellCheckDialog *m_pUi;
     CSpellChecker *_spellChecker;
     QString _unkownWord;
     SpellCheckAction _returnCode;

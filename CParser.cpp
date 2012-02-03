@@ -29,7 +29,10 @@
 
 // Constructor
 CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl )
-    : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki), m_tmpFileDir(tmpFileOutputDir), m_tmpImgDir(tmpImgDir)
+    : m_pRawText(pRawDocument),
+      m_sWikiUrl(sUrlToWiki),
+      m_tmpFileDir(tmpFileOutputDir),
+      m_tmpImgDir(tmpImgDir)
 {
     try
     {

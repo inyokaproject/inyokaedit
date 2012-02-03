@@ -40,7 +40,7 @@
 
 #include <hunspell/hunspell.hxx>
 
-CSpellChecker::CSpellChecker(const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent)
+CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent )
 {
     _userDictionary = userDictionary;
 
@@ -92,7 +92,7 @@ CSpellChecker::~CSpellChecker()
 }
 
 
-void CSpellChecker::start(CTextEditor *pEditor)
+void CSpellChecker::start( CTextEditor *pEditor )
 {
     QTextCharFormat highlightFormat;
     highlightFormat.setBackground(QBrush(QColor("#ff6060")));
@@ -170,14 +170,14 @@ void CSpellChecker::start(CTextEditor *pEditor)
 }
 
 
-bool CSpellChecker::spell(const QString &word)
+bool CSpellChecker::spell( const QString &word )
 {
     // Encode from Unicode to the encoding used by current dictionary
     return _hunspell->spell(_codec->fromUnicode(word).constData()) != 0;
 }
 
 
-QStringList CSpellChecker::suggest(const QString &word)
+QStringList CSpellChecker::suggest( const QString &word )
 {
     char **suggestWordList;
 
@@ -192,19 +192,19 @@ QStringList CSpellChecker::suggest(const QString &word)
 }
 
 
-void CSpellChecker::ignoreWord(const QString &word)
+void CSpellChecker::ignoreWord( const QString &word )
 {
     put_word(word);
 }
 
 
-void CSpellChecker::put_word(const QString &word)
+void CSpellChecker::put_word( const QString &word )
 {
     _hunspell->add(_codec->fromUnicode(word).constData());
 }
 
 
-void CSpellChecker::addToUserWordlist(const QString &word)
+void CSpellChecker::addToUserWordlist( const QString &word )
 {
     put_word(word);
     if(!_userDictionary.isEmpty()) {

@@ -43,17 +43,17 @@ class CSpellCheckDialog;
 class CSpellChecker
 {
 public:
-    CSpellChecker(const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent);
+    CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent );
     ~CSpellChecker();
 
-    void start(CTextEditor *pEditor);
-    bool spell(const QString &word);
-    QStringList suggest(const QString &word);
-    void ignoreWord(const QString &word);
-    void addToUserWordlist(const QString &word);
+    void start( CTextEditor *pEdito );
+    bool spell( const QString &word );
+    QStringList suggest( const QString &word );
+    void ignoreWord( const QString &word );
+    void addToUserWordlist (const QString &word );
 
 private:
-    void put_word(const QString &word);
+    void put_word( const QString &word );
     Hunspell *_hunspell;
     QString _userDictionary;
     QString _encoding;

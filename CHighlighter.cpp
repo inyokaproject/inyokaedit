@@ -29,7 +29,7 @@
 
 #include "CHighlighter.h"
 
-CHighlighter::CHighlighter(QTextDocument *pParent)
+CHighlighter::CHighlighter( QTextDocument *pParent )
     : QSyntaxHighlighter(pParent)
 {
     HighlightingRule myRule;
@@ -71,7 +71,8 @@ CHighlighter::CHighlighter(QTextDocument *pParent)
     // Format Interwiki Links
     m_interwikiLinksFormat.setForeground(Qt::blue);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, interwikiLinksPatterns) {
+    foreach ( const QString &sPattern, interwikiLinksPatterns )
+    {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_interwikiLinksFormat;
         m_highlightingRules.append(myRule);
@@ -84,7 +85,8 @@ CHighlighter::CHighlighter(QTextDocument *pParent)
     // Format macros
     m_macrosFormat.setForeground(Qt::darkCyan);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, macroPatterns) {
+    foreach ( const QString &sPattern, macroPatterns )
+    {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_macrosFormat;
         m_highlightingRules.append(myRule);
@@ -97,7 +99,8 @@ CHighlighter::CHighlighter(QTextDocument *pParent)
     m_parserFormat.setForeground(Qt::darkRed);
     m_parserFormat.setFontWeight(QFont::Bold);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, parserPatterns) {
+    foreach ( const QString &sPattern, parserPatterns )
+    {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_parserFormat;
         m_highlightingRules.append(myRule);
@@ -113,7 +116,8 @@ CHighlighter::CHighlighter(QTextDocument *pParent)
     // Format textformats
     m_textformatFormat.setForeground(Qt::red);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, textformatPatterns) {
+    foreach ( const QString &sPattern, textformatPatterns )
+    {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_textformatFormat;
         m_highlightingRules.append(myRule);
@@ -138,14 +142,16 @@ CHighlighter::CHighlighter(QTextDocument *pParent)
     // Format flags
     m_flagsFormat.setForeground(Qt::darkYellow);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, flagsPatterns) {
+    foreach ( const QString &sPattern, flagsPatterns )
+    {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_flagsFormat;
         m_highlightingRules.append(myRule);
     }
 }
 
-CHighlighter::~CHighlighter(){
+CHighlighter::~CHighlighter()
+{
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -193,16 +199,18 @@ CHighlighter::~CHighlighter(){
 ****************************************************************************/
 
 // Apply collected highlighting rules
-void CHighlighter::highlightBlock(const QString &sText)
+void CHighlighter::highlightBlock( const QString &sText )
 {
     // Go through each highlighting rule
     // rules for every syntax element had been appended in constructor
-    foreach (const HighlightingRule &myRule, m_highlightingRules) {
+    foreach ( const HighlightingRule &myRule, m_highlightingRules )
+    {
         QRegExp express(myRule.pattern);
         int nIndex = express.indexIn(sText);
-        while (nIndex >= 0) {
+        while ( nIndex >= 0 )
+        {
             int nLength = express.matchedLength();
-            this->setFormat(nIndex, nLength, myRule.format);
+            this->setFormat( nIndex, nLength, myRule.format );
             nIndex = express.indexIn(sText, nIndex + nLength);
         }
     }
