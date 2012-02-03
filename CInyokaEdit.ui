@@ -163,10 +163,22 @@
     <addaction name="reportBugAct"/>
     <addaction name="aboutAct"/>
    </widget>
+   <widget class="QMenu" name="toolsMenu">
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
+    </property>
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="spellCheckerAct"/>
+    <addaction name="DownloadInyokaStylesAct"/>
+    <addaction name="deleteTempImagesAct"/>
+   </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
    <addaction name="insertTextSampleMenu"/>
    <addaction name="iWikiMenu"/>
+   <addaction name="toolsMenu"/>
    <addaction name="helpMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -755,6 +767,27 @@
    </property>
    <property name="toolTip">
     <string>Spell checker</string>
+   </property>
+  </action>
+  <action name="deleteTempImagesAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/edit-delete.png</normaloff>:/images/edit-delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete temporarily images</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete images which had been downloaded with an article.</string>
+   </property>
+  </action>
+  <action name="DownloadInyokaStylesAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Download Inyoka styles</string>
    </property>
   </action>
  </widget>

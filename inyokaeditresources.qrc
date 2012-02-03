@@ -25,5 +25,6 @@
         <file>images/question.png</file>
         <file>images/bug.png</file>
         <file>images/spellchecker.png</file>
+        <file>images/edit-delete.png</file>
     </qresource>
 </RCC>

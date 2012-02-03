@@ -28,14 +28,15 @@
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog(const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent) :
+CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent ) :
     QDialog(pParent),
     m_pUi(new Ui::CProgressDialog)
 {
     m_pUi->setupUi(this);
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
 
-    if (sListArguments.size() == 0){
+    if ( sListArguments.size() == 0 )
+    {
         sListArguments << QDir::homePath() + "/." + sAppName;
     }
 
@@ -43,35 +44,43 @@ CProgressDialog::CProgressDialog(const QString &sScriptname, QStringList sListAr
     {
         m_myProc = new QProcess();
     }
-    catch (std::bad_alloc& ba)
+    catch ( std::bad_alloc& ba )
     {
-      std::cerr << "ERROR: Caught bad_alloc in \"CProgressDialog\": " << ba.what() << std::endl;
-      QMessageBox::critical(0, sAppName, "Error while memory allocation: CProgressDialog");
-      exit (-1);
+        std::cerr << "ERROR: Caught bad_alloc in \"CProgressDialog\": " << ba.what() << std::endl;
+        QMessageBox::critical(0, sAppName, "Error while memory allocation: CProgressDialog");
+        exit (-1);
     }
-    m_myProc->start(sScriptname, sListArguments);
+    m_myProc->start( sScriptname, sListArguments );
 
     // Show output
-    connect(m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
-    connect(m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
+    connect( m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
+    connect( m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
 
-    connect(m_myProc, SIGNAL(finished(int)), this, SLOT(downloadScriptFinished()) );
+    connect( m_myProc, SIGNAL(finished(int)), this, SLOT(downloadScriptFinished()) );
 }
 
 CProgressDialog::~CProgressDialog()
 {
     m_myProc->kill();
-    delete m_myProc;
-    m_myProc = NULL;
-    delete m_pUi;
+
+    if (  m_myProc != NULL )
+    {
+        delete  m_myProc;
+    }
+     m_myProc = NULL;
+
+    if ( m_pUi != NULL )
+    {
+        delete m_pUi;
+    }
     m_pUi = NULL;
 }
 
 // -----------------------------------------------------------------------------------------------
 
-void CProgressDialog::closeEvent(QCloseEvent *pEvent)
+void CProgressDialog::closeEvent( QCloseEvent *pEvent )
 {
-    m_myProc->kill();   // Kill download process
+    m_myProc->kill();  // Kill download process
     pEvent->accept();  // Close window
 }
 
@@ -100,7 +109,7 @@ void CProgressDialog::downloadScriptFinished()
 #if defined _WIN32
     QProcess killWinBash;
     // Kill bash if button "Cancel" was clicked, needed because bash.exe is started via batch file...
-    killWinBash.start("taskkill", QStringList() << "/F" << "/IM" << "bash.exe");
+    killWinBash.start( "taskkill", QStringList() << "/F" << "/IM" << "bash.exe" );
 #endif
 
     this->close();

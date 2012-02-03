@@ -75,16 +75,16 @@ class CInyokaEdit : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit CInyokaEdit(QApplication *ptrApp, QWidget *parent = 0);   // Constructor
+    explicit CInyokaEdit( QApplication *ptrApp, QWidget *parent = 0 );   // Constructor
     ~CInyokaEdit();  // Desstructor
     
 public slots:
-    void showHtmlPreview(const QString &filename);
-    void displayArticleText(const QString &sArticleText);
+    void showHtmlPreview( const QString &filename );
+    void displayArticleText( const QString &sArticleText );
 
 protected:
     // Event when program will close
-    void closeEvent(QCloseEvent *event);
+    void closeEvent( QCloseEvent *event );
 
 protected slots:
     void checkSpelling();
@@ -97,29 +97,30 @@ private slots:
     // Called when text in editor was changed
     void documentWasModified();
 
-    void receiveMenuLastOpenedState(bool bEnabled);
-    void receiveStatusbarMessage(const QString &sMessage);
+    void receiveMenuLastOpenedState( bool bEnabled );
+    void receiveStatusbarMessage( const QString &sMessage );
 
     // Functions in inyoka toolbar
-    void insertDropDownHeadline(const int iSelection);
-    void insertDropDownTextmacro(const int iSelection);
-    void insertDropDownTextformat(const int iSelection);
+    void insertDropDownHeadline( const int nSelection );
+    void insertDropDownTextmacro( const int nSelection );
+    void insertDropDownTextformat( const int nSelection );
 
     void downloadArticle();
+    void deleteTempImages();
 
     // Preview / download toolbar
-    void previewInyokaPage(const int iIndex = 999);
-    void loadPreviewFinished(bool bSuccess);
+    void previewInyokaPage( const int nIndex = 999 );
+    void loadPreviewFinished( bool bSuccess );
 
     // Insert text sample menu
-    void insertTextSample(const QString &sMenuEntry);
+    void insertTextSample( const QString &sMenuEntry);
 
     // Insert interwiki-link menu
-    void insertInterwikiLink(const QString &sMenuEntry);
+    void insertInterwikiLink( const QString &sMenuEntry );
 
 private:
-    Ui::CInyokaEdit *ui;
-    QApplication *pApp;
+    Ui::CInyokaEdit *m_pUi;
+    QApplication *m_pApp;
 
     void createObjects();
 
@@ -151,31 +152,30 @@ private:
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
 
-    QDir StylesAndImagesDir;
+    QDir m_StylesAndImagesDir;
     QDir m_tmpPreviewImgDir;
 
-    QStringList sListCompleter;
+    QStringList m_sListCompleter;
 
-    bool bLogging;
+    bool m_bLogging;
 
     // File menu: Clear recent opened files list
-    QAction *clearRecentFilesAct;
+    QAction *m_pClearRecentFilesAct;
 
     // InterWiki links menu group list
-    QList<QMenu *> iWikiGroups;
+    QList<QMenu *> m_iWikiGroups;
 
     // Comboboxes for samplesmacrosBar toolbar
-    QComboBox *headlineBox;
-    QComboBox *textmacrosBox;
-    QComboBox *textformatBox;
+    QComboBox *m_pHeadlineBox;
+    QComboBox *m_pTextmacrosBox;
+    QComboBox *m_pTextformatBox;
 
     // Text samples signal mapper
     QSignalMapper *mySigMapTextSamples;
 
     // Inter-Wiki Links
-    QList<QList<QAction *> > iWikiLinksActions;
+    QList<QList<QAction *> > m_iWikiLinksActions;
     QSignalMapper *mySigMapInterWikiLinks;
-
 };
 
 #endif // CINYOKAEDIT_H

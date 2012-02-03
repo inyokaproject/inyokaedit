@@ -29,70 +29,112 @@
 
 CInsertSyntaxElement::CInsertSyntaxElement()
 {
-    sSampleBegin_1  = "[[Vorlage(";
-    sSampleBegin_11 = "[[Bild(";
-    sSampleBegin_12 = "[[Inhaltsverzeichnis(";
-    sSampleEnd_1    = ")]]\n";
-    sSampleBegin_2  = "{{{#!vorlage ";
-    sSampleEnd_2    = "}}}\n";
+    m_sSampleBegin_1  = "[[Vorlage(";
+    m_sSampleBegin_11 = "[[Bild(";
+    m_sSampleBegin_12 = "[[Inhaltsverzeichnis(";
+    m_sSampleEnd_1    = ")]]\n";
+    m_sSampleBegin_2  = "{{{#!vorlage ";
+    m_sSampleEnd_2    = "}}}\n";
 }
 
-std::string CInsertSyntaxElement::getElementInyokaCode(const std::string sElement, const std::string sSelectedText){
-
+std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sElement, const std::string sSelectedText )
+{
     // Toolbar buttons
-    if (sElement == "boldAct"){
-        if (sSelectedText == "")
+    if ( sElement == "boldAct" )
+    {
+        if ( sSelectedText == "" )
+        {
             return "'''Fett'''";
+        }
         else
+        {
             return "'''" + sSelectedText + "'''";
+        }
     }
-    else if (sElement == "italicAct"){
-        if (sSelectedText == "")
+    else if ( sElement == "italicAct" )
+    {
+        if ( sSelectedText == "" )
+        {
             return "''Kursiv''";
+        }
         else
+        {
             return "''" + sSelectedText + "''";
+        }
     }
-    else if (sElement == "monotypeAct"){
-        if (sSelectedText == "")
+    else if ( sElement == "monotypeAct" )
+    {
+        if ( sSelectedText == "" )
+        {
             return "`Monotype`";
+        }
         else
+        {
             return "`" + sSelectedText + "`";
+        }
     }
-    else if (sElement == "wikilinkAct"){
-        if (sSelectedText == "")
+    else if ( sElement == "wikilinkAct" )
+    {
+        if ( sSelectedText == "" )
+        {
             return "[:Seitenname:]";
+        }
         else
+        {
             return "[:" + sSelectedText + ":]";
+        }
     }
-    else if (sElement == "externalLinkAct"){
-        if (sSelectedText == "")
+    else if ( sElement == "externalLinkAct" )
+    {
+        if ( sSelectedText == "" )
+        {
             return "[http://www.example.org/]";
+        }
         else
+        {
             return "[" + sSelectedText + "]";
+        }
     }
-    else if (sElement == "codeblockAct"){
-        if (sSelectedText == "")
+    else if ( sElement == "codeblockAct" )
+    {
+        if ( sSelectedText == "")
+        {
             return "{{{\nCode\n}}}";
+        }
         else
+        {
             return "{{{\n" + sSelectedText + "\n}}}";
+        }
     }
 
     // Menu / dropdown menu items
-    else if (sElement == "insertUnderConstructionAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Baustelle, Datum, \"Bearbeiter\"" + sSampleEnd_1;
+    else if ( sElement == "insertUnderConstructionAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Baustelle, Datum, \"Bearbeiter\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Baustelle, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Baustelle, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertTestedForAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Getestet, " + sSampleEnd_1;
+    else if ( sElement == "insertTestedForAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Getestet, " + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Getestet, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Getestet, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertKnowledgeAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Wissen\n"
+    else if ( sElement == "insertKnowledgeAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Wissen\n"
                     "[:Anwendungen_hinzufügen:Anwendungen hinzufügen]\n"
                     "[:Pakete installieren: Installation von Programmen]\n"
                     "[:Paketquellen freischalten: Bearbeiten von Paketquellen]\n"
@@ -105,173 +147,300 @@ std::string CInsertSyntaxElement::getElementInyokaCode(const std::string sElemen
                     "[:Autostart: Automatischer Start von Programmen]\n"
                     "[:Menüeditor: Programme zum Menü hinzufügen]\n"
                     "[:sudo: Root-Rechte]\n"
-                    "[:Rechte: Rechte für Dateien und Ordner ändern]\n" + sSampleEnd_2;
+                    "[:Rechte: Rechte für Dateien und Ordner ändern]\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Wissen\n, " + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Wissen\n, " + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "insertTableOfContentsAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_12 + "2" + sSampleEnd_1;
+    else if ( sElement == "insertTableOfContentsAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_12 + "2" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_12 + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_12 + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertAdvancedAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fortgeschritten" + sSampleEnd_1;
+    else if ( sElement == "insertAdvancedAct" )
+    {
+        if ( sSelectedText == "")
+        {
+            return m_sSampleBegin_1 + "Fortgeschritten" + m_sSampleEnd_1;
+        }
         else
-            return sSelectedText + sSampleBegin_1 + "Fortgeschritten" + sSampleEnd_1;
+        {
+            return sSelectedText + m_sSampleBegin_1 + "Fortgeschritten" + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertAwardAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Award, \"Preis\", Link, Preiskategorie, \"Preisträger\"" + sSampleEnd_1;
+    else if ( sElement == "insertAwardAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Award, \"Preis\", Link, Preiskategorie, \"Preisträger\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Award, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Award, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertBashCommandAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Befehl\nShell-Befehl\n" + sSampleEnd_2;
+    else if ( sElement == "insertBashCommandAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Befehl\nShell-Befehl\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Befehl\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Befehl\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "insertNoticeAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Hinweis\nHinweistext\n" + sSampleEnd_2;
+    else if ( sElement == "insertNoticeAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Hinweis\nHinweistext\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Hinweis\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Hinweis\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "insertWarningAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Warnung\nWarnungstext\n" + sSampleEnd_2;
+    else if ( sElement == "insertWarningAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Warnung\nWarnungstext\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Warnung\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Warnung\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "insertExpertsAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Experten\nHintergrundinformation\n" + sSampleEnd_2;
+    else if ( sElement == "insertExpertsAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Experten\nHintergrundinformation\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Experten\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Experten\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "imageAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_11 + "Bild.png, 200 (optional), left|right (optional)" + sSampleEnd_1;
+    else if ( sElement == "imageAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_11 + "Bild.png, 200 (optional), left|right (optional)" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_11 + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_11 + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertImageUnderlineAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style (optional) " + sSampleEnd_1;
+    else if ( sElement == "insertImageUnderlineAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Bildunterschrift, Bild.png, Bildbreite (optional), \"Beschreibung\", left|right (optional), *-style (optional) " + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Bildunterschrift, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Bildunterschrift, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertImageCollectionAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n"
+    else if ( sElement == "insertImageCollectionAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n"
                     "Bild1.jpg, \"Beschreibung 1\"\n"
                     "Bild2.png, \"Beschreibung 2\"\n"
-                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + sSampleEnd_1;
+                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n" + sSelectedText + "\n" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Bildersammlung, Bildhöhe (optional)\n" + sSelectedText + "\n" + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertImageCollectionInTextAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n"
+    else if ( sElement == "insertImageCollectionInTextAct" )
+    {
+        if ( sSelectedText == "")
+        {
+            return m_sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n"
                     "Bild1.jpg, \"Beschreibung 1\"\n"
                     "Bild2.png, \"Beschreibung 2\"\n"
-                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + sSampleEnd_1;
+                    "Wiki/Icons/Bild3.png, \"Beschreibung 3\"\n" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n" + sSelectedText + "\n" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Bildersammlung, left|right, Bildhöhe (optional)\n" + sSelectedText + "\n" + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertPackageListAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Pakete, paket1, paket2" + sSampleEnd_1;
+    else if ( sElement == "insertPackageListAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Pakete, paket1, paket2" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Pakete, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Pakete, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertPackageInstallAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Paketinstallation\n"
+    else if ( sElement == "insertPackageInstallAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Paketinstallation\n"
                     "paketname1, Information (optional)\n"
-                    "paketname2, Information (optional)\n" + sSampleEnd_2;
+                    "paketname2, Information (optional)\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Paketinstallation\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Paketinstallation\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
-    else if (sElement == "insertPPAAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "PPA, PPA-Besitzer, PPA-Name" + sSampleEnd_1;
+    else if ( sElement == "insertPPAAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "PPA, PPA-Besitzer, PPA-Name" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "PPA, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "PPA, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertThirdPartyRepoAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremdquelle, URL zur Fremdquelle, Ubuntuversionen (optional), Komponent/en (optional) " + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartyRepoAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Fremdquelle, URL zur Fremdquelle, Ubuntuversionen (optional), Komponent/en (optional) " + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremdquelle, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremdquelle, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertThirdPartyRepoAuthAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremdquelle-auth, key PGP-Schlüsselnummer ODER Link zum PGP-Schlüssel" + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartyRepoAuthAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Fremdquelle-auth, key PGP-Schlüsselnummer ODER Link zum PGP-Schlüssel" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremdquelle-auth, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremdquelle-auth, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertThirdPartyPackageAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremdpaket, (Projekthoster, Projektname) ODER (\"Anbieter\", URL Downloadübersicht), Ubuntuversion/en (optional) " + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartyPackageAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Fremdpaket, (Projekthoster, Projektname) ODER (\"Anbieter\", URL Downloadübersicht), Ubuntuversion/en (optional) " + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremdpaket, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremdpaket, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertImprovableAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Ausbaufähig, \"Begründung\"" + sSampleEnd_1;
+    else if ( sElement == "insertImprovableAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Ausbaufähig, \"Begründung\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Ausbaufähig, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Ausbaufähig, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertFixMeAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fehlerhaft, \"Begründung\"" + sSampleEnd_1;
+    else if ( sElement == "insertFixMeAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Fehlerhaft, \"Begründung\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fehlerhaft, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fehlerhaft, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if (sElement == "insertLeftAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Verlassen, \"Begründung\"" + sSampleEnd_1;
+    else if ( sElement == "insertLeftAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Verlassen, \"Begründung\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Verlassen, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Verlassen, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if(sElement == "insertThirdPartyPackageWarningAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremd, Paket, \"Kommentar\"" + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartyPackageWarningAct" )
+    {
+        if ( sSelectedText == "")
+        {
+            return m_sSampleBegin_1 + "Fremd, Paket, \"Kommentar\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremd, Paket, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremd, Paket, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if(sElement == "insertThirdPartyRepoWarningAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremd, Quelle, \"Kommentar\"" + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartyRepoWarningAct" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Fremd, Quelle, \"Kommentar\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremd, Quelle, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremd, Quelle, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if(sElement == "insertThirdPartySoftwareWarningAct"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Fremd, Software, \"Kommentar\"" + sSampleEnd_1;
+    else if ( sElement == "insertThirdPartySoftwareWarningAct" )
+    {
+        if ( sSelectedText == "")
+        {
+            return m_sSampleBegin_1 + "Fremd, Software, \"Kommentar\"" + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Fremd, Software, \"" + sSelectedText + "\"" + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Fremd, Software, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+        }
     }
-    else if(sElement == "Keys"){
-        if (sSelectedText == "")
-            return sSampleBegin_1 + "Tasten, " + sSampleEnd_1;
+    else if ( sElement == "Keys" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_1 + "Tasten, " + m_sSampleEnd_1;
+        }
         else
-            return sSampleBegin_1 + "Tasten, " + sSelectedText + sSampleEnd_1;
+        {
+            return m_sSampleBegin_1 + "Tasten, " + sSelectedText + m_sSampleEnd_1;
+        }
     }
-    else if(sElement == "Table"){
-        if (sSelectedText == "")
-            return sSampleBegin_2 + "Tabelle\n<-2 rowclass=\"titel\">Titel\n+++\n" +
+    else if ( sElement == "Table" )
+    {
+        if ( sSelectedText == "" )
+        {
+            return m_sSampleBegin_2 + "Tabelle\n<-2 rowclass=\"titel\">Titel\n+++\n" +
                    "<rowclass=\"kopf\">Kopf\nKopf2\n+++\n" +
                    "foo\nbar\n+++\n<rowclass=\"highlight\">foo2\nbar2\n+++\n" +
-                    "<-2 :>Mehr Infos: [:Wiki/Tabellen:]\n" + sSampleEnd_2;
+                    "<-2 :>Mehr Infos: [:Wiki/Tabellen:]\n" + m_sSampleEnd_2;
+        }
         else
-            return sSampleBegin_2 + "Tabelle\n" + sSelectedText + "\n" + sSampleEnd_2;
+        {
+            return m_sSampleBegin_2 + "Tabelle\n" + sSelectedText + "\n" + m_sSampleEnd_2;
+        }
     }
     // Unkonwn element
     else
         return sSelectedText;
-
 }

@@ -34,10 +34,10 @@
 
 #include "CInyokaEdit.h"
 
-int main(int argc, char *argv[])
+int main( int argc, char *argv[] )
 {
     // Resource file (images, icons)
-    Q_INIT_RESOURCE(inyokaeditresources);
+    Q_INIT_RESOURCE( inyokaeditresources );
 
     // New application
     QApplication app(argc, argv);
@@ -50,23 +50,25 @@ int main(int argc, char *argv[])
     // Load global translation
     QTranslator qtTranslator;
     // Try to load Qt translation
-    if (!qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+    if ( !qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
+    {
         // If it fails search in application dircetory
-        qtTranslator.load("qt_" + QLocale::system().name(), app.applicationDirPath() + "/lang");
+        qtTranslator.load( "qt_" + QLocale::system().name(), app.applicationDirPath() + "/lang" );
     }
-    app.installTranslator(&qtTranslator);
+    app.installTranslator( &qtTranslator );
 
     // Load app translation if it exists
     QTranslator myAppTranslator;
     // Try to load app translation (normal installation)
-    if (!myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share/" + app.applicationName().toLower() + "/lang")){
+    if ( !myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share/" + app.applicationName().toLower() + "/lang") )
+    {
         // If it fails search in application dircetory
-        qtTranslator.load(app.applicationName().toLower() + "_"  + QLocale::system().name(), app.applicationDirPath() + "/lang");
+        qtTranslator.load( app.applicationName().toLower() + "_"  + QLocale::system().name(), app.applicationDirPath() + "/lang" );
     }
-    app.installTranslator(&myAppTranslator);
+    app.installTranslator( &myAppTranslator );
 
     // New object of InyokaEdit
-    CInyokaEdit myInyokaEdit(&app);
+    CInyokaEdit myInyokaEdit( &app );
     myInyokaEdit.show();
 
     return app.exec();

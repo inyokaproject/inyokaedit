@@ -50,41 +50,41 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser(QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl);
+    CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl );
     // Destructor
     ~CParser();
 
     // Starts generating HTML-code
-    bool genOutput(const QString sActFile);
+    bool genOutput( const QString sActFile );
 
 signals:
-    void callShowPreview(const QString &);
+    void callShowPreview( const QString & );
 
 private:
-    void replaceTextformat(QTextDocument *myRawDoc);
-    void replaceFlags(QTextDocument *myRawDoc);
-    void replaceKeys(QTextDocument *myRawDoc);
-    void replaceImages(QTextDocument *myRawDoc);
+    void replaceTextformat( QTextDocument *myRawDoc );
+    void replaceFlags( QTextDocument *myRawDoc );
+    void replaceKeys( QTextDocument *myRawDoc );
+    void replaceImages( QTextDocument *myRawDoc );
 
     // Parse Macros ([[Vorlage(...) etc.)
-    QString parseMacro(QTextBlock actParagraph);
+    QString parseMacro( QTextBlock actParagraph );
     // Generates table of content
-    QString parseTableOfContents(QTextBlock tabofcontents);
+    QString parseTableOfContents( QTextBlock tabofcontents );
     // Generate tags (#tag: ...)
-    QString generateTags(QTextBlock actParagraph);
+    QString generateTags( QTextBlock actParagraph );
     // Parse headline
-    QString parseHeadline(QTextBlock actParagraph);
+    QString parseHeadline( QTextBlock actParagraph );
     // Parse text samples ({{{#!vorlage)
-    QString parseTextSample(QString actParagraph);
+    QString parseTextSample( QString actParagraph );
     // Parse code blocks ({{{ and {{{#!code)
-    QString parseCodeBlock(QString actParagraph);
+    QString parseCodeBlock( QString actParagraph );
     // Parse image collection[[Vorlage(Bildersammlung, ... )]]
-    QString parseImageCollection(QString actParagraph);
+    QString parseImageCollection( QString actParagraph );
     // Parse List *
-    QString parseList(QString actParagraph);
+    QString parseList( QString actParagraph );
 
     // Insert a box
-    QString insertBox(const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "");
+    QString insertBox( const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "" );
 
     // Text from editor
     QTextDocument *m_pRawText, *m_pCopyOfrawText;
@@ -100,7 +100,6 @@ private:
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
     bool m_bShowedMsgBoxAlready;
-
 };
 
 #endif // CPARSER_H

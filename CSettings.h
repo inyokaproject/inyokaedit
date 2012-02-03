@@ -43,14 +43,14 @@ class CSettings
 {
 
 public:
-    CSettings(const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog);
+    CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog );
     ~CSettings();
 
     // Load / save application settings
     void readSettings();
-    void writeSettings(const QByteArray WinGeometry, const QByteArray WinState);
+    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState );
 
-    void setLastOpenedDir(const QDir LastDir);
+    void setLastOpenedDir( const QDir LastDir );
 
     // General
     bool getCodeCompletion() const;
@@ -59,7 +59,7 @@ public:
     bool getPreviewInEditor() const;
     QDir getLastOpenedDir() const;
     QString getConfVersion() const;
-    void setConfVersion(const QString &sNewVersion);
+    void setConfVersion( const QString &sNewVersion );
     bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
 
@@ -74,37 +74,36 @@ public:
     unsigned short getNumOfRecentFiles() const;
     unsigned short getMaxNumOfRecentFiles() const;
     QStringList getRecentFiles() const;
-    void setRecentFiles(const QStringList &sListNewRecent);
+    void setRecentFiles( const QStringList &sListNewRecent );
 
 private:
-
     QSettings *mySettingsObject;
 
     // General
-    bool bCodeCompletion;  // Enable / disable code completion
-    bool bPreviewInEditor; // Enable / disable preview in edior
-    QString sInyokaUrl;    // Url to inyoka
-    QDir LastOpenedDir;
-    bool bAutomaticImageDownload;  // Enable / disable download of article images
-    QString sConfVersion;
-    bool bShowStatusbar;
-    QString sSpellCheckerLanguage;
+    bool m_bCodeCompletion;  // Enable / disable code completion
+    bool m_bPreviewInEditor; // Enable / disable preview in edior
+    QString m_sInyokaUrl;    // Url to inyoka
+    QDir m_LastOpenedDir;
+    bool m_bAutomaticImageDownload;  // Enable / disable download of article images
+    QString m_sConfVersion;
+    bool m_bShowStatusbar;
+    QString m_sSpellCheckerLanguage;
 
     // Font
-    float iFontsize;
+    float m_nFontsize;
 
     // Find/replace dialogs
-    FindDialog *pFDialog;
-    FindReplaceDialog *pFRDialog;
+    FindDialog *m_pFDialog;
+    FindReplaceDialog *m_pFRDialog;
 
     // Window state
-    QByteArray aWindowState;
-    QByteArray aWindowGeometry;
+    QByteArray m_aWindowState;
+    QByteArray m_aWindowGeometry;
 
     // Last opened
-    static const unsigned short cMAXFILES = 10;
-    int iMaxLastOpenedFiles;
-    QStringList sListRecentFiles;
+    static const unsigned short m_cMAXFILES = 10;
+    int m_nMaxLastOpenedFiles;
+    QStringList m_sListRecentFiles;
 };
 
 #endif // CSETTINGS_H

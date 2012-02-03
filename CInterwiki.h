@@ -42,7 +42,7 @@ class CInterWiki
 class CIWikiLinksParser;
 
 public:
-    CInterWiki(const QApplication *pApp);
+    CInterWiki( const QApplication *pApp );
 
     QStringList getInterwikiLinksGroups() const;
     QStringList getInterwikiLinksGroupIcons() const;

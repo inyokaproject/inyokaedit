@@ -38,7 +38,7 @@ class CFileOperations : public QObject
     Q_OBJECT
 
 public:
-    CFileOperations(QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName);
+    CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName );
 
     QString getCurrentFile() const;
     bool maybeSave();
@@ -54,17 +54,17 @@ public slots:
     bool saveAs();
 
     // Load / save file
-    void loadFile(const QString &sFileName);
-    bool saveFile(const QString &sFileName);
+    void loadFile( const QString &sFileName );
+    bool saveFile( const QString &sFileName );
 
-    void setCurrentFile(const QString &sFileName);
+    void setCurrentFile( const QString &sFileName );
 
 signals:
-    void setMenuLastOpenedEnabled(const bool);
-    void setStatusbarMessage(QString);
+    void setMenuLastOpenedEnabled( const bool );
+    void setStatusbarMessage( QString );
 
 private:
-    void updateRecentFiles(const QString &sFileName);
+    void updateRecentFiles( const QString &sFileName );
     QSignalMapper *mySigMapLastOpenedFiles;
 
     QWidget *m_pParent;

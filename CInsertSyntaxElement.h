@@ -35,15 +35,15 @@ class CInsertSyntaxElement
 public:
     CInsertSyntaxElement();
 
-    std::string getElementInyokaCode(const std::string sElement, const std::string sSelectedText);
+    std::string getElementInyokaCode( const std::string sElement, const std::string sSelectedText );
 
 private:
-    std::string sSampleBegin_1;
-    std::string sSampleBegin_11;
-    std::string sSampleBegin_12;
-    std::string sSampleEnd_1;
-    std::string sSampleBegin_2;
-    std::string sSampleEnd_2;
+    std::string m_sSampleBegin_1;
+    std::string m_sSampleBegin_11;
+    std::string m_sSampleBegin_12;
+    std::string m_sSampleEnd_1;
+    std::string m_sSampleBegin_2;
+    std::string m_sSampleEnd_2;
 };
 
 #endif // CINSERTSYNTAXELEMENT_H

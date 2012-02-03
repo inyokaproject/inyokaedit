@@ -28,14 +28,14 @@
 #include "CParser.h"
 
 // Constructor
-CParser::CParser(QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl)
+CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl )
     : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki), m_tmpFileDir(tmpFileOutputDir), m_tmpImgDir(tmpImgDir)
 {
     try
     {
-        m_pLinkParser = new CParseLinks(m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl);
+        m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl );
     }
-    catch (std::bad_alloc& ba)
+    catch ( std::bad_alloc& ba )
     {
       std::cerr << "ERROR: Caught bad_alloc in \"CParseLinks\": " << ba.what() << std::endl;
       QMessageBox::critical(0, "Error", "Error while memory allocation: CParseLinks");
@@ -121,7 +121,7 @@ CParser::~CParser()
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-bool CParser::genOutput(const QString sActFile)
+bool CParser::genOutput( const QString sActFile )
 {
     // File for temporary html output
     QFile tmphtmlfile(m_tmpFileDir.absolutePath() + "/tmpinyoka.html");
@@ -307,7 +307,7 @@ bool CParser::genOutput(const QString sActFile)
 // -----------------------------------------------------------------------------------------------
 
 // REPLACE TEXT FORMATS
-void CParser::replaceTextformat(QTextDocument *myRawDoc)
+void CParser::replaceTextformat( QTextDocument *myRawDoc )
 {
     QRegExp patternTextformat;
     const QString variableText("[\\w\\s-_~:>\"\\(\\)/\\.\\+\\&\\!\\\"\\?/\\%\\*\\>]+"); // Escaped RegExp
@@ -361,8 +361,8 @@ void CParser::replaceTextformat(QTextDocument *myRawDoc)
 // -----------------------------------------------------------------------------------------------
 
 // Replace FLAGS
-void CParser::replaceFlags(QTextDocument *myRawDoc){
-
+void CParser::replaceFlags( QTextDocument *myRawDoc )
+{
     QRegExp findFlags("\\{[a-z\\w][a-z]+\\}");
     QString sMyDoc = myRawDoc->toPlainText();
     int iLength;
@@ -396,7 +396,8 @@ void CParser::replaceFlags(QTextDocument *myRawDoc){
 // -----------------------------------------------------------------------------------------------
 
 // Replace KEYS
-void CParser::replaceKeys(QTextDocument *myRawDoc){
+void CParser::replaceKeys( QTextDocument *myRawDoc )
+{
     QRegExp findKeys("\\[\\[Vorlage\\(Tasten,[\\w\\s\\?\\-\\=\\'\\,\\.\\`\\\"\\^\\<\\[\\]\\#\\+]+\\)\\]\\]");
     QString sMyDoc = myRawDoc->toPlainText();
     int iLength;
@@ -582,8 +583,8 @@ void CParser::replaceKeys(QTextDocument *myRawDoc){
 // -----------------------------------------------------------------------------------------------
 
 // MACROS [[Vorlage(...)]]
-QString CParser::parseMacro(QTextBlock actParagraph){
-
+QString CParser::parseMacro( QTextBlock actParagraph )
+{
     QString sParagraph = actParagraph.text();
     //QString sParagraph = actParagraph;
 
@@ -1207,8 +1208,8 @@ QString CParser::parseMacro(QTextBlock actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Create table of contents
-QString CParser::parseTableOfContents(QTextBlock tabofcontents){
-
+QString CParser::parseTableOfContents( QTextBlock tabofcontents )
+{
     QString sLine = tabofcontents.text();
     QString sOutput("TABLE OF CONTENT");
 
@@ -1262,8 +1263,8 @@ QString CParser::parseTableOfContents(QTextBlock tabofcontents){
 // -----------------------------------------------------------------------------------------------
 
 // TAGS (end of page)
-QString CParser::generateTags(QTextBlock actParagraph){
-
+QString CParser::generateTags( QTextBlock actParagraph )
+{
     QString sParagraph = actParagraph.text();
     QString sOutput("");
 
@@ -1293,7 +1294,8 @@ QString CParser::generateTags(QTextBlock actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Headline
-QString CParser::parseHeadline(QTextBlock actParagraph){
+QString CParser::parseHeadline( QTextBlock actParagraph )
+{
     QString sParagraph = actParagraph.text();
     QString sOutput("<strong>FOUND WRONG FORMATED HEADLINE</strong>\n");
     QString sLink("");
@@ -1343,7 +1345,8 @@ QString CParser::parseHeadline(QTextBlock actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Text samples {{{!#vorlage
-QString CParser::parseTextSample(QString actParagraph){
+QString CParser::parseTextSample( QString actParagraph )
+{
     QString sParagraph = actParagraph;
 
     sParagraph.remove("{{{#!vorlage ");
@@ -1627,7 +1630,8 @@ QString CParser::parseTextSample(QString actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Code blocks {{{ and {{{!#code
-QString CParser::parseCodeBlock(QString actParagraph){
+QString CParser::parseCodeBlock( QString actParagraph )
+{
     QString sParagraph = actParagraph;
     QString sOutput("<strong>FOUND WRONG FORMATED CODE BLOCK</strong>");
 
@@ -1688,7 +1692,8 @@ QString CParser::parseCodeBlock(QString actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Image collection [[Vorlage(Bildersammlung, ... )]]
-QString CParser::parseImageCollection(QString actParagraph){
+QString CParser::parseImageCollection( QString actParagraph )
+{
     QString sParagraph = actParagraph;
     QString sOutput("");
 
@@ -1783,9 +1788,8 @@ QString CParser::parseImageCollection(QString actParagraph){
 // -----------------------------------------------------------------------------------------------
 // REPLACE IMAGES
 
-void CParser::replaceImages(QTextDocument *myRawDoc){
-
-
+void CParser::replaceImages( QTextDocument *myRawDoc )
+{
     QRegExp findImages("\\[\\[Bild\\([\\w\\s\\-,./=\"]+\\)\\]\\]");
     QString sMyDoc = myRawDoc->toPlainText();
     int iLength;
@@ -1802,7 +1806,8 @@ void CParser::replaceImages(QTextDocument *myRawDoc){
     double tmpH, tmpW;
 
     int myindex = findImages.indexIn(sMyDoc);
-    while (myindex >= 0) {
+    while (myindex >= 0)
+    {
         iLength = findImages.matchedLength();
         sTmpImage = findImages.cap();
 
@@ -1896,7 +1901,8 @@ void CParser::replaceImages(QTextDocument *myRawDoc){
 // -----------------------------------------------------------------------------------------------
 
 // List
-QString CParser::parseList(QString actParagraph){
+QString CParser::parseList( QString actParagraph )
+{
     QString sParagraph = actParagraph;
     QString sOutput("<strong>ERROR: List</strong>\n");
 
@@ -1961,7 +1967,8 @@ QString CParser::parseList(QString actParagraph){
 // -----------------------------------------------------------------------------------------------
 
 // Insert box
-QString CParser::insertBox(const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark) {
+QString CParser::insertBox( const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark )
+{
     QString sReturn("");
 
     // Generate output
@@ -1970,7 +1977,8 @@ QString CParser::insertBox(const QString &sClass, const QString &sHeadline, cons
     sReturn += "<div class=\"contents\">\n";
     sReturn += "<p>" + sContents + "</p>\n";
     // Remark available
-    if (sRemark != "" && sRemark != " "){
+    if ( sRemark != "" && sRemark != " " )
+    {
         sReturn += "<hr />\n<p><strong>" + trUtf8("Anmerkung:") + "</strong> " + sRemark + "</p>\n";
     }
     sReturn += "</div>\n"
