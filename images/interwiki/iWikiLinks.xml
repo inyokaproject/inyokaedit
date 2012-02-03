@@ -51,6 +51,7 @@
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
     <iwikilink type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
     <iwikilink type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
+    <iwikilink type="github" url="https://github.com/" name="GitHub" icon="github.png" />
     <iwikilink type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
     <iwikilink type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
     <iwikilink type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
