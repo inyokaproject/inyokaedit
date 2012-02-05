@@ -1,8 +1,8 @@
 /**
- * @file CDownload.h
- * @author See AUTHORS
+ * \file CDownload.h
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition for download functions.
  */
 
@@ -32,6 +32,10 @@
 
 class CInyokaEdit;
 
+/**
+ * \class CDownload
+ * \brief Download functions (Inyoka styles, articles, article images)
+ */
 class CDownload : public QObject
 {
     Q_OBJECT

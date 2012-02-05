@@ -1,7 +1,7 @@
 /**
- * @file findform.h
+ * \file findform.h
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Copyright (C) 2009  Lorenzo Bettini <http://www.lorenzobettini.it>
  * See COPYING file that comes with this distribution
  */
@@ -15,9 +15,9 @@
 #include "findreplaceform.h"
 
 /**
-  * The form for the find dialog (it is basically the same
-  * as FindReplaceForm without the replace related widgets).
-  */
+ * \class FindForm
+ * \brief The form for the find dialog.
+ */
 class FindForm : public FindReplaceForm {
     Q_OBJECT
 public:

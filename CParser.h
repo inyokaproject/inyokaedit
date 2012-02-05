@@ -1,8 +1,8 @@
 /**
- * @file CParser.h
- * @author See AUTHORS
+ * \file CParser.h
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition for parser.
  */
 
@@ -44,6 +44,11 @@ class QDir;
 
 class CParseLinks;
 
+/**
+ * \class CParser
+ * \brief Main parser module.
+ * \todo Separate some parts in smaler modules.
+ */
 class CParser : public QObject
 {
     Q_OBJECT

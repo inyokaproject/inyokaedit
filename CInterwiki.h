@@ -36,6 +36,10 @@
 #include <QMessageBox>
 #include <QApplication>
 
+/**
+ * \class CInterWiki
+ * \brief Delivering InterWiki links (groups, url, icon)
+ */
 class CInterWiki
 {
 
@@ -67,6 +71,10 @@ private:
 
 // -----------------------------------------------------------------------------------------------
 
+/**
+ * \class CInterWiki::CIWikiLinksParser
+ * \brief Reading InterWiki link definitions from xml file.
+ */
 class CInterWiki::CIWikiLinksParser : public QXmlDefaultHandler
 {
     friend class CInterWiki;

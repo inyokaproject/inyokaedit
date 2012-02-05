@@ -1,8 +1,8 @@
 /**
- * @file main.cpp
- * @author See AUTHORS
+ * \file main.cpp
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,8 +21,21 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Main function, start application, loading translation.
+ */
+
+/** \mainpage
+ * \section Introduction
+ * InyokaEdit is a small markup editor for Inyoka articles (http://ubuntuusers.de/inyoka/).<br />
+ * <br />Some features:<br />
+ * \li Syntax highlighting
+ * \li Offline preview
+ * \li Downloading raw text of existing articles and corresponding images.
+ * \li Spell checker
+ *
+ * \section Launchpad
+ * InyokaEdit on Launchpad: https://launchpad.net/inyokaedit
  */
 
 #include <QApplication>

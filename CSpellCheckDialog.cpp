@@ -1,8 +1,8 @@
 /**
- * @file CSpellCheckDialog.cpp
- * @author See AUTHORS
+ * \file CSpellCheckDialog.cpp
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,10 +21,10 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Show spell checker dialog with spelling suggestions.
  *
- * @section SOURCE
+ * \section SOURCE
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
@@ -35,7 +35,7 @@
 
 CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent ) :
     QDialog(parent),
-    m_pU( new Ui::CSpellCheckDialog )
+    m_pUi( new Ui::CSpellCheckDialog )
 {
     m_pUi->setupUi(this);
     _spellChecker = spellChecker;

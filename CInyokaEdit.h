@@ -1,8 +1,8 @@
 /**
- * @file CInyokaEdit.h
- * @author See AUTHORS
+ * \file CInyokaEdit.h
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition main application.
  */
 
@@ -70,6 +70,10 @@ namespace Ui {
     class CInyokaEdit;
 }
 
+/**
+ * \class CInyokaEdit
+ * \brief Main application definition (gui, objects, etc.)
+ */
 class CInyokaEdit : public QMainWindow
 {
     Q_OBJECT

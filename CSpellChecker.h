@@ -1,8 +1,8 @@
 /**
- * @file CSpellChecker.h
- * @author See AUTHORS
+ * \file CSpellChecker.h
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,10 +21,10 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition for spell checker using hunspell.
  *
- * @section SOURCE
+ * \section SOURCE
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
@@ -40,6 +40,10 @@ class Hunspell;
 class CTextEditor;
 class CSpellCheckDialog;
 
+/**
+ * \class CSpellChecker
+ * \brief Spell checker using hunspell.
+ */
 class CSpellChecker
 {
 public:

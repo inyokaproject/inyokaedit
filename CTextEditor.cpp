@@ -1,7 +1,7 @@
 /**
- * @file CTextEditor.cpp
+ * \file CTextEditor.cpp
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  * All rights reserved.
@@ -37,7 +37,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Extend QTextEdit (editor widget) to popup code completition for Inyoka
  * syntax elements.
  */

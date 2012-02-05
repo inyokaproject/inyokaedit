@@ -1,7 +1,7 @@
 /**
- * @file CTextEditor.h
+ * \file CTextEditor.h
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
  * All rights reserved.
@@ -37,7 +37,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition for extended QTextEdit (editor widget).
  */
 
@@ -48,6 +48,10 @@
 
 class QCompleter;
 
+/**
+ * \class CTextEditor
+ * \brief Extended QTextEdit (editor widget) with simple code completition.
+ */
 class CTextEditor : public QTextEdit
 {
     Q_OBJECT

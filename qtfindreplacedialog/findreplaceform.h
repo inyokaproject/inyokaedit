@@ -1,7 +1,7 @@
 /**
- * @file findreplaceform.h
+ * \file findreplaceform.h
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Copyright (C) 2009  Lorenzo Bettini <http://www.lorenzobettini.it>
  * See COPYING file that comes with this distribution
  */
@@ -20,34 +20,37 @@ class QTextEdit;
 class QSettings;
 
 /**
-  * The form for the find/replace dialog.  The form presents the typical
-  * widgets you find in standard find/replace dialogs, and it acts on a QTextEdit.
-  *
-  * \image html Screenshot-FindReplace.png
-  *
-  * You need to set the QTextEdit explicitly, using the method setTextEdit(QTextEdit *textEdit).
-  *
-  * For instance
-  * \code
-  * m_findReplaceDialog = new FindReplaceDialog(this);
-  * m_findReplaceDialog->setModal(false);
-  * m_findReplaceDialog->setTextEdit(ui->textEdit);
-  * \endcode
-  *
-  * The find functionalities is available even if the find dialog is not shown: if something
-  * to search for was already specified, the application can call the methods findNext() and
-  * findPrev() (e.g., by connecting them to menu items).
-  *
-  * In case a regular expression is used as the search term, the form also checks whether the
-  * expression is a valid regular expression (You may want to take a look at the syntax of regular expressions:
-  * http://doc.trolltech.com/qregexp.html).
-  *
-  * The form provides also functionalities to save and restore its state using a QSettings object (i.e.,
-  * the last word searched for, the options of the form, etc.) via the methods writeSettings()
-  * and readSettings().
-  *
-  * You can take a look at the \ref examples page.
-  */
+ * \class FindReplaceForm
+ * \brief The form for the find/replace dialog.
+ *
+ * The form presents the typical widgets you find in standard find/replace dialogs, and it
+ * acts on a QTextEdit.
+ *
+ * \image html Screenshot-FindReplace.png
+ *
+ * You need to set the QTextEdit explicitly, using the method setTextEdit(QTextEdit *textEdit).
+ *
+ * For instance
+ * \code
+ * m_findReplaceDialog = new FindReplaceDialog(this);
+ * m_findReplaceDialog->setModal(false);
+ * m_findReplaceDialog->setTextEdit(ui->textEdit);
+ * \endcode
+ *
+ * The find functionalities is available even if the find dialog is not shown: if something
+ * to search for was already specified, the application can call the methods findNext() and
+ * findPrev() (e.g., by connecting them to menu items).
+ *
+ * In case a regular expression is used as the search term, the form also checks whether the
+ * expression is a valid regular expression (You may want to take a look at the syntax of regular expressions:
+ * http://doc.trolltech.com/qregexp.html).
+ *
+ * The form provides also functionalities to save and restore its state using a QSettings object (i.e.,
+ * the last word searched for, the options of the form, etc.) via the methods writeSettings()
+ * and readSettings().
+ *
+ * You can take a look at the \ref examples page.
+ */
 class FindReplaceForm : public QWidget {
     Q_OBJECT
 public:

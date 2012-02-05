@@ -1,7 +1,7 @@
 /**
- * @file findreplacedialog.h
+ * \file findreplacedialog.h
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Copyright (C) 2009  Lorenzo Bettini <http://www.lorenzobettini.it>
  * See COPYING file that comes with this distribution
  */
@@ -19,10 +19,11 @@ class QTextEdit;
 class QSettings;
 
 /**
-  * A find/replace dialog.
-  *
-  * It relies on a FindReplaceForm object (see that class for the functionalities provided).
-  */
+ * \class FindReplaceDialog
+ * \brief A find/replace dialog.
+ *
+ * It relies on a FindReplaceForm object (see that class for the functionalities provided).
+ */
 class FindReplaceDialog : public QDialog {
     Q_OBJECT
 public:

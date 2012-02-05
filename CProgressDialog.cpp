@@ -1,8 +1,8 @@
 /**
- * @file CProgessDialog.cpp
- * @author See AUTHORS
+ * \file CProgessDialog.cpp
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Shows a modal window with download progress messages.
  */
 

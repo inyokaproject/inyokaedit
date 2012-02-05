@@ -1,8 +1,8 @@
 /**
- * @file CSpellCheckDialog.h
- * @author See AUTHORS
+ * \file CSpellCheckDialog.h
+ * \author See AUTHORS
  *
- * @section LICENSE
+ * \section LICENSE
  *
  * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
  *
@@ -21,10 +21,10 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition spell checker dialog.
  *
- * @section SOURCE
+ * \section SOURCE
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
@@ -39,6 +39,10 @@ namespace Ui {
     class CSpellCheckDialog;
 }
 
+/**
+ * \class CSpellCheckDialog
+ * \brief Spell checker dialog.
+ */
 class CSpellCheckDialog : public QDialog
 {
     Q_OBJECT

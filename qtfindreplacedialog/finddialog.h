@@ -1,7 +1,7 @@
 /**
- * @file finddialog.h
+ * \file finddialog.h
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Copyright (C) 2009  Lorenzo Bettini <http://www.lorenzobettini.it>
  * See COPYING file that comes with this distribution
  */
@@ -14,9 +14,9 @@
 #include "findreplacedialog.h"
 
 /**
-  * A find dialog (it is basically the same
-  * as FindReplaceDialog without the replace related widgets).
-  */
+ * \class FindDialog
+ * \brief A find dialog.
+ */
 class FindDialog : public FindReplaceDialog {
     Q_OBJECT
 public:
