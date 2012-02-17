@@ -1702,25 +1702,36 @@ QString CParser::parseCodeBlock( QString actParagraph )
 
     // Separate elementes from macro (between §)
     QStringList sListElements = sParagraph.split("§");
-    for (int i = 0; i < sListElements.length(); i++){
+    for ( int i = 0; i < sListElements.length(); i++ )
+    {
         sListElements[i] = sListElements[i].trimmed();
     }
 
     // Only plain code
-    if (sListElements[0] == ""){
+    if ( sListElements[0] == "" )
+    {
         sOutput = "<pre>";
 
-        for (int i = 1; i < sListElements.length(); i++){
+        for ( int i = 1; i < sListElements.length(); i++ )
+        {
+            // Replace char "<" because it will be interpreted as html tag (see bug #826482)
+            sListElements[i].replace('<', "&lt;");
+
             sOutput += sListElements[i];
-            if (i < sListElements.size()-1)
+            if ( i < sListElements.size() - 1 )
+            {
                 sOutput += "\n";
+            }
         }
 
         sOutput += "</pre>\n";
     }
+
     // Syntax highlighting
-    else{
-        if (m_bShowedMsgBoxAlready == false){
+    else
+    {
+        if ( m_bShowedMsgBoxAlready == false )
+        {
             QMessageBox::information(0, "Information", tr("The preview does not support syntax highlighting in code block currently."));
             m_bShowedMsgBoxAlready = true;
         }
@@ -1729,19 +1740,28 @@ QString CParser::parseCodeBlock( QString actParagraph )
         sOutput = "<div class=\"code\">\n<table class=\"syntaxtable\"><tbody>\n<tr>\n<td class=\"linenos\">\n<div class=\"linenodiv\"><pre>";
 
         // First column (line numbers)
-        for (int i = 1; i < sListElements.size(); i++){
+        for ( int i = 1; i < sListElements.size(); i++ )
+        {
             sOutput += QString::number(i);
-            if (i < sListElements.size()-1)
+            if ( i < sListElements.size() - 1 )
+            {
                 sOutput += "\n";
+            }
         }
 
         sOutput += "</pre>\n</div>\n</td>\n<td class=\"code\">\n<div class=\"syntax\">\n<pre>\n";
 
         // Second column (code)
-        for (int i = 1; i < sListElements.length(); i++){
+        for ( int i = 1; i < sListElements.length(); i++ )
+        {
+            // Replace char "<" because it will be interpreted as html tag (see bug #826482)
+            sListElements[i].replace('<', "&lt;");
+
             sOutput += sListElements[i];
-            if (i < sListElements.size()-1)
+            if ( i < sListElements.size() - 1 )
+            {
                 sOutput += "\n";
+            }
         }
 
         sOutput += "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
