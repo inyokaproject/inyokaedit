@@ -96,7 +96,6 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
     this->createMenus();
     this->createToolBars();
 
-    bool bDialogShowed = false;
     // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
     if ( !m_StylesAndImagesDir.exists() ||
          !QDir(m_StylesAndImagesDir.absolutePath() + "/img").exists() ||
@@ -104,20 +103,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
          !QDir(m_StylesAndImagesDir.absolutePath() + "/Wiki").exists() )
     {
         m_StylesAndImagesDir.mkdir( m_StylesAndImagesDir.absolutePath() );  // Create folder because user may not start download. Folder is needed for preview.
-        if( myDownloadModule->loadInyokaStyles() )
-        {
-            mySettings->setConfVersion(sVERSION);
-        }
-        bDialogShowed = true;
-    }
-
-    // Download styles if in config file an older version was found and dialog was not shown before
-    if ( sVERSION != mySettings->getConfVersion() && !bDialogShowed )
-    {
-        if ( myDownloadModule->loadInyokaStyles() )
-        {
-            mySettings->setConfVersion(sVERSION);
-        }
+        myDownloadModule->loadInyokaStyles();
     }
 
     if ( mySettings->getShowStatusbar() )

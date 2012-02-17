@@ -89,7 +89,6 @@ private:
     QString m_sInyokaUrl;    // Url to inyoka
     QDir m_LastOpenedDir;
     bool m_bAutomaticImageDownload;  // Enable / disable download of article images
-    QString m_sConfVersion;
     bool m_bShowStatusbar;
     QString m_sSpellCheckerLanguage;
 
