@@ -36,8 +36,8 @@
 CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
     QMainWindow(parent),
     m_pUi( new Ui::CInyokaEdit ),
-    m_pApp(ptrApp),
-    myCompleter(0)
+    m_pApp( ptrApp ),
+    myCompleter( 0 )
 {
     m_pUi->setupUi(this);
 
@@ -98,8 +98,10 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
 
     bool bDialogShowed = false;
     // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
-    if ( !m_StylesAndImagesDir.exists() || !QDir(m_StylesAndImagesDir.absolutePath() + "/img").exists() ||
-         !QDir(m_StylesAndImagesDir.absolutePath() + "/styles").exists() || !QDir(m_StylesAndImagesDir.absolutePath() + "/Wiki").exists() )
+    if ( !m_StylesAndImagesDir.exists() ||
+         !QDir(m_StylesAndImagesDir.absolutePath() + "/img").exists() ||
+         !QDir(m_StylesAndImagesDir.absolutePath() + "/styles").exists() ||
+         !QDir(m_StylesAndImagesDir.absolutePath() + "/Wiki").exists() )
     {
         m_StylesAndImagesDir.mkdir( m_StylesAndImagesDir.absolutePath() );  // Create folder because user may not start download. Folder is needed for preview.
         if( myDownloadModule->loadInyokaStyles() )

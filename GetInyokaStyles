@@ -41,11 +41,11 @@ rm markup.css
 rm markup2.css
 rm wiki.css
 rm main-sprite.css
-wget -nv -N http://static.cdn.ubuntu-de.org/style/markup.css
+wget -nv http://static.cdn.ubuntu-de.org/style/markup.css
 mv markup.css markup2.css
-wget -nv -N http://static.cdn.ubuntu-de.org/style/wiki.css
-wget -nv -N http://static.cdn.ubuntu-de.org/style/main-sprite.css
-wget -nv -N http://ubuntuusers.de/markup.css
+wget -nv http://static.cdn.ubuntu-de.org/style/wiki.css
+wget -nv http://static.cdn.ubuntu-de.org/style/main-sprite.css
+wget -nv http://ubuntuusers.de/markup.css
 
 echo "Replace static paths..."
 ## Paths
@@ -71,7 +71,7 @@ fi
 cd img
 
 echo "Downloading images..."
-wget -nv -N http://static.cdn.ubuntu-de.org/img/anchor.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/anchor.png -O anchor.png
 
 if [ ! -d interwiki ]
   then
@@ -81,68 +81,60 @@ fi
 
 cd interwiki
 
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/16/askubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/18/bug.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/bug.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/16/canonical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/26/canonicalblog.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/09/debian.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/09/debian_de.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/20/dropbox.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/18/ean.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/17/edubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/18/fb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/44/freshmeat.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/37/gplus.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/getdeb.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/googlecode.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/18/googlecode.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/44/18/holarse.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/40/iawm.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/18/identica.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/isbn.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/52/18/isbn.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/17/kubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/16/kubuntu-de.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/41/kubuntu_doc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/18/lastfm.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/launchpad.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/18/launchpad.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/22/liflg.jpg
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/18/linuxgaming.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/lpuser.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/18/lpuser.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/19/lubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/45/ml.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/09/osm.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/16/packages.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/09/playdeb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/18/sourceforge.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/sourceforge.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/16/ticket.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/18/twitter.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/ubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/18/ubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/20/17/ubuntustudio.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/16/ubuntu_doc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/09/ubuntu_fr.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/46/uf_forum.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/46/uf_member.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/46/uf_thread.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/16/ubuntuone.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/09/wikibooks.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/user.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/askubuntu.png -O askubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bug.png -O bug.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonical.png -O canonical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonicalblog.png -O canonicalblog.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/debian.png -O debian.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/debian_de.png -O debian_de.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/dropbox.png -O dropbox.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ean.png -O ean.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/edubuntu.png -O edubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/fb.png -O fb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freshmeat.png -O freshmeat.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/getdeb.png -O getdeb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/github.png -O github.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/googlecode.png -O googlecode.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gplus.png -O gplus.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/holarse.png -O holarse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/iawm.png -O iawm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/identica.png -O identica.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/isbn.png -O isbn.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/kubuntu.png -O kubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/kubuntu-de.png -O kubuntu-de.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/kubuntu_doc.png -O kubuntu_doc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lastfm.png -O lastfm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/launchpad.png -O launchpad.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/liflg.jpg -O liflg.jpg
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/linuxgaming.png -O linuxgaming.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lpuser.png -O lpuser.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lubuntu.png -O lubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ml.png -O ml.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/osm.png -O osm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/packages.png -O packages.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/playdeb.png -O playdeb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/sourceforge.png -O sourceforge.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ticket.png -O ticket.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/twitter.png -O twitter.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu.png -O ubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_forum.png -O uf_forum.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_member.png -O uf_member.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_thread.png -O uf_thread.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntuone.png -O ubuntuone.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntustudio.png -O ubuntustudio.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_doc.png -O ubuntu_doc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_fr.png -O ubuntu_fr.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/user.png -O user.png
 cp user.png user-xmas.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/09/wikimedia.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/18/wikipedia.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/search.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/wikipedia.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/interwiki/wikipedia_en.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/18/wikipedia_en.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/17/xubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/09/youtube.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikibooks.png -O wikibooks.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikimedia.png -O wikimedia.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia.png -O wikipedia.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia_en.png -O wikipedia_en.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/xubuntu.png -O xubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/youtube.png -O youtube.png
 
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/43/ppa.png
+wget -nv http://static.cdn.ubuntu-de.org/img/interwiki/search.png
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/17/43/ppa.png
 cd ..
 
 if [ ! -d flags ]
@@ -152,12 +144,12 @@ if [ ! -d flags ]
 fi
 cd wiki
 
-wget -nv -N http://static.cdn.ubuntu-de.org/img/wiki/toc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/17/button.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/38/mouse_left.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/38/mouse_right.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/38/mouse_midd.png
-wget -nv -N http://static.cdn.ubuntu-de.org/img/wiki/heading.png
+wget -nv http://static.cdn.ubuntu-de.org/img/wiki/toc.png
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/42/17/button.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_left.png -O mouse_left.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_midd.png -O mouse_midd.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_right.png -O mouse_right.png
+wget -nv http://static.cdn.ubuntu-de.org/img/wiki/heading.png
 cd ..
 
 if [ ! -d flags ]
@@ -168,40 +160,41 @@ fi
 
 cd flags
 
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/download.png
-cp download.png dl.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/cz.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/40/eo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/da.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/gb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/at.png -O at.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ca.png -O ca.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ch.png -O ch.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/cl.png -O cl.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/cz.png -O cz.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/da.png -O da.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/de.png -O de.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/gb.png -O gb.png
 cp gb.png en.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/fi.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/es.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/de.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/fr.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/hr.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/52/hu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/it.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ja.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ko.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/lv.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/pt.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ro.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/pl.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/24/flag-nw.png
-cp flag-nw.png nw.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/nl.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/rs.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/ru.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/sk.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/sv.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/tr.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/zh.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/at.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/ch.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/us.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/cl.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/15/overview.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/eo.png -O eo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/es.png -O es.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/fi.png -O fi.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/fr.png -O fr.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/hr.png -O hr.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/hu.png -O hu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ir.png -O ir.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/it.png -O it.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ja.png -O ja.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ko.png -O ko.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/lv.png -O lv.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/nl.png -O nl.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/nw.png -O nw.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/pl.png -O pl.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/pt.png -O pt.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ro.png -O ro.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/rs.png -O rs.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ru.png -O ru.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/sv.png -O sv.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/sk.png -O sk.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/tr.png -O tr.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/us.png -O us.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/zh.png -O zh.png
+
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/08/15/overview.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/download.png -O dl.png
 
 cd ..
 cd ..
@@ -223,155 +216,156 @@ fi
 cd Icons
 
 # Linux
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/ubuntu_.png
-cp ubuntu_.png ubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/kubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/edubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/gobuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/02/01/lubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/06/online-community.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/28/ubuntu64.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/xubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/ubuntustudio.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/28/kxubuntu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/05/idea-logo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/20/28/gnome.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/gnu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/debian.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/redhat_.png
-cp redhat_.png redhat.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/tux.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/suse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu.png -O ubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kubuntu.png -O kubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/edubuntu.png -O edubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gobuntu.png -O gobuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/lubuntu.png -O lubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu-community.png -O ubuntu-community.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu64.png -O ubuntu64.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/xubuntu.png -O xubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntustudio.png -O ubuntustudio.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kxubuntu.png -O kxubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/brainstorm.png -O brainstorm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome.png -O gnome.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnu.png -O gnu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/debian.png -O debian.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/redhat.png -O redhat.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/tux.png -O tux.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/suse.png -O suse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/arch.png -O arch.png
 
 # Programme
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/28/abiword.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/aim.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/28/baobab.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/52/28/calc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/28/ekiga.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/28/firefox.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/gnome-emacs.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/icq.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/msn.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/43/28/ooo_draw.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/43/28/ooo_math.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/44/28/ooo_writer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/synaptic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/28/thunderbird.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/vlc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/wine2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/xmms.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/pidgin.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/acroread.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/amule.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/bmp.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/28/dtp.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/file-manager.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/gimp.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/gnome-word.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/jabber.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/ooo_calc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/43/28/ooo_impress.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/44/28/ooo_web.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/28/stickynotes.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/28/text-editor.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/vanity.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/wine.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/wine3.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/gajim.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/09/guayadeque.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/calc.png -O calc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/dtp.png -O dtp.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/file-manager.png -O file-manager.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/synaptic.png -O synaptic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/text-editor.png -O text-editor.png
 
 # Hardware
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/2monitors.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/computer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/games.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/hd-linux.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/ipod-mini-blue.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/28/joystick.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/28/mouse2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/28/pci.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/28/printer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/scanner.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/28/tv2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/CPU.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/17/keyboard.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/backup.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/28/harddrive.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/32/28/network_local.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/removable.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/camera.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/floppy.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/hd.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/hd-windows.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/ipod-photos.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/21/28/mouse.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/28/notebook.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/portablemp3.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/24/28/printer2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/28/tv.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/usb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/40/bluetooth.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/17/mouse3.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/download_manager.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/removable-usb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/networksettings.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/removable-1394.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/2monitors.png -O 2monitors.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/camera.png -O camera.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/computer.png -O computer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/floppy.png -O floppy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/games.png -O games.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/hd.png -O hd.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/hd-linux.png -O hd-linux.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/hd-windows.png -O hd-windows.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ipod-mini-blue.png -O ipod-mini-blue.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ipod-photos.png -O ipod-photos.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/joystick.png -O joystick.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/mouse.png -O mouse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/mouse2.png -O mouse2.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/notebook.png -O notebook.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/pci.png -O pci.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/portablemp3.png -O portablemp3.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/printer.png -O printer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/printer2.png -O printer2.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/scanner.png -O scanner.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/tv.png -O tv.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/tv2.png -O tv2.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/usb.png -O usb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/CPU.png -O CPU.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/bluetooth.png -O bluetooth.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/keyboard.png -O keyboard.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/mouse3.png -O mouse3.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/backup.png -O backup.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/download_manager.png -O download_manager.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/harddrive.png -O harddrive.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/removable-usb.png -O removable-usb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/network_local.png -O network_local.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/networksettings.png -O networksettings.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/removable.png -O removable.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/removable-1394.png -O removable-1394.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/SSD.png -O SSD.png
 
 # System
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/24/28/access.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/button_cancel.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/28/develop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/28/globe.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/gnome-reclevel.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/44/28/help.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/28/internet.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/multimedia.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/search2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/19/28/security.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/sound.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/terminal.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/trash.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/advancedsettings.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/32/28/config.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/dvd.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/gnome-cd.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/gnome-warning.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/konsole2.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/optical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/secure_non.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/settings.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/28/soundcontrol.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/volume.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/service.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/access.png -O access.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/advancedsettings.png -O advancedsettings.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/button_cancel.png -O button_cancel.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/config.png -O config.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/develop.png -O develop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/dvd.png -O dvd.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/globe.png -O globe.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome-cd.png -O gnome-cd.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome-reclevel.png -O gnome-reclevel.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome-warning.png -O gnome-warning.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/help.png -O help.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/home.png -O home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/internet.png -O internet.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/konsole2.png -O konsole2.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/multimedia.png -O multimedia.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/optical.png -O optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/search2.png -O search2.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/secure_non.png -O secure_non.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/security.png -O security.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/settings.png -O settings.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/sound.png -O sound.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/soundcontrol.png -O soundcontrol.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/terminal.png -O terminal.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/volume.png -O volume.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/trash.png -O trash.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/service.png -O service.png
 
 # Sonstige
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/ati.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/blackbox.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/burning.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/contact.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/email.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/19/28/improvements.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/movies.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/19/28/panel.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/28/rss.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/time.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/28/unknown.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/users.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/28/window.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/yahoo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/windows_users.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/06/openstreetmap.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/28/wiki.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/save_all.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/pencil.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/package.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/32/28/looknfeel.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/hint.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/date.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/community-help.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/28/box.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/background.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ati.png -O ati.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/background.png -O background.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/blackbox.png -O blackbox.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/box.png -O box.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/burning.png -O burning.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/community-help.png -O community-help.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/contact.png -O contact.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/date.png -O date.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/email.png -O email.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/hint.png -O hint.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/improvements.png -O improvements.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/looknfeel.png -O looknfeel.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/movies.png -O movies.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/package.png -O package.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/panel.png -O panel.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/pencil.png -O pencil.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/rss.png -O rss.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/save_all.png -O save_all.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/time.png -O time.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/wiki.png -O wiki.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/unknown.png -O unknown.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/openstreetmap.png -O openstreetmap.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/users.png -O users.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/windows_users.png -O windows_users.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/window.png -O window.png
+
+
+if [ ! -d Protokolle ]
+  then
+    echo "Creating folder \"Wiki\Icons\Protokolle\"..."
+    mkdir Protokolle
+fi
+
+cd Protokolle
+
+# Protokolle
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/aim.png -O aim.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/bonjour.png -O bonjour.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/facebook.png -O facebook.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/gadu-gadu.png -O gadu-gadu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/google.png -O google.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/icq.png -O icq.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/irc.png -O irc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/msn.png -O msn.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/mrim.png -O mrim.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/mxit.png -O mxit.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/myspace.png -O myspace.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/novell.png -O novell.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/qq.png -O qq.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/sametime.png -O sametime.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/silc.png -O silc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/simple.png -O simple.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/vkontakte.png -O vkontakte.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/xmpp.png -O xmpp.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/yahoo.png -O yahoo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/zephyr.png -O zephyr.png
+
+cd ..
 
 if [ ! -d Tango ]
   then
@@ -382,123 +376,123 @@ fi
 cd Tango
 
 # Tango - Dokument
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/accessories-text-editor.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/document-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/document-print.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/document-save.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-copy.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-delete.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-paste.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/folder-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/folder-remote.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/user-home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/08/contact-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/bookmark-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/document-open.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/document-save-as.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-clear.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-cut.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/edit-find.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/edit-select-all.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/folder.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/folder-saved-search.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/document-properties.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/accessories-text-editor.png -O accessories-text-editor.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-new.png -O document-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-print.png -O document-print.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save.png -O document-save.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-copy.png -O edit-copy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-delete.png -O edit-delete.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-paste.png -O edit-paste.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-new.png -O folder-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-remote.png -O folder-remote.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/user-home.png -O user-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/contact-new.png -O contact-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/bookmark-new.png -O bookmark-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-open.png -O document-open.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save-as.png -O document-save-as.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-clear.png -O edit-clear.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-cut.png -O edit-cut.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-find.png -O edit-find.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-select-all.png -O edit-select-all.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder.png -O folder.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-saved-search.png -O folder-saved-search.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-properties.png -O document-properties.png
 
 # Tango - Dateityp
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/audio-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/text-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/image-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/video-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-x-generic.png -O audio-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/image-x-generic.png -O image-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/text-x-generic.png -O text-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/video-x-generic.png -O video-x-generic.png
 
 # Tango - Navigation
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/go-bottom.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/go-first.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/go-jump.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/go-next.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/go-top.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/go-down.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/go-home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/go-last.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/go-previous.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/go-up.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-bottom.png -O go-bottom.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-first.png -O go-first.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-jump.png -O go-jump.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-next.png -O go-next.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-top.png -O go-top.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-down.png -O go-down.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-home.png -O go-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-last.png -O go-last.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-previous.png -O go-previous.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-up.png -O go-up.png
 
 # Tango - Internet
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/internet-mail.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/internet-news-reader.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/internet-group-chat.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/internet-mail.png -O internet-mail.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/internet-news-reader.png -O internet-news-reader.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/internet-group-chat.png -O internet-group-chat.png
 
 # Tango Netzwerk
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/network-error.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-offline.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-transmit-receive.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-wired.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-wireless.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/network-idle.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-receive.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-transmit.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/network-wireless-encrypted.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-error.png -O network-error.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-offline.png -O network-offline.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-transmit-receive.png -O network-transmit-receive.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-wired.png -O network-wired.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-wireless.png -O network-wireless.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-idle.png -O network-idle.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-receive.png -O network-receive.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-transmit.png -O network-transmit.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/network-wireless-encrypted.png -O network-wireless-encrypted.png
 
 # Tango - Listen
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/list-add.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/list-remove.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/list-add.png -O list-add.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/list-remove.png -O list-remove.png
 
 # Tango - Multimedia
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/media-eject.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/media-playback-start.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/media-record.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/media-seek-forward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/media-skip-forward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/media-playback-pause.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/28/media-playback-stop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/media-seek-backward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/media-skip-backward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-eject.png -O media-eject.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-playback-start.png -O media-playback-start.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-record.png -O media-record.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-seek-forward.png -O media-seek-forward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-skip-forward.png -O media-skip-forward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-playback-pause.png -O media-playback-pause.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-playback-stop.png -O media-playback-stop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-seek-backward.png -O media-seek-backward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-skip-backward.png -O media-skip-backward.png
 
 # Tango - System
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/process-stop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/system-search.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/user-desktop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/system-log-out.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/system-shutdown.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/28/user-trash.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/process-stop.png -O process-stop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/system-search.png -O system-search.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/user-desktop.png -O user-desktop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/system-log-out.png -O system-log-out.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/system-shutdown.png -O system-shutdown.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/user-trash.png -O user-trash.png
 
 # Tango - Ansichtsmodi
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/28/view-fullscreen.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/zoom-best-fit.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/zoom-original.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/view-refresh.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/zoom-in.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/zoom-out.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/view-fullscreen.png -O view-fullscreen.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/zoom-best-fit.png -O zoom-best-fit.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/zoom-original.png -O zoom-original.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/view-refresh.png -O view-refresh.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/zoom-in.png -O zoom-in.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/zoom-out.png -O zoom-out.png
 
 # Tango - Diverse
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/camera-photo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/computer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/drive-optical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/input-gaming.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/28/input-mouse.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/media-floppy.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/multimedia-player.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/audio-card.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/battery.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/help-browser.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/28/preferences-desktop-locale.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-assistive-technology.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-keyboard-shortcuts.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-wallpaper.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/emblem-favorite.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/camera-video.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/drive-harddisk.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/drive-removable-media.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/input-keyboard.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/media-flash.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/28/media-optical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/28/printer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/28/audio-input-microphone.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/28/office-calendar.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/28/preferences-desktop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-accessibility.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-font.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/17/28/preferences-desktop-theme.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/28/X.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/camera-photo.png -O camera-photo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/computer.png -O computer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-optical.png -O drive-optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-gaming.png -O input-gaming.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-mouse.png -O input-mouse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-floppy.png -O media-floppy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/multimedia-player.png -O multimedia-player.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-card.png -O audio-card.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/battery.png -O battery.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/help-browser.png -O help-browser.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-locale.png -O preferences-desktop-locale.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-assistive-technology.png -O preferences-desktop-assistive-technology.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-keyboard-shortcuts.png -O preferences-desktop-keyboard-shortcuts.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-wallpaper.png -O preferences-desktop-wallpaper.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/emblem-favorite.png -O emblem-favorite.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/camera-video.png -O camera-video.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-harddisk.png -O drive-harddisk.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-removable-media.png -O drive-removable-media.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-keyboard.png -O input-keyboard.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-flash.png -O media-flash.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-optical.png -O media-optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/printer.png -O printer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-input-microphone.png -O audio-input-microphone.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/office-calendar.png -O office-calendar.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop.png -O preferences-desktop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-accessibility.png -O preferences-desktop-accessibility.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-font.png -O preferences-desktop-font.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-theme.png -O preferences-desktop-theme.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/X.png -O X.png
 
 cd ..
 
@@ -511,210 +505,213 @@ fi
 cd Oxygen
 
 # Oxygen - Dokument
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/accessories-text-editor.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/28/document-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/28/document-print.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/30/28/document-save.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/12/edit-copy.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/edit-delete.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/edit-paste.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/folder-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/folder-remote.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/28/document-properties.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/12/bookmark-new.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/document-open.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/33/28/document-save-as.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/edit-cut.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/31/28/edit-clear.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/12/edit-find.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/32/28/edit-select-all.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/folder.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/user-home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/06/datashow.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/18/contents.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/46/18/fileclose.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/accessories-text-editor.png -O accessories-text-editor.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-new.png -O document-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-print.png -O document-print.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-save.png -O document-save.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-copy.png -O edit-copy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-delete.png -O edit-delete.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-paste.png -O edit-paste.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/folder-new.png -O folder-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/folder-remote.png -O folder-remote.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-properties.png -O document-properties.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/bookmark-new.png -O bookmark-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-open.png -O document-open.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/document-save-as.png -O document-save-as.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-cut.png -O edit-cut.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-clear.png -O edit-clear.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-find.png -O edit-find.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/edit-select-all.png -O edit-select-all.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/folder.png -O folder.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/user-home.png -O user-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/datashow.png -O datashow.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/contents.png -O contents.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/fileclose.png -O fileclose.png
 
 # Oxygen - Dateityp
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/audio-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/text-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/image-x-generic.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/27/28/video-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/audio-x-generic.png -O audio-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/image-x-generic.png -O image-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/pdf.png -O pdf.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/text-x-generic.png -O text-x-generic.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/video-x-generic.png -O video-x-generic.png
 
 # Oxygen - Navigation
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/24/28/go-bottom.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/go-first.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/go-jump.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/go-next.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/go-top.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/24/28/go-down.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/go-home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/go-last.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/28/go-previous.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/28/go-up.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-bottom.png -O go-bottom.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-first.png -O go-first.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-jump.png -O go-jump.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-next.png -O go-next.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-top.png -O go-top.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-down.png -O go-down.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-home.png -O go-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-last.png -O go-last.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-previous.png -O go-previous.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/go-up.png -O go-up.png
 
 # Oxygen - Internet
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/28/internet-mail.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/internet-web-browser.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/28/internet-telephony.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/internet-mail.png -O internet-mail.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/internet-web-browser.png -O internet-web-browser.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/internet-telephony.png -O internet-telephony.png
 
 # Oxygen - Netzwerk
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/network-wired.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/28/network-wireless.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/11/network-connect.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/11/network-disconnect.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/network-wired.png -O network-wired.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/network-wireless.png -O network-wireless.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/network-connect.png -O network-connect.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/network-disconnect.png -O network-disconnect.png
 
 # Oxygen - Listen
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/list-add.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/list-remove.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/list-add.png -O list-add.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/list-remove.png -O list-remove.png
 
 # Oxygen - Multimedia
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/35/28/media-eject.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/media-playback-start.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/media-record.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/media-seek-forward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/media-skip-forward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/11/media-playlist-repeat.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/media-playback-pause.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/28/media-playback-stop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/media-seek-backward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/28/media-skip-backward.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/11/media-playlist-shuffle.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-eject.png -O media-eject.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-playback-start.png -O media-playback-start.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-record.png -O media-record.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-seek-forward.png -O media-seek-forward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-skip-forward.png -O media-skip-forward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-playlist-repeat.png -O media-playlist-repeat.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-playback-pause.png -O media-playback-pause.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-playback-stop.png -O media-playback-stop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-seek-backward.png -O media-seek-backward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-skip-backward.png -O media-skip-backward.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-playlist-shuffle.png -O media-playlist-shuffle.png
 
 # Oxygen - System
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/process-stop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/system-search.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/28/user-desktop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/12/system-restart.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/12/06/tools_report_bug.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/system-log-out.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/28/system-shutdown.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/28/user-trash.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/05/system_users.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/process-stop.png -O process-stop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-search.png -O system-search.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/user-desktop.png -O user-desktop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-restart.png -O system-restart.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/tools_report_bug.png -O tools_report_bug.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-log-out.png -O system-log-out.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-shutdown.png -O system-shutdown.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/user-trash.png -O user-trash.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system_users.png -O system_users.png
 
 # Oxygen - Ansichtsmodi
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/39/28/view-fullscreen.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/zoom-best-fit.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/zoom-original.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/view-refresh.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/zoom-in.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/zoom-out.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/view-fullscreen.png -O view-fullscreen.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/zoom-best-fit.png -O zoom-best-fit.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/zoom-original.png -O zoom-original.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/view-refresh.png -O view-refresh.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/zoom-in.png -O zoom-in.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/zoom-out.png -O zoom-out.png
 
 # Oxygen - Hardware
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/audio-card.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/audio-input-line.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/28/camera-photo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/08/12/computer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/cpu.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/drive-optical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/drive-removable-media-usb-pendrive.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/input-gaming.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/input-mouse.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/52/28/media-flash-memory-stick.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/28/media-flash-sd-mmc.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/43/28/media-floppy.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/43/28/media-optical.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/media-tape.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/multimedia-player-apple-ipod.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/28/pda.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/printer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/12/video-display.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/28/video-television.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/49/28/audio-headset.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/audio-input-microphone.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/camera-web.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/50/28/computer-laptop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/28/drive-harddisk.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/drive-removable-media.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/28/drive-removable-media-usb.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/input-keyboard.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/52/28/input-tablet.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/28/media-flash.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/28/media-flash-smart-media.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/media-optical-audio.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/media-optical-recordable.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/54/28/modem.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/44/28/multimedia-player.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/12/phone.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/28/scanner.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/28/video-projector.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/28/battery.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/audio-card.png -O audio-card.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/audio-input-line.png -O audio-input-line.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/camera-photo.png -O camera-photo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/computer.png -O computer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/cpu.png -O cpu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/drive-optical.png -O drive-optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/drive-removable-media-usb-pendrive.png -O drive-removable-media-usb-pendrive.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/input-gaming.png -O input-gaming.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/input-mouse.png -O input-mouse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-flash-memory-stick.png -O media-flash-memory-stick.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-flash-sd-mmc.png -O media-flash-sd-mmc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-floppy.png -O media-floppy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-optical.png -O media-optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-tape.png -O media-tape.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/multimedia-player-apple-ipod.png -O multimedia-player-apple-ipod.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/pda.png -O pda.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/printer.png -O printer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/video-display.png -O video-display.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/video-television.png -O video-television.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/audio-headset.png -O audio-headset.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/audio-input-microphone.png -O audio-input-microphone.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/camera-web.png -O camera-web.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/computer-laptop.png -O computer-laptop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/drive-harddisk.png -O drive-harddisk.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/drive-removable-media.png -O drive-removable-media.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/drive-removable-media-usb.png -O drive-removable-media-usb.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/input-keyboard.png -O input-keyboard.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/input-tablet.png -O input-tablet.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-flash.png -O media-flash.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-flash-smart-media.png -O media-flash-smart-media.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-optical-audio.png -O media-optical-audio.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/media-optical-recordable.png -O media-optical-recordable.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/modem.png -O modem.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/multimedia-player.png -O multimedia-player.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/phone.png -O phone.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/scanner.png -O scanner.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/video-projector.png -O video-projector.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/battery.png -O battery.png
 
 # Oxygen - Einstellungen
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/11/45/preferences-other.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/28/preferences-desktop.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/preferences-contact-list.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/preferences-desktop-color.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/preferences-desktop-default-applications.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/preferences-desktop-font.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/28/preferences-desktop-icons.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/28/preferences-desktop-locale.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/02/28/preferences-desktop-notification.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/28/preferences-desktop-printer.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/preferences-desktop-sound.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/preferences-desktop-theme.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/28/preferences-desktop-user.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/28/preferences-kcalc-constants.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/preferences-system-bluetooth.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/preferences-system-network-sharing.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/preferences-system-time.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/28/preferences-desktop-personal.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/22/preferences-desktop-filetype-association.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/22/user-identity.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/22/preferences-system-session-services.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/12/preferences-system-windows.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/28/preferences-system-power-management.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/05/28/preferences-system-login.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/28/preferences-plugin.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/preferences-desktop-wallpaper.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/preferences-desktop-user-password.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/28/preferences-desktop-text-to-speech.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/02/28/preferences-desktop-screensaver.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/28/preferences-desktop-peripherals.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/01/28/preferences-desktop-mouse.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/28/preferences-desktop-keyboard.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/28/preferences-desktop-gaming.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/12/preferences-desktop-display.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/28/preferences-desktop-cryptography.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/46/28/preferences-desktop-accessibility.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/preferences-system-network.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/28/preferences-system.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-other.png -O preferences-other.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop.png -O preferences-desktop.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-contact-list.png -O preferences-contact-list.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-color.png -O preferences-desktop-color.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-default-applications.png -O preferences-desktop-default-applications.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-font.png -O preferences-desktop-font.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-icons.png -O preferences-desktop-icons.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-locale.png -O preferences-desktop-locale.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-notification.png -O preferences-desktop-notification.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-printer.png -O preferences-desktop-printer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-sound.png -O preferences-desktop-sound.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-theme.png -O preferences-desktop-theme.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-user.png -O preferences-desktop-user.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-kcalc-constants.png -O preferences-kcalc-constants.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-bluetooth.png -O preferences-system-bluetooth.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-network-sharing.png -O preferences-system-network-sharing.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-time.png -O preferences-system-time.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-personal.png -O preferences-desktop-personal.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-filetype-association.png -O preferences-desktop-filetype-association.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/user-identity.png -O user-identity.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-session-services.png -O preferences-system-session-services.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-windows.png -O preferences-system-windows.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-power-management.png -O preferences-system-power-management.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-login.png -O preferences-system-login.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-plugin.png -O preferences-plugin.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-wallpaper.png -O preferences-desktop-wallpaper.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-user-password.png -O preferences-desktop-user-password.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-text-to-speech.png -O preferences-desktop-text-to-speech.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-screensaver.png -O preferences-desktop-screensaver.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-peripherals.png -O preferences-desktop-peripherals.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-mouse.png -O preferences-desktop-mouse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-keyboard.png -O preferences-desktop-keyboard.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-gaming.png -O preferences-desktop-gaming.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-display.png -O preferences-desktop-display.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-cryptography.png -O preferences-desktop-cryptography.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-desktop-accessibility.png -O preferences-desktop-accessibility.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system-network.png -O preferences-system-network.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-system.png -O preferences-system.png
 
 # Oxygen - Anwendungen
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/59/12/konversation.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/06/partitionmanager.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/56/12/kaffeine.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/28/16/hwinfo.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/24/12/nepomuk.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/22/k3b.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/12/kontact.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/18/12/knotes.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/57/12/digikam.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/12/akonadi.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/45/05/konsole.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/k3b.png -O k3b.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/konversation.png -O konversation.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/partitionmanager.png -O partitionmanager.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/kaffeine.png -O kaffeine.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/hwinfo.png -O hwinfo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/nepomuk.png -O nepomuk.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences-activities.png -O preferences-activities.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/k3b_1.png -O k3b_1.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/kontact.png -O kontact.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/knotes.png -O knotes.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/digikam.png -O digikam.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/akonadi.png -O akonadi.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/konsole.png -O konsole.png
 
 # Oxygen - Diverses
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/46/28/office-calendar.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/28/X.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/58/12/utilities-terminal.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/41/kde.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/41/plasma.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/14/11/security-high.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/41/11/security-low.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/12/applications-games.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/06/12/system-run.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/34/13/face-smile.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/40/22/view-calendar-day.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/46/28/help-browser.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/28/emblem-favorite.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/41/utilities-file-archiver.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/41/applications-internet.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/11/applications-other.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/11/security-medium.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/25/24/dialog-ok-apply.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/42/06/object-locked.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/12/system-software-update.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/07/22/get-hot-new-stuff.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/47/06/applications_engineering.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/office-calendar.png -O office-calendar.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/X.png -O X.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/terminal.png -O terminal.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/kde.png -O kde.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/plasma.png -O plasma.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/security-high.png -O security-high.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/security-low.png -O security-low.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/applications-games.png -O applications-games.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-run.png -O system-run.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/face-smile.png -O face-smile.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/view-calendar-day.png -O view-calendar-day.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/help-browser.png -O help-browser.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/emblem-favorite.png -O emblem-favorite.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/utilities-file-archiver.png -O utilities-file-archiver.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/applications-internet.png -O applications-internet.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/applications-other.png -O applications-other.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/security-medium.png -O security-medium.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/dialog-ok-apply.png -O dialog-ok-apply.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/object-locked.png -O object-locked.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-software-update.png -O system-software-update.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/get-hot-new-stuff.png -O get-hot-new-stuff.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/applications_engineering.png -O applications_engineering.png
 
 cd ..
 
@@ -726,31 +723,29 @@ fi
 
 cd Portal
 
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/48/04/go-home.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/00/04/internet-news-reader.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/55/04/ubuntuusers.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/29/04/community.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/22/03/usercp-preferences.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/36/03/usercp-profile.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/51/03/usercp-wikipage.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/06/anchor.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/16/06/mark.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/53/06/picture.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/15/07/topic-solved-locked.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/10/04/system-users.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/04/internet.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/13/wiki_icon_retouched24_braun.png
-cp wiki_icon_retouched24_braun.png wiki.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/26/09/wochenrueckblick.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/09/03/usercp-password.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/04/03/usercp-subscriptions.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/23/06/pre.png
-cp pre.png code.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/03/07/download.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/13/06/user_link.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/38/06/wikilink.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/21/06/expand.png
-wget -nv -N http://media.cdn.ubuntu-de.org/wiki/attachments/37/49/online-community.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/portal.png -O portal.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/ikhaya.png -O ikhaya.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/ubuntuusers.png -O ubuntuusers.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/community.png -O community.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/usercp-preferences.png -O usercp-preferences.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/usercp-profile.png -O usercp-profile.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/usercp-wikipage.png -O usercp-wikipage.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/anchor.png -O anchor.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/mark.png -O mark.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/picture.png -O picture.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/topic-solved-locked.png -O topic-solved-locked.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/forum.png -O forum.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/planet.png -O planet.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/wiki.png -O wiki.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/wochenrueckblick.png -O wochenrueckblick.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/usercp-password.png -O usercp-password.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/usercp-subscriptions.png -O usercp-subscriptions.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/code.png -O code.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/download.png -O download.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/userlink.png -O userlink.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/wikilink.png -O wikilink.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/expand.png -O expand.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/ubuntu-community.png -O ubuntu-community.png
 
 cd ${PROJECT}
 

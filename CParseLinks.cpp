@@ -349,7 +349,7 @@ void CParseLinks::createAnchor( QTextDocument *pRawDoc )
     int nLength;
     QString sAnchor;
 
-   nIndex = findAnchor.indexIn(sMyDoc);
+    nIndex = findAnchor.indexIn(sMyDoc);
     while (nIndex >= 0) {
         nLength = findAnchor.matchedLength();
         sAnchor = findAnchor.cap();
