@@ -48,7 +48,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
 
 bool CDownload::loadInyokaStyles() {
 
-    int iRet = QMessageBox::question(m_pParent, tr("Download styles"), tr("In order that articles could be previewed correctly, you have to download some Inyoka ressources. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
+    int iRet = QMessageBox::question(m_pParent, tr("Download styles"), tr("In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
 
     if (QMessageBox::Yes== iRet){
 

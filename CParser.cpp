@@ -1464,7 +1464,8 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // TABLE (Tabelle)
-    else if (sListElements[0] == trUtf8("Tabelle")){
+    else if ( sListElements[0] == trUtf8("Tabelle") )
+    {
         QRegExp tablePattern("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
         QRegExp connectCells("-\\d{1,2}");
         QRegExp connectRows("\\|\\d{1,2}");
@@ -1479,58 +1480,79 @@ QString CParser::parseTextSample( QString actParagraph )
         int iLength;
         QString sTmpCellStyle, sStyleInfo, sTmpTD;
 
-        if (sListElements.length() >= 2){
-            if (tableStylePattern.indexIn(sListElements[1]) >= 0){
+        if ( sListElements.length() >= 2 )
+        {
+            if ( tableStylePattern.indexIn(sListElements[1]) >= 0 )
+            {
                 sTmpCellStyle = tableStylePattern.cap();
                 sOutput = "<table style=" + sTmpCellStyle.remove("tablestyle=") + ">\n<tbody>\n";
             }
-            else{
+            else
+            {
                 sOutput = "<table>\n<tbody>\n";
             }
         }
-        else {
+        else
+        {
             sOutput = "<table>\n<tbody>\n";
         }
 
-        for (int i = 1; i < sListElements.length(); i++){
-
+        for ( int i = 1; i < sListElements.length(); i++ )
+        {
             bCellStyleWasSet = false;
             sTmpTD.clear();
             // New line
-            if (sListElements[i] == "+++"){
+            if ( sListElements[i] == "+++" )
+            {
                 sOutput += "</tr>\n";
             }
             // New cell
-            else{
+            else
+            {
                 int myindex = tablePattern.indexIn(sListElements[i]);
-                // Found style info && pattern which was found is not a <span class=...> element
-                if (myindex >= 0 && !sListElements[i].trimmed().startsWith("<span")){
 
+                // Check if found style info is in reality a html text format
+                bool bTextformat = false;
+                foreach ( const QString &sTmp, m_sListFormatHtmlStart )
+                {
+                    if ( sListElements[i].trimmed().startsWith(sTmp) )
+                    {
+                        bTextformat = true;
+                    }
+                }
+
+                // Found style info && pattern which was found is not a <span class=...> element or html text format
+                if ( myindex >= 0 && !sListElements[i].trimmed().startsWith("<span") && !bTextformat )
+                {
                     iLength = tablePattern.matchedLength();
                     sStyleInfo = tablePattern.cap();
 
                     // Start tr
-                    if (i == 1 || sListElements[i-1] == "+++" ||
+                    if ( i == 1 || sListElements[i-1] == "+++" ||
                         rowclassPattern.indexIn(sStyleInfo) >= 0 ||
-                        rowStylePattern.indexIn(sStyleInfo) >= 0){
+                        rowStylePattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sOutput += "<tr";
                     }
 
                     // Found row class info --> in tr
-                    if (rowclassPattern.indexIn(sStyleInfo) >= 0){
+                    if ( rowclassPattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpCellStyle = rowclassPattern.cap();
                         sOutput += " class=" + sTmpCellStyle.remove("rowclass=");
                     }
                     // Found row sytle info --> in tr
-                    if (rowStylePattern.indexIn(sStyleInfo) >= 0){
+                    if ( rowStylePattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpCellStyle = rowStylePattern.cap();
                         sOutput += " style=\"" + sTmpCellStyle.remove("rowstyle=").remove("\"") + "\"";
                     }
 
                     // Close tr
-                    if (i == 1 || sListElements[i-1] == "+++" ||
+                    if ( i == 1 || sListElements[i-1] == "+++" ||
                         rowclassPattern.indexIn(sStyleInfo) >= 0 ||
-                        rowStylePattern.indexIn(sStyleInfo) >= 0){
+                        rowStylePattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sOutput += ">\n";
                     }
 
@@ -1538,90 +1560,127 @@ QString CParser::parseTextSample( QString actParagraph )
                     sOutput += "<td";
 
                     // Found cellclass info
-                    if (cellclassPattern.indexIn(sStyleInfo) >= 0){
+                    if ( cellclassPattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpCellStyle = cellclassPattern.cap();
                         sTmpTD += " class=" + sTmpCellStyle.remove("cellclass=");
                     }
 
                     // Connect cells info (-integer, e.g. -3)
-                    if (connectCells.indexIn(sStyleInfo) >= 0){
+                    if ( connectCells.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpTD += " colspan=\"" + connectCells.cap().remove("-") + "\"";
                     }
 
                     // Connect ROWS info (|integer, e.g. |2)
-                    if (connectRows.indexIn(sStyleInfo) >= 0){
+                    if ( connectRows.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpTD += " rowspan=\"" + connectRows.cap().remove("|") + "\"";
                     }
 
                     // Cell style attributs
-                    if (cellStylePattern.indexIn(sStyleInfo) >= 0){
+                    if ( cellStylePattern.indexIn(sStyleInfo) >= 0 )
+                    {
                         sTmpTD += " style=\"" + cellStylePattern.cap().remove("cellstyle=").remove("\"");
                         bCellStyleWasSet = true;
                     }
 
                     // Text align center
-                    if (sStyleInfo.contains("<:") || sStyleInfo.contains(" : ") || sStyleInfo.contains(":>")){
-                        if (bCellStyleWasSet)
+                    if ( sStyleInfo.contains("<:") || sStyleInfo.contains(" : ") || sStyleInfo.contains(":>") )
+                    {
+                        if ( bCellStyleWasSet )
+                        {
                             sTmpTD += " text-align: center;";
+                        }
                         else
+                        {
                             sTmpTD += " style=\"text-align: center;";
+                        }
                         bCellStyleWasSet = true;
                     }
                     // Text align left
-                    if (sStyleInfo.contains("<(") || sStyleInfo.contains(" ( ") || sStyleInfo.contains("(>")){
-                        if (bCellStyleWasSet)
+                    if ( sStyleInfo.contains("<(") || sStyleInfo.contains(" ( ") || sStyleInfo.contains("(>") )
+                    {
+                        if ( bCellStyleWasSet )
+                        {
                             sTmpTD += " text-align: left;";
+                        }
                         else
+                        {
                             sTmpTD += " style=\"text-align: left;";
+                        }
                         bCellStyleWasSet = true;
                     }
                     // Text align center
-                    if (sStyleInfo.contains("<)") || sStyleInfo.contains(" ) ") || sStyleInfo.contains(")>")){
-                        if (bCellStyleWasSet)
+                    if ( sStyleInfo.contains("<)") || sStyleInfo.contains(" ) ") || sStyleInfo.contains(")>") )
+                    {
+                        if ( bCellStyleWasSet )
+                        {
                             sTmpTD += " text-align: right;";
+                        }
                         else
+                        {
                             sTmpTD += " style=\"text-align: right;";
+                        }
                         bCellStyleWasSet = true;
                     }
                     // Text vertical align top
-                    if (sStyleInfo.contains("<^") || sStyleInfo.contains(" ^ ") || sStyleInfo.contains("^>")){
-                        if (bCellStyleWasSet)
+                    if ( sStyleInfo.contains("<^") || sStyleInfo.contains(" ^ ") || sStyleInfo.contains("^>") )
+                    {
+                        if ( bCellStyleWasSet )
+                        {
                             sTmpTD += " text-align: top;";
+                        }
                         else
+                        {
                             sTmpTD += " style=\"vertical-align: top;";
+                        }
                         bCellStyleWasSet = true;
                     }
                     // Text vertical align bottom
-                    if (sStyleInfo.contains("<v") || sStyleInfo.contains(" v ") || sStyleInfo.contains("v>")){
-                        if (bCellStyleWasSet)
+                    if ( sStyleInfo.contains("<v") || sStyleInfo.contains(" v ") || sStyleInfo.contains("v>") )
+                    {
+                        if ( bCellStyleWasSet )
+                        {
                             sTmpTD += " text-align: bottom;";
+                        }
                         else
+                        {
                             sTmpTD += " style=\"vertical-align: bottom;";
+                        }
                         bCellStyleWasSet = true;
                     }
 
                     // Closing style section
-                    if (bCellStyleWasSet)
+                    if ( bCellStyleWasSet )
+                    {
                         sTmpTD += "\"";
+                    }
 
 
                     // Remove style info (only remove, if line starts with "<" otherwise elemn)
-                    if (sListElements[i].startsWith("<"))
+                    if ( sListElements[i].startsWith("<") )
+                    {
                         sListElements[i].replace(myindex, iLength, "");
+                    }
 
                     sOutput += sTmpTD + ">" + sListElements[i] + "</td>\n";
                 }
 
                 // Normal cell without style info
-                else{
-                    if (i == 1)
+                else
+                {
+                    if ( i == 1 )
+                    {
                         sOutput += "<tr>\n";
-                    if (sListElements[i-1] == "+++")
+                    }
+                    if ( sListElements[i-1] == "+++" )
+                    {
                         sOutput += "<tr>\n";
+                    }
                     sOutput += "<td>" + sListElements[i] + "</td>\n";
                 }
             }
-
         }
 
         sOutput += "</tr></tbody>\n</table>";
