@@ -46,27 +46,59 @@ class CInterWiki
 class CIWikiLinksParser;
 
 public:
+    /**
+    * \brief Constructor
+    * \param pApp Pointer to parent window
+    */
     CInterWiki( const QApplication *pApp );
 
+    /**
+    * \brief Get list of interwiki link groups
+    * \return List with group names
+    */
     QStringList getInterwikiLinksGroups() const;
+
+    /**
+    * \brief Get list of interwiki link group icons
+    * \return List with group icons
+    */
     QStringList getInterwikiLinksGroupIcons() const;
+
+    /**
+    * \brief Get list of list of interwiki links
+    * \return List of list of interwiki links
+    */
     QList<QStringList> getInterwikiLinks() const;
+
+    /**
+    * \brief Get list of list of interwiki link urls
+    * \return List of list of interwiki link urls
+    */
     QList<QStringList> getInterwikiLinksUrls() const;
+
+    /**
+    * \brief Get list of list of interwiki link names
+    * \return List of list of interwiki link names
+    */
     QList<QStringList> getInterwikiLinksNames() const;
+
+    /**
+    * \brief Get list of list of interwiki link icons
+    * \return List of list of interwiki link icons
+    */
     QList<QStringList> getInterwikiLinksIcons() const;
 
 private:
-    QXmlInputSource *m_myXmlSource;
-    CIWikiLinksParser *m_myHandler;
+    QXmlInputSource *m_myXmlSource;  /**< Pointer to xml input source file */
+    CIWikiLinksParser *m_myHandler;  /**< Handle to xml parser module */
 
-    QStringList m_sListGroups;
-    QStringList m_sListGroupIcons;
-    QList<QStringList> m_sListInterWikiLinks;
-    QList<QStringList> m_sListInterWikiLinksUrls;
-    QList<QStringList> m_sListInterWikiLinksNames;
-    QList<QStringList> m_sListInterWikiLinksIcons;
+    QStringList m_sListGroups;       /**< Interwiki link groups list */
+    QStringList m_sListGroupIcons;   /**< Interwiki link group icons list */
+    QList<QStringList> m_sListInterWikiLinks;       /**< List of list of interwiki links */
+    QList<QStringList> m_sListInterWikiLinksUrls;   /**< List of list of interwiki link urls */
+    QList<QStringList> m_sListInterWikiLinksNames;  /**< List of list of interwiki link names */
+    QList<QStringList> m_sListInterWikiLinksIcons;  /**< List of list of interwiki link icons */
 
-    class CIWikiLinksParser;
 };
 
 // -----------------------------------------------------------------------------------------------
@@ -80,8 +112,25 @@ class CInterWiki::CIWikiLinksParser : public QXmlDefaultHandler
     friend class CInterWiki;
 
 public:
+    /**
+    * \brief Called at document start
+    * \return True
+    */
     bool startDocument();
+
+    /**
+    * \brief Found end of a xml element
+    * \param name Element name
+    * \return True
+    */
     bool endElement( const QString&, const QString&, const QString &name );
+
+    /**
+    * \brief Found start of a xml element
+    * \param name Element name
+    * \param attrs Attribute name
+    * \return True
+    */
     bool startElement( const QString&, const QString&, const QString &name, const QXmlAttributes &attrs );
 
 private:

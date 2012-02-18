@@ -1,5 +1,5 @@
 /**
- * \file CProgessDialog.cpp
+ * \file CProgressDialog.cpp
  * \author See AUTHORS
  *
  * \section LICENSE

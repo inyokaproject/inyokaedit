@@ -975,7 +975,7 @@ void CInyokaEdit::displayArticleText( const QString &sArticleText )
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
-void CInyokaEdit::showHtmlPreview( const QString &filename )
+void CInyokaEdit::showHtmlPreview( const QString &sFilename )
 {
     if ( mySettings->getShowStatusbar() )
     {
@@ -986,11 +986,11 @@ void CInyokaEdit::showHtmlPreview( const QString &filename )
     if ( false == mySettings->getPreviewInEditor() )
     {
         // Open html-file in system web browser
-        QDesktopServices::openUrl( QUrl::fromLocalFile(filename) );
+        QDesktopServices::openUrl( QUrl::fromLocalFile(sFilename) );
     }
     else
     {
-        myWebview->load( QUrl::fromLocalFile(filename) );
+        myWebview->load( QUrl::fromLocalFile(sFilename) );
     }
 }
 

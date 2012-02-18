@@ -37,8 +37,15 @@
 class CInsertSyntaxElement
 {
 public:
+    /** \brief Constructor */
     CInsertSyntaxElement();
 
+    /**
+    * \brief Get Inyoka syntax element code
+    * \param sElement Element name
+    * \param sSelectedText Text which was selected
+    * \return Syntax element code
+    */
     std::string getElementInyokaCode( const std::string sElement, const std::string sSelectedText );
 
 private:

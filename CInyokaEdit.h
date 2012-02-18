@@ -79,47 +79,94 @@ class CInyokaEdit : public QMainWindow
     Q_OBJECT
     
 public:
+    /**
+    * \brief Constructor
+    * \param ptrApp Pointer to main application
+    * \param parent pointer to parent window
+    */
     explicit CInyokaEdit( QApplication *ptrApp, QWidget *parent = 0 );   // Constructor
-    ~CInyokaEdit();  // Desstructor
+
+    /** \brief Destructor */
+    ~CInyokaEdit();
     
 public slots:
-    void showHtmlPreview( const QString &filename );
+    /**
+    * \brief Call preview
+    * \param sFilename Name of temporarily generated html file
+    */
+    void showHtmlPreview( const QString &sFilename );
+
+    /**
+    * \brief Update text in editor with downloaded article
+    * \param sArticleText Raw text
+    */
     void displayArticleText( const QString &sArticleText );
 
 protected:
-    // Event when program will close
+    /**
+    * \brief Close event handler
+    * \param event Close event
+    */
     void closeEvent( QCloseEvent *event );
 
 protected slots:
+    /** \brief Call spell checker */
     void checkSpelling();
 
 private slots:
-    // About menu
+    /** \brief Call Apport for bug report */
     void reportBug();
+
+    /** \brief Call about dialog */
     void about();
 
-    // Called when text in editor was changed
+    /** \brief Called when text in editor was changed */
     void documentWasModified();
 
+    /** \brief Receive recent opened files menu state */
     void receiveMenuLastOpenedState( bool bEnabled );
+
+    /** \brief Receive status bar messages */
     void receiveStatusbarMessage( const QString &sMessage );
 
-    // Functions in inyoka toolbar
+    /**
+    * \brief Insert headline from drop down box
+    * \param nSelection Selected entry
+    */
     void insertDropDownHeadline( const int nSelection );
+
+    /**
+    * \brief Insert text macro from drop down box
+    * \param nSelection Selected entry
+    */
     void insertDropDownTextmacro( const int nSelection );
+
+    /**
+    * \brief Insert text format from drop down box
+    * \param nSelection Selected entry
+    */
     void insertDropDownTextformat( const int nSelection );
 
+    /** \brief Download an existing article */
     void downloadArticle();
+
+    /** \brief Delete downloaded images which had been attached to an article */
     void deleteTempImages();
 
     // Preview / download toolbar
     void previewInyokaPage( const int nIndex = 999 );
     void loadPreviewFinished( bool bSuccess );
 
-    // Insert text sample menu
+    /**
+    * \brief Insert text sample from menu
+    * \param sMenuEntry Selected entry
+    */
     void insertTextSample( const QString &sMenuEntry);
 
-    // Insert interwiki-link menu
+    /**
+    * \brief Insert interwiki link from menu
+    * \param sMenuEntry Selected entry
+    */
     void insertInterwikiLink( const QString &sMenuEntry );
 
 private:
