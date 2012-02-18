@@ -41,26 +41,50 @@ class CDownload : public QObject
     Q_OBJECT
 
 public:
+    /**
+    * \brief Constructor
+    * \param pParent Pointer to parent window
+    * \param sAppName Application name
+    * \param sAppDir Application directory
+    * \param StylesDir Folder in which Inyoka style elements should be stored
+    */
     CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir );
 
+    /**
+    * \brief Start download of an existing article
+    * \param ImgDir Folder in which attached images should be downloaded
+    * \param sInyokaUrl Full url to the Inyoka wiki
+    * \param bAutomaticImageDownload True or false if attached article images should be downloaded without any question
+    */
     void downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
 
 public slots:
+    /**
+    * \brief Start download of Inyoka style elements
+    * \return True or false for successful / not successful download
+    */
     bool loadInyokaStyles();
 
 signals:
-    void sendArticleText(const QString &);
+    void sendArticleText(const QString &);  /**< Signal for sending downloaded article text to editor */
 
 private:
+    /**
+    * \brief Start download of images which are attached to an article
+    * \param sArticlename Name of the article
+    * \param ImgDir Folder in which attached images should be downloaded
+    * \param sInyokaUrl Full url to the Inyoka wiki
+    * \param AutomaticImageDownload True or false if attached article images should be downloaded without any question
+    */
     void downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
 
-    QWidget *m_pParent;
-    QString m_sAppName;
-    QString m_sAppDir;
-    QDir m_StylesDir;
+    QWidget *m_pParent;  /**< Pointer to parent window */
+    QString m_sAppName;  /**< Application name */
+    QString m_sAppDir;   /**< Application directory */
+    QDir m_StylesDir;    /**< Folder in which Inyoka style elements should be stored */
 
-    QString m_sWinBashFolder;
-    QString m_sWget;
+    QString m_sWinBashFolder;  /**< Only for windows: Folder in which WinBash is located */
+    QString m_sWget;           /**< Folder in which Wget is located */
 };
 
 #endif // CDOWNLOAD_H

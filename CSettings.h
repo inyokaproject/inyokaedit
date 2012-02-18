@@ -62,8 +62,6 @@ public:
     bool getAutomaticImageDownload() const;
     bool getPreviewInEditor() const;
     QDir getLastOpenedDir() const;
-    QString getConfVersion() const;
-    void setConfVersion( const QString &sNewVersion );
     bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
 

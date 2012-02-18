@@ -84,11 +84,11 @@ void CFileOperations::open()
 // ---------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------
 
-void CFileOperations::openRecentFile( int iEntry )
+void CFileOperations::openRecentFile( const int nEntry )
 {
     if ( this->maybeSave() )
     {
-        this->loadFile(m_pSettings->getRecentFiles()[iEntry]);
+        this->loadFile(m_pSettings->getRecentFiles()[nEntry]);
     }
 }
 

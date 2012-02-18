@@ -104,9 +104,9 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
     // ----------------------------------------------------------------------------------------------------
 
     // Initialize possible flags
-    m_sListFlags << "cz" << "da" << "de" << "en" << "eo" << "es" << "fi" << "fr" << "hr" << "hu" << "it" << "ja" <<
-            "ko" << "lv" << "nl" << "nw" << "pl" << "pt" << "ro" << "rs" << "ru" << "sk" << "sv" << "tr" << "zh" <<
-            "at" << "ch" << "gb" << "us" << "cl" << "dl";
+    m_sListFlags << "at" << "ca" << "ch" << "cl" << "cz" << "da" << "de" << "en" << "eo" << "es" << "fi" <<
+                    "fr" << "gb" << "hr" << "hu" << "ir" << "it" << "ja" << "ko" << "lv" << "nl" << "nw" <<
+                    "pl" << "pt" << "ro" << "rs" << "ru" << "sv" << "sk" << "tr" << "us" << "zh" << "dl";
 
     m_bShowedMsgBoxAlready = false;
 }
