@@ -1012,8 +1012,12 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
 
 void CInyokaEdit::checkSpelling()
 {
-#if not defined _WIN32
+#if defined _WIN32
+    QString dictPath = m_pApp->applicationDirPath() + "/" + mySettings->getSpellCheckerLanguage();
+#else
     QString dictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
+#endif
+
     if ( !QFile::exists(dictPath + ".dic") || !QFile::exists(dictPath + ".aff") )
     {
         QMessageBox::critical( this, m_pApp->applicationName(), "Error: Spell checker dictionary file does not exist!" );
@@ -1042,11 +1046,6 @@ void CInyokaEdit::checkSpelling()
     spellChecker = NULL;
 
     QMessageBox::information( this, m_pApp->applicationName(), tr("Spell check has finished.") );
-
-// Windows
-#else
-    QMessageBox::information( this, m_pApp->applicationName(), tr("Spell checker is currently not supported for windows.") );
-#endif
 }
 
 // -----------------------------------------------------------------------------------------------

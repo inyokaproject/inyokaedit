@@ -38,7 +38,11 @@
 #include <QMessageBox>
 #include <QCoreApplication>
 
-#include <hunspell/hunspell.hxx>
+#if defined _WIN32
+    #include "hunspell-mingw/include/hunspell.hxx"
+#else
+    #include <hunspell/hunspell.hxx>
+#endif
 
 CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent )
 {

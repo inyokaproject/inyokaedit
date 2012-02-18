@@ -12,11 +12,9 @@
                  CParser.h \
                  CDownload.h \
                  CFileOperations.h \
-                 CParseLinks.h
-unix {
- HEADERS      += CSpellChecker.h \
+                 CParseLinks.h \
+                 CSpellChecker.h \
                  CSpellCheckDialog.h
-}
 
  SOURCES      += main.cpp \
                  CInyokaEdit.cpp \
@@ -33,11 +31,9 @@ unix {
                  CParser.cpp \
                  CDownload.cpp \
                  CFileOperations.cpp \
-                 CParseLinks.cpp
-unix {
- SOURCES      += CSpellChecker.cpp \
+                 CParseLinks.cpp \
+                 CSpellChecker.cpp \
                  CSpellCheckDialog.cpp
-}
 
  RESOURCES     = inyokaeditresources.qrc
 
@@ -62,6 +58,7 @@ unix {
 }
 
 win32 {
+ LIBS   += $$PWD/hunspell-mingw/bin/libhunspell.dll
  RC_FILE = inyokaedit.rc
 }
 
