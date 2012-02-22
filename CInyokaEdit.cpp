@@ -103,7 +103,9 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
          !QDir(m_StylesAndImagesDir.absolutePath() + "/Wiki").exists() )
     {
         m_StylesAndImagesDir.mkdir( m_StylesAndImagesDir.absolutePath() );  // Create folder because user may not start download. Folder is needed for preview.
+#if !defined _WIN32
         myDownloadModule->loadInyokaStyles();
+#endif
     }
 
     if ( mySettings->getShowStatusbar() )
@@ -372,6 +374,9 @@ void CInyokaEdit::createActions()
 
     // Download styles
     connect(m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()), myDownloadModule, SLOT(loadInyokaStyles()));
+#if defined _WIN32
+    m_pUi->DownloadInyokaStylesAct->setDisabled( true );
+#endif
 
     // Clear temp. image download folder
     connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()), this, SLOT(deleteTempImages()));
@@ -813,7 +818,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 {
     bool bSelected = false;
     QString sInsertedText = "";
-    unsigned short iFormatLength;
+    unsigned short iFormatLength = 0;
 
     // Some text was selected
     if ( myEditor->textCursor().selectedText() != "" )

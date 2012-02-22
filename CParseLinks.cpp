@@ -117,7 +117,7 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
     QRegExp findInyokaWikiLink( "\\[{1,1}\\:[0-9A-Za-z.]" );
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
-    int nLength;
+    int nLength = 0;
     QString sLink;
 
     nIndex = findInyokaWikiLink.indexIn( sMyDoc );
@@ -171,7 +171,7 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
 {
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
-    int nLength;
+    int nLength = 0;
     QString sLink;
     QStringList sListLink;
     QString sClass;
@@ -258,7 +258,7 @@ void CParseLinks::replaceAnchorLinks( QTextDocument *pRawDoc )
     QRegExp findAnchorLink( "\\[{1,1}\\#" );
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
-    int nLength;
+    int nLength = 0;
     QString sLink;
     int nSplit;
 

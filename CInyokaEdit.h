@@ -43,12 +43,8 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 #include "CDownload.h"
 #include "CFileOperations.h"
-
-// Spell checker currently not under windows
-#if not defined _WIN32
 #include "CSpellChecker.h"
 #include "CSpellCheckDialog.h"
-#endif
 
 // Qt classes
 class QComboBox;
