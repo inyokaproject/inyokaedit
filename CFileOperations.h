@@ -1,10 +1,9 @@
 /**
  * \file CFileOperations.h
- * \author See AUTHORS
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
+ * Copyright (C) 2011-2012 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *

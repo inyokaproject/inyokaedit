@@ -1,10 +1,9 @@
 /**
  * \file CInyokaEdit.cpp
- * \author See AUTHORS
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
+ * Copyright (C) 2011-2012 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -1121,7 +1120,7 @@ void CInyokaEdit::about()
     QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg( m_pApp->applicationName() ),
                        tr("<b>%1</b> - Editor for Inyoka-based portals<br />"
                           "Version: %2<br /><br />"
-                          "&copy; 2011-2012, the %3 authors<br />"
+                          "&copy; 2011-2012, The %3 developers<br />"
                           "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
                           "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(m_pApp->applicationName()).arg(sVERSION).arg(m_pApp->applicationName()));
 }

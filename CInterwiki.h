@@ -1,10 +1,9 @@
 /**
- * @file CInterwiki.h
- * @author See AUTHORS
+ * \file CInterwiki.h
  *
- * @section LICENSE
+ * \section LICENSE
  *
- * Copyright (C) 2011-2012 by the respective authors (see AUTHORS)
+ * Copyright (C) 2011-2012 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @section DESCRIPTION
+ * \section DESCRIPTION
  * Class definition.
  */
 
