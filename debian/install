@@ -2,6 +2,7 @@ GetInyokaStyles /usr/share/inyokaedit
 inyokaedit.desktop /usr/share/applications
 images/inyokaedit_64x64.png /usr/share/pixmaps
 inyokaedit /usr/bin
+man/man1/inyokaedit.1.gz /usr/share/man/man1
 man/de/man1/inyokaedit.1.gz /usr/share/man/de/man1
 apport/inyokaedit-crashdb.conf /etc/apport/crashdb.conf.d
 apport/source_inyokaedit.py /usr/share/apport/package-hooks
