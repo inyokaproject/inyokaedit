@@ -83,7 +83,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
     m_tmpPreviewImgDir = m_StylesAndImagesDir.absolutePath() + "/tmpImages";
     if ( !m_tmpPreviewImgDir.exists() )
     {
-        m_tmpPreviewImgDir.mkdir(m_tmpPreviewImgDir.absolutePath());
+        m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());  // Create folder including possible parent directories (mkPATH)!
     }
 
     // Create all objects (after definition of StylesAndImagesDir AND m_tmpPreviewImgDir)
