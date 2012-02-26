@@ -2,7 +2,7 @@ inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 
   * Switched to source format 3.0 (quilt)
 
-  * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304 and LP: #941299.
+  * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304, LP: #941299 and LP: #941017.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Feb 2012 15:20:54 +0200
 

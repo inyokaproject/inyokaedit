@@ -53,6 +53,10 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
     m_sListFormatEnd << "''";
     m_sListFormatHtmlStart << "<em>";
     m_sListFormatHtmlEnd << "</em>";
+    m_sListFormatStart << "``";            // MONOTYPE 2
+    m_sListFormatEnd << "``";
+    m_sListFormatHtmlStart << "<code>";
+    m_sListFormatHtmlEnd << "</code>";
     m_sListFormatStart << "`";            // MONOTYPE
     m_sListFormatEnd << "`";
     m_sListFormatHtmlStart << "<code>";
@@ -318,22 +322,26 @@ void CParser::replaceTextformat( QTextDocument *myRawDoc )
     QString sFormatedText, sTmpRegExp; //, sTmpText;
     int myindex;
 
-    for(int i = 0; i < m_sListFormatStart.size(); i++){
+    for( int i = 0; i < m_sListFormatStart.size(); i++ )
+    {
         sTmpRegExp = QRegExp::escape(m_sListFormatStart[i]) + variableText + QRegExp::escape(m_sListFormatEnd[i]);
 
         patternTextformat.setPattern(sTmpRegExp);
         myindex = patternTextformat.indexIn(sMyDoc);
-        while (myindex >= 0) {
+        while ( myindex >= 0 )
+        {
             iLength = patternTextformat.matchedLength();
             sFormatedText = patternTextformat.cap();
 
             /*
             // Hex color
-            if (sFormatedText.startsWith("[color=#")){
-
+            if ( sFormatedText.startsWith("[color=#") )
+            {
+                ...
             }
             // Color as word
-            else if (sFormatedText.startsWith("[color=")){
+            else if ( sFormatedText.startsWith("[color=") )
+            {
                 sFormatedText.remove(sListFormatEnd[i]);
                 sFormatedText.remove("[color=");
                 int iBracket = sFormatedText.indexOf("]");
@@ -342,7 +350,8 @@ void CParser::replaceTextformat( QTextDocument *myRawDoc )
                 sFormatedText.remove(0, iBracket);
                 sMyDoc.replace(myindex, iLength, QString(sListFormatHtmlStart[i]).arg(sTmpText) + sFormatedText + sListFormatHtmlEnd[i]);
             }
-            else {
+            else
+            {
             */
                 // Remove syntax element
                 sFormatedText.remove(m_sListFormatStart[i]);
