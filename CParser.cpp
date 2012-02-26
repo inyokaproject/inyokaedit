@@ -1221,7 +1221,8 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
     sLine.remove(")");
 
     /*
-    if (sLine == "" || sLine != "1"){
+    if ( sLine == "" || sLine != "1" )
+    {
         QMessageBox::information(0, "Information", tr("The preview of table of contents does not supports sub headlines currently.", "Msg: Table of contents does bot support sub headlines"));
     }
     */
@@ -1230,8 +1231,10 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
     QStringList sListHeadlineLevel1, sListHeadlineLevel1_Links;
     QString sTmpString;
 
-    for(; curBlock.isValid() && !(m_pRawText->lastBlock() < curBlock); curBlock = curBlock.next()) {
-        if (curBlock.text().startsWith("= ") || curBlock.text().startsWith(" = ")){
+    for( ; curBlock.isValid() && !(m_pRawText->lastBlock() < curBlock); curBlock = curBlock.next() )
+    {
+        if ( (curBlock.text().startsWith("=") || curBlock.text().startsWith(" =")) && (!curBlock.text().startsWith("==") || !curBlock.text().startsWith(" ==")) )
+        {
             sTmpString = curBlock.text();
 
             sTmpString.remove("=");
@@ -1252,7 +1255,8 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
 
     sOutput = "<div class=\"toc\">\n<div class=\"head\">" + trUtf8("Inhaltsverzeichnis") + "</div>\n<ol class=\"arabic\">\n";
 
-    for (int i = 0; i < sListHeadlineLevel1.size(); i++){
+    for ( int i = 0; i < sListHeadlineLevel1.size(); i++ )
+    {
         sOutput += "<li>\n<a href=\"#" + sListHeadlineLevel1_Links[i] + "\" class=\"crosslink\">" + sListHeadlineLevel1[i] + "</a>\n</li>\n";
     }
 

@@ -1,6 +1,6 @@
 inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 
-  * Fixed LP: #941301 and LP: #941390.
+  * Fixed LP: #941301, LP: #941390 and LP: #941313.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Feb 2012 15:20:54 +0200
 
