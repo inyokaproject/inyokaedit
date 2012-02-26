@@ -217,7 +217,7 @@ bool CParser::genOutput( const QString sActFile )
             sHtmlBody += parseHeadline(it);
         }
         // Text sample
-        else if (it.text().trimmed().startsWith(trUtf8("{{{#!vorlage"), Qt::CaseSensitive)){
+        else if (it.text().trimmed().startsWith(trUtf8("{{{#!vorlage"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!Vorlage"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
             for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
@@ -227,7 +227,7 @@ bool CParser::genOutput( const QString sActFile )
             //it = it.next();
         }
         // Codeblock
-        else if (it.text().trimmed() == trUtf8("{{{") || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive)){
+        else if (it.text().trimmed() == trUtf8("{{{") || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!Code"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
             for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
@@ -377,7 +377,7 @@ void CParser::replaceFlags( QTextDocument *myRawDoc )
         sTmpFlag.remove("{");
         sTmpFlag.remove("}");
 
-        if (sTmpFlag == trUtf8("Übersicht")){
+        if (sTmpFlag.toLower() == trUtf8("Übersicht").toLower()){
             sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/overview.png\" alt=\"&#123;" + trUtf8("Übersicht") + "&#125;\" />");
         }
         else if (sTmpFlag.length() == 2){
@@ -607,7 +607,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     }
 
     // Under construction (Baustelle)
-    if ( sListElements[0] == trUtf8("Baustelle") || sListElements[0] == trUtf8("InArbeit") )
+    if ( sListElements[0].toLower() == trUtf8("Baustelle").toLower() || sListElements[0].toLower() == trUtf8("InArbeit").toLower() )
     {
         // Get and check date
         QString sDate;
@@ -694,7 +694,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // TESTED (Getestet)
-    else if(sListElements[0] == trUtf8("Getestet")){
+    else if(sListElements[0].toLower() == trUtf8("Getestet").toLower()){
 
         if (sListElements.size() >= 2){
             // Article untested
@@ -702,7 +702,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 sOutput = trUtf8("Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.");
             }
             // Tested "general"
-            else if (sListElements[1] == trUtf8("general")){
+            else if (sListElements[1].toLower() == trUtf8("general").toLower()){
                 sOutput = trUtf8("Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.");
             }
             // Article tested with ubuntu versions
@@ -744,7 +744,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // ADVANCED (Fortgeschritten)
-    else if (sListElements[0] == trUtf8("Fortgeschritten")){
+    else if (sListElements[0].toLower() == trUtf8("Fortgeschritten").toLower()){
         sOutput = insertBox("box advanced",
                             trUtf8("Artikel für fortgeschrittene Anwender"),
                             trUtf8("Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist daher nur für fortgeschrittene Benutzer gedacht."));
@@ -752,7 +752,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // AWARD (Auszeichnung)
-    else if (sListElements[0] == trUtf8("Award")){
+    else if (sListElements[0].toLower() == trUtf8("Award").toLower()){
 
         QString sAward("");
 
@@ -778,7 +778,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // PACKAGE-LIST (Pakete-Makro)  -- OBSOLETE --
-    else if (sListElements[0] == trUtf8("Pakete")){
+    else if (sListElements[0].toLower() == trUtf8("Pakete").toLower()){
 
         // Generate output
         sOutput = "<div class=\"package-list\">\n"
@@ -797,7 +797,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // IMPROVABLE (Ausbaufähig)
-    else if (sListElements[0] == trUtf8("Ausbaufähig")){
+    else if (sListElements[0].toLower() == trUtf8("Ausbaufähig").toLower()){
         sOutput = "";
         // Remark available?
         if (sListElements.size() >= 2){
@@ -812,7 +812,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // FIXME (Fehlerhaft)
-    else if (sListElements[0] == trUtf8("Fehlerhaft")){
+    else if (sListElements[0].toLower() == trUtf8("Fehlerhaft").toLower()){
         sOutput = "";
         // Remark available?
         if (sListElements.size() >= 2){
@@ -827,7 +827,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // LEFT (Verlassen)
-    else if (sListElements[0] == trUtf8("Verlassen")){
+    else if (sListElements[0].toLower() == trUtf8("Verlassen").toLower()){
         sOutput = "";
         // Remark available?
         if (sListElements.size() >= 2){
@@ -842,7 +842,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // ARCHIVED (Archiviert)
-    else if (sListElements[0] == trUtf8("Archiviert")){
+    else if (sListElements[0].toLower() == trUtf8("Archiviert").toLower()){
         sOutput = "";
         // Remark available?
         if (sListElements.size() >= 2){
@@ -857,7 +857,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // COPY (Kopie)
-    else if (sListElements[0] == trUtf8("Kopie")){
+    else if (sListElements[0].toLower() == trUtf8("Kopie").toLower()){
         sOutput = "";
         // Generate temp. link
         if (sListElements.size() >= 2) {
@@ -873,7 +873,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // WORK IN PROGRESS (Überarbeitung)
-    else if (sListElements[0] == trUtf8("Überarbeitung")){
+    else if (sListElements[0].toLower() == trUtf8("Überarbeitung").toLower()){
         sOutput = trUtf8("Dieser Artikel wird momentan überarbeitet.");
 
         // Correct number of elements?
@@ -918,21 +918,21 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // THIRD-PARTY SOURCE / PACKAGE / SOFTWARE WARNING (Fremdquellen / -pakete / -software Warnung)
-    else if (sListElements[0] == trUtf8("Fremd")){
+    else if (sListElements[0].toLower() == trUtf8("Fremd").toLower()){
         QString sRemark("");
         sOutput = "";
 
         if (sListElements.size() >= 2){
             // Package
-            if (sListElements[1] == trUtf8("Paket")){
+            if (sListElements[1].toLower() == trUtf8("Paket").toLower()){
                 sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             // Source
-            else if (sListElements[1] == trUtf8("Quelle")){
+            else if (sListElements[1].toLower() == trUtf8("Quelle").toLower()){
                 sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             //Software
-            else if (sListElements[1] == trUtf8("Software")){
+            else if (sListElements[1].toLower() == trUtf8("Software").toLower()){
                 sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
             }
             // Remark available
@@ -949,7 +949,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // PPA
-    else if (sListElements[0] == trUtf8("PPA")){
+    else if (sListElements[0].toLower() == trUtf8("PPA").toLower()){
         QString sOutsideBox("");
         QString sRemark("");
         sOutput = "";
@@ -975,7 +975,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // AUTHENTICATE THIRD-PARTY REPO (Fremdquelle authentifizieren)
-    else if (sListElements[0] == trUtf8("Fremdquelle-auth")){
+    else if (sListElements[0].toLower() == trUtf8("Fremdquelle-auth").toLower()){
         if (sListElements.size() == 2){
 
             // Key
@@ -1010,7 +1010,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // THIRD-PARTY REPO (Fremdquelle)
-    else if (sListElements[0] == trUtf8("Fremdquelle")){
+    else if (sListElements[0].toLower() == trUtf8("Fremdquelle").toLower()){
         if (sListElements.size() >= 3){
 
             // Generate output
@@ -1048,13 +1048,13 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // THIRD-PARTY PACKAGE (Fremdpaket)
-    else if (sListElements[0] == trUtf8("Fremdpaket")){
+    else if (sListElements[0].toLower() == trUtf8("Fremdpaket").toLower()){
         if (sListElements.size() >= 3){
 
             // Case 1: [[Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]
             if (!(sListElements[2].startsWith("http")) && sListElements[2] != "dl"){
                 // LAUNCHPAD
-                if (sListElements[1] == "launchpad"){
+                if (sListElements[1].toLower() == "launchpad"){
                     sOutput = "<p>" + trUtf8("Beim <a href=\"%1/Launchpad\" class=\"internal\">Launchpad</a>-Projekt "
                                      "<a href=\"https://launchpad.net/%2\" class=\"interwiki interwiki-launchpad\">%3</a> "
                                      "werden <a href=\"https://launchpad.net/%4/+download\" class=\"interwiki interwiki-launchpad\">DEB-Pakete</a> "
@@ -1065,7 +1065,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                             .arg(sListElements[2]);
                 }
                 // SOURCEFORGE
-                else if (sListElements[1] == "sourceforge"){
+                else if (sListElements[1].toLower() == "sourceforge"){
                     sOutput = "<p>" + trUtf8("Beim <a href=\"http://de.wikipedia.org/wiki/SourceForge\" class=\"interwiki interwiki-wikipedia\">SourceForge</a>-Projekt "
                                      "<a href=\"http://sourceforge.net/projets/%1\" class=\"interwiki interwiki-sourceforge\">%2</a> "
                                      "werden <a href=\"http://sourceforge.net/projects/%3/files\" class=\"interwiki interwiki-sourceforge\">DEB-Pakete</a> "
@@ -1075,7 +1075,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                             .arg(sListElements[2]);
                 }
                 // GOOGLE CODE
-                else if (sListElements[1] == "googlecode"){
+                else if (sListElements[1].toLower() == "googlecode"){
                     sOutput = "<p>" + trUtf8("Beim <a href=\"http://code.google.com/intl/de\" rel =\"nofollow\" class=\"external\">Google Code</a> "
                                      "<img src=\"img/flags/de.png\" alt=\"(de)\" /> -Projekt "
                                      "<a href=\"http://code.google.com/p/%1\" class=\"interwiki interwiki-googlecode\">%2</a> "
@@ -1131,7 +1131,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // IMAGE WITH SUBSCRIPTION
-    else if (sListElements[0] == trUtf8("Bildunterschrift")){
+    else if (sListElements[0].toLower() == trUtf8("Bildunterschrift").toLower()){
         QString sImageLink("");
         QString sImageWidth("");
         QString sImageDescription("");
@@ -1352,6 +1352,7 @@ QString CParser::parseTextSample( QString actParagraph )
     QString sParagraph = actParagraph;
 
     sParagraph.remove("{{{#!vorlage ");
+    sParagraph.remove("{{{#!Vorlage ");
 
     // Separate elementes from macro (between §)
     QStringList sListElements = sParagraph.split("§");
@@ -1362,7 +1363,7 @@ QString CParser::parseTextSample( QString actParagraph )
     QString sOutput("<strong>ERROR: Found unknown item: {{{#!vorlage " + sListElements[0] + "</strong>\n");
 
     // KNOWLEGE BOX (Wissensblock)
-    if (sListElements[0] == trUtf8("Wissen")){
+    if (sListElements[0].toLower() == trUtf8("Wissen").toLower()){
 
         sOutput = "<ol class=\"arabic\">\n";
         for (int i = 1; i < sListElements.length(); i++){
@@ -1376,7 +1377,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // WARNING (Warnung)
-    else if (sListElements[0] == trUtf8("Warnung")){
+    else if (sListElements[0].toLower() == trUtf8("Warnung").toLower()){
         sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
@@ -1388,7 +1389,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // NOTICE (Hinweis)
-    else if (sListElements[0] == trUtf8("Hinweis")){
+    else if (sListElements[0].toLower() == trUtf8("Hinweis").toLower()){
         sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
@@ -1400,7 +1401,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // EXPERT-INFO (Experteninformationen)
-    else if (sListElements[0] == trUtf8("Experten")){
+    else if (sListElements[0].toLower() == trUtf8("Experten").toLower()){
         sOutput = "";
         for (int i = 1; i < sListElements.length(); i++){
             sOutput += sListElements[i] + " ";
@@ -1412,7 +1413,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // BASH (Befehl)
-    else if (sListElements[0] == trUtf8("Befehl")){
+    else if (sListElements[0].toLower() == trUtf8("Befehl").toLower()){
         sOutput = "<div class=\"bash\">\n"
                   "<div class=\"contents\">\n"
                   "<pre>";
@@ -1426,7 +1427,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // PACKAGE INSTALLATION (Paketinstallation)
-    else if (sListElements[0] == trUtf8("Paketinstallation")){
+    else if (sListElements[0].toLower() == trUtf8("Paketinstallation").toLower()){
         QStringList sListPackages, sListPackagesTMP;
 
         sOutput = "<ul>\n";
@@ -1463,7 +1464,7 @@ QString CParser::parseTextSample( QString actParagraph )
     }
 
     // TABLE (Tabelle)
-    else if ( sListElements[0] == trUtf8("Tabelle") )
+    else if ( sListElements[0].toLower() == trUtf8("Tabelle").toLower() )
     {
         QRegExp tablePattern("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
         QRegExp connectCells("-\\d{1,2}");
@@ -1697,6 +1698,7 @@ QString CParser::parseCodeBlock( QString actParagraph )
     QString sOutput("<strong>FOUND WRONG FORMATED CODE BLOCK</strong>");
 
     sParagraph.remove("{{{#!code ");
+    sParagraph.remove("{{{#!Code ");
     sParagraph.remove("{{{");
 
     // Separate elementes from macro (between §)

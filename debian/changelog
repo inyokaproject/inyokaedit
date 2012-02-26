@@ -1,3 +1,9 @@
+inyokaedit (0.3.0~ppa1) oneiric; urgency=low
+
+  * Fixed LP: #941301 and LP: #941390.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Feb 2012 15:20:54 +0200
+
 inyokaedit (0.2.0~ppa1) oneiric; urgency=low
 
   * Fixed bug #924525 (Improve table template)

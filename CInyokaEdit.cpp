@@ -24,7 +24,7 @@
  * Main application generation (gui, object creation etc.).
  */
 
-#define sVERSION "0.2.0"
+#define sVERSION "0.3.0"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
