@@ -1,4 +1,4 @@
-inyokaedit (0.3.0~ppa1) oneiric; urgency=low
+inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
 
   [Dominique Lasserre]
   * Apply new versions scheme.
@@ -9,12 +9,14 @@ inyokaedit (0.3.0~ppa1) oneiric; urgency=low
   * Improved package descriptions.
   * Added lintian override for false positive spelling mistake "Programm".
   * Fixed LP: #941528 and LP: #941532
+  * Added Vcs-Browser and Vcs-Bzr control elements.
 
   [Thorsten Roth]
   * Added Dominique Lasserre as uploader
   * Added back/forward/reload button to toolbar in preview (LP: #940968).
   * Switched to source format 3.0 (quilt)
-  * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304, LP: #941299 and LP: #941017.
+  * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304, LP: #941299 and
+    LP: #941017.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Feb 2012 15:20:54 +0200
 

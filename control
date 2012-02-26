@@ -2,7 +2,7 @@ Source: inyokaedit
 Section: doc
 Priority: extra
 Maintainer: Thorsten Roth <elthoro@gmx.de>
-Uploader: Dominique Lasserre <lasserre.d@gmail.com>
+Uploaders: Dominique Lasserre <lasserre.d@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~),
          libqt4-dev (>= 4:4.7.0),
          qt4-qmake (>= 4:4.7.0),
@@ -11,6 +11,8 @@ Build-Depends: debhelper (>= 7.0.50~),
          libhunspell-dev (>= 1.2.8)
 Standards-Version: 3.9.3
 Homepage: https://launchpad.net/inyokaedit
+Vcs-Bzr: https://code.launchpad.net/~elthoro/inyokaedit/packaging
+Vcs-Browser: http://bazaar.launchpad.net/~elthoro/inyokaedit/packaging
 
 Package: inyokaedit
 Architecture: any
