@@ -26,5 +26,7 @@
         <file>images/bug.png</file>
         <file>images/spellchecker.png</file>
         <file>images/edit-delete.png</file>
+        <file>images/view-refresh.png</file>
+        <file>images/go-previous.png</file>
     </qresource>
 </RCC>

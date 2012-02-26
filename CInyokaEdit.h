@@ -152,6 +152,8 @@ private slots:
     void previewInyokaPage( const int nIndex = 999 );
     void loadPreviewFinished( bool bSuccess );
 
+    void clickedLink();
+
     /**
     * \brief Insert text sample from menu
     * \param sMenuEntry Selected entry

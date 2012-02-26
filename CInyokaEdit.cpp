@@ -254,6 +254,16 @@ void CInyokaEdit::setupEditor()
     connect(myDownloadModule, SIGNAL(sendArticleText(QString)),
             this, SLOT(displayArticleText(QString)));
 
+    // Browser buttons
+    connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
+            myWebview, SLOT(back()));
+    connect(m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
+            myWebview, SLOT(forward()));
+    connect(m_pUi->reloadBrowserAct, SIGNAL(triggered()),
+            myWebview, SLOT(reload()));
+    connect(myWebview, SIGNAL(urlChanged(QUrl)),
+            this, SLOT(clickedLink()));
+
     // Hide statusbar, if option is false
     if ( false == mySettings->getShowStatusbar() )
     {
@@ -264,6 +274,8 @@ void CInyokaEdit::setupEditor()
     // Settings have to be restored after toolbars are created!
     this->restoreGeometry(mySettings->getWindowGeometry());
     this->restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
+
+    this->removeToolBar(m_pUi->browserBar);
 
     m_pUi->aboutAct->setText( m_pUi->aboutAct->text() + " " + m_pApp->applicationName() );
 
@@ -690,8 +702,12 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         m_pUi->iWikiMenu->setDisabled(true);
         m_pUi->editToolBar->setDisabled(true);
         m_pUi->inyokaeditorBar->setDisabled(true);
+        //this->removeToolBar(m_pUi->inyokaeditorBar);
         m_pUi->samplesmacrosBar->setDisabled(true);
+        //this->removeToolBar(m_pUi->samplesmacrosBar);
         m_pUi->previewAct->setDisabled(true);
+        this->addToolBar(m_pUi->browserBar);
+        m_pUi->browserBar->show();
 
         if ( "" == myFileOperations->getCurrentFile() || tr("Untitled") == myFileOperations->getCurrentFile() )
         {
@@ -711,8 +727,13 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         m_pUi->iWikiMenu->setEnabled(true);
         m_pUi->editToolBar->setEnabled(true);
         m_pUi->inyokaeditorBar->setEnabled(true);
+        //this->addToolBar(m_pUi->inyokaeditorBar);
+        //m_pUi->inyokaeditorBar->show();
         m_pUi->samplesmacrosBar->setEnabled(true);
+        //this->addToolBar(m_pUi->samplesmacrosBar);
+        //m_pUi->samplesmacrosBar->show();
         m_pUi->previewAct->setEnabled(true);
+        this->removeToolBar(m_pUi->browserBar);
     }
 }
 
@@ -1008,6 +1029,30 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
     else
     {
         QMessageBox::warning( this, m_pApp->applicationName(), tr("Error while loading preview.") );
+    }
+}
+
+// A link on preview page was clicked
+void CInyokaEdit::clickedLink()
+{
+    // Enable / disbale back button
+    if ( myWebview->history()->canGoBack() )
+    {
+        m_pUi->goBackBrowserAct->setEnabled(true);
+    }
+    else
+    {
+        m_pUi->goBackBrowserAct->setEnabled(false);
+    }
+
+    // Enable / disable forward button
+    if ( myWebview->history()->canGoForward() )
+    {
+        m_pUi->goForwardBrowserAct->setEnabled(true);
+    }
+    else
+    {
+        m_pUi->goForwardBrowserAct->setEnabled(false);
     }
 }
 

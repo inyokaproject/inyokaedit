@@ -1,7 +1,8 @@
 inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 
+  * Fixed LP: #941528 and LP: #941532 - thanks to Lasall
+  * Added back/forward/reload button to toolbar in preview (LP: #940968).
   * Switched to source format 3.0 (quilt)
-
   * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304, LP: #941299 and LP: #941017.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Feb 2012 15:20:54 +0200
@@ -9,13 +10,9 @@ inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 inyokaedit (0.2.0~ppa1) oneiric; urgency=low
 
   * Fixed bug #924525 (Improve table template)
-
   * Fixed bug #925013 (Dates with/without leading 0)
-
   * Started with doxygen documentation and some code cosmetics.
-
   * Added new GitHub interwiki link.
-
   * Possibility to remove temp. with articles downloaded images.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 05 Feb 2012 17:51:12 +0200
@@ -23,15 +20,10 @@ inyokaedit (0.2.0~ppa1) oneiric; urgency=low
 inyokaedit (0.1.0~ppa1) lucid; urgency=low
 
   * Separated link parser into CParseLinks
-
   * Fixed bug #826344 (Some signs break link syntax) and #883811
-
   * Separated file functions into CFileOperations
-
   * Separated download functions into CDownload
-
   * Cleaned up parser
-
   * Fixes for running InyokaEdit under Windows
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Jan 2012 17:47:54 +0200
@@ -51,9 +43,7 @@ inyokaedit (0.0.9~ppa2) lucid; urgency=low
 inyokaedit (0.0.9~ppa1) lucid; urgency=low
 
   * Added hunspell-based spell checker
-
   * Separated gui definition from CInyokaEdit.cpp into CInyokaEdit.ui
-
   * Added ifdefs for debugging and not packaged installations
 
  -- Thorsten Roth <elthoro@gmx.de>  Mon, 26 Dec 2011 00:27:53 +0200
@@ -61,11 +51,8 @@ inyokaedit (0.0.9~ppa1) lucid; urgency=low
 inyokaedit (0.0.8~ppa1) oneiric; urgency=low
 
   * Translated all GUI strings into english, added german translation
-
   * Added combobox for text format
-
   * Possibility to hide statusbar
-
   * Added interwiki links
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 27 Nov 2011 22:50:12 +0200
@@ -73,9 +60,7 @@ inyokaedit (0.0.8~ppa1) oneiric; urgency=low
 inyokaedit (0.0.7~ppa1) oneiric; urgency=low
 
   * Open recent files menu entry
-
   * Updated man file
-
   * Made clumsy code completion working again
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 12 Nov 2011 22:37:49 +0200
@@ -83,11 +68,8 @@ inyokaedit (0.0.7~ppa1) oneiric; urgency=low
 inyokaedit (0.0.6~ppa1) natty; urgency=low
 
   * Importing interwiki links via xml file in menu and parser
-
   * Cleand up source code...
-
   * Added font size to settings
-
   * Separated settings in own module
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 05 Nov 2011 20:13:19 +0200
@@ -95,17 +77,11 @@ inyokaedit (0.0.6~ppa1) natty; urgency=low
 inyokaedit (0.0.5~ppa1) natty; urgency=low
 
   * Changed save folder of settings file
-
   * File dialogs open last used folder
-
   * Replaced CDownloadArticle with simple wget call
-
   * Bigger application icon
-
   * Reporting bugs via apport
-
   * Added missing interwiki links
-
   * Save and restore toolbar positions
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Oct 2011 20:37:44 +0200
@@ -113,7 +89,6 @@ inyokaedit (0.0.5~ppa1) natty; urgency=low
 inyokaedit (0.0.4~ppa1) natty; urgency=low
 
   * Added option to download images of articles (Closes: #847258)
-
   * Minor changes (exception handling, using wget for metadata download)
 
  -- Thorsten Roth <elthoro@gmx.de>  Wed, 19 Oct 2011 19:47:23 +0200
@@ -127,9 +102,7 @@ inyokaedit (0.0.3~ppa2) natty; urgency=low
 inyokaedit (0.0.3~ppa1) natty; urgency=low
 
   * Another try to realize Open with...
-
   * File dialog opens home directory
-
   * Show download progress at first startup
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 18 Aug 2011 22:25:04 +0200
@@ -137,9 +110,7 @@ inyokaedit (0.0.3~ppa1) natty; urgency=low
 inyokaedit (0.0.2~ppa1) natty; urgency=low
 
   * CHANGELOG: Used changelog file ;-)
-
   * main.cpp, CInyokaEdit.cpp: Open file from command line argument
-
   * CInyokaEdit.cpp: Updated about dialog
 
  -- Thorsten Roth <elthoro@gmx.de>  Mon, 15 Aug 2011 22:25:04 +0200

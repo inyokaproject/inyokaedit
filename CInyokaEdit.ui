@@ -114,20 +114,6 @@
      <addaction name="insertWarningAct"/>
      <addaction name="insertExpertsAct"/>
     </widget>
-    <widget class="QMenu" name="insertPacketinstallationMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Package installation</string>
-     </property>
-     <addaction name="insertPackageInstallAct"/>
-     <addaction name="insertPPAAct"/>
-     <addaction name="insertThirdPartyRepoAct"/>
-     <addaction name="insertThirdPartyRepoAuthAct"/>
-     <addaction name="insertThirdPartyPackageAct"/>
-     <addaction name="insertPackageListAct"/>
-    </widget>
     <widget class="QMenu" name="insertMiscElementMenu">
      <property name="locale">
       <locale language="English" country="UnitedKingdom"/>
@@ -141,6 +127,20 @@
      <addaction name="insertThirdPartyPackageWarningAct"/>
      <addaction name="insertThirdPartyRepoWarningAct"/>
      <addaction name="insertThirdPartySoftwareWarningAct"/>
+    </widget>
+    <widget class="QMenu" name="insertPacketinstallationMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Package installation</string>
+     </property>
+     <addaction name="insertPackageInstallAct"/>
+     <addaction name="insertPPAAct"/>
+     <addaction name="insertThirdPartyRepoAct"/>
+     <addaction name="insertThirdPartyRepoAuthAct"/>
+     <addaction name="insertThirdPartyPackageAct"/>
+     <addaction name="insertPackageListAct"/>
     </widget>
     <addaction name="insertBeginningMenu"/>
     <addaction name="insertImageMenu"/>
@@ -256,6 +256,20 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+  </widget>
+  <widget class="QToolBar" name="browserBar">
+   <property name="windowTitle">
+    <string>Browser toolbar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="goBackBrowserAct"/>
+   <addaction name="goForwardBrowserAct"/>
+   <addaction name="reloadBrowserAct"/>
   </widget>
   <action name="reportBugAct">
    <property name="icon">
@@ -754,7 +768,7 @@
     <string>Third-party software warning</string>
    </property>
    <property name="toolTip">
-    <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completly without package repositories</string>
+    <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completely without package repositories</string>
    </property>
   </action>
   <action name="spellCheckerAct">
@@ -788,6 +802,36 @@
    </property>
    <property name="text">
     <string>Download Inyoka styles</string>
+   </property>
+  </action>
+  <action name="goBackBrowserAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-previous.png</normaloff>:/images/go-previous.png</iconset>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </action>
+  <action name="goForwardBrowserAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/go-next.png</normaloff>:/images/go-next.png</iconset>
+   </property>
+   <property name="text">
+    <string>Forward</string>
+   </property>
+  </action>
+  <action name="reloadBrowserAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/view-refresh.png</normaloff>:/images/view-refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reload</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload</string>
    </property>
   </action>
  </widget>
