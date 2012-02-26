@@ -1,17 +1,22 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
+export DH_VERBOSE=1
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
- 
+CFLAGS = -Wall -g
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/qmake.mk
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+  CFLAGS += -O0
+else
+  CFLAGS += -O2
+endif
 
-# Add here any variable or target overrides you need.
-QMAKE=qmake-qt4
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  PARALLEL_MAKEFLAGS += -j$(NUMJOBS)
+endif
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build -- $(PARALLEL_MAKEFLAGS) CFLAGS="$(CFLAGS)"

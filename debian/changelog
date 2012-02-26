@@ -1,3 +1,15 @@
+inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
+
+  * Apply new versions scheme.
+  * Bump to Standards version 3.9.3.
+  * Bump to DEP-5 copyright format 1.0.
+  * Switch from cdbs to dh.
+  * Support DEB_BUILD_OPTIONS "parallel=%s" and "noopt".
+  * Improved package descriptions.
+  * Added lintian override for false positive spelling mistake "Programm".
+
+ -- Dominique Lasserre <lasserre.d@gmail.com>  Sun, 26 Feb 2012 19:07:13 +0100
+
 inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 
   * Switched to source format 3.0 (quilt)
