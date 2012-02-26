@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+export DH_VERBOSE=1
+
+CFLAGS = -Wall -g
+
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+  CFLAGS += -O0
+else
+  CFLAGS += -O2
+endif
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  PARALLEL_MAKEFLAGS += -j$(NUMJOBS)
+endif
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build -- $(PARALLEL_MAKEFLAGS) CFLAGS="$(CFLAGS)"
