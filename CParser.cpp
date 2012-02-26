@@ -1131,7 +1131,8 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     // IMAGE WITH SUBSCRIPTION
-    else if (sListElements[0].toLower() == trUtf8("Bildunterschrift").toLower()){
+    else if ( sListElements[0].toLower() == trUtf8("Bildunterschrift").toLower() )
+    {
         QString sImageLink("");
         QString sImageWidth("");
         QString sImageDescription("");
@@ -1140,34 +1141,49 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         double iImgHeight, iImgWidth;
 
         sImageLink = sListElements[1].trimmed();
+        if ( sImageLink.startsWith("Wiki/") )
+        {
+            sImageLink = m_tmpFileDir.absolutePath() + "/" + sImageLink;
+        }
+        else if ( QFile(m_tmpImgDir.absolutePath() + "/" + sImageLink).exists() )
+        {
+            sImageLink = m_tmpImgDir.absolutePath() + "/" + sImageLink;
+        }
 
-        for (int i = 2; i < sListElements.length(); i++){
+        for ( int i = 2; i < sListElements.length(); i++ )
+        {
             // Found integer -> width
-            if(sListElements[i].trimmed().toUInt() != 0){
+            if( sListElements[i].trimmed().toUInt() != 0 )
+            {
                 sImageWidth = sListElements[i].trimmed();
             }
             // Alignment
-            else if (sListElements[i].trimmed() == "left" || sListElements[i].trimmed() == "right"){
+            else if ( sListElements[i].trimmed() == "left" || sListElements[i].trimmed() == "right" )
+            {
                 sImageAlign = sListElements[i].trimmed();
             }
             // Style
-            else if (sListElements[i].trimmed() == "xfce-style" || sListElements[i].trimmed() == "kde-style" ||
-                     sListElements[i].trimmed() == "edu-style" || sListElements[i].trimmed() == "lxde-style" ||
-                     sListElements[i].trimmed() == "studio-style"){
+            else if ( sListElements[i].trimmed() == "xfce-style" || sListElements[i].trimmed() == "kde-style" ||
+                      sListElements[i].trimmed() == "edu-style" || sListElements[i].trimmed() == "lxde-style" ||
+                      sListElements[i].trimmed() == "studio-style")
+            {
                 sImageStyle = sListElements[i].trimmed().remove("-style");
             }
             // Everything else is description...
-            else {
+            else
+            {
                 sImageDescription += sListElements[i];
             }
         }
 
         iImgWidth = QImage(sImageLink).width();
-        if (sImageWidth != ""){
+        if ( sImageWidth != "" )
+        {
             iImgHeight = (double)QImage(sImageLink).height() / (iImgWidth / sImageWidth.toDouble());
         }
         // Default
-        else {
+        else
+        {
             sImageWidth = "140";
             iImgHeight = (double)QImage(sImageLink).height() / (iImgWidth / 140);
         }
@@ -1175,10 +1191,12 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         sOutput = "<table style=\"float: " + sImageAlign + "; clear: both; border: none\">\n<tbody>\n";
 
         // No style info -> default
-        if (sImageStyle == ""){
+        if ( sImageStyle == "" )
+        {
             sOutput += "<tr class=\"titel\">\n";
         }
-        else{
+        else
+        {
             sOutput += "<tr class=\"" + sImageStyle + "-titel\">\n";
         }
 
@@ -1188,10 +1206,12 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                    "</td>\n</tr>\n";
 
         // No style info -> default
-        if (sImageStyle == ""){
+        if ( sImageStyle == "" )
+        {
             sOutput += "<tr class=\"kopf\">\n";
         }
-        else{
+        else
+        {
             sOutput += "<tr class=\"" + sImageStyle + "-kopf\">\n";
         }
 
@@ -1787,6 +1807,7 @@ QString CParser::parseImageCollection( QString actParagraph )
     sParagraph.remove("[[Vorlage(Bildersammlung");
     sParagraph.remove(")]]");
 
+    QString sImageUrl("");
     QString sImageCollHeight("140");
     QString sImageCollAlign("");
     QStringList sListImages;
@@ -1794,71 +1815,112 @@ QString CParser::parseImageCollection( QString actParagraph )
 
     // Separate elementes from macro (between §)
     QStringList sListElements = sParagraph.split("§");
-    if (sListElements.length() == 0)
+    if ( sListElements.length() == 0 )
+    {
         return "<strong>ERROR: Image collection</strong>\n";
+    }
 
-    for (int i = 0; i < sListElements.length(); i++){
+    for ( int i = 0; i < sListElements.length(); i++ )
+    {
         sListElements[i] = sListElements[i].trimmed();
         sListElements[i].remove("\"");
 
         // First entry (height, align)
-        if (i == 0){
+        if ( i == 0 )
+        {
             sListImages << sListElements[0].split(",");
-            for (int j = 0; j < sListImages.length(); j++){
-                if (sListImages[j].trimmed().toUInt() != 0)
+            for ( int j = 0; j < sListImages.length(); j++ )
+            {
+                if ( sListImages[j].trimmed().toUInt() != 0 )
+                {
                     sImageCollHeight = sListImages[j].trimmed();
-                else if (sListImages[j].trimmed() == "left" || sListImages[j].trimmed() == "right")
+                }
+                else if ( sListImages[j].trimmed() == "left" || sListImages[j].trimmed() == "right" )
+                {
                     sImageCollAlign = sListImages[j].trimmed();
+                }
             }
         }
-        else{
+        else
+        {
             sListImages.clear();
             sListImages << sListElements[i].split(",");
-            if (sListImages.length() <= 1)
+            if ( sListImages.length() <= 1 )
+            {
                 return "<strong>ERROR: Image collection</strong>\n";
+            }
         }
 
         // With word wrap
-        if (sImageCollAlign == "" && i > 0){
-
-            if (i == 1)
+        if ( sImageCollAlign == "" && i > 0 )
+        {
+            if ( i == 1 )
+            {
                 sOutput += "<div style=\"clear: both\">\n<div class=\"contents\"> </div>\n</div>";
+            }
 
-            iImgHeight = QImage(sListImages[0].trimmed()).height();
-            iImgWidth = (double)QImage(sListImages[0].trimmed()).width() / (iImgHeight / sImageCollHeight.toDouble());
+            sImageUrl = sListImages[0].trimmed();
+            if ( sImageUrl.startsWith("Wiki/") )
+            {
+                sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+            }
+            else if ( QFile(m_tmpImgDir.absolutePath() + "/" + sImageUrl).exists() )
+            {
+                sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+            }
+
+            iImgHeight = QImage(sImageUrl).height();
+            iImgWidth = (double)QImage(sImageUrl).width() / (iImgHeight / sImageCollHeight.toDouble());
 
             sOutput += "<table style=\"float: left; margin: 10px 5px; border: none\">\n<tbody>\n<tr>\n";
             sOutput += "<td style=\"text-align: center; background-color: #E2C889; border: none\">";
-            sOutput += "<a href=\"" + sListImages[0].trimmed() + "\" class=\"crosslink\">";
-            sOutput += "<img src=\"" + sListImages[0].trimmed() + "\" alt=\"" + sListImages[0].trimmed() + "\" class=\"image-default\" ";
+            sOutput += "<a href=\"" + sImageUrl + "\" class=\"crosslink\">";
+            sOutput += "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl + "\" class=\"image-default\" ";
             sOutput += "width=\"" + QString::number((int)iImgWidth) + "\" height=\"" + sImageCollHeight + "\"/></a></td>\n</tr>\n";
             sOutput += "<tr>\n<td style=\"text-align: center; background-color: #F9EAAF; border: none\">" + sListImages[1] + "</td>\n</tr>\n";
             sOutput += "</tbody>\n</table>\n";
         }
     }
 
-    if (sImageCollAlign == "")
+    if ( sImageCollAlign == "" )
+    {
         sOutput += "<div style=\"clear: both\">\n<div class=\"contents\"> </div>\n</div>";
+    }
 
     // In continuous text
-    if (sImageCollAlign != ""){
+    if ( sImageCollAlign != "" )
+    {
         sOutput = "<table style=\"float: " + sImageCollAlign + "; clear: both; border: none\">\n<tbody>\n<tr style=\"background-color: #E2C889\">\n";
-        for (int i = 1; i < sListElements.length(); i++){
+        for ( int i = 1; i < sListElements.length(); i++ )
+        {
             sListImages.clear();
             sListImages << sListElements[i].split(",");
-            if (sListImages.length() <= 1)
+            if ( sListImages.length() <= 1 )
+            {
                 return "<strong>ERROR: Image collection</strong>\n";
+            }
 
-            iImgHeight = QImage(sListImages[0].trimmed()).height();
-            iImgWidth = (double)QImage(sListImages[0].trimmed()).width() / (iImgHeight / sImageCollHeight.toDouble());
+            sImageUrl = sListImages[0].trimmed();
+            if ( sImageUrl.startsWith("Wiki/") )
+            {
+                sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+            }
+            else if ( QFile(m_tmpImgDir.absolutePath() + "/" + sImageUrl).exists() )
+            {
+                sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+            }
+
+            iImgHeight = QImage(sImageUrl).height();
+            iImgWidth = (double)QImage(sImageUrl).width() / (iImgHeight / sImageCollHeight.toDouble());
 
             sOutput += "<td style=\"text-align: center; border-width: 0 10px 0 0; border-color: #FFFFFF \">\n";
-            sOutput += "<img src=\"" + sListImages[0] + "\" alt=\"" + sListImages[0] + "\" class=\"image-default\" ";
+            sOutput += "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl + "\" class=\"image-default\" ";
             sOutput += "width=\"" + QString::number((int)iImgWidth) + "\" height=\"" + sImageCollHeight + "\"/></td>\n";
         }
         sOutput += "</tr>\n<tr style=\"background-color: #F9EAAF\">";
 
-        for (int i = 1; i < sListElements.length(); i++){
+        for ( int i = 1; i < sListElements.length(); i++ )
+        {
             sListImages.clear();
             sListImages << sListElements[i].split(",");
 
@@ -1913,26 +1975,32 @@ void CParser::replaceImages( QTextDocument *myRawDoc )
         sListTmpImageInfo << sTmpImage.split(",");
 
         sImageUrl = sListTmpImageInfo[0].trimmed();
-        if (sImageUrl.startsWith("Wiki/")) {
+        if ( sImageUrl.startsWith("Wiki/") )
+        {
             sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
         }
-        else if (QFile(m_tmpImgDir.absolutePath() + "/" + sImageUrl).exists()) {
+        else if ( QFile(m_tmpImgDir.absolutePath() + "/" + sImageUrl).exists() )
+        {
             sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
         }
         //sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
-        for (int i = 1; i < sListTmpImageInfo.length(); i++){
+        for ( int i = 1; i < sListTmpImageInfo.length(); i++ )
+        {
             // Found integer (width)
-            if (sListTmpImageInfo[i].trimmed().toUInt() != 0){
+            if ( sListTmpImageInfo[i].trimmed().toUInt() != 0 )
+            {
                 sImageWidth = sListTmpImageInfo[i].trimmed();
                 tmpW = sListTmpImageInfo[i].trimmed().toUInt();
             }
             // Found x+integer (height)
-            else if (sListTmpImageInfo[i].startsWith("x\\d")){
+            else if ( sListTmpImageInfo[i].startsWith("x\\d") )
+            {
                 sImageHeight = sListTmpImageInfo[i].remove("x").trimmed();
                 tmpH = sImageHeight.toUInt();
             }
             // Found int x int (width x height)
-            else if (sListTmpImageInfo[i].contains("\\dx\\d")){
+            else if ( sListTmpImageInfo[i].contains("\\dx\\d") )
+            {
                 QString sTmp;
                 sTmp = sListTmpImageInfo[i];
                 sImageWidth = sListTmpImageInfo[i].remove(sListTmpImageInfo[i].indexOf("x"), sListTmpImageInfo[i].length()).trimmed();
@@ -1942,27 +2010,32 @@ void CParser::replaceImages( QTextDocument *myRawDoc )
             }
 
             // Found alignment
-            else if (sListTmpImageInfo[i].trimmed() == "left" || sListTmpImageInfo[i].trimmed() == "align=left"){
+            else if ( sListTmpImageInfo[i].trimmed() == "left" || sListTmpImageInfo[i].trimmed() == "align=left" )
+            {
                 sImageAlign = "left";
             }
-            else if (sListTmpImageInfo[i].trimmed() == "right" || sListTmpImageInfo[i].trimmed() == "align=right"){
+            else if ( sListTmpImageInfo[i].trimmed() == "right" || sListTmpImageInfo[i].trimmed() == "align=right" )
+            {
                 sImageAlign = "right";
             }
         }
 
         // No size given
-        if (tmpH == 0 && tmpW == 0){
+        if ( tmpH == 0 && tmpW == 0 )
+        {
             iImgHeight = QImage(sImageUrl).height();
             tmpH = iImgHeight;
             iImgWidth = QImage(sImageUrl).width();
             tmpW = iImgWidth;
         }
 
-        if (tmpH > tmpW){
+        if ( tmpH > tmpW )
+        {
             iImgHeight = QImage(sImageUrl).height();
             tmpW = (double)QImage(sImageUrl).width() / (iImgHeight / (double)tmpH);
         }
-        else if (tmpW > tmpH){
+        else if ( tmpW > tmpH )
+        {
             iImgWidth = QImage(sImageUrl).width();
             tmpH = (double)QImage(sImageUrl).height() / (iImgWidth / (double)tmpW);
         }
