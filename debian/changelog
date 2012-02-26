@@ -1,6 +1,13 @@
 inyokaedit (0.3.0~ppa1) oneiric; urgency=low
 
   [Dominique Lasserre]
+  * Apply new versions scheme.
+  * Bump to Standards version 3.9.3.
+  * Bump to DEP-5 copyright format 1.0.
+  * Switch from cdbs to dh.
+  * Support DEB_BUILD_OPTIONS "parallel=%s" and "noopt".
+  * Improved package descriptions.
+  * Added lintian override for false positive spelling mistake "Programm".
   * Fixed LP: #941528 and LP: #941532
 
   [Thorsten Roth]
