@@ -10,6 +10,7 @@ inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
   * Added lintian override for false positive spelling mistake "Programm".
   * Fixed LP: #941528 and LP: #941532
   * Added Vcs-Browser and Vcs-Bzr control elements.
+  * Install manpages from plain text files.
 
   [Thorsten Roth]
   * Added Dominique Lasserre as uploader

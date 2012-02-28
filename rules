@@ -20,3 +20,7 @@ endif
 
 override_dh_auto_build:
 	dh_auto_build -- $(PARALLEL_MAKEFLAGS) CFLAGS="$(CFLAGS)"
+
+override_dh_installman:
+	dh_installman man/man1/inyokaedit.1
+	dh_installman --language=de man/de/man1/inyokaedit.1
