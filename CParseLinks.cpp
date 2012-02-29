@@ -137,7 +137,9 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                 {
                     sLink.remove( ":]" );
                     //qDebug() << sLink;
-                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + m_sWikiUrl + "/" + sLink + "\" class=\"internal\">" + sLink + "</a>");
+                    QString sLink2 = sLink;
+                    sLink2.replace("_", " ");
+                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + m_sWikiUrl + "/" + sLink + "\" class=\"internal\">" + sLink2 + "</a>");
                 }
                 else
                 {
