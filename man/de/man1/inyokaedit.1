@@ -1,0 +1,42 @@
+'\" t
+.\" ** The above line should force tbl to be a preprocessor **
+.\" Man page for InyokaEdit
+.\"
+.\" Copyright (C), 2011, Martin Rabeneck, Thorsten Roth
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the file COPYING that comes with the man
+.\" distribution.
+.\"
+.\" Sun Nov  6 17:13:29 CEST 2011  ElThoro <elthoro@gmx.de> 
+.\" 
+.TH MAN 1 "2011-11-06" "0.2.0" "InyokaEdit Handbuchseite"
+.SH NAME
+InyokaEdit \- Editor für Inyoka-basierende Portale
+.SH "SYNOPSIS"
+\fBinyokaedit\fP [\fIOption\fP] oder [\fIDatei\fP]
+.SH BESCHREIBUNG
+\fPinyokaedit\fP ist ein Editor für Artikel von Inyoka-basierenden Portalen.
+Neben Syntaxhervorhebung für das Wiki-Markup, vielen Textbausteinen und
+Vorlagen bietet das Programm eine Vorschaufunktion.
+.SS Optionen
+.TP
+\fB\--log\fP
+Debug-Informationen ausgeben.
+.TP
+\fB\--version\fP
+Versionsnummer ausgeben.
+.SH DATEIEN
+.TP
+.I ~/.InyokaEdit/InyokaEdit.conf
+Die Konfigurationsdatei.
+.TP
+.I ~/.InyokaEdit
+Das Standardprojekt-Verzeichnis.
+.TP
+.I /usr/share/inyokaedit/iWikiLinks/iWikiLinks.xml
+Xml-Datei mit den unterstützten InterWiki-Links. Wird zur Generierung des InterWiki-Menüs, sowie zum Parsen verwendet.
+.SH FEHLER
+Launchpad Bugtracker:
+
+https://bugs.launchpad.net/inyokaedit
