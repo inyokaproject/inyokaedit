@@ -28,5 +28,6 @@
         <file>images/edit-delete.png</file>
         <file>images/view-refresh.png</file>
         <file>images/go-previous.png</file>
+        <file>images/document-print.png</file>
     </qresource>
 </RCC>

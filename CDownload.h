@@ -65,7 +65,7 @@ public slots:
     bool loadInyokaStyles();
 
 signals:
-    void sendArticleText(const QString &);  /**< Signal for sending downloaded article text to editor */
+    void sendArticleText( const QString &, const QString & );  /**< Signal for sending downloaded article text to editor */
 
 private:
     /**

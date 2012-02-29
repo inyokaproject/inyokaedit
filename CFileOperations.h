@@ -109,6 +109,9 @@ public slots:
     */
     bool saveFile( const QString &sFileName );
 
+    /** \brief Print preview (printer / PDF) */
+    void printPreview();
+
     /**
     * \brief Change / set current file name
     * \param sFileName Path and name of current file

@@ -24,6 +24,8 @@
  * File operations: New, load, save...
  */
 
+#include <QWebView>
+
 #include "CFileOperations.h"
 
 CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName ) :
@@ -111,7 +113,16 @@ bool CFileOperations::save()
 
 bool CFileOperations::saveAs()
 {
-    QString sFileName = QFileDialog::getSaveFileName(m_pParent, tr("Save file", "GUI: Save file dialog"), m_pSettings->getLastOpenedDir().absolutePath());  // File dialog opens last used folder
+    QString sCurFileName("");
+    if ( m_sCurFile != "" )
+    {
+        sCurFileName = m_pSettings->getLastOpenedDir().absolutePath() + "/" + m_sCurFile;
+    }
+    else
+    {
+        sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
+    }
+    QString sFileName = QFileDialog::getSaveFileName(m_pParent, tr("Save file", "GUI: Save file dialog"), sCurFileName);  // File dialog opens last used folder
     if (sFileName.isEmpty())
         return false;
 
@@ -230,6 +241,35 @@ bool CFileOperations::saveFile( const QString &sFileName )
     }
     return true;
 }
+
+// ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+
+void CFileOperations::printPreview()
+{
+    //QMessageBox::information(0, "Test", "printPreview()");
+
+    QWebView myPreviewWebView;
+    QPrinter myPrinter;
+
+    // Configure printer : format A4, PDF
+    myPrinter.setPageSize(QPrinter::A4);
+    myPrinter.setFullPage( true );
+    myPrinter.setOrientation( QPrinter::Portrait );
+    myPrinter.setPrintRange( QPrinter::AllPages );
+    myPrinter.setOutputFormat(QPrinter::PdfFormat);
+    myPrinter.setOutputFileName("Preview.pdf");  // Default name
+
+    // Load preview from url
+    myPreviewWebView.load(QUrl::fromLocalFile(QDir::homePath() + "/." + m_sAppName + "/tmpinyoka.html"));
+
+    QPrintDialog myPrintDialog(&myPrinter);
+    if ( myPrintDialog.exec() == QDialog::Accepted )
+    {
+        myPreviewWebView.print(&myPrinter);
+    }
+}
+
 
 // ---------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------

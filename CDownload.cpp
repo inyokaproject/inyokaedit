@@ -162,7 +162,7 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
     QApplication::restoreOverrideCursor();
 #endif
 
-    emit sendArticleText(sTmpArticle);
+    emit sendArticleText(sTmpArticle, sSitename);
     this->downloadImages(sSitename, ImgDir, sInyokaUrl, bAutomaticImageDownload);
 }
 

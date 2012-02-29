@@ -94,8 +94,9 @@ public slots:
     /**
     * \brief Update text in editor with downloaded article
     * \param sArticleText Raw text
+    * \param sSitename Name of downloaded site
     */
-    void displayArticleText( const QString &sArticleText );
+    void displayArticleText( const QString &sArticleText, const QString &sSitename );
 
 protected:
     /**

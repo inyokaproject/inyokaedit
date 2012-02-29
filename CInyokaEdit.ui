@@ -51,6 +51,8 @@
     <addaction name="saveAct"/>
     <addaction name="saveAsAct"/>
     <addaction name="separator"/>
+    <addaction name="printPreviewAct"/>
+    <addaction name="separator"/>
     <addaction name="exitAct"/>
    </widget>
    <widget class="QMenu" name="editMenu">
@@ -832,6 +834,18 @@
    </property>
    <property name="toolTip">
     <string>Reload</string>
+   </property>
+  </action>
+  <action name="printPreviewAct">
+   <property name="icon">
+    <iconset resource="inyokaeditresources.qrc">
+     <normaloff>:/images/document-print.png</normaloff>:/images/document-print.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print preview</string>
+   </property>
+   <property name="toolTip">
+    <string>Print preview or export to PDF</string>
    </property>
   </action>
  </widget>

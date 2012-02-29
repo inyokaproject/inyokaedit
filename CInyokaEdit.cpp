@@ -251,8 +251,8 @@ void CInyokaEdit::setupEditor()
     myFileOperations->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
 
-    connect(myDownloadModule, SIGNAL(sendArticleText(QString)),
-            this, SLOT(displayArticleText(QString)));
+    connect(myDownloadModule, SIGNAL(sendArticleText(QString, QString)),
+            this, SLOT(displayArticleText(QString, QString)));
 
     // Browser buttons
     connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
@@ -310,6 +310,11 @@ void CInyokaEdit::createActions()
         // Save file as...
         m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
         connect(m_pUi->saveAsAct, SIGNAL(triggered()), myFileOperations, SLOT(saveAs()));
+
+        // Print preview
+        m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
+        connect(m_pUi->printPreviewAct, SIGNAL(triggered()), myFileOperations, SLOT(printPreview()));
+        m_pUi->printPreviewAct->setEnabled(false);
 
         // Exit application
         m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
@@ -709,6 +714,8 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         this->addToolBar(m_pUi->browserBar);
         m_pUi->browserBar->show();
 
+        m_pUi->printPreviewAct->setEnabled(true);
+
         if ( "" == myFileOperations->getCurrentFile() || tr("Untitled") == myFileOperations->getCurrentFile() )
         {
             myParser->genOutput("");
@@ -734,6 +741,8 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         //m_pUi->samplesmacrosBar->show();
         m_pUi->previewAct->setEnabled(true);
         this->removeToolBar(m_pUi->browserBar);
+
+        m_pUi->printPreviewAct->setEnabled(false);
     }
 }
 
@@ -991,9 +1000,10 @@ void CInyokaEdit::downloadArticle()
     }
 }
 
-void CInyokaEdit::displayArticleText( const QString &sArticleText )
+void CInyokaEdit::displayArticleText( const QString &sArticleText, const QString &sSitename )
 {
     myEditor->setPlainText(sArticleText);
+    myFileOperations->setCurrentFile(sSitename);
     myEditor->document()->setModified(true);
     this->documentWasModified();
 }
