@@ -17,11 +17,11 @@ inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
   * Added back/forward/reload button to toolbar in preview (LP: #940968).
   * Switched to source format 3.0 (quilt)
   * Fixed LP: #941301, LP: #941390, LP: #941313, LP: #941304, LP: #941299,
-    LP: #941017, LP: #943231 and LP: #941650.
+    LP: #941017, LP: #943231, LP: #941650, LP: #944402 and LP: #944398.
   * Added printer support (normal printer and PDF)
   * File name is set after article download.
 
- -- Thorsten Roth <elthoro@gmx.de>  Wed, 29 Feb 2012 22:08:53 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 02 Mar 2012 20:32:36 +0200
 
 inyokaedit (0.2.0~ppa1) oneiric; urgency=low
 
