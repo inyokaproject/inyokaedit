@@ -9,11 +9,12 @@
 .\" distribution.
 .\"
 .\" Sun Nov  6 17:13:29 CEST 2011  ElThoro <elthoro@gmx.de> 
+.\" Wed Feb 29 23:14:00 CEST 2012  Jakob Kramer <jakob.kramer@gmx.de>
 .\" 
-.TH MAN 1 "2012-02-24" "0.2.0" "InyokaEdit Manual"
+.TH INYOKAEDIT 1 "2012-03-02" "Thorsten Roth" "InyokaEdit Manual"
 .SH NAME
 InyokaEdit \- editor for Inyoka based portals
-.SH "SYNOPSIS"
+.SH SYNOPSIS
 \fBinyokaedit\fP [\fIOption\fP] or [\fIFile\fP]
 .SH DESCRIPTION
 \fPinyokaedit\fP is a markup editor for articles for Inyoka-based portals.
@@ -27,14 +28,16 @@ Print out debug information.
 Print out version.
 .SH FILES
 .TP
+.I ~/.InyokaEdit
+Standard project folder. It is used for storing Inyoka style elements (images,
+css files), user dictionaries, preview and configuration files.
+.TP
 .I ~/.InyokaEdit/InyokaEdit.conf
 Main configuration file.
 .TP
-.I ~/.InyokaEdit
-Standard project folder.
-.TP
 .I /usr/share/inyokaedit/iWikiLinks/iWikiLinks.xml
-Xml file with the supported interwiki links. It is used for generation of interwiki menu and for parsing.
+XML file with the supported interwiki links. It is used for generation of
+interwiki menu and for parsing.
 .SH BUGS
 Launchpad bug tracker:
 

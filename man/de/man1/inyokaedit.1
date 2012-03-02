@@ -9,11 +9,12 @@
 .\" distribution.
 .\"
 .\" Sun Nov  6 17:13:29 CEST 2011  ElThoro <elthoro@gmx.de> 
+.\" Wed Feb 29 23:16:00 CEST 2012  Jakob Kramer <jakob.kramer@gmx.de>          
 .\" 
-.TH MAN 1 "2011-11-06" "0.2.0" "InyokaEdit Handbuchseite"
+.TH INYOKAEDIT 1 "2012-03-02" "Thorsten Roth" "InyokaEdit-Handbuchseite"
 .SH NAME
 InyokaEdit \- Editor für Inyoka-basierende Portale
-.SH "SYNOPSIS"
+.SH SYNOPSIS
 \fBinyokaedit\fP [\fIOption\fP] oder [\fIDatei\fP]
 .SH BESCHREIBUNG
 \fPinyokaedit\fP ist ein Editor für Artikel von Inyoka-basierenden Portalen.
@@ -28,14 +29,17 @@ Debug-Informationen ausgeben.
 Versionsnummer ausgeben.
 .SH DATEIEN
 .TP
+.I ~/.InyokaEdit
+Das Standardverzeichnis. Wird zum Speichern der Vorschau, den Inyoka
+Styleelementen (Bilder, CSS-Dateien), der Konfigurationsdatei und
+dem Benutzerwörterbuch verwendet.
+.TP
 .I ~/.InyokaEdit/InyokaEdit.conf
 Die Konfigurationsdatei.
 .TP
-.I ~/.InyokaEdit
-Das Standardprojekt-Verzeichnis.
-.TP
 .I /usr/share/inyokaedit/iWikiLinks/iWikiLinks.xml
-Xml-Datei mit den unterstützten InterWiki-Links. Wird zur Generierung des InterWiki-Menüs, sowie zum Parsen verwendet.
+XML-Datei mit den unterstützten InterWiki-Links. Wird zur Generierung des
+InterWiki-Menüs, sowie zum Parsen verwendet.
 .SH FEHLER
 Launchpad Bugtracker:
 
