@@ -133,7 +133,8 @@ bool CParser::genOutput( const QString sActFile )
     QFile tmphtmlfile(m_tmpFileDir.absolutePath() + "/tmpinyoka.html");
 
     // No write permission
-    if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
+    if ( !tmphtmlfile.open(QFile::WriteOnly | QFile::Text) )
+    {
         QMessageBox::warning(0, "Warning", tr("Could not create temporary HTML file!"));
         return false;
     }
@@ -316,7 +317,7 @@ bool CParser::genOutput( const QString sActFile )
 void CParser::replaceTextformat( QTextDocument *myRawDoc )
 {
     QRegExp patternTextformat;
-    const QString variableText("[\\w\\s-_~:>\"\\(\\)/\\.\\+\\&\\!\\\"\\?/\\%\\*\\>]+"); // Escaped RegExp
+    const QString variableText(".*"); // Any character!
     QString sMyDoc = myRawDoc->toPlainText();
     int iLength;
     QString sFormatedText, sTmpRegExp; //, sTmpText;
@@ -327,6 +328,7 @@ void CParser::replaceTextformat( QTextDocument *myRawDoc )
         sTmpRegExp = QRegExp::escape(m_sListFormatStart[i]) + variableText + QRegExp::escape(m_sListFormatEnd[i]);
 
         patternTextformat.setPattern(sTmpRegExp);
+        patternTextformat.setMinimal(true); // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
         myindex = patternTextformat.indexIn(sMyDoc);
         while ( myindex >= 0 )
         {
@@ -380,17 +382,21 @@ void CParser::replaceFlags( QTextDocument *myRawDoc )
     QString sTmpFlag;
 
     int myindex = findFlags.indexIn(sMyDoc);
-    while (myindex >= 0) {
+    while ( myindex >= 0 )
+    {
         iLength = findFlags.matchedLength();
         sTmpFlag = findFlags.cap();
         sTmpFlag.remove("{");
         sTmpFlag.remove("}");
 
-        if (sTmpFlag.toLower() == trUtf8("Übersicht").toLower()){
+        if ( sTmpFlag.toLower() == trUtf8("Übersicht").toLower() )
+        {
             sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/overview.png\" alt=\"&#123;" + trUtf8("Übersicht") + "&#125;\" />");
         }
-        else if (sTmpFlag.length() == 2){
-            if (m_sListFlags.contains(sTmpFlag)){
+        else if ( sTmpFlag.length() == 2 )
+        {
+            if ( m_sListFlags.contains(sTmpFlag) )
+            {
                 sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/" + sTmpFlag + ".png\" alt=\"&#123;" + sTmpFlag + "&#125;\" />");
             }
         }
@@ -416,7 +422,8 @@ void CParser::replaceKeys( QTextDocument *myRawDoc )
     QStringList sListTmpKeys;
 
     int myindex = findKeys.indexIn(sMyDoc);
-    while (myindex >= 0) {
+    while ( myindex >= 0 )
+    {
         iLength = findKeys.matchedLength();
         sTmpKey = findKeys.cap();
         sTmpKey.remove(trUtf8("[[Vorlage(Tasten,"));
@@ -426,157 +433,204 @@ void CParser::replaceKeys( QTextDocument *myRawDoc )
         sListTmpKeys = sTmpKey.split("+");
         sTmpKey.clear();
 
-        for (int i = 0; i < sListTmpKeys.size(); i++){
+        for ( int i = 0; i < sListTmpKeys.size(); i++ )
+        {
             // Remove possible spaces before and after string
             sListTmpKeys[i] = sListTmpKeys[i].trimmed();
             sListTmpKeys[i][0] = sListTmpKeys[i][0].toLower();
 
-            if (sListTmpKeys[i] == "backspace" || sListTmpKeys[i] == trUtf8("löschen") || sListTmpKeys[i] == trUtf8("rückschritt")){
+            if ( sListTmpKeys[i] == "backspace" || sListTmpKeys[i] == trUtf8("löschen") || sListTmpKeys[i] == trUtf8("rückschritt") )
+            {
                 sTmpKey += "<span class=\"key\">&#9003;</span>";
             }
-            else if (sListTmpKeys[i] == "ctrl"){
+            else if ( sListTmpKeys[i] == "ctrl" )
+            {
                 sTmpKey += "<span class=\"key\">Strg</span>";
             }
-            else if (sListTmpKeys[i] == "del" || sListTmpKeys[i] == "delete" || sListTmpKeys[i] == "entfernen"){
+            else if ( sListTmpKeys[i] == "del" || sListTmpKeys[i] == "delete" || sListTmpKeys[i] == "entfernen" )
+            {
                 sTmpKey += "<span class=\"key\">Entf</span>";
             }
-            else if (sListTmpKeys[i] == "return" || sListTmpKeys[i] == "enter" || sListTmpKeys[i] == "eingabe"){
+            else if ( sListTmpKeys[i] == "return" || sListTmpKeys[i] == "enter" || sListTmpKeys[i] == "eingabe" )
+            {
                 sTmpKey += "<span class=\"key\">&#9166;</span>";
             }
-            else if (sListTmpKeys[i] == "escape"){
+            else if ( sListTmpKeys[i] == "escape" )
+            {
                 sTmpKey += "<span class=\"key\">Esc</span>";
             }
-            else if (sListTmpKeys[i] == "eckig_auf"){
+            else if ( sListTmpKeys[i] == "eckig_auf" )
+            {
                 sTmpKey += "<span class=\"key\">[</span>";
             }
-            else if (sListTmpKeys[i] == "eckig_zu"){
+            else if ( sListTmpKeys[i] == "eckig_zu" )
+            {
                 sTmpKey += "<span class=\"key\">]</span>";
             }
-            else if (sListTmpKeys[i] == "bild auf" || sListTmpKeys[i] == "bild-auf" || sListTmpKeys[i] == "bild-rauf"){
+            else if ( sListTmpKeys[i] == "bild auf" || sListTmpKeys[i] == "bild-auf" || sListTmpKeys[i] == "bild-rauf" )
+            {
                 sTmpKey += "<span class=\"key\">Bild &uarr;</span>";
             }
-            else if (sListTmpKeys[i] == "bild ab" || sListTmpKeys[i] == "bild-ab" || sListTmpKeys[i] == "bild-runter"){
+            else if ( sListTmpKeys[i] == "bild ab" || sListTmpKeys[i] == "bild-ab" || sListTmpKeys[i] == "bild-runter" )
+            {
                 sTmpKey += "<span class=\"key\">Bild &darr;</span>";
             }
-            else if (sListTmpKeys[i] == "print" || sListTmpKeys[i] == "prtsc" || sListTmpKeys[i] == "sysrq"){
+            else if ( sListTmpKeys[i] == "print" || sListTmpKeys[i] == "prtsc" || sListTmpKeys[i] == "sysrq" )
+            {
                 sTmpKey += "<span class=\"key\">Druck</span>";
             }
-            else if (sListTmpKeys[i] == "mac" || sListTmpKeys[i] == "appel" || sListTmpKeys[i] == "apfel" || sListTmpKeys[i] == "cmd"){
+            else if ( sListTmpKeys[i] == "mac" || sListTmpKeys[i] == "appel" || sListTmpKeys[i] == "apfel" || sListTmpKeys[i] == "cmd" )
+            {
                 sTmpKey += "<span class=\"key\">&#8984;</span>";
             }
-            else if (sListTmpKeys[i] == "caps" || sListTmpKeys[i] == "feststell" || sListTmpKeys[i] == "feststelltaste" || sListTmpKeys[i] == trUtf8("groß")){
+            else if ( sListTmpKeys[i] == "caps" || sListTmpKeys[i] == "feststell" || sListTmpKeys[i] == "feststelltaste" || sListTmpKeys[i] == trUtf8("groß") )
+            {
                 sTmpKey += "<span class=\"key\">&dArr;</span>";
             }
-            else if (sListTmpKeys[i] == "shift" || sListTmpKeys[i] == "umschalt" || sListTmpKeys[i] == "umsch"){
+            else if ( sListTmpKeys[i] == "shift" || sListTmpKeys[i] == "umschalt" || sListTmpKeys[i] == "umsch" )
+            {
                 sTmpKey += "<span class=\"key\">&uArr;</span>";
             }
-            else if (sListTmpKeys[i] == "at"){
+            else if ( sListTmpKeys[i] == "at" )
+            {
                 sTmpKey += "<span class=\"key\">&#64;</span>";
             }
-            else if (sListTmpKeys[i] == "cherry" || sListTmpKeys[i] == "keyman"){
+            else if ( sListTmpKeys[i] == "cherry" || sListTmpKeys[i] == "keyman" )
+            {
                 sTmpKey += "<span class=\"key\">Keym&#64;n</span>";
             }
-            else if (sListTmpKeys[i] == "space" || sListTmpKeys[i] == "leer" || sListTmpKeys[i] == "leertaste" || sListTmpKeys[i] == "leerzeichen" || sListTmpKeys[i] == "leerschritt"){
+            else if ( sListTmpKeys[i] == "space" || sListTmpKeys[i] == "leer" || sListTmpKeys[i] == "leertaste" || sListTmpKeys[i] == "leerzeichen" || sListTmpKeys[i] == "leerschritt" )
+            {
                 sTmpKey += "<span class=\"key\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
             }
-            else if (sListTmpKeys[i] == "tab" || sListTmpKeys[i] == "tabulator"){
+            else if ( sListTmpKeys[i] == "tab" || sListTmpKeys[i] == "tabulator" )
+            {
                 sTmpKey += "<span class=\"key\">Tab &#8644;</span>";
             }
-            else if (sListTmpKeys[i] == "win"){
+            else if ( sListTmpKeys[i] == "win" )
+            {
                 sTmpKey += "<span class=\"key\">Windows</span>";
             }
-            else if (sListTmpKeys[i] == "hoch" || sListTmpKeys[i] == "auf" || sListTmpKeys[i] == "up" || sListTmpKeys[i] == "rauf" || sListTmpKeys[i] == trUtf8("pfeil-hoch")){
+            else if ( sListTmpKeys[i] == "hoch" || sListTmpKeys[i] == "auf" || sListTmpKeys[i] == "up" || sListTmpKeys[i] == "rauf" || sListTmpKeys[i] == trUtf8("pfeil-hoch") )
+            {
                 sTmpKey += "<span class=\"key\">&uarr;</span>";
             }
-            else if (sListTmpKeys[i] == "runter" || sListTmpKeys[i] == "ab" || sListTmpKeys[i] == "down" || sListTmpKeys[i] == "pfeil-runter" || sListTmpKeys[i] == trUtf8("pfeil-ab")){
+            else if ( sListTmpKeys[i] == "runter" || sListTmpKeys[i] == "ab" || sListTmpKeys[i] == "down" || sListTmpKeys[i] == "pfeil-runter" || sListTmpKeys[i] == trUtf8("pfeil-ab") )
+            {
                 sTmpKey += "<span class=\"key\">&darr;</span>";
             }
-            else if (sListTmpKeys[i] == "links" || sListTmpKeys[i] == "left" || sListTmpKeys[i] == trUtf8("pfeil-links")){
+            else if ( sListTmpKeys[i] == "links" || sListTmpKeys[i] == "left" || sListTmpKeys[i] == trUtf8("pfeil-links") )
+            {
                 sTmpKey += "<span class=\"key\">&larr;</span>";
             }
-            else if (sListTmpKeys[i] == "rechts" || sListTmpKeys[i] == "right" || sListTmpKeys[i] == trUtf8("pfeil-rechts")){
+            else if ( sListTmpKeys[i] == "rechts" || sListTmpKeys[i] == "right" || sListTmpKeys[i] == trUtf8("pfeil-rechts") )
+            {
                 sTmpKey += "<span class=\"key\">&rarr;</span>";
             }
-            else if (sListTmpKeys[i] == "\",\"" || sListTmpKeys[i] == "\',\'"){
+            else if ( sListTmpKeys[i] == "\",\"" || sListTmpKeys[i] == "\',\'" )
+            {
                 sTmpKey += "<span class=\"key\">,</span>";
             }
-            else if (sListTmpKeys[i] == "minus"){
+            else if ( sListTmpKeys[i] == "minus" )
+            {
                 sTmpKey += "<span class=\"key\">-</span>";
             }
-            else if (sListTmpKeys[i] == "plus"){
+            else if ( sListTmpKeys[i] == "plus" )
+            {
                 sTmpKey += "<span class=\"key\">+</span>";
             }
-            else if (sListTmpKeys[i] == "\"`\""){
+            else if ( sListTmpKeys[i] == "\"`\"" )
+            {
                 sTmpKey += "<span class=\"key\">`</span>";
             }
-            //else if (sListTmpKeys[i] == "^"){
+            //else if ( sListTmpKeys[i] == "^" )
+            //{
             //    sTmpKey += "<span class=\"key\">^</span>";
             //}
-            //else if (sListTmpKeys[i] == "<"){
+            //else if ( sListTmpKeys[i] == "<" )
+            //{
             //    sTmpKey += "<span class=\"key\"><</span>";
             //}
-            else if (sListTmpKeys[i] == "sz"){
+            else if ( sListTmpKeys[i] == "sz" )
+            {
                 sTmpKey += QString::fromUtf8("<span class=\"key\">&szlig;</span>");
             }
-            else if (sListTmpKeys[i] == "gleich"){
+            else if ( sListTmpKeys[i] == "gleich" )
+            {
                 sTmpKey += QString::fromUtf8("<span class=\"key\">=</span>");
             }
-            else if (sListTmpKeys[i] == "num" || sListTmpKeys[i] == trUtf8("num-taste") || sListTmpKeys[i] == trUtf8("num-Taste") || sListTmpKeys[i] == trUtf8("num-lock-taste") || sListTmpKeys[i] == trUtf8("num-Lock-Taste")){
+            else if ( sListTmpKeys[i] == "num" || sListTmpKeys[i] == trUtf8("num-taste") || sListTmpKeys[i] == trUtf8("num-Taste") || sListTmpKeys[i] == trUtf8("num-lock-taste") || sListTmpKeys[i] == trUtf8("num-Lock-Taste") )
+            {
                 sTmpKey += QString::fromUtf8("<span class=\"key\">num &dArr;</span>");
             }
-            else if (sListTmpKeys[i] == "fragezeichen"){
+            else if ( sListTmpKeys[i] == "fragezeichen" )
+            {
                 sTmpKey += "<span class=\"key\">?</span>";
             }
-            else if (sListTmpKeys[i] == "break"){
+            else if ( sListTmpKeys[i] == "break" )
+            {
                 sTmpKey += "<span class=\"key\">Pause</span>";
             }
-            else if (sListTmpKeys[i] == "rollen" || sListTmpKeys[i] == "bildlauf"){
+            else if ( sListTmpKeys[i] == "rollen" || sListTmpKeys[i] == "bildlauf" )
+            {
                 sTmpKey += QString::fromUtf8("<span class=\"key\">&dArr; Rollen</span>");
             }
-            else if (sListTmpKeys[i] == "slash"){
+            else if ( sListTmpKeys[i] == "slash" )
+            {
                 sTmpKey += "<span class=\"key\">/</span>";
             }
-            else if (sListTmpKeys[i] == "any"){
+            else if ( sListTmpKeys[i] == "any" )
+            {
                 sTmpKey += "<span class=\"key\">ANY KEY</span>";
             }
-            else if (sListTmpKeys[i] == "panic"){
+            else if ( sListTmpKeys[i] == "panic" )
+            {
                 sTmpKey += "<span class=\"key\">PANIC</span>";
             }
-            else if (sListTmpKeys[i] == "koelsch"){
+            else if ( sListTmpKeys[i] == "koelsch" )
+            {
                 sTmpKey += QString::fromUtf8("<span class=\"key\">K&ouml;lsch</span>");
             }
-            else if (sListTmpKeys[i] == "lmt" || sListTmpKeys[i] == "lmb"){
+            else if ( sListTmpKeys[i] == "lmt" || sListTmpKeys[i] == "lmb" )
+            {
                 sTmpKey += "<img src=\"img/wiki/mouse_left.png\" alt=\"linke Maustaste\" class=\"image-default\" />";
             }
-            else if (sListTmpKeys[i] == "rmt" || sListTmpKeys[i] == "rmb"){
+            else if ( sListTmpKeys[i] == "rmt" || sListTmpKeys[i] == "rmb" )
+            {
                 sTmpKey += "<img src=\"img/wiki/mouse_right.png\" alt=\"rechte Maustaste\" class=\"image-default\" />";
             }
-            else if (sListTmpKeys[i] == "mmt" || sListTmpKeys[i] == "mmb"){
+            else if ( sListTmpKeys[i] == "mmt" || sListTmpKeys[i] == "mmb" )
+            {
                 sTmpKey += "<img src=\"img/wiki/mouse_midd.png\" alt=\"mittlere Maustaste\" class=\"image-default\" />";
             }
 
             // Everything else: First character to Upper (first characters had been changed to lower at beginning of function)
-            else{
+            else
+            {
                 sListTmpKeys[i][0] = sListTmpKeys[i][0].toUpper();
                 sTmpKey += "<span class=\"key\">" + sListTmpKeys[i] + "</span>";
             }
 
             /*
             // Begins with lower case letters (a-z or ä, ö, ü)
-            else if ((sListTmpKeys[i][0] > 96 && sListTmpKeys[i][0] < 122) ||
-                     (sListTmpKeys[i][0] == 228 || sListTmpKeys[i][0] == 246 || sListTmpKeys[i][0] == 252)){
+            else if ( (sListTmpKeys[i][0] > 96 && sListTmpKeys[i][0] < 122) ||
+                      (sListTmpKeys[i][0] == 228 || sListTmpKeys[i][0] == 246 || sListTmpKeys[i][0] == 252) )
+            {
                 sListTmpKeys[i][0] = sListTmpKeys[i][0].toUpper();
                 sTmpKey += "<span class=\"key\">" + sListTmpKeys[i] + "</span>";
             }
             // Everything else will be given out dircetly
-            else{
+            else
+            {
                 sTmpKey += "<span class=\"key\">" + sListTmpKeys[i] + "</span>";
             }
             */
 
             // "+" between keys
-            if (i != sListTmpKeys.size()-1)
+            if ( i != sListTmpKeys.size()-1 )
+            {
                 sTmpKey += " + ";
+            }
         }
         // Replace text with Html code
         sMyDoc.replace(myindex, iLength, sTmpKey);
