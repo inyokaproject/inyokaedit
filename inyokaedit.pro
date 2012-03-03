@@ -35,7 +35,7 @@
                  CSpellChecker.cpp \
                  CSpellCheckDialog.cpp
 
- RESOURCES     = inyokaeditresources.qrc
+ RESOURCES     = inyokaedit_resources.qrc
 
  TEMPLATE      = app
 
@@ -58,8 +58,8 @@ unix {
 }
 
 win32 {
- LIBS   += $$PWD/hunspell-mingw/bin/libhunspell.dll
- RC_FILE = inyokaedit.rc
+ LIBS         += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
+ RC_FILE       = windows_files/inyokaedit.rc
 }
 
  TRANSLATIONS += lang/inyokaedit_de.ts

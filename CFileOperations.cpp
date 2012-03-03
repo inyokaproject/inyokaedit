@@ -247,8 +247,7 @@ bool CFileOperations::saveFile( const QString &sFileName )
 
 void CFileOperations::printPreview()
 {
-    //QMessageBox::information(0, "Test", "printPreview()");
-
+#if not defined _WIN32
     QWebView myPreviewWebView;
     QPrinter myPrinter;
 
@@ -268,6 +267,9 @@ void CFileOperations::printPreview()
     {
         myPreviewWebView.print(&myPrinter);
     }
+#else
+    QMessageBox::information(m_pParent, m_sAppName, trUtf8("Printing is not supported under Windows, yet."));
+#endif
 }
 
 

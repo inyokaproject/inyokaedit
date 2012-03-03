@@ -14,7 +14,7 @@
    <string>Search</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../inyokaeditresources.qrc">
+   <iconset resource="../inyokaedit_resources.qrc">
     <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -204,7 +204,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>closeButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../inyokaeditresources.qrc"/>
+  <include location="../inyokaedit_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

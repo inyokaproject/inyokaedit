@@ -125,7 +125,12 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Datei gespeichert</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="293"/>
+        <location filename="../CFileOperations.cpp" line="271"/>
+        <source>Printing is not supported under Windows, yet.</source>
+        <translation>Das Drucken wird derzeit noch nicht unter Windows unterstützt.</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="295"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -1108,646 +1113,646 @@ Bild2.png, &quot;Beschreibung 2&quot;
 <context>
     <name>CParser</name>
     <message>
-        <location filename="../CParser.cpp" line="137"/>
+        <location filename="../CParser.cpp" line="138"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kann temporäre HTML-Datei nicht erzeugen!</translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="150"/>
+        <location filename="../CParser.cpp" line="151"/>
         <source>Untitled</source>
         <comment>No file name set</comment>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="206"/>
-        <location filename="../CParser.cpp" line="603"/>
+        <location filename="../CParser.cpp" line="207"/>
+        <location filename="../CParser.cpp" line="657"/>
         <source>[[Vorlage(</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="207"/>
+        <location filename="../CParser.cpp" line="208"/>
         <source>[[Vorlage(Tasten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="208"/>
-        <location filename="../CParser.cpp" line="243"/>
+        <location filename="../CParser.cpp" line="209"/>
+        <location filename="../CParser.cpp" line="244"/>
         <source>[[Vorlage(Bildersammlung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="212"/>
-        <location filename="../CParser.cpp" line="1248"/>
+        <location filename="../CParser.cpp" line="213"/>
+        <location filename="../CParser.cpp" line="1302"/>
         <source>[[Inhaltsverzeichnis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="224"/>
+        <location filename="../CParser.cpp" line="225"/>
         <source>{{{#!vorlage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="234"/>
+        <location filename="../CParser.cpp" line="235"/>
         <source>{{{</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="234"/>
+        <location filename="../CParser.cpp" line="235"/>
         <source>{{{#!code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="285"/>
+        <location filename="../CParser.cpp" line="286"/>
         <source>Diese Revision wurde am %1 um %2 Uhr erstellt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="287"/>
+        <location filename="../CParser.cpp" line="288"/>
         <source>Dieser Seite wurden die folgenden Begriffe zugeordnet: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="389"/>
-        <location filename="../CParser.cpp" line="390"/>
+        <location filename="../CParser.cpp" line="392"/>
+        <location filename="../CParser.cpp" line="394"/>
         <source>Übersicht</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="422"/>
+        <location filename="../CParser.cpp" line="429"/>
         <source>[[Vorlage(Tasten,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="434"/>
+        <location filename="../CParser.cpp" line="442"/>
         <source>löschen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="434"/>
+        <location filename="../CParser.cpp" line="442"/>
         <source>rückschritt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="467"/>
+        <location filename="../CParser.cpp" line="486"/>
         <source>groß</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="488"/>
+        <location filename="../CParser.cpp" line="514"/>
         <source>pfeil-hoch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="491"/>
+        <location filename="../CParser.cpp" line="518"/>
         <source>pfeil-ab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="494"/>
+        <location filename="../CParser.cpp" line="522"/>
         <source>pfeil-links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="497"/>
+        <location filename="../CParser.cpp" line="526"/>
         <source>pfeil-rechts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="524"/>
+        <location filename="../CParser.cpp" line="562"/>
         <source>num-taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="524"/>
+        <location filename="../CParser.cpp" line="562"/>
         <source>num-Taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="524"/>
+        <location filename="../CParser.cpp" line="562"/>
         <source>num-lock-taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="524"/>
+        <location filename="../CParser.cpp" line="562"/>
         <source>num-Lock-Taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="619"/>
-        <location filename="../CParser.cpp" line="875"/>
-        <location filename="../CParser.cpp" line="918"/>
+        <location filename="../CParser.cpp" line="673"/>
+        <location filename="../CParser.cpp" line="929"/>
+        <location filename="../CParser.cpp" line="972"/>
         <source>Baustelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="619"/>
+        <location filename="../CParser.cpp" line="673"/>
         <source>InArbeit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="677"/>
-        <location filename="../CParser.cpp" line="910"/>
+        <location filename="../CParser.cpp" line="731"/>
+        <location filename="../CParser.cpp" line="964"/>
         <source>und</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="683"/>
+        <location filename="../CParser.cpp" line="737"/>
         <source>Dieser Artikel wird momentan von %1 erstellt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="689"/>
+        <location filename="../CParser.cpp" line="743"/>
         <source>Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="694"/>
+        <location filename="../CParser.cpp" line="748"/>
         <source>Dieser Artikel wird momentan erstellt. Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="698"/>
+        <location filename="../CParser.cpp" line="752"/>
         <source>Artikel in Arbeit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="686"/>
+        <location filename="../CParser.cpp" line="740"/>
         <source>Als Fertigstellungsdatum wurde der %1 angegeben.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="700"/>
+        <location filename="../CParser.cpp" line="754"/>
         <source>Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="706"/>
+        <location filename="../CParser.cpp" line="760"/>
         <source>Getestet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="750"/>
+        <location filename="../CParser.cpp" line="804"/>
         <source>Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="711"/>
-        <location filename="../CParser.cpp" line="746"/>
+        <location filename="../CParser.cpp" line="765"/>
+        <location filename="../CParser.cpp" line="800"/>
         <source>Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="714"/>
+        <location filename="../CParser.cpp" line="768"/>
         <source>general</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="715"/>
+        <location filename="../CParser.cpp" line="769"/>
         <source>Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="756"/>
+        <location filename="../CParser.cpp" line="810"/>
         <source>Fortgeschritten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="758"/>
+        <location filename="../CParser.cpp" line="812"/>
         <source>Artikel für fortgeschrittene Anwender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="759"/>
+        <location filename="../CParser.cpp" line="813"/>
         <source>Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist daher nur für fortgeschrittene Benutzer gedacht.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="764"/>
+        <location filename="../CParser.cpp" line="818"/>
         <source>Award</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="775"/>
+        <location filename="../CParser.cpp" line="829"/>
         <source>Diese Anwendung hat die Auszeichnung %1 in der Kategorie %2 gewonnen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="779"/>
+        <location filename="../CParser.cpp" line="833"/>
         <source>Die Auszeichnung wurde an %1 überreicht.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="790"/>
+        <location filename="../CParser.cpp" line="844"/>
         <source>Pakete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="796"/>
+        <location filename="../CParser.cpp" line="850"/>
         <source>Paketliste zum Kopieren:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="809"/>
+        <location filename="../CParser.cpp" line="863"/>
         <source>Ausbaufähig</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="817"/>
+        <location filename="../CParser.cpp" line="871"/>
         <source>Ausbaufähige Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="818"/>
+        <location filename="../CParser.cpp" line="872"/>
         <source>Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas verbessern kannst, dann editiere den Beitrag, um die Qualität des Wikis noch weiter zu verbessern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="900"/>
+        <location filename="../CParser.cpp" line="954"/>
         <source>Geplante Fertigstellung:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="902"/>
+        <location filename="../CParser.cpp" line="956"/>
         <source>Derzeit gültiger Artikel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1033"/>
+        <location filename="../CParser.cpp" line="1087"/>
         <source>Zusätzliche %1 können das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="2151"/>
+        <location filename="../CParser.cpp" line="2205"/>
         <source>Anmerkung:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="824"/>
+        <location filename="../CParser.cpp" line="878"/>
         <source>Fehlerhaft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="832"/>
+        <location filename="../CParser.cpp" line="886"/>
         <source>Fehlerhafte Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="833"/>
+        <location filename="../CParser.cpp" line="887"/>
         <source>Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, nimm dir bitte die Zeit und bessere sie aus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="839"/>
+        <location filename="../CParser.cpp" line="893"/>
         <source>Verlassen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="847"/>
+        <location filename="../CParser.cpp" line="901"/>
         <source>Verlassene Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="848"/>
+        <location filename="../CParser.cpp" line="902"/>
         <source>Dieser Artikel wurde von seinem Ersteller verlassen und wird nicht mehr weiter von ihm gepflegt. Wenn Du den Artikel fertigstellen oder erweitern kannst, dann bessere ihn bitte aus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="854"/>
+        <location filename="../CParser.cpp" line="908"/>
         <source>Archiviert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="862"/>
+        <location filename="../CParser.cpp" line="916"/>
         <source>Archivierte Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="863"/>
+        <location filename="../CParser.cpp" line="917"/>
         <source>Dieser Artikel wurde archiviert, da er - oder Teile daraus - nur noch unter einer älteren Ubuntu-Version nutzbar ist. Diese Anleitung wird vom Wiki-Team weder auf Richtigkeit überprüft noch anderweitig gepflegt. Zusätzlich wurde der Artikel für weitere Änderungen gesperrt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="869"/>
+        <location filename="../CParser.cpp" line="923"/>
         <source>Kopie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="879"/>
-        <location filename="../CParser.cpp" line="1420"/>
+        <location filename="../CParser.cpp" line="933"/>
+        <location filename="../CParser.cpp" line="1474"/>
         <source>Achtung!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="880"/>
+        <location filename="../CParser.cpp" line="934"/>
         <source>Diese Seite wird aktuell überarbeitet. Bitte hier keine Änderungen mehr vornehmen, sondern in %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="885"/>
+        <location filename="../CParser.cpp" line="939"/>
         <source>Überarbeitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="923"/>
+        <location filename="../CParser.cpp" line="977"/>
         <source>Artikel wird überarbeitet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="886"/>
+        <location filename="../CParser.cpp" line="940"/>
         <source>Dieser Artikel wird momentan überarbeitet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="916"/>
+        <location filename="../CParser.cpp" line="970"/>
         <source>Bearbeiter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="918"/>
+        <location filename="../CParser.cpp" line="972"/>
         <source>letzten Änderung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="919"/>
+        <location filename="../CParser.cpp" line="973"/>
         <source>Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="925"/>
+        <location filename="../CParser.cpp" line="979"/>
         <source>Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="930"/>
+        <location filename="../CParser.cpp" line="984"/>
         <source>Fremd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="954"/>
-        <location filename="../CParser.cpp" line="982"/>
-        <location filename="../CParser.cpp" line="1032"/>
-        <location filename="../CParser.cpp" line="1137"/>
+        <location filename="../CParser.cpp" line="1008"/>
+        <location filename="../CParser.cpp" line="1036"/>
+        <location filename="../CParser.cpp" line="1086"/>
+        <location filename="../CParser.cpp" line="1191"/>
         <source>Hinweis!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="936"/>
+        <location filename="../CParser.cpp" line="990"/>
         <source>Paket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="224"/>
+        <location filename="../CParser.cpp" line="225"/>
         <source>{{{#!Vorlage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="234"/>
+        <location filename="../CParser.cpp" line="235"/>
         <source>{{{#!Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="937"/>
-        <location filename="../CParser.cpp" line="941"/>
-        <location filename="../CParser.cpp" line="976"/>
+        <location filename="../CParser.cpp" line="991"/>
         <location filename="../CParser.cpp" line="995"/>
-        <location filename="../CParser.cpp" line="1006"/>
-        <location filename="../CParser.cpp" line="1026"/>
         <location filename="../CParser.cpp" line="1030"/>
-        <location filename="../CParser.cpp" line="1138"/>
+        <location filename="../CParser.cpp" line="1049"/>
+        <location filename="../CParser.cpp" line="1060"/>
+        <location filename="../CParser.cpp" line="1080"/>
+        <location filename="../CParser.cpp" line="1084"/>
+        <location filename="../CParser.cpp" line="1192"/>
         <source>Fremdquellen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="937"/>
-        <location filename="../CParser.cpp" line="1138"/>
+        <location filename="../CParser.cpp" line="991"/>
+        <location filename="../CParser.cpp" line="1192"/>
         <source>Fremdpakete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="937"/>
-        <location filename="../CParser.cpp" line="941"/>
-        <location filename="../CParser.cpp" line="976"/>
+        <location filename="../CParser.cpp" line="991"/>
+        <location filename="../CParser.cpp" line="995"/>
+        <location filename="../CParser.cpp" line="1030"/>
         <source>können das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="940"/>
+        <location filename="../CParser.cpp" line="994"/>
         <source>Quelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="941"/>
-        <location filename="../CParser.cpp" line="976"/>
+        <location filename="../CParser.cpp" line="995"/>
+        <location filename="../CParser.cpp" line="1030"/>
         <source>Zusätzliche</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="944"/>
+        <location filename="../CParser.cpp" line="998"/>
         <source>Software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="945"/>
+        <location filename="../CParser.cpp" line="999"/>
         <source>Fremdsoftware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="945"/>
+        <location filename="../CParser.cpp" line="999"/>
         <source>kann das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="961"/>
+        <location filename="../CParser.cpp" line="1015"/>
         <source>PPA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="977"/>
+        <location filename="../CParser.cpp" line="1031"/>
         <source>PPA Beschreibung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="979"/>
+        <location filename="../CParser.cpp" line="1033"/>
         <source>Weitere Informationen bietet die %1 vom Benutzer/Team %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="987"/>
+        <location filename="../CParser.cpp" line="1041"/>
         <source>Fremdquelle-auth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="995"/>
-        <location filename="../CParser.cpp" line="1006"/>
-        <location filename="../CParser.cpp" line="1022"/>
-        <location filename="../CParser.cpp" line="1026"/>
-        <location filename="../CParser.cpp" line="1030"/>
+        <location filename="../CParser.cpp" line="1049"/>
+        <location filename="../CParser.cpp" line="1060"/>
+        <location filename="../CParser.cpp" line="1076"/>
+        <location filename="../CParser.cpp" line="1080"/>
+        <location filename="../CParser.cpp" line="1084"/>
         <source>Fremdquelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="996"/>
+        <location filename="../CParser.cpp" line="1050"/>
         <source>Um die %1 zu authentifizieren, kann man den Signierungsschlüssel mit folgendem Befehl importieren:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1007"/>
+        <location filename="../CParser.cpp" line="1061"/>
         <source>Signierungsschlüssel herunterladen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1008"/>
-        <location filename="../CParser.cpp" line="1027"/>
+        <location filename="../CParser.cpp" line="1062"/>
+        <location filename="../CParser.cpp" line="1081"/>
         <source>Paketquellen_freischalten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1008"/>
+        <location filename="../CParser.cpp" line="1062"/>
         <source>Paketverwaltung hinzufügen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1009"/>
+        <location filename="../CParser.cpp" line="1063"/>
         <source>Um die %1 zu authentifizieren, kann man entweder den %2 und in der %3 oder folgenden Befehl ausführen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1027"/>
+        <location filename="../CParser.cpp" line="1081"/>
         <source>Paketquellen freischalten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1028"/>
+        <location filename="../CParser.cpp" line="1082"/>
         <source>Um aus der %1 zu installieren, muss man die folgenden %2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1038"/>
+        <location filename="../CParser.cpp" line="1092"/>
         <source>Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1060"/>
+        <location filename="../CParser.cpp" line="1114"/>
         <source>Fremdpaket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1067"/>
+        <location filename="../CParser.cpp" line="1121"/>
         <source>Beim &lt;a href=&quot;%1/Launchpad&quot; class=&quot;internal&quot;&gt;Launchpad&lt;/a&gt;-Projekt &lt;a href=&quot;https://launchpad.net/%2&quot; class=&quot;interwiki interwiki-launchpad&quot;&gt;%3&lt;/a&gt; werden &lt;a href=&quot;https://launchpad.net/%4/+download&quot; class=&quot;interwiki interwiki-launchpad&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1078"/>
+        <location filename="../CParser.cpp" line="1132"/>
         <source>Beim &lt;a href=&quot;http://de.wikipedia.org/wiki/SourceForge&quot; class=&quot;interwiki interwiki-wikipedia&quot;&gt;SourceForge&lt;/a&gt;-Projekt &lt;a href=&quot;http://sourceforge.net/projets/%1&quot; class=&quot;interwiki interwiki-sourceforge&quot;&gt;%2&lt;/a&gt; werden &lt;a href=&quot;http://sourceforge.net/projects/%3/files&quot; class=&quot;interwiki interwiki-sourceforge&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1088"/>
+        <location filename="../CParser.cpp" line="1142"/>
         <source>Beim &lt;a href=&quot;http://code.google.com/intl/de&quot; rel =&quot;nofollow&quot; class=&quot;external&quot;&gt;Google Code&lt;/a&gt; &lt;img src=&quot;img/flags/de.png&quot; alt=&quot;(de)&quot; /&gt; -Projekt &lt;a href=&quot;http://code.google.com/p/%1&quot; class=&quot;interwiki interwiki-googlecode&quot;&gt;%2&lt;/a&gt; werden &lt;a href=&quot;http://code.google.com/p/%3/downloads&quot; class=&quot;interwiki interwiki-googlecode&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1101"/>
+        <location filename="../CParser.cpp" line="1155"/>
         <source>Von %1 werden &lt;a href=&quot;%2&quot; class=&quot;external&quot;&gt;DEB-Pakete&lt;/a&gt; &lt;img src=&quot;img/flags/dl.png&quot; alt=&quot;(dl)&quot; /&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1107"/>
+        <location filename="../CParser.cpp" line="1161"/>
         <source>Von %1 werden folgende DEB-Pakete angeboten:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1117"/>
+        <location filename="../CParser.cpp" line="1171"/>
         <source>Die unterstützten Ubuntuversionen und Architekturen werden aufgelistet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1129"/>
+        <location filename="../CParser.cpp" line="1183"/>
         <source>Die Pakete können für %1 heruntergeladen werden. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1132"/>
+        <location filename="../CParser.cpp" line="1186"/>
         <source>Paketinstallation_DEB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1132"/>
+        <location filename="../CParser.cpp" line="1186"/>
         <source>DEB-Pakete noch installiert werden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1133"/>
+        <location filename="../CParser.cpp" line="1187"/>
         <source>Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1138"/>
+        <location filename="../CParser.cpp" line="1192"/>
         <source>können das Sytem gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1143"/>
+        <location filename="../CParser.cpp" line="1197"/>
         <source>Bildunterschrift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1285"/>
+        <location filename="../CParser.cpp" line="1339"/>
         <source>Inhaltsverzeichnis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1399"/>
+        <location filename="../CParser.cpp" line="1453"/>
         <source>Wissen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1408"/>
+        <location filename="../CParser.cpp" line="1462"/>
         <source>Zum Verständnis dieses Artikels sind folgende Seiten hilfreich:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1413"/>
+        <location filename="../CParser.cpp" line="1467"/>
         <source>Warnung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1425"/>
+        <location filename="../CParser.cpp" line="1479"/>
         <source>Hinweis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1432"/>
+        <location filename="../CParser.cpp" line="1486"/>
         <source>Hinweis:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1437"/>
+        <location filename="../CParser.cpp" line="1491"/>
         <source>Experten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1444"/>
+        <location filename="../CParser.cpp" line="1498"/>
         <source>Experten-Info:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1449"/>
+        <location filename="../CParser.cpp" line="1503"/>
         <source>Befehl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1463"/>
+        <location filename="../CParser.cpp" line="1517"/>
         <source>Paketinstallation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1500"/>
+        <location filename="../CParser.cpp" line="1554"/>
         <source>Tabelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1769"/>
+        <location filename="../CParser.cpp" line="1823"/>
         <source>The preview does not support syntax highlighting in code block currently.</source>
         <translation>Die Vorschau unterstützt derzeit kein Syntax-Highlighting im Codeblock.</translation>
     </message>

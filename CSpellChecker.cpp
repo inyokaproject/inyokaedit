@@ -38,7 +38,7 @@
 #include <QCoreApplication>
 
 #if defined _WIN32
-    #include "hunspell-mingw/include/hunspell.hxx"
+    #include "windows_files/hunspell-mingw/include/hunspell.hxx"
 #else
     #include <hunspell/hunspell.hxx>
 #endif

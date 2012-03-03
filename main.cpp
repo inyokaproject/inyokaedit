@@ -49,7 +49,7 @@
 int main( int argc, char *argv[] )
 {
     // Resource file (images, icons)
-    Q_INIT_RESOURCE( inyokaeditresources );
+    Q_INIT_RESOURCE( inyokaedit_resources );
 
     // New application
     QApplication app(argc, argv);
