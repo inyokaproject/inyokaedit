@@ -232,13 +232,22 @@ bool CParser::genOutput( const QString sActFile )
             //it = it.next();
         }
         // Codeblock
-        else if (it.text().trimmed() == trUtf8("{{{") || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!Code"), Qt::CaseSensitive)){
+        else if (it.text().trimmed().startsWith(trUtf8("{{{"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!Code"), Qt::CaseSensitive)){
             sSample = it.text();
             it = it.next();
-            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
-                sSample += "§" + it.text();
+
+            // Only one line
+            if ( sSample.trimmed().endsWith("}}}") )
+            {
+                sHtmlBody += parseCodeBlock(sSample);
             }
-            sHtmlBody += parseCodeBlock(sSample);
+            else
+            {
+                for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
+                    sSample += "§" + it.text();
+                }
+                sHtmlBody += parseCodeBlock(sSample);
+            }
         }
         // Image collection
         else if (it.text().trimmed().startsWith(trUtf8("[[Vorlage(Bildersammlung"), Qt::CaseSensitive)){
@@ -1316,7 +1325,7 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
 
     for( ; curBlock.isValid() && !(m_pRawText->lastBlock() < curBlock); curBlock = curBlock.next() )
     {
-        if ( (curBlock.text().startsWith("=") || curBlock.text().startsWith(" =")) && (!curBlock.text().startsWith("==") || !curBlock.text().startsWith(" ==")) )
+        if ( (curBlock.text().startsWith("=") || curBlock.text().startsWith(" =")) && (!curBlock.text().startsWith("==") && !curBlock.text().startsWith(" ==")) )
         {
             sTmpString = curBlock.text();
 
@@ -1784,9 +1793,8 @@ QString CParser::parseCodeBlock( QString actParagraph )
     QString sParagraph = actParagraph;
     QString sOutput("<strong>FOUND WRONG FORMATED CODE BLOCK</strong>");
 
-    sParagraph.remove("{{{#!code ");
-    sParagraph.remove("{{{#!Code ");
     sParagraph.remove("{{{");
+    sParagraph.remove("}}}");
 
     // Separate elementes from macro (between §)
     QStringList sListElements = sParagraph.split("§");
@@ -1796,11 +1804,16 @@ QString CParser::parseCodeBlock( QString actParagraph )
     }
 
     // Only plain code
-    if ( sListElements[0] == "" )
+    if ( !sListElements[0].startsWith("#!code") && !sListElements[0].startsWith("#!Code") )
     {
         sOutput = "<pre>";
 
-        for ( int i = 1; i < sListElements.length(); i++ )
+        int i = 0;
+        if ( sListElements[0] == "" )
+        {
+            i = 1;
+        }
+        for ( ; i < sListElements.length(); i++ )
         {
             // Replace char "<" because it will be interpreted as html tag (see bug #826482)
             sListElements[i].replace('<', "&lt;");

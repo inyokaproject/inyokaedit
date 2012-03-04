@@ -24,7 +24,7 @@
  * Main application generation (gui, object creation etc.).
  */
 
-#define sVERSION "0.3.0"
+#define sVERSION "0.3.1"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -43,7 +43,8 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
     m_bLogging = false;
 
     // Check for command line arguments
-    if (m_pApp->argc() >= 2) {
+    if ( m_pApp->argc() >= 2 )
+    {
         QString sTmp = m_pApp->argv()[1];
 
         if ( "-v"== sTmp || "--version"== sTmp )
