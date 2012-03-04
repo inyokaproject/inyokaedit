@@ -878,7 +878,7 @@ Bild2.png, &quot;Beschreibung 2&quot;
     <message>
         <location filename="../CInyokaEdit.ui" line="845"/>
         <source>Print preview</source>
-        <translation>Vorschau druken</translation>
+        <translation>Vorschau drucken</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="848"/>
