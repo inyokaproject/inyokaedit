@@ -5,4 +5,5 @@ inyokaedit /usr/bin
 apport/inyokaedit-crashdb.conf /etc/apport/crashdb.conf.d
 apport/source_inyokaedit.py /usr/share/apport/package-hooks
 lang/inyokaedit_de.qm /usr/share/inyokaedit/lang
-images/iWikiLinks /usr/share/inyokaedit
+iWikiLinks /usr/share/inyokaedit
+debian/inyokaedit.xpm /usr/share/pixmaps
