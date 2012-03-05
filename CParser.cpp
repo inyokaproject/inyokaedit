@@ -245,6 +245,10 @@ bool CParser::genOutput( const QString sActFile )
             {
                 for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
                     sSample += "§" + it.text();
+                    if ( it.text().endsWith("}}}") )
+                    {
+                        break;
+                    }
                 }
                 sHtmlBody += parseCodeBlock(sSample);
             }
