@@ -234,7 +234,7 @@ bool CParser::genOutput( const QString sActFile )
         // Codeblock
         else if (it.text().trimmed().startsWith(trUtf8("{{{"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!code"), Qt::CaseSensitive) || it.text().trimmed().startsWith(trUtf8("{{{#!Code"), Qt::CaseSensitive)){
             sSample = it.text();
-            it = it.next();
+
 
             // Only one line
             if ( sSample.trimmed().endsWith("}}}") )
@@ -243,6 +243,7 @@ bool CParser::genOutput( const QString sActFile )
             }
             else
             {
+                it = it.next();
                 for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next()){
                     sSample += "§" + it.text();
                     if ( it.text().endsWith("}}}") )
