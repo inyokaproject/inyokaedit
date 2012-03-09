@@ -1,3 +1,9 @@
+inyokaedit (0.3.2-0ubuntu1) oneiric; urgency=low
+
+  * Fixed LP: #941308.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 09 Mar 2012 21:49:31 +0200
+
 inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
 
   * Fixed table of contents and code block generation.
