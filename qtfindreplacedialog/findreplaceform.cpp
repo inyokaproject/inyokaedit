@@ -166,6 +166,9 @@ void FindReplaceForm::find(bool next) {
         // move to the beginning of the document for the next find
         textCursor.setPosition(0);
         textEdit->setTextCursor(textCursor);
+
+        // Workaround for LP: #941308
+        textEdit->setText(textEdit->toPlainText());
     }
 }
 
