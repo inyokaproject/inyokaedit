@@ -1072,22 +1072,33 @@ void CInyokaEdit::clickedLink()
 
 void CInyokaEdit::checkSpelling()
 {
+    QString sDictPath("");
+
 #if defined _WIN32
-    QString dictPath = m_pApp->applicationDirPath() + "/" + mySettings->getSpellCheckerLanguage();
+    sDictPath = m_pApp->applicationDirPath() + "/" + mySettings->getSpellCheckerLanguage();
 #else
-    QString dictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
+    // Standard path for Hunspell
+    if ( QDir("/usr/share/hunspell").exists() )
+    {
+        sDictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
+    }
+    // Otherwise use MySpell dictionary
+    else
+    {
+        sDictPath = "/usr/share/myspell/dicts/" + mySettings->getSpellCheckerLanguage();
+    }
 #endif
 
-    if ( !QFile::exists(dictPath + ".dic") || !QFile::exists(dictPath + ".aff") )
+    if ( !QFile::exists(sDictPath + ".dic") || !QFile::exists(sDictPath + ".aff") )
     {
         QMessageBox::critical( this, m_pApp->applicationName(), "Error: Spell checker dictionary file does not exist!" );
         return;
     }
 
-    QString userDict= m_StylesAndImagesDir.absolutePath() + "/userDict_" + mySettings->getSpellCheckerLanguage() + ".txt";
-    if ( !QFile::exists(userDict) )
+    QString sUserDict= m_StylesAndImagesDir.absolutePath() + "/userDict_" + mySettings->getSpellCheckerLanguage() + ".txt";
+    if ( !QFile::exists(sUserDict) )
     {
-        QFile userDictFile(userDict);
+        QFile userDictFile(sUserDict);
         if( userDictFile.open(QIODevice::WriteOnly) )
         {
             userDictFile.close();
@@ -1096,7 +1107,7 @@ void CInyokaEdit::checkSpelling()
             QMessageBox::warning( 0, m_pApp->applicationName(), "User dictionary file could not be created." );
         }
     }
-    CSpellChecker *spellChecker = new CSpellChecker( dictPath, userDict, this );
+    CSpellChecker *spellChecker = new CSpellChecker( sDictPath, sUserDict, this );
     spellChecker->start(myEditor);
 
     if ( spellChecker != NULL )
