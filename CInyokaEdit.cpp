@@ -1074,20 +1074,21 @@ void CInyokaEdit::checkSpelling()
 {
     QString sDictPath("");
 
-#if defined _WIN32
-    sDictPath = m_pApp->applicationDirPath() + "/" + mySettings->getSpellCheckerLanguage();
-#else
-    // Standard path for Hunspell
+    // Standard path for Hunspell (Linux only)
     if ( QDir("/usr/share/hunspell").exists() )
     {
         sDictPath = "/usr/share/hunspell/" + mySettings->getSpellCheckerLanguage();
     }
-    // Otherwise use MySpell dictionary
-    else
+    // Otherwise look for MySpell dictionary (Linx only)
+    else if ( QDir("/usr/share/myspell/dicts").exists() )
     {
         sDictPath = "/usr/share/myspell/dicts/" + mySettings->getSpellCheckerLanguage();
     }
-#endif
+    // Fallback and for Windows look in app dir
+    else
+    {
+        sDictPath = m_pApp->applicationDirPath() + "/dicts/" + mySettings->getSpellCheckerLanguage();
+    }
 
     if ( !QFile::exists(sDictPath + ".dic") || !QFile::exists(sDictPath + ".aff") )
     {
