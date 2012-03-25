@@ -195,8 +195,6 @@ private:
     CSettings *mySettings;
     CInterWiki *myInterWikiLinks;
     CDownload *myDownloadModule;
-
-    QWidget *myMainWidget;
     QSplitter *myWidgetSplitter;
 
     //QTabWidget *myTabwidgetDocuments;

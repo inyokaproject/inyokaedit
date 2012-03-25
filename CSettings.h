@@ -51,7 +51,7 @@ public:
 
     // Load / save application settings
     void readSettings();
-    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState );
+    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState );
 
     void setLastOpenedDir( const QDir LastDir );
 
@@ -71,6 +71,7 @@ public:
     // Window state
     QByteArray getWindowState() const;
     QByteArray getWindowGeometry() const;
+    QByteArray getSplitterState() const;
 
     // Recent files
     unsigned short getNumOfRecentFiles() const;
@@ -101,6 +102,7 @@ private:
     // Window state
     QByteArray m_aWindowState;
     QByteArray m_aWindowGeometry;
+    QByteArray m_aSplitterState;
 
     // Last opened
     static const unsigned short m_cMAXFILES = 10;

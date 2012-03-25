@@ -56,14 +56,6 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
         {
             m_bLogging = true;
         }
-        else if ("--log" != sTmp)
-        {
-            myFileOperations->loadFile( m_pApp->argv()[1] );
-        }
-        else if ("--log" == sTmp && m_pApp->argc() >= 3)
-        {
-            myFileOperations->loadFile(m_pApp->argv()[2]);
-        }
     }
 
     m_sListCompleter << "Inhaltsverzeichnis(1)]]" << "Vorlage(Getestet, Ubuntuversion)]]" << "Vorlage(Baustelle, Datum, \"Bearbeiter\")]]"
@@ -106,6 +98,24 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
 #if !defined _WIN32
         myDownloadModule->loadInyokaStyles();
 #endif
+    }
+
+    // Check for command line arguments
+    // Calling loadFile() only possible AFTER creating objects...
+    if ( m_pApp->argc() >= 2 )
+    {
+        QString sTmp = m_pApp->argv()[1];
+
+        if ("--log" != sTmp)
+        {
+            myFileOperations->loadFile( m_pApp->argv()[1] );
+            this->previewInyokaPage();
+        }
+        else if ("--log" == sTmp && m_pApp->argc() >= 3)
+        {
+            myFileOperations->loadFile(m_pApp->argv()[2]);
+            this->previewInyokaPage();
+        }
     }
 
     if ( mySettings->getShowStatusbar() )
@@ -244,12 +254,25 @@ void CInyokaEdit::setupEditor()
 
     if ( true == mySettings->getPreviewAlongside() && true == mySettings->getPreviewInEditor() )
     {
-        myMainWidget = new QWidget;
-        myWidgetSplitter = new QSplitter;
+        try
+        {
+            myWidgetSplitter = new QSplitter;
+        }
+        catch ( std::bad_alloc& ba )
+        {
+            std::cerr << "ERROR: Caught bad_alloc in \"create QSplitter()\": " << ba.what() << std::endl;
+            QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - create QSplitter");
+            exit (-1);
+        }
         myWidgetSplitter->addWidget( myEditor );
         myWidgetSplitter->addWidget( myWebview );
 
+        connect(myFileOperations, SIGNAL(loadedFile()),
+                this, SLOT(previewInyokaPage()));
+
         setCentralWidget( myWidgetSplitter );
+        // Show an empty website after start
+        this->previewInyokaPage();
     }
     else
     {
@@ -293,6 +316,7 @@ void CInyokaEdit::setupEditor()
     // Settings have to be restored after toolbars are created!
     this->restoreGeometry(mySettings->getWindowGeometry());
     this->restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
+    myWidgetSplitter->restoreState(mySettings->getSplitterState());
 
     if ( false == mySettings->getPreviewAlongside() )
     {
@@ -1022,6 +1046,7 @@ void CInyokaEdit::downloadArticle()
     else
     {
         myDownloadModule->downloadArticle( m_tmpPreviewImgDir, mySettings->getInyokaUrl(), mySettings->getAutomaticImageDownload() );
+        this->previewInyokaPage();
     }
 }
 
@@ -1255,7 +1280,7 @@ void CInyokaEdit::closeEvent( QCloseEvent *event )
 {
     if ( myFileOperations->maybeSave() )
     {
-        mySettings->writeSettings( saveGeometry(), saveState() );
+        mySettings->writeSettings( saveGeometry(), saveState(), myWidgetSplitter->saveState() );
         event->accept();
     }
     else

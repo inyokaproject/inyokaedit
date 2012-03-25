@@ -113,12 +113,13 @@ void CSettings::readSettings()
     mySettingsObject->beginGroup("Window");
     m_aWindowGeometry = mySettingsObject->value("Geometry").toByteArray();
     m_aWindowState = mySettingsObject->value("WindowState").toByteArray();  // Restore toolbar position etc.
+    m_aSplitterState = mySettingsObject->value("SplitterState").toByteArray();
     mySettingsObject->endGroup();
 }
 
 // -----------------------------------------------------------------------------------------------
 
-void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState )
+void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState, QByteArray SplitterState )
 {
     // General settings
     mySettingsObject->setValue("CodeCompletion", m_bCodeCompletion);
@@ -162,6 +163,7 @@ void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState )
     mySettingsObject->beginGroup("Window");
     mySettingsObject->setValue("Geometry", WinGeometry);
     mySettingsObject->setValue("WindowState", WinState);
+    mySettingsObject->setValue("SplitterState", SplitterState);
     mySettingsObject->endGroup();
 }
 
@@ -266,4 +268,9 @@ QByteArray CSettings::getWindowGeometry() const
 QByteArray CSettings::getWindowState() const
 {
     return m_aWindowState;
+}
+
+QByteArray CSettings::getSplitterState() const
+{
+    return m_aSplitterState;
 }

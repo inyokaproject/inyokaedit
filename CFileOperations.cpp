@@ -197,6 +197,8 @@ void CFileOperations::loadFile( const QString &sFileName )
     QApplication::restoreOverrideCursor();
 #endif
 
+    emit this->loadedFile();
+
     this->updateRecentFiles(sFileName);
     this->setCurrentFile(sFileName);
     if ( m_pSettings->getShowStatusbar() )

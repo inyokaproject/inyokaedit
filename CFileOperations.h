@@ -121,6 +121,7 @@ public slots:
 signals:
     void setMenuLastOpenedEnabled( const bool );  /**< Signal for sending state of recent files menu entry (enabled / disabled) */
     void setStatusbarMessage( QString );          /**< Signal for sending messages to status bar */
+    void loadedFile();
 
 private:
     /**
