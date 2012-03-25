@@ -8,6 +8,7 @@ License: GPL-3+
 
 Files: debian/*
 Copyright: 2011, 2012 Thorsten Roth <elthoro@gmx.de>
+           2012, Dominique Lasserre <lasserre.d@gmail.com>
 License: GPL-3+
 
 Files: qtfindreplacedialog/*

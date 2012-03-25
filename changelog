@@ -1,9 +1,14 @@
 inyokaedit (0.4.0-0ubuntu1) oneiric; urgency=low
 
+  [Dominique Lasserre]
+  * Improved Makefile (installation target).
+  * Added me to authors of debian/*.
+
+  [Thorsten Roth]
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
     alongside editor).
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 25 Mar 2012 19:02:31 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 25 Mar 2012 19:17:16 +0200
 
 inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
 
