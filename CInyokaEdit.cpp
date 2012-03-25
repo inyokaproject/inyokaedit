@@ -360,7 +360,10 @@ void CInyokaEdit::createActions()
         // Print preview
         m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
         connect(m_pUi->printPreviewAct, SIGNAL(triggered()), myFileOperations, SLOT(printPreview()));
-        m_pUi->printPreviewAct->setEnabled(false);
+        if ( false == mySettings->getPreviewAlongside() )
+        {
+            m_pUi->printPreviewAct->setEnabled(false);
+        }
 
         // Exit application
         m_pUi->exitAct->setShortcuts(QKeySequence::Quit);

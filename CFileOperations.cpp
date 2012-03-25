@@ -62,6 +62,7 @@ void CFileOperations::newFile()
     {
         m_pEditor->clear();
         this->setCurrentFile("");
+        emit this->loadedFile();
     }
 }
 
