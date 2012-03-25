@@ -1,9 +1,3 @@
-GetInyokaStyles /usr/share/inyokaedit
-inyokaedit.desktop /usr/share/applications
-images/inyokaedit_64x64.png /usr/share/pixmaps
-inyokaedit /usr/bin
 apport/inyokaedit-crashdb.conf /etc/apport/crashdb.conf.d
 apport/source_inyokaedit.py /usr/share/apport/package-hooks
-lang/inyokaedit_de.qm /usr/share/inyokaedit/lang
-iWikiLinks /usr/share/inyokaedit
 debian/inyokaedit.xpm /usr/share/pixmaps

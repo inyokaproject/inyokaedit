@@ -1,3 +1,10 @@
+inyokaedit (0.4.0-0ubuntu1) oneiric; urgency=low
+
+  * Improved Makefile (installation target).
+  * Added me to authors of debian/*.
+
+ -- Dominique Lasserre <lasserre.d@gmail.com>  Sun, 25 Mar 2012 17:46:33 +0200
+
 inyokaedit (0.3.2-0ubuntu1) oneiric; urgency=low
 
   * Fixed LP: #941308.
