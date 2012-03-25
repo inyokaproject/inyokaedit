@@ -60,6 +60,7 @@ public:
     QString getInyokaUrl() const;
     bool getAutomaticImageDownload() const;
     bool getPreviewInEditor() const;
+    bool getPreviewAlongside() const;
     QDir getLastOpenedDir() const;
     bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
@@ -83,6 +84,7 @@ private:
     // General
     bool m_bCodeCompletion;  // Enable / disable code completion
     bool m_bPreviewInEditor; // Enable / disable preview in edior
+    bool m_bPreviewAlongside;
     QString m_sInyokaUrl;    // Url to inyoka
     QDir m_LastOpenedDir;
     bool m_bAutomaticImageDownload;  // Enable / disable download of article images

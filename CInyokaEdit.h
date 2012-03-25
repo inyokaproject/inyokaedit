@@ -105,6 +105,8 @@ protected:
     */
     void closeEvent( QCloseEvent *event );
 
+    bool eventFilter( QObject *obj, QEvent *event );
+
 protected slots:
     /** \brief Call spell checker */
     void checkSpelling();
@@ -193,6 +195,9 @@ private:
     CSettings *mySettings;
     CInterWiki *myInterWikiLinks;
     CDownload *myDownloadModule;
+
+    QWidget *myMainWidget;
+    QSplitter *myWidgetSplitter;
 
     //QTabWidget *myTabwidgetDocuments;
     QTabWidget *myTabwidgetRawPreview;

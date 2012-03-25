@@ -60,6 +60,7 @@ void CSettings::readSettings()
     // General settings
     m_bCodeCompletion = mySettingsObject->value("CodeCompletion", true).toBool();
     m_bPreviewInEditor = mySettingsObject->value("PreviewInEditor", true).toBool();
+    m_bPreviewAlongside = mySettingsObject->value("PreviewAlongside", false).toBool();
     m_sInyokaUrl = mySettingsObject->value("InyokaUrl", "http://wiki.ubuntuusers.de").toString();
     if ( m_sInyokaUrl.endsWith("/") )
     {
@@ -122,11 +123,15 @@ void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState )
     // General settings
     mySettingsObject->setValue("CodeCompletion", m_bCodeCompletion);
     mySettingsObject->setValue("PreviewInEditor", m_bPreviewInEditor);
+    mySettingsObject->setValue("PreviewAlongside", m_bPreviewAlongside);
     mySettingsObject->setValue("InyokaUrl", m_sInyokaUrl);
     mySettingsObject->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
     mySettingsObject->setValue("ShowStatusbar", m_bShowStatusbar);
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
+
+    // Remove obsolete entry
+    mySettingsObject->remove( "ConfVersion" );
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -181,6 +186,11 @@ bool CSettings::getAutomaticImageDownload() const
 bool CSettings::getPreviewInEditor() const
 {
     return m_bPreviewInEditor;
+}
+
+bool CSettings::getPreviewAlongside() const
+{
+    return m_bPreviewAlongside;
 }
 
 QDir CSettings::getLastOpenedDir() const

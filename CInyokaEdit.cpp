@@ -24,7 +24,7 @@
  * Main application generation (gui, object creation etc.).
  */
 
-#define sVERSION "0.3.1"
+#define sVERSION "0.4.0"
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
@@ -147,6 +147,10 @@ void CInyokaEdit::createObjects()
 
         myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
         if ( m_bLogging ) { std::clog << "Created myEditor" << std::endl; }
+        if ( true == mySettings->getPreviewAlongside() )
+        {
+            myEditor->installEventFilter(this);
+        }
 
         myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
         if ( m_bLogging ) { std::clog << "Created myFileOperations" << std::endl; }
@@ -238,13 +242,27 @@ void CInyokaEdit::setupEditor()
     myTabwidgetDocuments->addTab(myTabwidgetRawPreview, tr("Untitled"));
     */
 
-    setCentralWidget(myTabwidgetRawPreview);
-    myTabwidgetRawPreview->setTabPosition(QTabWidget::West);
-    myTabwidgetRawPreview->addTab(myEditor, tr("Raw format"));
+    if ( true == mySettings->getPreviewAlongside() && true == mySettings->getPreviewInEditor() )
+    {
+        myMainWidget = new QWidget;
+        myWidgetSplitter = new QSplitter;
+        myWidgetSplitter->addWidget( myEditor );
+        myWidgetSplitter->addWidget( myWebview );
 
-    myTabwidgetRawPreview->addTab(myWebview, tr("Preview"));
-    if (false == mySettings->getPreviewInEditor())
-        myTabwidgetRawPreview->setTabEnabled(myTabwidgetRawPreview->indexOf(myWebview), false);
+        setCentralWidget( myWidgetSplitter );
+    }
+    else
+    {
+        setCentralWidget( myTabwidgetRawPreview );
+        myTabwidgetRawPreview->setTabPosition(QTabWidget::West);
+        myTabwidgetRawPreview->addTab(myEditor, tr("Raw format"));
+
+        myTabwidgetRawPreview->addTab(myWebview, tr("Preview"));
+        if ( false == mySettings->getPreviewInEditor() )
+        {
+            myTabwidgetRawPreview->setTabEnabled(myTabwidgetRawPreview->indexOf(myWebview), false);
+        }
+    }
 
     connect(myWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
@@ -276,7 +294,10 @@ void CInyokaEdit::setupEditor()
     this->restoreGeometry(mySettings->getWindowGeometry());
     this->restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
 
-    this->removeToolBar(m_pUi->browserBar);
+    if ( false == mySettings->getPreviewAlongside() )
+    {
+        this->removeToolBar(m_pUi->browserBar);
+    }
 
     m_pUi->aboutAct->setText( m_pUi->aboutAct->text() + " " + m_pApp->applicationName() );
 
@@ -701,21 +722,24 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
     // or if iIndex == 999 -> Default parameter value when calling the function (e.g.) by clicking on button preview
     if ( myTabwidgetRawPreview->indexOf(myWebview) == nIndex || 999 == nIndex )
     {
+        // Only disable buttons if preview is not shown alongside editor
+        if ( false == mySettings->getPreviewAlongside() )
+        {
+            // Disable editor and insert samples/macros toolbars
+            m_pUi->editMenu->setDisabled(true);
+            m_pUi->insertTextSampleMenu->setDisabled(true);
+            m_pUi->iWikiMenu->setDisabled(true);
+            m_pUi->editToolBar->setDisabled(true);
+            m_pUi->inyokaeditorBar->setDisabled(true);
+            //this->removeToolBar(m_pUi->inyokaeditorBar);
+            m_pUi->samplesmacrosBar->setDisabled(true);
+            //this->removeToolBar(m_pUi->samplesmacrosBar);
+            m_pUi->previewAct->setDisabled(true);
+            this->addToolBar(m_pUi->browserBar);
+            m_pUi->browserBar->show();
 
-        // Disable editor and insert samples/macros toolbars
-        m_pUi->editMenu->setDisabled(true);
-        m_pUi->insertTextSampleMenu->setDisabled(true);
-        m_pUi->iWikiMenu->setDisabled(true);
-        m_pUi->editToolBar->setDisabled(true);
-        m_pUi->inyokaeditorBar->setDisabled(true);
-        //this->removeToolBar(m_pUi->inyokaeditorBar);
-        m_pUi->samplesmacrosBar->setDisabled(true);
-        //this->removeToolBar(m_pUi->samplesmacrosBar);
-        m_pUi->previewAct->setDisabled(true);
-        this->addToolBar(m_pUi->browserBar);
-        m_pUi->browserBar->show();
-
-        m_pUi->printPreviewAct->setEnabled(true);
+            m_pUi->printPreviewAct->setEnabled(true);
+        }
 
         if ( "" == myFileOperations->getCurrentFile() || tr("Untitled") == myFileOperations->getCurrentFile() )
         {
@@ -1064,6 +1088,37 @@ void CInyokaEdit::clickedLink()
     else
     {
         m_pUi->goForwardBrowserAct->setEnabled(false);
+    }
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
+{
+    if ( obj == myEditor )
+    {
+        if ( event->type() == QEvent::KeyPress )
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            switch( keyEvent->key() )
+            {
+                case Qt::Key_Enter:
+                case Qt::Key_Return:
+                case Qt::Key_F5:
+                    previewInyokaPage();
+                break;
+            }
+            return false;
+        }
+        else
+        {
+            return QObject::eventFilter( obj, event );
+        }
+    }
+    else
+    {
+        return QObject::eventFilter( obj, event );
     }
 }
 
