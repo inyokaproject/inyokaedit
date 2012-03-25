@@ -55,6 +55,19 @@
 
 unix {
  LIBS         += -lhunspell
+
+data.path      = /usr/share/inyokaedit
+data.files    += iWikiLinks GetInyokaStyles
+lang.path      = /usr/share/inyokaedit/lang
+lang.files    += lang/*.qm
+desktop.path   = /usr/share/applications
+desktop.files += inyokaedit.desktop
+pixmap.path    = /usr/share/pixmaps
+pixmap.files  += images/inyokaedit_64x64.png
+man.path       = /usr/share
+man.files     += man
+target.path    = /usr/bin
+ INSTALLS     += data lang desktop pixmap man target
 }
 
 win32 {
