@@ -163,13 +163,13 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->beginGroup("Window");
     mySettingsObject->setValue("Geometry", WinGeometry);
     mySettingsObject->setValue("WindowState", WinState);
-    if ( 0 == SplitterState )
+    if ( true == m_bPreviewAlongside && true == m_bPreviewInEditor )
     {
-        mySettingsObject->setValue("SplitterState", m_aSplitterState);
+        mySettingsObject->setValue("SplitterState", SplitterState);
     }
     else
     {
-        mySettingsObject->setValue("SplitterState", SplitterState);
+        mySettingsObject->setValue("SplitterState", m_aSplitterState);
     }
 
     mySettingsObject->endGroup();

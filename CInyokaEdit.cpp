@@ -264,7 +264,7 @@ void CInyokaEdit::setupEditor()
             QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - create QSplitter");
             exit (-1);
         }
-        myWidgetSplitter->restoreState(mySettings->getSplitterState());
+
         myWidgetSplitter->addWidget( myEditor );
         myWidgetSplitter->addWidget( myWebview );
 
@@ -272,6 +272,8 @@ void CInyokaEdit::setupEditor()
                 this, SLOT(previewInyokaPage()));
 
         setCentralWidget( myWidgetSplitter );
+        myWidgetSplitter->restoreState( mySettings->getSplitterState() );
+
         // Show an empty website after start
         this->previewInyokaPage();
     }
