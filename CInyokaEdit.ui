@@ -460,7 +460,7 @@
   <action name="previewAct">
    <property name="icon">
     <iconset resource="inyokaedit_resources.qrc">
-     <normaloff>:/images/preview.png</normaloff>:/images/preview.png</iconset>
+     <normaloff>:/images/x-office-document.png</normaloff>:/images/x-office-document.png</iconset>
    </property>
    <property name="text">
     <string>Open preview</string>
