@@ -264,6 +264,7 @@ void CInyokaEdit::setupEditor()
             QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - create QSplitter");
             exit (-1);
         }
+        myWidgetSplitter->restoreState(mySettings->getSplitterState());
         myWidgetSplitter->addWidget( myEditor );
         myWidgetSplitter->addWidget( myWebview );
 
@@ -316,7 +317,6 @@ void CInyokaEdit::setupEditor()
     // Settings have to be restored after toolbars are created!
     this->restoreGeometry(mySettings->getWindowGeometry());
     this->restoreState(mySettings->getWindowState());  // Restore toolbar position etc.
-    myWidgetSplitter->restoreState(mySettings->getSplitterState());
 
     if ( false == mySettings->getPreviewAlongside() )
     {
@@ -1283,7 +1283,14 @@ void CInyokaEdit::closeEvent( QCloseEvent *event )
 {
     if ( myFileOperations->maybeSave() )
     {
-        mySettings->writeSettings( saveGeometry(), saveState(), myWidgetSplitter->saveState() );
+        if ( true == mySettings->getPreviewAlongside() && true == mySettings->getPreviewInEditor() )
+        {
+            mySettings->writeSettings( saveGeometry(), saveState(), myWidgetSplitter->saveState() );
+        }
+        else
+        {
+            mySettings->writeSettings( saveGeometry(), saveState() );
+        }
         event->accept();
     }
     else

@@ -51,7 +51,7 @@ public:
 
     // Load / save application settings
     void readSettings();
-    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState );
+    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState = 0 );
 
     void setLastOpenedDir( const QDir LastDir );
 

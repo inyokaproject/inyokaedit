@@ -119,7 +119,7 @@ void CSettings::readSettings()
 
 // -----------------------------------------------------------------------------------------------
 
-void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState, QByteArray SplitterState )
+void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState )
 {
     // General settings
     mySettingsObject->setValue("CodeCompletion", m_bCodeCompletion);
@@ -163,7 +163,15 @@ void CSettings::writeSettings( QByteArray WinGeometry, QByteArray WinState, QByt
     mySettingsObject->beginGroup("Window");
     mySettingsObject->setValue("Geometry", WinGeometry);
     mySettingsObject->setValue("WindowState", WinState);
-    mySettingsObject->setValue("SplitterState", SplitterState);
+    if ( 0 == SplitterState )
+    {
+        mySettingsObject->setValue("SplitterState", m_aSplitterState);
+    }
+    else
+    {
+        mySettingsObject->setValue("SplitterState", SplitterState);
+    }
+
     mySettingsObject->endGroup();
 }
 
