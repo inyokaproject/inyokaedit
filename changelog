@@ -6,9 +6,9 @@ inyokaedit (0.4.0-0ubuntu1) oneiric; urgency=low
 
   [Thorsten Roth]
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
-    alongside editor).
+    alongside editor), LP: #969649.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 25 Mar 2012 19:17:16 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 31 Mar 2012 13:59:42 +0200
 
 inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
 
