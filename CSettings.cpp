@@ -69,7 +69,9 @@ void CSettings::readSettings()
     m_LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
     m_bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
     m_bShowStatusbar = mySettingsObject->value("ShowStatusbar", false).toBool();
+#ifndef DISABLE_SPELLCHECKER
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
+#endif
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -129,7 +131,9 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
     mySettingsObject->setValue("ShowStatusbar", m_bShowStatusbar);
+#ifndef DISABLE_SPELLCHECKER
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
+#endif
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -218,10 +222,12 @@ bool CSettings::getShowStatusbar() const
     return m_bShowStatusbar;
 }
 
+#ifndef DISABLE_SPELLCHECKER
 QString CSettings::getSpellCheckerLanguage() const
 {
     return m_sSpellCheckerLanguage;
 }
+#endif
 
 // ----------------------------------------------------
 

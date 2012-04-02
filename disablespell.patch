@@ -1,0 +1,37 @@
+--- a/CInyokaEdit.ui
++++ b/CInyokaEdit.ui
+@@ -172,7 +172,6 @@
+     <property name="title">
+      <string>&amp;Tools</string>
+     </property>
+-    <addaction name="spellCheckerAct"/>
+     <addaction name="DownloadInyokaStylesAct"/>
+     <addaction name="deleteTempImagesAct"/>
+    </widget>
+@@ -215,7 +214,6 @@
+    <addaction name="undoAct"/>
+    <addaction name="redoAct"/>
+    <addaction name="separator"/>
+-   <addaction name="spellCheckerAct"/>
+   </widget>
+   <widget class="QToolBar" name="previewDlBar">
+    <property name="windowTitle">
+@@ -773,18 +771,6 @@
+     <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completely without package repositories</string>
+    </property>
+   </action>
+-  <action name="spellCheckerAct">
+-   <property name="icon">
+-    <iconset resource="inyokaedit_resources.qrc">
+-     <normaloff>:/images/spellchecker.png</normaloff>:/images/spellchecker.png</iconset>
+-   </property>
+-   <property name="text">
+-    <string>Spell checker</string>
+-   </property>
+-   <property name="toolTip">
+-    <string>Spell checker</string>
+-   </property>
+-  </action>
+   <action name="deleteTempImagesAct">
+    <property name="icon">
+     <iconset resource="inyokaedit_resources.qrc">

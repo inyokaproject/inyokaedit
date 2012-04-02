@@ -12,9 +12,7 @@
                  CParser.h \
                  CDownload.h \
                  CFileOperations.h \
-                 CParseLinks.h \
-                 CSpellChecker.h \
-                 CSpellCheckDialog.h
+                 CParseLinks.h
 
  SOURCES      += main.cpp \
                  CInyokaEdit.cpp \
@@ -31,9 +29,7 @@
                  CParser.cpp \
                  CDownload.cpp \
                  CFileOperations.cpp \
-                 CParseLinks.cpp \
-                 CSpellChecker.cpp \
-                 CSpellCheckDialog.cpp
+                 CParseLinks.cpp
 
  RESOURCES     = inyokaedit_resources.qrc
 
@@ -54,7 +50,24 @@
  CODECFORTR    = UTF-8
 
 unix {
- LIBS         += -lhunspell
+  !DISABLE_SPELLCHECKER {
+    system(pkg-config --exists hunspell) {
+      LIBS         += -lhunspell
+      message("Checking for hunspell... ok")
+    } else {
+    system(pkg-config --exists hunspell-1.3) {
+      LIBS         += -lhunspell-1.3
+      message("Checking for hunspell-1.3... ok")
+    } else {
+    system(pkg-config --exists hunspell-1.2) {
+      LIBS         += -lhunspell-1.2
+      message("Checking for hunspell-1.2... ok")
+    } else {
+    message("Checking for hunspell... no")
+    warning("spellchecker disabled")
+    CONFIG += DISABLE_SPELLCHECKER
+    }}}
+  }
 
 data.path      = /usr/share/inyokaedit
 data.files    += iWikiLinks GetInyokaStyles
@@ -71,8 +84,36 @@ target.path    = /usr/bin
 }
 
 win32 {
- LIBS         += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
+  !DISABLE_SPELLCHECKER {
+    exists(windows_files/hunspell-mingw/bin/libhunspell.dll) {
+      LIBS         += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
+      message("Checking for hunspell... ok")
+    } else {
+    message("Checking for hunspell... no")
+    warning("spellchecker disabled")
+    CONFIG += DISABLE_SPELLCHECKER
+    }
+  }
  RC_FILE       = windows_files/inyokaedit.rc
+}
+
+!DISABLE_SPELLCHECKER {
+ HEADERS      += CSpellChecker.h \
+                 CSpellCheckDialog.h
+
+ SOURCES      += CSpellChecker.cpp \
+                 CSpellCheckDialog.cpp
+}
+
+DISABLE_SPELLCHECKER {
+ DEFINES      += DISABLE_SPELLCHECKER
+
+ unix {
+  disablespell.commands += patch -p1 <disablespell.patch
+  QMAKE_EXTRA_TARGETS += disablespell
+  PRE_TARGETDEPS += disablespell
+  QMAKE_POST_LINK += patch -Rp1 <disablespell.patch
+ }
 }
 
  TRANSLATIONS += lang/inyokaedit_de.ts

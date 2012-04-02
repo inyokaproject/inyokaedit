@@ -42,8 +42,11 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 #include "CDownload.h"
 #include "CFileOperations.h"
+
+#ifndef DISABLE_SPELLCHECKER
 #include "CSpellChecker.h"
 #include "CSpellCheckDialog.h"
+#endif
 
 // Qt classes
 class QComboBox;
@@ -107,9 +110,11 @@ protected:
 
     bool eventFilter( QObject *obj, QEvent *event );
 
+#ifndef DISABLE_SPELLCHECKER
 protected slots:
     /** \brief Call spell checker */
     void checkSpelling();
+#endif
 
 private slots:
     /** \brief Call Apport for bug report */

@@ -435,9 +435,11 @@ void CInyokaEdit::createActions()
 
     // ---------------------------------------------------------------------------------------------
     // TOOLS MENU
+#ifndef DISABLE_SPELLCHECKER
     // Spell checker
     m_pUi->spellCheckerAct->setShortcut(Qt::Key_F7);
     connect(m_pUi->spellCheckerAct, SIGNAL(triggered()), this, SLOT(checkSpelling()));
+#endif
 
     // Download styles
     connect(m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()), myDownloadModule, SLOT(loadInyokaStyles()));
@@ -1155,6 +1157,7 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
+#ifndef DISABLE_SPELLCHECKER
 void CInyokaEdit::checkSpelling()
 {
     QString sDictPath("");
@@ -1204,6 +1207,7 @@ void CInyokaEdit::checkSpelling()
 
     QMessageBox::information( this, m_pApp->applicationName(), tr("Spell check has finished.") );
 }
+#endif
 
 // -----------------------------------------------------------------------------------------------
 
