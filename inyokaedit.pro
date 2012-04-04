@@ -51,22 +51,15 @@
 
 unix {
   !DISABLE_SPELLCHECKER {
-    system(pkg-config --exists hunspell) {
-      LIBS         += -lhunspell
+    CONFIG += link_pkgconfig
+    PKGCONFIG += hunspell
+    contains(PKGCONFIG, hunspell) {
       message("Checking for hunspell... ok")
     } else {
-    system(pkg-config --exists hunspell-1.3) {
-      LIBS         += -lhunspell-1.3
-      message("Checking for hunspell-1.3... ok")
-    } else {
-    system(pkg-config --exists hunspell-1.2) {
-      LIBS         += -lhunspell-1.2
-      message("Checking for hunspell-1.2... ok")
-    } else {
-    message("Checking for hunspell... no")
-    warning("spellchecker disabled")
-    CONFIG += DISABLE_SPELLCHECKER
-    }}}
+      message("Checking for hunspell... no")
+      CONFIG += DISABLE_SPELLCHECKER
+      warning("spellchecker disabled")
+    }
   }
 
 data.path      = /usr/share/inyokaedit
