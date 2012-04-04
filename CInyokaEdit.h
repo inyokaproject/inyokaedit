@@ -42,8 +42,11 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 #include "CDownload.h"
 #include "CFileOperations.h"
+
+#ifndef DISABLE_SPELLCHECKER
 #include "CSpellChecker.h"
 #include "CSpellCheckDialog.h"
+#endif
 
 // Qt classes
 class QComboBox;

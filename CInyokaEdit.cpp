@@ -435,9 +435,13 @@ void CInyokaEdit::createActions()
 
     // ---------------------------------------------------------------------------------------------
     // TOOLS MENU
+
     // Spell checker
     m_pUi->spellCheckerAct->setShortcut(Qt::Key_F7);
     connect(m_pUi->spellCheckerAct, SIGNAL(triggered()), this, SLOT(checkSpelling()));
+#ifdef DISABLE_SPELLCHECKER
+    m_pUi->spellCheckerAct->setVisible(false);
+#endif
 
     // Download styles
     connect(m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()), myDownloadModule, SLOT(loadInyokaStyles()));
@@ -1157,6 +1161,7 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
 
 void CInyokaEdit::checkSpelling()
 {
+  #ifndef DISABLE_SPELLCHECKER
     QString sDictPath("");
 
     // Standard path for Hunspell (Linux only)
@@ -1203,7 +1208,9 @@ void CInyokaEdit::checkSpelling()
     spellChecker = NULL;
 
     QMessageBox::information( this, m_pApp->applicationName(), tr("Spell check has finished.") );
+  #endif
 }
+
 
 // -----------------------------------------------------------------------------------------------
 
