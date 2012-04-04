@@ -5,6 +5,7 @@ inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
     (dynamic check with pkg-config which is a new dependency). Spellchecker can
     be disabled (but is enabled by default).
   * Added me to authors of debian/*.
+  * Fixed LP: #951056
 
   [Thorsten Roth]
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
