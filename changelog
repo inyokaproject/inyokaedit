@@ -11,6 +11,9 @@ inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
     alongside editor), LP: #969649 (crash on startup), LP: #889321 and #922808
     (cursor moving and marking issues).
+  * Webview dependency now optional (dynamic check with pkg-config which
+    is a new dependency). This is needed because Webview is not supported in
+    Ubuntu 10.04 anymore (backport support was dropped...).
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 08 Apr 2012 15:46:54 +0200
 
