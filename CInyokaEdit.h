@@ -28,7 +28,6 @@
 #define CINYOKAEDIT_H
 
 #include <QMainWindow>
-#include <QWebHistory>
 #include <iostream>
 
 #include "CInterwiki.h"
@@ -48,10 +47,14 @@
 #include "CSpellCheckDialog.h"
 #endif
 
+#ifndef DISABLE_WEBVIEW
+#include <QWebHistory>
+class QWebView;
+#endif
+
 // Qt classes
 class QComboBox;
 class QSignalMapper;
-class QWebView;
 class QFile;
 class QDir;
 
@@ -204,7 +207,10 @@ private:
 
     //QTabWidget *myTabwidgetDocuments;
     QTabWidget *myTabwidgetRawPreview;
+
+    #ifndef DISABLE_WEBVIEW
     QWebView *myWebview;
+    #endif
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;

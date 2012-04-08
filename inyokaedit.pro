@@ -37,7 +37,6 @@
 
  QT           += core \
                  gui \
-                 webkit \
                  xml
 
  FORMS        += CInyokaEdit.ui \
@@ -59,6 +58,17 @@ unix {
       message("Checking for hunspell... no")
       CONFIG += DISABLE_SPELLCHECKER
       warning("spellchecker disabled")
+    }
+  }
+
+  !DISABLE_WEBVIEW {
+    PKGCONFIG += libqtwebkit4
+    contains(PKGCONFIG, libqtwebkit4) {
+      message("Checking for libqtwebkit4... ok")
+    } else {
+      message("Checking for libqtwebkit4... no")
+      CONFIG += DISABLE_WEBVIEW
+      warning("webview disabled")
     }
   }
 
@@ -100,6 +110,14 @@ win32 {
 
 DISABLE_SPELLCHECKER {
  DEFINES      += DISABLE_SPELLCHECKER
+}
+
+!DISABLE_WEBVIEW {
+ QT           += webkit
+}
+
+DISABLE_WEBVIEW {
+ DEFINES      += DISABLE_WEBVIEW
 }
 
  TRANSLATIONS += lang/inyokaedit_de.ts

@@ -59,8 +59,13 @@ void CSettings::readSettings()
 {
     // General settings
     m_bCodeCompletion = mySettingsObject->value("CodeCompletion", true).toBool();
+    #ifndef DISABLE_WEBVIEW
     m_bPreviewInEditor = mySettingsObject->value("PreviewInEditor", true).toBool();
     m_bPreviewAlongside = mySettingsObject->value("PreviewAlongside", false).toBool();
+    #else
+    m_bPreviewInEditor = false;
+    m_bPreviewAlongside = false;
+    #endif
     m_sInyokaUrl = mySettingsObject->value("InyokaUrl", "http://wiki.ubuntuusers.de").toString();
     if ( m_sInyokaUrl.endsWith("/") )
     {

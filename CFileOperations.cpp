@@ -24,7 +24,9 @@
  * File operations: New, load, save...
  */
 
+#ifndef DISABLE_WEBVIEW
 #include <QWebView>
+#endif
 
 #include "CFileOperations.h"
 
@@ -250,6 +252,7 @@ bool CFileOperations::saveFile( const QString &sFileName )
 
 void CFileOperations::printPreview()
 {
+#ifndef DISABLE_WEBVIEW
 #if not defined _WIN32
     QWebView myPreviewWebView;
     QPrinter myPrinter;
@@ -272,6 +275,10 @@ void CFileOperations::printPreview()
     }
 #else
     QMessageBox::information(m_pParent, m_sAppName, trUtf8("Printing is not supported under Windows, yet."));
+#endif
+
+#else
+    QMessageBox::information(m_pParent, m_sAppName, trUtf8("Printing is not supported under this Linux version."));
 #endif
 }
 

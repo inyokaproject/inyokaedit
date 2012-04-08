@@ -27,7 +27,9 @@
 #define sVERSION "0.4.0"
 
 #include <QtGui>
+#ifndef DISABLE_WEBVIEW
 #include <QtWebKit/QWebView>
+#endif
 
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
@@ -185,8 +187,10 @@ void CInyokaEdit::createObjects()
         myTabwidgetRawPreview = new QTabWidget;
         if ( m_bLogging ) { std::clog << "Created myTabwidgetRawPreview" << std::endl; }
 
+        #ifndef DISABLE_WEBVIEW
         myWebview = new QWebView(this);
         if ( m_bLogging ) { std::clog << "Created myWebview" << std::endl; }
+        #endif
 
         myInsertSyntaxElement = new CInsertSyntaxElement;
         if ( m_bLogging ) { std::clog << "Created myInsertSyntaxElement" << std::endl; }
@@ -252,6 +256,7 @@ void CInyokaEdit::setupEditor()
     myTabwidgetDocuments->addTab(myTabwidgetRawPreview, tr("Untitled"));
     */
 
+    #ifndef DISABLE_WEBVIEW
     if ( true == mySettings->getPreviewAlongside() && true == mySettings->getPreviewInEditor() )
     {
         try
@@ -285,10 +290,12 @@ void CInyokaEdit::setupEditor()
     }
     else
     {
+    #endif
         setCentralWidget( myTabwidgetRawPreview );
         myTabwidgetRawPreview->setTabPosition(QTabWidget::West);
         myTabwidgetRawPreview->addTab(myEditor, tr("Raw format"));
 
+    #ifndef DISABLE_WEBVIEW
         myTabwidgetRawPreview->addTab(myWebview, tr("Preview"));
         if ( false == mySettings->getPreviewInEditor() )
         {
@@ -299,12 +306,6 @@ void CInyokaEdit::setupEditor()
     connect(myWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
 
-    myFileOperations->setCurrentFile("");
-    this->setUnifiedTitleAndToolBarOnMac(true);
-
-    connect(myDownloadModule, SIGNAL(sendArticleText(QString, QString)),
-            this, SLOT(displayArticleText(QString, QString)));
-
     // Browser buttons
     connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
             myWebview, SLOT(back()));
@@ -314,6 +315,13 @@ void CInyokaEdit::setupEditor()
             myWebview, SLOT(reload()));
     connect(myWebview, SIGNAL(urlChanged(QUrl)),
             this, SLOT(clickedLink()));
+    #endif
+
+    myFileOperations->setCurrentFile("");
+    this->setUnifiedTitleAndToolBarOnMac(true);
+
+    connect(myDownloadModule, SIGNAL(sendArticleText(QString, QString)),
+            this, SLOT(displayArticleText(QString, QString)));
 
     // Hide statusbar, if option is false
     if ( false == mySettings->getShowStatusbar() )
@@ -757,6 +765,7 @@ void CInyokaEdit::createToolBars()
 // Call parser
 void CInyokaEdit::previewInyokaPage( const int nIndex )
 {
+    #ifndef DISABLE_WEBVIEW
     // Call parser if iIndex == index of myWebview -> Click on tab preview
     // or if iIndex == 999 -> Default parameter value when calling the function (e.g.) by clicking on button preview
     if ( myTabwidgetRawPreview->indexOf(myWebview) == nIndex || 999 == nIndex )
@@ -779,7 +788,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
 
             m_pUi->printPreviewAct->setEnabled(true);
         }
-
+    #endif
         if ( "" == myFileOperations->getCurrentFile() || tr("Untitled") == myFileOperations->getCurrentFile() )
         {
             myParser->genOutput("");
@@ -789,6 +798,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
             QFileInfo fi(myFileOperations->getCurrentFile());
             myParser->genOutput(fi.fileName());
         }
+    #ifndef DISABLE_WEBVIEW
     }
     else
     {
@@ -808,6 +818,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
 
         m_pUi->printPreviewAct->setEnabled(false);
     }
+    #endif
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1081,22 +1092,25 @@ void CInyokaEdit::showHtmlPreview( const QString &sFilename )
     {
         this->statusBar()->showMessage( tr("Opening preview", "GUI: Status bar") );
     }
-    myWebview->history()->clear();  // Clear history (clicked links)
 
     if ( false == mySettings->getPreviewInEditor() )
     {
         // Open html-file in system web browser
         QDesktopServices::openUrl( QUrl::fromLocalFile(sFilename) );
     }
+    #ifndef DISABLE_WEBVIEW
     else
     {
         myWebview->load( QUrl::fromLocalFile(sFilename) );
     }
+    myWebview->history()->clear();  // Clear history (clicked links)
+    #endif
 }
 
 // Wait until loading has finished
 void CInyokaEdit::loadPreviewFinished( bool bSuccess )
 {
+    #ifndef DISABLE_WEBVIEW
     if ( bSuccess )
     {
         myTabwidgetRawPreview->setCurrentIndex( myTabwidgetRawPreview->indexOf(myWebview) );
@@ -1124,14 +1138,17 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
     {
         QMessageBox::warning( this, m_pApp->applicationName(), tr("Error while loading preview.") );
     }
+    #endif
 }
 
 // A link on preview page was clicked
 void CInyokaEdit::clickedLink()
 {
+    #ifndef DISABLE_WEBVIEW
     // Disable forward / backward button
     m_pUi->goForwardBrowserAct->setEnabled(false);
     m_pUi->goBackBrowserAct->setEnabled(false);
+    #endif
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1285,16 +1302,26 @@ void CInyokaEdit::checkSpelling()
 // Delete images in temp. download folder (images downloaded with articles)
 void CInyokaEdit::deleteTempImages()
 {
-    // Remove all files in current folder
-    QFileInfoList fiListFiles = m_tmpPreviewImgDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
-    for ( int nFile = 0; nFile < fiListFiles.count(); nFile++ )
+    int nRet = QMessageBox::question( this, m_pApp->applicationName(), tr("Do you really want to delete all images downloaded with articles?"), QMessageBox::Yes | QMessageBox::No);
+
+    if ( QMessageBox::Yes== nRet )
     {
-        if ( !m_tmpPreviewImgDir.remove( fiListFiles.at(nFile).fileName() ) )
+        // Remove all files in current folder
+        QFileInfoList fiListFiles = m_tmpPreviewImgDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
+        for ( int nFile = 0; nFile < fiListFiles.count(); nFile++ )
         {
-            // Problem while removing
-            QMessageBox::warning( this, m_pApp->applicationName(), tr("Could not delete file: ") + fiListFiles.at(nFile).fileName() );
-            return;
+            if ( !m_tmpPreviewImgDir.remove( fiListFiles.at(nFile).fileName() ) )
+            {
+                // Problem while removing
+                QMessageBox::warning( this, m_pApp->applicationName(), tr("Could not delete file: ") + fiListFiles.at(nFile).fileName() );
+                return;
+            }
         }
+        QMessageBox::information( this, m_pApp->applicationName(), tr("Images successfully deleted.") );
+    }
+    else
+    {
+        return;
     }
 }
 
