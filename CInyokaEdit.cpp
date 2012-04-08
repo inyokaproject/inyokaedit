@@ -157,10 +157,10 @@ void CInyokaEdit::createObjects()
 
         myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
         if ( m_bLogging ) { std::clog << "Created myEditor" << std::endl; }
-        if ( true == mySettings->getPreviewAlongside() )
-        {
+//        if ( true == mySettings->getPreviewAlongside() )
+//        {
             myEditor->installEventFilter(this);
-        }
+//        }
 
         myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
         if ( m_bLogging ) { std::clog << "Created myFileOperations" << std::endl; }
@@ -1132,15 +1132,74 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
 {
     if ( obj == myEditor )
     {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+        // ---------------------------------------------------------------------------
+        // Bug fix for LP: #922808
+        Qt::KeyboardModifiers keyMod = QApplication::keyboardModifiers();
+        bool isSHIFT = keyMod.testFlag(Qt::ShiftModifier);
+        bool isCTRL = keyMod.testFlag(Qt::ControlModifier);
+
+        // CTRL + SHIFT + arrow right
+        if ( event->type() == QEvent::KeyPress &&
+             keyEvent->key() == Qt::Key_Right &&
+             isSHIFT && isCTRL )
+        {
+            QTextCursor cursor(myEditor->textCursor());
+            cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
+            cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor);
+            myEditor->setTextCursor(cursor);
+            return true;
+        }
+        // CTRL + arrow right
+        else if ( event->type() == QEvent::KeyPress &&
+             keyEvent->key() == Qt::Key_Right &&
+             !isSHIFT && isCTRL )
+        {
+                myEditor->moveCursor(QTextCursor::Right);
+                myEditor->moveCursor(QTextCursor::EndOfWord);
+                return true;
+        }
+
+        // ----------------------------------------------
+        // Bug fix for LP: #889321
+
+        // CTRL + SHIFT arrow down
+        else if ( event->type() == QEvent::KeyPress &&
+             keyEvent->key() == Qt::Key_Up &&
+             isSHIFT && isCTRL )
+        {
+                QTextCursor cursor(myEditor->textCursor());
+                cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
+                myEditor->setTextCursor(cursor);
+                return true;
+        }
+
+        // CTRL + SHIFT arrow down
+        else if ( event->type() == QEvent::KeyPress &&
+             keyEvent->key() == Qt::Key_Down &&
+             isSHIFT && isCTRL )
+        {
+                QTextCursor cursor(myEditor->textCursor());
+                cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
+                myEditor->setTextCursor(cursor);
+                return true;
+        }
+        // ---------------------------------------------------------------------------
+
+        // Reload preview at RETURN if preview alongside
         if ( event->type() == QEvent::KeyPress )
         {
-            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
             switch( keyEvent->key() )
             {
                 case Qt::Key_Enter:
                 case Qt::Key_Return:
                 case Qt::Key_F5:
-                    previewInyokaPage();
+                    if ( true == mySettings->getPreviewAlongside() )
+                    {
+                        previewInyokaPage();
+                    }
                 break;
             }
             return false;
