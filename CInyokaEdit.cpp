@@ -257,6 +257,8 @@ void CInyokaEdit::setupEditor()
         try
         {
             myWidgetSplitter = new QSplitter;
+            myFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+            myWebviewFrame = new QFrame;
         }
         catch ( std::bad_alloc& ba )
         {
@@ -266,7 +268,11 @@ void CInyokaEdit::setupEditor()
         }
 
         myWidgetSplitter->addWidget( myEditor );
-        myWidgetSplitter->addWidget( myWebview );
+        myFrameLayout->addWidget( myWebview );
+        myWebviewFrame->setLayout( myFrameLayout );
+        myWebviewFrame->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+        //myWidgetSplitter->addWidget( myWebview );
+        myWidgetSplitter->addWidget( myWebviewFrame );
 
         connect(myFileOperations, SIGNAL(loadedFile()),
                 this, SLOT(previewInyokaPage()));
@@ -1094,6 +1100,25 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
     if ( bSuccess )
     {
         myTabwidgetRawPreview->setCurrentIndex( myTabwidgetRawPreview->indexOf(myWebview) );
+        // Enable / disbale back button
+        if ( myWebview->history()->canGoBack() )
+        {
+            m_pUi->goBackBrowserAct->setEnabled(true);
+        }
+        else
+        {
+            m_pUi->goBackBrowserAct->setEnabled(false);
+        }
+
+        // Enable / disable forward button
+        if ( myWebview->history()->canGoForward() )
+        {
+            m_pUi->goForwardBrowserAct->setEnabled(true);
+        }
+        else
+        {
+            m_pUi->goForwardBrowserAct->setEnabled(false);
+        }
     }
     else
     {
@@ -1104,25 +1129,9 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
 // A link on preview page was clicked
 void CInyokaEdit::clickedLink()
 {
-    // Enable / disbale back button
-    if ( myWebview->history()->canGoBack() )
-    {
-        m_pUi->goBackBrowserAct->setEnabled(true);
-    }
-    else
-    {
-        m_pUi->goBackBrowserAct->setEnabled(false);
-    }
-
-    // Enable / disable forward button
-    if ( myWebview->history()->canGoForward() )
-    {
-        m_pUi->goForwardBrowserAct->setEnabled(true);
-    }
-    else
-    {
-        m_pUi->goForwardBrowserAct->setEnabled(false);
-    }
+    // Disable forward / backward button
+    m_pUi->goForwardBrowserAct->setEnabled(false);
+    m_pUi->goBackBrowserAct->setEnabled(false);
 }
 
 // -----------------------------------------------------------------------------------------------

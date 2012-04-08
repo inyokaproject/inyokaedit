@@ -199,6 +199,8 @@ private:
     CInterWiki *myInterWikiLinks;
     CDownload *myDownloadModule;
     QSplitter *myWidgetSplitter;
+    QBoxLayout *myFrameLayout;
+    QFrame *myWebviewFrame;
 
     //QTabWidget *myTabwidgetDocuments;
     QTabWidget *myTabwidgetRawPreview;
