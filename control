@@ -6,7 +6,7 @@ Uploaders: Dominique Lasserre <lasserre.d@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~),
          libqt4-dev,
          qt4-qmake,
-         libqtwebkit-dev | libqt4-dev < 4:4.7.0,
+         libqtwebkit-dev | libqt4-dev (<< 4:4.7.0),
          libqtgui4,
          pkg-config,
          libhunspell-dev
