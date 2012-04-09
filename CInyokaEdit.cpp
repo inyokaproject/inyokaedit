@@ -1285,7 +1285,7 @@ void CInyokaEdit::checkSpelling()
 // Delete images in temp. download folder (images downloaded with articles)
 void CInyokaEdit::deleteTempImages()
 {
-    int nRet = QMessageBox::information( this, m_pApp->applicationName(), tr("Do you really want to delete all images downloaded with articles?"), QMessageBox::Yes | QMessageBox::No);
+    int nRet = QMessageBox::question( this, m_pApp->applicationName(), tr("Do you really want to delete all images downloaded with articles?"), QMessageBox::Yes | QMessageBox::No);
 
     if ( QMessageBox::Yes== nRet )
     {
