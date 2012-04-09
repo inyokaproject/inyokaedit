@@ -48,25 +48,41 @@
  CODECFORSRC   = UTF-8
  CODECFORTR    = UTF-8
 
+defineTest(pkgconfigcheck) {
+  isEmpty(2) {
+    PKG_STR="Checking for $${1}..."
+  } else {
+    PKG_STR="Checking $$1 is at least version $${2}..."
+  }
+
+  system(pkg-config --exists $$1) {
+    !isEmpty(2) {
+      !system(pkg-config $$1 --atleast-version $$2) {
+        message("$$PKG_STR no")
+        return(false)
+      }
+    }
+  CONFIG += link_pkgconfig
+    PKGCONFIG += $$1
+    export(CONFIG)
+    export(PKGCONFIG)
+    message("$$PKG_STR ok")
+    return(true)
+  }
+  message("$$PKG_STR no")
+  return(false)
+}
+
 unix {
   !DISABLE_SPELLCHECKER {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += hunspell
-    contains(PKGCONFIG, hunspell) {
-      message("Checking for hunspell... ok")
-    } else {
-      message("Checking for hunspell... no")
+    !pkgconfigcheck(hunspell) {
       CONFIG += DISABLE_SPELLCHECKER
       warning("spellchecker disabled")
     }
   }
 
   !DISABLE_WEBVIEW {
-    PKGCONFIG += libqtwebkit4
-    contains(PKGCONFIG, libqtwebkit4) {
-      message("Checking for libqtwebkit4... ok")
-    } else {
-      message("Checking for libqtwebkit4... no")
+    !pkgconfigcheck(QtWebKit, 4.0) {
       CONFIG += DISABLE_WEBVIEW
       warning("webview disabled")
     }
