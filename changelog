@@ -3,19 +3,16 @@ inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
   [Dominique Lasserre]
   * Improved Makefile (installation target). Hunspell dependency now optional
     (dynamic check with pkg-config which is a new dependency). Spellchecker can
-    be disabled (but is enabled by default).
+    be disabled (but is enabled by default). LP: #951056
   * Added me to authors of debian/*.
-  * Fixed LP: #951056
+  * Accept libqt4-dev << 4:4.7.0 as replacement of libqtwebkit-dev.
 
   [Thorsten Roth]
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
     alongside editor), LP: #969649 (crash on startup), LP: #889321 and #922808
     (cursor moving and marking issues).
-  * Webview dependency now optional (dynamic check with pkg-config which
-    is a new dependency). This is needed because Webview is not supported in
-    Ubuntu 10.04 anymore (backport support was dropped...).
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 08 Apr 2012 15:46:54 +0200
+ -- Dominique Lasserre <lasserre.d@gmail.com>  Mon, 09 Apr 2012 03:43:29 +0200
 
 inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
 
