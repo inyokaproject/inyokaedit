@@ -33,16 +33,7 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
       m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir)
 {
-    try
-    {
-        m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl );
-    }
-    catch ( std::bad_alloc& ba )
-    {
-      std::cerr << "ERROR: Caught bad_alloc in \"CParseLinks\": " << ba.what() << std::endl;
-      QMessageBox::critical(0, "Error", "Error while memory allocation: CParseLinks");
-      exit (-11);
-    }
+    m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl );
 
     // Initialize possible text formats
     m_sListFormatStart << "'''";          // BOLD

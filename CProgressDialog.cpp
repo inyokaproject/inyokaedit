@@ -39,23 +39,17 @@ CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListA
         sListArguments << QDir::homePath() + "/." + sAppName;
     }
 
-    try
-    {
-        m_myProc = new QProcess();
-    }
-    catch ( std::bad_alloc& ba )
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"CProgressDialog\": " << ba.what() << std::endl;
-        QMessageBox::critical(0, sAppName, "Error while memory allocation: CProgressDialog");
-        exit (-1);
-    }
+    m_myProc = new QProcess();
     m_myProc->start( sScriptname, sListArguments );
 
     // Show output
-    connect( m_myProc, SIGNAL(readyReadStandardOutput()),this, SLOT(showMessage()) );
-    connect( m_myProc, SIGNAL(readyReadStandardError()), this, SLOT(showErrorMessage()) );
+    connect( m_myProc, SIGNAL(readyReadStandardOutput()),
+             this, SLOT(showMessage()) );
+    connect( m_myProc, SIGNAL(readyReadStandardError()),
+             this, SLOT(showErrorMessage()) );
 
-    connect( m_myProc, SIGNAL(finished(int)), this, SLOT(downloadScriptFinished()) );
+    connect( m_myProc, SIGNAL(finished(int)),
+             this, SLOT(downloadScriptFinished()) );
 }
 
 CProgressDialog::~CProgressDialog()

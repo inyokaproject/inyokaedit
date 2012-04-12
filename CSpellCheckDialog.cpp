@@ -39,16 +39,23 @@ CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *pare
     m_pUi->setupUi(this);
     _spellChecker = spellChecker;
 
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
 
-    connect(m_pUi->listWidget, SIGNAL(currentTextChanged(QString)), m_pUi->ledtReplaceWith, SLOT(setText(QString)));
+    connect( m_pUi->listWidget, SIGNAL(currentTextChanged(QString)),
+             m_pUi->ledtReplaceWith, SLOT(setText(QString)) );
 
-    connect(m_pUi->btnAddToDict, SIGNAL(clicked()), this, SLOT(addToDict()));
-    connect(m_pUi->btnReplaceOnce, SIGNAL(clicked()), this, SLOT(replaceOnce()));
-    connect(m_pUi->btnReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAll()));
-    connect(m_pUi->btnIgnoreOnce, SIGNAL(clicked()), this, SLOT(ignoreOnce()));
-    connect(m_pUi->btnIgnoreAll, SIGNAL(clicked()), this, SLOT(ignoreAll()));
-    connect(m_pUi->btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    connect( m_pUi->btnAddToDict, SIGNAL(clicked()),
+             this, SLOT(addToDict()) );
+    connect( m_pUi->btnReplaceOnce, SIGNAL(clicked()),
+             this, SLOT(replaceOnce()) );
+    connect( m_pUi->btnReplaceAll, SIGNAL(clicked()),
+             this, SLOT(replaceAll()) );
+    connect( m_pUi->btnIgnoreOnce, SIGNAL(clicked()),
+             this, SLOT(ignoreOnce()) );
+    connect( m_pUi->btnIgnoreAll, SIGNAL(clicked()),
+             this, SLOT(ignoreAll()) );
+    connect( m_pUi->btnCancel, SIGNAL(clicked()),
+             this, SLOT(reject()) );
 }
 
 
@@ -73,8 +80,10 @@ CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord( const QString 
     m_pUi->listWidget->clear();
     m_pUi->listWidget->addItems(suggestions);
 
-    if(suggestions.count() > 0)
+    if( suggestions.count() > 0 )
+    {
         m_pUi->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
+    }
 
     _returnCode = AbortCheck;
     QDialog::exec();

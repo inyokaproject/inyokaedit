@@ -29,19 +29,8 @@
 CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
     m_pFDialog(&FDialog), m_pFRDialog(&FRDialog)
 {
-
     QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath() );
-
-    try
-    {
-        mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
-    }
-    catch ( std::bad_alloc& ba )
-    {
-      std::cerr << "ERROR: Caught bad_alloc in \"CSettings\": " << ba.what() << std::endl;
-      QMessageBox::critical( 0, sName, "Error while memory allocation: CSettings" );
-      exit (-10);
-    }
+    mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
 }
 
 CSettings::~CSettings()

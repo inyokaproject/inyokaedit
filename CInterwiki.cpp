@@ -52,17 +52,8 @@ CInterWiki::CInterWiki( const QApplication *pApp )
 
     QXmlSimpleReader myXmlReader;
 
-    try
-    {
-        m_myXmlSource = new QXmlInputSource(&XmlFile);
-        m_myHandler = new CIWikiLinksParser;
-    }
-    catch ( std::bad_alloc& ba )
-    {
-        std::cerr << "ERROR: myXmlSource - bad_alloc caught: " << ba.what() << std::endl;
-        QMessageBox::critical( 0, pApp->applicationName(), "ERROR: bad_alloc XmlSource" );
-        exit (-6);
-    }
+   m_myXmlSource = new QXmlInputSource(&XmlFile);
+   m_myHandler = new CIWikiLinksParser;
 
     myXmlReader.setContentHandler(m_myHandler);
     myXmlReader.setErrorHandler(m_myHandler);

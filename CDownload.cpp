@@ -53,34 +53,26 @@ bool CDownload::loadInyokaStyles()
     {
         CProgressDialog *myArticleDownloadProgress;
 
-        try
+        // Path from normal installation
+        if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") )
         {
-            // Path from normal installation
-            if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") )
-            {
-                myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
-            }
-            // No installation: Use app path
-            else
-            {
+            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+        }
+        // No installation: Use app path
+        else
+        {
 #if defined _WIN32
-                if ( QFile::exists(m_StylesDir.absolutePath() + "/GetInyokaStyles") )
-                {
-                    QFile::remove(m_StylesDir.absolutePath() + "/GetInyokaStyles");
-                    QFile::copy(m_sAppDir + "/GetInyokaStyles", m_StylesDir.absolutePath() + "/GetInyokaStyles");
-                }
-                myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
-#else
-                myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
-#endif
+            if ( QFile::exists(m_StylesDir.absolutePath() + "/GetInyokaStyles") )
+            {
+                QFile::remove(m_StylesDir.absolutePath() + "/GetInyokaStyles");
+                QFile::copy(m_sAppDir + "/GetInyokaStyles", m_StylesDir.absolutePath() + "/GetInyokaStyles");
             }
+            myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+#else
+            myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+#endif
         }
-        catch ( std::bad_alloc& ba )
-        {
-            std::cerr << "ERROR: myArticleDownloadProgress - bad_alloc caught: " << ba.what() << std::endl;
-            QMessageBox::critical(m_pParent, m_sAppName, "Error while memory allocation: bad_alloc - myArticleDownloadProgress");
-            exit (-8);
-        }
+
         myArticleDownloadProgress->open();
 
         return true;
@@ -272,23 +264,14 @@ void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, 
             tmpScriptfile.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner | QFile::ReadGroup | QFile::ExeGroup | QFile::ReadOther | QFile::ExeOther);
 
             CProgressDialog *myImageDownloadProgress;
-            // Start download script
-            try
-            {
-                QString sTmpFilePath = ImgDir.absolutePath() + "/" + sScriptName;
-#if defined _WIN32
-                myImageDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << sTmpFilePath << ImgDir.absolutePath(), m_sAppName, m_pParent);
-#else
-                myImageDownloadProgress = new CProgressDialog(sTmpFilePath, QStringList() << ImgDir.absolutePath(), m_sAppName, m_pParent);
-#endif
-            }
-            catch ( std::bad_alloc& ba )
-            {
-                std::cerr << "ERROR: Caught bad_alloc in \"downloadImages()\": " << ba.what() << std::endl;
-                QMessageBox::critical(m_pParent, m_sAppName, "Error while memory allocation: bad_alloc - myImageDownloadProgress");
-                exit (-9);
-            }
 
+            // Start download script
+            QString sTmpFilePath = ImgDir.absolutePath() + "/" + sScriptName;
+#if defined _WIN32
+            myImageDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << sTmpFilePath << ImgDir.absolutePath(), m_sAppName, m_pParent);
+#else
+            myImageDownloadProgress = new CProgressDialog(sTmpFilePath, QStringList() << ImgDir.absolutePath(), m_sAppName, m_pParent);
+#endif
             myImageDownloadProgress->open();
         }
     }

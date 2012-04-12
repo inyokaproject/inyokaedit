@@ -48,9 +48,11 @@ CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSetti
             m_LastOpenedFilesAct[i]->setVisible(false);
         }
         mySigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
-        connect(m_LastOpenedFilesAct[i], SIGNAL(triggered()), mySigMapLastOpenedFiles, SLOT(map()));
+        connect( m_LastOpenedFilesAct[i], SIGNAL(triggered()),
+                 mySigMapLastOpenedFiles, SLOT(map()) );
     }
-    connect(mySigMapLastOpenedFiles, SIGNAL(mapped(int)), this, SLOT(openRecentFile(int)));
+    connect( mySigMapLastOpenedFiles, SIGNAL(mapped(int)),
+             this, SLOT(openRecentFile(int)) );
 }
 
 // ---------------------------------------------------------------------------------------------

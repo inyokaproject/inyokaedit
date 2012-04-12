@@ -56,11 +56,14 @@ CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &user
     // Detect encoding analyzing the SET option in the affix file
     _encoding = "ISO8859-1";
     QFile _affixFile(affixFile);
-    if (_affixFile.open(QIODevice::ReadOnly)) {
+    if ( _affixFile.open(QIODevice::ReadOnly) )
+    {
         QTextStream stream(&_affixFile);
         QRegExp enc_detector("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*", Qt::CaseInsensitive);
-        for(QString line = stream.readLine(); !line.isEmpty(); line = stream.readLine()) {
-            if (enc_detector.indexIn(line) > -1) {
+        for( QString line = stream.readLine(); !line.isEmpty(); line = stream.readLine() )
+        {
+            if ( enc_detector.indexIn(line) > -1 )
+            {
                 _encoding = enc_detector.cap(1);
                 //qDebug() << QString("Encoding set to ") + _encoding;
                 break;
@@ -70,18 +73,26 @@ CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &user
     }
     _codec = QTextCodec::codecForName(this->_encoding.toLatin1().constData());
 
-    if(!_userDictionary.isEmpty()) {
+    if ( !_userDictionary.isEmpty() )
+    {
         QFile userDictonaryFile(_userDictionary);
-        if(userDictonaryFile.open(QIODevice::ReadOnly)) {
+        if ( userDictonaryFile.open(QIODevice::ReadOnly) )
+        {
             QTextStream stream(&userDictonaryFile);
-            for(QString word = stream.readLine(); !word.isEmpty(); word = stream.readLine())
+            for( QString word = stream.readLine(); !word.isEmpty(); word = stream.readLine() )
+            {
                 put_word(word);
+            }
             userDictonaryFile.close();
-        } else {
+        }
+        else
+        {
             QMessageBox::warning(0, "Spell checker", "User dictionary in " + _userDictionary + " could not be opened.");
             //qWarning() << "User dictionary in " << _userDictionary << "could not be opened";
         }
-    } else {
+    }
+    else
+    {
         qDebug() << "User dictionary not set.";
     }
 
@@ -112,20 +123,23 @@ void CSpellChecker::start( CTextEditor *pEditor )
 
     // Don't call cursor.beginEditBlock(), as this prevents the redraw after changes to the content
     // cursor.beginEditBlock();
-    while(!cursor.atEnd()) {
+    while( !cursor.atEnd() )
+    {
         QCoreApplication::processEvents();
         cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
         QString word = cursor.selectedText();
 
         // Workaround for better recognition of words punctuation etc. does not belong to words
-        while(!word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position()) {
+        while( !word.isEmpty() && !word.at(0).isLetter() && cursor.anchor() < cursor.position() )
+        {
             int cursorPos = cursor.position();
             cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
             cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
             word = cursor.selectedText();
         }
 
-        if(!word.isEmpty() && !this->spell(word)) {
+        if ( !word.isEmpty() && !this->spell(word))
+        {
             QTextCursor tmpCursor(cursor);
             tmpCursor.setPosition(cursor.anchor());
             pEditor->setTextCursor(tmpCursor);
@@ -152,7 +166,8 @@ void CSpellChecker::start( CTextEditor *pEditor )
             if(spellResult == CSpellCheckDialog::AbortCheck)
                 break;
 
-            switch(spellResult) {
+            switch( spellResult )
+            {
                 case CSpellCheckDialog::ReplaceOnce:
                     cursor.insertText(m_pCheckDialog->replacement());
                     break;
@@ -187,7 +202,8 @@ QStringList CSpellChecker::suggest( const QString &word )
     // Encode from Unicode to the encoding used by current dictionary
     int numSuggestions = _hunspell->suggest(&suggestWordList, _codec->fromUnicode(word).constData());
     QStringList suggestions;
-    for(int i=0; i < numSuggestions; ++i) {
+    for ( int i=0; i < numSuggestions; ++i )
+    {
         suggestions << _codec->toUnicode(suggestWordList[i]);
         free(suggestWordList[i]);
     }
@@ -210,17 +226,23 @@ void CSpellChecker::put_word( const QString &word )
 void CSpellChecker::addToUserWordlist( const QString &word )
 {
     put_word(word);
-    if(!_userDictionary.isEmpty()) {
+    if ( !_userDictionary.isEmpty() )
+    {
         QFile userDictonaryFile(_userDictionary);
-        if(userDictonaryFile.open(QIODevice::Append)) {
+        if ( userDictonaryFile.open(QIODevice::Append) )
+        {
             QTextStream stream(&userDictonaryFile);
             stream << word << "\n";
             userDictonaryFile.close();
-        } else {
+        }
+        else
+        {
             QMessageBox::warning(0, "Spell checker", "User dictionary in " + _userDictionary + " could not be opened for appending a new word.");
             //qWarning() << "User dictionary in " << _userDictionary << "could not be opened for appending a new word";
         }
-    } else {
+    }
+    else
+    {
         qDebug() << "User dictionary not set.";
     }
 }

@@ -68,7 +68,9 @@ CTextEditor::~CTextEditor()
 void CTextEditor::setCompleter( QCompleter *completer )
 {
     if (c)
+    {
         QObject::disconnect(c, 0, this, 0);
+    }
 
     c = completer;
 
@@ -78,8 +80,8 @@ void CTextEditor::setCompleter( QCompleter *completer )
     c->setWidget(this);
     c->setCompletionMode(QCompleter::PopupCompletion);
     c->setCaseSensitivity(Qt::CaseInsensitive);
-    QObject::connect(c, SIGNAL(activated(QString)),
-                     this, SLOT(insertCompletion(QString)));
+    QObject::connect( c, SIGNAL(activated(QString)),
+                      this, SLOT(insertCompletion(QString)) );
 }
 
 QCompleter *CTextEditor::completer() const
@@ -89,8 +91,10 @@ QCompleter *CTextEditor::completer() const
 
 void CTextEditor::insertCompletion( const QString& completion )
 {
-    if (c->widget() != this)
+    if ( c->widget() != this )
+    {
         return;
+    }
     QTextCursor tc = textCursor();
     int extra = completion.length() - c->completionPrefix().length();
     tc.movePosition(QTextCursor::Left);
@@ -108,26 +112,30 @@ QString CTextEditor::textUnderCursor() const
 
 void CTextEditor::focusInEvent( QFocusEvent *e )
 {
-    if (c)
+    if ( c )
+    {
         c->setWidget(this);
+    }
     QTextEdit::focusInEvent(e);
 }
 
 void CTextEditor::keyPressEvent( QKeyEvent *e )
 {
 
-    if (c && c->popup()->isVisible()) {
+    if ( c && c->popup()->isVisible() )
+    {
         // The following keys are forwarded by the completer to the widget
-        switch (e->key()) {
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-        case Qt::Key_Escape:
-        case Qt::Key_Tab:
-        case Qt::Key_Backtab:
-            e->ignore();
-            return; // let the completer do default behavior
-        default:
-            break;
+        switch ( e->key() )
+        {
+            case Qt::Key_Enter:
+            case Qt::Key_Return:
+            case Qt::Key_Escape:
+            case Qt::Key_Tab:
+            case Qt::Key_Backtab:
+                e->ignore();
+                return; // let the completer do default behavior
+            default:
+                break;
         }
     }
 

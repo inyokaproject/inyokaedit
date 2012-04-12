@@ -140,63 +140,54 @@ CInyokaEdit::~CInyokaEdit()
 
 void CInyokaEdit::createObjects()
 {
-    try
-    {
-        m_findDialog = new FindDialog(this);  // Has to be create before readSettings
-        m_findReplaceDialog = new FindReplaceDialog(this);
-        if ( m_bLogging ) { std::clog << "Created find/replace dialogs" << std::endl; }
+    m_findDialog = new FindDialog(this);  // Has to be create before readSettings
+    m_findReplaceDialog = new FindReplaceDialog(this);
+    if ( m_bLogging ) { std::clog << "Created find/replace dialogs" << std::endl; }
 
-        mySettings = new CSettings(m_StylesAndImagesDir, m_pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
-        if ( m_bLogging ) { std::clog << "Created mySettings" << std::endl; }
-        // Load settings from config file
-        mySettings->readSettings();
-        if ( m_bLogging ) { std::clog << "Read settings" << std::endl; }
+    mySettings = new CSettings(m_StylesAndImagesDir, m_pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
+    if ( m_bLogging ) { std::clog << "Created mySettings" << std::endl; }
+    // Load settings from config file
+    mySettings->readSettings();
+    if ( m_bLogging ) { std::clog << "Read settings" << std::endl; }
 
-        myDownloadModule = new CDownload(this, m_pApp->applicationName(), m_pApp->applicationDirPath(), m_StylesAndImagesDir);
-        if ( m_bLogging ) { std::clog << "Created myDownloadModule" << std::endl; }
+    myDownloadModule = new CDownload(this, m_pApp->applicationName(), m_pApp->applicationDirPath(), m_StylesAndImagesDir);
+    if ( m_bLogging ) { std::clog << "Created myDownloadModule" << std::endl; }
 
-        myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
-        if ( m_bLogging ) { std::clog << "Created myEditor" << std::endl; }
-//        if ( true == mySettings->getPreviewAlongside() )
-//        {
-            myEditor->installEventFilter(this);
-//        }
+    myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
+    if ( m_bLogging ) { std::clog << "Created myEditor" << std::endl; }
+//  if ( true == mySettings->getPreviewAlongside() )
+//  {
+    myEditor->installEventFilter(this);
+//  }
 
-        myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
-        if ( m_bLogging ) { std::clog << "Created myFileOperations" << std::endl; }
+    myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
+    if ( m_bLogging ) { std::clog << "Created myFileOperations" << std::endl; }
 
-        myCompleter = new QCompleter(m_sListCompleter, this);
-        if ( m_bLogging ) { std::clog << "Created myCompleter" << std::endl; }
+    myCompleter = new QCompleter(m_sListCompleter, this);
+    if ( m_bLogging ) { std::clog << "Created myCompleter" << std::endl; }
 
-        myInterWikiLinks = new CInterWiki(m_pApp);  // Has to be created before parser
-        if ( m_bLogging ) { std::clog << "Created myInterWikiLinks" << std::endl; }
+    myInterWikiLinks = new CInterWiki(m_pApp);  // Has to be created before parser
+    if ( m_bLogging ) { std::clog << "Created myInterWikiLinks" << std::endl; }
 
-        myHighlighter = new CHighlighter(myEditor->document());
-        if ( m_bLogging ) { std::clog << "Created myHighlighter" << std::endl; }
+    myHighlighter = new CHighlighter(myEditor->document());
+    if ( m_bLogging ) { std::clog << "Created myHighlighter" << std::endl; }
 
-        myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_StylesAndImagesDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
-        if ( m_bLogging ) { std::clog << "Created myParser" << std::endl; }
+    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_StylesAndImagesDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
+    if ( m_bLogging ) { std::clog << "Created myParser" << std::endl; }
 
-        /**
-         * \todo Add tabs for editing multiple documents.
-         */
-        //myTabwidgetDocuments = new QTabWidget;
-        //if ( m_bLogging ) { std::clog << "Created myTabwidgetDocuments" << std::endl; }
-        myTabwidgetRawPreview = new QTabWidget;
-        if ( m_bLogging ) { std::clog << "Created myTabwidgetRawPreview" << std::endl; }
+    /**
+     * \todo Add tabs for editing multiple documents.
+     */
+    //myTabwidgetDocuments = new QTabWidget;
+    //if ( m_bLogging ) { std::clog << "Created myTabwidgetDocuments" << std::endl; }
+    myTabwidgetRawPreview = new QTabWidget;
+    if ( m_bLogging ) { std::clog << "Created myTabwidgetRawPreview" << std::endl; }
 
-        myWebview = new QWebView(this);
-        if ( m_bLogging ) { std::clog << "Created myWebview" << std::endl; }
+    myWebview = new QWebView(this);
+    if ( m_bLogging ) { std::clog << "Created myWebview" << std::endl; }
 
-        myInsertSyntaxElement = new CInsertSyntaxElement;
-        if ( m_bLogging ) { std::clog << "Created myInsertSyntaxElement" << std::endl; }
-    }
-    catch (std::bad_alloc& ba)
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createObjects()\": " << ba.what() << std::endl;
-        QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - createObjects()");
-        exit (-1);
-    }
+    myInsertSyntaxElement = new CInsertSyntaxElement;
+    if ( m_bLogging ) { std::clog << "Created myInsertSyntaxElement" << std::endl; }
 
     if ( m_bLogging ) { std::clog << "Created objects" << std::endl; }
 }
@@ -220,8 +211,8 @@ void CInyokaEdit::setupEditor()
     myEditor->setCompleter(myCompleter);
 
     // Text changed
-    connect(myEditor->document(), SIGNAL(contentsChanged()),
-            this, SLOT(documentWasModified()));
+    connect( myEditor->document(), SIGNAL(contentsChanged()),
+             this, SLOT(documentWasModified()) );
 
     // Find/replace dialogs
     m_findDialog->setModal(false);
@@ -233,14 +224,14 @@ void CInyokaEdit::setupEditor()
     myCompleter->setWrapAround(false);
 
     // Connect signals from parser with functions
-    connect(myParser, SIGNAL(callShowPreview(QString)),
-            this, SLOT(showHtmlPreview(QString)));
+    connect( myParser, SIGNAL(callShowPreview(QString)),
+             this, SLOT(showHtmlPreview(QString)) );
 
-    connect(myFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
-            this, SLOT(receiveMenuLastOpenedState(bool)));
+    connect( myFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
+             this, SLOT(receiveMenuLastOpenedState(bool)) );
 
-    connect(myFileOperations, SIGNAL(setStatusbarMessage(QString)),
-            this, SLOT(receiveStatusbarMessage(QString)));
+    connect( myFileOperations, SIGNAL(setStatusbarMessage(QString)),
+             this, SLOT(receiveStatusbarMessage(QString)) );
 
     /*
     setCentralWidget(myTabwidgetDocuments);
@@ -254,18 +245,9 @@ void CInyokaEdit::setupEditor()
 
     if ( true == mySettings->getPreviewAlongside() && true == mySettings->getPreviewInEditor() )
     {
-        try
-        {
-            myWidgetSplitter = new QSplitter;
-            myFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-            myWebviewFrame = new QFrame;
-        }
-        catch ( std::bad_alloc& ba )
-        {
-            std::cerr << "ERROR: Caught bad_alloc in \"create QSplitter()\": " << ba.what() << std::endl;
-            QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - create QSplitter");
-            exit (-1);
-        }
+        myWidgetSplitter = new QSplitter;
+        myFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+        myWebviewFrame = new QFrame;
 
         myWidgetSplitter->addWidget( myEditor );
         myFrameLayout->addWidget( myWebview );
@@ -274,8 +256,8 @@ void CInyokaEdit::setupEditor()
         //myWidgetSplitter->addWidget( myWebview );
         myWidgetSplitter->addWidget( myWebviewFrame );
 
-        connect(myFileOperations, SIGNAL(loadedFile()),
-                this, SLOT(previewInyokaPage()));
+        connect( myFileOperations, SIGNAL(loadedFile()),
+                 this, SLOT(previewInyokaPage()) );
 
         setCentralWidget( myWidgetSplitter );
         myWidgetSplitter->restoreState( mySettings->getSplitterState() );
@@ -296,24 +278,24 @@ void CInyokaEdit::setupEditor()
         }
     }
 
-    connect(myWebview, SIGNAL(loadFinished(bool)),
-            this, SLOT(loadPreviewFinished(bool)));
+    connect( myWebview, SIGNAL(loadFinished(bool)),
+             this, SLOT(loadPreviewFinished(bool)) );
 
     myFileOperations->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
 
-    connect(myDownloadModule, SIGNAL(sendArticleText(QString, QString)),
-            this, SLOT(displayArticleText(QString, QString)));
+    connect( myDownloadModule, SIGNAL(sendArticleText(QString, QString)),
+             this, SLOT(displayArticleText(QString, QString)) );
 
     // Browser buttons
-    connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
-            myWebview, SLOT(back()));
-    connect(m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
-            myWebview, SLOT(forward()));
-    connect(m_pUi->reloadBrowserAct, SIGNAL(triggered()),
-            myWebview, SLOT(reload()));
-    connect(myWebview, SIGNAL(urlChanged(QUrl)),
-            this, SLOT(clickedLink()));
+    connect( m_pUi->goBackBrowserAct, SIGNAL(triggered()),
+             myWebview, SLOT(back()) );
+    connect( m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
+            myWebview, SLOT(forward()) );
+    connect( m_pUi->reloadBrowserAct, SIGNAL(triggered()),
+             myWebview, SLOT(reload()) );
+    connect( myWebview, SIGNAL(urlChanged(QUrl)),
+             this, SLOT(clickedLink()) );
 
     // Hide statusbar, if option is false
     if ( false == mySettings->getShowStatusbar() )
@@ -343,157 +325,162 @@ void CInyokaEdit::setupEditor()
 void CInyokaEdit::createActions()
 {
     // File menu
-    try
+
+    // New file
+    m_pUi->newAct->setShortcuts(QKeySequence::New);
+    connect( m_pUi->newAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(newFile()) );
+
+    // Open file
+    m_pUi->openAct->setShortcuts(QKeySequence::Open);
+    connect( m_pUi->openAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(open()) );
+
+    // Clear recent files list
+    m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
+    connect( m_pClearRecentFilesAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(clearRecentFiles()) );
+
+    // Save file
+    m_pUi->saveAct->setShortcuts(QKeySequence::Save);
+    connect( m_pUi->saveAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(save()) );
+
+    // Save file as...
+    m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
+    connect( m_pUi->saveAsAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(saveAs()) );
+
+    // Print preview
+    m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
+    connect( m_pUi->printPreviewAct, SIGNAL(triggered()),
+             myFileOperations, SLOT(printPreview()) );
+    if ( false == mySettings->getPreviewAlongside() )
     {
-        // New file
-        m_pUi->newAct->setShortcuts(QKeySequence::New);
-        connect(m_pUi->newAct, SIGNAL(triggered()), myFileOperations, SLOT(newFile()));
-
-        // Open file
-        m_pUi->openAct->setShortcuts(QKeySequence::Open);
-        connect(m_pUi->openAct, SIGNAL(triggered()), myFileOperations, SLOT(open()));
-
-        // Clear recent files list
-        m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
-        connect(m_pClearRecentFilesAct, SIGNAL(triggered()), myFileOperations, SLOT(clearRecentFiles()));
-
-        // Save file
-        m_pUi->saveAct->setShortcuts(QKeySequence::Save);
-        connect(m_pUi->saveAct, SIGNAL(triggered()), myFileOperations, SLOT(save()));
-
-        // Save file as...
-        m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
-        connect(m_pUi->saveAsAct, SIGNAL(triggered()), myFileOperations, SLOT(saveAs()));
-
-        // Print preview
-        m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
-        connect(m_pUi->printPreviewAct, SIGNAL(triggered()), myFileOperations, SLOT(printPreview()));
-        if ( false == mySettings->getPreviewAlongside() )
-        {
-            m_pUi->printPreviewAct->setEnabled(false);
-        }
-
-        // Exit application
-        m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
-        connect(m_pUi->exitAct, SIGNAL(triggered()), this, SLOT(close()));
+        m_pUi->printPreviewAct->setEnabled(false);
     }
-    catch ( std::bad_alloc& ba )
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / file menu: " << ba.what() << std::endl;
-        QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / file menu");
-        exit (-2);
-    }
+
+    // Exit application
+    m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
+    connect( m_pUi->exitAct, SIGNAL(triggered()),
+             this, SLOT(close()) );
 
     // ---------------------------------------------------------------------------------------------
     // EDIT MENU
 
     // Cut
     m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-    connect(m_pUi->cutAct, SIGNAL(triggered()), myEditor, SLOT(cut()));
+    connect( m_pUi->cutAct, SIGNAL(triggered()),
+             myEditor, SLOT(cut()) );
 
     // Copy
     m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-    connect(m_pUi->copyAct, SIGNAL(triggered()), myEditor, SLOT(copy()));
+    connect( m_pUi->copyAct, SIGNAL(triggered()),
+             myEditor, SLOT(copy()) );
 
     // Paste
     m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-    connect(m_pUi->pasteAct, SIGNAL(triggered()), myEditor, SLOT(paste()));
+    connect( m_pUi->pasteAct, SIGNAL(triggered()),
+             myEditor, SLOT(paste()) );
 
     // Undo
     m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-    connect(m_pUi->undoAct, SIGNAL(triggered()), myEditor, SLOT(undo()));
+    connect( m_pUi->undoAct, SIGNAL(triggered()),
+             myEditor, SLOT(undo()) );
 
     // Redo
     m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
-    connect(m_pUi->redoAct, SIGNAL(triggered()), myEditor, SLOT(redo()));
+    connect( m_pUi->redoAct, SIGNAL(triggered()),
+             myEditor, SLOT(redo()) );
 
     // Find
     m_pUi->searchAct->setShortcuts(QKeySequence::Find);
-    connect(m_pUi->searchAct, SIGNAL(triggered()), m_findDialog, SLOT(show()));
+    connect( m_pUi->searchAct, SIGNAL(triggered()),
+             m_findDialog, SLOT(show()) );
 
     // Replace
     m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
-    connect(m_pUi->replaceAct, SIGNAL(triggered()), m_findReplaceDialog, SLOT(show()));
+    connect( m_pUi->replaceAct, SIGNAL(triggered()),
+             m_findReplaceDialog, SLOT(show()) );
 
     // Find next
     m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-    connect(m_pUi->findNextAct, SIGNAL(triggered()), m_findDialog, SLOT(findNext()));
+    connect( m_pUi->findNextAct, SIGNAL(triggered()),
+             m_findDialog, SLOT(findNext()) );
 
     // Find previous
     m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-    connect(m_pUi->findPreviousAct, SIGNAL(triggered()), m_findDialog, SLOT(findPrev()));
+    connect( m_pUi->findPreviousAct, SIGNAL(triggered()),
+             m_findDialog, SLOT(findPrev()) );
 
 
     // Set / initialize / connect cut / copy / redo / undo
     m_pUi->cutAct->setEnabled(false);
     m_pUi->copyAct->setEnabled(false);
-    connect(myEditor, SIGNAL(copyAvailable(bool)),
-            m_pUi->cutAct, SLOT(setEnabled(bool)));
-    connect(myEditor, SIGNAL(copyAvailable(bool)),
-            m_pUi->copyAct, SLOT(setEnabled(bool)));
+    connect( myEditor, SIGNAL(copyAvailable(bool)),
+             m_pUi->cutAct, SLOT(setEnabled(bool)) );
+    connect( myEditor, SIGNAL(copyAvailable(bool)),
+             m_pUi->copyAct, SLOT(setEnabled(bool)) );
 
     m_pUi->undoAct->setEnabled(false);
-    connect(myEditor, SIGNAL(undoAvailable(bool)),
-            m_pUi->undoAct, SLOT(setEnabled(bool)));
+    connect( myEditor, SIGNAL(undoAvailable(bool)),
+             m_pUi->undoAct, SLOT(setEnabled(bool)) );
     m_pUi->redoAct->setEnabled(false);
-    connect(myEditor, SIGNAL(redoAvailable(bool)),
-            m_pUi->redoAct, SLOT(setEnabled(bool)));
+    connect( myEditor, SIGNAL(redoAvailable(bool)),
+             m_pUi->redoAct, SLOT(setEnabled(bool)) );
 
     // ---------------------------------------------------------------------------------------------
     // TOOLS MENU
 
     // Spell checker
     m_pUi->spellCheckerAct->setShortcut(Qt::Key_F7);
-    connect(m_pUi->spellCheckerAct, SIGNAL(triggered()), this, SLOT(checkSpelling()));
+    connect( m_pUi->spellCheckerAct, SIGNAL(triggered()),
+             this, SLOT(checkSpelling()) );
 #ifdef DISABLE_SPELLCHECKER
     m_pUi->spellCheckerAct->setVisible(false);
 #endif
 
     // Download styles
-    connect(m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()), myDownloadModule, SLOT(loadInyokaStyles()));
+    connect( m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()),
+             myDownloadModule, SLOT(loadInyokaStyles()) );
 #if defined _WIN32
     m_pUi->DownloadInyokaStylesAct->setDisabled( true );
 #endif
 
     // Clear temp. image download folder
-    connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()), this, SLOT(deleteTempImages()));
+    connect( m_pUi->deleteTempImagesAct, SIGNAL(triggered()),
+             this, SLOT(deleteTempImages()) );
 
     // ---------------------------------------------------------------------------------------------
 
     // Show html preview
     m_pUi->previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
-    connect(m_pUi->previewAct, SIGNAL(triggered()), this, SLOT(previewInyokaPage()));
+    connect( m_pUi->previewAct, SIGNAL(triggered()),
+             this, SLOT(previewInyokaPage()) );
 
     // Click on tabs of widget - int = index of tab
-    connect(myTabwidgetRawPreview, SIGNAL(currentChanged(int)), this, SLOT(previewInyokaPage(int)));
+    connect( myTabwidgetRawPreview, SIGNAL(currentChanged(int)),
+             this, SLOT(previewInyokaPage(int)) );
 
     // Download Inyoka article
-    connect(m_pUi->downloadArticleAct, SIGNAL(triggered()), this, SLOT(downloadArticle()));
+    connect( m_pUi->downloadArticleAct, SIGNAL(triggered()),
+             this, SLOT(downloadArticle()) );
 
     // ---------------------------------------------------------------------------------------------
 
-    try
-    {
-        mySigMapTextSamples = new QSignalMapper(this);
+    mySigMapTextSamples = new QSignalMapper(this);
 
-        // Insert headline
-        m_pHeadlineBox = new QComboBox();
-        m_pHeadlineBox->setStatusTip(tr("Insert a headline - 5 headline steps are supported"));
+    // Insert headline
+    m_pHeadlineBox = new QComboBox();
+    m_pHeadlineBox->setStatusTip(tr("Insert a headline - 5 headline steps are supported"));
 
-        // Insert sample
-        m_pTextmacrosBox = new QComboBox();
-        m_pTextmacrosBox->setStatusTip(tr("Insert text sample"));
+    // Insert sample
+    m_pTextmacrosBox = new QComboBox();
+    m_pTextmacrosBox->setStatusTip(tr("Insert text sample"));
 
-        // Insert text format
-        m_pTextformatBox = new QComboBox();
-        m_pTextformatBox->setStatusTip(tr("Insert text format"));
-    }
-    catch ( std::bad_alloc& ba )
-    {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / text samples: " << ba.what() << std::endl;
-        QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / combo boxes");
-        exit (-6);
-    }
+    // Insert text format
+    m_pTextformatBox = new QComboBox();
+    m_pTextformatBox->setStatusTip(tr("Insert text format"));
 
     // ---------------------------------------------------------------------------------------------
     // INSERT SYNTAX ELEMENTS
@@ -501,163 +488,192 @@ void CInyokaEdit::createActions()
     // Insert bold element
     m_pUi->boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
     mySigMapTextSamples->setMapping(m_pUi->boldAct, "boldAct");
-    connect(m_pUi->boldAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->boldAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert italic element
     m_pUi->italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
     mySigMapTextSamples->setMapping(m_pUi->italicAct, "italicAct");
-    connect(m_pUi->italicAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->italicAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert monotype element
     mySigMapTextSamples->setMapping(m_pUi->monotypeAct, "monotypeAct");
-    connect(m_pUi->monotypeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->monotypeAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert wiki link
     mySigMapTextSamples->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
-    connect(m_pUi->wikilinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->wikilinkAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert extern link
     mySigMapTextSamples->setMapping(m_pUi->externalLinkAct, "externalLinkAct");
-    connect(m_pUi->externalLinkAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->externalLinkAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert image
     mySigMapTextSamples->setMapping(m_pUi->imageAct, "imageAct");
-    connect(m_pUi->imageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->imageAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // Insert code block
     mySigMapTextSamples->setMapping(m_pUi->codeblockAct, "codeblockAct");
-    connect(m_pUi->codeblockAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->codeblockAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     // ---------------------------------------------------------------------------------------------
     // TEXT SAMPLES
 
     mySigMapTextSamples->setMapping(m_pUi->insertUnderConstructionAct, "insertUnderConstructionAct");
-    connect(m_pUi->insertUnderConstructionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertUnderConstructionAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertTestedForAct, "insertTestedForAct");
-    connect(m_pUi->insertTestedForAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertTestedForAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertKnowledgeAct, "insertKnowledgeAct");
-    connect(m_pUi->insertKnowledgeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertKnowledgeAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertTableOfContentsAct, "insertTableOfContentsAct");
-    connect(m_pUi->insertTableOfContentsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertTableOfContentsAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertAdvancedAct, "insertAdvancedAct");
-    connect(m_pUi->insertAdvancedAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertAdvancedAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertAwardAct, "insertAwardAct");
-    connect(m_pUi->insertAwardAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertAwardAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertImageAct, "imageAct");  // insertImageAct = imageAct !
-    connect(m_pUi->insertImageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertImageAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertImageUnderlineAct, "insertImageUnderlineAct");
-    connect(m_pUi->insertImageUnderlineAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertImageUnderlineAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertImageCollectionAct, "insertImageCollectionAct");
-    connect(m_pUi->insertImageCollectionAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertImageCollectionAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertImageCollectionInTextAct, "insertImageCollectionInTextAct");
-    connect(m_pUi->insertImageCollectionInTextAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertImageCollectionInTextAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertBashCommandAct, "insertBashCommandAct");
-    connect(m_pUi->insertBashCommandAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertBashCommandAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertNoticeAct, "insertNoticeAct");
-    connect(m_pUi->insertNoticeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertNoticeAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertWarningAct, "insertWarningAct");
-    connect(m_pUi->insertWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertWarningAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertExpertsAct, "insertExpertsAct");
-    connect(m_pUi->insertExpertsAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertExpertsAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertPackageListAct, "insertPackageListAct");
-    connect(m_pUi->insertPackageListAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertPackageListAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertPackageInstallAct, "insertPackageInstallAct");
-    connect(m_pUi->insertPackageInstallAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertPackageInstallAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertPPAAct, "insertPPAAct");
-    connect(m_pUi->insertPPAAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertPPAAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoAct, "insertThirdPartyRepoAct");
-    connect(m_pUi->insertThirdPartyRepoAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartyRepoAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoAuthAct, "insertThirdPartyRepoAuthAct");
-    connect(m_pUi->insertThirdPartyRepoAuthAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartyRepoAuthAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyPackageAct, "insertThirdPartyPackageAct");
-    connect(m_pUi->insertThirdPartyPackageAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartyPackageAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertImprovableAct, "insertImprovableAct");
-    connect(m_pUi->insertImprovableAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertImprovableAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertFixMeAct, "insertFixMeAct");
-    connect(m_pUi->insertFixMeAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertFixMeAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertLeftAct, "insertLeftAct");
-    connect(m_pUi->insertLeftAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertLeftAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyPackageWarningAct, "insertThirdPartyPackageWarningAct");
-    connect(m_pUi->insertThirdPartyPackageWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartyPackageWarningAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoWarningAct, "insertThirdPartyRepoWarningAct");
-    connect(m_pUi->insertThirdPartyRepoWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartyRepoWarningAct, SIGNAL(triggered()),
+             mySigMapTextSamples, SLOT(map()) );
 
     mySigMapTextSamples->setMapping(m_pUi->insertThirdPartySoftwareWarningAct, "insertThirdPartySoftwareWarningAct");
-    connect(m_pUi->insertThirdPartySoftwareWarningAct, SIGNAL(triggered()), mySigMapTextSamples, SLOT(map()));
+    connect( m_pUi->insertThirdPartySoftwareWarningAct, SIGNAL(triggered()),
+            mySigMapTextSamples, SLOT(map()) );
 
-    connect(mySigMapTextSamples, SIGNAL(mapped(QString)), this, SLOT(insertTextSample(QString)));
+    connect( mySigMapTextSamples, SIGNAL(mapped(QString)),
+            this, SLOT(insertTextSample(QString)) );
 
     // ---------------------------------------------------------------------------------------------
     // INTERWIKI LINKS MENU
 
-    try {
-        mySigMapInterWikiLinks = new QSignalMapper(this);
-        QList <QAction *> emptyActionList;
-        emptyActionList.clear();
+    mySigMapInterWikiLinks = new QSignalMapper(this);
+    QList <QAction *> emptyActionList;
+    emptyActionList.clear();
 
-        for ( int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++ )
-        {
-            m_iWikiLinksActions << emptyActionList;
-            for ( int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++ )
-            {
-                // Path from normal installation
-                if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks") )
-                {
-                    m_iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-                }
-                // No installation: Use app path
-                else
-                {
-                    m_iWikiLinksActions[i] << new QAction(QIcon(m_pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-                }
-
-                mySigMapInterWikiLinks->setMapping( m_iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j) );
-                connect(m_iWikiLinksActions[i][j], SIGNAL(triggered()), mySigMapInterWikiLinks, SLOT(map()));
-            }
-        }
-
-        connect(mySigMapInterWikiLinks, SIGNAL(mapped(QString)), this, SLOT(insertInterwikiLink(QString)));
-    }
-    catch ( std::bad_alloc& ba )
+    for ( int i = 0; i < myInterWikiLinks->getInterwikiLinksGroups().size(); i++ )
     {
-        std::cerr << "ERROR: Caught bad_alloc in \"createActions()\" / interwiki actions: " << ba.what() << std::endl;
-        QMessageBox::critical(this, m_pApp->applicationName(), "Error while memory allocation: bad_alloc - \"createActions()\" / interwiki actions");
-        exit (-7);
+        m_iWikiLinksActions << emptyActionList;
+        for ( int j = 0; j < myInterWikiLinks->getInterwikiLinksNames()[i].size(); j++ )
+        {
+            // Path from normal installation
+            if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks") )
+            {
+                m_iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+            }
+            // No installation: Use app path
+            else
+            {
+                m_iWikiLinksActions[i] << new QAction(QIcon(m_pApp->applicationDirPath() + "/iWikiLinks/" + myInterWikiLinks->getInterwikiLinksIcons()[i][j]), myInterWikiLinks->getInterwikiLinksNames()[i][j], this);
+            }
+
+            mySigMapInterWikiLinks->setMapping( m_iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j) );
+            connect( m_iWikiLinksActions[i][j], SIGNAL(triggered()),
+                     mySigMapInterWikiLinks, SLOT(map()) );
+        }
     }
+
+    connect( mySigMapInterWikiLinks, SIGNAL(mapped(QString)),
+             this, SLOT(insertInterwikiLink(QString)) );
 
     // ---------------------------------------------------------------------------------------------
     // ABOUT MENU
 
     // Report a bug using apport
-    connect(m_pUi->reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
+    connect( m_pUi->reportBugAct, SIGNAL(triggered()),
+             this, SLOT(reportBug()) );
 
     // Open about windwow
-    connect(m_pUi->aboutAct, SIGNAL(triggered()), this, SLOT(about()));
-
+    connect( m_pUi->aboutAct, SIGNAL(triggered()),
+             this, SLOT(about()) );
 
     if ( m_bLogging ) { std::clog << "Created actions" << std::endl; }
 }
