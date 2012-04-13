@@ -24,10 +24,13 @@
  * Xml parser for importing interwiki links.
  */
 
+#include <QDebug>
 #include "CInterwiki.h"
 
 CInterWiki::CInterWiki( const QApplication *pApp )
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     QFile XmlFile;
 
     // Path from normal installation
@@ -52,8 +55,8 @@ CInterWiki::CInterWiki( const QApplication *pApp )
 
     QXmlSimpleReader myXmlReader;
 
-   m_myXmlSource = new QXmlInputSource(&XmlFile);
-   m_myHandler = new CIWikiLinksParser;
+    m_myXmlSource = new QXmlInputSource(&XmlFile);
+    m_myHandler = new CIWikiLinksParser;
 
     myXmlReader.setContentHandler(m_myHandler);
     myXmlReader.setErrorHandler(m_myHandler);
@@ -83,6 +86,7 @@ CInterWiki::CInterWiki( const QApplication *pApp )
         }
     }
     */
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------

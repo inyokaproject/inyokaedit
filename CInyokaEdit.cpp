@@ -24,23 +24,24 @@
  * Main application generation (gui, object creation etc.).
  */
 
-#define sVERSION "0.4.0"
-
 #include <QtGui>
 #include <QtWebKit/QWebView>
 
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
+CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent ) :
     QMainWindow(parent),
     m_pUi( new Ui::CInyokaEdit ),
     m_pApp( ptrApp ),
-    myCompleter( 0 )
+    myCompleter( 0 ),
+    m_UserAppDir (userAppDir)
 {
-    m_pUi->setupUi(this);
+    qDebug() << "Begin" << Q_FUNC_INFO;
 
-    m_bLogging = false;
+    bool bOpenFileAfterStart = false;
+
+    m_pUi->setupUi(this);
 
     // Check for command line arguments
     if ( m_pApp->argc() >= 2 )
@@ -52,9 +53,9 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
             std::cout << m_pApp->argv()[0] << "\t v" << sVERSION << std::endl;
             exit(0);
         }
-        else if ("--log" == sTmp)
+        else
         {
-            m_bLogging = true;
+            bOpenFileAfterStart = true;
         }
     }
 
@@ -69,11 +70,8 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
                      << "Vorlage(Tasten, TASTE)]]" << trUtf8("Bild(name.png, Größe, Ausrichtung)]]") << "Anker(Name)]]" << "[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, \"Beschreibung\", left|right)]]"
                      << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
 
-    // Set config and styles/images path
-    m_StylesAndImagesDir = QDir::homePath() + "/." + m_pApp->applicationName();
-
     // Create folder for downloaded article images
-    m_tmpPreviewImgDir = m_StylesAndImagesDir.absolutePath() + "/tmpImages";
+    m_tmpPreviewImgDir = m_UserAppDir.absolutePath() + "/tmpImages";
     if ( !m_tmpPreviewImgDir.exists() )
     {
         m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());  // Create folder including possible parent directories (mkPATH)!
@@ -89,33 +87,21 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
     this->createToolBars();
 
     // Download style files if preview/styles/imgages folders doesn't exist (/home/user/.InyokaEdit)
-    if ( !m_StylesAndImagesDir.exists() ||
-         !QDir(m_StylesAndImagesDir.absolutePath() + "/img").exists() ||
-         !QDir(m_StylesAndImagesDir.absolutePath() + "/styles").exists() ||
-         !QDir(m_StylesAndImagesDir.absolutePath() + "/Wiki").exists() )
+    if ( !m_UserAppDir.exists() ||
+         !QDir(m_UserAppDir.absolutePath() + "/img").exists() ||
+         !QDir(m_UserAppDir.absolutePath() + "/styles").exists() ||
+         !QDir(m_UserAppDir.absolutePath() + "/Wiki").exists() )
     {
-        m_StylesAndImagesDir.mkdir( m_StylesAndImagesDir.absolutePath() );  // Create folder because user may not start download. Folder is needed for preview.
+        m_UserAppDir.mkdir( m_UserAppDir.absolutePath() );  // Create folder because user may not start download. Folder is needed for preview.
 #if !defined _WIN32
         myDownloadModule->loadInyokaStyles();
 #endif
     }
 
-    // Check for command line arguments
-    // Calling loadFile() only possible AFTER creating objects...
-    if ( m_pApp->argc() >= 2 )
+    if ( true == bOpenFileAfterStart )
     {
-        QString sTmp = m_pApp->argv()[1];
-
-        if ("--log" != sTmp)
-        {
-            myFileOperations->loadFile( m_pApp->argv()[1] );
-            this->previewInyokaPage();
-        }
-        else if ("--log" == sTmp && m_pApp->argc() >= 3)
-        {
-            myFileOperations->loadFile(m_pApp->argv()[2]);
-            this->previewInyokaPage();
-        }
+        myFileOperations->loadFile( m_pApp->argv()[1] );
+        this->previewInyokaPage();
     }
 
     if ( mySettings->getShowStatusbar() )
@@ -123,7 +109,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QWidget *parent ) :
         this->statusBar()->showMessage(tr("Ready"));
     }
 
-    if ( m_bLogging ) { std::clog << "Created CInyokaEdit" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 CInyokaEdit::~CInyokaEdit()
@@ -133,6 +119,7 @@ CInyokaEdit::~CInyokaEdit()
         delete m_pUi;
     }
     m_pUi = NULL;
+    qDebug() << "Closing " << m_pApp->applicationName();
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -140,40 +127,32 @@ CInyokaEdit::~CInyokaEdit()
 
 void CInyokaEdit::createObjects()
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     m_findDialog = new FindDialog(this);  // Has to be create before readSettings
     m_findReplaceDialog = new FindReplaceDialog(this);
-    if ( m_bLogging ) { std::clog << "Created find/replace dialogs" << std::endl; }
 
-    mySettings = new CSettings(m_StylesAndImagesDir, m_pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
-    if ( m_bLogging ) { std::clog << "Created mySettings" << std::endl; }
+    mySettings = new CSettings(m_UserAppDir, m_pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
     // Load settings from config file
     mySettings->readSettings();
-    if ( m_bLogging ) { std::clog << "Read settings" << std::endl; }
 
-    myDownloadModule = new CDownload(this, m_pApp->applicationName(), m_pApp->applicationDirPath(), m_StylesAndImagesDir);
-    if ( m_bLogging ) { std::clog << "Created myDownloadModule" << std::endl; }
+    myDownloadModule = new CDownload(this, m_pApp->applicationName(), m_pApp->applicationDirPath(), m_UserAppDir);
 
     myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
-    if ( m_bLogging ) { std::clog << "Created myEditor" << std::endl; }
 //  if ( true == mySettings->getPreviewAlongside() )
 //  {
     myEditor->installEventFilter(this);
 //  }
 
     myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
-    if ( m_bLogging ) { std::clog << "Created myFileOperations" << std::endl; }
 
     myCompleter = new QCompleter(m_sListCompleter, this);
-    if ( m_bLogging ) { std::clog << "Created myCompleter" << std::endl; }
 
     myInterWikiLinks = new CInterWiki(m_pApp);  // Has to be created before parser
-    if ( m_bLogging ) { std::clog << "Created myInterWikiLinks" << std::endl; }
 
     myHighlighter = new CHighlighter(myEditor->document());
-    if ( m_bLogging ) { std::clog << "Created myHighlighter" << std::endl; }
 
-    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_StylesAndImagesDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
-    if ( m_bLogging ) { std::clog << "Created myParser" << std::endl; }
+    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_UserAppDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
 
     /**
      * \todo Add tabs for editing multiple documents.
@@ -181,15 +160,12 @@ void CInyokaEdit::createObjects()
     //myTabwidgetDocuments = new QTabWidget;
     //if ( m_bLogging ) { std::clog << "Created myTabwidgetDocuments" << std::endl; }
     myTabwidgetRawPreview = new QTabWidget;
-    if ( m_bLogging ) { std::clog << "Created myTabwidgetRawPreview" << std::endl; }
 
     myWebview = new QWebView(this);
-    if ( m_bLogging ) { std::clog << "Created myWebview" << std::endl; }
 
     myInsertSyntaxElement = new CInsertSyntaxElement;
-    if ( m_bLogging ) { std::clog << "Created myInsertSyntaxElement" << std::endl; }
 
-    if ( m_bLogging ) { std::clog << "Created objects" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -197,6 +173,8 @@ void CInyokaEdit::createObjects()
 
 void CInyokaEdit::setupEditor()
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     // Application icon
     this->setWindowIcon( QIcon(":/images/" + m_pApp->applicationName().toLower() + "_64x64.png") );
 
@@ -315,7 +293,7 @@ void CInyokaEdit::setupEditor()
 
     m_pUi->aboutAct->setText( m_pUi->aboutAct->text() + " " + m_pApp->applicationName() );
 
-    if ( m_bLogging ) { std::clog << "Editor setup completed" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -324,8 +302,9 @@ void CInyokaEdit::setupEditor()
 // Generate actions (buttons / menu entries)
 void CInyokaEdit::createActions()
 {
-    // File menu
+    qDebug() << "Begin" << Q_FUNC_INFO;
 
+    // File menu
     // New file
     m_pUi->newAct->setShortcuts(QKeySequence::New);
     connect( m_pUi->newAct, SIGNAL(triggered()),
@@ -675,7 +654,7 @@ void CInyokaEdit::createActions()
     connect( m_pUi->aboutAct, SIGNAL(triggered()),
              this, SLOT(about()) );
 
-    if ( m_bLogging ) { std::clog << "Created actions" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -684,6 +663,8 @@ void CInyokaEdit::createActions()
 // Generate menus
 void CInyokaEdit::createMenus()
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     // File menu
     m_pUi->fileMenuLastOpened->addActions( myFileOperations->getLastOpenedFiles() );
     m_pUi->fileMenuLastOpened->addSeparator();
@@ -709,7 +690,7 @@ void CInyokaEdit::createMenus()
         m_iWikiGroups[i]->addActions( m_iWikiLinksActions[i] );
     }
 
-    if ( m_bLogging ) { std::clog << "Created menus" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -718,6 +699,8 @@ void CInyokaEdit::createMenus()
 // Generate tool bars
 void CInyokaEdit::createToolBars()
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     // Tool bar for combo boxes (samples and macros)
     m_pUi->samplesmacrosBar->addWidget( m_pHeadlineBox );
 
@@ -764,7 +747,7 @@ void CInyokaEdit::createToolBars()
     connect(m_pTextformatBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextformat(int)));
 
-    if ( m_bLogging ) { std::clog << "Created toolbars" << std::endl; }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1270,7 +1253,7 @@ void CInyokaEdit::checkSpelling()
         return;
     }
 
-    QString sUserDict= m_StylesAndImagesDir.absolutePath() + "/userDict_" + mySettings->getSpellCheckerLanguage() + ".txt";
+    QString sUserDict= m_UserAppDir.absolutePath() + "/userDict_" + mySettings->getSpellCheckerLanguage() + ".txt";
     if ( !QFile::exists(sUserDict) )
     {
         QFile userDictFile(sUserDict);

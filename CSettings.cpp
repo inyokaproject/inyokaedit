@@ -24,13 +24,18 @@
  * Read and write settings.
  */
 
+#include <QDebug>
 #include "CSettings.h"
 
 CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
     m_pFDialog(&FDialog), m_pFRDialog(&FRDialog)
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath() );
     mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
+
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 CSettings::~CSettings()

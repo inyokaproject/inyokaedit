@@ -29,7 +29,6 @@
 
 #include <QMainWindow>
 #include <QWebHistory>
-#include <iostream>
 
 #include "CInterwiki.h"
 #include "CSettings.h"
@@ -64,6 +63,8 @@ class CSettings;
 class CDownload;
 class CFileOperations;
 
+#define sVERSION "0.4.0"
+
 namespace Ui {
     class CInyokaEdit;
 }
@@ -82,7 +83,7 @@ public:
     * \param ptrApp Pointer to main application
     * \param parent pointer to parent window
     */
-    explicit CInyokaEdit( QApplication *ptrApp, QWidget *parent = 0 );   // Constructor
+    explicit CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent = 0 );   // Constructor
 
     /** \brief Destructor */
     ~CInyokaEdit();
@@ -209,12 +210,10 @@ private:
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
 
-    QDir m_StylesAndImagesDir;
+    QDir m_UserAppDir;
     QDir m_tmpPreviewImgDir;
 
     QStringList m_sListCompleter;
-
-    bool m_bLogging;
 
     // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;

@@ -43,8 +43,16 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>
+#include <QtGlobal>
+#include <QTime>
+#include <fstream>
 
 #include "CInyokaEdit.h"
+
+std::ofstream logfile;
+
+void LoggingHandler( QtMsgType type, const char *msg );
+
 
 int main( int argc, char *argv[] )
 {
@@ -58,6 +66,18 @@ int main( int argc, char *argv[] )
     QTextCodec::setCodecForCStrings( QTextCodec::codecForName( "UTF-8" ) );
     QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
     QTextCodec::setCodecForTr( QTextCodec::codecForName("UTF-8") );
+
+    // Set config and styles/images path
+    QDir userAppDir = QDir::homePath() + "/." + app.applicationName();
+
+    if ( QFile(userAppDir.absolutePath() + "/Debug.log").exists() )
+    {
+        QFile(userAppDir.absolutePath() + "/Debug.log").remove();
+    }
+    logfile.open( QString(userAppDir.absolutePath() + "/Debug.log").toStdString().c_str(), std::ios::app);
+    qInstallMsgHandler( LoggingHandler );
+    qDebug() << app.applicationName() << sVERSION;
+    qDebug() << "Qt" << QT_VERSION_STR << endl;
 
     // Load global translation
     QTranslator qtTranslator;
@@ -80,8 +100,40 @@ int main( int argc, char *argv[] )
     app.installTranslator( &myAppTranslator );
 
     // New object of InyokaEdit
-    CInyokaEdit myInyokaEdit( &app );
+    CInyokaEdit myInyokaEdit( &app, userAppDir );
     myInyokaEdit.show();
 
-    return app.exec();
+    int nRet = app.exec();
+
+    logfile.close();
+    return nRet;
+}
+
+// ----------------------------------------------------------------------------
+
+void LoggingHandler( QtMsgType type, const char *sMsg )
+{
+    switch (type)
+    {
+        case QtDebugMsg:
+            #ifndef QT_NO_DEBUG
+                logfile << QTime::currentTime().toString().toAscii().data() <<
+                           " Debug: " << sMsg << "\n";
+            #else
+                std::clog << sMsg << "\n";
+            #endif
+            break;
+        case QtCriticalMsg:
+            logfile << QTime::currentTime().toString().toAscii().data() <<
+                       " Critical: " << sMsg << "\n";
+            break;
+        case QtWarningMsg:
+            logfile << QTime::currentTime().toString().toAscii().data() <<
+                       " Warning: " << sMsg << "\n";
+            break;
+        case QtFatalMsg:
+            logfile << QTime::currentTime().toString().toAscii().data() <<
+                       " Fatal: " << sMsg << "\n";
+            logfile.close();
+    }
 }

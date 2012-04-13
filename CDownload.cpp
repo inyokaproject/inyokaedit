@@ -32,6 +32,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
     m_sAppDir(sAppDir),
     m_StylesDir(StylesDir)
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
 #if defined _WIN32
     m_sWinBashFolder = m_sAppDir + "/win-bash/";
     m_sWget = "\"" + m_sWinBashFolder + "wget\"";
@@ -39,6 +40,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
     m_sWinBashFolder = "";
     m_sWget = "wget";
 #endif
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------

@@ -45,6 +45,8 @@
 
 CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent )
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     _userDictionary = userDictionary;
 
     QString dictFile = dictionaryPath + ".dic";
@@ -97,6 +99,8 @@ CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &user
     }
 
     m_pCheckDialog = new CSpellCheckDialog(this, pParent);
+
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 

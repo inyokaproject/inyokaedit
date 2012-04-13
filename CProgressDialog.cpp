@@ -31,6 +31,8 @@ CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListA
     QDialog(pParent),
     m_pUi(new Ui::CProgressDialog)
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     m_pUi->setupUi(this);
     this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
 
@@ -50,6 +52,8 @@ CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListA
 
     connect( m_myProc, SIGNAL(finished(int)),
              this, SLOT(downloadScriptFinished()) );
+
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 CProgressDialog::~CProgressDialog()

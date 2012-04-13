@@ -24,11 +24,14 @@
  * Parse all kind of links (external, InterWiki, etc.)
  */
 
+#include <QDebug>
 #include "CParseLinks.h"
 
 CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl )
     : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki)
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     // Copy interwiki links to lists
     for ( int i = 0; i < sListIWiki.size(); i++ )
     {
@@ -38,6 +41,7 @@ CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki
             this->m_sListInterwikiLink << sListIWikiUrl[i][j];
         }
     }
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------

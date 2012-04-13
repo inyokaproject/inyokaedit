@@ -27,6 +27,7 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
+#include <QDebug>
 #include "CSpellCheckDialog.h"
 #include "ui_CSpellCheckDialog.h"
 
@@ -36,6 +37,8 @@ CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *pare
     QDialog(parent),
     m_pUi( new Ui::CSpellCheckDialog )
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     m_pUi->setupUi(this);
     _spellChecker = spellChecker;
 
@@ -56,6 +59,8 @@ CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *pare
              this, SLOT(ignoreAll()) );
     connect( m_pUi->btnCancel, SIGNAL(clicked()),
              this, SLOT(reject()) );
+
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 

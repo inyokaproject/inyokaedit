@@ -33,6 +33,8 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
       m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir)
 {
+    qDebug() << "Begin" << Q_FUNC_INFO;
+
     m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl );
 
     // Initialize possible text formats
@@ -103,6 +105,8 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
                     "pl" << "pt" << "ro" << "rs" << "ru" << "sv" << "sk" << "tr" << "us" << "zh" << "dl";
 
     m_bShowedMsgBoxAlready = false;
+
+    qDebug() << "Finished" << Q_FUNC_INFO;
 }
 
 // Destructor
