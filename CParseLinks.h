@@ -30,10 +30,12 @@
 #include <QTextDocument>
 #include <QList>
 #include <QStringList>
-#include <QNetworkConfigurationManager>
-#include <QEventLoop>
-
 #include <QNetworkReply>
+#include <QEventLoop>
+#if QT_VERSION >= 0x040700
+#include <QNetworkConfigurationManager>
+#endif
+
 
 /**
  * \class CParseLinks
