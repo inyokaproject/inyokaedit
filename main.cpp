@@ -81,7 +81,7 @@ int main( int argc, char *argv[] )
     qInstallMsgHandler( LoggingHandler );
     qDebug() << app.applicationName() << app.applicationVersion();
     qDebug() << "Compiled with Qt" << QT_VERSION_STR;
-    qDebug() << "Running under Qt" <<  qVersion() << endl;
+    qDebug() << "Qt runtime" <<  qVersion();
 
     // Load global translation
     QTranslator qtTranslator;
@@ -122,18 +122,22 @@ void LoggingHandler( QtMsgType type, const char *sMsg )
         case QtDebugMsg:
             logfile << QTime::currentTime().toString().toAscii().data() <<
                        " Debug: " << sMsg << "\n";
+            logfile.flush();
             break;
         case QtCriticalMsg:
             logfile << QTime::currentTime().toString().toAscii().data() <<
                        " Critical: " << sMsg << "\n";
+            logfile.flush();
             break;
         case QtWarningMsg:
             logfile << QTime::currentTime().toString().toAscii().data() <<
                        " Warning: " << sMsg << "\n";
+            logfile.flush();
             break;
         case QtFatalMsg:
             logfile << QTime::currentTime().toString().toAscii().data() <<
                        " Fatal: " << sMsg << "\n";
+            logfile.flush();
             logfile.close();
     }
 }
