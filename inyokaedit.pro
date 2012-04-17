@@ -38,7 +38,8 @@
  QT           += core \
                  gui \
                  webkit \
-                 xml
+                 xml \
+                 network
 
  FORMS        += CInyokaEdit.ui \
                  qtfindreplacedialog/findreplaceform.ui \

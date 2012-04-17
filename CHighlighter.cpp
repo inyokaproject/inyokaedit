@@ -31,7 +31,7 @@
 CHighlighter::CHighlighter( QTextDocument *pParent )
     : QSyntaxHighlighter(pParent)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     HighlightingRule myRule;
     QStringList interwikiLinksPatterns, macroPatterns, parserPatterns, textformatPatterns, flagsPatterns;
@@ -149,7 +149,7 @@ CHighlighter::CHighlighter( QTextDocument *pParent )
         myRule.format = m_flagsFormat;
         m_highlightingRules.append(myRule);
     }
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CHighlighter::~CHighlighter()

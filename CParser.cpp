@@ -27,15 +27,15 @@
 #include "CParser.h"
 
 // Constructor
-CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl )
+CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks )
     : m_pRawText(pRawDocument),
       m_sWikiUrl(sUrlToWiki),
       m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
-    m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl );
+    m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl, bCheckLinks );
 
     // Initialize possible text formats
     m_sListFormatStart << "'''";          // BOLD
@@ -106,7 +106,7 @@ CParser::CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const 
 
     m_bShowedMsgBoxAlready = false;
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // Destructor

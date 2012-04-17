@@ -32,7 +32,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
     m_sAppDir(sAppDir),
     m_StylesDir(StylesDir)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 #if defined _WIN32
     m_sWinBashFolder = m_sAppDir + "/win-bash/";
     m_sWget = "\"" + m_sWinBashFolder + "wget\"";
@@ -40,7 +40,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
     m_sWinBashFolder = "";
     m_sWget = "wget";
 #endif
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -49,6 +49,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &s
 
 bool CDownload::loadInyokaStyles()
 {
+    qDebug() << "Start" << Q_FUNC_INFO;
     int iRet = QMessageBox::question(m_pParent, tr("Download styles"), tr("In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
 
     if ( QMessageBox::Yes== iRet )
@@ -77,6 +78,7 @@ bool CDownload::loadInyokaStyles()
 
         myArticleDownloadProgress->open();
 
+        qDebug() << "End" << Q_FUNC_INFO;
         return true;
     }
     return false;

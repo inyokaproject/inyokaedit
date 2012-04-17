@@ -30,17 +30,23 @@
 #include <QTextDocument>
 #include <QList>
 #include <QStringList>
+#include <QNetworkConfigurationManager>
+#include <QEventLoop>
+
+#include <QNetworkReply>
 
 /**
  * \class CParseLinks
  * \brief Part of parser module responsible for any kind of links.
  */
-class CParseLinks
+class CParseLinks : public QObject
 {
-public:
-    CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl );
+    Q_OBJECT
 
-    void startParsing( QTextDocument *pRawDoc);
+public:
+    CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks );
+
+    void startParsing( QTextDocument *pRawDoc );
 
 private:
     void replaceHyperlinks( QTextDocument *pRawDoc );
@@ -54,6 +60,12 @@ private:
     const QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
     QStringList m_sListInterwikiLink;  // Interwiki link urls
+
+    bool m_bIsOnline;
+    bool m_bCheckLinks;
+    QString m_sLinkClassAddition;
+    QNetworkAccessManager *m_NWAManager;
+    QNetworkReply *m_NWreply;
 };
 
 #endif // CPARSELINKS_H

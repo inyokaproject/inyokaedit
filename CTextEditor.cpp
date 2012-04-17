@@ -59,8 +59,8 @@ CTextEditor::CTextEditor( bool bCompleter, QWidget *parent ) :
     c(0),
     bCodeCompState(bCompleter)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CTextEditor::~CTextEditor()

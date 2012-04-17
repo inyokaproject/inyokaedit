@@ -54,7 +54,7 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl );
+    CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks );
     // Destructor
     ~CParser();
 

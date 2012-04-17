@@ -37,7 +37,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
     myCompleter( 0 ),
     m_UserAppDir (userAppDir)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     bool bOpenFileAfterStart = false;
 
@@ -50,7 +50,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
 
         if ( "-v"== sTmp || "--version"== sTmp )
         {
-            std::cout << m_pApp->argv()[0] << "\t v" << sVERSION << std::endl;
+            std::cout << m_pApp->argv()[0] << "\t v" << m_pApp->applicationVersion().toStdString() << std::endl;
             exit(0);
         }
         else
@@ -109,7 +109,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
         this->statusBar()->showMessage(tr("Ready"));
     }
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CInyokaEdit::~CInyokaEdit()
@@ -127,7 +127,7 @@ CInyokaEdit::~CInyokaEdit()
 
 void CInyokaEdit::createObjects()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     m_findDialog = new FindDialog(this);  // Has to be create before readSettings
     m_findReplaceDialog = new FindReplaceDialog(this);
@@ -152,7 +152,7 @@ void CInyokaEdit::createObjects()
 
     myHighlighter = new CHighlighter(myEditor->document());
 
-    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_UserAppDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls());
+    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_UserAppDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls(), mySettings->getCheckLinks() );
 
     /**
      * \todo Add tabs for editing multiple documents.
@@ -165,7 +165,7 @@ void CInyokaEdit::createObjects()
 
     myInsertSyntaxElement = new CInsertSyntaxElement;
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ void CInyokaEdit::createObjects()
 
 void CInyokaEdit::setupEditor()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // Application icon
     this->setWindowIcon( QIcon(":/images/" + m_pApp->applicationName().toLower() + "_64x64.png") );
@@ -293,7 +293,7 @@ void CInyokaEdit::setupEditor()
 
     m_pUi->aboutAct->setText( m_pUi->aboutAct->text() + " " + m_pApp->applicationName() );
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -302,7 +302,7 @@ void CInyokaEdit::setupEditor()
 // Generate actions (buttons / menu entries)
 void CInyokaEdit::createActions()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // File menu
     // New file
@@ -654,7 +654,7 @@ void CInyokaEdit::createActions()
     connect( m_pUi->aboutAct, SIGNAL(triggered()),
              this, SLOT(about()) );
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -663,7 +663,7 @@ void CInyokaEdit::createActions()
 // Generate menus
 void CInyokaEdit::createMenus()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // File menu
     m_pUi->fileMenuLastOpened->addActions( myFileOperations->getLastOpenedFiles() );
@@ -690,7 +690,7 @@ void CInyokaEdit::createMenus()
         m_iWikiGroups[i]->addActions( m_iWikiLinksActions[i] );
     }
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -699,7 +699,7 @@ void CInyokaEdit::createMenus()
 // Generate tool bars
 void CInyokaEdit::createToolBars()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // Tool bar for combo boxes (samples and macros)
     m_pUi->samplesmacrosBar->addWidget( m_pHeadlineBox );
@@ -747,7 +747,7 @@ void CInyokaEdit::createToolBars()
     connect(m_pTextformatBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextformat(int)));
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1359,7 +1359,11 @@ void CInyokaEdit::about()
                           "Version: %2<br /><br />"
                           "&copy; 2011-2012, The %3 developers<br />"
                           "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
-                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.", "About dialog text, <sAppName>, <sVERSION>, <sAppName>").arg(m_pApp->applicationName()).arg(sVERSION).arg(m_pApp->applicationName()));
+                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.",
+                          "About dialog text, <sAppName>, <sAppVersion>, <sAppName>")
+                       .arg(m_pApp->applicationName())
+                       .arg(m_pApp->applicationVersion())
+                       .arg(m_pApp->applicationName()));
 }
 
 // -----------------------------------------------------------------------------------------------

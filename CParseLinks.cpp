@@ -27,10 +27,10 @@
 #include <QDebug>
 #include "CParseLinks.h"
 
-CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl )
-    : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki)
+CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks )
+    : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki), m_bCheckLinks(bCheckLinks)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // Copy interwiki links to lists
     for ( int i = 0; i < sListIWiki.size(); i++ )
@@ -41,7 +41,10 @@ CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki
             this->m_sListInterwikiLink << sListIWikiUrl[i][j];
         }
     }
-    qDebug() << "Finished" << Q_FUNC_INFO;
+
+    m_NWAManager = new QNetworkAccessManager(this);
+
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -121,7 +124,15 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
     int nLength = 0;
-    QString sLink;
+    QString sLink("");
+    QString sLinkURL("");
+
+    // Check for internet connection
+    m_bIsOnline = false;
+    #if QT_VERSION >= 0x040700
+        QNetworkConfigurationManager mgr;
+        m_bIsOnline = mgr.isOnline();
+    #endif
 
     nIndex = findInyokaWikiLink.indexIn( sMyDoc );
     while ( nIndex >= 0 )
@@ -143,13 +154,49 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                     //qDebug() << sLink;
                     QString sLink2 = sLink;
                     sLink2.replace("_", " ");
-                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + m_sWikiUrl + "/" + sLink + "\" class=\"internal\">" + sLink2 + "</a>");
+                    sLinkURL = m_sWikiUrl + "/" + sLink;
+
+                    m_sLinkClassAddition = "";
+                    if ( m_bIsOnline && m_bCheckLinks )
+                    {
+                        m_NWreply = m_NWAManager->get(QNetworkRequest(QUrl( sLinkURL + "?action=metaexport" )));
+                        QEventLoop loop;  // Workaround for getting reply synchronously
+                        connect(m_NWreply, SIGNAL(finished()), &loop, SLOT(quit()));
+                        loop.exec();
+
+                        if ( QNetworkReply::NoError == m_NWreply->error() )
+                        {
+                            m_sLinkClassAddition = "";
+                        }
+                        else
+                        {
+                            m_sLinkClassAddition = " missing";
+                        }
+                    }
+                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + sLink2 + "</a>");
                 }
                 else
                 {
                     sLink.remove( "]" );
                     //qDebug() << sLink.mid( 0, sLink.indexOf(":")) << " - " << sLink.mid( sLink.indexOf(":") + 1, nLength );
-                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + m_sWikiUrl + "/" + sLink.mid( 0, sLink.indexOf(":")) + "\" class=\"internal\">" + sLink.mid( sLink.indexOf(":") + 1, nLength ) + "</a>");
+                    sLinkURL = m_sWikiUrl + "/" + sLink.mid( 0, sLink.indexOf(":"));
+                    if ( m_bIsOnline && m_bCheckLinks )
+                    {
+                        m_NWreply = m_NWAManager->get(QNetworkRequest(QUrl( sLinkURL + "?action=metaexport" )));
+                        QEventLoop loop;
+                        connect(m_NWreply, SIGNAL(finished()), &loop, SLOT(quit()));
+                        loop.exec();
+
+                        if ( QNetworkReply::NoError == m_NWreply->error() )
+                        {
+                            m_sLinkClassAddition = "";
+                        }
+                        else
+                        {
+                            m_sLinkClassAddition = " missing";
+                        }
+                    }
+                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + sLink.mid( sLink.indexOf(":") + 1, nLength ) + "</a>");
                 }
             }
         }

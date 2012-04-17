@@ -29,14 +29,14 @@
 
 CInsertSyntaxElement::CInsertSyntaxElement()
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
     m_sSampleBegin_1  = "[[Vorlage(";
     m_sSampleBegin_11 = "[[Bild(";
     m_sSampleBegin_12 = "[[Inhaltsverzeichnis(";
     m_sSampleEnd_1    = ")]]\n";
     m_sSampleBegin_2  = "{{{#!vorlage ";
     m_sSampleEnd_2    = "}}}\n";
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sElement, const std::string sSelectedText )

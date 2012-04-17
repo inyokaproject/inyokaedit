@@ -31,9 +31,6 @@
 #include <QSettings>
 #include <QMessageBox>
 
-#include <iostream>
-#include <stdlib.h>
-
 #include "qtfindreplacedialog/finddialog.h"
 #include "qtfindreplacedialog/findreplacedialog.h"
 
@@ -64,6 +61,7 @@ public:
     QDir getLastOpenedDir() const;
     bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
+    bool getCheckLinks() const;
 
     // Font
     float getFontsize() const;
@@ -91,6 +89,7 @@ private:
     bool m_bAutomaticImageDownload;  // Enable / disable download of article images
     bool m_bShowStatusbar;
     QString m_sSpellCheckerLanguage;
+    bool m_bCheckLinks;
 
     // Font
     float m_nFontsize;

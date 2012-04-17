@@ -56,12 +56,15 @@ void LoggingHandler( QtMsgType type, const char *msg );
 
 int main( int argc, char *argv[] )
 {
+    const QString sDebugFile("Debug.log");
+
     // Resource file (images, icons)
     Q_INIT_RESOURCE( inyokaedit_resources );
 
     // New application
     QApplication app(argc, argv);
     app.setApplicationName("InyokaEdit");
+    app.setApplicationVersion( sVERSION );
 
     QTextCodec::setCodecForCStrings( QTextCodec::codecForName( "UTF-8" ) );
     QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
@@ -70,14 +73,15 @@ int main( int argc, char *argv[] )
     // Set config and styles/images path
     QDir userAppDir = QDir::homePath() + "/." + app.applicationName();
 
-    if ( QFile(userAppDir.absolutePath() + "/Debug.log").exists() )
+    if ( QFile(userAppDir.absolutePath() + "/" + sDebugFile).exists() )
     {
-        QFile(userAppDir.absolutePath() + "/Debug.log").remove();
+        QFile(userAppDir.absolutePath() + "/" + sDebugFile).remove();
     }
-    logfile.open( QString(userAppDir.absolutePath() + "/Debug.log").toStdString().c_str(), std::ios::app);
+    logfile.open( QString(userAppDir.absolutePath() + "/" + sDebugFile).toStdString().c_str(), std::ios::app);
     qInstallMsgHandler( LoggingHandler );
-    qDebug() << app.applicationName() << sVERSION;
-    qDebug() << "Qt" << QT_VERSION_STR << endl;
+    qDebug() << app.applicationName() << app.applicationVersion();
+    qDebug() << "Compiled with Qt" << QT_VERSION_STR;
+    qDebug() << "Running under Qt" <<  qVersion() << endl;
 
     // Load global translation
     QTranslator qtTranslator;
@@ -116,12 +120,8 @@ void LoggingHandler( QtMsgType type, const char *sMsg )
     switch (type)
     {
         case QtDebugMsg:
-            #ifndef QT_NO_DEBUG
-                logfile << QTime::currentTime().toString().toAscii().data() <<
-                           " Debug: " << sMsg << "\n";
-            #else
-                std::clog << sMsg << "\n";
-            #endif
+            logfile << QTime::currentTime().toString().toAscii().data() <<
+                       " Debug: " << sMsg << "\n";
             break;
         case QtCriticalMsg:
             logfile << QTime::currentTime().toString().toAscii().data() <<

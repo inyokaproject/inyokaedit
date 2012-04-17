@@ -29,7 +29,7 @@
 
 CInterWiki::CInterWiki( const QApplication *pApp )
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     QFile XmlFile;
 
@@ -86,7 +86,7 @@ CInterWiki::CInterWiki( const QApplication *pApp )
         }
     }
     */
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------

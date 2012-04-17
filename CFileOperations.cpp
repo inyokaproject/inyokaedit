@@ -34,7 +34,7 @@ CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSetti
     m_pSettings(pSettings),
     m_sAppName(sAppName)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     // Generate recent files list
     mySigMapLastOpenedFiles = new QSignalMapper(this);
@@ -55,7 +55,7 @@ CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSetti
     }
     connect( mySigMapLastOpenedFiles, SIGNAL(mapped(int)),
              this, SLOT(openRecentFile(int)) );
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ---------------------------------------------------------------------------------------------

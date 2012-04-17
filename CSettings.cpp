@@ -30,12 +30,12 @@
 CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
     m_pFDialog(&FDialog), m_pFRDialog(&FRDialog)
 {
-    qDebug() << "Begin" << Q_FUNC_INFO;
+    qDebug() << "Start" << Q_FUNC_INFO;
 
     QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath() );
     mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
 
-    qDebug() << "Finished" << Q_FUNC_INFO;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CSettings::~CSettings()
@@ -64,6 +64,7 @@ void CSettings::readSettings()
     m_bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
     m_bShowStatusbar = mySettingsObject->value("ShowStatusbar", false).toBool();
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
+    m_bCheckLinks = mySettingsObject->value("CheckLinks", false).toBool();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -124,6 +125,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
     mySettingsObject->setValue("ShowStatusbar", m_bShowStatusbar);
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
+    mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -215,6 +217,11 @@ bool CSettings::getShowStatusbar() const
 QString CSettings::getSpellCheckerLanguage() const
 {
     return m_sSpellCheckerLanguage;
+}
+
+bool CSettings::getCheckLinks() const
+{
+    return m_bCheckLinks;
 }
 
 // ----------------------------------------------------
