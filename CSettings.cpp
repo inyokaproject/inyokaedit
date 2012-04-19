@@ -32,8 +32,13 @@ CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
+#if defined _WIN32
+    QSettings::setPath( QSettings::IniFormat, QSettings::UserScope, SettingsDir.absolutePath() );
+    mySettingsObject = new QSettings( QSettings::IniFormat, QSettings::UserScope, sName );
+#else
     QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath() );
     mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
+#endif
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
