@@ -159,9 +159,9 @@ void CParser::initFlags( const QString sAppName, const QString sAppDirPath, cons
         while ( !in.atEnd() )
         {
             tmpLine = in.readLine().trimmed();
-            if ( !tmpLine.startsWith("#") )
+            if ( !tmpLine.startsWith("#") && "" != tmpLine.trimmed() )
             {
-                m_sListFlags << tmpLine;
+                m_sListFlags << tmpLine.trimmed();
             }
         }
         flagsFile.close();
