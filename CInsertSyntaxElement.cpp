@@ -27,14 +27,16 @@
 #include <QDebug>
 #include "CInsertSyntaxElement.h"
 
-CInsertSyntaxElement::CInsertSyntaxElement()
+CInsertSyntaxElement::CInsertSyntaxElement( const QString sTransTemplate,
+                                            const QString sTransImage,
+                                            const QString sTransTOC )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
-    m_sSampleBegin_1  = "[[Vorlage(";
-    m_sSampleBegin_11 = "[[Bild(";
-    m_sSampleBegin_12 = "[[Inhaltsverzeichnis(";
+    m_sSampleBegin_1  = "[[" + sTransTemplate.toStdString() + "(";
+    m_sSampleBegin_11 = "[[" + sTransImage.toStdString() + "(";
+    m_sSampleBegin_12 = "[[" + sTransTOC.toStdString() + "(";
     m_sSampleEnd_1    = ")]]\n";
-    m_sSampleBegin_2  = "{{{#!vorlage ";
+    m_sSampleBegin_2  = "{{{#!" + sTransTemplate.toLower().toStdString() + " ";
     m_sSampleEnd_2    = "}}}\n";
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -138,18 +140,18 @@ std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sEleme
         {
             return m_sSampleBegin_2 + "Wissen\n"
                     "[:Anwendungen_hinzufügen:Anwendungen hinzufügen]\n"
-                    "[:Pakete installieren: Installation von Programmen]\n"
-                    "[:Paketquellen freischalten: Bearbeiten von Paketquellen]\n"
-                    "[:Paketinstallation_DEB: Ein einzelnes Paket installieren]\n"
-                    "[:Programme kompilieren: Pakete aus dem Quellcode erstellen]\n"
-                    "[:Terminal: Ein Terminal öffnen]\n"
-                    "[:Editor: Einen Editor öffnen]\n"
-                    "[:Packprogramme: Archive entpacken]\n"
-                    "[:Programme starten: Ein Programm ohne Menüeintrag starten]\n"
-                    "[:Autostart: Automatischer Start von Programmen]\n"
-                    "[:Menüeditor: Programme zum Menü hinzufügen]\n"
-                    "[:sudo: Root-Rechte]\n"
-                    "[:Rechte: Rechte für Dateien und Ordner ändern]\n" + m_sSampleEnd_2;
+                    "[:Pakete installieren:Installation von Programmen]\n"
+                    "[:Paketquellen freischalten:Bearbeiten von Paketquellen]\n"
+                    "[:Paketinstallation_DEB:Ein einzelnes Paket installieren]\n"
+                    "[:Programme kompilieren:Pakete aus dem Quellcode erstellen]\n"
+                    "[:Terminal:Ein Terminal öffnen]\n"
+                    "[:Editor:Einen Editor öffnen]\n"
+                    "[:Packprogramme:Archive entpacken]\n"
+                    "[:Programme starten:Ein Programm ohne Menüeintrag starten]\n"
+                    "[:Autostart:Automatischer Start von Programmen]\n"
+                    "[:Menüeditor:Programme zum Menü hinzufügen]\n"
+                    "[:sudo:Root-Rechte]\n"
+                    "[:Rechte:Rechte für Dateien und Ordner ändern]\n" + m_sSampleEnd_2;
         }
         else
         {

@@ -27,8 +27,16 @@
 #include <QDebug>
 #include "CParseLinks.h"
 
-CParseLinks::CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks )
-    : m_pRawText(pRawDocument), m_sWikiUrl(sUrlToWiki), m_bCheckLinks(bCheckLinks)
+CParseLinks::CParseLinks( QTextDocument *pRawDocument,
+                          const QString &sUrlToWiki,
+                          const QList<QStringList> sListIWiki,
+                          const QList<QStringList> sListIWikiUrl,
+                          const bool bCheckLinks,
+                          const QString sTransAnchor )
+    : m_pRawText(pRawDocument),
+      m_sWikiUrl(sUrlToWiki),
+      m_bCheckLinks(bCheckLinks),
+      m_sTransAnchor( sTransAnchor )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -196,7 +204,7 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                             m_sLinkClassAddition = " missing";
                         }
                     }
-                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + QString(sLink.mid( sLink.indexOf(":") + 1, nLength )).trimmed() + "</a>");
+                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + sLink.mid( sLink.indexOf(":") + 1, nLength ).trimmed() + "</a>");
                 }
             }
         }
@@ -395,7 +403,7 @@ void CParseLinks::replaceKnowledgeBoxLinks( QTextDocument *pRawDoc )
 // Create anchor
 void CParseLinks::createAnchor( QTextDocument *pRawDoc )
 {
-    QRegExp findAnchor( "\\[{2,2}\\b(Anker)\\([A-Za-z_\\s-]+\\)\\]{2,2}" );
+    QRegExp findAnchor( "\\[{2,2}\\b(" + m_sTransAnchor + ")\\([A-Za-z_\\s-]+\\)\\]{2,2}" );
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
     int nLength;
@@ -407,7 +415,7 @@ void CParseLinks::createAnchor( QTextDocument *pRawDoc )
         sAnchor = findAnchor.cap();
         //qDebug() << sAnchor;
 
-        sAnchor.remove("[[Anker(");
+        sAnchor.remove("[[" + m_sTransAnchor + "(");
         sAnchor.remove(")]]");
         sAnchor = sAnchor.trimmed();
 

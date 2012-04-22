@@ -70,6 +70,7 @@ void CSettings::readSettings()
     m_bShowStatusbar = mySettingsObject->value("ShowStatusbar", false).toBool();
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
     m_bCheckLinks = mySettingsObject->value("CheckLinks", false).toBool();
+    m_sTemplateLang = mySettingsObject->value("TemplateLanguage", "de").toString();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -131,6 +132,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("ShowStatusbar", m_bShowStatusbar);
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
     mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
+    mySettingsObject->setValue("TemplateLanguage", m_sTemplateLang);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -227,6 +229,11 @@ QString CSettings::getSpellCheckerLanguage() const
 bool CSettings::getCheckLinks() const
 {
     return m_bCheckLinks;
+}
+
+QString CSettings::getTemplateLanguage() const
+{
+    return m_sTemplateLang;
 }
 
 // ----------------------------------------------------

@@ -54,21 +54,52 @@ class CParser : public QObject
 
 public:
     // Constructor
-    CParser( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QDir tmpFileOutputDir, const QDir tmpImgDir, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks );
+    CParser( QTextDocument *pRawDocument,
+             const QString &sUrlToWiki,
+             const QDir tmpFileOutputDir,
+             const QDir tmpImgDir,
+             const QList<QStringList> sListIWiki,
+             const QList<QStringList> sListIWikiUrl,
+             const bool bCheckLinks,
+             const QString &sAppName,
+             const QString &sAppDirPath,
+             const QString &sTemplateLang );
     // Destructor
     ~CParser();
 
     // Starts generating HTML-code
     bool genOutput( const QString sActFile );
 
+    QStringList getFlaglist() const;
+    QString getTransTemplate() const;
+    QString getTransTOC() const;
+    QString getTransImage() const;
+    QString getTransCodeBlock() const;
+    QString getTransAttachment() const;
+    QString getTransAnchor() const;
+    QString getTransDate() const;
+    QString getTransOverview() const;
+
 signals:
     void callShowPreview( const QString & );
 
 private:
+    void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName);
+    void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName);
     void replaceTextformat( QTextDocument *myRawDoc );
     void replaceFlags( QTextDocument *myRawDoc );
     void replaceKeys( QTextDocument *myRawDoc );
     void replaceImages( QTextDocument *myRawDoc );
+
+    // Translations
+    QString m_sTransTemplate;
+    QString m_sTransTOC;
+    QString m_sTransImage;
+    QString m_sTransCodeBlock;
+    QString m_sTransAttachment;
+    QString m_sTransAnchor;
+    QString m_sTransDate;
+    QString m_sTransOverview;
 
     // Parse Macros ([[Vorlage(...) etc.)
     QString parseMacro( QTextBlock actParagraph );

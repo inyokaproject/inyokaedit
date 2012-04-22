@@ -37,7 +37,9 @@ class CInsertSyntaxElement
 {
 public:
     /** \brief Constructor */
-    CInsertSyntaxElement();
+    CInsertSyntaxElement( const QString sTransTemplate,
+                          const QString sTransImage,
+                          const QString sTransTOC );
 
     /**
     * \brief Get Inyoka syntax element code

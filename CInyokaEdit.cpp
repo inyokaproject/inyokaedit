@@ -132,27 +132,59 @@ void CInyokaEdit::createObjects()
     m_findDialog = new FindDialog(this);  // Has to be create before readSettings
     m_findReplaceDialog = new FindReplaceDialog(this);
 
-    mySettings = new CSettings(m_UserAppDir, m_pApp->applicationName(), *m_findDialog, *m_findReplaceDialog);
+    mySettings = new CSettings( m_UserAppDir,
+                                m_pApp->applicationName(),
+                                *m_findDialog, *m_findReplaceDialog );
     // Load settings from config file
     mySettings->readSettings();
 
-    myDownloadModule = new CDownload(this, m_pApp->applicationName(), m_pApp->applicationDirPath(), m_UserAppDir);
+    myDownloadModule = new CDownload( this,
+                                      m_pApp->applicationName(),
+                                      m_pApp->applicationDirPath(),
+                                      m_UserAppDir );
 
-    myEditor = new CTextEditor(mySettings->getCodeCompletion());  // Has to be create before find/replace
+    myEditor = new CTextEditor( mySettings->getCodeCompletion() );  // Has to be create before find/replace
 //  if ( true == mySettings->getPreviewAlongside() )
 //  {
     myEditor->installEventFilter(this);
 //  }
 
-    myFileOperations = new CFileOperations(this, myEditor, mySettings, m_pApp->applicationName());
+    myFileOperations = new CFileOperations( this,
+                                            myEditor,
+                                            mySettings,
+                                            m_pApp->applicationName() );
 
-    myCompleter = new QCompleter(m_sListCompleter, this);
+    myCompleter = new QCompleter( m_sListCompleter,
+                                  this );
 
-    myInterWikiLinks = new CInterWiki(m_pApp);  // Has to be created before parser
+    myInterWikiLinks = new CInterWiki( m_pApp );  // Has to be created before parser
 
-    myHighlighter = new CHighlighter(myEditor->document());
+    myParser = new CParser( myEditor->document(),
+                            mySettings->getInyokaUrl(),
+                            m_UserAppDir,
+                            m_tmpPreviewImgDir,
+                            myInterWikiLinks->getInterwikiLinks(),
+                            myInterWikiLinks->getInterwikiLinksUrls(),
+                            mySettings->getCheckLinks(),
+                            m_pApp->applicationName(),
+                            m_pApp->applicationDirPath(),
+                            mySettings->getTemplateLanguage() );
 
-    myParser = new CParser(myEditor->document(), mySettings->getInyokaUrl(), m_UserAppDir, m_tmpPreviewImgDir, myInterWikiLinks->getInterwikiLinks(), myInterWikiLinks->getInterwikiLinksUrls(), mySettings->getCheckLinks() );
+    QStringList tmpsListMacro;
+    tmpsListMacro << myParser->getTransTemplate() << myParser->getTransTOC() <<
+                     myParser->getTransImage() << myParser->getTransAnchor() <<
+                     myParser->getTransAttachment() << myParser->getTransDate();
+
+    QStringList tmpsListParser;
+    tmpsListParser << myParser->getTransTemplate().toLower() <<
+                      myParser->getTransCodeBlock().toLower();
+
+    myHighlighter = new CHighlighter( myInterWikiLinks->getInterwikiLinks(),
+                                      myParser->getFlaglist(),
+                                      myParser->getTransOverview(),
+                                      tmpsListMacro,
+                                      tmpsListParser,
+                                      myEditor->document() );
 
     /**
      * \todo Add tabs for editing multiple documents.
@@ -161,9 +193,11 @@ void CInyokaEdit::createObjects()
     //if ( m_bLogging ) { std::clog << "Created myTabwidgetDocuments" << std::endl; }
     myTabwidgetRawPreview = new QTabWidget;
 
-    myWebview = new QWebView(this);
+    myWebview = new QWebView( this );
 
-    myInsertSyntaxElement = new CInsertSyntaxElement;
+    myInsertSyntaxElement = new CInsertSyntaxElement( myParser->getTransTemplate(),
+                                                      myParser->getTransImage(),
+                                                      myParser->getTransTOC() );
 
     qDebug() << "End" << Q_FUNC_INFO;
 }

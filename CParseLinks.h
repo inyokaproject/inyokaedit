@@ -46,7 +46,12 @@ class CParseLinks : public QObject
     Q_OBJECT
 
 public:
-    CParseLinks( QTextDocument *pRawDocument, const QString &sUrlToWiki, const QList<QStringList> sListIWiki, const QList<QStringList> sListIWikiUrl, const bool bCheckLinks );
+    CParseLinks( QTextDocument *pRawDocument,
+                 const QString &sUrlToWiki,
+                 const QList<QStringList> sListIWiki,
+                 const QList<QStringList> sListIWikiUrl,
+                 const bool bCheckLinks,
+                 const QString sTransAnchor);
 
     void startParsing( QTextDocument *pRawDoc );
 
@@ -65,6 +70,7 @@ private:
 
     bool m_bIsOnline;
     bool m_bCheckLinks;
+    QString m_sTransAnchor;
     QString m_sLinkClassAddition;
     QNetworkAccessManager *m_NWAManager;
     QNetworkReply *m_NWreply;

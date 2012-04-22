@@ -44,7 +44,12 @@ class CHighlighter : public QSyntaxHighlighter
 
 public:
     // Constructor
-    CHighlighter( QTextDocument *parent = 0 );
+    CHighlighter( const QList<QStringList> sListIWiki,
+                  const QStringList sListFlags,
+                  const QString sTransOverview,
+                  const QStringList sListMacroKeywords,
+                  const QStringList sListParserKeywords,
+                  QTextDocument *parent = 0 );
     // Destrcutor
     ~CHighlighter();
 

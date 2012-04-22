@@ -28,7 +28,12 @@
 
 #include "CHighlighter.h"
 
-CHighlighter::CHighlighter( QTextDocument *pParent )
+CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
+                            const QStringList sListFlags,
+                            const QString sTransOverview,
+                            const QStringList sListMacroKeywords,
+                            const QStringList sListParserKeywords,
+                            QTextDocument *pParent )
     : QSyntaxHighlighter(pParent)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
@@ -59,15 +64,10 @@ CHighlighter::CHighlighter( QTextDocument *pParent )
     m_highlightingRules.append(myRule);
 
     // Define interwiki link keywords
-    interwikiLinksPatterns << "\\bapt\\b" << "\\baskubuntu\\b" << "\\bbehind\\b" << "\\bbug\\b" << "\\bcalendar\\b" << "\\bcanonical\\b"
-            << "\\bcanonicalblog\\b" << "\\bdebian\\b" << "\\bdebian_de\\b" << "\\bdropbox\\b" << "\\bean\\b" << "\\bedubuntu\\b"
-            << "\\bfb\\b" << "\\bforum\\b" << "\\bfreshmeat\\b" << "\\bgetdeb\\b" << "\\bgoogle\\b" << "\\bgplus\\b" << "\\bgooglecode\\b"
-            << "\\bholarse\\b" << "\\biawm\\b" << "\\bidentica\\b" << "\\bikhaya\\b" << "\\bisbn\\b" << "\\bkubuntu\\b" << "\\bkubuntu-de\\b"
-            << "\\bkubuntu_doc\\b" << "\\blaunchpad\\b" << "\\blastfm\\b" << "\\bliflg\\b" << "\\blinuxgaming\\b" << "\\blpuser\\b"
-            << "\\blubuntu\\b" << "\\bosm\\b" << "\\bpackages\\b" << "\\bpaste\\b" << "\\bplanet\\b" << "\\bplaydeb\\b" << "\\bpost\\b"
-            << "\\bsourceforge\\b" << "\\bticket\\b" << "\\btopic\\b" << "\\btwitter\\b" << "\\bubuntu\\b" << "\\bubuntustudio\\b"
-            << "\\bubuntu_doc\\b" << "\\bubuntu_fr\\b" << "\\bubuntuone\\b" << "\\buser\\b" << "\\bwikibooks\\b" << "\\bwikimedia\\b"
-            << "\\bwikipedia\\b" << "\\bwikipedia_en\\b" << "\\bxubuntu\\b" << "\\byoutube\\b";
+    foreach( QStringList tmpStrList, sListIWiki ) {
+        foreach( QString tmpStr, tmpStrList )
+            interwikiLinksPatterns << "\\b" + tmpStr + "\\b";
+    }
 
     // Format Interwiki Links
     m_interwikiLinksFormat.setForeground(Qt::blue);
@@ -80,8 +80,11 @@ CHighlighter::CHighlighter( QTextDocument *pParent )
     }
 
     // Define macro keywords ([[Vorlage(...) etc.)
-    macroPatterns << QRegExp::escape(trUtf8("[[Vorlage(")) << QRegExp::escape(trUtf8("[[Inhaltsverzeichnis(")) << QRegExp::escape(trUtf8("[[Bild("))
-            << QRegExp::escape(trUtf8("[[Anker(")) << QRegExp::escape(trUtf8("[[Anhang(")) << QRegExp::escape(")]]");
+    foreach ( QString tmpStr, sListMacroKeywords )
+    {
+        macroPatterns << QRegExp::escape( "[[" + tmpStr + "(" );
+    }
+    macroPatterns << QRegExp::escape( ")]]" );
 
     // Format macros
     m_macrosFormat.setForeground(Qt::darkCyan);
@@ -93,10 +96,14 @@ CHighlighter::CHighlighter( QTextDocument *pParent )
         m_highlightingRules.append(myRule);
     }
 
-    // Define submission keywords
-    parserPatterns << QRegExp::escape(trUtf8("{{{#!vorlage")) << QRegExp::escape("{{{#!code") << QRegExp::escape("{{{") << QRegExp::escape("}}}");
+    // Define parser keywords ({{{#!code etc.)
+    foreach ( QString tmpStr, sListParserKeywords )
+    {
+        parserPatterns << QRegExp::escape( "{{{#!" + tmpStr );
+    }
+    parserPatterns << QRegExp::escape( "{{{" ) << QRegExp::escape( "}}}" );
 
-    // Format submissions
+    // Format parser
     m_parserFormat.setForeground(Qt::darkRed);
     m_parserFormat.setFontWeight(QFont::Bold);
     // Collecting highlighting rules
@@ -131,14 +138,12 @@ CHighlighter::CHighlighter( QTextDocument *pParent )
     m_highlightingRules.append(myRule); // Collecting highlighting rules
 
     // Define flags
-    flagsPatterns << QRegExp::escape("{de}") << QRegExp::escape("{ch}")<< QRegExp::escape("{zh}") << QRegExp::escape("{cl}")
-            << QRegExp::escape("{it}") << QRegExp::escape("{cz}") << QRegExp::escape("{en}") << QRegExp::escape("{at}")
-            << QRegExp::escape("{es}") << QRegExp::escape("{ru}") << QRegExp::escape("{nl}") << QRegExp::escape("{pt}")
-            << QRegExp::escape("{rs}") << QRegExp::escape("{tr}") << QRegExp::escape("{lv}") << QRegExp::escape("{ro}")
-            << QRegExp::escape("{pl}") << QRegExp::escape("{fr}") << QRegExp::escape("{hr}") << QRegExp::escape("{da}")
-            << QRegExp::escape("{fi}") << QRegExp::escape("{ja}") << QRegExp::escape("{ko}") << QRegExp::escape("{sv}")
-            << QRegExp::escape("{us}") << QRegExp::escape("{sk}") << QRegExp::escape("{gb}") << QRegExp::escape("{nw}")
-            << QRegExp::escape("{eo}") << QRegExp::escape("{hu}") << QRegExp::escape("{dl}") << QRegExp::escape(trUtf8("{Übersicht}"));
+    foreach ( QString tmpStr, sListFlags )
+    {
+        flagsPatterns << QRegExp::escape("{" + tmpStr + "}");
+    }
+    // Overview flag
+    flagsPatterns << QRegExp::escape("{" + sTransOverview + "}");
 
     // Format flags
     m_flagsFormat.setForeground(Qt::darkYellow);

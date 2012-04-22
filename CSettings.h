@@ -62,6 +62,7 @@ public:
     bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
     bool getCheckLinks() const;
+    QString getTemplateLanguage() const;
 
     // Font
     float getFontsize() const;
@@ -90,6 +91,7 @@ private:
     bool m_bShowStatusbar;
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
+    QString m_sTemplateLang;
 
     // Font
     float m_nFontsize;
