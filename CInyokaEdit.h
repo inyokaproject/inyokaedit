@@ -63,7 +63,7 @@ class CSettings;
 class CDownload;
 class CFileOperations;
 
-#define sVERSION "0.4.0"
+#define sVERSION "0.5.0"
 
 namespace Ui {
     class CInyokaEdit;

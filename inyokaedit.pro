@@ -84,7 +84,7 @@ unix {
   }
 
 data.path      = /usr/share/inyokaedit
-data.files    += iWikiLinks GetInyokaStyles
+data.files    += iWikiLinks templates GetInyokaStyles
 lang.path      = /usr/share/inyokaedit/lang
 lang.files    += lang/*.qm
 desktop.path   = /usr/share/applications
