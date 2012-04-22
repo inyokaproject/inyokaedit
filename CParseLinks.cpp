@@ -196,7 +196,7 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                             m_sLinkClassAddition = " missing";
                         }
                     }
-                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + sLink.mid( sLink.indexOf(":") + 1, nLength ) + "</a>");
+                    sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + QString(sLink.mid( sLink.indexOf(":") + 1, nLength )).trimmed() + "</a>");
                 }
             }
         }
