@@ -854,11 +854,6 @@
     <string>Print preview or export to PDF</string>
    </property>
   </action>
-  <action name="actionWw">
-   <property name="text">
-    <string>ww</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

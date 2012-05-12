@@ -444,6 +444,22 @@ std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sEleme
             return m_sSampleBegin_2 + "Tabelle\n" + sSelectedText + "\n" + m_sSampleEnd_2;
         }
     }
+    else if ( sElement == "GameInfoBox" )
+    {
+        QString sTmp("[[Bild(Wiki/Icons/games.png, 48, right)]]\n= Infobox =\n"
+                     "{{{#!vorlage Tabelle\n<-2 tablestyle=\"width: 97%;\" rowclass=\"verlauf\"> Spielname\n+++\n"
+                     "Originaltitel:\nOriginaltitel meist Englisch\n+++\n"
+                     "Genre:\nGenre z.B. Adventure\n+++\n"
+                     "Sprache:\nLänderfähnchen z.B. {de} {en}\n+++\n"
+                     "Veröffentlichung:\nJahr der Veröffentlichung\n+++\n"
+                     "Publisher:\nName des Herausgebers\n+++\n"
+                     "Systemvoraussetzungen:\nOffizielle Systemvoraussetzung\n+++\n"
+                     "Medien:\nz.B. Diskette (7) / CD (1) / DVD (1) / Download\n+++\n"
+                     "Strichcode / EAN / GTIN:\n[ean:5901234123457:]\n+++\n"
+                     "<-2 rowclass=\"kopf\">\n+++\n"
+                     "Läuft mit:\nz.B. [:Spiele/DOSBox:DOSBox], [:Spiele/ScummVM: ScummVM], [:Wine:] und/oder nativ\n}}}");
+        return sTmp.toStdString();
+    }
     // Unkonwn element
     else
         return sSelectedText;

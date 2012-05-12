@@ -808,6 +808,7 @@ void CInyokaEdit::createToolBars()
     m_pTextmacrosBox->addItem(tr("Experts information", "GUI: Text macro combo box - Experts info box"));
     m_pTextmacrosBox->addItem(tr("Keys", "GUI: Text macro combo box - Keys"));
     m_pTextmacrosBox->addItem(tr("Table", "GUI: Text macro combo box - Table"));
+    m_pTextmacrosBox->addItem(tr("Game info box", "GUI: Game info box"));
     connect(m_pTextmacrosBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextmacro(int)));
 
@@ -1004,6 +1005,10 @@ void CInyokaEdit::insertDropDownTextmacro( const int nSelection )
             case 12:
                 // Table (Tabelle)
                 insertTextSample("Table");
+                break;
+            case 13:
+                // Game info box
+                insertTextSample("GameInfoBox");
                 break;
         }
         // Reset selection
