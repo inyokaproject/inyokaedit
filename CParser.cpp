@@ -260,6 +260,7 @@ bool CParser::genOutput( const QString sActFile )
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/markup2.css\" />\n"
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/wiki.css\" />\n"
                       "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/markup.css\" />\n"
+                      "<style type=\"text/css\"><!-- div.wrap{min-width:0px !important;} //--></style>"
                       "</head>\n"
                       "<body>\n"
                       "<div class=\"wrap\">\n"
