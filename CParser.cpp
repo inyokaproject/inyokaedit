@@ -280,19 +280,22 @@ bool CParser::genOutput( const QString sActFile )
     m_pLinkParser->startParsing( m_pCopyOfrawText );
 
     // Replace text format
-    this->replaceTextformat(m_pCopyOfrawText);
+    this->replaceTextformat( m_pCopyOfrawText );
 
     // Replace flags
-    this->replaceFlags(m_pCopyOfrawText);
+    this->replaceFlags( m_pCopyOfrawText );
 
     // Replace keys
-    this->replaceKeys(m_pCopyOfrawText);
+    this->replaceKeys( m_pCopyOfrawText );
 
     // Replace images
-    this->replaceImages(m_pCopyOfrawText);
+    this->replaceImages( m_pCopyOfrawText );
 
     // Replace breaks (\\ or [[BR]])
-    this->replaceBreaks(m_pCopyOfrawText);
+    this->replaceBreaks( m_pCopyOfrawText );
+
+    // Replace horizontal line (----)
+    this->replaceHorLine( m_pCopyOfrawText );
 
     // Get first text block
     QTextBlock it = m_pCopyOfrawText->firstBlock();
@@ -1413,6 +1416,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
 
     return (sOutput);
 }
+
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
@@ -1423,6 +1427,20 @@ void CParser::replaceBreaks( QTextDocument *myRawDoc )
 
     sMyDoc.replace("[[BR]]", "<br />");
     sMyDoc.replace("\\\\", "<br />");
+
+    // Replace myRawDoc with document with HTML links
+    myRawDoc->setPlainText(sMyDoc);
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// Replace HORIZONTAL LINE
+void CParser::replaceHorLine( QTextDocument *myRawDoc )
+{
+    QString sMyDoc = myRawDoc->toPlainText();
+
+    sMyDoc.replace("----", "\n<hr />\n");
 
     // Replace myRawDoc with document with HTML links
     myRawDoc->setPlainText(sMyDoc);

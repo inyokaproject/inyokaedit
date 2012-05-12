@@ -115,11 +115,12 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
     }
 
     // Define textformat keywords (Bold, italic etc.)
-    textformatPatterns << QRegExp::escape("'''") << QRegExp::escape("''") << QRegExp::escape("`") << QRegExp::escape(" * ") << QRegExp::escape(" 1. ")
+    textformatPatterns << QRegExp::escape("'''") << QRegExp::escape("''") << QRegExp::escape("`") << QRegExp::escape(" * ")
             << QRegExp::escape("__") << QRegExp::escape("--(") << QRegExp::escape(")--") << QRegExp::escape("^^(")
             << QRegExp::escape(")^^") << QRegExp::escape(",,(") << QRegExp::escape("),,") << QRegExp::escape("~+(")
             << QRegExp::escape(")+~") << QRegExp::escape("~-(") << QRegExp::escape(")-~") << QRegExp::escape("[[BR]]")
-            << QRegExp::escape("\\\\") << QRegExp::escape("#tag:") << QRegExp::escape("# tag:") << QRegExp::escape("+++");
+            << QRegExp::escape("\\\\") << QRegExp::escape("#tag:") << QRegExp::escape("# tag:") << QRegExp::escape("+++")
+            << QRegExp::escape(" 1. ") << QRegExp::escape("----");
 
     // Format textformats
     m_textformatFormat.setForeground(Qt::red);

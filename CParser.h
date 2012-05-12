@@ -91,6 +91,7 @@ private:
     void replaceKeys( QTextDocument *myRawDoc );
     void replaceImages( QTextDocument *myRawDoc );
     void replaceBreaks( QTextDocument *myRawDoc );
+    void replaceHorLine( QTextDocument *myRawDoc );
 
     // Translations
     QString m_sTransTemplate;
