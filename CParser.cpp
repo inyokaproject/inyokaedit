@@ -44,8 +44,8 @@ CParser::CParser( QTextDocument *pRawDocument,
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    initFlags( sAppName, sAppDirPath, "Flags.conf" );
-    initTranslations( sAppName, sAppDirPath, sTemplateLang, "Translations.conf" );
+    this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
+    this->initTranslations( sAppName, sAppDirPath, sTemplateLang, "Translations.conf" );
 
     m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl, bCheckLinks, m_sTransAnchor );
 
@@ -280,16 +280,19 @@ bool CParser::genOutput( const QString sActFile )
     m_pLinkParser->startParsing( m_pCopyOfrawText );
 
     // Replace text format
-    replaceTextformat(m_pCopyOfrawText);
+    this->replaceTextformat(m_pCopyOfrawText);
 
     // Replace flags
-    replaceFlags(m_pCopyOfrawText);
+    this->replaceFlags(m_pCopyOfrawText);
 
     // Replace keys
-    replaceKeys(m_pCopyOfrawText);
+    this->replaceKeys(m_pCopyOfrawText);
 
     // Replace images
-    replaceImages(m_pCopyOfrawText);
+    this->replaceImages(m_pCopyOfrawText);
+
+    // Replace breaks (\\ or [[BR]])
+    this->replaceBreaks(m_pCopyOfrawText);
 
     // Get first text block
     QTextBlock it = m_pCopyOfrawText->firstBlock();
@@ -1409,6 +1412,20 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     // -----------------------------------------------------------------------------------------------
 
     return (sOutput);
+}
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// Replace BREAKS
+void CParser::replaceBreaks( QTextDocument *myRawDoc )
+{
+    QString sMyDoc = myRawDoc->toPlainText();
+
+    sMyDoc.replace("[[BR]]", "<br />");
+    sMyDoc.replace("\\\\", "<br />");
+
+    // Replace myRawDoc with document with HTML links
+    myRawDoc->setPlainText(sMyDoc);
 }
 
 // -----------------------------------------------------------------------------------------------
