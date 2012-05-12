@@ -116,6 +116,8 @@ protected slots:
     void checkSpelling();
 
 private slots:
+    void openTemplateFile( const QString &sTtplFile);
+
     /** \brief Call Apport for bug report */
     void reportBug();
 
@@ -190,22 +192,22 @@ private:
     void writeSettings();
 
     // Objects
-    CTextEditor *myEditor;
-    QCompleter *myCompleter;
-    CFileOperations *myFileOperations;
-    CHighlighter *myHighlighter;  // Syntax highlighting
-    CParser *myParser;            // Parser text to HTML
-    CInsertSyntaxElement *myInsertSyntaxElement;
-    CSettings *mySettings;
-    CInterWiki *myInterWikiLinks;
-    CDownload *myDownloadModule;
-    QSplitter *myWidgetSplitter;
-    QBoxLayout *myFrameLayout;
-    QFrame *myWebviewFrame;
+    CTextEditor *m_pEditor;
+    QCompleter *m_pCompleter;
+    CFileOperations *m_pFileOperations;
+    CHighlighter *m_pHighlighter;  // Syntax highlighting
+    CParser *m_pParser;            // Parser text to HTML
+    CInsertSyntaxElement *m_pInsertSyntaxElement;
+    CSettings *m_pSettings;
+    CInterWiki *m_pInterWikiLinks;
+    CDownload *m_pDownloadModule;
+    QSplitter *m_pWidgetSplitter;
+    QBoxLayout *m_pFrameLayout;
+    QFrame *m_pWebviewFrame;
 
     //QTabWidget *myTabwidgetDocuments;
-    QTabWidget *myTabwidgetRawPreview;
-    QWebView *myWebview;
+    QTabWidget *m_pTabwidgetRawPreview;
+    QWebView *m_pWebview;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
@@ -231,7 +233,10 @@ private:
 
     // Inter-Wiki Links
     QList<QList<QAction *> > m_iWikiLinksActions;
-    QSignalMapper *mySigMapInterWikiLinks;
+    QSignalMapper *m_pSigMapInterWikiLinks;
+
+    QList<QAction *> m_OpenTemplateFilesActions;
+    QSignalMapper *m_pSigMapOpenTemplate;
 };
 
 #endif // CINYOKAEDIT_H

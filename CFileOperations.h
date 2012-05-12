@@ -130,7 +130,7 @@ private:
     */
     void updateRecentFiles( const QString &sFileName );
 
-    QSignalMapper *mySigMapLastOpenedFiles;  /**< Pointer to signal mapper for the actions which open recent files */
+    QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Pointer to signal mapper for the actions which open recent files */
 
     QWidget *m_pParent;      /**< Pointer to parent window */
     CTextEditor *m_pEditor;  /**< Pointer to editor module */

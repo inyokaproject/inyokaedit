@@ -45,7 +45,13 @@
       <string>Open &amp;recent</string>
      </property>
     </widget>
+    <widget class="QMenu" name="fileMenuFromTemplate">
+     <property name="title">
+      <string>New from &amp;template</string>
+     </property>
+    </widget>
     <addaction name="newAct"/>
+    <addaction name="fileMenuFromTemplate"/>
     <addaction name="openAct"/>
     <addaction name="fileMenuLastOpened"/>
     <addaction name="saveAct"/>
@@ -846,6 +852,11 @@
    </property>
    <property name="toolTip">
     <string>Print preview or export to PDF</string>
+   </property>
+  </action>
+  <action name="actionWw">
+   <property name="text">
+    <string>ww</string>
    </property>
   </action>
  </widget>

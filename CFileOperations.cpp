@@ -37,7 +37,7 @@ CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSetti
     qDebug() << "Start" << Q_FUNC_INFO;
 
     // Generate recent files list
-    mySigMapLastOpenedFiles = new QSignalMapper(this);
+    m_pSigMapLastOpenedFiles = new QSignalMapper(this);
     for ( int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++ )
     {
         if ( i < m_pSettings->getRecentFiles().size() )
@@ -49,11 +49,11 @@ CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSetti
             m_LastOpenedFilesAct << new QAction("EMPTY", this);
             m_LastOpenedFilesAct[i]->setVisible(false);
         }
-        mySigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
+        m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
         connect( m_LastOpenedFilesAct[i], SIGNAL(triggered()),
-                 mySigMapLastOpenedFiles, SLOT(map()) );
+                 m_pSigMapLastOpenedFiles, SLOT(map()) );
     }
-    connect( mySigMapLastOpenedFiles, SIGNAL(mapped(int)),
+    connect( m_pSigMapLastOpenedFiles, SIGNAL(mapped(int)),
              this, SLOT(openRecentFile(int)) );
     qDebug() << "End" << Q_FUNC_INFO;
 }
