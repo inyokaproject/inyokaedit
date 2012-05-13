@@ -36,6 +36,7 @@
     <iwikilink type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
     <iwikilink type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />
     <iwikilink type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
+    <iwikilink type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
     <iwikilink type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
     <iwikilink type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
     <iwikilink type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
@@ -49,6 +50,7 @@
     <iwikilink type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
   </group>
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
+    <iwikilink type="freecode" url="http://freecode.com/projects/" name="Freecode" icon="freecode.png" />
     <iwikilink type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
     <iwikilink type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
     <iwikilink type="github" url="https://github.com/" name="GitHub" icon="github.png" />
@@ -60,18 +62,22 @@
     <iwikilink type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
   </group>
   <group name="Misc" icon="youtube.png">
+    <iwikilink type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <iwikilink type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
     <iwikilink type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
     <iwikilink type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
+    <iwikilink type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="fb.png" />
     <iwikilink type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
     <iwikilink type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
     <iwikilink type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
+    <iwikilink type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
     <iwikilink type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
     <iwikilink type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
     <iwikilink type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
     <iwikilink type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <iwikilink type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
     <iwikilink type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
+    <iwikilink type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <iwikilink type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
     <iwikilink type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
     <iwikilink type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
