@@ -45,71 +45,10 @@ CParser::CParser( QTextDocument *pRawDocument,
     qDebug() << "Start" << Q_FUNC_INFO;
 
     this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
+    this->initTextformats( sAppName, sAppDirPath, "Textformats.conf" );
     this->initTranslations( sAppName, sAppDirPath, sTemplateLang, "Translations.conf" );
 
     m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl, bCheckLinks, m_sTransAnchor );
-
-    // Initialize possible text formats
-    m_sListFormatStart << "'''";          // BOLD
-    m_sListFormatEnd << "'''";
-    m_sListFormatHtmlStart << "<strong>";
-    m_sListFormatHtmlEnd << "</strong>";
-    m_sListFormatStart << "''";           // ITALIC
-    m_sListFormatEnd << "''";
-    m_sListFormatHtmlStart << "<em>";
-    m_sListFormatHtmlEnd << "</em>";
-    m_sListFormatStart << "``";            // MONOTYPE 2
-    m_sListFormatEnd << "``";
-    m_sListFormatHtmlStart << "<code>";
-    m_sListFormatHtmlEnd << "</code>";
-    m_sListFormatStart << "`";            // MONOTYPE
-    m_sListFormatEnd << "`";
-    m_sListFormatHtmlStart << "<code>";
-    m_sListFormatHtmlEnd << "</code>";
-    m_sListFormatStart << "__";           // UNDERLINE
-    m_sListFormatEnd << "__";
-    m_sListFormatHtmlStart << "<span class=\"underline\">";
-    m_sListFormatHtmlEnd << "</span>";
-    m_sListFormatStart << "--(";          // STRIKE OUT
-    m_sListFormatEnd << ")--";
-    m_sListFormatHtmlStart << "<del>";
-    m_sListFormatHtmlEnd << "</del>";
-    m_sListFormatStart << "^^(";          // RISED TEXT
-    m_sListFormatEnd << ")^^";
-    m_sListFormatHtmlStart << "<sup>";
-    m_sListFormatHtmlEnd << "</sup>";
-    m_sListFormatStart << ",,(";          // LOWERED TEXT
-    m_sListFormatEnd << "),,";
-    m_sListFormatHtmlStart << "<sub>";
-    m_sListFormatHtmlEnd << "</sub>";
-    m_sListFormatStart << "~+(";          // BIGGER
-    m_sListFormatEnd << ")+~";
-    m_sListFormatHtmlStart << "<big>";
-    m_sListFormatHtmlEnd << "</big>";
-    m_sListFormatStart << "~-(";          // SMALLER
-    m_sListFormatEnd << ")-~";
-    m_sListFormatHtmlStart << "<small>";
-    m_sListFormatHtmlEnd << "</small>";
-    /*
-    m_sListFormatStart << "[size=+\d+]";  // DEFINED SIZE
-    m_sListFormatEnd << "[/size]";
-    m_sListFormatHtmlStart << "<span style=\"font-size: %1\">";
-    m_sListFormatHtmlEnd << "</span>";
-    */
-    /*
-    m_sListFormatStart << "[color=#+[0-9A-F]{5,5}]";  // DEFINED COLOR (hex)
-    m_sListFormatEnd << "[/color]|";
-    m_sListFormatHtmlStart << "<span style=\"color: %1\">";
-    m_sListFormatHtmlEnd << "</span>";
-    */
-    /*
-    m_sListFormatStart << "[color=[a-z]{3,8}]";               // DEFINED COLOR (word)
-    m_sListFormatEnd << "[/color]";
-    m_sListFormatHtmlStart << "<span-]+\[/color\] style=\"color: %1\">";
-    m_sListFormatHtmlEnd << "</span>";
-    */
-
-    // ----------------------------------------------------------------------------------------------------
 
     m_bShowedMsgBoxAlready = false;
 
@@ -165,6 +104,62 @@ void CParser::initFlags( const QString sAppName, const QString sAppDirPath, cons
             }
         }
         flagsFile.close();
+    }
+    qDebug() << "End" << Q_FUNC_INFO;
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CParser::initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName )
+{
+    qDebug() << "Start" << Q_FUNC_INFO;
+
+    QFile formatsFile( sFileName );
+    QStringList sListInput;
+
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + formatsFile.fileName()) )
+    {
+        formatsFile.setFileName("/usr/share/" + sAppName.toLower() + "/templates/" + formatsFile.fileName());
+    }
+    // No installation: Use app path
+    else
+    {
+        formatsFile.setFileName( sAppDirPath + "/templates/" + formatsFile.fileName() );
+    }
+
+    if ( !formatsFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        QMessageBox::warning( 0, "Warning", tr("Could not open text formats config file!") );
+        qWarning() << "Could not open text formats config file:" << formatsFile.fileName();
+        // Initialize possible text formats
+        m_sListFormatStart << "ERROR";
+        m_sListFormatEnd << "ERROR";
+        m_sListFormatHtmlStart << "ERROR";
+        m_sListFormatHtmlEnd << "ERROR";
+    }
+    else
+    {
+        QTextStream in(&formatsFile);
+        QString tmpLine;
+        while ( !in.atEnd() )
+        {
+            tmpLine = in.readLine().trimmed();
+            if ( !tmpLine.startsWith("#") && "" != tmpLine.trimmed() )
+            {
+                sListInput << tmpLine.trimmed();
+            }
+        }
+        formatsFile.close();
+
+        for( int i = 0; i+3 < sListInput.size(); i+=4 )
+        {
+            m_sListFormatStart << sListInput[i];
+            m_sListFormatEnd << sListInput[i+1];
+            m_sListFormatHtmlStart << sListInput[i+2];
+            m_sListFormatHtmlEnd << sListInput[i+3];
+        }
     }
     qDebug() << "End" << Q_FUNC_INFO;
 }

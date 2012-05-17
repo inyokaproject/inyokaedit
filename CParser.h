@@ -85,6 +85,7 @@ signals:
 
 private:
     void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName);
+    void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName);
     void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName);
     void replaceTextformat( QTextDocument *myRawDoc );
     void replaceFlags( QTextDocument *myRawDoc );
