@@ -1,3 +1,16 @@
+inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
+
+  [Thorsten Roth]
+  * Started with the introduction of parser templates.
+  * Added HTML preview template file.
+  * Separated text format definitions into config file.
+  * Fixed LP: #989455 (New line syntax element not supported), LP: #940523
+    (Offering article templates), LP: #970404 (Horizontal line not supported)
+  * Added game info box to toolbar combobox.
+  * Added new interwiki links.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Thu, 17 May 2012 17:16:19 +0200
+
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
   [Dominique Lasserre]
