@@ -84,6 +84,7 @@ signals:
     void callShowPreview( const QString & );
 
 private:
+    void initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName);
     void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName);
     void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName);
     void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName);
@@ -94,6 +95,8 @@ private:
     void replaceBreaks( QTextDocument *myRawDoc );
     void replaceHorLine( QTextDocument *myRawDoc );
 
+    QString m_sPreviewTemplate;
+
     // Translations
     QString m_sTransTemplate;
     QString m_sTransTOC;
@@ -103,6 +106,8 @@ private:
     QString m_sTransAnchor;
     QString m_sTransDate;
     QString m_sTransOverview;
+    QString m_sRevText;
+    QString m_sTagText;
 
     // Parse Macros ([[Vorlage(...) etc.)
     QString parseMacro( QTextBlock actParagraph );

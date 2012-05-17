@@ -44,6 +44,7 @@ CParser::CParser( QTextDocument *pRawDocument,
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
+    this->initHTML( sAppName, sAppDirPath, "Preview.tpl" );
     this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
     this->initTextformats( sAppName, sAppDirPath, "Textformats.conf" );
     this->initTranslations( sAppName, sAppDirPath, sTemplateLang, "Translations.conf" );
@@ -63,6 +64,42 @@ CParser::~CParser()
         delete m_pLinkParser;
         m_pLinkParser = NULL;
     }
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CParser::initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName )
+{
+    qDebug() << "Start" << Q_FUNC_INFO;
+
+    QFile HTMLTemplateFile( sFileName );
+
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + HTMLTemplateFile.fileName()) )
+    {
+        HTMLTemplateFile.setFileName("/usr/share/" + sAppName.toLower() + "/templates/" + HTMLTemplateFile.fileName());
+    }
+    // No installation: Use app path
+    else
+    {
+        HTMLTemplateFile.setFileName( sAppDirPath + "/templates/" + HTMLTemplateFile.fileName() );
+    }
+
+    if ( !HTMLTemplateFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        QMessageBox::warning( 0, "Warning", tr("Could not open preview template file!") );
+        qWarning() << "Could not open preview template file:" << HTMLTemplateFile.fileName();
+        m_sPreviewTemplate = "ERROR";
+    }
+    else
+    {
+        QTextStream in(&HTMLTemplateFile);
+        m_sPreviewTemplate = in.readAll();
+
+        HTMLTemplateFile.close();
+    }
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -210,6 +247,10 @@ void CParser::initTranslations( const QString sAppName, const QString sAppDirPat
     if ( "ERROR" == m_sTransDate ) { qWarning() << "Date translation not found."; }
     m_sTransOverview = configTransl.value("Overview", "ERROR").toString();
     if ( "ERROR" == m_sTransOverview ) { qWarning() << "Overview translation not found."; }
+    m_sRevText = configTransl.value("RevText", "ERROR").toString();
+    if ( "ERROR" == m_sTransDate ) { qWarning() << "Revision text translation not found."; }
+    m_sTagText = configTransl.value("TagText", "ERROR").toString();
+    if ( "ERROR" == m_sTransOverview ) { qWarning() << "Tag text translation not found."; }
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -237,37 +278,11 @@ bool CParser::genOutput( const QString sActFile )
     // File name
     QFileInfo fi(sActFile);
     QString sFilename;
-    if (sActFile == "")
+    if (sActFile == "") {
         sFilename = tr("Untitled", "No file name set");
-    else
+    } else {
         sFilename = fi.fileName();
-
-    // Define html header
-    // IMPORTANT: PAY ATTENTION TO ORDER OF CSS-FILES!
-    QString sHtmlHead("<?xml version=\"1.0\"  encoding=\"utf-8\"?>\n"
-                      "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"
-                      "\t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
-                      "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                      "<head>\n"
-                      "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
-                      "<title>InyokaEdit - " + sFilename + "</title>\n"
-                      "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/main-sprite.css\" />\n"
-                      "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/markup2.css\" />\n"
-                      "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/wiki.css\" />\n"
-                      "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/markup.css\" />\n"
-                      "<style type=\"text/css\"><!-- div.wrap{min-width:0px !important;} //--></style>"
-                      "</head>\n"
-                      "<body>\n"
-                      "<div class=\"wrap\">\n"
-                      "<div class=\"wrap2\">\n"
-                      "<div class=\"wrap3\">\n"
-                      "<div class=\"wrap4\">\n"
-                      "<div class=\"wrap5\">\n"
-                      "<div class=\"body\">\n"
-                      "<div class=\"page_content\">\n"
-                      "<div class=\"content content_tabbar\">\n"
-                      "<h1 class=\"pagetitle\">" + sFilename + "</h1>\n"
-                      "<div id=\"page\">\n");
+    }
 
     // Need a copy otherwise text in editor will be changed
     m_pCopyOfrawText = m_pRawText->clone();
@@ -404,27 +419,16 @@ bool CParser::genOutput( const QString sActFile )
         }
     }
 
-    // Define end of html body
-    QString sHtmlBodyEnd = "</div>\n"
-                           "<p class=\"meta\">\n";
-    sHtmlBodyEnd += trUtf8("Diese Revision wurde am %1 um %2 Uhr erstellt.").arg(QDate::currentDate().toString("dd.MM.yyyy")).arg(QTime::currentTime().toString("hh:mm"));
-    sHtmlBodyEnd += "<br />\n";
-    sHtmlBodyEnd += trUtf8("Dieser Seite wurden die folgenden Begriffe zugeordnet: %1").arg(sWikitags);
-    sHtmlBodyEnd += "\n</p>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "<div style=\"clear: both;\">&nbsp;</div>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "</div>\n"
-                    "</body>\n"
-                    "</html>\n";
+    // Replace template tags
+    QString sTemplateCopy( m_sPreviewTemplate );  // Copy needed, otherwise %tags% will be replaced/removed in template!
+    sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
+    QString sRevTextCopy( m_sRevText );  // Copy needed!
+    sRevTextCopy= sRevTextCopy.replace("%date%", QDate::currentDate().toString("dd.MM.yyyy")).replace("%time%", QTime::currentTime().toString("hh:mm"));
+    sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
+    sTemplateCopy = sTemplateCopy.replace("%tagtext%", m_sTagText + " " + sWikitags);
 
-    // Write html code to output file
-    tmpoutputstream << sHtmlHead << sHtmlBody << sHtmlBodyEnd;
+    // Write HTML code into output file
+    tmpoutputstream << sTemplateCopy.replace("%content%", sHtmlBody);
 
     tmphtmlfile.close();
 
