@@ -114,6 +114,7 @@ int main( int argc, char *argv[] )
 }
 
 // ----------------------------------------------------------------------------
+// Source: http://www.developer.nokia.com/Community/Wiki/File_based_logging_in_Qt_for_debugging
 
 void LoggingHandler( QtMsgType type, const char *sMsg )
 {

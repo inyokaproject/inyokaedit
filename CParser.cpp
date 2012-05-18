@@ -44,6 +44,7 @@ CParser::CParser( QTextDocument *pRawDocument,
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
+    this->initTemplates( sAppName, sAppDirPath, sTemplateLang );
     this->initHTML( sAppName, sAppDirPath, "Preview.tpl" );
     this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
     this->initTextformats( sAppName, sAppDirPath, "Textformats.conf" );
@@ -64,6 +65,53 @@ CParser::~CParser()
         delete m_pLinkParser;
         m_pLinkParser = NULL;
     }
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CParser::initTemplates( const QString sAppName, const QString sAppDirPath, const QString sTplLang )
+{
+    qDebug() << "Start" << Q_FUNC_INFO;
+
+    QFile TplFile("");
+    QDir TplDir("");
+
+    // Path from normal installation
+    if ( TplDir.exists("/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang) )
+    {
+        TplDir.setPath( "/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang );
+    }
+    // No installation: Use app path
+    else
+    {
+        TplDir.setPath( sAppDirPath + "/templates/" + sTplLang );
+    }
+
+    // Get template files
+    QFileInfoList fiListTplFiles = TplDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
+    for ( int nFile = 0; nFile < fiListTplFiles.count(); nFile++ )
+    {
+        if ( "tpl" == fiListTplFiles[nFile].completeSuffix() )
+        {
+            //qDebug() << fiListTplFiles[nFile].absoluteFilePath();
+            TplFile.setFileName( fiListTplFiles[nFile].absoluteFilePath() );
+            if( TplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                m_sListTplNames << fiListTplFiles[nFile].baseName();
+                m_sListTemplates << QString::fromUtf8( TplFile.readAll() );
+                TplFile.close();
+            }
+            else
+            {
+                QMessageBox::warning( 0, "Warning", "Could not open template file: \n" + fiListTplFiles[nFile].absoluteFilePath() );
+                qWarning() << "Could not open template file:" << fiListTplFiles[nFile].absoluteFilePath();
+            }
+        }
+    }
+
+    qDebug() << "Loaded templates:" << m_sListTplNames;
+    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -287,6 +335,9 @@ bool CParser::genOutput( const QString sActFile )
     // Need a copy otherwise text in editor will be changed
     m_pCopyOfrawText = m_pRawText->clone();
 
+    //// Replace macros with Inyoka markup templates
+    //this->replaceTemplates( m_pRawText );
+
     // Replace all links
     m_pLinkParser->startParsing( m_pCopyOfrawText );
 
@@ -441,12 +492,75 @@ bool CParser::genOutput( const QString sActFile )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
+void CParser::replaceTemplates( QTextDocument *p_rawDoc )
+{
+    qDebug() << Q_FUNC_INFO;
+
+    QStringList sListTplRegExp;
+    sListTplRegExp << "\\[\\[" + m_sTransTemplate + "(.*)\\]\\]";
+//                   << "\\{\\{\\{#!" + m_sTransTemplate + " .*\\}\\}\\}";
+    QString sMyDoc = p_rawDoc->toPlainText();
+    int nIndex;
+    int nLength;
+    QString sMacro;
+
+    for (int j = 0; j < sListTplRegExp.size(); j++ )
+    {
+        QRegExp findTemplate( sListTplRegExp[j], Qt::CaseInsensitive );
+        findTemplate.setMinimal( true );
+
+        nIndex = findTemplate.indexIn( sMyDoc );
+        while ( nIndex >= 0 )
+        {
+            // Found end of macro
+            if ( sMyDoc.indexOf( ")]]", nIndex ) != -1 )//||
+//                 sMyDoc.indexOf( "}}}", nIndex ) != -1 )
+            {
+                sMacro = findTemplate.cap(1);
+                qDebug() << "TEST:" << sMacro;
+
+//                if ( 0 == j ) {
+                    nLength = sMyDoc.indexOf( ")]]", nIndex ) - nIndex + 3;  // Find end of macro ")]]" = length 3
+//                }
+//                else {
+//                    nLength = sMyDoc.indexOf( "}}}", nIndex ) - nIndex + 3;  // Find end of macro "}}}" = length 3
+//                }
+
+
+                for( int i = 0; i < m_sListTplNames.size(); i++ )
+                {
+                    if( sMacro.startsWith("(" + m_sListTplNames[i], Qt::CaseInsensitive) )
+                    {
+                        qDebug() << "Found known macro:" << m_sListTplNames[i];
+                        //sMyDoc.replace(nIndex, nLength, sMacro);
+                    }
+                }
+
+                // Go on with next
+                nIndex = findTemplate.indexIn( sMyDoc, nIndex + sMacro.length() + 1 );
+            }
+
+            // Skip not closed macro and go on with next
+            else
+            {
+                nIndex = findTemplate.indexIn( sMyDoc, nIndex + 3 );
+            }
+        }
+
+    }
+    // Replace p_rawDoc with document with formated text
+    p_rawDoc->setPlainText(sMyDoc);
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
 // REPLACE TEXT FORMATS
-void CParser::replaceTextformat( QTextDocument *myRawDoc )
+void CParser::replaceTextformat( QTextDocument *p_rawDoc )
 {
     QRegExp patternTextformat;
     const QString variableText(".*"); // Any character!
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sFormatedText, sTmpRegExp; //, sTmpText;
     int myindex;
@@ -494,18 +608,18 @@ void CParser::replaceTextformat( QTextDocument *myRawDoc )
         }
     }
 
-    // Replace myRawDoc with document with formated text
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with formated text
+    p_rawDoc->setPlainText(sMyDoc);
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 // Replace FLAGS
-void CParser::replaceFlags( QTextDocument *myRawDoc )
+void CParser::replaceFlags( QTextDocument *p_rawDoc )
 {
     QRegExp findFlags("\\{[a-z\\w][a-z]+\\}");
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpFlag;
 
@@ -533,18 +647,18 @@ void CParser::replaceFlags( QTextDocument *myRawDoc )
         myindex = findFlags.indexIn(sMyDoc, myindex + iLength);
     }
 
-    // Replace myRawDoc with document with HTML links
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with HTML links
+    p_rawDoc->setPlainText(sMyDoc);
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 // Replace KEYS
-void CParser::replaceKeys( QTextDocument *myRawDoc )
+void CParser::replaceKeys( QTextDocument *p_rawDoc )
 {
     QRegExp findKeys("\\[\\[" + m_sTransTemplate + "\\(Tasten,[\\w\\s\\?\\-\\=\\'\\,\\.\\`\\\"\\^\\<\\[\\]\\#\\+]+\\)\\]\\]");
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpKey;
     QStringList sListTmpKeys;
@@ -767,8 +881,8 @@ void CParser::replaceKeys( QTextDocument *myRawDoc )
         myindex = findKeys.indexIn(sMyDoc, myindex + iLength);
     }
 
-    // Replace myRawDoc with document with HTML links
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with HTML links
+    p_rawDoc->setPlainText(sMyDoc);
 
 }
 
@@ -1421,29 +1535,29 @@ QString CParser::parseMacro( QTextBlock actParagraph )
 // -----------------------------------------------------------------------------------------------
 
 // Replace BREAKS
-void CParser::replaceBreaks( QTextDocument *myRawDoc )
+void CParser::replaceBreaks( QTextDocument *p_rawDoc )
 {
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
 
     sMyDoc.replace("[[BR]]", "<br />");
     sMyDoc.replace("\\\\", "<br />");
 
-    // Replace myRawDoc with document with HTML links
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with HTML links
+    p_rawDoc->setPlainText(sMyDoc);
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 // Replace HORIZONTAL LINE
-void CParser::replaceHorLine( QTextDocument *myRawDoc )
+void CParser::replaceHorLine( QTextDocument *p_rawDoc )
 {
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
 
     sMyDoc.replace("----", "\n<hr />\n");
 
-    // Replace myRawDoc with document with HTML links
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with HTML links
+    p_rawDoc->setPlainText(sMyDoc);
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -2161,10 +2275,10 @@ QString CParser::parseImageCollection( QString actParagraph )
 // -----------------------------------------------------------------------------------------------
 // REPLACE IMAGES
 
-void CParser::replaceImages( QTextDocument *myRawDoc )
+void CParser::replaceImages( QTextDocument *p_rawDoc )
 {
     QRegExp findImages("\\[\\[" + m_sTransImage + "\\([\\w\\s\\-,./=\"]+\\)\\]\\]");
-    QString sMyDoc = myRawDoc->toPlainText();
+    QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpImage;
     QStringList sListTmpImageInfo;
@@ -2276,8 +2390,8 @@ void CParser::replaceImages( QTextDocument *myRawDoc )
         myindex = findImages.indexIn(sMyDoc, myindex + iLength);
     }
 
-    // Replace myRawDoc with document with HTML links
-    myRawDoc->setPlainText(sMyDoc);
+    // Replace p_rawDoc with document with HTML links
+    p_rawDoc->setPlainText(sMyDoc);
 
 }
 

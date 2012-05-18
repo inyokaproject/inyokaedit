@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/markup2.css" />
     <link rel="stylesheet" type="text/css" href="styles/wiki.css" />
     <link rel="stylesheet" type="text/css" href="styles/markup.css" />
-    <style type="text/css"><!-- div.wrap{min-width:0px !important;} //--></style>
+    <style type="text/css"><!-- div.wrap{min-width:0px;} div.body{padding-bottom:0px;} //--></style>
   </head>
   <body>
   <div class="wrap">
@@ -27,7 +27,6 @@
           </p>
         </div>
       </div>
-      <div style="clear: both;">&nbsp;</div>
     </div>
   </div>
   </body>

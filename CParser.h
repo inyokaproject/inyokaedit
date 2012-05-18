@@ -84,18 +84,23 @@ signals:
     void callShowPreview( const QString & );
 
 private:
-    void initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName);
-    void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName);
-    void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName);
-    void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName);
-    void replaceTextformat( QTextDocument *myRawDoc );
-    void replaceFlags( QTextDocument *myRawDoc );
-    void replaceKeys( QTextDocument *myRawDoc );
-    void replaceImages( QTextDocument *myRawDoc );
-    void replaceBreaks( QTextDocument *myRawDoc );
-    void replaceHorLine( QTextDocument *myRawDoc );
+    void initTemplates( const QString sAppName, const QString sAppDirPath, const QString sTplLang );
+    void initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName );
+    void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName );
+    void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName );
+    void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName );
+
+    void replaceTemplates( QTextDocument *p_rawDoc );
+    void replaceTextformat( QTextDocument *p_rawDoc );
+    void replaceFlags( QTextDocument *p_rawDoc );
+    void replaceKeys( QTextDocument *p_rawDoc );
+    void replaceImages( QTextDocument *p_rawDoc );
+    void replaceBreaks( QTextDocument *p_rawDoc );
+    void replaceHorLine( QTextDocument *p_rawDoc );
 
     QString m_sPreviewTemplate;
+    QStringList m_sListTplNames;
+    QStringList m_sListTemplates;
 
     // Translations
     QString m_sTransTemplate;

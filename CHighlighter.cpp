@@ -91,7 +91,7 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
     // Collecting highlighting rules
     foreach ( const QString &sPattern, macroPatterns )
     {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
         myRule.format = m_macrosFormat;
         m_highlightingRules.append(myRule);
     }
@@ -109,7 +109,7 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
     // Collecting highlighting rules
     foreach ( const QString &sPattern, parserPatterns )
     {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
         myRule.format = m_parserFormat;
         m_highlightingRules.append(myRule);
     }
