@@ -1,5 +1,3 @@
-Durch Klick auf "Bearbeiten" kann (a) bearbeitet werden (aha!) und (b) die zugrundeliegende Syntax betrachtet und nachgeahmt werden
-
 ##Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen.
 [[Vorlage(Baustelle, 11.11.2111, Nutzername)]]
 Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "InArbeit"-Zeile herauslöschen.

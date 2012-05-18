@@ -212,13 +212,7 @@ void CInyokaEdit::setupEditor()
     // Application icon
     this->setWindowIcon( QIcon(":/images/" + m_pApp->applicationName().toLower() + "_64x64.png") );
 
-    // Font settings for editor
-    QFont font;
-    font.setFamily("Monospace");
-    font.setFixedPitch(true);
-    font.setPointSize(m_pSettings->getFontsize());
-
-    m_pEditor->setFont(font);
+    m_pEditor->setFont( m_pSettings->getEditorFont() );
     m_pEditor->setAcceptRichText(false); // Paste plain text only
     m_pEditor->setCompleter(m_pCompleter);
 

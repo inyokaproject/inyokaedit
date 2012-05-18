@@ -65,7 +65,7 @@ public:
     QString getTemplateLanguage() const;
 
     // Font
-    float getFontsize() const;
+    QFont getEditorFont() const;
 
     // Window state
     QByteArray getWindowState() const;
@@ -94,6 +94,8 @@ private:
     QString m_sTemplateLang;
 
     // Font
+    QFont m_EditorFont;
+    QString m_sFontFamily;
     float m_nFontsize;
 
     // Find/replace dialogs

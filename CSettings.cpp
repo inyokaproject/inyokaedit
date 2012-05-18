@@ -74,6 +74,7 @@ void CSettings::readSettings()
 
     // Font settings
     mySettingsObject->beginGroup("Font");
+    m_sFontFamily = mySettingsObject->value("FontFamily", "Monospace").toString();
     // Used string for font size because float isn't saved human readable...
     QString sFontsize = mySettingsObject->value("FontSize", "10.5").toString();
     m_nFontsize = sFontsize.toFloat();
@@ -81,6 +82,12 @@ void CSettings::readSettings()
     {
         m_nFontsize = 10.5;
     }
+
+    m_EditorFont.setFamily( m_sFontFamily );
+    m_EditorFont.setFixedPitch( true );
+    m_EditorFont.setStyleHint( QFont::TypeWriter );  // Font matcher prefers fixed pitch fonts
+    m_EditorFont.setPointSize( m_nFontsize );
+
     mySettingsObject->endGroup();
 
     // Recent files
@@ -139,7 +146,8 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
 
     // Font settings
     mySettingsObject->beginGroup("Font");
-    mySettingsObject->setValue("FontSize", QString::number(m_nFontsize));
+    mySettingsObject->setValue("FontFamily", m_EditorFont.family());
+    mySettingsObject->setValue("FontSize", QString::number(m_EditorFont.pointSize()));
     mySettingsObject->endGroup();
 
     // Recent files
@@ -238,9 +246,9 @@ QString CSettings::getTemplateLanguage() const
 
 // ----------------------------------------------------
 
-float CSettings::getFontsize() const
+QFont CSettings::getEditorFont() const
 {
-    return m_nFontsize;
+    return m_EditorFont;
 }
 
 // ----------------------------------------------------
