@@ -8,8 +8,9 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
     (Offering article templates), LP: #970404 (Horizontal line not supported)
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
+  * Possibility to set font family for editor.
 
- -- Thorsten Roth <elthoro@gmx.de>  Thu, 17 May 2012 17:16:19 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 18 May 2012 19:13:43 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
