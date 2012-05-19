@@ -1271,9 +1271,9 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
              keyEvent->key() == Qt::Key_Right &&
              !isSHIFT && isCTRL )
         {
-                m_pEditor->moveCursor(QTextCursor::Right);
-                m_pEditor->moveCursor(QTextCursor::EndOfWord);
-                return true;
+            m_pEditor->moveCursor(QTextCursor::Right);
+            m_pEditor->moveCursor(QTextCursor::EndOfWord);
+            return true;
         }
 
         // ----------------------------------------------
@@ -1284,10 +1284,10 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
              keyEvent->key() == Qt::Key_Up &&
              isSHIFT && isCTRL )
         {
-                QTextCursor cursor(m_pEditor->textCursor());
-                cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
-                m_pEditor->setTextCursor(cursor);
-                return true;
+            QTextCursor cursor(m_pEditor->textCursor());
+            cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
+            m_pEditor->setTextCursor(cursor);
+            return true;
         }
 
         // CTRL + SHIFT arrow down
@@ -1295,11 +1295,32 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
              keyEvent->key() == Qt::Key_Down &&
              isSHIFT && isCTRL )
         {
-                QTextCursor cursor(m_pEditor->textCursor());
-                cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
-                m_pEditor->setTextCursor(cursor);
-                return true;
+            QTextCursor cursor(m_pEditor->textCursor());
+            cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
+            m_pEditor->setTextCursor(cursor);
+            return true;
         }
+        // ---------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------
+        // CTRL + SHIFT + T (only for debugging)
+        else if ( event->type() == QEvent::KeyPress &&
+             keyEvent->key() == Qt::Key_T &&
+             isSHIFT && isCTRL )
+        {
+            static bool bToggle = false;
+            static QTextDocument docBackup("");
+
+            if ( !bToggle ) {
+                docBackup.setPlainText( m_pEditor->document()->toPlainText() );
+                m_pParser->replaceTemplates( m_pEditor->document() );
+            }
+            else {
+                m_pEditor->setText( docBackup.toPlainText() );
+            }
+            bToggle = !bToggle;
+            return true;
+        }
+        // ---------------------------------------------------------------------------
         // ---------------------------------------------------------------------------
 
         // Reload preview at RETURN if preview alongside

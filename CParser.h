@@ -67,6 +67,9 @@ public:
     // Destructor
     ~CParser();
 
+    // PUBLIC FOR DEBUGGING
+    void replaceTemplates( QTextDocument *p_rawDoc );
+
     // Starts generating HTML-code
     bool genOutput( const QString sActFile );
 
@@ -90,7 +93,7 @@ private:
     void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName );
     void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName );
 
-    void replaceTemplates( QTextDocument *p_rawDoc );
+    //void replaceTemplates( QTextDocument *p_rawDoc );
     void replaceTextformat( QTextDocument *p_rawDoc );
     void replaceFlags( QTextDocument *p_rawDoc );
     void replaceKeys( QTextDocument *p_rawDoc );

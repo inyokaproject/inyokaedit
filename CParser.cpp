@@ -110,6 +110,12 @@ void CParser::initTemplates( const QString sAppName, const QString sAppDirPath, 
         }
     }
 
+    if ( 0 == m_sListTplNames.size() )
+    {
+        QMessageBox::warning( 0, "Warning", "Could not find any markup template files!" );
+        qWarning() << "Could not find any template files in:" << TplDir.absolutePath();
+    }
+
     qDebug() << "Loaded templates:" << m_sListTplNames;
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -335,7 +341,7 @@ bool CParser::genOutput( const QString sActFile )
     // Need a copy otherwise text in editor will be changed
     m_pCopyOfrawText = m_pRawText->clone();
 
-    //// Replace macros with Inyoka markup templates
+    // Replace macros with Inyoka markup templates
     //this->replaceTemplates( m_pRawText );
 
     // Replace all links
@@ -497,58 +503,63 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
     qDebug() << Q_FUNC_INFO;
 
     QStringList sListTplRegExp;
-    sListTplRegExp << "\\[\\[" + m_sTransTemplate + "(.*)\\]\\]";
+    sListTplRegExp << "\\[\\[" + m_sTransTemplate + "\\(.*\\)\\]\\]";
 //                   << "\\{\\{\\{#!" + m_sTransTemplate + " .*\\}\\}\\}";
     QString sMyDoc = p_rawDoc->toPlainText();
-    int nIndex;
-    int nLength;
     QString sMacro;
+    QStringList sListArguments;
+    int nPos = 0;
 
-    for (int j = 0; j < sListTplRegExp.size(); j++ )
-    {
-        QRegExp findTemplate( sListTplRegExp[j], Qt::CaseInsensitive );
-        findTemplate.setMinimal( true );
 
-        nIndex = findTemplate.indexIn( sMyDoc );
-        while ( nIndex >= 0 )
+    QRegExp findTemplate( sListTplRegExp[0], Qt::CaseInsensitive );
+    findTemplate.setMinimal( true );
+
+    while ((nPos = findTemplate.indexIn(sMyDoc, nPos)) != -1) {
+        sMacro =  findTemplate.cap(0);
+        //qDebug() << "CAPTURED:" << sMacro;
+
+        for( int i = 0; i < m_sListTplNames.size(); i++ )
         {
-            // Found end of macro
-            if ( sMyDoc.indexOf( ")]]", nIndex ) != -1 )//||
-//                 sMyDoc.indexOf( "}}}", nIndex ) != -1 )
+            if( sMacro.startsWith("[[" + m_sTransTemplate + "(" + m_sListTplNames[i], Qt::CaseInsensitive) )
             {
-                sMacro = findTemplate.cap(1);
-                qDebug() << "TEST:" << sMacro;
+                qDebug() << "Found known macro:" << m_sListTplNames[i];
+                sMacro.remove( "[[" + m_sTransTemplate + "(" );
+                sMacro.remove( ")]]" );
 
-//                if ( 0 == j ) {
-                    nLength = sMyDoc.indexOf( ")]]", nIndex ) - nIndex + 3;  // Find end of macro ")]]" = length 3
-//                }
-//                else {
-//                    nLength = sMyDoc.indexOf( "}}}", nIndex ) - nIndex + 3;  // Find end of macro "}}}" = length 3
-//                }
-
-
-                for( int i = 0; i < m_sListTplNames.size(); i++ )
-                {
-                    if( sMacro.startsWith("(" + m_sListTplNames[i], Qt::CaseInsensitive) )
-                    {
-                        qDebug() << "Found known macro:" << m_sListTplNames[i];
-                        //sMyDoc.replace(nIndex, nLength, sMacro);
+                // Split by ',' but DON'T split quoted strings containing commas!
+                QStringList tmpList = sMacro.split(QRegExp("\"")); // Split by "
+                bool inside = false;
+                sListArguments.clear();
+                foreach (QString s, tmpList) {
+                    if (inside) { // If 's' is inside quotes ...
+                        sListArguments.append(s); // ... get the whole string
+                    } else { // If 's' is outside quotes ...
+                        sListArguments.append(s.split(QRegExp(",+"), QString::SkipEmptyParts)); // ... get the splitted string
                     }
+                    inside = !inside;
                 }
 
-                // Go on with next
-                nIndex = findTemplate.indexIn( sMyDoc, nIndex + sMacro.length() + 1 );
-            }
+                sListArguments.removeAll(" ");
+                sListArguments.removeFirst();  // Remove template name
 
-            // Skip not closed macro and go on with next
-            else
-            {
-                nIndex = findTemplate.indexIn( sMyDoc, nIndex + 3 );
+                // Replace arguments
+                sMacro = m_sListTemplates[i];
+                for ( int k = 0; k < sListArguments.size(); k++ ) {
+                    sMacro.replace("<@ $arguments." + QString::number(k) + " @>", sListArguments[k].trimmed());
+                }
+
+                sMyDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
             }
         }
 
+        // Go on with new start position
+        nPos += sMacro.length();
+        //nPos += findTemplate.matchedLength();
     }
-    // Replace p_rawDoc with document with formated text
+
+
+
+    //Replace p_rawDoc with document with formated text
     p_rawDoc->setPlainText(sMyDoc);
 }
 
