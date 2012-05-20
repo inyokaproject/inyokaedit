@@ -83,7 +83,7 @@ void CFileOperations::open()
         {
             QFileInfo tmpFI(sFileName);
             m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
-            this->loadFile(sFileName);
+            this->loadFile(sFileName, true);
         }
     }
 }
@@ -95,7 +95,7 @@ void CFileOperations::openRecentFile( const int nEntry )
 {
     if ( this->maybeSave() )
     {
-        this->loadFile(m_pSettings->getRecentFiles()[nEntry]);
+        this->loadFile( m_pSettings->getRecentFiles()[nEntry], true );
     }
 }
 
@@ -178,8 +178,10 @@ bool CFileOperations::maybeSave()
 // ---------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------
 
-void CFileOperations::loadFile( const QString &sFileName )
+void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRecent )
 {
+    this->newFile();
+
     QFile file(sFileName);
     // No permission to read
     if ( !file.open(QFile::ReadOnly | QFile::Text) )
@@ -203,11 +205,14 @@ void CFileOperations::loadFile( const QString &sFileName )
     QApplication::restoreOverrideCursor();
 #endif
 
-    this->updateRecentFiles(sFileName);
-    this->setCurrentFile(sFileName);
-    if ( m_pSettings->getShowStatusbar() )
+    // Do not update recent files if template is loaded
+    if ( bUpdateRecent )
     {
-        emit this->setStatusbarMessage(tr("File loaded"));
+        this->updateRecentFiles(sFileName);
+        this->setCurrentFile(sFileName);
+    }
+    else {
+        this->setCurrentFile("");
     }
 
     emit this->loadedFile();
@@ -243,10 +248,7 @@ bool CFileOperations::saveFile( const QString &sFileName )
 
     this->updateRecentFiles(sFileName);
     this->setCurrentFile(sFileName);
-    if ( m_pSettings->getShowStatusbar() )
-    {
-        emit this->setStatusbarMessage(tr("File saved"));
-    }
+
     return true;
 }
 

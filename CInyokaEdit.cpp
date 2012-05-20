@@ -100,13 +100,8 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
 
     if ( true == bOpenFileAfterStart )
     {
-        m_pFileOperations->loadFile( m_pApp->argv()[1] );
+        m_pFileOperations->loadFile( m_pApp->argv()[1], true );
         this->previewInyokaPage();
-    }
-
-    if ( m_pSettings->getShowStatusbar() )
-    {
-        this->statusBar()->showMessage(tr("Ready"));
     }
 
     qDebug() << "End" << Q_FUNC_INFO;
@@ -143,7 +138,7 @@ void CInyokaEdit::createObjects()
                                       m_pApp->applicationDirPath(),
                                       m_UserAppDir );
 
-    m_pEditor = new CTextEditor( m_pSettings->getCodeCompletion() );  // Has to be create before find/replace
+    m_pEditor = new CTextEditor( m_pUi, m_pSettings->getCodeCompletion() );  // Has to be create before find/replace
 //  if ( true == m_pSettings->getPreviewAlongside() )
 //  {
     m_pEditor->installEventFilter(this);
@@ -234,10 +229,7 @@ void CInyokaEdit::setupEditor()
              this, SLOT(showHtmlPreview(QString)) );
 
     connect( m_pFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
-             this, SLOT(receiveMenuLastOpenedState(bool)) );
-
-    connect( m_pFileOperations, SIGNAL(setStatusbarMessage(QString)),
-             this, SLOT(receiveStatusbarMessage(QString)) );
+             m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)) );
 
     /*
     setCentralWidget(myTabwidgetDocuments);
@@ -303,12 +295,6 @@ void CInyokaEdit::setupEditor()
     connect( m_pWebview, SIGNAL(urlChanged(QUrl)),
              this, SLOT(clickedLink()) );
 
-    // Hide statusbar, if option is false
-    if ( false == m_pSettings->getShowStatusbar() )
-    {
-        this->setStatusBar(0);
-    }
-
     // Restore window and toolbar settings
     // Settings have to be restored after toolbars are created!
     this->restoreGeometry(m_pSettings->getWindowGeometry());
@@ -334,6 +320,7 @@ void CInyokaEdit::createActions()
 
     // File menu
     // New file
+
     m_pUi->newAct->setShortcuts(QKeySequence::New);
     connect( m_pUi->newAct, SIGNAL(triggered()),
              m_pFileOperations, SLOT(newFile()) );
@@ -377,28 +364,14 @@ void CInyokaEdit::createActions()
 
     // Cut
     m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-    connect( m_pUi->cutAct, SIGNAL(triggered()),
-             m_pEditor, SLOT(cut()) );
-
     // Copy
     m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-    connect( m_pUi->copyAct, SIGNAL(triggered()),
-             m_pEditor, SLOT(copy()) );
-
     // Paste
     m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-    connect( m_pUi->pasteAct, SIGNAL(triggered()),
-             m_pEditor, SLOT(paste()) );
-
     // Undo
     m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-    connect( m_pUi->undoAct, SIGNAL(triggered()),
-             m_pEditor, SLOT(undo()) );
-
     // Redo
     m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
-    connect( m_pUi->redoAct, SIGNAL(triggered()),
-             m_pEditor, SLOT(redo()) );
 
     // Find
     m_pUi->searchAct->setShortcuts(QKeySequence::Find);
@@ -421,20 +394,11 @@ void CInyokaEdit::createActions()
              m_findDialog, SLOT(findPrev()) );
 
 
-    // Set / initialize / connect cut / copy / redo / undo
+    // Initialize cut / copy / redo / undo
     m_pUi->cutAct->setEnabled(false);
     m_pUi->copyAct->setEnabled(false);
-    connect( m_pEditor, SIGNAL(copyAvailable(bool)),
-             m_pUi->cutAct, SLOT(setEnabled(bool)) );
-    connect( m_pEditor, SIGNAL(copyAvailable(bool)),
-             m_pUi->copyAct, SLOT(setEnabled(bool)) );
-
     m_pUi->undoAct->setEnabled(false);
-    connect( m_pEditor, SIGNAL(undoAvailable(bool)),
-             m_pUi->undoAct, SLOT(setEnabled(bool)) );
     m_pUi->redoAct->setEnabled(false);
-    connect( m_pEditor, SIGNAL(redoAvailable(bool)),
-             m_pUi->redoAct, SLOT(setEnabled(bool)) );
 
     // ---------------------------------------------------------------------------------------------
     // TOOLS MENU
@@ -723,7 +687,7 @@ void CInyokaEdit::createMenus()
         }
         m_pUi->fileMenuFromTemplate->addActions( m_OpenTemplateFilesActions );
         connect( m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
-                 this, SLOT(openTemplateFile(QString)) );
+                 m_pFileOperations, SLOT(loadFile(QString)) );
 
         if ( 0 == nTplFileCount ){
             m_pUi->fileMenuFromTemplate->setDisabled(true);
@@ -818,39 +782,6 @@ void CInyokaEdit::createToolBars()
             this, SLOT(insertDropDownTextformat(int)));
 
     qDebug() << "End" << Q_FUNC_INFO;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CInyokaEdit::openTemplateFile( const QString &sTtplFile )
-{
-    if ( m_pFileOperations->maybeSave() )
-    {
-        QFile file( sTtplFile );
-        // No permission to read
-        if ( !file.open(QFile::ReadOnly | QFile::Text) )
-        {
-            QMessageBox::warning( this, m_pApp->applicationName(),
-                                  "Template file \"" + sTtplFile + "\" could not be opened:\n" + file.errorString() );
-            return;
-        }
-
-        QTextStream in(&file);
-        in.setCodec("UTF-8");
-        in.setAutoDetectUnicode(true);
-
-    #ifndef QT_NO_CURSOR
-        QApplication::setOverrideCursor(Qt::WaitCursor);
-    #endif
-        m_pEditor->setPlainText(in.readAll());
-    #ifndef QT_NO_CURSOR
-        QApplication::restoreOverrideCursor();
-    #endif
-
-        m_pFileOperations->setCurrentFile("");
-        this->previewInyokaPage();
-    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1144,18 +1075,6 @@ void CInyokaEdit::insertInterwikiLink( const QString &sMenuEntry )
 }
 
 // -----------------------------------------------------------------------------------------------
-
-void CInyokaEdit::receiveMenuLastOpenedState( bool bEnabled )
-{
-    m_pUi->fileMenuLastOpened->setEnabled(bEnabled);
-}
-
-void CInyokaEdit::receiveStatusbarMessage( const QString &sMessage )
-{
-    this->statusBar()->showMessage(sMessage, 2000);
-}
-
-// -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 void CInyokaEdit::downloadArticle()
@@ -1183,10 +1102,6 @@ void CInyokaEdit::displayArticleText( const QString &sArticleText, const QString
 // -----------------------------------------------------------------------------------------------
 void CInyokaEdit::showHtmlPreview( const QString &sFilename )
 {
-    if ( m_pSettings->getShowStatusbar() )
-    {
-        this->statusBar()->showMessage( tr("Opening preview", "GUI: Status bar") );
-    }
     m_pWebview->history()->clear();  // Clear history (clicked links)
 
     if ( false == m_pSettings->getPreviewInEditor() )

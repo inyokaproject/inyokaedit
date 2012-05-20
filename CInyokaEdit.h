@@ -116,8 +116,6 @@ protected slots:
     void checkSpelling();
 
 private slots:
-    void openTemplateFile( const QString &sTtplFile);
-
     /** \brief Call Apport for bug report */
     void reportBug();
 
@@ -126,12 +124,6 @@ private slots:
 
     /** \brief Called when text in editor was changed */
     void documentWasModified();
-
-    /** \brief Receive recent opened files menu state */
-    void receiveMenuLastOpenedState( bool bEnabled );
-
-    /** \brief Receive status bar messages */
-    void receiveStatusbarMessage( const QString &sMessage );
 
     /**
     * \brief Insert headline from drop down box

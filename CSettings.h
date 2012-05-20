@@ -59,7 +59,6 @@ public:
     bool getPreviewInEditor() const;
     bool getPreviewAlongside() const;
     QDir getLastOpenedDir() const;
-    bool getShowStatusbar() const;
     QString getSpellCheckerLanguage() const;
     bool getCheckLinks() const;
     QString getTemplateLanguage() const;
@@ -88,7 +87,6 @@ private:
     QString m_sInyokaUrl;    // Url to inyoka
     QDir m_LastOpenedDir;
     bool m_bAutomaticImageDownload;  // Enable / disable download of article images
-    bool m_bShowStatusbar;
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
     QString m_sTemplateLang;

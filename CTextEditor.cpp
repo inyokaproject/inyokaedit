@@ -54,12 +54,37 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-CTextEditor::CTextEditor( bool bCompleter, QWidget *parent ) :
+CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *parent ) :
     QTextEdit(parent),
-    c(0),
-    bCodeCompState(bCompleter)
+    m_pCompleter(0),
+    m_bCodeCompState(bCompleter)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
+
+    // Cut
+    connect( pGUI->cutAct, SIGNAL(triggered()),
+             this, SLOT(cut()) );
+    connect( this, SIGNAL(copyAvailable(bool)),
+             pGUI->cutAct, SLOT(setEnabled(bool)) );
+    // Copy
+    connect( pGUI->copyAct, SIGNAL(triggered()),
+             this, SLOT(copy()) );
+    connect( this, SIGNAL(copyAvailable(bool)),
+             pGUI->copyAct, SLOT(setEnabled(bool)) );
+    // Paste
+    connect( pGUI->pasteAct, SIGNAL(triggered()),
+             this, SLOT(paste()) );
+    // Undo
+    connect( pGUI->undoAct, SIGNAL(triggered()),
+             this, SLOT(undo()) );
+    connect( this, SIGNAL(undoAvailable(bool)),
+             pGUI->undoAct, SLOT(setEnabled(bool)) );
+    // Redo
+    connect( pGUI->redoAct, SIGNAL(triggered()),
+             this, SLOT(redo()) );
+    connect( this, SIGNAL(redoAvailable(bool)),
+             pGUI->redoAct, SLOT(setEnabled(bool)) );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -69,36 +94,35 @@ CTextEditor::~CTextEditor()
 
 void CTextEditor::setCompleter( QCompleter *completer )
 {
-    if (c)
-    {
-        QObject::disconnect(c, 0, this, 0);
+    if ( m_pCompleter ) {
+        QObject::disconnect( m_pCompleter, 0, this, 0 );
     }
 
-    c = completer;
+    m_pCompleter = completer;
 
-    if (!c)
+    if ( !m_pCompleter ) {
         return;
+    }
 
-    c->setWidget(this);
-    c->setCompletionMode(QCompleter::PopupCompletion);
-    c->setCaseSensitivity(Qt::CaseInsensitive);
-    QObject::connect( c, SIGNAL(activated(QString)),
+    m_pCompleter->setWidget( this );
+    m_pCompleter->setCompletionMode( QCompleter::PopupCompletion );
+    m_pCompleter->setCaseSensitivity( Qt::CaseInsensitive );
+    QObject::connect( m_pCompleter, SIGNAL(activated(QString)),
                       this, SLOT(insertCompletion(QString)) );
 }
 
 QCompleter *CTextEditor::completer() const
 {
-    return c;
+    return m_pCompleter;
 }
 
 void CTextEditor::insertCompletion( const QString& completion )
 {
-    if ( c->widget() != this )
-    {
+    if ( m_pCompleter->widget() != this ) {
         return;
     }
     QTextCursor tc = textCursor();
-    int extra = completion.length() - c->completionPrefix().length();
+    int extra = completion.length() - m_pCompleter->completionPrefix().length();
     tc.movePosition(QTextCursor::Left);
     tc.movePosition(QTextCursor::EndOfWord);
     tc.insertText(completion.right(extra));
@@ -114,9 +138,8 @@ QString CTextEditor::textUnderCursor() const
 
 void CTextEditor::focusInEvent( QFocusEvent *e )
 {
-    if ( c )
-    {
-        c->setWidget(this);
+    if ( m_pCompleter ) {
+        m_pCompleter->setWidget(this);
     }
     QTextEdit::focusInEvent(e);
 }
@@ -124,8 +147,7 @@ void CTextEditor::focusInEvent( QFocusEvent *e )
 void CTextEditor::keyPressEvent( QKeyEvent *e )
 {
 
-    if ( c && c->popup()->isVisible() )
-    {
+    if ( m_pCompleter && m_pCompleter->popup()->isVisible() ) {
         // The following keys are forwarded by the completer to the widget
         switch ( e->key() )
         {
@@ -142,11 +164,11 @@ void CTextEditor::keyPressEvent( QKeyEvent *e )
     }
 
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
-    if (!c || !isShortcut) // do not process the shortcut when we have a completer
+    if ( !m_pCompleter || !isShortcut ) // do not process the shortcut when we have a completer
         QTextEdit::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
-    if (!c || (ctrlOrShift && e->text().isEmpty()))
+    if ( !m_pCompleter || (ctrlOrShift && e->text().isEmpty()) )
         return;
 
     static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word
@@ -161,24 +183,24 @@ void CTextEditor::keyPressEvent( QKeyEvent *e )
     }
     */
 
-    if (false == bCodeCompState) {
-        c->popup()->hide();
+    if ( false == m_bCodeCompState ) {
+        m_pCompleter->popup()->hide();
         return;
     }
     else if (!isShortcut && (hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
                         || eow.contains(e->text().right(1)))) {
-        c->popup()->hide();
+        m_pCompleter->popup()->hide();
         return;
     }
 
 
-    if (completionPrefix != c->completionPrefix()) {
-        c->setCompletionPrefix(completionPrefix);
-        c->popup()->setCurrentIndex(c->completionModel()->index(0, 0));
+    if (completionPrefix != m_pCompleter->completionPrefix()) {
+        m_pCompleter->setCompletionPrefix(completionPrefix);
+        m_pCompleter->popup()->setCurrentIndex(m_pCompleter->completionModel()->index(0, 0));
     }
     QRect cr = cursorRect();
-    cr.setWidth(c->popup()->sizeHintForColumn(0)
-                + c->popup()->verticalScrollBar()->sizeHint().width());
-    c->complete(cr); // popup it up!
+    cr.setWidth(m_pCompleter->popup()->sizeHintForColumn(0)
+                + m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
+    m_pCompleter->complete(cr); // popup it up!
 
 }

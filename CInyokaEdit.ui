@@ -189,7 +189,6 @@
    <addaction name="toolsMenu"/>
    <addaction name="helpMenu"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="fileToolBar">
    <property name="windowTitle">
     <string>File</string>

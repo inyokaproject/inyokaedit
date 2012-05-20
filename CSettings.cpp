@@ -67,7 +67,6 @@ void CSettings::readSettings()
     }
     m_LastOpenedDir = mySettingsObject->value("LastOpenedDir", QDir::homePath()).toString();
     m_bAutomaticImageDownload = mySettingsObject->value("AutomaticImageDownload", false).toBool();
-    m_bShowStatusbar = mySettingsObject->value("ShowStatusbar", false).toBool();
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
     m_bCheckLinks = mySettingsObject->value("CheckLinks", false).toBool();
     m_sTemplateLang = mySettingsObject->value("TemplateLanguage", "de").toString();
@@ -136,13 +135,13 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("InyokaUrl", m_sInyokaUrl);
     mySettingsObject->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
     mySettingsObject->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
-    mySettingsObject->setValue("ShowStatusbar", m_bShowStatusbar);
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
     mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
     mySettingsObject->setValue("TemplateLanguage", m_sTemplateLang);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
+    mySettingsObject->remove( "ShowStatusbar" );
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -222,11 +221,6 @@ QDir CSettings::getLastOpenedDir() const
 void CSettings::setLastOpenedDir( const QDir LastDir )
 {
     m_LastOpenedDir = LastDir;
-}
-
-bool CSettings::getShowStatusbar() const
-{
-    return m_bShowStatusbar;
 }
 
 QString CSettings::getSpellCheckerLanguage() const

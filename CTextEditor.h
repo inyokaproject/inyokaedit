@@ -45,6 +45,7 @@
 #define CTEXTEDITOR_H
 
 #include <QTextEdit>
+#include "ui_CInyokaEdit.h"
 
 class QCompleter;
 
@@ -57,7 +58,7 @@ class CTextEditor : public QTextEdit
     Q_OBJECT
 
 public:
-    CTextEditor( bool bCompleter, QWidget *parent = 0 );
+    CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *parent = 0 );
     ~CTextEditor();
 
     void setCompleter( QCompleter *c );
@@ -72,9 +73,9 @@ private slots:
 
 private:
     QString textUnderCursor() const;
-    QCompleter *c;
+    QCompleter *m_pCompleter;
 
-    bool bCodeCompState;
+    bool m_bCodeCompState;
 };
 
 #endif // CTEXTEDITOR_H
