@@ -120,7 +120,7 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
             << QRegExp::escape(")^^") << QRegExp::escape(",,(") << QRegExp::escape("),,") << QRegExp::escape("~+(")
             << QRegExp::escape(")+~") << QRegExp::escape("~-(") << QRegExp::escape(")-~") << QRegExp::escape("[[BR]]")
             << QRegExp::escape("\\\\") << QRegExp::escape("#tag:") << QRegExp::escape("# tag:") << QRegExp::escape("+++")
-            << QRegExp::escape(" 1. ") << QRegExp::escape("----");
+            << QRegExp::escape(" 1. ") << QRegExp::escape("----") << QRegExp::escape("||");
 
     // Format textformats
     m_textformatFormat.setForeground(Qt::red);
