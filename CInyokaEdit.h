@@ -89,6 +89,11 @@ public:
     ~CInyokaEdit();
     
 public slots:
+    void newDocumentTab();
+
+    /** \brief Called when text in editor was changed */
+    void documentWasModified();
+
     /**
     * \brief Call preview
     * \param sFilename Name of temporarily generated html file
@@ -121,9 +126,6 @@ private slots:
 
     /** \brief Call about dialog */
     void about();
-
-    /** \brief Called when text in editor was changed */
-    void documentWasModified();
 
     /**
     * \brief Insert headline from drop down box

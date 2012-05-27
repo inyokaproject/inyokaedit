@@ -100,7 +100,7 @@ public slots:
     * \brief Load existing file
     * \param sFileName Path and name of file which should be loaded
     */
-    void loadFile( const QString &sFileName, const bool bUpdateRecent = false );
+    void loadFile( const QString &sFileName, const bool bUpdateRecent = false, const bool bCheckSave = true );
 
     /**
     * \brief Save current file

@@ -14,6 +14,7 @@ FindDialog::FindDialog(QWidget *parent) :
 {
     ui->findReplaceForm->hideReplaceWidgets();
     setWindowTitle(tr("Search", "GUI: Search dialog title"));
+    this->setModal( false );
 }
 
 FindDialog::~FindDialog()

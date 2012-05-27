@@ -83,7 +83,7 @@ void CFileOperations::open()
         {
             QFileInfo tmpFI(sFileName);
             m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
-            this->loadFile(sFileName, true);
+            this->loadFile(sFileName, true, false);
         }
     }
 }
@@ -93,10 +93,7 @@ void CFileOperations::open()
 
 void CFileOperations::openRecentFile( const int nEntry )
 {
-    if ( this->maybeSave() )
-    {
-        this->loadFile( m_pSettings->getRecentFiles()[nEntry], true );
-    }
+    this->loadFile( m_pSettings->getRecentFiles()[nEntry], true, true );
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -178,9 +175,14 @@ bool CFileOperations::maybeSave()
 // ---------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------
 
-void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRecent )
+void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRecent, const bool bCheckSave )
 {
-    this->newFile();
+    if ( bCheckSave )
+    {
+        if ( !this->maybeSave() ) {
+            return;
+        }
+    }
 
     QFile file(sFileName);
     // No permission to read

@@ -128,42 +128,42 @@ void CInyokaEdit::createObjects()
     m_findReplaceDialog = new FindReplaceDialog(this);
 
     m_pSettings = new CSettings( m_UserAppDir,
-                                m_pApp->applicationName(),
-                                *m_findDialog, *m_findReplaceDialog );
+                                 m_pApp->applicationName(),
+                                 *m_findDialog, *m_findReplaceDialog );
     // Load settings from config file
     m_pSettings->readSettings();
 
     m_pDownloadModule = new CDownload( this,
-                                      m_pApp->applicationName(),
-                                      m_pApp->applicationDirPath(),
-                                      m_UserAppDir );
+                                       m_pApp->applicationName(),
+                                       m_pApp->applicationDirPath(),
+                                       m_UserAppDir );
 
-    m_pEditor = new CTextEditor( m_pUi, m_pSettings->getCodeCompletion() );  // Has to be create before find/replace
+    m_pEditor = new CTextEditor( m_pUi, m_pSettings->getCodeCompletion(), this );  // Has to be create before find/replace
 //  if ( true == m_pSettings->getPreviewAlongside() )
 //  {
     m_pEditor->installEventFilter(this);
 //  }
 
     m_pFileOperations = new CFileOperations( this,
-                                            m_pEditor,
-                                            m_pSettings,
-                                            m_pApp->applicationName() );
+                                             m_pEditor,
+                                             m_pSettings,
+                                             m_pApp->applicationName() );
 
     m_pCompleter = new QCompleter( m_sListCompleter,
-                                  this );
+                                   this );
 
     m_pInterWikiLinks = new CInterWiki( m_pApp );  // Has to be created before parser
 
     m_pParser = new CParser( m_pEditor->document(),
-                            m_pSettings->getInyokaUrl(),
-                            m_UserAppDir,
-                            m_tmpPreviewImgDir,
-                            m_pInterWikiLinks->getInterwikiLinks(),
-                            m_pInterWikiLinks->getInterwikiLinksUrls(),
-                            m_pSettings->getCheckLinks(),
-                            m_pApp->applicationName(),
-                            m_pApp->applicationDirPath(),
-                            m_pSettings->getTemplateLanguage() );
+                             m_pSettings->getInyokaUrl(),
+                             m_UserAppDir,
+                             m_tmpPreviewImgDir,
+                             m_pInterWikiLinks->getInterwikiLinks(),
+                             m_pInterWikiLinks->getInterwikiLinksUrls(),
+                             m_pSettings->getCheckLinks(),
+                             m_pApp->applicationName(),
+                             m_pApp->applicationDirPath(),
+                             m_pSettings->getTemplateLanguage() );
 
     QStringList tmpsListMacro;
     tmpsListMacro << m_pParser->getTransTemplate() << m_pParser->getTransTOC() <<
@@ -175,11 +175,11 @@ void CInyokaEdit::createObjects()
                       m_pParser->getTransCodeBlock().toLower();
 
     m_pHighlighter = new CHighlighter( m_pInterWikiLinks->getInterwikiLinks(),
-                                      m_pParser->getFlaglist(),
-                                      m_pParser->getTransOverview(),
-                                      tmpsListMacro,
-                                      tmpsListParser,
-                                      m_pEditor->document() );
+                                       m_pParser->getFlaglist(),
+                                       m_pParser->getTransOverview(),
+                                       tmpsListMacro,
+                                       tmpsListParser,
+                                       m_pEditor->document() );
 
     /**
      * \todo Add tabs for editing multiple documents.
@@ -191,8 +191,8 @@ void CInyokaEdit::createObjects()
     m_pWebview = new QWebView( this );
 
     m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pParser->getTransTemplate(),
-                                                      m_pParser->getTransImage(),
-                                                      m_pParser->getTransTOC() );
+                                                       m_pParser->getTransImage(),
+                                                       m_pParser->getTransTOC() );
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -211,18 +211,9 @@ void CInyokaEdit::setupEditor()
     m_pEditor->setAcceptRichText(false); // Paste plain text only
     m_pEditor->setCompleter(m_pCompleter);
 
-    // Text changed
-    connect( m_pEditor->document(), SIGNAL(contentsChanged()),
-             this, SLOT(documentWasModified()) );
-
     // Find/replace dialogs
-    m_findDialog->setModal(false);
     m_findDialog->setTextEdit(m_pEditor);
-    m_findReplaceDialog->setModal(false);
     m_findReplaceDialog->setTextEdit(m_pEditor);
-
-    m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-    m_pCompleter->setWrapAround(false);
 
     // Connect signals from parser with functions
     connect( m_pParser, SIGNAL(callShowPreview(QString)),
@@ -241,16 +232,16 @@ void CInyokaEdit::setupEditor()
     myTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, tr("Untitled"));
     */
 
+    m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+    m_pFrameLayout->addWidget( m_pWebview );
+    m_pWebviewFrame = new QFrame;
+    m_pWebviewFrame->setLayout( m_pFrameLayout );
+    m_pWebviewFrame->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+
     if ( true == m_pSettings->getPreviewAlongside() && true == m_pSettings->getPreviewInEditor() )
     {
         m_pWidgetSplitter = new QSplitter;
-        m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-        m_pWebviewFrame = new QFrame;
-
         m_pWidgetSplitter->addWidget( m_pEditor );
-        m_pFrameLayout->addWidget( m_pWebview );
-        m_pWebviewFrame->setLayout( m_pFrameLayout );
-        m_pWebviewFrame->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
         //m_pWidgetSplitter->addWidget( m_pWebview );
         m_pWidgetSplitter->addWidget( m_pWebviewFrame );
 
@@ -269,10 +260,10 @@ void CInyokaEdit::setupEditor()
         m_pTabwidgetRawPreview->setTabPosition(QTabWidget::West);
         m_pTabwidgetRawPreview->addTab(m_pEditor, tr("Raw format"));
 
-        m_pTabwidgetRawPreview->addTab(m_pWebview, tr("Preview"));
+        m_pTabwidgetRawPreview->addTab(m_pWebviewFrame, tr("Preview"));
         if ( false == m_pSettings->getPreviewInEditor() )
         {
-            m_pTabwidgetRawPreview->setTabEnabled(m_pTabwidgetRawPreview->indexOf(m_pWebview), false);
+            m_pTabwidgetRawPreview->setTabEnabled(m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame), false);
         }
     }
 
@@ -284,16 +275,6 @@ void CInyokaEdit::setupEditor()
 
     connect( m_pDownloadModule, SIGNAL(sendArticleText(QString, QString)),
              this, SLOT(displayArticleText(QString, QString)) );
-
-    // Browser buttons
-    connect( m_pUi->goBackBrowserAct, SIGNAL(triggered()),
-             m_pWebview, SLOT(back()) );
-    connect( m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
-            m_pWebview, SLOT(forward()) );
-    connect( m_pUi->reloadBrowserAct, SIGNAL(triggered()),
-             m_pWebview, SLOT(reload()) );
-    connect( m_pWebview, SIGNAL(urlChanged(QUrl)),
-             this, SLOT(clickedLink()) );
 
     // Restore window and toolbar settings
     // Settings have to be restored after toolbars are created!
@@ -781,6 +762,16 @@ void CInyokaEdit::createToolBars()
     connect(m_pTextformatBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextformat(int)));
 
+    // Browser buttons
+    connect( m_pUi->goBackBrowserAct, SIGNAL(triggered()),
+             m_pWebview, SLOT(back()) );
+    connect( m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
+            m_pWebview, SLOT(forward()) );
+    connect( m_pUi->reloadBrowserAct, SIGNAL(triggered()),
+             m_pWebview, SLOT(reload()) );
+    connect( m_pWebview, SIGNAL(urlChanged(QUrl)),
+             this, SLOT(clickedLink()) );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -792,7 +783,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
 {
     // Call parser if iIndex == index of m_pWebview -> Click on tab preview
     // or if iIndex == 999 -> Default parameter value when calling the function (e.g.) by clicking on button preview
-    if ( m_pTabwidgetRawPreview->indexOf(m_pWebview) == nIndex || 999 == nIndex )
+    if ( m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame) == nIndex || 999 == nIndex )
     {
         // Only disable buttons if preview is not shown alongside editor
         if ( false == m_pSettings->getPreviewAlongside() )
@@ -1120,7 +1111,7 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
 {
     if ( bSuccess )
     {
-        m_pTabwidgetRawPreview->setCurrentIndex( m_pTabwidgetRawPreview->indexOf(m_pWebview) );
+        m_pTabwidgetRawPreview->setCurrentIndex( m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame) );
         // Enable / disbale back button
         if ( m_pWebview->history()->canGoBack() )
         {

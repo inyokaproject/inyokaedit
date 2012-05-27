@@ -54,10 +54,10 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *parent ) :
-    QTextEdit(parent),
-    m_pCompleter(0),
-    m_bCodeCompState(bCompleter)
+CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *pParent ) :
+    QTextEdit( pParent ),
+    m_pCompleter( 0 ),
+    m_bCodeCompState( bCompleter )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -85,6 +85,11 @@ CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *paren
     connect( this, SIGNAL(redoAvailable(bool)),
              pGUI->redoAct, SLOT(setEnabled(bool)) );
 
+
+    // Text changed
+    connect( this->document(), SIGNAL(contentsChanged()),
+             pParent, SLOT( documentWasModified()) );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -106,7 +111,8 @@ void CTextEditor::setCompleter( QCompleter *completer )
 
     m_pCompleter->setWidget( this );
     m_pCompleter->setCompletionMode( QCompleter::PopupCompletion );
-    m_pCompleter->setCaseSensitivity( Qt::CaseInsensitive );
+    m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    m_pCompleter->setWrapAround(false);
     QObject::connect( m_pCompleter, SIGNAL(activated(QString)),
                       this, SLOT(insertCompletion(QString)) );
 }
