@@ -56,30 +56,51 @@
 
 CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *pParent ) :
     QTextEdit( pParent ),
-    m_pCompleter( 0 ),
     m_bCodeCompState( bCompleter )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
+    m_sListCompleter << "Inhaltsverzeichnis(1)]]" << "Vorlage(Getestet, Ubuntuversion)]]" << "Vorlage(Baustelle, Datum, \"Bearbeiter\")]]"
+                     << "Vorlage(Fortgeschritten)]]" << "Vorlage(Pakete, \"foo bar\")]]" << trUtf8("Vorlage(Ausbaufähig, \"Begründung\")]]")
+                     << trUtf8("Vorlage(Fehlerhaft, \"Begründung\")]]") << trUtf8("Vorlage(Verlassen, \"Begründung\")]]") << "Vorlage(Archiviert, \"Text\")]]"
+                     << "Vorlage(Kopie, Seite, Autor)]]" << trUtf8("Vorlage(Überarbeitung, Datum, Seite, Autor)]]") << "Vorlage(Fremd, Paket, \"Kommentar\")]]"
+                     << "Vorlage(Fremd, Quelle, \"Kommentar\")]]" << "Vorlage(Fremd, Software, \"Kommentar\")]]" << trUtf8("Vorlage(Award, \"Preis\", Link, Preiskategorie, \"Preisträger\")]]")
+                     << "Vorlage(PPA, PPA-Besitzer, PPA-Name)]]" << "Vorlage(Fremdquelle-auth, URL zum PGP-Key)]]" << trUtf8("Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer)]]")
+                     << "Vorlage(Fremdquelle, URL, Ubuntuversion(en), Komponente(n) )]]" << "Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]"
+                     << trUtf8("Vorlage(Fremdpaket, \"Anbieter\", URL zu einer Downloadübersicht, Ubuntuversion(en))]]") << "Vorlage(Fremdpaket, \"Anbieter\", dl, URL zu EINEM Download, Ubuntuversion(en))]]"
+                     << "Vorlage(Tasten, TASTE)]]" << trUtf8("Bild(name.png, Größe, Ausrichtung)]]") << "Anker(Name)]]" << "[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, \"Beschreibung\", left|right)]]"
+                     << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
+
+    m_pCompleter = new QCompleter( m_sListCompleter,
+                                   this );
+
+    this->setCompleter(m_pCompleter);
+    this->setAcceptRichText(false); // Paste plain text only
+
     // Cut
+    pGUI->cutAct->setShortcuts(QKeySequence::Cut);
     connect( pGUI->cutAct, SIGNAL(triggered()),
              this, SLOT(cut()) );
     connect( this, SIGNAL(copyAvailable(bool)),
              pGUI->cutAct, SLOT(setEnabled(bool)) );
     // Copy
+    pGUI->copyAct->setShortcuts(QKeySequence::Copy);
     connect( pGUI->copyAct, SIGNAL(triggered()),
              this, SLOT(copy()) );
     connect( this, SIGNAL(copyAvailable(bool)),
              pGUI->copyAct, SLOT(setEnabled(bool)) );
     // Paste
+    pGUI->pasteAct->setShortcuts(QKeySequence::Paste);
     connect( pGUI->pasteAct, SIGNAL(triggered()),
              this, SLOT(paste()) );
     // Undo
+    pGUI->undoAct->setShortcuts(QKeySequence::Undo);
     connect( pGUI->undoAct, SIGNAL(triggered()),
              this, SLOT(undo()) );
     connect( this, SIGNAL(undoAvailable(bool)),
              pGUI->undoAct, SLOT(setEnabled(bool)) );
     // Redo
+    pGUI->redoAct->setShortcuts(QKeySequence::Redo);
     connect( pGUI->redoAct, SIGNAL(triggered()),
              this, SLOT(redo()) );
     connect( this, SIGNAL(redoAvailable(bool)),

@@ -89,7 +89,7 @@ public:
     ~CInyokaEdit();
     
 public slots:
-    void newDocumentTab();
+    //void newDocumentTab();
 
     /** \brief Called when text in editor was changed */
     void documentWasModified();
@@ -187,7 +187,6 @@ private:
 
     // Objects
     CTextEditor *m_pEditor;
-    QCompleter *m_pCompleter;
     CFileOperations *m_pFileOperations;
     CHighlighter *m_pHighlighter;  // Syntax highlighting
     CParser *m_pParser;            // Parser text to HTML
@@ -208,8 +207,6 @@ private:
 
     QDir m_UserAppDir;
     QDir m_tmpPreviewImgDir;
-
-    QStringList m_sListCompleter;
 
     // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;

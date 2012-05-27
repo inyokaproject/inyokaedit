@@ -28,29 +28,34 @@
 
 // Constructor
 CParser::CParser( QTextDocument *pRawDocument,
-                  const QString &sUrlToWiki,
                   const QDir tmpFileOutputDir,
                   const QDir tmpImgDir,
                   const QList<QStringList> sListIWiki,
                   const QList<QStringList> sListIWikiUrl,
-                  const bool bCheckLinks,
                   const QString &sAppName,
                   const QString &sAppDirPath,
-                  const QString &sTemplateLang )
-    : m_pRawText(pRawDocument),
-      m_sWikiUrl(sUrlToWiki),
-      m_tmpFileDir(tmpFileOutputDir),
-      m_tmpImgDir(tmpImgDir)
+                  CSettings *pSettings )
+    : m_pRawText( pRawDocument ),
+      m_tmpFileDir( tmpFileOutputDir ),
+      m_tmpImgDir( tmpImgDir ),
+      m_pSettings( pSettings )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    this->initTemplates( sAppName, sAppDirPath, sTemplateLang );
-    this->initHTML( sAppName, sAppDirPath, "Preview.tpl" );
+    this->initTemplates( sAppName, sAppDirPath, m_pSettings->getTemplateLanguage() );
+    this->initHtmlTpl( sAppName, sAppDirPath, "Preview.tpl" );
     this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
     this->initTextformats( sAppName, sAppDirPath, "Textformats.conf" );
-    this->initTranslations( sAppName, sAppDirPath, sTemplateLang, "Translations.conf" );
+    this->initTranslations( sAppName, sAppDirPath, m_pSettings->getTemplateLanguage(), "Translations.conf" );
 
-    m_pLinkParser = new CParseLinks( m_pRawText, m_sWikiUrl, sListIWiki, sListIWikiUrl, bCheckLinks, m_sTransAnchor );
+    m_pLinkParser = new CParseLinks( m_pRawText,
+                                     m_pSettings->getInyokaUrl(),
+                                     sListIWiki,
+                                     sListIWikiUrl,
+                                     m_pSettings->getCheckLinks(),
+                                     m_sTransAnchor );
+
+   // emit sendHighlightingKeywords();
 
     m_bShowedMsgBoxAlready = false;
 
@@ -123,7 +128,7 @@ void CParser::initTemplates( const QString sAppName, const QString sAppDirPath, 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CParser::initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName )
+void CParser::initHtmlTpl( const QString sAppName, const QString sAppDirPath, const QString sFileName )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -961,7 +966,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 }
             }
 
-            QString sTmpUrl = m_sWikiUrl;
+            QString sTmpUrl = m_pSettings->getInyokaUrl();
             sTmpUrl.remove("wiki.");
             QString sLinkUser("");
             int iCntUser;
@@ -1029,17 +1034,17 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                     sOutput += "<li>\n"
                                "<p>\n";
                     if (sListElements[i].toLower() == "precise")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
                     else if (sListElements[i].toLower() == "oneiric")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
                     else if (sListElements[i].toLower() == "natty")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
                     else if (sListElements[i].toLower() == "maverick")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
                     else if (sListElements[i].toLower() == "lucid")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
                     else if (sListElements[i].toLower() == "hardy")
-                        sOutput += "<a href=\"" + m_sWikiUrl + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
                     else
                         sOutput +=  "Unknown Version\n";
 
@@ -1179,7 +1184,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         if (sListElements.size() >= 2) {
             // Replace possible spaces
             sListElements[1].replace(" ", "_");
-            sOutput = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
+            sOutput = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Baustelle") + "/" + sListElements[1] + "\" class=\"internal missing\">" + trUtf8("Baustelle") + "/" + sListElements[1] + "</a>";
         }
 
         sOutput = insertBox("box warning",
@@ -1200,12 +1205,12 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 sListElements[i].replace(" ", "_");
             }
 
-            QString sTmpUrl = m_sWikiUrl;
+            QString sTmpUrl = m_pSettings->getInyokaUrl();
             sTmpUrl.remove("wiki.");
             // Generate output
             sOutput += "<ul>";
             sOutput += "<li><p>" + trUtf8("Geplante Fertigstellung:") + " " + sListElements[1] + "</p></li>\n";
-            QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
+            QString sTmpLink = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + sListElements[2] + "\" class=\"internal missing\"> " + sListElements[2] +" </a>";
             sOutput += "<li><p>" + trUtf8("Derzeit gültiger Artikel:") + " " + sTmpLink + "</p></li>\n";
 
             // Generate user list
@@ -1222,7 +1227,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
             }
             sOutput += "<li><p>" + trUtf8("Bearbeiter:") + sTmpLink2 + "</p></li>\n";
             sOutput += "</ul>\n";
-            QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Baustelle") + "/" + sListElements[2] + "?action=log\" class=\"crosslink\">" + trUtf8("letzten Änderung") + "</a>";
             sOutput += "<p>" + trUtf8("Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.").arg(sTmpLink3) + "</p>\n";
         }
 
@@ -1241,15 +1246,15 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         if (sListElements.size() >= 2){
             // Package
             if (sListElements[1].toLower() == trUtf8("Paket").toLower()){
-                sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             // Source
             else if (sListElements[1].toLower() == trUtf8("Quelle").toLower()){
-                sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
+                sOutput = "<p>" + trUtf8("Zusätzliche") + " <a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.") + "</p>\n";
             }
             //Software
             else if (sListElements[1].toLower() == trUtf8("Software").toLower()){
-                sOutput = "<p><a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
+                sOutput = "<p><a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdsoftware") + "\" class=\"internal\">" + trUtf8("Fremdsoftware") + "</a> " + trUtf8("kann das System gefährden.") + "</p>\n";
             }
             // Remark available
             if (sListElements.size() >= 3){
@@ -1280,7 +1285,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
             sOutsideBox += "<p><strong>ppa:" + sListElements[1] + "/" + sListElements[2] + "</strong></p>\n";
             sOutsideBox += "</li>\n</ul>";
 
-            sOutput = trUtf8("Zusätzliche") + " <a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.");
+            sOutput = trUtf8("Zusätzliche") + " <a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquellen") + "</a> " + trUtf8("können das System gefährden.");
             QString sTmpLink = "<img src=\"img/interwiki/ppa.png\" class=\"image-default\" alt=\"PPA\" /> <a href=\"https://launchpad.net/~" + sListElements[1] + "/+archive/" + sListElements[2] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("PPA Beschreibung") + "</a>";
             QString sTmpLink2 = "<a href=\"https://launchpad.net/~" + sListElements[1] + "\" class=\"interwiki interwiki-lpuser\">" + sListElements[1] + "</a>";
             sRemark = trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2);
@@ -1299,7 +1304,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 sListElements[1].remove("key");
                 sListElements[1].remove(" ");
 
-                QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man den Signierungsschlüssel mit folgendem Befehl importieren:").arg(sTmpLink);
                 sOutput += "</p>\n"
                            "<div class=\"bash\">\n"
@@ -1310,9 +1315,9 @@ QString CParser::parseMacro( QTextBlock actParagraph )
             }
             // Url
             else{
-                QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+                QString sTmpLink = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
                 QString sTmpLink2 = "<a href=\"" + sListElements[1] + "\" rel=\"nofollow\" class=\"external\">" + trUtf8("Signierungsschlüssel herunterladen") + "</a>";
-                QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
+                QString sTmpLink3 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketverwaltung hinzufügen") + "</a>";
                 sOutput = "<p>" + trUtf8("Um die %1 zu authentifizieren, kann man entweder den %2 und in der %3 oder folgenden Befehl ausführen:").arg(sTmpLink).arg(sTmpLink2).arg(sTmpLink3) + "</p>\n";
                 sOutput += "<div class=\"bash\">\n"
                            "<div class=\"contents\">\n"
@@ -1330,11 +1335,11 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         if (sListElements.size() >= 3){
 
             // Generate output
-            QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
-            QString sTmpLink2 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
+            QString sTmpLink = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink2 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Paketquellen_freischalten") + "\" class=\"internal\">" + trUtf8("Paketquellen freischalten") + "</a>";
             sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man die folgenden %2:").arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
 
-            QString sTmpLink3 = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
+            QString sTmpLink3 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdquelle") + "</a>";
             sOutput += insertBox("box warning",
                                 trUtf8("Hinweis!"),
                                 trUtf8("Zusätzliche %1 können das System gefährden.").arg(sTmpLink3));
@@ -1375,7 +1380,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                                      "<a href=\"https://launchpad.net/%2\" class=\"interwiki interwiki-launchpad\">%3</a> "
                                      "werden <a href=\"https://launchpad.net/%4/+download\" class=\"interwiki interwiki-launchpad\">DEB-Pakete</a> "
                                      "angeboten. ")
-                            .arg(m_sWikiUrl)
+                            .arg(m_pSettings->getInyokaUrl())
                             .arg(sListElements[2])
                             .arg(sListElements[2])
                             .arg(sListElements[2]);
@@ -1436,13 +1441,13 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 sOutput += trUtf8("Die Pakete können für %1 heruntergeladen werden. ").arg(sUbuntuVersions);
             }
         }
-        QString sTmpLink = "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
+        QString sTmpLink = "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Paketinstallation_DEB") + "\" class=\"internal\">" + trUtf8("DEB-Pakete noch installiert werden") + "</a>";
         sOutput += trUtf8("Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.").arg(sTmpLink) + "</p>\n";
 
         // Warning box
         sOutput += insertBox("box warning",
                              trUtf8("Hinweis!"),
-                             "<a href=\"" + m_sWikiUrl + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
+                             "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
     }
     // -----------------------------------------------------------------------------------------------
 
@@ -1652,7 +1657,7 @@ QString CParser::generateTags( QTextBlock actParagraph )
         // Remove spaces and generate output
         for (int i = 0; i < sListElements.size(); i++){
             sListElements[i].remove(" ");
-            sOutput += " <a href=\"" + m_sWikiUrl + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
+            sOutput += " <a href=\"" + m_pSettings->getInyokaUrl() + "/Wiki/Tags?tag=" + sListElements[i] + "\">" + sListElements[i] + "</a>";
             if (i < sListElements.size()-1)
                 sOutput += ",";
         }

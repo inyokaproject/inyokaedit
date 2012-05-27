@@ -74,6 +74,7 @@ private slots:
 private:
     QString textUnderCursor() const;
     QCompleter *m_pCompleter;
+    QStringList m_sListCompleter;
 
     bool m_bCodeCompState;
 };

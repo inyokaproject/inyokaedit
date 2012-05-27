@@ -55,15 +55,13 @@ class CParser : public QObject
 public:
     // Constructor
     CParser( QTextDocument *pRawDocument,
-             const QString &sUrlToWiki,
              const QDir tmpFileOutputDir,
              const QDir tmpImgDir,
              const QList<QStringList> sListIWiki,
              const QList<QStringList> sListIWikiUrl,
-             const bool bCheckLinks,
              const QString &sAppName,
              const QString &sAppDirPath,
-             const QString &sTemplateLang );
+             CSettings *pSettings );
     // Destructor
     ~CParser();
 
@@ -88,7 +86,7 @@ signals:
 
 private:
     void initTemplates( const QString sAppName, const QString sAppDirPath, const QString sTplLang );
-    void initHTML( const QString sAppName, const QString sAppDirPath, const QString sFileName );
+    void initHtmlTpl( const QString sAppName, const QString sAppDirPath, const QString sFileName );
     void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName );
     void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName );
     void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName );
@@ -147,9 +145,10 @@ private:
 
     CParseLinks *m_pLinkParser;
 
-    const QString m_sWikiUrl;
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
+    CSettings *m_pSettings;
+
     bool m_bShowedMsgBoxAlready;
 };
 

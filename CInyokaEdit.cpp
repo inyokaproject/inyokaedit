@@ -34,7 +34,6 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
     QMainWindow(parent),
     m_pUi( new Ui::CInyokaEdit ),
     m_pApp( ptrApp ),
-    m_pCompleter( 0 ),
     m_UserAppDir (userAppDir)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
@@ -58,17 +57,6 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
             bOpenFileAfterStart = true;
         }
     }
-
-    m_sListCompleter << "Inhaltsverzeichnis(1)]]" << "Vorlage(Getestet, Ubuntuversion)]]" << "Vorlage(Baustelle, Datum, \"Bearbeiter\")]]"
-                     << "Vorlage(Fortgeschritten)]]" << "Vorlage(Pakete, \"foo bar\")]]" << trUtf8("Vorlage(Ausbaufähig, \"Begründung\")]]")
-                     << trUtf8("Vorlage(Fehlerhaft, \"Begründung\")]]") << trUtf8("Vorlage(Verlassen, \"Begründung\")]]") << "Vorlage(Archiviert, \"Text\")]]"
-                     << "Vorlage(Kopie, Seite, Autor)]]" << trUtf8("Vorlage(Überarbeitung, Datum, Seite, Autor)]]") << "Vorlage(Fremd, Paket, \"Kommentar\")]]"
-                     << "Vorlage(Fremd, Quelle, \"Kommentar\")]]" << "Vorlage(Fremd, Software, \"Kommentar\")]]" << trUtf8("Vorlage(Award, \"Preis\", Link, Preiskategorie, \"Preisträger\")]]")
-                     << "Vorlage(PPA, PPA-Besitzer, PPA-Name)]]" << "Vorlage(Fremdquelle-auth, URL zum PGP-Key)]]" << trUtf8("Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer)]]")
-                     << "Vorlage(Fremdquelle, URL, Ubuntuversion(en), Komponente(n) )]]" << "Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]"
-                     << trUtf8("Vorlage(Fremdpaket, \"Anbieter\", URL zu einer Downloadübersicht, Ubuntuversion(en))]]") << "Vorlage(Fremdpaket, \"Anbieter\", dl, URL zu EINEM Download, Ubuntuversion(en))]]"
-                     << "Vorlage(Tasten, TASTE)]]" << trUtf8("Bild(name.png, Größe, Ausrichtung)]]") << "Anker(Name)]]" << "[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, \"Beschreibung\", left|right)]]"
-                     << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
 
     // Create folder for downloaded article images
     m_tmpPreviewImgDir = m_UserAppDir.absolutePath() + "/tmpImages";
@@ -101,7 +89,6 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
     if ( true == bOpenFileAfterStart )
     {
         m_pFileOperations->loadFile( m_pApp->argv()[1], true );
-        this->previewInyokaPage();
     }
 
     qDebug() << "End" << Q_FUNC_INFO;
@@ -149,21 +136,16 @@ void CInyokaEdit::createObjects()
                                              m_pSettings,
                                              m_pApp->applicationName() );
 
-    m_pCompleter = new QCompleter( m_sListCompleter,
-                                   this );
-
     m_pInterWikiLinks = new CInterWiki( m_pApp );  // Has to be created before parser
 
     m_pParser = new CParser( m_pEditor->document(),
-                             m_pSettings->getInyokaUrl(),
                              m_UserAppDir,
                              m_tmpPreviewImgDir,
                              m_pInterWikiLinks->getInterwikiLinks(),
                              m_pInterWikiLinks->getInterwikiLinksUrls(),
-                             m_pSettings->getCheckLinks(),
                              m_pApp->applicationName(),
                              m_pApp->applicationDirPath(),
-                             m_pSettings->getTemplateLanguage() );
+                             m_pSettings );
 
     QStringList tmpsListMacro;
     tmpsListMacro << m_pParser->getTransTemplate() << m_pParser->getTransTOC() <<
@@ -208,8 +190,6 @@ void CInyokaEdit::setupEditor()
     this->setWindowIcon( QIcon(":/images/" + m_pApp->applicationName().toLower() + "_64x64.png") );
 
     m_pEditor->setFont( m_pSettings->getEditorFont() );
-    m_pEditor->setAcceptRichText(false); // Paste plain text only
-    m_pEditor->setCompleter(m_pCompleter);
 
     // Find/replace dialogs
     m_findDialog->setTextEdit(m_pEditor);
@@ -342,17 +322,6 @@ void CInyokaEdit::createActions()
 
     // ---------------------------------------------------------------------------------------------
     // EDIT MENU
-
-    // Cut
-    m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-    // Copy
-    m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-    // Paste
-    m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-    // Undo
-    m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-    // Redo
-    m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
 
     // Find
     m_pUi->searchAct->setShortcuts(QKeySequence::Find);
@@ -1070,11 +1039,7 @@ void CInyokaEdit::insertInterwikiLink( const QString &sMenuEntry )
 
 void CInyokaEdit::downloadArticle()
 {
-    if ( !m_pFileOperations->maybeSave() )
-    {
-        return;
-    }
-    else
+    if ( m_pFileOperations->maybeSave() )
     {
         m_pDownloadModule->downloadArticle( m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(), m_pSettings->getAutomaticImageDownload() );
         this->previewInyokaPage();
