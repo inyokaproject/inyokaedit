@@ -6,7 +6,8 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Separated text format definitions into config file.
   * Fixed LP: #989455 (New line syntax element not supported), LP: #940523
     (Offering article templates), LP: #970404 (Horizontal line not supported),
-    LP: #1005247 (removed infobox code block syntax highlighting)
+    LP: #1005247 (removed infobox code block syntax highlighting), LP: #904443
+    (downloading older article revisions)
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
   * Possibility to set font family for editor.
