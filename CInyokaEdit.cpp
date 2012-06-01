@@ -1041,8 +1041,11 @@ void CInyokaEdit::downloadArticle()
 {
     if ( m_pFileOperations->maybeSave() )
     {
-        m_pDownloadModule->downloadArticle( m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(), m_pSettings->getAutomaticImageDownload() );
-        this->previewInyokaPage();
+        bool bSuccess = m_pDownloadModule->downloadArticle( m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(), m_pSettings->getAutomaticImageDownload() );
+        if ( bSuccess )
+        {
+            this->previewInyokaPage();
+        }
     }
 }
 

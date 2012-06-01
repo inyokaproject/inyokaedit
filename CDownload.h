@@ -54,8 +54,9 @@ public:
     * \param ImgDir Folder in which attached images should be downloaded
     * \param sInyokaUrl Full url to the Inyoka wiki
     * \param bAutomaticImageDownload True or false if attached article images should be downloaded without any question
+    * \return True or false for successful / not successful download
     */
-    void downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
+    bool downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
 
 public slots:
     /**
@@ -74,8 +75,9 @@ private:
     * \param ImgDir Folder in which attached images should be downloaded
     * \param sInyokaUrl Full url to the Inyoka wiki
     * \param AutomaticImageDownload True or false if attached article images should be downloaded without any question
+    * \return True or false for successful / not successful download
     */
-    void downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
+    bool downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
 
     QWidget *m_pParent;  /**< Pointer to parent window */
     QString m_sAppName;  /**< Application name */

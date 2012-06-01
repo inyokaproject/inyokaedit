@@ -87,7 +87,7 @@ bool CDownload::loadInyokaStyles()
 // -----------------------------------------------------------------------------------------------
 // DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
-void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
+bool CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
 {
     QString sTmpArticle("");
     QString sSitename("");
@@ -103,7 +103,7 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
     // Click on "cancel" or string is empty
     if ( false == ok || sSitename.isEmpty() )
     {
-        return;
+        return false;
     }
 
     // Replace non valid characters
@@ -127,7 +127,7 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
 #endif
         QMessageBox::critical(m_pParent, m_sAppName, tr("Could not start the download of the raw format of article."));
         procDownloadRawtext.kill();
-        return;
+        return false;
     }
     if ( !procDownloadRawtext.waitForFinished() )
     {
@@ -136,7 +136,7 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
 #endif
         QMessageBox::critical(m_pParent, m_sAppName, tr("Error while downloading raw format of article."));
         procDownloadRawtext.kill();
-        return;
+        return false;
     }
 
     tempResult = procDownloadRawtext.readAll();
@@ -151,7 +151,7 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
         QApplication::restoreOverrideCursor();
 #endif
         QMessageBox::information(m_pParent, m_sAppName, tr("Could not download the article."));
-        return;
+        return false;
     }
 
 #ifndef QT_NO_CURSOR
@@ -159,14 +159,14 @@ void CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
 #endif
 
     emit sendArticleText(sTmpArticle, sSitename);
-    this->downloadImages(sSitename, ImgDir, sInyokaUrl, bAutomaticImageDownload);
+    return this->downloadImages(sSitename, ImgDir, sInyokaUrl, bAutomaticImageDownload);
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 // DOWNLOAD IN ARTICLES INCLUDED IMAGES
 
-void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
+bool CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
 {
     int iRet = 0;
     QByteArray tempResult;
@@ -182,13 +182,13 @@ void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, 
     {
         QMessageBox::critical(m_pParent, m_sAppName, tr("Could not start download of the meta data."));
         procDownloadMetadata.kill();
-        return;
+        return false;
     }
     if ( !procDownloadMetadata.waitForFinished() )
     {
         QMessageBox::critical(m_pParent, m_sAppName, tr("Error while downloading meta data."));
         procDownloadMetadata.kill();
-        return;
+        return false;
     }
 
     tempResult = procDownloadMetadata.readAll();
@@ -198,7 +198,7 @@ void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, 
     if ( "" == sMetadata )
     {
         QMessageBox::information(m_pParent, m_sAppName, tr("Could not find meta data."));
-        return;
+        return false;
     }
 
     // Copy metadata line by line in list
@@ -236,7 +236,7 @@ void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, 
             if ( !tmpScriptfile.open(QFile::WriteOnly | QFile::Text) )
             {
                 QMessageBox::warning(m_pParent, m_sAppName, tr("Could not create temporary download file!"));
-                return;
+                return false;
             }
 
             // Stream for output in file
@@ -279,4 +279,5 @@ void CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, 
             myImageDownloadProgress->open();
         }
     }
+    return true;
 }
