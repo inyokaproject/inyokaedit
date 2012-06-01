@@ -57,7 +57,6 @@ CParser::CParser( QTextDocument *pRawDocument,
 
    // emit sendHighlightingKeywords();
 
-    m_bShowedMsgBoxAlready = false;
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -2109,12 +2108,6 @@ QString CParser::parseCodeBlock( QString actParagraph )
     // Syntax highlighting
     else
     {
-        if ( m_bShowedMsgBoxAlready == false )
-        {
-            QMessageBox::information(0, "Information", tr("The preview does not support syntax highlighting in code block currently."));
-            m_bShowedMsgBoxAlready = true;
-        }
-
         //int iNumberOfLines = sListElements.size()-1;
         sOutput = "<div class=\"code\">\n<table class=\"syntaxtable\"><tbody>\n<tr>\n<td class=\"linenos\">\n<div class=\"linenodiv\"><pre>";
 

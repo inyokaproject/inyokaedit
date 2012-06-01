@@ -149,7 +149,6 @@ private:
     QDir m_tmpImgDir;
     CSettings *m_pSettings;
 
-    bool m_bShowedMsgBoxAlready;
 };
 
 #endif // CPARSER_H
