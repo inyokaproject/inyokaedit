@@ -91,6 +91,7 @@ bool CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
 {
     QString sTmpArticle("");
     QString sSitename("");
+    QString sRevision("");
     QByteArray tempResult;
 
     bool ok; // Buttons of input dialog (click on "OK" -> ok = true, click on "Cancel" -> ok = false)
@@ -118,7 +119,20 @@ bool CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, c
 
     // Start article download
     QProcess procDownloadRawtext;
-    procDownloadRawtext.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sSitename + "?action=export&format=raw");
+
+    // Download specific revision
+    if ( sSitename.contains("@rev=") )
+    {
+        sRevision = sSitename.mid( sSitename.indexOf("@rev=") );
+        sRevision.remove("@rev=");
+        sSitename.remove( sSitename.indexOf("@rev="), sSitename.length() );
+        procDownloadRawtext.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sSitename + "?action=export&format=raw&rev=" + sRevision);
+    }
+    // Latest version
+    else
+    {
+        procDownloadRawtext.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sSitename + "?action=export&format=raw");
+    }
 
     if ( !procDownloadRawtext.waitForStarted() )
     {
