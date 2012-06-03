@@ -1,0 +1,20 @@
+Changed
+
+ Created on: 29.05.2012
+     Author: christian
+
+changed/added files by Christian Schärf mysteryx
+
+added:
+ * CTableTemplate.h
+ * CTableTemplate.cpp
+ * CTableTemplate.ui
+ * Changed
+ 
+changed:
+ * CInyokaEdit.h l 44
+ * CInyokaEdit.h l 66
+ * CInyokaEdit.h l 199
+ * CInyokaEdit.ui (added Menu entry "Table..." in menu "Text Samples")
+ * CInyokaEdit.cpp l 179
+ * CInyokaEdit.cpp l 558/559
