@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>528</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -155,6 +155,7 @@
     <addaction name="insertFormatingHelpMenu"/>
     <addaction name="insertPacketinstallationMenu"/>
     <addaction name="insertMiscElementMenu"/>
+    <addaction name="insertTableAct"/>
    </widget>
    <widget class="QMenu" name="iWikiMenu">
     <property name="locale">
@@ -851,6 +852,11 @@
    </property>
    <property name="toolTip">
     <string>Print preview or export to PDF</string>
+   </property>
+  </action>
+  <action name="insertTableAct">
+   <property name="text">
+    <string>Table...</string>
    </property>
   </action>
  </widget>
