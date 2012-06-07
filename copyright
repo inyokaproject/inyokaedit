@@ -15,6 +15,13 @@ Files: qtfindreplacedialog/*
 Copyright: 2009 Lorenzo Bettini
 License: LGPL-2.1
 
+Files: CTableTemplate.cpp
+       CTableTemplate.h
+       CTableTemplate.ui
+Copyright: 2012 Christian Schärf
+           2012 Thorsten Roth <elthoro@gmx.de>
+License: GPL-3+
+
 License: GPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
