@@ -96,7 +96,7 @@ void CTableTemplate::newTable(){
 
 void CTableTemplate::preview(){
 	qDebug() << "Start" << Q_FUNC_INFO;
-	QMessageBox::information(this,"Function message","Function CTabelTemplate::preview() called");
+
 	this->generateTable();
     m_pTextDocument->setPlainText(m_sTableString);
 
@@ -108,14 +108,8 @@ void CTableTemplate::preview(){
 
 void CTableTemplate::tableParseFinished(QString sHtmlFilePath){
 	qDebug() << "Start" << Q_FUNC_INFO;
-    QMessageBox::information(this,"Function message","Function CTabelTemplate::tableParseFinished(QString) called");
 
-    QFile *file = new QFile(sHtmlFilePath,this);
-    QTextStream stream(file);
-    QString content(stream.readAll());
-
-    QMessageBox::information(this,"Table Parse Finished",content);
-    //m_pUi->previewBox->setHtml(sHtmlTable);
+    m_pUi->previewBox->load( QUrl::fromLocalFile(sHtmlFilePath) );
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -127,7 +121,7 @@ void CTableTemplate::generateTable(){
 	int colsNum = m_pUi->colsNum->value();
 	int rowsNum = m_pUi->rowsNum->value();
 
-	m_sTableString += "{{{#!vorlage Tabelle\n";
+    m_sTableString = "{{{#!vorlage Tabelle\n";
 
 	// Create title if set
 	if (m_bHasTitle)

@@ -69,6 +69,8 @@ public slots:
 	/** \brief Open dialog */
     void newTable();
 
+    void tableParseFinished( QString sHtmlTable );
+
 private slots:
 	/** \brief Show preview */
 	void preview();
@@ -85,7 +87,6 @@ private slots:
 private:
 	/** \brief Generate specific table */
 	void generateTable();
-    void tableParseFinished( QString sHtmlTable );
 
     Ui::CTableTemplateClass *m_pUi;
 
