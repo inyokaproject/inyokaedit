@@ -41,6 +41,7 @@
 #include "qtfindreplacedialog/findreplacedialog.h"
 #include "CDownload.h"
 #include "CFileOperations.h"
+#include "CTableTemplate.h"
 
 #ifndef DISABLE_SPELLCHECKER
 #include "CSpellChecker.h"
@@ -62,6 +63,7 @@ class CProgressDialog;
 class CSettings;
 class CDownload;
 class CFileOperations;
+class CTabelTemplate;
 
 #define sVERSION "0.5.0"
 
@@ -194,6 +196,7 @@ private:
     CSettings *m_pSettings;
     CInterWiki *m_pInterWikiLinks;
     CDownload *m_pDownloadModule;
+    CTableTemplate *m_pTableTemplate;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
     QFrame *m_pWebviewFrame;

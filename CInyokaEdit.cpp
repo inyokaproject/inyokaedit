@@ -176,6 +176,15 @@ void CInyokaEdit::createObjects()
                                                        m_pParser->getTransImage(),
                                                        m_pParser->getTransTOC() );
 
+    m_pTableTemplate = new CTableTemplate( m_pEditor,
+										   m_UserAppDir,
+										   m_tmpPreviewImgDir,
+										   m_pInterWikiLinks->getInterwikiLinks(),
+										   m_pInterWikiLinks->getInterwikiLinksUrls(),
+										   m_pApp->applicationName(),
+										   m_pApp->applicationDirPath(),
+										   m_pSettings );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -552,6 +561,9 @@ void CInyokaEdit::createActions()
 
     connect( mySigMapTextSamples, SIGNAL(mapped(QString)),
             this, SLOT(insertTextSample(QString)) );
+
+    connect( m_pUi->insertTableAct, SIGNAL(triggered()),
+    		m_pTableTemplate, SLOT(newTable()) );
 
     // ---------------------------------------------------------------------------------------------
     // INTERWIKI LINKS MENU
