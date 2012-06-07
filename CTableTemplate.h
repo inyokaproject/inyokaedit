@@ -75,12 +75,6 @@ private slots:
 	/** \brief Show preview */
 	void preview();
 
-	/** \brief Called when title-checkbox is clicked */
-	void setTitle( int nHasTitle );
-
-	/** \brief Called when head-checkbox is clicked */
-	void setHead( int nHasHead );
-
 	/** \brief Dialog finished */
 	void accept();
 
@@ -96,8 +90,8 @@ private:
     QString m_sTableString;
     QTextDocument *m_pTextDocument;
 
-    bool m_bHasTitle;
-    bool m_bHasHead;
+    QStringList m_sListTableStyles;
+    QStringList m_sListTableStylesPrefix;
 };
 
 #endif // CTABLETEMPLATE_H

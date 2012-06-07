@@ -80,6 +80,7 @@ public:
     QString getTransAnchor() const;
     QString getTransDate() const;
     QString getTransOverview() const;
+    QString getTransTable() const;
 
 signals:
     void callShowPreview( const QString & );
@@ -114,6 +115,7 @@ private:
     QString m_sTransOverview;
     QString m_sRevText;
     QString m_sTagText;
+    QString m_sTransTable;
 
     // Parse Macros ([[Vorlage(...) etc.)
     QString parseMacro( QTextBlock actParagraph );

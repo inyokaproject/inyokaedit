@@ -310,6 +310,10 @@ void CParser::initTranslations( const QString sAppName, const QString sAppDirPat
     m_sTagText = configTransl.value("TagText", "ERROR").toString();
     if ( "ERROR" == m_sTransOverview ) { qWarning() << "Tag text translation not found."; }
 
+    // Translation needed for table template
+    m_sTransTable = configTransl.value("Table", "ERROR").toString();
+    if ( "ERROR" == m_sTransTable ) { qWarning() << "Table translation not found."; }
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -2540,4 +2544,9 @@ QString CParser::getTransDate() const
 QString CParser::getTransOverview() const
 {
     return m_sTransOverview;
+}
+
+QString CParser::getTransTable() const
+{
+    return m_sTransTable;
 }
