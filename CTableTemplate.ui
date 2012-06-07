@@ -113,6 +113,12 @@
    </item>
    <item>
     <widget class="QWebView" name="previewBox">
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
      <property name="locale">
       <locale language="English" country="UnitedKingdom"/>
      </property>
