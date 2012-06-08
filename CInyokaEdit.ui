@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>528</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -252,7 +252,6 @@
    <addaction name="wikilinkAct"/>
    <addaction name="externalLinkAct"/>
    <addaction name="imageAct"/>
-   <addaction name="codeblockAct"/>
   </widget>
   <widget class="QToolBar" name="samplesmacrosBar">
    <property name="windowTitle">
@@ -557,18 +556,6 @@
    </property>
    <property name="toolTip">
     <string>Insert an image</string>
-   </property>
-  </action>
-  <action name="codeblockAct">
-   <property name="icon">
-    <iconset resource="inyokaedit_resources.qrc">
-     <normaloff>:/images/code.png</normaloff>:/images/code.png</iconset>
-   </property>
-   <property name="text">
-    <string>Code block</string>
-   </property>
-   <property name="toolTip">
-    <string>Code block - Console output, extract of config files</string>
    </property>
   </action>
   <action name="insertUnderConstructionAct">

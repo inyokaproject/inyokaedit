@@ -171,6 +171,12 @@ private slots:
     */
     void insertInterwikiLink( const QString &sMenuEntry );
 
+    /**
+    * \brief Insert code block from toolbar
+    * \param sCodeStyle Selected highlighting style
+    */
+    void insertCodeblock( const QString &sCodeStyle );
+
 private:
     Ui::CInyokaEdit *m_pUi;
     QApplication *m_pApp;
@@ -231,6 +237,12 @@ private:
 
     QList<QAction *> m_OpenTemplateFilesActions;
     QSignalMapper *m_pSigMapOpenTemplate;
+
+    // Code block syntax highlighting
+    QSignalMapper *mySigMapCodeHighlight;
+    QToolButton *m_pCodePopup;
+    QMenu *m_pCodeStyles;
+    QList<QAction *> m_CodeHighlightActions;
 };
 
 #endif // CINYOKAEDIT_H

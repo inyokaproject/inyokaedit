@@ -447,10 +447,41 @@ void CInyokaEdit::createActions()
     connect( m_pUi->imageAct, SIGNAL(triggered()),
              mySigMapTextSamples, SLOT(map()) );
 
-    // Insert code block
-    mySigMapTextSamples->setMapping(m_pUi->codeblockAct, "codeblockAct");
-    connect( m_pUi->codeblockAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+    // Code block + syntax highlighting
+    mySigMapCodeHighlight = new QSignalMapper(this);
+    QStringList sListHighlightText, sListHighlightLang;
+    sListHighlightText << tr("Raw text") << tr("Code without highlighting") << "Bash" << "C" <<
+                          "C#" << "C++" << "CSS" << "D" << "Django / Jinja Templates" <<
+                          "HTML" << "IRC Logs" << "Java" << "JavaScript" << "Perl" << "PHP" <<
+                          "Python" << "Python Console Sessions" << "Python Tracebacks" <<
+                          "Ruby" << "sources.list" << "SQL" << "XML";
+
+    sListHighlightLang << ""  << "text" << "bash" << "c" <<
+                          "csharp" << "cpp" << "css" << "d" << "html+django" <<
+                          "html" << "irc" << "java" << "js" << "perl" << "html+php" <<
+                          "python" << "pycon" << "pytb" <<
+                          "ruby" << "sourceslist" << "sql" << "xml";
+
+    QString sCodeTag("#!" + m_pParser->getTransCodeBlock().toLower() + " ");
+    m_pCodePopup = new QToolButton;
+    m_pCodePopup->setIcon(QIcon(":/images/code.png"));
+    m_pCodePopup->setPopupMode( QToolButton::InstantPopup );
+    m_pCodeStyles = new QMenu( m_pCodePopup );
+
+    for ( int i = 0; i < sListHighlightText.size(); i++ ) {
+        if (0 != i) { sListHighlightLang[i] = sCodeTag + sListHighlightLang[i]; }
+        m_CodeHighlightActions << new QAction( sListHighlightText[i], this );
+        mySigMapCodeHighlight->setMapping( m_CodeHighlightActions[i], sListHighlightLang[i] );
+        connect( m_CodeHighlightActions[i], SIGNAL(triggered()),
+                 mySigMapCodeHighlight, SLOT(map()) );
+    }
+
+    m_pCodeStyles->addActions( m_CodeHighlightActions );
+    m_pCodePopup->setMenu(m_pCodeStyles);
+    m_pUi->inyokaeditorBar->addWidget(m_pCodePopup);
+
+    connect( mySigMapCodeHighlight, SIGNAL(mapped(QString)),
+             this, SLOT(insertCodeblock(QString)) );
 
     // ---------------------------------------------------------------------------------------------
     // TEXT SAMPLES
@@ -1041,6 +1072,33 @@ void CInyokaEdit::insertInterwikiLink( const QString &sMenuEntry )
     else
     {
         QMessageBox::warning( this, m_pApp->applicationName(), "Error while inserting InterWiki link: InterWiki indice" );
+    }
+
+    m_pEditor->setFocus();
+}
+
+// Insert code block
+void CInyokaEdit::insertCodeblock( const QString &sCodeStyle )
+{
+    // No text selected
+    if ( m_pEditor->textCursor().selectedText() == "" )
+    {
+        QString sCode("Code");
+
+        // Insert InterWiki-Link
+        m_pEditor->insertPlainText( "{{{" + sCodeStyle + "\n" + sCode + "\n}}}\n" );
+
+        // Select the word "code"
+        QTextCursor textCursor = m_pEditor->textCursor();
+        textCursor.setPosition( m_pEditor->textCursor().position() - sCode.length() - 5);
+        textCursor.setPosition( m_pEditor->textCursor().position() - 5, QTextCursor::KeepAnchor );
+        m_pEditor->setTextCursor( textCursor );
+    }
+    // Some text is selected
+    else
+    {
+        // Insert InterWiki-Link with selected text
+        m_pEditor->insertPlainText( "{{{" + sCodeStyle + "\n" + m_pEditor->textCursor().selectedText() + "\n}}}\n" );
     }
 
     m_pEditor->setFocus();

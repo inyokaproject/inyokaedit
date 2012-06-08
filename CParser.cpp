@@ -2125,22 +2125,33 @@ QString CParser::parseCodeBlock( QString actParagraph )
             }
         }
 
+        // Second column (code)
         sOutput += "</pre>\n</div>\n</td>\n<td class=\"code\">\n<div class=\"syntax\">\n<pre>\n";
 
-        // Second column (code)
+        QString sCode("");
+
         for ( int i = 1; i < sListElements.length(); i++ )
         {
             // Replace char "<" because it will be interpreted as html tag (see bug #826482)
             sListElements[i].replace('<', "&lt;");
 
-            sOutput += sListElements[i];
+            sCode += sListElements[i];
             if ( i < sListElements.size() - 1 )
             {
-                sOutput += "\n";
+                sCode += "\n";
             }
         }
 
-        sOutput += "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+/*
+        // Syntax highlighting with Pygments (only on Unix)
+#if not defined _WIN32
+        if ( QFile("/usr/bin/pygmentize").exists() ) {
+            //QMessageBox::information(0, "Test", "PYGMENTS gefunden!");
+        }
+#endif
+*/
+
+        sOutput += sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
     }
 
     return sOutput;

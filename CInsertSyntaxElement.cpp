@@ -99,17 +99,6 @@ std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sEleme
             return "[" + sSelectedText + "]";
         }
     }
-    else if ( sElement == "codeblockAct" )
-    {
-        if ( sSelectedText == "")
-        {
-            return "{{{\nCode\n}}}";
-        }
-        else
-        {
-            return "{{{\n" + sSelectedText + "\n}}}";
-        }
-    }
 
     // Menu / dropdown menu items
     else if ( sElement == "insertUnderConstructionAct" )
