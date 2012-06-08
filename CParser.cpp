@@ -2106,7 +2106,7 @@ QString CParser::parseCodeBlock( QString actParagraph )
             }
         }
 
-        sOutput += "</pre>\n";
+        return sOutput + "</pre>\n";
     }
 
     // Syntax highlighting
@@ -2133,7 +2133,7 @@ QString CParser::parseCodeBlock( QString actParagraph )
         for ( int i = 1; i < sListElements.length(); i++ )
         {
             // Replace char "<" because it will be interpreted as html tag (see bug #826482)
-            sListElements[i].replace('<', "&lt;");
+            //sListElements[i].replace('<', "&lt;");
 
             sCode += sListElements[i];
             if ( i < sListElements.size() - 1 )
@@ -2142,19 +2142,54 @@ QString CParser::parseCodeBlock( QString actParagraph )
             }
         }
 
-/*
         // Syntax highlighting with Pygments (only on Unix)
 #if not defined _WIN32
         if ( QFile("/usr/bin/pygmentize").exists() ) {
-            //QMessageBox::information(0, "Test", "PYGMENTS gefunden!");
+            QString sHighlightLang = sListElements[0].remove("#!" + m_sTransCodeBlock + " ", Qt::CaseInsensitive);
+
+            // Start pygmentize
+            QProcess procPygmentize;
+            QProcess procEcho;
+
+            // Poor workaround for passing stdin string with code to pygmentize...
+            procEcho.setStandardOutputProcess(&procPygmentize);
+            procEcho.start("echo", QStringList() << sCode);
+            if ( !procEcho.waitForStarted() )
+            {
+                QMessageBox::critical(0, "Pygments error", "Could not start echo.");
+                procEcho.kill();
+                return sOutput + sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+            }
+            if ( !procEcho.waitForFinished() )
+            {
+                QMessageBox::critical(0, "Pygments error", "Error while using echo.");
+                procEcho.kill();
+                return sOutput + sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+            }
+
+            procPygmentize.start( "pygmentize", QStringList() << "-l" << sHighlightLang <<
+                                  "-f" << "html" <<
+                                  "-O" << "nowrap" <<
+                                  "-O" << "noclasses");
+
+            if ( !procPygmentize.waitForStarted() )
+            {
+                QMessageBox::critical(0, "Pygments error", "Could not start pygmentize.");
+                procPygmentize.kill();
+                return sOutput + sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+            }
+            if ( !procPygmentize.waitForFinished() )
+            {
+                QMessageBox::critical(0, "Pygments error", "Error while using pygmentize.");
+                procPygmentize.kill();
+                return sOutput + sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+            }
+
+            sCode = procPygmentize.readAll();
         }
 #endif
-*/
-
-        sOutput += sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
+        return sOutput + sCode + "</pre>\n</div>\n</td>\n</tr>\n</tbody>\n</table>\n</div>";
     }
-
-    return sOutput;
 }
 
 // -----------------------------------------------------------------------------------------------

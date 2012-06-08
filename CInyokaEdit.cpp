@@ -1085,7 +1085,7 @@ void CInyokaEdit::insertCodeblock( const QString &sCodeStyle )
     {
         QString sCode("Code");
 
-        // Insert InterWiki-Link
+        // Insert code block
         m_pEditor->insertPlainText( "{{{" + sCodeStyle + "\n" + sCode + "\n}}}\n" );
 
         // Select the word "code"
@@ -1097,7 +1097,7 @@ void CInyokaEdit::insertCodeblock( const QString &sCodeStyle )
     // Some text is selected
     else
     {
-        // Insert InterWiki-Link with selected text
+        // Insert code block with selected text
         m_pEditor->insertPlainText( "{{{" + sCodeStyle + "\n" + m_pEditor->textCursor().selectedText() + "\n}}}\n" );
     }
 
