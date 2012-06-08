@@ -21,7 +21,8 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          wget
-Suggests: hunspell
+Suggests: hunspell,
+         python-pygments
 Description: Editor for Inyoka based portals
  InyokaEdit provides offline support for Inyoka based portals like
  ubuntuusers.de.

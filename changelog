@@ -14,6 +14,8 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
   * Possibility to set font family for editor.
+  * Popup menu for inserting syntax highlighting in code blocks.
+  * Syntax highlighting in code blocks with Pygments (only under Linux).
 
  -- Thorsten Roth <elthoro@gmx.de>  Thu, 07 Jun 2012 15:58:43 +0200
 
