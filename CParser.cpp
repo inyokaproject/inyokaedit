@@ -1284,7 +1284,8 @@ QString CParser::parseMacro( QTextBlock actParagraph )
             }
 
             // Generate output
-            sOutsideBox = "<ul>\n<li>\n";
+            sOutsideBox = "<p>" + trUtf8("Adresszeile zum") + " <a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Paketquellen_freischalten/PPA#PPA-hinzufuegen") + "\" class=\"internal\">" + trUtf8("Hinzufügen") + "</a> " + trUtf8("des PPAs:") + "</p>";
+            sOutsideBox += "<ul>\n<li>\n";
             sOutsideBox += "<p><strong>ppa:" + sListElements[1] + "/" + sListElements[2] + "</strong></p>\n";
             sOutsideBox += "</li>\n</ul>";
 
@@ -1294,7 +1295,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
             sRemark = trUtf8("Weitere Informationen bietet die %1 vom Benutzer/Team %2.").arg(sTmpLink).arg(sTmpLink2);
         }
 
-        sOutput = sOutsideBox + insertBox("box warning", trUtf8("Hinweis!"), sOutput, sRemark);
+        sOutput = sOutsideBox + insertBox("box warning", trUtf8("Hinweis!"), sOutput, sRemark) + "<p>" + trUtf8("Damit Pakete aus dem PPA genutzt werden können, müssen die Paketquellen neu") + " <a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("apt/apt-get#apt-get-update") + "\" class=\"internal\">" + trUtf8("eingelesen") + "</a> " + trUtf8("werden.") + "</p>";
     }
     // -----------------------------------------------------------------------------------------------
 
