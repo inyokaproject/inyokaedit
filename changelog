@@ -1,6 +1,6 @@
 inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
 
-  [ Christian Schärf ]
+  [ Christian Schaerf ]
   * New uploader.
   * Added table template dialog.
 
@@ -22,7 +22,7 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Use hardening flags (using wrapper). New build depencency:
     hardening-wrapper
 
- -- Dominique Lasserre <lasserre.d@gmail.com>  Thu, 07 Jun 2012 20:09:55 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 15 Jun 2012 23:13:52 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
