@@ -18,7 +18,7 @@ License: LGPL-2.1
 Files: CTableTemplate.cpp
        CTableTemplate.h
        CTableTemplate.ui
-Copyright: 2012 Christian Schärf
+Copyright: 2012 Christian Schaerf
            2012 Thorsten Roth <elthoro@gmx.de>
 License: GPL-3+
 
