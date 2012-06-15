@@ -1,9 +1,10 @@
 inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
 
-  [Christian Schärf]
+  [ Christian Schärf ]
+  * New uploader.
   * Added table template dialog.
 
-  [Thorsten Roth]
+  [ Thorsten Roth ]
   * Started with the introduction of parser templates.
   * Added HTML preview template file.
   * Separated text format definitions into config file.
@@ -17,7 +18,11 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Popup menu for inserting syntax highlighting in code blocks.
   * Syntax highlighting in code blocks with Pygments (only under Linux).
 
- -- Thorsten Roth <elthoro@gmx.de>  Thu, 07 Jun 2012 15:58:43 +0200
+  [ Dominique Lasserre ]
+  * Use hardening flags (using wrapper). New build depencency:
+    hardening-wrapper
+
+ -- Dominique Lasserre <lasserre.d@gmail.com>  Thu, 07 Jun 2012 20:09:55 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
