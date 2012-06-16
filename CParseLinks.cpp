@@ -128,7 +128,7 @@ void CParseLinks::replaceHyperlinks( QTextDocument *pRawDoc )
 // Inyoka wiki links [:Wikipage:]
 void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
 {
-    QRegExp findInyokaWikiLink( "\\[{1,1}\\:[0-9A-Za-z.]" );
+    QRegExp findInyokaWikiLink( "\\[{1,1}\\:[0-9A-Za-z:.]" );
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
     int nLength = 0;
@@ -150,7 +150,7 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
         {
             nLength = sMyDoc.indexOf( "]", nIndex ) - nIndex + 1;  // Find end of link "]"
             sLink = sMyDoc.mid( nIndex, nLength );
-            if ( 2 == sLink.count(":") )
+            if ( 2 <= sLink.count(":") )
             {
                 //qDebug() << "FOUND: " << sLink;
                 sLink.remove( "[:" );
@@ -258,7 +258,7 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
         {
             nLength = sMyDoc.indexOf( "]", nIndex ) - nIndex + 1;  // Find end of link "]"
             sLink = sMyDoc.mid( nIndex, nLength );
-            if ( 2 == sLink.count(":") )
+            if ( 2 <= sLink.count(":") )
             {
                 sLink.remove( "[" );
                 sLink.remove( "]" );
@@ -276,12 +276,17 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
                         sClass = "interwiki interwiki-" + sListLink[0];
                     }
 
-                    if ( sListLink.size() == 3 )
+                    if ( sListLink.size() >= 3 )
                     {
                         // With description
                         if (sListLink[2] != "")
                         {
-                            sMyDoc.replace(nIndex, nLength, "<a href=\"" + m_sListInterwikiLink[ m_sListInterwikiKey.indexOf( sListLink[0] ) ] + sListLink[1] + "\" class=\"" + sClass + "\">" + sListLink[2] + "</a>");
+                            QString sTempDescription(sListLink[2]);
+                            // Append description with ":" if any exist
+                            for (int i = 3; i < sListLink.size(); i++) {
+                                sTempDescription.append(":" + sListLink[i]);
+                            }
+                            sMyDoc.replace(nIndex, nLength, "<a href=\"" + m_sListInterwikiLink[ m_sListInterwikiKey.indexOf( sListLink[0] ) ] + sListLink[1] + "\" class=\"" + sClass + "\">" + sTempDescription + "</a>");
                         }
                         // Without description
                         else
