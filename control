@@ -3,7 +3,7 @@ Section: doc
 Priority: extra
 Maintainer: Thorsten Roth <elthoro@gmx.de>
 Uploaders: Dominique Lasserre <lasserre.d@gmail.com>,
-         Christian Schaerf
+         Christian Schärf
 Build-Depends: debhelper (>= 7.0.50~),
          hardening-wrapper,
          libqt4-dev,
