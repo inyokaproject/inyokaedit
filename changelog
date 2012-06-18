@@ -1,10 +1,11 @@
 inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
 
-  [Christian Schärf]
+  [ Christian Schärf ]
   * New uploader.
   * Added table template dialog.
+  * Fixed LP: #1014367 (table dialog heading failure)
 
-  [Thorsten Roth]
+  [ Thorsten Roth ]
   * Started with the introduction of parser templates.
   * Added HTML preview template file.
   * Separated text format definitions into config file.
@@ -19,11 +20,11 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Popup menu for inserting syntax highlighting in code blocks.
   * Syntax highlighting in code blocks with Pygments (only under Linux).
 
-  [Dominique Lasserre]
+  [ Dominique Lasserre ]
   * Use hardening flags (using wrapper). New build depencency:
     hardening-wrapper
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 16 Jun 2012 17:13:36 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 18 Jun 2012 18:34:07 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
