@@ -56,31 +56,31 @@ public:
      * \param pEditor Pointer to editor module
      */
     CTableTemplate( CTextEditor *pEditor,
-					const QDir tmpFileOutputDir,
-					const QDir tmpImgDir,
-					const QList<QStringList> sListIWiki,
-					const QList<QStringList> sListIWikiUrl,
-					const QString &sAppName,
-					const QString &sAppDirPath,
-					CSettings *pSettings,
-					QWidget *pParent = 0 );
+                    const QDir tmpFileOutputDir,
+                    const QDir tmpImgDir,
+                    const QList<QStringList> sListIWiki,
+                    const QList<QStringList> sListIWikiUrl,
+                    const QString &sAppName,
+                    const QString &sAppDirPath,
+                    CSettings *pSettings,
+                    QWidget *pParent = 0 );
 
 public slots:
-	/** \brief Open dialog */
+    /** \brief Open dialog */
     void newTable();
 
     void tableParseFinished( QString sHtmlTable );
 
 private slots:
-	/** \brief Show preview */
-	void preview();
+    /** \brief Show preview */
+    void preview();
 
-	/** \brief Dialog finished */
-	void accept();
+    /** \brief Dialog finished */
+    void accept();
 
 private:
-	/** \brief Generate specific table */
-	void generateTable();
+    /** \brief Generate specific table */
+    void generateTable();
 
     Ui::CTableTemplateClass *m_pUi;
 
