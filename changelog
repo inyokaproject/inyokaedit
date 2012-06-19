@@ -13,7 +13,8 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
     (Offering article templates), LP: #970404 (Horizontal line not supported),
     LP: #1005247 (removed infobox code block syntax highlighting), LP: #904443
     (downloading older article revisions), LP: #989451 (Second colon in
-    Wikilink breaks syntax)
+    Wikilink breaks syntax), LP: #1014806 (Simple code formatting not
+    supported)
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
   * Possibility to set font family for editor.
@@ -24,7 +25,7 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Use hardening flags (using wrapper). New build depencency:
     hardening-wrapper
 
- -- Thorsten Roth <elthoro@gmx.de>  Mon, 18 Jun 2012 18:34:07 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Tue, 19 Jun 2012 19:52:01 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
