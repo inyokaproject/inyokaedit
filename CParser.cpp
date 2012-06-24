@@ -259,8 +259,8 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
     qDebug() << Q_FUNC_INFO;
 
     QStringList sListTplRegExp;
-    sListTplRegExp << "\\[\\[" +  m_pTemplates->getTransTemplate() + "\\(.*\\)\\]\\]";
-//                   << "\\{\\{\\{#!" +  m_pTemplates->getTransTemplate() + " .*\\}\\}\\}";
+    sListTplRegExp << "\\[\\[" +  m_pTemplates->getTransTemplate() + "\\(.+\\)\\]\\]";
+//                   << "\\{\\{\\{#!" +  m_pTemplates->getTransTemplate() + " .+\\}\\}\\}";
     QString sMyDoc = p_rawDoc->toPlainText();
     QString sMacro;
     QStringList sListArguments;
@@ -327,7 +327,7 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
 void CParser::replaceTextformat( QTextDocument *p_rawDoc )
 {
     QRegExp patternTextformat;
-    const QString variableText(".*"); // Any character!
+    const QString variableText(".+"); // Any character, minimum 1 char!
     QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sFormatedText, sTmpRegExp; //, sTmpText;

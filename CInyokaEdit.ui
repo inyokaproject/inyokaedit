@@ -122,20 +122,6 @@
      <addaction name="insertWarningAct"/>
      <addaction name="insertExpertsAct"/>
     </widget>
-    <widget class="QMenu" name="insertMiscElementMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Misc samples</string>
-     </property>
-     <addaction name="insertImprovableAct"/>
-     <addaction name="insertFixMeAct"/>
-     <addaction name="insertLeftAct"/>
-     <addaction name="insertThirdPartyPackageWarningAct"/>
-     <addaction name="insertThirdPartyRepoWarningAct"/>
-     <addaction name="insertThirdPartySoftwareWarningAct"/>
-    </widget>
     <widget class="QMenu" name="insertPacketinstallationMenu">
      <property name="locale">
       <locale language="English" country="UnitedKingdom"/>
@@ -149,6 +135,18 @@
      <addaction name="insertThirdPartyRepoAuthAct"/>
      <addaction name="insertThirdPartyPackageAct"/>
      <addaction name="insertPackageListAct"/>
+    </widget>
+    <widget class="QMenu" name="insertMiscElementMenu">
+     <property name="locale">
+      <locale language="English" country="UnitedKingdom"/>
+     </property>
+     <property name="title">
+      <string>&amp;Misc samples</string>
+     </property>
+     <addaction name="insertImprovableAct"/>
+     <addaction name="insertFixMeAct"/>
+     <addaction name="insertLeftAct"/>
+     <addaction name="insertThirdPartyWarningAct"/>
     </widget>
     <addaction name="insertBeginningMenu"/>
     <addaction name="insertImageMenu"/>
@@ -742,28 +740,12 @@
     <string>Insert &quot;Left&quot; sample - Only for articles under construction which are left by primal author</string>
    </property>
   </action>
-  <action name="insertThirdPartyPackageWarningAct">
+  <action name="insertThirdPartyWarningAct">
    <property name="text">
-    <string>Third-party package warning</string>
+    <string>Third-party package/repo/software warning</string>
    </property>
    <property name="toolTip">
-    <string>Insert &quot;Third-party package warning&quot; sample - For packages from third-party repositories</string>
-   </property>
-  </action>
-  <action name="insertThirdPartyRepoWarningAct">
-   <property name="text">
-    <string>Third-party repository warning</string>
-   </property>
-   <property name="toolTip">
-    <string>Insert &quot;Third-party repo warning&quot; sample - For packages which are installed from third-party repositories</string>
-   </property>
-  </action>
-  <action name="insertThirdPartySoftwareWarningAct">
-   <property name="text">
-    <string>Third-party software warning</string>
-   </property>
-   <property name="toolTip">
-    <string>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completely without package repositories</string>
+    <string>Insert &quot;Third-party warning&quot; sample - For third-party packages/repositories/software</string>
    </property>
   </action>
   <action name="spellCheckerAct">

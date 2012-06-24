@@ -29,14 +29,20 @@
 #include "CHighlighter.h"
 
 CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
-                            const QStringList sListFlags,
-                            const QString sTransOverview,
-                            const QStringList sListMacroKeywords,
-                            const QStringList sListParserKeywords,
+                            CTemplates *pTemplates,
                             QTextDocument *pParent )
     : QSyntaxHighlighter(pParent)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
+
+    QStringList sListMacroKeywords;
+    sListMacroKeywords << pTemplates->getTransTemplate() << pTemplates->getTransTOC() <<
+                          pTemplates->getTransImage() << pTemplates->getTransAnchor() <<
+                          pTemplates->getTransAttachment() << pTemplates->getTransDate();
+
+    QStringList sListParserKeywords;
+    sListParserKeywords << pTemplates->getTransTemplate().toLower() <<
+                           pTemplates->getTransCodeBlock().toLower();
 
     HighlightingRule myRule;
     QStringList interwikiLinksPatterns, macroPatterns, parserPatterns, textformatPatterns, flagsPatterns;
@@ -139,12 +145,12 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
     m_highlightingRules.append(myRule); // Collecting highlighting rules
 
     // Define flags
-    foreach ( QString tmpStr, sListFlags )
+    foreach ( QString tmpStr, pTemplates->getListFlags() )
     {
         flagsPatterns << QRegExp::escape("{" + tmpStr + "}");
     }
     // Overview flag
-    flagsPatterns << QRegExp::escape("{" + sTransOverview + "}");
+    flagsPatterns << QRegExp::escape("{" + pTemplates->getTransOverview() + "}");
 
     // Format flags
     m_flagsFormat.setForeground(Qt::darkYellow);

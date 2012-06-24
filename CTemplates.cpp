@@ -58,6 +58,7 @@ void CTemplates::initTemplates()
 
     QFile TplFile("");
     QDir TplDir("");
+    QString tmpLine("");
 
     // Path from normal installation
     if ( TplDir.exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang) )
@@ -81,7 +82,24 @@ void CTemplates::initTemplates()
             if( TplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
                 m_sListTplNames << fiListTplFiles[nFile].baseName();
-                m_sListTemplates << QString::fromUtf8( TplFile.readAll() );
+
+                QTextStream in(&TplFile);
+                QString sTempTplText("");
+                while ( !in.atEnd() )
+                {
+                    tmpLine = in.readLine().trimmed();
+                    if ( !tmpLine.trimmed().startsWith("#") )
+                    {
+                        sTempTplText += tmpLine.trimmed() + "\n";
+                    }
+                    else if ( tmpLine.trimmed().startsWith("## Macro=") )
+                    {
+                        tmpLine = tmpLine.remove("## Macro=");
+                        m_sListTplMacros << tmpLine.trimmed();
+                    }
+                }
+
+                m_sListTemplates <<  sTempTplText;
                 TplFile.close();
             }
             else
@@ -117,12 +135,12 @@ void CTemplates::initHtmlTpl( const QString sTplFile )
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName()) )
     {
-         HTMLTplFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName());
+        HTMLTplFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName());
     }
     // No installation: Use app path
     else
     {
-         HTMLTplFile.setFileName( m_sAppPath + "/templates/" +  HTMLTplFile.fileName() );
+        HTMLTplFile.setFileName( m_sAppPath + "/templates/" +  HTMLTplFile.fileName() );
     }
 
     if ( ! HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
@@ -136,7 +154,7 @@ void CTemplates::initHtmlTpl( const QString sTplFile )
         QTextStream in(& HTMLTplFile);
         m_sPreviewTemplate = in.readAll();
 
-         HTMLTplFile.close();
+        HTMLTplFile.close();
     }
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -314,6 +332,11 @@ QStringList CTemplates::getListTplNames() const
 QStringList CTemplates::getListTemplates() const
 {
     return m_sListTemplates;
+}
+
+QStringList CTemplates::getListTplMacros() const
+{
+    return m_sListTplMacros;
 }
 
 QStringList CTemplates::getFlaglist() const

@@ -375,37 +375,15 @@ std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sEleme
             return m_sSampleBegin_1 + "Verlassen, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
         }
     }
-    else if ( sElement == "insertThirdPartyPackageWarningAct" )
+    else if ( sElement == "insertThirdPartyWarningAct" )
     {
         if ( sSelectedText == "")
         {
-            return m_sSampleBegin_1 + "Fremd, Paket, \"Kommentar\"" + m_sSampleEnd_1;
+            return m_sSampleBegin_1 + "Fremd, Paket|Quelle|Software, \"Kommentar\"" + m_sSampleEnd_1;
         }
         else
         {
-            return m_sSampleBegin_1 + "Fremd, Paket, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
-        }
-    }
-    else if ( sElement == "insertThirdPartyRepoWarningAct" )
-    {
-        if ( sSelectedText == "" )
-        {
-            return m_sSampleBegin_1 + "Fremd, Quelle, \"Kommentar\"" + m_sSampleEnd_1;
-        }
-        else
-        {
-            return m_sSampleBegin_1 + "Fremd, Quelle, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
-        }
-    }
-    else if ( sElement == "insertThirdPartySoftwareWarningAct" )
-    {
-        if ( sSelectedText == "")
-        {
-            return m_sSampleBegin_1 + "Fremd, Software, \"Kommentar\"" + m_sSampleEnd_1;
-        }
-        else
-        {
-            return m_sSampleBegin_1 + "Fremd, Software, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
+            return m_sSampleBegin_1 + "Fremd, Paket|Quelle|Software, \"" + sSelectedText + "\"" + m_sSampleEnd_1;
         }
     }
     else if ( sElement == "Keys" )

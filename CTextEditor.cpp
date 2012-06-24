@@ -54,22 +54,28 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 
-CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI, bool bCompleter, QWidget *pParent ) :
-    QTextEdit( pParent ),
-    m_bCodeCompState( bCompleter )
+CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
+                          bool bCompleter,
+                          QStringList sListTplMacros,
+                          QWidget *pParent )
+    : QTextEdit( pParent ),
+      m_bCodeCompState( bCompleter ),
+      m_sListCompleter( sListTplMacros )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    m_sListCompleter << "Inhaltsverzeichnis(1)]]" << "Vorlage(Getestet, Ubuntuversion)]]" << "Vorlage(Baustelle, Datum, \"Bearbeiter\")]]"
-                     << "Vorlage(Fortgeschritten)]]" << "Vorlage(Pakete, \"foo bar\")]]" << trUtf8("Vorlage(Ausbaufähig, \"Begründung\")]]")
-                     << trUtf8("Vorlage(Fehlerhaft, \"Begründung\")]]") << trUtf8("Vorlage(Verlassen, \"Begründung\")]]") << "Vorlage(Archiviert, \"Text\")]]"
-                     << "Vorlage(Kopie, Seite, Autor)]]" << trUtf8("Vorlage(Überarbeitung, Datum, Seite, Autor)]]") << "Vorlage(Fremd, Paket, \"Kommentar\")]]"
-                     << "Vorlage(Fremd, Quelle, \"Kommentar\")]]" << "Vorlage(Fremd, Software, \"Kommentar\")]]" << trUtf8("Vorlage(Award, \"Preis\", Link, Preiskategorie, \"Preisträger\")]]")
-                     << "Vorlage(PPA, PPA-Besitzer, PPA-Name)]]" << "Vorlage(Fremdquelle-auth, URL zum PGP-Key)]]" << trUtf8("Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer)]]")
-                     << "Vorlage(Fremdquelle, URL, Ubuntuversion(en), Komponente(n) )]]" << "Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]"
-                     << trUtf8("Vorlage(Fremdpaket, \"Anbieter\", URL zu einer Downloadübersicht, Ubuntuversion(en))]]") << "Vorlage(Fremdpaket, \"Anbieter\", dl, URL zu EINEM Download, Ubuntuversion(en))]]"
-                     << "Vorlage(Tasten, TASTE)]]" << trUtf8("Bild(name.png, Größe, Ausrichtung)]]") << "Anker(Name)]]" << "[[Vorlage(Bildunterschrift, BILDLINK, BILDBREITE, \"Beschreibung\", left|right)]]"
-                     << trUtf8("Vorlage(Bildersammlung, BILDHÖHE\nBild1.jpg, \"Beschreibung 1\"\nBild2.png, \"Beschreibung 2\"\n)]]");
+    QStringList sListTemp = m_sListCompleter;
+    m_sListCompleter.clear();
+    for( int i = 0; i < sListTemp.size(); i++ )
+    {
+        if ( sListTemp[i].startsWith("[[") )
+        {
+            // "[[" can not be handled by completer
+            m_sListCompleter << sListTemp[i].remove("[[");
+            // Remove markers for description
+            m_sListCompleter.last() = sListTemp[i].remove("%%");
+        }
+    }
 
     m_pCompleter = new QCompleter( m_sListCompleter,
                                    this );

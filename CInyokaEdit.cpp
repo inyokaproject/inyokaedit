@@ -131,6 +131,7 @@ void CInyokaEdit::createObjects()
 
     m_pEditor = new CTextEditor( m_pUi,
                                  m_pSettings->getCodeCompletion(),
+                                 m_pTemplates->getListTplMacros(),
                                  this );
 //  if ( true == m_pSettings->getPreviewAlongside() )
 //  {
@@ -152,20 +153,8 @@ void CInyokaEdit::createObjects()
                              m_pSettings,
                              m_pTemplates );
 
-    QStringList tmpsListMacro;
-    tmpsListMacro << m_pTemplates->getTransTemplate() << m_pTemplates->getTransTOC() <<
-                     m_pTemplates->getTransImage() << m_pTemplates->getTransAnchor() <<
-                     m_pTemplates->getTransAttachment() << m_pTemplates->getTransDate();
-
-    QStringList tmpsListParser;
-    tmpsListParser << m_pTemplates->getTransTemplate().toLower() <<
-                      m_pTemplates->getTransCodeBlock().toLower();
-
     m_pHighlighter = new CHighlighter( m_pInterWikiLinks->getInterwikiLinks(),
-                                       m_pTemplates->getFlaglist(),
-                                       m_pTemplates->getTransOverview(),
-                                       tmpsListMacro,
-                                       tmpsListParser,
+                                       m_pTemplates,
                                        m_pEditor->document() );
 
     /**
@@ -582,17 +571,9 @@ void CInyokaEdit::createActions()
     connect( m_pUi->insertLeftAct, SIGNAL(triggered()),
              mySigMapTextSamples, SLOT(map()) );
 
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyPackageWarningAct, "insertThirdPartyPackageWarningAct");
-    connect( m_pUi->insertThirdPartyPackageWarningAct, SIGNAL(triggered()),
+    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyWarningAct, "insertThirdPartyWarningAct");
+    connect( m_pUi->insertThirdPartyWarningAct, SIGNAL(triggered()),
              mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoWarningAct, "insertThirdPartyRepoWarningAct");
-    connect( m_pUi->insertThirdPartyRepoWarningAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartySoftwareWarningAct, "insertThirdPartySoftwareWarningAct");
-    connect( m_pUi->insertThirdPartySoftwareWarningAct, SIGNAL(triggered()),
-            mySigMapTextSamples, SLOT(map()) );
 
     connect( mySigMapTextSamples, SIGNAL(mapped(QString)),
             this, SLOT(insertTextSample(QString)) );
@@ -922,8 +903,8 @@ void CInyokaEdit::insertDropDownTextmacro( const int nSelection )
             case 7:  // Notice (Hinweis)
                 insertTextSample("insertNoticeAct");
                 break;
-            case 8:  // Third-party repo warning (Fremdquelle-Warnung)
-                insertTextSample("insertThirdPartyRepoWarningAct");
+            case 8:  // Third-party package/repo/software warning
+                insertTextSample("insertThirdPartyWarningAct");
                 break;
             case 9:  // Warning (Warnung)
                 insertTextSample("insertWarningAct");

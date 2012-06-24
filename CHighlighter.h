@@ -31,6 +31,8 @@
 #include <QHash>
 #include <QTextCharFormat>
 
+#include "CTemplates.h"
+
 // Qt classes
 class QTextDocument;
 
@@ -45,10 +47,7 @@ class CHighlighter : public QSyntaxHighlighter
 public:
     // Constructor
     CHighlighter( const QList<QStringList> sListIWiki,
-                  const QStringList sListFlags,
-                  const QString sTransOverview,
-                  const QStringList sListMacroKeywords,
-                  const QStringList sListParserKeywords,
+                  CTemplates *pTemplates,
                   QTextDocument *parent = 0 );
     // Destrcutor
     ~CHighlighter();
