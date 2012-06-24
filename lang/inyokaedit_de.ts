@@ -128,37 +128,37 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CInyokaEdit</name>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="250"/>
+        <location filename="../CInyokaEdit.cpp" line="243"/>
         <source>Raw format</source>
         <translation>Rohformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="252"/>
+        <location filename="../CInyokaEdit.cpp" line="245"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="304"/>
+        <location filename="../CInyokaEdit.cpp" line="297"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="405"/>
+        <location filename="../CInyokaEdit.cpp" line="398"/>
         <source>Insert a headline - 5 headline steps are supported</source>
         <translation>Überschrift einfügen - Es werden bis zu 5 Stufen unterstützt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="409"/>
+        <location filename="../CInyokaEdit.cpp" line="402"/>
         <source>Insert text sample</source>
         <translation>Textbaustein einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="413"/>
+        <location filename="../CInyokaEdit.cpp" line="406"/>
         <source>Insert text format</source>
         <translation>Textformat einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="748"/>
+        <location filename="../CInyokaEdit.cpp" line="733"/>
         <source>Text macros</source>
         <comment>GUI: Text macro combo box</comment>
         <translation>Textbausteine</translation>
@@ -194,22 +194,22 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Allg. &amp;Formatierungshilfen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="144"/>
+        <location filename="../CInyokaEdit.ui" line="130"/>
         <source>&amp;Package installation</source>
         <translation>&amp;Paketinstallation</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="130"/>
+        <location filename="../CInyokaEdit.ui" line="144"/>
         <source>&amp;Misc samples</source>
         <translation>&amp;Sonstige Bausteine</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="165"/>
+        <location filename="../CInyokaEdit.ui" line="163"/>
         <source>&amp;InterWiki-Links</source>
         <translation>&amp;InterWiki-Links</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="170"/>
+        <location filename="../CInyokaEdit.ui" line="168"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
@@ -224,806 +224,786 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Neu von &amp;Template</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="180"/>
+        <location filename="../CInyokaEdit.ui" line="178"/>
         <source>&amp;Tools</source>
         <translation>E&amp;xtras</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="195"/>
+        <location filename="../CInyokaEdit.ui" line="193"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="209"/>
+        <location filename="../CInyokaEdit.ui" line="207"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="228"/>
+        <location filename="../CInyokaEdit.ui" line="226"/>
         <source>Preview / Download</source>
         <translation>Vorschau / Download</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="241"/>
+        <location filename="../CInyokaEdit.ui" line="239"/>
         <source>Inyoka editor</source>
         <translation>Inyoka editor</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="258"/>
+        <location filename="../CInyokaEdit.ui" line="256"/>
         <source>Samples and macros</source>
         <translation>Vorlagen und Makros</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="269"/>
+        <location filename="../CInyokaEdit.ui" line="267"/>
         <source>Browser toolbar</source>
         <translation>Browser Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="287"/>
+        <location filename="../CInyokaEdit.ui" line="285"/>
         <source>Report bug</source>
         <translation>Fehler melden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="290"/>
+        <location filename="../CInyokaEdit.ui" line="288"/>
         <source>Report a bug - For this a launchpad account is needed!</source>
         <translation>Fehler melden - Hierzu wird ein Launchpad-Account benötigt!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="299"/>
+        <location filename="../CInyokaEdit.ui" line="297"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="302"/>
+        <location filename="../CInyokaEdit.ui" line="300"/>
         <source>Shows the about box of this application</source>
         <translation>Infobox zu dieser Anwendung anzeigen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="311"/>
+        <location filename="../CInyokaEdit.ui" line="309"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="314"/>
+        <location filename="../CInyokaEdit.ui" line="312"/>
         <source>Create a new file</source>
         <translation>Eine neue Datei erstellen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="323"/>
+        <location filename="../CInyokaEdit.ui" line="321"/>
         <source>&amp;Open...</source>
         <translation>&amp;Öffnen...</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="326"/>
+        <location filename="../CInyokaEdit.ui" line="324"/>
         <source>Open a file</source>
         <translation>Eine Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="335"/>
+        <location filename="../CInyokaEdit.ui" line="333"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="338"/>
+        <location filename="../CInyokaEdit.ui" line="336"/>
         <source>Save current document</source>
         <translation>Das aktuelle Dokument speichern</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="343"/>
+        <location filename="../CInyokaEdit.ui" line="341"/>
         <source>Save as...</source>
         <translation>Speichern unter...</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="346"/>
+        <location filename="../CInyokaEdit.ui" line="344"/>
         <source>Save current document under a new name</source>
         <translation>Das aktuelle Dokment unter neuem Namen speichern</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="351"/>
+        <location filename="../CInyokaEdit.ui" line="349"/>
         <source>&amp;Quit</source>
         <translation>B&amp;eenden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="354"/>
+        <location filename="../CInyokaEdit.ui" line="352"/>
         <source>Quit the application</source>
         <translation>Das Programm beenden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="363"/>
+        <location filename="../CInyokaEdit.ui" line="361"/>
         <source>Undo</source>
         <translation>Rückgängig</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="366"/>
+        <location filename="../CInyokaEdit.ui" line="364"/>
         <source>Undo changes</source>
         <translation>Änderungen rückgängig machen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="375"/>
+        <location filename="../CInyokaEdit.ui" line="373"/>
         <source>Redo</source>
         <translation>Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="378"/>
+        <location filename="../CInyokaEdit.ui" line="376"/>
         <source>Redo changes</source>
         <translation>Änderungen wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="387"/>
+        <location filename="../CInyokaEdit.ui" line="385"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="390"/>
+        <location filename="../CInyokaEdit.ui" line="388"/>
         <source>Cut highlighted text</source>
         <translation>Den markierten Text ausschneiden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="399"/>
+        <location filename="../CInyokaEdit.ui" line="397"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="402"/>
+        <location filename="../CInyokaEdit.ui" line="400"/>
         <source>Copy highlighted text</source>
         <translation>Den markierten Text in die Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="411"/>
+        <location filename="../CInyokaEdit.ui" line="409"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="414"/>
+        <location filename="../CInyokaEdit.ui" line="412"/>
         <source>Paste text from clipboard</source>
         <translation>Text aus der Zwischenablage einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="423"/>
+        <location filename="../CInyokaEdit.ui" line="421"/>
         <source>Find...</source>
         <translation>Suchen...</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="426"/>
+        <location filename="../CInyokaEdit.ui" line="424"/>
         <source>Find text</source>
         <translation>Einen Ausdruck suchen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="435"/>
+        <location filename="../CInyokaEdit.ui" line="433"/>
         <source>Replace...</source>
         <translation>Ersetzen...</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="438"/>
+        <location filename="../CInyokaEdit.ui" line="436"/>
         <source>Replace text</source>
         <translation>Einen bestimmten Ausdruck ersetzen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="447"/>
+        <location filename="../CInyokaEdit.ui" line="445"/>
         <source>Find next</source>
         <translation>Weitersuchen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="450"/>
+        <location filename="../CInyokaEdit.ui" line="448"/>
         <source>Find next (search forward)</source>
         <translation>Weitersuchen (vorwärts)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="459"/>
+        <location filename="../CInyokaEdit.ui" line="457"/>
         <source>Find previous</source>
         <translation>Rückwärts weitersuchen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="462"/>
+        <location filename="../CInyokaEdit.ui" line="460"/>
         <source>Find previous (search backward)</source>
         <translation>Weitersuchen (rückwärts)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="471"/>
+        <location filename="../CInyokaEdit.ui" line="469"/>
         <source>Open preview</source>
         <translation>Vorschau öffnen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="474"/>
+        <location filename="../CInyokaEdit.ui" line="472"/>
         <source>Open preview of current article</source>
         <translation>Die Vorschau des aktuellen Artikels anzeigen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="483"/>
+        <location filename="../CInyokaEdit.ui" line="481"/>
         <source>Download raw format</source>
         <translation>Rohformat herunterladen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="486"/>
+        <location filename="../CInyokaEdit.ui" line="484"/>
         <source>Downloads raw format of an existing Inyoka article</source>
         <translation>Den Rohtext eines bestehenden Inyoka Wikiartikels herunterladen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="495"/>
+        <location filename="../CInyokaEdit.ui" line="493"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="498"/>
+        <location filename="../CInyokaEdit.ui" line="496"/>
         <source>Bold - File names, folders, packages, file extensions</source>
         <translation>Fett - Dateinamen, Verzeichnisse, Paketnamen, Formatnamen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="507"/>
+        <location filename="../CInyokaEdit.ui" line="505"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="510"/>
+        <location filename="../CInyokaEdit.ui" line="508"/>
         <source>Italic - Menu entries, buttons, G-Conf keys - Always enclosed by quotation marks!</source>
         <translation>Kursiv - Menüelemente, Schaltflächen, G-Conf-Schlüssel, immer in Anführungszeichen!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="519"/>
+        <location filename="../CInyokaEdit.ui" line="517"/>
         <source>Monotype</source>
         <translation>Monotype</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="522"/>
+        <location filename="../CInyokaEdit.ui" line="520"/>
         <source>Monotype - Commands and their options, console outputs in continuous text, modules, users, groups</source>
         <translation>Monotype - Befehle und ihre Optionen, Terminalausgaben im Fließtext, Module, Benutzer, Gruppen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="531"/>
+        <location filename="../CInyokaEdit.ui" line="529"/>
         <source>Link to wikipage</source>
         <translation>Link zu Wikiseite</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="534"/>
+        <location filename="../CInyokaEdit.ui" line="532"/>
         <source>Link to an Inyoka wiki page</source>
         <translation>Link auf eine Inyoka-Wikiseite</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="543"/>
+        <location filename="../CInyokaEdit.ui" line="541"/>
         <source>External link</source>
         <translation>Externer Link</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="546"/>
+        <location filename="../CInyokaEdit.ui" line="544"/>
         <source>Link to an external website - always with flag e.g. {en}, {de}!</source>
         <translation>Link auf eine externe Webseite, immer mit Fahne z.B. {de}, {en}!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="555"/>
+        <location filename="../CInyokaEdit.ui" line="553"/>
         <source>Insert image</source>
         <translation>Bild einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="558"/>
+        <location filename="../CInyokaEdit.ui" line="556"/>
         <source>Insert an image</source>
         <translation>Ein Bild einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="563"/>
+        <location filename="../CInyokaEdit.ui" line="561"/>
         <source>Under construction</source>
         <translation>Baustelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="566"/>
+        <location filename="../CInyokaEdit.ui" line="564"/>
         <source>Insert &quot;Under construction&quot; sample - Only for articles which are currently under construction</source>
         <translation>Textbaustein &quot;Baustelle&quot; einfügen - Nur in Artikeln zu verwenden, die gerade in der Baustelle erstellt werden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="571"/>
+        <location filename="../CInyokaEdit.ui" line="569"/>
         <source>Tested for</source>
         <translation>Getestet</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="574"/>
+        <location filename="../CInyokaEdit.ui" line="572"/>
         <source>Insert &quot;Tested for&quot; sample - Indicates if an article was tested</source>
         <translation>Textbaustein &quot;Getestet&quot; einfügen - Kennzeichnung ob der Artikel getestet wurde</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="579"/>
+        <location filename="../CInyokaEdit.ui" line="577"/>
         <source>Knowledge block</source>
         <translation>Wissensblock</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="582"/>
+        <location filename="../CInyokaEdit.ui" line="580"/>
         <source>Insert &quot;Knowledge block&quot; sample - Reference to elementary articles which are helpful for the understanding of an article</source>
         <translation>Textbaustein &quot;Wissensblock&quot; einfügen - Verweise auf grundlegende Artikel die zum Verständnis des Artikels hilfreich sind</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="587"/>
+        <location filename="../CInyokaEdit.ui" line="585"/>
         <source>Table of contents</source>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="590"/>
+        <location filename="../CInyokaEdit.ui" line="588"/>
         <source>Insert &quot;Table of contents&quot; sample</source>
         <translation>Textbaustein &quot;Inhaltsverzeichnis&quot; einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="595"/>
+        <location filename="../CInyokaEdit.ui" line="593"/>
         <source>Advanced label</source>
         <translation>Experten-Markierung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="598"/>
+        <location filename="../CInyokaEdit.ui" line="596"/>
         <source>Insert &quot;Advanced label&quot; sample - Indicates that an article is recommended for advanced users only</source>
         <translation>Textbaustein &quot;Experten-Markierung&quot; einfügen - Zeigt an, dass der Artikel eher für fortgeschrittene Nutzer gedacht ist</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="603"/>
+        <location filename="../CInyokaEdit.ui" line="601"/>
         <source>Award label</source>
         <translation>Preis-Markierung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="606"/>
+        <location filename="../CInyokaEdit.ui" line="604"/>
         <source>Insert &quot;Award label&quot; sample - For awarded applications</source>
         <translation>Textbaustein &quot;Preis-Markierung&quot; einfügen - Für preisgekrönte Anwendungen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="611"/>
+        <location filename="../CInyokaEdit.ui" line="609"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="614"/>
+        <location filename="../CInyokaEdit.ui" line="612"/>
         <source>Insert an image sample</source>
         <translation>Einfaches Bild einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="619"/>
+        <location filename="../CInyokaEdit.ui" line="617"/>
         <source>Image with underline</source>
         <translation>Bild mit Bildunterschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="622"/>
+        <location filename="../CInyokaEdit.ui" line="620"/>
         <source>Insert an image with underline</source>
         <translation>Bild mit Bildunterschrift einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="627"/>
+        <location filename="../CInyokaEdit.ui" line="625"/>
         <source>Image collection (with wordwrap)</source>
         <translation>Bildersammlung (mit Umbruch)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="630"/>
+        <location filename="../CInyokaEdit.ui" line="628"/>
         <source>Insert an image collection (with wordwrap) sample - Depending on the browser width, automatic word wrapping will be used to align the images</source>
         <translation>Bildersammlung (mit Umbruch) einfügen - Sammlung wird abhängig von der Browserbreite automatisch umgebrochen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="635"/>
+        <location filename="../CInyokaEdit.ui" line="633"/>
         <source>Image collection (continuous text)</source>
         <translation>Bildersammlung (im Fließtext)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="638"/>
+        <location filename="../CInyokaEdit.ui" line="636"/>
         <source>Insert an image collection (continuous text) sample - Text flows round the collection (max. 3 images, width per image: 200px)</source>
         <translation>Bildersammlung (im Fließtext) einfügen - Text umfließt die Sammlung (max. 3 Bilder, Breite pro Bild: 200px)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="643"/>
+        <location filename="../CInyokaEdit.ui" line="641"/>
         <source>Bash command</source>
         <translation>Shell Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="646"/>
+        <location filename="../CInyokaEdit.ui" line="644"/>
         <source>Insert &quot;Bash command&quot; sample</source>
         <translation>Shell Befehl einfügen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="651"/>
+        <location filename="../CInyokaEdit.ui" line="649"/>
         <source>Notice box</source>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="654"/>
+        <location filename="../CInyokaEdit.ui" line="652"/>
         <source>Insert &quot;Notice box&quot; sample - Accentuate a special circumstance</source>
         <translation>Hinweisbox einfügen - Besondere Hervorhebung eines Sachverhalts</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="659"/>
+        <location filename="../CInyokaEdit.ui" line="657"/>
         <source>Warning box</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="662"/>
+        <location filename="../CInyokaEdit.ui" line="660"/>
         <source>Insert &quot;Warning box&quot; sample - Notice for potential risks</source>
         <translation>Warnbox einfügen - Hinweis auf potenzielle Gefahren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="667"/>
+        <location filename="../CInyokaEdit.ui" line="665"/>
         <source>Experts information</source>
         <translation>Experten-Info</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="670"/>
+        <location filename="../CInyokaEdit.ui" line="668"/>
         <source>Insert &quot;Experts info&quot; sample - Providing background information</source>
         <translation>Experten-Info einfügen - Bereitstellung von Hintergrundinformationen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="675"/>
+        <location filename="../CInyokaEdit.ui" line="673"/>
         <source>Package installation</source>
         <translation>Paketinstallation</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="678"/>
+        <location filename="../CInyokaEdit.ui" line="676"/>
         <source>Insert &quot;Package installation&quot; sample - Create a package list with installation button</source>
         <translation>Paketinstallations-Makro einfügen - Erstellt Paketliste mit Installationsknopf</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="683"/>
+        <location filename="../CInyokaEdit.ui" line="681"/>
         <source>PPA sample</source>
         <translation>PPA-Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="686"/>
+        <location filename="../CInyokaEdit.ui" line="684"/>
         <source>Insert PPA sample - Create a sample for using a Launchpad-PPA, including warning and link to PPA source</source>
         <translation>PPA-Vorlage einfügen - Erstellt einen Abschnitt zur Verwendung von Launchpad-PPAs ink. Warnung und Link zur PPA-Quelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="691"/>
+        <location filename="../CInyokaEdit.ui" line="689"/>
         <source>Third-party repository</source>
         <translation>Fremdquellen-Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="694"/>
+        <location filename="../CInyokaEdit.ui" line="692"/>
         <source>Insert &quot;Third-party repo&quot; sample - Create a sample for using third-party repositories (not Ubuntu or Launchpad)</source>
         <translation>Fremdquellen-Vorlage einfügen - Erstellt einen Abschnitt zur Verwendung von Qullen außerhalb von Ubuntu oder Launchpad</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="699"/>
+        <location filename="../CInyokaEdit.ui" line="697"/>
         <source>Authenticate third-party repo</source>
         <translation>Fremdquelle authentifizieren Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="702"/>
+        <location filename="../CInyokaEdit.ui" line="700"/>
         <source>Insert a sample for authenticating third-party repositories</source>
         <translation>Vorlage &quot;Fremdquelle authentifizieren&quot; einfügen - Erstellt einen Abschnitt zur Authentifizierung einer Fremdquelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="707"/>
+        <location filename="../CInyokaEdit.ui" line="705"/>
         <source>Third-party package</source>
         <translation>Fremdpaket-Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="710"/>
+        <location filename="../CInyokaEdit.ui" line="708"/>
         <source>Insert &quot;Third-party package&quot; sample - Create a sample for installing DEB-Packages from third-party repos</source>
         <translation>Fremdpaket-Vorlage einfügen - Erstellt einen Abschnitt zur Installation von DEB-Paketen aus Fremdquellen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="715"/>
+        <location filename="../CInyokaEdit.ui" line="713"/>
         <source>Package macro (obsolete!)</source>
         <translation>Pakete-Makro (veraltet!)</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="718"/>
+        <location filename="../CInyokaEdit.ui" line="716"/>
         <source>Insert &quot;Package macro&quot; - This macro is obsolete and shall be used only in exceptional cases</source>
         <translation>Pakete-Makro einfügen - Veraltet und sollte nur in Ausnahmefällen verwendet werden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="723"/>
+        <location filename="../CInyokaEdit.ui" line="721"/>
         <source>Improvable label</source>
         <translation>Ausbaufähig-Markierung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="726"/>
+        <location filename="../CInyokaEdit.ui" line="724"/>
         <source>Insert &quot;Improvable&quot; sample - Article is incomplete or could be extended</source>
         <translation>Ausbaufähig-Markierung einfügen - Der Artikel ist unvollständig oder kann noch erweitert werden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="731"/>
+        <location filename="../CInyokaEdit.ui" line="729"/>
         <source>Fix me label</source>
         <translation>Fehlerhaft-Markierung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="734"/>
+        <location filename="../CInyokaEdit.ui" line="732"/>
         <source>Insert &quot;Fix Me&quot; sample - Article contains descriptions or paragraphs which are not correct (any more)</source>
         <translation>Fehlerhaft-Markierung einfügen - Der Artikel enthält Angaben oder Abschnitte die nicht (mehr) korrekt sind&quot;</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="739"/>
+        <location filename="../CInyokaEdit.ui" line="737"/>
         <source>Left label</source>
         <translation>Verlassen-Markierung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="742"/>
+        <location filename="../CInyokaEdit.ui" line="740"/>
         <source>Insert &quot;Left&quot; sample - Only for articles under construction which are left by primal author</source>
         <translation>Verlassen-Markierung einfügen - Nur für Baustellenartikel, die der Originalautor nicht mehr zu Ende bringt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="747"/>
-        <source>Third-party package warning</source>
-        <translation>Fremdpakete-Warnung</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="750"/>
-        <source>Insert &quot;Third-party package warning&quot; sample - For packages from third-party repositories</source>
-        <translation>Fremdpakete-Warnung einfügen - Für Pakete aus einer externen Quelle</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="755"/>
-        <source>Third-party repository warning</source>
-        <translation>Fremdquellen-Warnung</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="758"/>
-        <source>Insert &quot;Third-party repo warning&quot; sample - For packages which are installed from third-party repositories</source>
-        <translation>Fremdquellen-Warnung einfügen - Für Pakete, die aus externen Quellen installiert werden</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="763"/>
-        <source>Third-party software warning</source>
-        <translation>Fremdsoftware-Warnung</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="766"/>
-        <source>Insert &quot;Third-party software warning&quot; sample - Only for software which is installed completely without package repositories</source>
-        <translation>Fremdsoftware-Warnung einfügen - Nur für Software, die komplett ohne Paketquelle installiert wird</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.ui" line="808"/>
+        <location filename="../CInyokaEdit.ui" line="790"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="817"/>
+        <location filename="../CInyokaEdit.ui" line="799"/>
         <source>Forward</source>
         <translation>Vorwärts</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="826"/>
-        <location filename="../CInyokaEdit.ui" line="829"/>
+        <location filename="../CInyokaEdit.ui" line="808"/>
+        <location filename="../CInyokaEdit.ui" line="811"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="838"/>
+        <location filename="../CInyokaEdit.ui" line="820"/>
         <source>Print preview</source>
         <translation>Vorschau drucken</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="841"/>
+        <location filename="../CInyokaEdit.ui" line="823"/>
         <source>Print preview or export to PDF</source>
         <translation>Vorschau ausdrucken oder als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="846"/>
+        <location filename="../CInyokaEdit.ui" line="828"/>
         <source>Table...</source>
         <translation>Tabelle...</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="775"/>
-        <location filename="../CInyokaEdit.ui" line="778"/>
+        <location filename="../CInyokaEdit.ui" line="757"/>
+        <location filename="../CInyokaEdit.ui" line="760"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="787"/>
+        <location filename="../CInyokaEdit.ui" line="745"/>
+        <source>Third-party package/repo/software warning</source>
+        <translation>Fremdquellen-Warnung</translation>
+    </message>
+    <message>
+        <location filename="../CInyokaEdit.ui" line="748"/>
+        <source>Insert &quot;Third-party warning&quot; sample - For third-party packages/repositories/software</source>
+        <translation>Fremdquellen-Warnung einfügen - Für Fremdpakte /-quellen/-software</translation>
+    </message>
+    <message>
+        <location filename="../CInyokaEdit.ui" line="769"/>
         <source>Delete temporarily images</source>
         <translation>Heruntergeladene Bilder löschen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="790"/>
+        <location filename="../CInyokaEdit.ui" line="772"/>
         <source>Delete images which had been downloaded with an article.</source>
         <translation>Temporär mit Artikeln heruntergeladene Bilder löschen.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="799"/>
+        <location filename="../CInyokaEdit.ui" line="781"/>
         <source>Download Inyoka styles</source>
         <translation>Inyoka-Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="735"/>
+        <location filename="../CInyokaEdit.cpp" line="720"/>
         <source>Step</source>
         <comment>GUI: Headline combo box</comment>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="750"/>
+        <location filename="../CInyokaEdit.cpp" line="735"/>
         <source>Under construction</source>
         <comment>GUI: Text macro combo box - Work in progress</comment>
         <translation>Baustelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="751"/>
+        <location filename="../CInyokaEdit.cpp" line="736"/>
         <source>Table of contents</source>
         <comment>GUI: Text macro combo box - Table of contents</comment>
         <translation>Inhaltsverzeichnis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="752"/>
+        <location filename="../CInyokaEdit.cpp" line="737"/>
         <source>Tested for</source>
         <comment>GUI: Text macro combo box - Tested for</comment>
         <translation>Getestet</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="753"/>
+        <location filename="../CInyokaEdit.cpp" line="738"/>
         <source>Package installation</source>
         <comment>GUI: Text macro combo box - Package installation</comment>
         <translation>Paketinstallation</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="754"/>
+        <location filename="../CInyokaEdit.cpp" line="739"/>
         <source>Bash command</source>
         <comment>GUI: Text macro combo box - Bash command</comment>
         <translation>Shell Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="755"/>
+        <location filename="../CInyokaEdit.cpp" line="740"/>
         <source>PPA sample</source>
         <comment>GUI: Text macro combo box - PPA sample</comment>
         <translation>PPA-Vorlage</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="756"/>
+        <location filename="../CInyokaEdit.cpp" line="741"/>
         <source>Notice box</source>
         <comment>GUI: Text macro combo box - Notice box</comment>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="757"/>
-        <source>Third-party repo warning</source>
-        <comment>GUI: Text macro combo box - Third-party repo warning</comment>
-        <translation>Fremdquellen-Warnung</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="758"/>
+        <location filename="../CInyokaEdit.cpp" line="743"/>
         <source>Warning box</source>
         <comment>GUI: Text macro combo box - Warning box</comment>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="759"/>
+        <location filename="../CInyokaEdit.cpp" line="744"/>
         <source>Experts information</source>
         <comment>GUI: Text macro combo box - Experts info box</comment>
         <translation>Experten-Info</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="760"/>
+        <location filename="../CInyokaEdit.cpp" line="745"/>
         <source>Keys</source>
         <comment>GUI: Text macro combo box - Keys</comment>
         <translation>Tasten</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="761"/>
+        <location filename="../CInyokaEdit.cpp" line="746"/>
         <source>Table</source>
         <comment>GUI: Text macro combo box - Table</comment>
         <translation>Tabelle</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="762"/>
+        <location filename="../CInyokaEdit.cpp" line="747"/>
         <source>Game info box</source>
         <comment>GUI: Game info box</comment>
         <translation>Spiel Infobox</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="768"/>
+        <location filename="../CInyokaEdit.cpp" line="753"/>
         <source>Text format</source>
         <comment>GUI: Text format combo box</comment>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="770"/>
+        <location filename="../CInyokaEdit.cpp" line="755"/>
         <source>Folders</source>
         <comment>GUI: Text format folders</comment>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="771"/>
+        <location filename="../CInyokaEdit.cpp" line="756"/>
         <source>Menu entries</source>
         <comment>GUI: Text format menu entries</comment>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="772"/>
+        <location filename="../CInyokaEdit.cpp" line="757"/>
         <source>Files</source>
         <comment>GUI: Text format files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="773"/>
+        <location filename="../CInyokaEdit.cpp" line="758"/>
         <source>Command</source>
         <comment>GUI: Text format command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="819"/>
+        <location filename="../CInyokaEdit.cpp" line="804"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1175"/>
+        <location filename="../CInyokaEdit.cpp" line="1160"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1349"/>
+        <location filename="../CInyokaEdit.cpp" line="1334"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung beendet.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1359"/>
+        <location filename="../CInyokaEdit.cpp" line="1344"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1370"/>
+        <location filename="../CInyokaEdit.cpp" line="1355"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1374"/>
+        <location filename="../CInyokaEdit.cpp" line="1359"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1398"/>
+        <location filename="../CInyokaEdit.cpp" line="1383"/>
         <source>Error while starting Apport.</source>
         <translation>Problem beim Aufruf von Apport festgestellt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1403"/>
+        <location filename="../CInyokaEdit.cpp" line="1388"/>
         <source>Error while executing Apport.</source>
         <translation>Problem beim Ausführen von Apport.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1430"/>
+        <location filename="../CInyokaEdit.cpp" line="1415"/>
         <source>&lt;b&gt;%1&lt;/b&gt; - Editor for Inyoka-based portals&lt;br /&gt;Version: %2&lt;br /&gt;&lt;br /&gt;&amp;copy; 2011-2012, The %3 developers&lt;br /&gt;Licence: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
         <comment>About dialog text, &lt;sAppName&gt;, &lt;sAppVersion&gt;, &lt;sAppName&gt;</comment>
         <translation>&lt;b&gt;%1&lt;/b&gt; - Editor für Inyoka-basierende Portale&lt;br /&gt;Version: %2&lt;br /&gt;&lt;br /&gt;&amp;copy; 2011-2012, die Autoren von %3&lt;br /&gt;Lizenz: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Die Anwendung verwendet Icons aus dem &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango-Projekt&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="734"/>
-        <location filename="../CInyokaEdit.cpp" line="858"/>
+        <location filename="../CInyokaEdit.cpp" line="719"/>
+        <location filename="../CInyokaEdit.cpp" line="843"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="453"/>
+        <location filename="../CInyokaEdit.cpp" line="446"/>
         <source>Raw text</source>
         <translation>Rohtext</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="453"/>
+        <location filename="../CInyokaEdit.cpp" line="446"/>
         <source>Code without highlighting</source>
         <translation>Code ohne Highlighting</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="975"/>
+        <location filename="../CInyokaEdit.cpp" line="742"/>
+        <source>Third-party package warning</source>
+        <comment>GUI: Text macro combo box - Third-party package warning</comment>
+        <translation>Fremdquellen-Warnung</translation>
+    </message>
+    <message>
+        <location filename="../CInyokaEdit.cpp" line="960"/>
         <source>Folders</source>
         <comment>Text format: Folders</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="987"/>
+        <location filename="../CInyokaEdit.cpp" line="972"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <comment>Text format: Menu entries example</comment>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="999"/>
+        <location filename="../CInyokaEdit.cpp" line="984"/>
         <source>Files</source>
         <comment>GUI: Text format: Files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1011"/>
+        <location filename="../CInyokaEdit.cpp" line="996"/>
         <source>Command</source>
         <comment>Text format: Command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1052"/>
+        <location filename="../CInyokaEdit.cpp" line="1037"/>
         <source>Sitename</source>
         <comment>InterWiki links: Common sitename</comment>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1053"/>
+        <location filename="../CInyokaEdit.cpp" line="1038"/>
         <source>Text</source>
         <comment>Interwiki links: Common text</comment>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1429"/>
+        <location filename="../CInyokaEdit.cpp" line="1414"/>
         <source>About %1</source>
         <comment>About dialog &lt;sAppName&gt;</comment>
         <translation>Über %1</translation>
@@ -1032,643 +1012,623 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CParser</name>
     <message>
-        <location filename="../CParser.cpp" line="331"/>
+        <location filename="../CParser.cpp" line="79"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kann temporäre HTML-Datei nicht erzeugen!</translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="344"/>
+        <location filename="../CParser.cpp" line="92"/>
         <source>Untitled</source>
         <comment>No file name set</comment>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="703"/>
+        <location filename="../CParser.cpp" line="460"/>
         <source>löschen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="703"/>
+        <location filename="../CParser.cpp" line="460"/>
         <source>rückschritt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="747"/>
+        <location filename="../CParser.cpp" line="504"/>
         <source>groß</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="775"/>
+        <location filename="../CParser.cpp" line="532"/>
         <source>pfeil-hoch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="779"/>
+        <location filename="../CParser.cpp" line="536"/>
         <source>pfeil-ab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="783"/>
+        <location filename="../CParser.cpp" line="540"/>
         <source>pfeil-links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="787"/>
+        <location filename="../CParser.cpp" line="544"/>
         <source>pfeil-rechts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="823"/>
+        <location filename="../CParser.cpp" line="580"/>
         <source>num-taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="823"/>
+        <location filename="../CParser.cpp" line="580"/>
         <source>num-Taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="823"/>
+        <location filename="../CParser.cpp" line="580"/>
         <source>num-lock-taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="823"/>
+        <location filename="../CParser.cpp" line="580"/>
         <source>num-Lock-Taste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="934"/>
-        <location filename="../CParser.cpp" line="1190"/>
-        <location filename="../CParser.cpp" line="1233"/>
+        <location filename="../CParser.cpp" line="691"/>
+        <location filename="../CParser.cpp" line="947"/>
+        <location filename="../CParser.cpp" line="990"/>
         <source>Baustelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="934"/>
+        <location filename="../CParser.cpp" line="691"/>
         <source>InArbeit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="992"/>
-        <location filename="../CParser.cpp" line="1225"/>
+        <location filename="../CParser.cpp" line="749"/>
+        <location filename="../CParser.cpp" line="982"/>
         <source>und</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="998"/>
+        <location filename="../CParser.cpp" line="755"/>
         <source>Dieser Artikel wird momentan von %1 erstellt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1004"/>
+        <location filename="../CParser.cpp" line="761"/>
         <source>Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1009"/>
+        <location filename="../CParser.cpp" line="766"/>
         <source>Dieser Artikel wird momentan erstellt. Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der letzten Änderung und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1013"/>
+        <location filename="../CParser.cpp" line="770"/>
         <source>Artikel in Arbeit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1001"/>
+        <location filename="../CParser.cpp" line="758"/>
         <source>Als Fertigstellungsdatum wurde der %1 angegeben.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1015"/>
+        <location filename="../CParser.cpp" line="772"/>
         <source>Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1021"/>
+        <location filename="../CParser.cpp" line="778"/>
         <source>Getestet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1065"/>
+        <location filename="../CParser.cpp" line="822"/>
         <source>Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1026"/>
-        <location filename="../CParser.cpp" line="1061"/>
+        <location filename="../CParser.cpp" line="783"/>
+        <location filename="../CParser.cpp" line="818"/>
         <source>Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das getestet-Tag entsprechend anpassen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="185"/>
-        <source>Could not open flag config file!</source>
-        <translation>Die Flaggen-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CParser.cpp" line="284"/>
-        <source>Could not open template translation file!</source>
-        <translation>Die Template-Übersetzungsdatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CParser.cpp" line="386"/>
+        <location filename="../CParser.cpp" line="134"/>
         <source>Tasten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="387"/>
-        <location filename="../CParser.cpp" line="447"/>
+        <location filename="../CParser.cpp" line="135"/>
+        <location filename="../CParser.cpp" line="195"/>
         <source>Bildersammlung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="690"/>
+        <location filename="../CParser.cpp" line="447"/>
         <source>(Tasten,</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1029"/>
+        <location filename="../CParser.cpp" line="786"/>
         <source>general</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1030"/>
+        <location filename="../CParser.cpp" line="787"/>
         <source>Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1071"/>
+        <location filename="../CParser.cpp" line="828"/>
         <source>Fortgeschritten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1073"/>
+        <location filename="../CParser.cpp" line="830"/>
         <source>Artikel für fortgeschrittene Anwender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1074"/>
+        <location filename="../CParser.cpp" line="831"/>
         <source>Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist daher nur für fortgeschrittene Benutzer gedacht.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1079"/>
+        <location filename="../CParser.cpp" line="836"/>
         <source>Award</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1090"/>
+        <location filename="../CParser.cpp" line="847"/>
         <source>Diese Anwendung hat die Auszeichnung %1 in der Kategorie %2 gewonnen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1094"/>
+        <location filename="../CParser.cpp" line="851"/>
         <source>Die Auszeichnung wurde an %1 überreicht.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1105"/>
+        <location filename="../CParser.cpp" line="862"/>
         <source>Pakete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1111"/>
+        <location filename="../CParser.cpp" line="868"/>
         <source>Paketliste zum Kopieren:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1124"/>
+        <location filename="../CParser.cpp" line="881"/>
         <source>Ausbaufähig</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1132"/>
+        <location filename="../CParser.cpp" line="889"/>
         <source>Ausbaufähige Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1133"/>
+        <location filename="../CParser.cpp" line="890"/>
         <source>Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas verbessern kannst, dann editiere den Beitrag, um die Qualität des Wikis noch weiter zu verbessern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1215"/>
+        <location filename="../CParser.cpp" line="972"/>
         <source>Geplante Fertigstellung:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1217"/>
+        <location filename="../CParser.cpp" line="974"/>
         <source>Derzeit gültiger Artikel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1349"/>
+        <location filename="../CParser.cpp" line="1106"/>
         <source>Zusätzliche %1 können das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="2540"/>
+        <location filename="../CParser.cpp" line="2305"/>
         <source>Anmerkung:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1139"/>
+        <location filename="../CParser.cpp" line="896"/>
         <source>Fehlerhaft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1147"/>
+        <location filename="../CParser.cpp" line="904"/>
         <source>Fehlerhafte Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1148"/>
+        <location filename="../CParser.cpp" line="905"/>
         <source>Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, nimm dir bitte die Zeit und bessere sie aus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1154"/>
+        <location filename="../CParser.cpp" line="911"/>
         <source>Verlassen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1162"/>
+        <location filename="../CParser.cpp" line="919"/>
         <source>Verlassene Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1163"/>
+        <location filename="../CParser.cpp" line="920"/>
         <source>Dieser Artikel wurde von seinem Ersteller verlassen und wird nicht mehr weiter von ihm gepflegt. Wenn Du den Artikel fertigstellen oder erweitern kannst, dann bessere ihn bitte aus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1169"/>
+        <location filename="../CParser.cpp" line="926"/>
         <source>Archiviert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1177"/>
+        <location filename="../CParser.cpp" line="934"/>
         <source>Archivierte Anleitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1178"/>
+        <location filename="../CParser.cpp" line="935"/>
         <source>Dieser Artikel wurde archiviert, da er - oder Teile daraus - nur noch unter einer älteren Ubuntu-Version nutzbar ist. Diese Anleitung wird vom Wiki-Team weder auf Richtigkeit überprüft noch anderweitig gepflegt. Zusätzlich wurde der Artikel für weitere Änderungen gesperrt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1184"/>
+        <location filename="../CParser.cpp" line="941"/>
         <source>Kopie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1194"/>
-        <location filename="../CParser.cpp" line="1765"/>
+        <location filename="../CParser.cpp" line="951"/>
+        <location filename="../CParser.cpp" line="1524"/>
         <source>Achtung!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1195"/>
+        <location filename="../CParser.cpp" line="952"/>
         <source>Diese Seite wird aktuell überarbeitet. Bitte hier keine Änderungen mehr vornehmen, sondern in %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1200"/>
+        <location filename="../CParser.cpp" line="957"/>
         <source>Überarbeitung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1238"/>
+        <location filename="../CParser.cpp" line="995"/>
         <source>Artikel wird überarbeitet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1201"/>
+        <location filename="../CParser.cpp" line="958"/>
         <source>Dieser Artikel wird momentan überarbeitet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1231"/>
+        <location filename="../CParser.cpp" line="988"/>
         <source>Bearbeiter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1233"/>
+        <location filename="../CParser.cpp" line="990"/>
         <source>letzten Änderung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1234"/>
+        <location filename="../CParser.cpp" line="991"/>
         <source>Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der %1 und entscheide, wie du weiter vorgehst.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1240"/>
+        <location filename="../CParser.cpp" line="997"/>
         <source>Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1245"/>
+        <location filename="../CParser.cpp" line="1002"/>
         <source>Fremd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1269"/>
-        <location filename="../CParser.cpp" line="1298"/>
-        <location filename="../CParser.cpp" line="1348"/>
-        <location filename="../CParser.cpp" line="1453"/>
+        <location filename="../CParser.cpp" line="1026"/>
+        <location filename="../CParser.cpp" line="1055"/>
+        <location filename="../CParser.cpp" line="1105"/>
+        <location filename="../CParser.cpp" line="1210"/>
         <source>Hinweis!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1251"/>
+        <location filename="../CParser.cpp" line="1008"/>
         <source>Paket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="149"/>
-        <source>Could not open preview template file!</source>
-        <translation>Die Vorschau-Templatedatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CParser.cpp" line="229"/>
-        <source>Could not open text formats config file!</source>
-        <translation>Die Textformat-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CParser.cpp" line="1252"/>
-        <location filename="../CParser.cpp" line="1256"/>
-        <location filename="../CParser.cpp" line="1292"/>
-        <location filename="../CParser.cpp" line="1311"/>
-        <location filename="../CParser.cpp" line="1322"/>
-        <location filename="../CParser.cpp" line="1342"/>
-        <location filename="../CParser.cpp" line="1346"/>
-        <location filename="../CParser.cpp" line="1454"/>
+        <location filename="../CParser.cpp" line="1009"/>
+        <location filename="../CParser.cpp" line="1013"/>
+        <location filename="../CParser.cpp" line="1049"/>
+        <location filename="../CParser.cpp" line="1068"/>
+        <location filename="../CParser.cpp" line="1079"/>
+        <location filename="../CParser.cpp" line="1099"/>
+        <location filename="../CParser.cpp" line="1103"/>
+        <location filename="../CParser.cpp" line="1211"/>
         <source>Fremdquellen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1252"/>
-        <location filename="../CParser.cpp" line="1454"/>
+        <location filename="../CParser.cpp" line="1009"/>
+        <location filename="../CParser.cpp" line="1211"/>
         <source>Fremdpakete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1252"/>
-        <location filename="../CParser.cpp" line="1256"/>
-        <location filename="../CParser.cpp" line="1292"/>
+        <location filename="../CParser.cpp" line="1009"/>
+        <location filename="../CParser.cpp" line="1013"/>
+        <location filename="../CParser.cpp" line="1049"/>
         <source>können das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1255"/>
+        <location filename="../CParser.cpp" line="1012"/>
         <source>Quelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1256"/>
-        <location filename="../CParser.cpp" line="1292"/>
+        <location filename="../CParser.cpp" line="1013"/>
+        <location filename="../CParser.cpp" line="1049"/>
         <source>Zusätzliche</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1259"/>
+        <location filename="../CParser.cpp" line="1016"/>
         <source>Software</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1260"/>
+        <location filename="../CParser.cpp" line="1017"/>
         <source>Fremdsoftware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1260"/>
+        <location filename="../CParser.cpp" line="1017"/>
         <source>kann das System gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1276"/>
+        <location filename="../CParser.cpp" line="1033"/>
         <source>PPA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1287"/>
+        <location filename="../CParser.cpp" line="1044"/>
         <source>Adresszeile zum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1287"/>
+        <location filename="../CParser.cpp" line="1044"/>
         <source>Paketquellen_freischalten/PPA#PPA-hinzufuegen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1287"/>
+        <location filename="../CParser.cpp" line="1044"/>
         <source>Hinzufügen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1287"/>
+        <location filename="../CParser.cpp" line="1044"/>
         <source>des PPAs:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1293"/>
+        <location filename="../CParser.cpp" line="1050"/>
         <source>PPA Beschreibung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1295"/>
+        <location filename="../CParser.cpp" line="1052"/>
         <source>Weitere Informationen bietet die %1 vom Benutzer/Team %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1298"/>
+        <location filename="../CParser.cpp" line="1055"/>
         <source>Damit Pakete aus dem PPA genutzt werden können, müssen die Paketquellen neu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1298"/>
+        <location filename="../CParser.cpp" line="1055"/>
         <source>apt/apt-get#apt-get-update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1298"/>
+        <location filename="../CParser.cpp" line="1055"/>
         <source>eingelesen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1298"/>
+        <location filename="../CParser.cpp" line="1055"/>
         <source>werden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1303"/>
+        <location filename="../CParser.cpp" line="1060"/>
         <source>Fremdquelle-auth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1311"/>
-        <location filename="../CParser.cpp" line="1322"/>
-        <location filename="../CParser.cpp" line="1338"/>
-        <location filename="../CParser.cpp" line="1342"/>
-        <location filename="../CParser.cpp" line="1346"/>
+        <location filename="../CParser.cpp" line="1068"/>
+        <location filename="../CParser.cpp" line="1079"/>
+        <location filename="../CParser.cpp" line="1095"/>
+        <location filename="../CParser.cpp" line="1099"/>
+        <location filename="../CParser.cpp" line="1103"/>
         <source>Fremdquelle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1312"/>
+        <location filename="../CParser.cpp" line="1069"/>
         <source>Um die %1 zu authentifizieren, kann man den Signierungsschlüssel mit folgendem Befehl importieren:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1323"/>
+        <location filename="../CParser.cpp" line="1080"/>
         <source>Signierungsschlüssel herunterladen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1324"/>
-        <location filename="../CParser.cpp" line="1343"/>
+        <location filename="../CParser.cpp" line="1081"/>
+        <location filename="../CParser.cpp" line="1100"/>
         <source>Paketquellen_freischalten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1324"/>
+        <location filename="../CParser.cpp" line="1081"/>
         <source>Paketverwaltung hinzufügen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1325"/>
+        <location filename="../CParser.cpp" line="1082"/>
         <source>Um die %1 zu authentifizieren, kann man entweder den %2 und in der %3 oder folgenden Befehl ausführen:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1343"/>
+        <location filename="../CParser.cpp" line="1100"/>
         <source>Paketquellen freischalten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1344"/>
+        <location filename="../CParser.cpp" line="1101"/>
         <source>Um aus der %1 zu installieren, muss man die folgenden %2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1354"/>
+        <location filename="../CParser.cpp" line="1111"/>
         <source>Version:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1376"/>
+        <location filename="../CParser.cpp" line="1133"/>
         <source>Fremdpaket</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1383"/>
+        <location filename="../CParser.cpp" line="1140"/>
         <source>Beim &lt;a href=&quot;%1/Launchpad&quot; class=&quot;internal&quot;&gt;Launchpad&lt;/a&gt;-Projekt &lt;a href=&quot;https://launchpad.net/%2&quot; class=&quot;interwiki interwiki-launchpad&quot;&gt;%3&lt;/a&gt; werden &lt;a href=&quot;https://launchpad.net/%4/+download&quot; class=&quot;interwiki interwiki-launchpad&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1394"/>
+        <location filename="../CParser.cpp" line="1151"/>
         <source>Beim &lt;a href=&quot;http://de.wikipedia.org/wiki/SourceForge&quot; class=&quot;interwiki interwiki-wikipedia&quot;&gt;SourceForge&lt;/a&gt;-Projekt &lt;a href=&quot;http://sourceforge.net/projets/%1&quot; class=&quot;interwiki interwiki-sourceforge&quot;&gt;%2&lt;/a&gt; werden &lt;a href=&quot;http://sourceforge.net/projects/%3/files&quot; class=&quot;interwiki interwiki-sourceforge&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1404"/>
+        <location filename="../CParser.cpp" line="1161"/>
         <source>Beim &lt;a href=&quot;http://code.google.com/intl/de&quot; rel =&quot;nofollow&quot; class=&quot;external&quot;&gt;Google Code&lt;/a&gt; &lt;img src=&quot;img/flags/de.png&quot; alt=&quot;(de)&quot; /&gt; -Projekt &lt;a href=&quot;http://code.google.com/p/%1&quot; class=&quot;interwiki interwiki-googlecode&quot;&gt;%2&lt;/a&gt; werden &lt;a href=&quot;http://code.google.com/p/%3/downloads&quot; class=&quot;interwiki interwiki-googlecode&quot;&gt;DEB-Pakete&lt;/a&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1417"/>
+        <location filename="../CParser.cpp" line="1174"/>
         <source>Von %1 werden &lt;a href=&quot;%2&quot; class=&quot;external&quot;&gt;DEB-Pakete&lt;/a&gt; &lt;img src=&quot;img/flags/dl.png&quot; alt=&quot;(dl)&quot; /&gt; angeboten. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1423"/>
+        <location filename="../CParser.cpp" line="1180"/>
         <source>Von %1 werden folgende DEB-Pakete angeboten:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1433"/>
+        <location filename="../CParser.cpp" line="1190"/>
         <source>Die unterstützten Ubuntuversionen und Architekturen werden aufgelistet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1445"/>
+        <location filename="../CParser.cpp" line="1202"/>
         <source>Die Pakete können für %1 heruntergeladen werden. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1448"/>
+        <location filename="../CParser.cpp" line="1205"/>
         <source>Paketinstallation_DEB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1448"/>
+        <location filename="../CParser.cpp" line="1205"/>
         <source>DEB-Pakete noch installiert werden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1449"/>
+        <location filename="../CParser.cpp" line="1206"/>
         <source>Nachdem man sie für die korrekte Ubuntuversion geladen hat, müssen die %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1454"/>
+        <location filename="../CParser.cpp" line="1211"/>
         <source>können das Sytem gefährden.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1459"/>
+        <location filename="../CParser.cpp" line="1216"/>
         <source>Bildunterschrift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1744"/>
+        <location filename="../CParser.cpp" line="1503"/>
         <source>Wissen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1753"/>
+        <location filename="../CParser.cpp" line="1512"/>
         <source>Zum Verständnis dieses Artikels sind folgende Seiten hilfreich:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1758"/>
+        <location filename="../CParser.cpp" line="1517"/>
         <source>Warnung</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1770"/>
+        <location filename="../CParser.cpp" line="1529"/>
         <source>Hinweis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1777"/>
+        <location filename="../CParser.cpp" line="1536"/>
         <source>Hinweis:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1782"/>
+        <location filename="../CParser.cpp" line="1541"/>
         <source>Experten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1789"/>
+        <location filename="../CParser.cpp" line="1548"/>
         <source>Experten-Info:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1794"/>
+        <location filename="../CParser.cpp" line="1553"/>
         <source>Befehl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1808"/>
+        <location filename="../CParser.cpp" line="1567"/>
         <source>Paketinstallation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CParser.cpp" line="1845"/>
+        <location filename="../CParser.cpp" line="1604"/>
         <source>Tabelle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1742,7 +1702,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CTableTemplate</name>
     <message>
-        <location filename="../CTableTemplate.cpp" line="134"/>
+        <location filename="../CTableTemplate.cpp" line="133"/>
         <source>Could not load table preview!</source>
         <translation>Tabellenvorschau konnte nicht geladen werden!</translation>
     </message>
@@ -1806,54 +1766,26 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
 </context>
 <context>
-    <name>CTextEditor</name>
+    <name>CTemplates</name>
     <message>
-        <location filename="../CTextEditor.cpp" line="64"/>
-        <source>Vorlage(Ausbaufähig, &quot;Begründung&quot;)]]</source>
-        <translation type="unfinished"></translation>
+        <location filename="../CTemplates.cpp" line="148"/>
+        <source>Could not open preview template file!</source>
+        <translation>Die Vorschau-Templatedatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CTextEditor.cpp" line="65"/>
-        <source>Vorlage(Fehlerhaft, &quot;Begründung&quot;)]]</source>
-        <translation type="unfinished"></translation>
+        <location filename="../CTemplates.cpp" line="184"/>
+        <source>Could not open flag config file!</source>
+        <translation>Die Flaggen-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CTextEditor.cpp" line="65"/>
-        <source>Vorlage(Verlassen, &quot;Begründung&quot;)]]</source>
-        <translation type="unfinished"></translation>
+        <location filename="../CTemplates.cpp" line="228"/>
+        <source>Could not open text formats config file!</source>
+        <translation>Die Textformat-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CTextEditor.cpp" line="66"/>
-        <source>Vorlage(Überarbeitung, Datum, Seite, Autor)]]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTextEditor.cpp" line="67"/>
-        <source>Vorlage(Award, &quot;Preis&quot;, Link, Preiskategorie, &quot;Preisträger&quot;)]]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTextEditor.cpp" line="68"/>
-        <source>Vorlage(Fremdquelle-auth, key PGP-Schlüsselnummer)]]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTextEditor.cpp" line="70"/>
-        <source>Vorlage(Fremdpaket, &quot;Anbieter&quot;, URL zu einer Downloadübersicht, Ubuntuversion(en))]]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTextEditor.cpp" line="71"/>
-        <source>Bild(name.png, Größe, Ausrichtung)]]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTextEditor.cpp" line="72"/>
-        <source>Vorlage(Bildersammlung, BILDHÖHE
-Bild1.jpg, &quot;Beschreibung 1&quot;
-Bild2.png, &quot;Beschreibung 2&quot;
-)]]</source>
-        <translation type="unfinished"></translation>
+        <location filename="../CTemplates.cpp" line="283"/>
+        <source>Could not open template translation file!</source>
+        <translation>Die Template-Übersetzungsdatei konnte nicht geöffnet werden!</translation>
     </message>
 </context>
 <context>

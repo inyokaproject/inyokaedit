@@ -739,7 +739,7 @@ void CInyokaEdit::createToolBars()
     m_pTextmacrosBox->addItem(tr("Bash command", "GUI: Text macro combo box - Bash command"));
     m_pTextmacrosBox->addItem(tr("PPA sample", "GUI: Text macro combo box - PPA sample"));
     m_pTextmacrosBox->addItem(tr("Notice box", "GUI: Text macro combo box - Notice box"));
-    m_pTextmacrosBox->addItem(tr("Third-party repo warning", "GUI: Text macro combo box - Third-party repo warning"));
+    m_pTextmacrosBox->addItem(tr("Third-party package warning", "GUI: Text macro combo box - Third-party package warning"));
     m_pTextmacrosBox->addItem(tr("Warning box", "GUI: Text macro combo box - Warning box"));
     m_pTextmacrosBox->addItem(tr("Experts information", "GUI: Text macro combo box - Experts info box"));
     m_pTextmacrosBox->addItem(tr("Keys", "GUI: Text macro combo box - Keys"));
