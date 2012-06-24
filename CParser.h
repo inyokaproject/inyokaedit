@@ -38,7 +38,6 @@
 // Qt classes
 class QString;
 class QTextDocument;
-class QFile;
 class QDir;
 
 class CParseLinks;
@@ -59,9 +58,8 @@ public:
              const QDir tmpImgDir,
              const QList<QStringList> sListIWiki,
              const QList<QStringList> sListIWikiUrl,
-             const QString &sAppName,
-             const QString &sAppDirPath,
-             CSettings *pSettings );
+             CSettings *pSettings,
+             CTemplates *pTemplates );
     // Destructor
     ~CParser();
 
@@ -71,27 +69,10 @@ public:
     // Starts generating HTML-code
     bool genOutput( const QString sActFile );
 
-    QStringList getFlaglist() const;
-    QString getTransTemplate() const;
-    QString getTransTOC() const;
-    QString getTransImage() const;
-    QString getTransCodeBlock() const;
-    QString getTransAttachment() const;
-    QString getTransAnchor() const;
-    QString getTransDate() const;
-    QString getTransOverview() const;
-    QString getTransTable() const;
-
 signals:
     void callShowPreview( const QString & );
 
 private:
-    void initTemplates( const QString sAppName, const QString sAppDirPath, const QString sTplLang );
-    void initHtmlTpl( const QString sAppName, const QString sAppDirPath, const QString sFileName );
-    void initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName );
-    void initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName );
-    void initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName );
-
     //void replaceTemplates( QTextDocument *p_rawDoc );
     void replaceTextformat( QTextDocument *p_rawDoc );
     void replaceFlags( QTextDocument *p_rawDoc );
@@ -99,23 +80,6 @@ private:
     void replaceImages( QTextDocument *p_rawDoc );
     void replaceBreaks( QTextDocument *p_rawDoc );
     void replaceHorLine( QTextDocument *p_rawDoc );
-
-    QString m_sPreviewTemplate;
-    QStringList m_sListTplNames;
-    QStringList m_sListTemplates;
-
-    // Translations
-    QString m_sTransTemplate;
-    QString m_sTransTOC;
-    QString m_sTransImage;
-    QString m_sTransCodeBlock;
-    QString m_sTransAttachment;
-    QString m_sTransAnchor;
-    QString m_sTransDate;
-    QString m_sTransOverview;
-    QString m_sRevText;
-    QString m_sTagText;
-    QString m_sTransTable;
 
     // Parse Macros ([[Vorlage(...) etc.)
     QString parseMacro( QTextBlock actParagraph );
@@ -140,16 +104,12 @@ private:
     // Text from editor
     QTextDocument *m_pRawText, *m_pCopyOfrawText;
 
-    // List for text formats (start keyword, end keyword, start HTML code, end HTML code)
-    QStringList m_sListFormatStart, m_sListFormatEnd, m_sListFormatHtmlStart, m_sListFormatHtmlEnd;
-    // List for flags
-    QStringList m_sListFlags;
-
     CParseLinks *m_pLinkParser;
 
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
     CSettings *m_pSettings;
+    CTemplates *m_pTemplates;
 
 };
 

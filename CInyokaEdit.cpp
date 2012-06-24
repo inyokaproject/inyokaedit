@@ -120,12 +120,18 @@ void CInyokaEdit::createObjects()
     // Load settings from config file
     m_pSettings->readSettings();
 
+    m_pTemplates = new CTemplates( m_pApp->applicationName(),
+                                   m_pApp->applicationDirPath(),
+                                   m_pSettings->getTemplateLanguage() );
+
     m_pDownloadModule = new CDownload( this,
                                        m_pApp->applicationName(),
                                        m_pApp->applicationDirPath(),
                                        m_UserAppDir );
 
-    m_pEditor = new CTextEditor( m_pUi, m_pSettings->getCodeCompletion(), this );  // Has to be create before find/replace
+    m_pEditor = new CTextEditor( m_pUi,
+                                 m_pSettings->getCodeCompletion(),
+                                 this );
 //  if ( true == m_pSettings->getPreviewAlongside() )
 //  {
     m_pEditor->installEventFilter(this);
@@ -143,22 +149,21 @@ void CInyokaEdit::createObjects()
                              m_tmpPreviewImgDir,
                              m_pInterWikiLinks->getInterwikiLinks(),
                              m_pInterWikiLinks->getInterwikiLinksUrls(),
-                             m_pApp->applicationName(),
-                             m_pApp->applicationDirPath(),
-                             m_pSettings );
+                             m_pSettings,
+                             m_pTemplates );
 
     QStringList tmpsListMacro;
-    tmpsListMacro << m_pParser->getTransTemplate() << m_pParser->getTransTOC() <<
-                     m_pParser->getTransImage() << m_pParser->getTransAnchor() <<
-                     m_pParser->getTransAttachment() << m_pParser->getTransDate();
+    tmpsListMacro << m_pTemplates->getTransTemplate() << m_pTemplates->getTransTOC() <<
+                     m_pTemplates->getTransImage() << m_pTemplates->getTransAnchor() <<
+                     m_pTemplates->getTransAttachment() << m_pTemplates->getTransDate();
 
     QStringList tmpsListParser;
-    tmpsListParser << m_pParser->getTransTemplate().toLower() <<
-                      m_pParser->getTransCodeBlock().toLower();
+    tmpsListParser << m_pTemplates->getTransTemplate().toLower() <<
+                      m_pTemplates->getTransCodeBlock().toLower();
 
     m_pHighlighter = new CHighlighter( m_pInterWikiLinks->getInterwikiLinks(),
-                                       m_pParser->getFlaglist(),
-                                       m_pParser->getTransOverview(),
+                                       m_pTemplates->getFlaglist(),
+                                       m_pTemplates->getTransOverview(),
                                        tmpsListMacro,
                                        tmpsListParser,
                                        m_pEditor->document() );
@@ -172,18 +177,17 @@ void CInyokaEdit::createObjects()
 
     m_pWebview = new QWebView( this );
 
-    m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pParser->getTransTemplate(),
-                                                       m_pParser->getTransImage(),
-                                                       m_pParser->getTransTOC() );
+    m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pTemplates->getTransTemplate(),
+                                                       m_pTemplates->getTransImage(),
+                                                       m_pTemplates->getTransTOC() );
 
     m_pTableTemplate = new CTableTemplate( m_pEditor,
 										   m_UserAppDir,
 										   m_tmpPreviewImgDir,
 										   m_pInterWikiLinks->getInterwikiLinks(),
 										   m_pInterWikiLinks->getInterwikiLinksUrls(),
-										   m_pApp->applicationName(),
-										   m_pApp->applicationDirPath(),
-										   m_pSettings );
+                                           m_pSettings,
+                                           m_pTemplates );
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -462,7 +466,7 @@ void CInyokaEdit::createActions()
                           "python" << "pycon" << "pytb" <<
                           "ruby" << "sourceslist" << "sql" << "xml";
 
-    QString sCodeTag("#!" + m_pParser->getTransCodeBlock().toLower() + " ");
+    QString sCodeTag("#!" + m_pTemplates->getTransCodeBlock().toLower() + " ");
     m_pCodePopup = new QToolButton;
     m_pCodePopup->setIcon(QIcon(":/images/code.png"));
     m_pCodePopup->setPopupMode( QToolButton::InstantPopup );

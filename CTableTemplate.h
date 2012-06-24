@@ -36,6 +36,7 @@ namespace Ui{
 
 class CParser;
 class CSettings;
+class CTemplates;
 class CTextEditor;
 
 class QDir;
@@ -60,9 +61,8 @@ public:
                     const QDir tmpImgDir,
                     const QList<QStringList> sListIWiki,
                     const QList<QStringList> sListIWikiUrl,
-                    const QString &sAppName,
-                    const QString &sAppDirPath,
                     CSettings *pSettings,
+                    CTemplates *pTemplates,
                     QWidget *pParent = 0 );
 
 public slots:
@@ -89,6 +89,8 @@ private:
 
     QString m_sTableString;
     QTextDocument *m_pTextDocument;
+
+    CTemplates *m_pTemplates;
 
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;

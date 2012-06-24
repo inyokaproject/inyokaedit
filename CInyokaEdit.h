@@ -30,6 +30,7 @@
 #include <QMainWindow>
 #include <QWebHistory>
 
+#include "CTemplates.h"
 #include "CInterwiki.h"
 #include "CSettings.h"
 #include "CHighlighter.h"
@@ -56,6 +57,7 @@ class QFile;
 class QDir;
 
 // Own classes
+class CTemplates;
 class CParser;
 class FindDialog;
 class FindReplaceDialog;
@@ -194,6 +196,7 @@ private:
     void writeSettings();
 
     // Objects
+    CTemplates *m_pTemplates;
     CTextEditor *m_pEditor;
     CFileOperations *m_pFileOperations;
     CHighlighter *m_pHighlighter;  // Syntax highlighting

@@ -42,13 +42,13 @@ CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                                 const QDir tmpImgDir,
                                 const QList<QStringList> sListIWiki,
                                 const QList<QStringList> sListIWikiUrl,
-                                const QString &sAppName,
-                                const QString &sAppDirPath,
                                 CSettings *pSettings,
+                                CTemplates *pTemplates,
                                 QWidget *pParent )
     : QDialog(pParent)
     , m_pEditor(pEditor)
     , m_pTextDocument(new QTextDocument(this))
+    , m_pTemplates(pTemplates)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -77,9 +77,8 @@ CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                              tmpImgDir,
                              sListIWiki,
                              sListIWikiUrl,
-                             sAppName,
-                             sAppDirPath,
-                             pSettings);
+                             pSettings,
+                             m_pTemplates );
 
     connect( m_pParser, SIGNAL(callShowPreview(QString)),
                 this, SLOT(tableParseFinished(QString)) );
@@ -160,7 +159,8 @@ void CTableTemplate::generateTable(){
     int colsNum = m_pUi->colsNum->value();
     int rowsNum = m_pUi->rowsNum->value();
 
-    m_sTableString = "{{{#!" + m_pParser->getTransTemplate().toLower() + " " + m_pParser->getTransTable() + "\n";
+    m_sTableString = "{{{#!" + m_pTemplates->getTransTemplate().toLower() +
+            " " + m_pTemplates->getTransTable() + "\n";
 
     // Create title if set
     if ( m_pUi->showTitleBox->isChecked()  ) {

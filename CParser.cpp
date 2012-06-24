@@ -32,28 +32,22 @@ CParser::CParser( QTextDocument *pRawDocument,
                   const QDir tmpImgDir,
                   const QList<QStringList> sListIWiki,
                   const QList<QStringList> sListIWikiUrl,
-                  const QString &sAppName,
-                  const QString &sAppDirPath,
-                  CSettings *pSettings )
+                  CSettings *pSettings,
+                  CTemplates *pTemplates )
     : m_pRawText( pRawDocument ),
       m_tmpFileDir( tmpFileOutputDir ),
       m_tmpImgDir( tmpImgDir ),
-      m_pSettings( pSettings )
+      m_pSettings( pSettings ),
+      m_pTemplates( pTemplates )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
-
-    this->initTemplates( sAppName, sAppDirPath, m_pSettings->getTemplateLanguage() );
-    this->initHtmlTpl( sAppName, sAppDirPath, "Preview.tpl" );
-    this->initFlags( sAppName, sAppDirPath, "Flags.conf" );
-    this->initTextformats( sAppName, sAppDirPath, "Textformats.conf" );
-    this->initTranslations( sAppName, sAppDirPath, m_pSettings->getTemplateLanguage(), "Translations.conf" );
 
     m_pLinkParser = new CParseLinks( m_pRawText,
                                      m_pSettings->getInyokaUrl(),
                                      sListIWiki,
                                      sListIWikiUrl,
                                      m_pSettings->getCheckLinks(),
-                                     m_sTransAnchor );
+                                     m_pTemplates->getTransAnchor() );
 
    // emit sendHighlightingKeywords();
 
@@ -69,252 +63,6 @@ CParser::~CParser()
         delete m_pLinkParser;
         m_pLinkParser = NULL;
     }
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CParser::initTemplates( const QString sAppName, const QString sAppDirPath, const QString sTplLang )
-{
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile TplFile("");
-    QDir TplDir("");
-
-    // Path from normal installation
-    if ( TplDir.exists("/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang) )
-    {
-        TplDir.setPath( "/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang );
-    }
-    // No installation: Use app path
-    else
-    {
-        TplDir.setPath( sAppDirPath + "/templates/" + sTplLang );
-    }
-
-    // Get template files
-    QFileInfoList fiListTplFiles = TplDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
-    for ( int nFile = 0; nFile < fiListTplFiles.count(); nFile++ )
-    {
-        if ( "tpl" == fiListTplFiles[nFile].completeSuffix() )
-        {
-            //qDebug() << fiListTplFiles[nFile].absoluteFilePath();
-            TplFile.setFileName( fiListTplFiles[nFile].absoluteFilePath() );
-            if( TplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
-            {
-                m_sListTplNames << fiListTplFiles[nFile].baseName();
-                m_sListTemplates << QString::fromUtf8( TplFile.readAll() );
-                TplFile.close();
-            }
-            else
-            {
-                QMessageBox::warning( 0, "Warning", "Could not open template file: \n" + fiListTplFiles[nFile].absoluteFilePath() );
-                qWarning() << "Could not open template file:" << fiListTplFiles[nFile].absoluteFilePath();
-            }
-        }
-    }
-
-    if ( 0 == m_sListTplNames.size() )
-    {
-        QMessageBox::warning( 0, "Warning", "Could not find any markup template files!" );
-        qWarning() << "Could not find any template files in:" << TplDir.absolutePath();
-    }
-
-    qDebug() << "Loaded templates:" << m_sListTplNames;
-    qDebug() << "End" << Q_FUNC_INFO;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CParser::initHtmlTpl( const QString sAppName, const QString sAppDirPath, const QString sFileName )
-{
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile HTMLTemplateFile( sFileName );
-
-    // Path from normal installation
-    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + HTMLTemplateFile.fileName()) )
-    {
-        HTMLTemplateFile.setFileName("/usr/share/" + sAppName.toLower() + "/templates/" + HTMLTemplateFile.fileName());
-    }
-    // No installation: Use app path
-    else
-    {
-        HTMLTemplateFile.setFileName( sAppDirPath + "/templates/" + HTMLTemplateFile.fileName() );
-    }
-
-    if ( !HTMLTemplateFile.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        QMessageBox::warning( 0, "Warning", tr("Could not open preview template file!") );
-        qWarning() << "Could not open preview template file:" << HTMLTemplateFile.fileName();
-        m_sPreviewTemplate = "ERROR";
-    }
-    else
-    {
-        QTextStream in(&HTMLTemplateFile);
-        m_sPreviewTemplate = in.readAll();
-
-        HTMLTemplateFile.close();
-    }
-    qDebug() << "End" << Q_FUNC_INFO;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CParser::initFlags( const QString sAppName, const QString sAppDirPath, const QString sFileName )
-{
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile flagsFile( sFileName );
-
-    // Path from normal installation
-    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + flagsFile.fileName()) )
-    {
-        flagsFile.setFileName("/usr/share/" + sAppName.toLower() + "/templates/" + flagsFile.fileName());
-    }
-    // No installation: Use app path
-    else
-    {
-        flagsFile.setFileName( sAppDirPath + "/templates/" + flagsFile.fileName() );
-    }
-
-    if ( !flagsFile.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        QMessageBox::warning( 0, "Warning", tr("Could not open flag config file!") );
-        qWarning() << "Could not open flag config file:" << flagsFile.fileName();
-        m_sListFlags << "ERROR";
-    }
-    else
-    {
-        QTextStream in(&flagsFile);
-        QString tmpLine;
-        while ( !in.atEnd() )
-        {
-            tmpLine = in.readLine().trimmed();
-            if ( !tmpLine.startsWith("#") && "" != tmpLine.trimmed() )
-            {
-                m_sListFlags << tmpLine.trimmed();
-            }
-        }
-        flagsFile.close();
-    }
-    qDebug() << "End" << Q_FUNC_INFO;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CParser::initTextformats( const QString sAppName, const QString sAppDirPath, const QString sFileName )
-{
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile formatsFile( sFileName );
-    QStringList sListInput;
-
-    // Path from normal installation
-    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + formatsFile.fileName()) )
-    {
-        formatsFile.setFileName("/usr/share/" + sAppName.toLower() + "/templates/" + formatsFile.fileName());
-    }
-    // No installation: Use app path
-    else
-    {
-        formatsFile.setFileName( sAppDirPath + "/templates/" + formatsFile.fileName() );
-    }
-
-    if ( !formatsFile.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        QMessageBox::warning( 0, "Warning", tr("Could not open text formats config file!") );
-        qWarning() << "Could not open text formats config file:" << formatsFile.fileName();
-        // Initialize possible text formats
-        m_sListFormatStart << "ERROR";
-        m_sListFormatEnd << "ERROR";
-        m_sListFormatHtmlStart << "ERROR";
-        m_sListFormatHtmlEnd << "ERROR";
-    }
-    else
-    {
-        QTextStream in(&formatsFile);
-        QString tmpLine;
-        while ( !in.atEnd() )
-        {
-            tmpLine = in.readLine().trimmed();
-            if ( !tmpLine.startsWith("#") && "" != tmpLine.trimmed() )
-            {
-                sListInput << tmpLine.trimmed();
-            }
-        }
-        formatsFile.close();
-
-        for( int i = 0; i+3 < sListInput.size(); i+=4 )
-        {
-            m_sListFormatStart << sListInput[i];
-            m_sListFormatEnd << sListInput[i+1];
-            m_sListFormatHtmlStart << sListInput[i+2];
-            m_sListFormatHtmlEnd << sListInput[i+3];
-        }
-    }
-    qDebug() << "End" << Q_FUNC_INFO;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-void CParser::initTranslations( const QString sAppName, const QString sAppDirPath, const QString sTplLang, const QString sFileName )
-{
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile translFile;
-
-    // Path from normal installation
-    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang + "/" + sFileName) )
-    {
-        translFile.setFileName( "/usr/share/" + sAppName.toLower() + "/templates/" + sTplLang + "/" + sFileName );
-    }
-    // No installation: Use app path
-    else
-    {
-        translFile.setFileName( sAppDirPath + "/templates/" + sTplLang + "/" + sFileName );
-    }
-
-    if ( !translFile.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        QMessageBox::critical( 0, "Error", tr("Could not open template translation file!") );
-        qCritical() << "Could not open template translation file:" << translFile.fileName();
-        exit(-1);
-    }
-
-    QSettings configTransl( translFile.fileName(), QSettings::IniFormat );
-    configTransl.setIniCodec("UTF-8");
-
-    m_sTransTemplate = configTransl.value("Template", "ERROR").toString();
-    if ( "ERROR" == m_sTransTemplate ) { qWarning() << "Template translation not found."; }
-    m_sTransTOC = configTransl.value("TableOfContents", "ERROR").toString();
-    if ( "ERROR" == m_sTransTOC ) { qWarning() << "TOC translation not found."; }
-    m_sTransImage = configTransl.value("Image", "ERROR").toString();
-    if ( "ERROR" == m_sTransImage ) { qWarning() << "Image translation not found."; }
-    m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
-    if ( "ERROR" == m_sTransCodeBlock ) { qWarning() << "Code block translation not found."; }
-    m_sTransAttachment = configTransl.value("Attachment", "ERROR").toString();
-    if ( "ERROR" == m_sTransAttachment ) { qWarning() << "Attachment translation not found."; }
-    m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
-    if ( "ERROR" == m_sTransAnchor ) { qWarning() << "Anchor translation not found."; }
-    m_sTransDate = configTransl.value("Date", "ERROR").toString();
-    if ( "ERROR" == m_sTransDate ) { qWarning() << "Date translation not found."; }
-    m_sTransOverview = configTransl.value("Overview", "ERROR").toString();
-    if ( "ERROR" == m_sTransOverview ) { qWarning() << "Overview translation not found."; }
-    m_sRevText = configTransl.value("RevText", "ERROR").toString();
-    if ( "ERROR" == m_sTransDate ) { qWarning() << "Revision text translation not found."; }
-    m_sTagText = configTransl.value("TagText", "ERROR").toString();
-    if ( "ERROR" == m_sTransOverview ) { qWarning() << "Tag text translation not found."; }
-
-    // Translation needed for table template
-    m_sTransTable = configTransl.value("Table", "ERROR").toString();
-    if ( "ERROR" == m_sTransTable ) { qWarning() << "Table translation not found."; }
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -382,14 +130,14 @@ bool CParser::genOutput( const QString sActFile )
     for( ; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it); it = it.next() )
     {
         // Macro samples
-        if ( it.text().trimmed().startsWith("[[" + m_sTransTemplate + "(", Qt::CaseSensitive) &&
-             !(it.text().trimmed().startsWith("[[" + m_sTransTemplate + "(" + trUtf8("Tasten"), Qt::CaseSensitive)) &&
-             !(it.text().trimmed().startsWith("[[" + m_sTransTemplate + "(" + trUtf8("Bildersammlung"), Qt::CaseSensitive)) )
+        if ( it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTemplate() + "(", Qt::CaseSensitive) &&
+             !(it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTemplate() + "(" + trUtf8("Tasten"), Qt::CaseSensitive)) &&
+             !(it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTemplate() + "(" + trUtf8("Bildersammlung"), Qt::CaseSensitive)) )
         {
             sHtmlBody += parseMacro(it);
         }
         // Table of contents
-        else if ( it.text().trimmed().startsWith("[[" + m_sTransTOC + "(", Qt::CaseSensitive) )
+        else if ( it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTOC() + "(", Qt::CaseSensitive) )
         {
             sHtmlBody += parseTableOfContents(it);
         }
@@ -404,8 +152,8 @@ bool CParser::genOutput( const QString sActFile )
             sHtmlBody += parseHeadline(it);
         }
         // Text sample
-        else if ( it.text().trimmed().startsWith("{{{#!" + m_sTransTemplate.toLower(), Qt::CaseSensitive) ||
-                  it.text().trimmed().startsWith("{{{#!" + m_sTransTemplate, Qt::CaseSensitive) )
+        else if ( it.text().trimmed().startsWith("{{{#!" + m_pTemplates->getTransTemplate().toLower(), Qt::CaseSensitive) ||
+                  it.text().trimmed().startsWith("{{{#!" + m_pTemplates->getTransTemplate(), Qt::CaseSensitive) )
         {
             sSample = it.text();
             it = it.next();
@@ -418,8 +166,8 @@ bool CParser::genOutput( const QString sActFile )
         }
         // Codeblock
         else if ( it.text().trimmed().startsWith("{{{", Qt::CaseSensitive) ||
-                  it.text().trimmed().startsWith("{{{#!" + m_sTransCodeBlock.toLower(), Qt::CaseSensitive) ||
-                  it.text().trimmed().startsWith("{{{#!" + m_sTransCodeBlock, Qt::CaseSensitive) )
+                  it.text().trimmed().startsWith("{{{#!" + m_pTemplates->getTransCodeBlock().toLower(), Qt::CaseSensitive) ||
+                  it.text().trimmed().startsWith("{{{#!" + m_pTemplates->getTransCodeBlock(), Qt::CaseSensitive) )
         {
             sSample = it.text();
 
@@ -444,7 +192,7 @@ bool CParser::genOutput( const QString sActFile )
             }
         }
         // Image collection
-        else if ( it.text().trimmed().startsWith("[["+ m_sTransTemplate + "(" + trUtf8("Bildersammlung"), Qt::CaseSensitive) )
+        else if ( it.text().trimmed().startsWith("[["+ m_pTemplates->getTransTemplate() + "(" + trUtf8("Bildersammlung"), Qt::CaseSensitive) )
         {
             sSample = it.text();
             it = it.next();
@@ -485,12 +233,12 @@ bool CParser::genOutput( const QString sActFile )
     }
 
     // Replace template tags
-    QString sTemplateCopy( m_sPreviewTemplate );  // Copy needed, otherwise %tags% will be replaced/removed in template!
+    QString sTemplateCopy( m_pTemplates->getPreviewTemplate() );  // Copy needed, otherwise %tags% will be replaced/removed in template!
     sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
-    QString sRevTextCopy( m_sRevText );  // Copy needed!
+    QString sRevTextCopy( m_pTemplates->getTransRev() );  // Copy needed!
     sRevTextCopy= sRevTextCopy.replace("%date%", QDate::currentDate().toString("dd.MM.yyyy")).replace("%time%", QTime::currentTime().toString("hh:mm"));
     sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
-    sTemplateCopy = sTemplateCopy.replace("%tagtext%", m_sTagText + " " + sWikitags);
+    sTemplateCopy = sTemplateCopy.replace("%tagtext%", m_pTemplates->getTransTag() + " " + sWikitags);
 
     // Write HTML code into output file
     tmpoutputstream << sTemplateCopy.replace("%content%", sHtmlBody);
@@ -511,8 +259,8 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
     qDebug() << Q_FUNC_INFO;
 
     QStringList sListTplRegExp;
-    sListTplRegExp << "\\[\\[" + m_sTransTemplate + "\\(.*\\)\\]\\]";
-//                   << "\\{\\{\\{#!" + m_sTransTemplate + " .*\\}\\}\\}";
+    sListTplRegExp << "\\[\\[" +  m_pTemplates->getTransTemplate() + "\\(.*\\)\\]\\]";
+//                   << "\\{\\{\\{#!" +  m_pTemplates->getTransTemplate() + " .*\\}\\}\\}";
     QString sMyDoc = p_rawDoc->toPlainText();
     QString sMacro;
     QStringList sListArguments;
@@ -526,12 +274,13 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
         sMacro =  findTemplate.cap(0);
         //qDebug() << "CAPTURED:" << sMacro;
 
-        for( int i = 0; i < m_sListTplNames.size(); i++ )
+        for( int i = 0; i < m_pTemplates->getListTplNames().size(); i++ )
         {
-            if( sMacro.startsWith("[[" + m_sTransTemplate + "(" + m_sListTplNames[i], Qt::CaseInsensitive) )
+            if( sMacro.startsWith( "[[" +  m_pTemplates->getTransTemplate() +
+                                   "(" + m_pTemplates->getListTplNames()[i], Qt::CaseInsensitive ))
             {
-                qDebug() << "Found known macro:" << m_sListTplNames[i];
-                sMacro.remove( "[[" + m_sTransTemplate + "(" );
+                qDebug() << "Found known macro:" << m_pTemplates->getListTplNames()[i];
+                sMacro.remove( "[[" +  m_pTemplates->getTransTemplate() + "(" );
                 sMacro.remove( ")]]" );
 
                 // Split by ',' but DON'T split quoted strings containing commas!
@@ -551,7 +300,7 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
                 sListArguments.removeFirst();  // Remove template name
 
                 // Replace arguments
-                sMacro = m_sListTemplates[i];
+                sMacro = m_pTemplates->getListTemplates()[i];
                 for ( int k = 0; k < sListArguments.size(); k++ ) {
                     sMacro.replace("<@ $arguments." + QString::number(k) + " @>", sListArguments[k].trimmed());
                 }
@@ -584,12 +333,16 @@ void CParser::replaceTextformat( QTextDocument *p_rawDoc )
     QString sFormatedText, sTmpRegExp; //, sTmpText;
     int myindex;
 
-    for( int i = 0; i < m_sListFormatStart.size(); i++ )
+    for( int i = 0; i < m_pTemplates->getListFormatStart().size(); i++ )
     {
-        sTmpRegExp = QRegExp::escape(m_sListFormatStart[i]) + variableText + QRegExp::escape(m_sListFormatEnd[i]);
+        sTmpRegExp = QRegExp::escape( m_pTemplates->getListFormatStart()[i] ) + variableText +
+                     QRegExp::escape( m_pTemplates->getListFormatEnd()[i] );
 
         patternTextformat.setPattern(sTmpRegExp);
-        patternTextformat.setMinimal(true); // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
+
+        // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
+        patternTextformat.setMinimal(true);
+
         myindex = patternTextformat.indexIn(sMyDoc);
         while ( myindex >= 0 )
         {
@@ -605,21 +358,23 @@ void CParser::replaceTextformat( QTextDocument *p_rawDoc )
             // Color as word
             else if ( sFormatedText.startsWith("[color=") )
             {
-                sFormatedText.remove(sListFormatEnd[i]);
-                sFormatedText.remove("[color=");
+                sFormatedText.remove( m_pTemplates->getListFormatEnd()[i] );
+                sFormatedText.remove( "[color=" );
                 int iBracket = sFormatedText.indexOf("]");
                 sTmpText = sFormatedText;
-                sTmpText.remove(iBracket, sTmpText.length()); // Remove everything besides color
+                sTmpText.remove( iBracket, sTmpText.length() ); // Remove everything besides color
                 sFormatedText.remove(0, iBracket);
-                sMyDoc.replace(myindex, iLength, QString(sListFormatHtmlStart[i]).arg(sTmpText) + sFormatedText + sListFormatHtmlEnd[i]);
+                sMyDoc.replace( myindex, iLength, QString(m_pTemplates->getListFormatHtmlStart()[i])
+                                .arg(sTmpText) + sFormatedText + m_pTemplates->getListFormatHtmlEnd()[i] );
             }
             else
             {
             */
                 // Remove syntax element
-                sFormatedText.remove(m_sListFormatStart[i]);
-                sFormatedText.remove(m_sListFormatEnd[i]);
-                sMyDoc.replace(myindex, iLength, m_sListFormatHtmlStart[i] + sFormatedText + m_sListFormatHtmlEnd[i]);
+                sFormatedText.remove( m_pTemplates->getListFormatStart()[i] );
+                sFormatedText.remove( m_pTemplates->getListFormatEnd()[i] );
+                sMyDoc.replace( myindex, iLength, m_pTemplates->getListFormatHtmlStart()[i] +
+                                sFormatedText + m_pTemplates->getListFormatHtmlEnd()[i] );
             //}
 
             // Go on with RegExp-Search
@@ -650,15 +405,17 @@ void CParser::replaceFlags( QTextDocument *p_rawDoc )
         sTmpFlag.remove("{");
         sTmpFlag.remove("}");
 
-        if ( sTmpFlag.toLower() == m_sTransOverview.toLower() )
+        if ( sTmpFlag.toLower() == m_pTemplates->getTransOverview().toLower() )
         {
-            sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/overview.png\" alt=\"&#123;" + m_sTransOverview + "&#125;\" />");
+            sMyDoc.replace( myindex, iLength, "<img src=\"img/flags/overview.png\" alt=\"&#123;" +
+                            m_pTemplates->getTransOverview() + "&#125;\" />" );
         }
         else if ( sTmpFlag.length() == 2 )
         {
-            if ( m_sListFlags.contains(sTmpFlag) )
+            if ( m_pTemplates->getFlaglist().contains(sTmpFlag) )
             {
-                sMyDoc.replace(myindex, iLength, "<img src=\"img/flags/" + sTmpFlag + ".png\" alt=\"&#123;" + sTmpFlag + "&#125;\" />");
+                sMyDoc.replace( myindex, iLength, "<img src=\"img/flags/" + sTmpFlag +
+                                ".png\" alt=\"&#123;" + sTmpFlag + "&#125;\" />" );
             }
         }
 
@@ -676,7 +433,7 @@ void CParser::replaceFlags( QTextDocument *p_rawDoc )
 // Replace KEYS
 void CParser::replaceKeys( QTextDocument *p_rawDoc )
 {
-    QRegExp findKeys("\\[\\[" + m_sTransTemplate + "\\(Tasten,[\\w\\s\\?\\-\\=\\'\\,\\.\\`\\\"\\^\\<\\[\\]\\#\\+]+\\)\\]\\]");
+    QRegExp findKeys("\\[\\[" +  m_pTemplates->getTransTemplate() + "\\(Tasten,[\\w\\s\\?\\-\\=\\'\\,\\.\\`\\\"\\^\\<\\[\\]\\#\\+]+\\)\\]\\]");
     QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpKey;
@@ -687,7 +444,7 @@ void CParser::replaceKeys( QTextDocument *p_rawDoc )
     {
         iLength = findKeys.matchedLength();
         sTmpKey = findKeys.cap();
-        sTmpKey.remove("[[" + m_sTransTemplate + trUtf8("(Tasten,"));
+        sTmpKey.remove("[[" +  m_pTemplates->getTransTemplate() + trUtf8("(Tasten,"));
         sTmpKey.remove(")]]");
 
         sListTmpKeys.clear();
@@ -915,13 +672,13 @@ QString CParser::parseMacro( QTextBlock actParagraph )
     //QString sParagraph = actParagraph;
 
     // Remove brackets
-    sParagraph.remove("[[" + m_sTransTemplate + "(", Qt::CaseSensitive);
+    sParagraph.remove("[[" +  m_pTemplates->getTransTemplate() + "(", Qt::CaseSensitive);
     sParagraph.remove(")]]");
 
     // Separate elementes from macro (between ,)
     QStringList sListElements = sParagraph.split(",");
 
-    QString sOutput("<strong>ERROR: Found unknown item [[" + m_sTransTemplate + "(" + sListElements[0] + "</strong>\n");
+    QString sOutput("<strong>ERROR: Found unknown item [[" +  m_pTemplates->getTransTemplate() + "(" + sListElements[0] + "</strong>\n");
 
     // Remove every quote sign and spaces before / behind strings (trimmed)
     for ( int i = 0; i < sListElements.size(); i++ )
@@ -1590,7 +1347,7 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
     QString sOutput("TABLE OF CONTENT");
 
     // Remove brackets
-    sLine.remove("[[" + m_sTransTOC, Qt::CaseSensitive);
+    sLine.remove("[[" + m_pTemplates->getTransTOC(), Qt::CaseSensitive);
     sLine.remove("(");
     sLine.remove(")");
 
@@ -1627,11 +1384,13 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
         }
     }
 
-    sOutput = "<div class=\"toc\">\n<div class=\"head\">" + m_sTransTOC + "</div>\n<ol class=\"arabic\">\n";
+    sOutput = "<div class=\"toc\">\n<div class=\"head\">" + m_pTemplates->getTransTOC() +
+              "</div>\n<ol class=\"arabic\">\n";
 
     for ( int i = 0; i < sListHeadlineLevel1.size(); i++ )
     {
-        sOutput += "<li>\n<a href=\"#" + sListHeadlineLevel1_Links[i] + "\" class=\"crosslink\">" + sListHeadlineLevel1[i] + "</a>\n</li>\n";
+        sOutput += "<li>\n<a href=\"#" + sListHeadlineLevel1_Links[i] + "\" class=\"crosslink\">" +
+                   sListHeadlineLevel1[i] + "</a>\n</li>\n";
     }
 
     sOutput += "</ol>\n</div>\n";
@@ -1729,8 +1488,8 @@ QString CParser::parseTextSample( QString actParagraph )
 {
     QString sParagraph = actParagraph;
 
-    sParagraph.remove("{{{#!" + m_sTransTemplate.toLower() + " ");
-    sParagraph.remove("{{{#!" + m_sTransTemplate + " ");
+    sParagraph.remove("{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " ");
+    sParagraph.remove("{{{#!" +  m_pTemplates->getTransTemplate() + " ");
 
     // Separate elementes from macro (between §)
     QStringList sListElements = sParagraph.split("§");
@@ -1738,7 +1497,7 @@ QString CParser::parseTextSample( QString actParagraph )
         sListElements[i] = sListElements[i].trimmed();
     }
 
-    QString sOutput("<strong>ERROR: Found unknown item: {{{#!" + m_sTransTemplate.toLower() + " " + sListElements[0] + "</strong>\n");
+    QString sOutput("<strong>ERROR: Found unknown item: {{{#!" +  m_pTemplates->getTransTemplate().toLower() + " " + sListElements[0] + "</strong>\n");
 
     // KNOWLEGE BOX (Wissensblock)
     if (sListElements[0].toLower() == trUtf8("Wissen").toLower()){
@@ -1891,7 +1650,7 @@ QString CParser::parseTextSample( QString actParagraph )
 
                 // Check if found style info is in reality a html text format
                 bool bTextformat = false;
-                foreach ( const QString &sTmp, m_sListFormatHtmlStart )
+                foreach ( const QString &sTmp, m_pTemplates->getListFormatHtmlStart() )
                 {
                     if ( sListElements[i].trimmed().startsWith(sTmp) )
                     {
@@ -2086,7 +1845,7 @@ QString CParser::parseCodeBlock( QString actParagraph )
     }
 
     // Only plain code
-    if ( !sListElements[0].startsWith("#!" + m_sTransCodeBlock.toLower()) && !sListElements[0].startsWith("#!" + m_sTransCodeBlock) )
+    if ( !sListElements[0].startsWith("#!" +  m_pTemplates->getTransCodeBlock().toLower()) && !sListElements[0].startsWith("#!" +  m_pTemplates->getTransCodeBlock()) )
     {
         sOutput = "<pre>";
 
@@ -2146,7 +1905,7 @@ QString CParser::parseCodeBlock( QString actParagraph )
         // Syntax highlighting with Pygments (only on Unix)
 #if not defined _WIN32
         if ( QFile("/usr/bin/pygmentize").exists() ) {
-            QString sHighlightLang = sListElements[0].remove("#!" + m_sTransCodeBlock, Qt::CaseInsensitive);
+            QString sHighlightLang = sListElements[0].remove("#!" +  m_pTemplates->getTransCodeBlock(), Qt::CaseInsensitive);
             sHighlightLang = sHighlightLang.trimmed();
 
             if ( "" != sHighlightLang ){
@@ -2208,7 +1967,7 @@ QString CParser::parseImageCollection( QString actParagraph )
     QString sParagraph = actParagraph;
     QString sOutput("");
 
-    sParagraph.remove("[[" + m_sTransTemplate + "(Bildersammlung");
+    sParagraph.remove("[[" +  m_pTemplates->getTransTemplate() + "(Bildersammlung");
     sParagraph.remove(")]]");
 
     QString sImageUrl("");
@@ -2343,7 +2102,7 @@ QString CParser::parseImageCollection( QString actParagraph )
 
 void CParser::replaceImages( QTextDocument *p_rawDoc )
 {
-    QRegExp findImages("\\[\\[" + m_sTransImage + "\\([\\w\\s\\-,./=\"]+\\)\\]\\]");
+    QRegExp findImages("\\[\\[" + m_pTemplates->getTransImage() + "\\([\\w\\s\\-,./=\"]+\\)\\]\\]");
     QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpImage;
@@ -2364,7 +2123,7 @@ void CParser::replaceImages( QTextDocument *p_rawDoc )
         iLength = findImages.matchedLength();
         sTmpImage = findImages.cap();
 
-        sTmpImage.remove("[[" + m_sTransImage + "(");
+        sTmpImage.remove("[[" + m_pTemplates->getTransImage() + "(");
         sTmpImage.remove(")]]");
 
         sImageWidth = "";
@@ -2549,57 +2308,4 @@ QString CParser::insertBox( const QString &sClass, const QString &sHeadline, con
                "</div>\n";
 
     return sReturn;
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-QStringList CParser::getFlaglist() const
-{
-    return m_sListFlags;
-}
-
-QString CParser::getTransTemplate() const
-{
-    return m_sTransTemplate;
-}
-
-QString CParser::getTransTOC() const
-{
-    return m_sTransTOC;
-}
-
-QString CParser::getTransImage() const
-{
-    return m_sTransImage;
-}
-
-QString CParser::getTransCodeBlock() const
-{
-    return m_sTransCodeBlock;
-}
-
-QString CParser::getTransAttachment() const
-{
-    return m_sTransAttachment;
-}
-
-QString CParser::getTransAnchor() const
-{
-    return m_sTransAnchor;
-}
-
-QString CParser::getTransDate() const
-{
-    return m_sTransDate;
-}
-
-QString CParser::getTransOverview() const
-{
-    return m_sTransOverview;
-}
-
-QString CParser::getTransTable() const
-{
-    return m_sTransTable;
 }

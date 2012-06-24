@@ -13,7 +13,8 @@ HEADERS += CTableTemplate.h \
     CParser.h \
     CDownload.h \
     CFileOperations.h \
-    CParseLinks.h
+    CParseLinks.h \
+    CTemplates.h
 SOURCES += CTableTemplate.cpp \
     main.cpp \
     CInyokaEdit.cpp \
@@ -30,7 +31,8 @@ SOURCES += CTableTemplate.cpp \
     CParser.cpp \
     CDownload.cpp \
     CFileOperations.cpp \
-    CParseLinks.cpp
+    CParseLinks.cpp \
+    CTemplates.cpp
 RESOURCES = inyokaedit_resources.qrc
 TEMPLATE = app
 QT += core \
