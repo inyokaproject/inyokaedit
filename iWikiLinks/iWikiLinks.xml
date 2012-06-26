@@ -32,6 +32,7 @@
     <iwikilink type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
     <iwikilink type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
     <iwikilink type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <iwikilink type="ubuntuapps" url="https://apps.ubuntu.com/cat/search/?op=&amp;q=" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
     <iwikilink type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
     <iwikilink type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
     <iwikilink type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />

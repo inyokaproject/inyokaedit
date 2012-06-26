@@ -125,6 +125,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/team.png -O 
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ticket.png -O ticket.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/twitter.png -O twitter.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu.png -O ubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntuapps.png -O ubuntuapps.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_forum.png -O uf_forum.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_member.png -O uf_member.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_thread.png -O uf_thread.png
