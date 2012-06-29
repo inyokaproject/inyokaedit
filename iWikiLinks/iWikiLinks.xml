@@ -57,6 +57,7 @@
     <iwikilink type="github" url="https://github.com/" name="GitHub" icon="github.png" />
     <iwikilink type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
     <iwikilink type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
+    <iwikilink type="lpcode" url="https://code.launchpad.net/" name="Launchpad Code" icon="lpcode.png" />
     <iwikilink type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
     <iwikilink type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />
     <iwikilink type="playdeb" url="http://www.playdeb.net/software/" name="PlayDeb" icon="playdeb.png" />
