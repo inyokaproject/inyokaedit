@@ -64,6 +64,7 @@ protected:
 
 private:
     Ui::CProgressDialog *m_pUi;
+    QString m_sAppName;
     QProcess *m_myProc;
 };
 

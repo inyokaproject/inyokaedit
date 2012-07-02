@@ -27,9 +27,10 @@
 #include "CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent ) :
-    QDialog(pParent),
-    m_pUi(new Ui::CProgressDialog)
+CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent )
+    : QDialog( pParent ),
+      m_pUi(new Ui::CProgressDialog),
+      m_sAppName( sAppName )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -38,7 +39,7 @@ CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListA
 
     if ( sListArguments.size() == 0 )
     {
-        sListArguments << QDir::homePath() + "/." + sAppName;
+        sListArguments << QDir::homePath() + "/." + m_sAppName;
     }
 
     m_myProc = new QProcess();
@@ -109,6 +110,7 @@ void CProgressDialog::downloadScriptFinished()
     killWinBash.start( "taskkill", QStringList() << "/F" << "/IM" << "bash.exe" );
 #endif
 
+    QMessageBox::information(0, m_sAppName, "Download finished.");
     this->close();
 }
 
