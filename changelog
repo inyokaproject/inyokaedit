@@ -7,6 +7,7 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
 
   [ Thorsten Roth ]
   * Started with the introduction of parser templates.
+  * Much code reorganization.
   * Added HTML preview template file.
   * Separated text format definitions into config file.
   * Fixed LP: #989455 (New line syntax element not supported), LP: #940523
@@ -14,7 +15,8 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
     LP: #1005247 (removed infobox code block syntax highlighting), LP: #904443
     (downloading older article revisions), LP: #989451 (Second colon in
     Wikilink breaks syntax), LP: #1014806 (Simple code formatting not
-    supported)
+    supported), LP: #1002816 (all text formats are supported now!), LP:
+    #1011278 (TOC issue with spaces), LP: #1005318 (infobox after styles DL)
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
   * Possibility to set font family for editor.
@@ -25,7 +27,7 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Use hardening flags (using wrapper). New build depencency:
     hardening-wrapper
 
- -- Thorsten Roth <elthoro@gmx.de>  Tue, 19 Jun 2012 19:52:01 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 02 Jul 2012 20:54:53 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
