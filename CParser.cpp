@@ -137,7 +137,7 @@ bool CParser::genOutput( const QString sActFile )
             sHtmlBody += parseMacro(it);
         }
         // Table of contents
-        else if ( it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTOC() + "(", Qt::CaseSensitive) )
+        else if ( it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTOC(), Qt::CaseInsensitive) )
         {
             sHtmlBody += parseTableOfContents(it);
         }
@@ -1438,14 +1438,24 @@ QString CParser::parseTableOfContents( QTextBlock tabofcontents )
 {
     QString sLine = tabofcontents.text();
     QString sOutput("TABLE OF CONTENT");
+    unsigned short nTOCLevel;
+
+    if ( !sLine.endsWith("]]") )
+    {
+        return sLine;
+    }
 
     // Remove brackets
-    sLine.remove("[[" + m_pTemplates->getTransTOC(), Qt::CaseSensitive);
+    sLine.remove("[[" + m_pTemplates->getTransTOC(), Qt::CaseInsensitive);
     sLine.remove("(");
     sLine.remove(")");
+    sLine.remove("]]");
+
+    nTOCLevel = sLine.trimmed().toUShort();
+    qDebug() << "TOC level:" << QString::number( nTOCLevel );
 
     /*
-    if ( sLine == "" || sLine != "1" )
+    if ( nTOCLevel != 1 )
     {
         QMessageBox::information(0, "Information", tr("The preview of table of contents does not supports sub headlines currently.", "Msg: Table of contents does bot support sub headlines"));
     }
