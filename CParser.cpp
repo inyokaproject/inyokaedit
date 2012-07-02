@@ -326,64 +326,157 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
 // REPLACE TEXT FORMATS
 void CParser::replaceTextformat( QTextDocument *p_rawDoc )
 {
-    QRegExp patternTextformat;
-    const QString variableText(".+"); // Any character, minimum 1 char!
     QString sMyDoc = p_rawDoc->toPlainText();
-    int iLength;
-    QString sFormatedText, sTmpRegExp; //, sTmpText;
+    bool bFoundStart;
+
+    QRegExp patternTextformat;
     int myindex;
+    int iLength;
+    QString sFormatedText, sTmpRegExp;
+
+    patternTextformat.setCaseSensitivity( Qt::CaseInsensitive );
+    // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
+    patternTextformat.setMinimal(true);
 
     for( int i = 0; i < m_pTemplates->getListFormatStart().size(); i++ )
     {
-        sTmpRegExp = QRegExp::escape( m_pTemplates->getListFormatStart()[i] ) + variableText +
-                     QRegExp::escape( m_pTemplates->getListFormatEnd()[i] );
+        bFoundStart = true;
 
-        patternTextformat.setPattern(sTmpRegExp);
-
-        // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
-        patternTextformat.setMinimal(true);
-
-        myindex = patternTextformat.indexIn(sMyDoc);
-        while ( myindex >= 0 )
+        // Start and end is not identical
+        if ( m_pTemplates->getListFormatStart()[i] != m_pTemplates->getListFormatEnd()[i] )
         {
-            iLength = patternTextformat.matchedLength();
-            sFormatedText = patternTextformat.cap();
-
-            /*
-            // Hex color
-            if ( sFormatedText.startsWith("[color=#") )
+            if ( !m_pTemplates->getListFormatStart()[i].startsWith("RegExp=") )
             {
-                ...
-            }
-            // Color as word
-            else if ( sFormatedText.startsWith("[color=") )
-            {
-                sFormatedText.remove( m_pTemplates->getListFormatEnd()[i] );
-                sFormatedText.remove( "[color=" );
-                int iBracket = sFormatedText.indexOf("]");
-                sTmpText = sFormatedText;
-                sTmpText.remove( iBracket, sTmpText.length() ); // Remove everything besides color
-                sFormatedText.remove(0, iBracket);
-                sMyDoc.replace( myindex, iLength, QString(m_pTemplates->getListFormatHtmlStart()[i])
-                                .arg(sTmpText) + sFormatedText + m_pTemplates->getListFormatHtmlEnd()[i] );
+                sMyDoc.replace( m_pTemplates->getListFormatStart()[i],
+                                m_pTemplates->getListFormatHtmlStart()[i]);
             }
             else
             {
-            */
-                // Remove syntax element
-                sFormatedText.remove( m_pTemplates->getListFormatStart()[i] );
-                sFormatedText.remove( m_pTemplates->getListFormatEnd()[i] );
-                sMyDoc.replace( myindex, iLength, m_pTemplates->getListFormatHtmlStart()[i] +
-                                sFormatedText + m_pTemplates->getListFormatHtmlEnd()[i] );
-            //}
+                sTmpRegExp = m_pTemplates->getListFormatStart()[i];
+                sTmpRegExp.remove( "RegExp=" );
+                sTmpRegExp = sTmpRegExp.trimmed();
+                patternTextformat.setPattern( sTmpRegExp );
 
-            // Go on with RegExp-Search
-            myindex = patternTextformat.indexIn(sMyDoc, myindex + iLength);
+                myindex = patternTextformat.indexIn( sMyDoc );
+
+                while ( myindex >= 0 )
+                {
+                    QString sCap("");
+                    iLength = patternTextformat.matchedLength();
+                    sFormatedText = patternTextformat.cap();
+                    sCap = patternTextformat.cap(1);
+
+                    if ( sCap == "" ) {
+                        sMyDoc.replace( myindex, iLength,
+                                        m_pTemplates->getListFormatHtmlStart()[i] );
+                    } else {
+                        sMyDoc.replace( myindex, iLength,
+                                        m_pTemplates->getListFormatHtmlStart()[i].arg(sCap) );
+                    }
+
+                    // Go on with RegExp-Search
+                    myindex = patternTextformat.indexIn( sMyDoc, myindex + iLength );
+                }
+            }
+            if ( !m_pTemplates->getListFormatEnd()[i].startsWith("RegExp=") )
+            {
+                sMyDoc.replace( m_pTemplates->getListFormatEnd()[i],
+                                m_pTemplates->getListFormatHtmlEnd()[i]);
+            }
+            else
+            {
+                sTmpRegExp = m_pTemplates->getListFormatEnd()[i];
+                sTmpRegExp.remove( "RegExp=" );
+                sTmpRegExp = sTmpRegExp.trimmed();
+                patternTextformat.setPattern( sTmpRegExp );
+
+                myindex = patternTextformat.indexIn( sMyDoc );
+
+                while ( myindex >= 0 )
+                {
+                    QString sCap("");
+                    iLength = patternTextformat.matchedLength();
+                    sFormatedText = patternTextformat.cap();
+                    sCap = patternTextformat.cap(1);
+
+                    if ( sCap == "" ) {
+                        sMyDoc.replace( myindex, iLength,
+                                        m_pTemplates->getListFormatHtmlEnd()[i] );
+                    } else {
+                        sMyDoc.replace( myindex, iLength,
+                                        m_pTemplates->getListFormatHtmlEnd()[i].arg(sCap) );
+                    }
+
+                    // Go on with RegExp-Search
+                    myindex = patternTextformat.indexIn( sMyDoc, myindex + iLength );
+                }
+            }
+        }
+        // Start and end is identical
+        else
+        {
+            if ( !m_pTemplates->getListFormatStart()[i].startsWith("RegExp=") )
+            {
+                while ( -1 != sMyDoc.indexOf( m_pTemplates->getListFormatStart()[i] ) )
+                {
+                    if ( bFoundStart ) {
+                        sMyDoc.replace( sMyDoc.indexOf( m_pTemplates->getListFormatStart()[i]),
+                                        m_pTemplates->getListFormatStart()[i].length(),
+                                        m_pTemplates->getListFormatHtmlStart()[i]);
+                    } else {
+                        sMyDoc.replace( sMyDoc.indexOf( m_pTemplates->getListFormatStart()[i]),
+                                        m_pTemplates->getListFormatStart()[i].length(),
+                                        m_pTemplates->getListFormatHtmlEnd()[i]);
+                    }
+                    bFoundStart = !bFoundStart;
+                }
+            }
+            else
+            {
+                sTmpRegExp = m_pTemplates->getListFormatStart()[i];
+                sTmpRegExp.remove( "RegExp=" );
+                sTmpRegExp = sTmpRegExp.trimmed();
+                patternTextformat.setPattern( sTmpRegExp );
+
+                myindex = patternTextformat.indexIn( sMyDoc );
+
+                while ( myindex >= 0 )
+                {
+                    QString sCap("");
+                    iLength = patternTextformat.matchedLength();
+                    sFormatedText = patternTextformat.cap();
+                    sCap = patternTextformat.cap(1);
+
+                    if ( sCap == "" )
+                    {
+                        if ( bFoundStart ) {
+                            sMyDoc.replace( myindex, iLength,
+                                            m_pTemplates->getListFormatHtmlStart()[i] );
+                        } else {
+                            sMyDoc.replace( myindex, iLength,
+                                            m_pTemplates->getListFormatHtmlEnd()[i] );
+                        }
+                    }
+                    else
+                    {
+                        if ( bFoundStart ) {
+                            sMyDoc.replace( myindex, iLength,
+                                            m_pTemplates->getListFormatHtmlStart()[i].arg(sCap) );
+                        } else {
+                            sMyDoc.replace( myindex, iLength,
+                                            m_pTemplates->getListFormatHtmlEnd()[i].arg(sCap) );
+                        }
+                    }
+
+                    // Go on with RegExp-Search
+                    myindex = patternTextformat.indexIn( sMyDoc, myindex + iLength );
+                }
+            }
         }
     }
 
     // Replace p_rawDoc with document with formated text
-    p_rawDoc->setPlainText(sMyDoc);
+    p_rawDoc->setPlainText( sMyDoc );
 }
 
 // -----------------------------------------------------------------------------------------------
