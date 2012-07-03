@@ -61,7 +61,9 @@ public:
     CTextEditor( Ui::CInyokaEdit *pGUI,
                  bool bCompleter,
                  QStringList sListTplMacros,
-                 QWidget *parent = 0 );
+                 unsigned short nAutosave,
+                 QString sUserAppDir,
+                 QWidget *pParent = 0 );
     ~CTextEditor();
 
     void setCompleter( QCompleter *c );
@@ -73,8 +75,11 @@ protected:
 
 private slots:
     void insertCompletion( const QString &completion );
+    void saveArticleAuto();
 
 private:
+    QTimer *m_pTimerAutosave;
+    QString m_UserAppDir;
     QString textUnderCursor() const;
     QCompleter *m_pCompleter;
     bool m_bCodeCompState;

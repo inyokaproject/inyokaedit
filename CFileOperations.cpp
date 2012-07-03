@@ -244,6 +244,7 @@ bool CFileOperations::saveFile( const QString &sFileName )
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
     out << m_pEditor->toPlainText();
+    file.close();
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif

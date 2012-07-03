@@ -70,6 +70,8 @@ void CSettings::readSettings()
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
     m_bCheckLinks = mySettingsObject->value("CheckLinks", false).toBool();
     m_sTemplateLang = mySettingsObject->value("TemplateLanguage", "de").toString();
+    QString sAutosave = mySettingsObject->value("AutoSave", "300").toString();
+    m_nAutosave = sAutosave.toUShort();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -138,6 +140,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
     mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
     mySettingsObject->setValue("TemplateLanguage", m_sTemplateLang);
+    mySettingsObject->setValue("AutoSave", QString::number(m_nAutosave));
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -236,6 +239,11 @@ bool CSettings::getCheckLinks() const
 QString CSettings::getTemplateLanguage() const
 {
     return m_sTemplateLang;
+}
+
+unsigned short CSettings::getAutoSave() const
+{
+    return m_nAutosave;
 }
 
 // ----------------------------------------------------

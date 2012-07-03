@@ -132,7 +132,10 @@ void CInyokaEdit::createObjects()
     m_pEditor = new CTextEditor( m_pUi,
                                  m_pSettings->getCodeCompletion(),
                                  m_pTemplates->getListTplMacros(),
+                                 m_pSettings->getAutoSave(),
+                                 m_UserAppDir.absolutePath(),
                                  this );
+
 //  if ( true == m_pSettings->getPreviewAlongside() )
 //  {
     m_pEditor->installEventFilter(this);

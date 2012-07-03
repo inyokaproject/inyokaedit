@@ -57,8 +57,11 @@
 CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
                           bool bCompleter,
                           QStringList sListTplMacros,
+                          unsigned short nAutosave,
+                          QString sUserAppDir,
                           QWidget *pParent )
     : QTextEdit( pParent ),
+      m_UserAppDir( sUserAppDir ),
       m_bCodeCompState( bCompleter ),
       m_sListCompleter( sListTplMacros )
 {
@@ -117,12 +120,25 @@ CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
     connect( this->document(), SIGNAL(contentsChanged()),
              pParent, SLOT( documentWasModified()) );
 
+    // Install auto save timer
+    if ( 0 != nAutosave )
+    {
+        m_pTimerAutosave = new QTimer;
+        m_pTimerAutosave->setInterval( nAutosave * 1000 );  // nAutoSave = time in seconds
+        connect ( m_pTimerAutosave, SIGNAL(timeout()),
+                  this, SLOT(saveArticleAuto()) );
+        m_pTimerAutosave->start();
+    }
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CTextEditor::~CTextEditor()
 {
 }
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 
 void CTextEditor::setCompleter( QCompleter *completer )
 {
@@ -144,10 +160,16 @@ void CTextEditor::setCompleter( QCompleter *completer )
                       this, SLOT(insertCompletion(QString)) );
 }
 
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
 QCompleter *CTextEditor::completer() const
 {
     return m_pCompleter;
 }
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 
 void CTextEditor::insertCompletion( const QString& completion )
 {
@@ -162,12 +184,18 @@ void CTextEditor::insertCompletion( const QString& completion )
     setTextCursor(tc);
 }
 
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
 QString CTextEditor::textUnderCursor() const
 {
     QTextCursor tc = textCursor();
     tc.select(QTextCursor::WordUnderCursor);
     return tc.selectedText();
 }
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 
 void CTextEditor::focusInEvent( QFocusEvent *e )
 {
@@ -176,6 +204,9 @@ void CTextEditor::focusInEvent( QFocusEvent *e )
     }
     QTextEdit::focusInEvent(e);
 }
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 
 void CTextEditor::keyPressEvent( QKeyEvent *e )
 {
@@ -236,4 +267,26 @@ void CTextEditor::keyPressEvent( QKeyEvent *e )
                 + m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
     m_pCompleter->complete(cr); // popup it up!
 
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CTextEditor::saveArticleAuto()
+{
+    QFile fAutoSave( m_UserAppDir + "/AutoSave.bak~" );
+    QTextStream outStream( &fAutoSave );
+
+    outStream.setCodec( "UTF-8" );
+    outStream.setAutoDetectUnicode( true );
+
+    // No write permission
+    if ( !fAutoSave.open(QFile::WriteOnly | QFile::Text) )
+    {
+        qWarning() << "Could not open AutoSave.bak file!";
+        return;
+    }
+
+    outStream << this->toPlainText();
+    fAutoSave.close();
 }

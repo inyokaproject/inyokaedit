@@ -62,6 +62,7 @@ public:
     QString getSpellCheckerLanguage() const;
     bool getCheckLinks() const;
     QString getTemplateLanguage() const;
+    unsigned short getAutoSave() const;
 
     // Font
     QFont getEditorFont() const;
@@ -90,6 +91,7 @@ private:
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
     QString m_sTemplateLang;
+    unsigned short m_nAutosave;
 
     // Font
     QFont m_EditorFont;
