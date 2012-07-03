@@ -16,7 +16,8 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
     (downloading older article revisions), LP: #989451 (Second colon in
     Wikilink breaks syntax), LP: #1014806 (Simple code formatting not
     supported), LP: #1002816 (all text formats are supported now!), LP:
-    #1011278 (TOC issue with spaces), LP: #1005318 (infobox after styles DL)
+    #1011278 (TOC issue with spaces), LP: #1005318 (infobox after styles DL),
+    LP: #979298 (autosave file)
   * Added game info box to toolbar combobox.
   * Added new interwiki links.
   * Possibility to set font family for editor.
@@ -27,7 +28,7 @@ inyokaedit (0.5.0-0ubuntu1) precise; urgency=low
   * Use hardening flags (using wrapper). New build depencency:
     hardening-wrapper
 
- -- Thorsten Roth <elthoro@gmx.de>  Mon, 02 Jul 2012 20:54:53 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Tue, 03 Jul 2012 17:05:41 +0200
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
