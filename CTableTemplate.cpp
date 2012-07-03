@@ -47,6 +47,7 @@ CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                                 QWidget *pParent )
     : QDialog(pParent)
     , m_pEditor(pEditor)
+    , m_dirPreview(tmpFileOutputDir)
     , m_pTextDocument(new QTextDocument(this))
     , m_pTemplates(pTemplates)
 {
@@ -79,9 +80,6 @@ CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                              sListIWikiUrl,
                              pSettings,
                              m_pTemplates );
-
-    connect( m_pParser, SIGNAL(callShowPreview(QString)),
-                this, SLOT(tableParseFinished(QString)) );
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }
@@ -116,36 +114,13 @@ void CTableTemplate::preview(){
     this->generateTable();
     m_pTextDocument->setPlainText(m_sTableString);
 
-    m_pParser->genOutput("");
+    QString sRetHtml = m_pParser->genOutput("");
+    // Remove for preview useless elements
+    sRetHtml.remove( QRegExp("<h1 class=\"pagetitle\">.*</h1>") );
+    sRetHtml.remove( QRegExp("<p class=\"meta\">.*</p>") );
+    sRetHtml.replace( "</style>", "#page table{margin:0px;}</style>");
 
-    qDebug() << "Stop" << Q_FUNC_INFO;
-}
-
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
-
-void CTableTemplate::tableParseFinished(QString sHtmlFilePath){
-    qDebug() << "Start" << Q_FUNC_INFO;
-
-    QFile file(sHtmlFilePath);
-    if ( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        QMessageBox::warning( 0, "Warning", tr("Could not load table preview!") );
-        qWarning() << "Could not open table preview:" << sHtmlFilePath;
-    }
-    else
-    {
-        QString sContent( file.readAll() );
-
-        // Remove for preview useless elements
-        sContent.remove( QRegExp("<h1 class=\"pagetitle\">.*</h1>") );
-        sContent.remove( QRegExp("<p class=\"meta\">.*</p>") );
-        sContent.replace( "</style>", "#page table{margin:0px;}</style>");
-
-        QFileInfo fi(file);
-        m_pUi->previewBox->setHtml( sContent, QUrl::fromLocalFile(fi.absoluteFilePath()) );
-        file.close();
-    }
+    m_pUi->previewBox->setHtml( sRetHtml, QUrl::fromLocalFile(m_dirPreview.absolutePath() + "/") );
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }

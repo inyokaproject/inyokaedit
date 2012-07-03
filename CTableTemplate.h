@@ -29,6 +29,7 @@
 
 #include <QtGui/QDialog>
 #include <QString>
+#include <QDir>
 
 namespace Ui{
 	class CTableTemplateClass;
@@ -69,8 +70,6 @@ public slots:
     /** \brief Open dialog */
     void newTable();
 
-    void tableParseFinished( QString sHtmlTable );
-
 private slots:
     /** \brief Show preview */
     void preview();
@@ -85,6 +84,7 @@ private:
     Ui::CTableTemplateClass *m_pUi;
 
     CTextEditor *m_pEditor;
+    QDir m_dirPreview;
     CParser *m_pParser;
 
     QString m_sTableString;
