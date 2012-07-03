@@ -197,10 +197,6 @@ void CInyokaEdit::setupEditor()
     m_findDialog->setTextEdit(m_pEditor);
     m_findReplaceDialog->setTextEdit(m_pEditor);
 
-    // Connect signals from parser with functions
-    connect( m_pParser, SIGNAL(callShowPreview(QString)),
-             this, SLOT(showHtmlPreview(QString)) );
-
     connect( m_pFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
              m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)) );
 
@@ -779,7 +775,8 @@ void CInyokaEdit::createToolBars()
 void CInyokaEdit::previewInyokaPage( const int nIndex )
 {
     // Call parser if iIndex == index of m_pWebview -> Click on tab preview
-    // or if iIndex == 999 -> Default parameter value when calling the function (e.g.) by clicking on button preview
+    // or if iIndex == 999 -> Default parameter value when calling the function
+    // e.g. by clicking on button preview
     if ( m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame) == nIndex || 999 == nIndex )
     {
         // Only disable buttons if preview is not shown alongside editor
@@ -801,14 +798,47 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
             m_pUi->printPreviewAct->setEnabled(true);
         }
 
-        if ( "" == m_pFileOperations->getCurrentFile() || tr("Untitled") == m_pFileOperations->getCurrentFile() )
+        m_pWebview->history()->clear();  // Clear history (clicked links)
+
+        QString sRetHTML;
+        if ( "" == m_pFileOperations->getCurrentFile() ||
+             tr("Untitled") == m_pFileOperations->getCurrentFile() )
         {
-            m_pParser->genOutput("");
+            sRetHTML = m_pParser->genOutput("");
         }
         else
         {
-            QFileInfo fi(m_pFileOperations->getCurrentFile());
-            m_pParser->genOutput(fi.fileName());
+            QFileInfo fi( m_pFileOperations->getCurrentFile() );
+            sRetHTML = m_pParser->genOutput( fi.fileName() );
+        }
+
+        // File for temporary html output
+        QFile tmphtmlfile( m_UserAppDir.absolutePath() + "/tmpinyoka.html" );
+
+        // No write permission
+        if ( !tmphtmlfile.open(QFile::WriteOnly | QFile::Text) )
+        {
+            QMessageBox::warning(this, m_pApp->applicationName(), tr("Could not create temporary HTML file!"));
+            return;
+        }
+
+        // Stream for output in file
+        QTextStream tmpoutputstream(&tmphtmlfile);
+        tmpoutputstream.setCodec("UTF-8");
+        tmpoutputstream.setAutoDetectUnicode(true);
+
+        // Write HTML code into output file
+        tmpoutputstream << sRetHTML;
+        tmphtmlfile.close();
+
+        if ( false == m_pSettings->getPreviewInEditor() )
+        {
+            // Open html-file in system web browser
+            QDesktopServices::openUrl( QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()) );
+        }
+        else
+        {
+            m_pWebview->load( QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()) );
         }
     }
     else
@@ -1114,20 +1144,6 @@ void CInyokaEdit::displayArticleText( const QString &sArticleText, const QString
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
-void CInyokaEdit::showHtmlPreview( const QString &sFilename )
-{
-    m_pWebview->history()->clear();  // Clear history (clicked links)
-
-    if ( false == m_pSettings->getPreviewInEditor() )
-    {
-        // Open html-file in system web browser
-        QDesktopServices::openUrl( QUrl::fromLocalFile(sFilename) );
-    }
-    else
-    {
-        m_pWebview->load( QUrl::fromLocalFile(sFilename) );
-    }
-}
 
 // Wait until loading has finished
 void CInyokaEdit::loadPreviewFinished( bool bSuccess )

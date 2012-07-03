@@ -99,12 +99,6 @@ public slots:
     void documentWasModified();
 
     /**
-    * \brief Call preview
-    * \param sFilename Name of temporarily generated html file
-    */
-    void showHtmlPreview( const QString &sFilename );
-
-    /**
     * \brief Update text in editor with downloaded article
     * \param sArticleText Raw text
     * \param sSitename Name of downloaded site

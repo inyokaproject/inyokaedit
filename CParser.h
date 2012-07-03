@@ -67,10 +67,7 @@ public:
     void replaceTemplates( QTextDocument *p_rawDoc );
 
     // Starts generating HTML-code
-    bool genOutput( const QString sActFile );
-
-signals:
-    void callShowPreview( const QString & );
+    QString genOutput( QString sActFile) ;
 
 private:
     //void replaceTemplates( QTextDocument *p_rawDoc );
@@ -102,7 +99,7 @@ private:
     QString insertBox( const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "" );
 
     // Text from editor
-    QTextDocument *m_pRawText, *m_pCopyOfrawText;
+    QTextDocument *m_pRawText;
 
     CParseLinks *m_pLinkParser;
 

@@ -49,9 +49,6 @@ CParser::CParser( QTextDocument *pRawDocument,
                                      m_pSettings->getCheckLinks(),
                                      m_pTemplates->getTransAnchor() );
 
-   // emit sendHighlightingKeywords();
-
-
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -68,66 +65,45 @@ CParser::~CParser()
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-bool CParser::genOutput( const QString sActFile )
+QString CParser::genOutput( QString sActFile )
 {
-    // File for temporary html output
-    QFile tmphtmlfile(m_tmpFileDir.absolutePath() + "/tmpinyoka.html");
-
-    // No write permission
-    if ( !tmphtmlfile.open(QFile::WriteOnly | QFile::Text) )
-    {
-        QMessageBox::warning(0, "Warning", tr("Could not create temporary HTML file!"));
-        return false;
-    }
-
-    // Stream for output in file
-    QTextStream tmpoutputstream(&tmphtmlfile);
-    tmpoutputstream.setCodec("UTF-8");
-    tmpoutputstream.setAutoDetectUnicode(true);
-
-    // File name
-    QFileInfo fi(sActFile);
-    QString sFilename;
-    if (sActFile == "") {
-        sFilename = tr("Untitled", "No file name set");
-    } else {
-        sFilename = fi.fileName();
-    }
+    QString sHtmlBody("");
+    QString sWikitags("");
+    QString sSample("");
+    QTextBlock it;
 
     // Need a copy otherwise text in editor will be changed
-    m_pCopyOfrawText = m_pRawText->clone();
+    QTextDocument *p_docCopyOfRawText = m_pRawText->clone();
 
     // Replace macros with Inyoka markup templates
     //this->replaceTemplates( m_pRawText );
 
     // Replace all links
-    m_pLinkParser->startParsing( m_pCopyOfrawText );
+    m_pLinkParser->startParsing( p_docCopyOfRawText );
 
     // Replace text format
-    this->replaceTextformat( m_pCopyOfrawText );
+    this->replaceTextformat( p_docCopyOfRawText );
 
     // Replace flags
-    this->replaceFlags( m_pCopyOfrawText );
+    this->replaceFlags( p_docCopyOfRawText );
 
     // Replace keys
-    this->replaceKeys( m_pCopyOfrawText );
+    this->replaceKeys( p_docCopyOfRawText );
 
     // Replace images
-    this->replaceImages( m_pCopyOfrawText );
+    this->replaceImages( p_docCopyOfRawText );
 
     // Replace breaks (\\ or [[BR]])
-    this->replaceBreaks( m_pCopyOfrawText );
+    this->replaceBreaks( p_docCopyOfRawText );
 
     // Replace horizontal line (----)
-    this->replaceHorLine( m_pCopyOfrawText );
+    this->replaceHorLine( p_docCopyOfRawText );
 
-    // Get first text block
-    QTextBlock it = m_pCopyOfrawText->firstBlock();
-    QString sHtmlBody, sWikitags;
-    QString sSample;
 
     // Go through each text block and call depending parse function
-    for( ; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it); it = it.next() )
+    for( it = p_docCopyOfRawText->firstBlock();
+         it.isValid() && !(p_docCopyOfRawText->lastBlock() < it);
+         it = it.next() )
     {
         // Macro samples
         if ( it.text().trimmed().startsWith("[[" + m_pTemplates->getTransTemplate() + "(", Qt::CaseSensitive) &&
@@ -157,7 +133,7 @@ bool CParser::genOutput( const QString sActFile )
         {
             sSample = it.text();
             it = it.next();
-            for ( ; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next() )
+            for ( ; it.isValid() && !(p_docCopyOfRawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next() )
             {
                 sSample += "§" + it.text();
             }
@@ -180,7 +156,7 @@ bool CParser::genOutput( const QString sActFile )
             else
             {
                 it = it.next();
-                for ( ; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next() )
+                for ( ; it.isValid() && !(p_docCopyOfRawText->lastBlock() < it) && it.text().trimmed() != "}}}"; it = it.next() )
                 {
                     sSample += "§" + it.text();
                     if ( it.text().endsWith("}}}") )
@@ -196,7 +172,7 @@ bool CParser::genOutput( const QString sActFile )
         {
             sSample = it.text();
             it = it.next();
-            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it) && it.text().trimmed() != ")]]"; it = it.next()){
+            for (; it.isValid() && !(p_docCopyOfRawText->lastBlock() < it) && it.text().trimmed() != ")]]"; it = it.next()){
                 sSample += "§" + it.text();
             }
             sHtmlBody += parseImageCollection(sSample);
@@ -206,7 +182,7 @@ bool CParser::genOutput( const QString sActFile )
             sSample = it.text();
             it = it.next();
             QTextBlock tmpBlock = it;  // Next to last block
-            for (; it.isValid() && !(m_pCopyOfrawText->lastBlock() < it); it = it.next()){
+            for (; it.isValid() && !(p_docCopyOfRawText->lastBlock() < it); it = it.next()){
 
                 if (it.text().trimmed().startsWith("* ") || it.text().trimmed().startsWith("1. ")){
                     sSample += "§" + it.text();
@@ -217,7 +193,7 @@ bool CParser::genOutput( const QString sActFile )
                     break;
                 }
 
-                if (it == m_pCopyOfrawText->lastBlock())
+                if ( it == p_docCopyOfRawText->lastBlock() )
                     break;
             }
             sHtmlBody += parseList(sSample);
@@ -232,6 +208,15 @@ bool CParser::genOutput( const QString sActFile )
         }
     }
 
+    // File name
+    QFileInfo fi( sActFile );
+    QString sFilename;
+    if ( sActFile == "" ) {
+        sFilename = tr("Untitled", "No file name set");
+    } else {
+        sFilename = fi.fileName();
+    }
+
     // Replace template tags
     QString sTemplateCopy( m_pTemplates->getPreviewTemplate() );  // Copy needed, otherwise %tags% will be replaced/removed in template!
     sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
@@ -239,16 +224,9 @@ bool CParser::genOutput( const QString sActFile )
     sRevTextCopy= sRevTextCopy.replace("%date%", QDate::currentDate().toString("dd.MM.yyyy")).replace("%time%", QTime::currentTime().toString("hh:mm"));
     sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
     sTemplateCopy = sTemplateCopy.replace("%tagtext%", m_pTemplates->getTransTag() + " " + sWikitags);
+    sTemplateCopy = sTemplateCopy.replace("%content%", sHtmlBody);
 
-    // Write HTML code into output file
-    tmpoutputstream << sTemplateCopy.replace("%content%", sHtmlBody);
-
-    tmphtmlfile.close();
-
-    // Call showPreview function from CInyokaEdit
-    emit callShowPreview(QFileInfo(tmphtmlfile).filePath());
-
-    return true;
+    return sTemplateCopy;
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -1436,7 +1414,7 @@ void CParser::replaceHorLine( QTextDocument *p_rawDoc )
 // Create table of contents
 QString CParser::parseTableOfContents( QTextBlock tabofcontents )
 {
-    QString sLine = tabofcontents.text();
+    QString sLine = tabofcontents.text().trimmed();
     QString sOutput("TABLE OF CONTENT");
     unsigned short nTOCLevel;
 
