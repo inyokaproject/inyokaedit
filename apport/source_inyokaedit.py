@@ -6,4 +6,3 @@ def add_info(report, ui=None):
         report['ThirdParty'] = 'True'
         report['CrashDB'] = 'inyokaedit'
         attach_file_if_exists(report, os.getenv("HOME") + '/.InyokaEdit/Debug.log', key='Debug.log')
-        attach_file_if_exists(report, os.getenv("HOME") + '/.InyokaEdit/Trolltech.conf', key='Trolltech.conf')
