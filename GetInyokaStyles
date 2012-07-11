@@ -140,6 +140,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikibooks.pn
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikimedia.png -O wikimedia.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia.png -O wikipedia.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia_en.png -O wikipedia_en.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/xfcedocs.png -O xfcedocs.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/xubuntu.png -O xubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/youtube.png -O youtube.png
 
