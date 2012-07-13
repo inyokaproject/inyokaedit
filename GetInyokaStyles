@@ -116,6 +116,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/linuxgaming.
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lpuser.png -O lpuser.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lubuntu.png -O lubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ml.png -O ml.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/moddb.png -O moddb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/mythbuntu.png -O mythbuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/omgubuntu.png -O omgubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/osm.png -O osm.png
