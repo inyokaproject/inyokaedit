@@ -63,6 +63,8 @@
     <iwikilink type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />
     <iwikilink type="playdeb" url="http://www.playdeb.net/software/" name="PlayDeb" icon="playdeb.png" />
     <iwikilink type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
+    <iwikilink type="sourceforge2" url="http://$PAGE.sourceforge.net" name="Sourceforge 2" icon="sourceforge2.png" />
+    <iwikilink type="debianbug" url="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=" name="Debian Bugs" icon="debianbug.png" />
   </group>
   <group name="Misc" icon="youtube.png">
     <iwikilink type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />

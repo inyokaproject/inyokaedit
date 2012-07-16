@@ -278,21 +278,32 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
 
                     if ( sListLink.size() >= 3 )
                     {
+                        QString sTmpUrl( m_sListInterwikiLink[ m_sListInterwikiKey.indexOf(sListLink[0]) ] );
+                        // Check for iWikilink with $Page
+                        if( sTmpUrl.contains("$Page", Qt::CaseInsensitive) )
+                        {
+                            sTmpUrl.replace( "$Page", sListLink[1], Qt::CaseInsensitive );
+                        }
+                        else {
+                            sTmpUrl.append( sListLink[1] );
+                        }
+
+                        // Default: Description = sitename
+                        QString sTmpDescr( sListLink[1] );
+
                         // With description
                         if (sListLink[2] != "")
                         {
-                            QString sTempDescription(sListLink[2]);
+                            sTmpDescr = sListLink[2];
                             // Append description with ":" if any exist
                             for (int i = 3; i < sListLink.size(); i++) {
-                                sTempDescription.append(":" + sListLink[i]);
+                                sTmpDescr.append(":" + sListLink[i]);
                             }
-                            sMyDoc.replace(nIndex, nLength, "<a href=\"" + m_sListInterwikiLink[ m_sListInterwikiKey.indexOf( sListLink[0] ) ] + sListLink[1] + "\" class=\"" + sClass + "\">" + sTempDescription + "</a>");
                         }
-                        // Without description
-                        else
-                        {
-                            sMyDoc.replace(nIndex, nLength, "<a href=\"" + m_sListInterwikiLink[ m_sListInterwikiKey.indexOf( sListLink[0] ) ] + sListLink[1] + "\" class=\"" + sClass + "\">" + sListLink[1] + "</a>");
-                        }
+
+                        // Replace link
+                        sMyDoc.replace(nIndex, nLength, "<a href=\"" + sTmpUrl + "\" class=\"" +
+                                       sClass + "\">" + sTmpDescr + "</a>");
                     }
                 }
 
