@@ -14,7 +14,6 @@
     <iwikilink type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
     <iwikilink type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
     <iwikilink type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
-    <iwikilink type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
     <iwikilink type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
     <iwikilink type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
     <iwikilink type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />

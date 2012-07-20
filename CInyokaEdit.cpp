@@ -1429,16 +1429,31 @@ void CInyokaEdit::documentWasModified()
 // About info box
 void CInyokaEdit::about()
 {
-    QMessageBox::about(this, tr("About %1", "About dialog <sAppName>").arg( m_pApp->applicationName() ),
-                       tr("<b>%1</b> - Editor for Inyoka-based portals<br />"
-                          "Version: %2<br /><br />"
-                          "&copy; 2011-2012, The %3 developers<br />"
-                          "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a><br /><br />"
-                          "This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.",
-                          "About dialog text, <sAppName>, <sAppVersion>, <sAppName>")
-                       .arg(m_pApp->applicationName())
-                       .arg(m_pApp->applicationVersion())
-                       .arg(m_pApp->applicationName()));
+    QString sUserIcon("");
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png") )
+    {
+        sUserIcon = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png";
+    }
+    // No installation: Use app path
+    else
+    {
+        sUserIcon =  m_pApp->applicationDirPath() + "/iWikiLinks/user.png";
+    }
+
+    QMessageBox::about(
+                this, tr("About %1", "About dialog <sAppName>").arg( m_pApp->applicationName() ),
+                tr("<p><b>%1</b> - Editor for Inyoka-based portals<br />"
+                   "Version: %2</p>"
+                   "<p>&copy; 2011-2012, The %3 developers<br />"
+                   "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
+                   "<p>Special thanks to <img src=\"%4\" /> bubi97, <img src=\"%4\" /> Lasall, <img src=\"%4\" /> Shakesbier"
+                   " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a></p>"
+                   "<p>This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.</p>",
+                   "About dialog text, <sAppName>, <sAppVersion>, <sAppName>, <sUserIcon>")
+                .arg(m_pApp->applicationName())
+                .arg(m_pApp->applicationVersion())
+                .arg(m_pApp->applicationName())
+                .arg(sUserIcon) );
 }
 
 // -----------------------------------------------------------------------------------------------
