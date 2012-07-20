@@ -26,6 +26,8 @@
 
 #include "CTemplates.h"
 
+extern bool bDebug;
+
 CTemplates::CTemplates( const QString sAppName,
                         const QString sAppPath,
                         const QString sTplLang )
@@ -61,7 +63,8 @@ void CTemplates::initTemplates()
     QString tmpLine("");
 
     // Path from normal installation
-    if ( TplDir.exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang) )
+    if ( TplDir.exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang)
+         && !bDebug )
     {
         TplDir.setPath( "/usr/share/" +m_sAppName.toLower() + "/templates/" + m_sTplLang );
     }
@@ -133,7 +136,8 @@ void CTemplates::initHtmlTpl( const QString sTplFile )
     QFile  HTMLTplFile( sTplFile );
 
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName()) )
+    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName())
+         && !bDebug )
     {
         HTMLTplFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName());
     }
@@ -169,7 +173,8 @@ void CTemplates::initFlags( const QString sFilename )
     QFile flagsFile( sFilename );
 
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + flagsFile.fileName()) )
+    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + flagsFile.fileName())
+         && !bDebug )
     {
         flagsFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" + flagsFile.fileName());
     }
@@ -213,7 +218,8 @@ void CTemplates::initTextformats( const QString sFilename )
     QStringList sListInput;
 
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + formatsFile.fileName()) )
+    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + formatsFile.fileName())
+         && !bDebug )
     {
         formatsFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" + formatsFile.fileName());
     }
@@ -268,7 +274,8 @@ void CTemplates::initTranslations( const QString sFilename )
     QFile translFile;
 
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang + "/" + sFilename) )
+    if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang + "/" + sFilename)
+         && !bDebug )
     {
         translFile.setFileName( "/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang + "/" + sFilename );
     }

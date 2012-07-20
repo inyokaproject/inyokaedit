@@ -86,7 +86,8 @@ int main( int argc, char *argv[] )
     // Load global translation
     QTranslator qtTranslator;
     // Try to load Qt translation
-    if ( !qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
+    if ( !qtTranslator.load("qt_" + QLocale::system().name(),
+                            QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
     {
         // If it fails search in application dircetory
         qtTranslator.load( "qt_" + QLocale::system().name(), app.applicationDirPath() + "/lang" );
@@ -96,10 +97,12 @@ int main( int argc, char *argv[] )
     // Load app translation if it exists
     QTranslator myAppTranslator;
     // Try to load app translation (normal installation)
-    if ( !myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(), "/usr/share/" + app.applicationName().toLower() + "/lang") )
+    if ( !myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(),
+                               "/usr/share/" + app.applicationName().toLower() + "/lang") )
     {
         // If it fails search in application dircetory
-        qtTranslator.load( app.applicationName().toLower() + "_"  + QLocale::system().name(), app.applicationDirPath() + "/lang" );
+        qtTranslator.load( app.applicationName().toLower() + "_"  + QLocale::system().name(),
+                           app.applicationDirPath() + "/lang" );
     }
     app.installTranslator( &myAppTranslator );
 

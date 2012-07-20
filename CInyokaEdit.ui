@@ -167,6 +167,7 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="showSyntaxOverviewAct"/>
     <addaction name="reportBugAct"/>
     <addaction name="aboutAct"/>
    </widget>
@@ -282,7 +283,7 @@
      <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
    </property>
    <property name="text">
-    <string>Report bug</string>
+    <string>Report &amp;bug</string>
    </property>
    <property name="toolTip">
     <string>Report a bug - For this a launchpad account is needed!</string>
@@ -294,7 +295,7 @@
      <normaloff>:/images/question.png</normaloff>:/images/question.png</iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
    <property name="toolTip">
     <string>Shows the about box of this application</string>
@@ -826,6 +827,11 @@
   <action name="insertTableAct">
    <property name="text">
     <string>Table...</string>
+   </property>
+  </action>
+  <action name="showSyntaxOverviewAct">
+   <property name="text">
+    <string>&amp;Syntax overview</string>
    </property>
   </action>
  </widget>

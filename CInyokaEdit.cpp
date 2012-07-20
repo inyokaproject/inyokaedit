@@ -30,6 +30,8 @@
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
+bool bDebug = true;
+
 CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent ) :
     QMainWindow(parent),
     m_pUi( new Ui::CInyokaEdit ),
@@ -593,7 +595,8 @@ void CInyokaEdit::createActions()
         for ( int j = 0; j < m_pInterWikiLinks->getInterwikiLinksNames()[i].size(); j++ )
         {
             // Path from normal installation
-            if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks") )
+            if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
+                 && !bDebug )
             {
                 m_iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksIcons()[i][j]), m_pInterWikiLinks->getInterwikiLinksNames()[i][j], this);
             }
@@ -614,6 +617,10 @@ void CInyokaEdit::createActions()
 
     // ---------------------------------------------------------------------------------------------
     // ABOUT MENU
+
+    // Show syntax overview
+    connect( m_pUi->showSyntaxOverviewAct, SIGNAL(triggered()),
+             this, SLOT(showSyntaxOverview()) );
 
     // Report a bug using apport
     connect( m_pUi->reportBugAct, SIGNAL(triggered()),
@@ -637,9 +644,12 @@ void CInyokaEdit::createMenus()
     QDir articleTemplateDir("");
 
     // File menu (new from template)
-    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" + m_pSettings->getTemplateLanguage() + "/articles"))
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() +
+                       "/templates/" + m_pSettings->getTemplateLanguage() + "/articles")
+         && !bDebug )
     {
-        articleTemplateDir.setPath("/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" + m_pSettings->getTemplateLanguage() + "/articles");
+        articleTemplateDir.setPath("/usr/share/" + m_pApp->applicationName().toLower() +
+                                   "/templates/" + m_pSettings->getTemplateLanguage() + "/articles");
     }
     // No installation: Use app path
     else
@@ -688,7 +698,8 @@ void CInyokaEdit::createMenus()
     for ( int i = 0; i < m_pInterWikiLinks->getInterwikiLinksGroups().size(); i++ )
     {
         // Path from normal installation
-        if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks") )
+        if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
+             && !bDebug )
         {
             m_iWikiGroups.append( m_pUi->iWikiMenu->addMenu(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksGroupIcons()[i]), m_pInterWikiLinks->getInterwikiLinksGroups()[i]) );
         }
@@ -1307,12 +1318,12 @@ void CInyokaEdit::checkSpelling()
     QString sDictPath("");
 
     // Standard path for Hunspell (Linux only)
-    if ( QDir("/usr/share/hunspell").exists() )
+    if ( QDir("/usr/share/hunspell").exists() && !bDebug )
     {
         sDictPath = "/usr/share/hunspell/" + m_pSettings->getSpellCheckerLanguage();
     }
     // Otherwise look for MySpell dictionary (Linx only)
-    else if ( QDir("/usr/share/myspell/dicts").exists() )
+    else if ( QDir("/usr/share/myspell/dicts").exists() && !bDebug )
     {
         sDictPath = "/usr/share/myspell/dicts/" + m_pSettings->getSpellCheckerLanguage();
     }
@@ -1383,6 +1394,57 @@ void CInyokaEdit::deleteTempImages()
 }
 
 // -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+// Set modified flag for window
+void CInyokaEdit::documentWasModified()
+{
+    m_pTabwidgetRawPreview->setCurrentIndex( m_pTabwidgetRawPreview->indexOf(m_pEditor) );
+    this->setWindowModified( m_pEditor->document()->isModified() );
+}
+
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::showSyntaxOverview()
+{
+    QDialog* dialog = new QDialog( this, this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
+    QGridLayout* layout = new QGridLayout(dialog);
+    QDialogButtonBox* button = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, dialog);
+    connect(button, SIGNAL(rejected()), dialog, SLOT(reject()));
+    QWebView* webview = new QWebView();
+    QTextDocument* pTextDocument = new QTextDocument(this);
+
+    QFile OverviewFile( m_pApp->applicationDirPath() + "/templates/de/Overview" );
+    QTextStream in( &OverviewFile );
+
+    if ( ! OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        QMessageBox::warning( 0, "Warning", tr("Could not open syntax overview file!") );
+        qWarning() << "Could not open syntax overview file:" <<  OverviewFile.fileName();
+    }
+    pTextDocument->setPlainText( in.readAll() );
+    OverviewFile.close();
+
+    /*
+    CParser* pParser = new CParser( pTextDocument,
+                                    m_UserAppDir,
+                                    m_tmpPreviewImgDir,
+                                    m_pInterWikiLinks->getInterwikiLinks(),
+                                    m_pInterWikiLinks->getInterwikiLinksUrls(),
+                                    m_pSettings,
+                                    m_pTemplates );
+    */
+
+    layout->setMargin(5);
+    layout->setSpacing(0);
+    layout->addWidget(webview);
+    layout->addWidget(button);
+    webview->setHtml( pTextDocument->toPlainText(), QUrl::fromLocalFile(m_UserAppDir.absolutePath() + "/") );
+
+    dialog->show();
+}
+
+// -----------------------------------------------------------------------------------------------
 
 // Report a bug
 void CInyokaEdit::reportBug()
@@ -1415,22 +1477,13 @@ void CInyokaEdit::reportBug()
 }
 
 // -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
-// Set modified flag for window
-void CInyokaEdit::documentWasModified()
-{
-    m_pTabwidgetRawPreview->setCurrentIndex( m_pTabwidgetRawPreview->indexOf(m_pEditor) );
-    this->setWindowModified( m_pEditor->document()->isModified() );
-}
-
-// -----------------------------------------------------------------------------------------------
 
 // About info box
 void CInyokaEdit::about()
 {
     QString sUserIcon("");
-    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png") )
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png")
+         && !bDebug )
     {
         sUserIcon = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png";
     }

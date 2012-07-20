@@ -119,6 +119,8 @@ protected slots:
     void checkSpelling();
 
 private slots:
+    void showSyntaxOverview();
+
     /** \brief Call Apport for bug report */
     void reportBug();
 

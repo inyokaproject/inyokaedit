@@ -26,6 +26,8 @@
 
 #include "CDownload.h"
 
+extern bool bDebug;
+
 CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir) :
     m_pParent(pParent),
     m_sAppName(sAppName),
@@ -57,9 +59,11 @@ bool CDownload::loadInyokaStyles()
         CProgressDialog *myArticleDownloadProgress;
 
         // Path from normal installation
-        if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") )
+        if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") && !bDebug )
         {
-            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() +"/GetInyokaStyles",
+                                                            QStringList() << m_StylesDir.absolutePath(),
+                                                            m_sAppName, m_pParent);
         }
         // No installation: Use app path
         else
@@ -70,9 +74,13 @@ bool CDownload::loadInyokaStyles()
                 QFile::remove(m_StylesDir.absolutePath() + "/GetInyokaStyles");
                 QFile::copy(m_sAppDir + "/GetInyokaStyles", m_StylesDir.absolutePath() + "/GetInyokaStyles");
             }
-            myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+            myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ",
+                                                            QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(),
+                                                            m_sAppName, m_pParent);
 #else
-            myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles", QStringList() << m_StylesDir.absolutePath(), m_sAppName, m_pParent);
+            myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles",
+                                                            QStringList() << m_StylesDir.absolutePath(),
+                                                            m_sAppName, m_pParent);
 #endif
         }
 
