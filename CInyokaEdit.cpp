@@ -170,6 +170,7 @@ void CInyokaEdit::createObjects()
     m_pTabwidgetRawPreview = new QTabWidget;
 
     m_pWebview = new QWebView( this );
+    m_pWebview->installEventFilter( this );
 
     m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pTemplates->getTransTemplate(),
                                                        m_pTemplates->getTransImage(),
@@ -1302,6 +1303,23 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         else
         {
             return QObject::eventFilter( obj, event );
+        }
+    }
+
+    // Forward / backward mouse button
+    if ( obj == m_pWebview )
+    {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+        if ( event->type() == QEvent::MouseButtonPress &&
+             mouseEvent->button() == Qt::XButton1 )
+        {
+            m_pWebview->back();
+        }
+        else if ( event->type() == QEvent::MouseButtonPress &&
+             mouseEvent->button() == Qt::XButton2 )
+        {
+            m_pWebview->forward();
         }
     }
 
