@@ -72,6 +72,7 @@ public:
 private:
     //void replaceTemplates( QTextDocument *p_rawDoc );
     void replaceTextformat( QTextDocument *p_rawDoc );
+    QString reinstertNoTranslate( const QString sRawDoc );
     void replaceFlags( QTextDocument *p_rawDoc );
     void replaceKeys( QTextDocument *p_rawDoc );
     void replaceImages( QTextDocument *p_rawDoc );
@@ -100,6 +101,8 @@ private:
 
     // Text from editor
     QTextDocument *m_pRawText;
+
+    QStringList m_sListNoTranslate;
 
     CParseLinks *m_pLinkParser;
 

@@ -46,12 +46,11 @@ class CParseLinks : public QObject
     Q_OBJECT
 
 public:
-    CParseLinks( QTextDocument *pRawDocument,
-                 const QString &sUrlToWiki,
+    CParseLinks( const QString &sUrlToWiki,
                  const QList<QStringList> sListIWiki,
                  const QList<QStringList> sListIWikiUrl,
                  const bool bCheckLinks,
-                 const QString sTransAnchor);
+                 const QString sTransAnchor );
 
     void startParsing( QTextDocument *pRawDoc );
 
@@ -63,7 +62,6 @@ private:
     void replaceKnowledgeBoxLinks( QTextDocument *pRawDoc );
     void createAnchor( QTextDocument *pRawDoc );
 
-    QTextDocument *m_pRawText;  // Copy of article
     const QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
     QStringList m_sListInterwikiLink;  // Interwiki link urls

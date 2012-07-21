@@ -27,14 +27,12 @@
 #include <QDebug>
 #include "CParseLinks.h"
 
-CParseLinks::CParseLinks( QTextDocument *pRawDocument,
-                          const QString &sUrlToWiki,
+CParseLinks::CParseLinks( const QString &sUrlToWiki,
                           const QList<QStringList> sListIWiki,
                           const QList<QStringList> sListIWikiUrl,
                           const bool bCheckLinks,
                           const QString sTransAnchor )
-    : m_pRawText(pRawDocument),
-      m_sWikiUrl(sUrlToWiki),
+    : m_sWikiUrl(sUrlToWiki),
       m_bCheckLinks(bCheckLinks),
       m_sTransAnchor( sTransAnchor )
 {

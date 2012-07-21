@@ -30,7 +30,7 @@
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-bool bDebug = true;
+bool bDebug = false;
 
 CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent ) :
     QMainWindow(parent),
@@ -1409,23 +1409,34 @@ void CInyokaEdit::showSyntaxOverview()
 {
     QDialog* dialog = new QDialog( this, this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
     QGridLayout* layout = new QGridLayout(dialog);
-    QDialogButtonBox* button = new QDialogButtonBox(QDialogButtonBox::Close, Qt::Horizontal, dialog);
-    connect(button, SIGNAL(rejected()), dialog, SLOT(reject()));
     QWebView* webview = new QWebView();
     QTextDocument* pTextDocument = new QTextDocument(this);
 
-    QFile OverviewFile( m_pApp->applicationDirPath() + "/templates/de/Overview" );
-    QTextStream in( &OverviewFile );
+    QFile OverviewFile("");
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" +
+                       m_pSettings->getTemplateLanguage() + "/SyntaxOverview") && !bDebug )
+    {
+        OverviewFile.setFileName( "/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" +
+                                  m_pSettings->getTemplateLanguage() + "/SyntaxOverview" );
+    }
+    // No installation: Use app path
+    else
+    {
+        OverviewFile.setFileName( m_pApp->applicationDirPath() + "/templates/" +
+                                  m_pSettings->getTemplateLanguage() + "/SyntaxOverview" );
+    }
 
+    QTextStream in( &OverviewFile );
     if ( ! OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text) )
     {
         QMessageBox::warning( 0, "Warning", tr("Could not open syntax overview file!") );
         qWarning() << "Could not open syntax overview file:" <<  OverviewFile.fileName();
+        return;
     }
     pTextDocument->setPlainText( in.readAll() );
     OverviewFile.close();
 
-    /*
     CParser* pParser = new CParser( pTextDocument,
                                     m_UserAppDir,
                                     m_tmpPreviewImgDir,
@@ -1433,14 +1444,19 @@ void CInyokaEdit::showSyntaxOverview()
                                     m_pInterWikiLinks->getInterwikiLinksUrls(),
                                     m_pSettings,
                                     m_pTemplates );
-    */
 
-    layout->setMargin(5);
+    QString sRet = pParser->genOutput("");
+    sRet.remove( QRegExp("<h1 class=\"pagetitle\">.*</h1>") );
+    sRet.remove( QRegExp("<p class=\"meta\">.*</p>") );
+    sRet.replace( "</style>", "#page table{margin:0px;}</style>");
+    pTextDocument->setPlainText( sRet );
+
+    layout->setMargin(2);
     layout->setSpacing(0);
     layout->addWidget(webview);
-    layout->addWidget(button);
-    webview->setHtml( pTextDocument->toPlainText(), QUrl::fromLocalFile(m_UserAppDir.absolutePath() + "/") );
+    dialog->setWindowTitle( tr("Syntax overview") );
 
+    webview->setHtml( pTextDocument->toPlainText(), QUrl::fromLocalFile(m_UserAppDir.absolutePath() + "/") );
     dialog->show();
 }
 
@@ -1500,7 +1516,7 @@ void CInyokaEdit::about()
                    "<p>&copy; 2011-2012, The %3 developers<br />"
                    "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
                    "<p>Special thanks to <img src=\"%4\" /> bubi97, <img src=\"%4\" /> Lasall, <img src=\"%4\" /> Shakesbier"
-                   " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a></p>"
+                   " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a>.</p>"
                    "<p>This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.</p>",
                    "About dialog text, <sAppName>, <sAppVersion>, <sAppName>, <sUserIcon>")
                 .arg(m_pApp->applicationName())

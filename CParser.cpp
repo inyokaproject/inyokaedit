@@ -42,8 +42,7 @@ CParser::CParser( QTextDocument *pRawDocument,
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    m_pLinkParser = new CParseLinks( m_pRawText,
-                                     m_pSettings->getInyokaUrl(),
+    m_pLinkParser = new CParseLinks( m_pSettings->getInyokaUrl(),
                                      sListIWiki,
                                      sListIWikiUrl,
                                      m_pSettings->getCheckLinks(),
@@ -78,11 +77,11 @@ QString CParser::genOutput( QString sActFile )
     // Replace macros with Inyoka markup templates
     //this->replaceTemplates( m_pRawText );
 
-    // Replace all links
-    m_pLinkParser->startParsing( p_docCopyOfRawText );
-
     // Replace text format
     this->replaceTextformat( p_docCopyOfRawText );
+
+    // Replace all links
+    m_pLinkParser->startParsing( p_docCopyOfRawText );
 
     // Replace flags
     this->replaceFlags( p_docCopyOfRawText );
@@ -208,6 +207,8 @@ QString CParser::genOutput( QString sActFile )
         }
     }
 
+    sHtmlBody = this->reinstertNoTranslate( sHtmlBody );
+
     // File name
     QFileInfo fi( sActFile );
     QString sFilename;
@@ -311,6 +312,7 @@ void CParser::replaceTextformat( QTextDocument *p_rawDoc )
     int myindex;
     int iLength;
     QString sFormatedText, sTmpRegExp;
+    unsigned int nNoTranslate = 0;
 
     patternTextformat.setCaseSensitivity( Qt::CaseInsensitive );
     // Find "smallest" match. See: http://doc.qt.nokia.com/qq/qq01-seriously-weird-qregexp.html
@@ -451,10 +453,37 @@ void CParser::replaceTextformat( QTextDocument *p_rawDoc )
                 }
             }
         }
+
+        // Filter monotype code block which should not be formated
+        patternTextformat.setPattern( "<code class=\"notranslate\">.+</code>" );
+        myindex = patternTextformat.indexIn( sMyDoc );
+
+        while ( myindex >= 0 )
+        {
+            iLength = patternTextformat.matchedLength();
+            sFormatedText = patternTextformat.cap();
+            m_sListNoTranslate << sFormatedText;
+            sMyDoc.replace( sFormatedText, "%%" + QString::number(nNoTranslate) + "%%");
+            nNoTranslate++;
+            myindex = patternTextformat.indexIn( sMyDoc, myindex + iLength );
+        }
     }
 
     // Replace p_rawDoc with document with formated text
     p_rawDoc->setPlainText( sMyDoc );
+}
+
+QString CParser::reinstertNoTranslate( const QString sRawDoc )
+{
+    QString sMyDoc = sRawDoc;
+
+    // Reinsert filtered monotype codeblock
+    for( int i = 0; i < m_sListNoTranslate.size(); i++ )
+    {
+        sMyDoc.replace( "%%" + QString::number(i) + "%%", m_sListNoTranslate[i] );
+    }
+
+    return sMyDoc;
 }
 
 // -----------------------------------------------------------------------------------------------
