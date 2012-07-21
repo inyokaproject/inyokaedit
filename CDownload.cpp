@@ -26,7 +26,7 @@
 
 #include "CDownload.h"
 
-extern bool bDebug;
+extern bool bDEBUG;
 
 CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir) :
     m_pParent(pParent),
@@ -59,7 +59,7 @@ bool CDownload::loadInyokaStyles()
         CProgressDialog *myArticleDownloadProgress;
 
         // Path from normal installation
-        if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") && !bDebug )
+        if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") && !bDEBUG )
         {
             myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() +"/GetInyokaStyles",
                                                             QStringList() << m_StylesDir.absolutePath(),

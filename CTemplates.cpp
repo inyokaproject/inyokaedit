@@ -26,7 +26,7 @@
 
 #include "CTemplates.h"
 
-extern bool bDebug;
+extern bool bDEBUG;
 
 CTemplates::CTemplates( const QString sAppName,
                         const QString sAppPath,
@@ -64,7 +64,7 @@ void CTemplates::initTemplates()
 
     // Path from normal installation
     if ( TplDir.exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang)
-         && !bDebug )
+         && !bDEBUG )
     {
         TplDir.setPath( "/usr/share/" +m_sAppName.toLower() + "/templates/" + m_sTplLang );
     }
@@ -137,7 +137,7 @@ void CTemplates::initHtmlTpl( const QString sTplFile )
 
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName())
-         && !bDebug )
+         && !bDEBUG )
     {
         HTMLTplFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" +  HTMLTplFile.fileName());
     }
@@ -174,7 +174,7 @@ void CTemplates::initFlags( const QString sFilename )
 
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + flagsFile.fileName())
-         && !bDebug )
+         && !bDEBUG )
     {
         flagsFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" + flagsFile.fileName());
     }
@@ -219,7 +219,7 @@ void CTemplates::initTextformats( const QString sFilename )
 
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + formatsFile.fileName())
-         && !bDebug )
+         && !bDEBUG )
     {
         formatsFile.setFileName("/usr/share/" + m_sAppName.toLower() + "/templates/" + formatsFile.fileName());
     }
@@ -275,7 +275,7 @@ void CTemplates::initTranslations( const QString sFilename )
 
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang + "/" + sFilename)
-         && !bDebug )
+         && !bDEBUG )
     {
         translFile.setFileName( "/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang + "/" + sFilename );
     }

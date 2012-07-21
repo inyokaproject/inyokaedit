@@ -27,7 +27,7 @@
 #include <QDebug>
 #include "CInterwiki.h"
 
-extern bool bDebug;
+extern bool bDEBUG;
 
 CInterWiki::CInterWiki( const QApplication *pApp )
 {
@@ -37,7 +37,7 @@ CInterWiki::CInterWiki( const QApplication *pApp )
 
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml")
-         && !bDebug )
+         && !bDEBUG )
     {
         XmlFile.setFileName( "/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml" );
     }

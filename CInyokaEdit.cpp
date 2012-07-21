@@ -30,7 +30,7 @@
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-bool bDebug = false;
+bool bDEBUG = false;
 
 CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent ) :
     QMainWindow(parent),
@@ -49,10 +49,14 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
     {
         QString sTmp = m_pApp->argv()[1];
 
-        if ( "-v"== sTmp || "--version"== sTmp )
+        if ( "-v" == sTmp || "--version" == sTmp )
         {
             std::cout << m_pApp->argv()[0] << "\t v" << m_pApp->applicationVersion().toStdString() << std::endl;
             exit(0);
+        }
+        else if ( "--debug" == sTmp )
+        {
+            bDEBUG = true;
         }
         else
         {
@@ -597,7 +601,7 @@ void CInyokaEdit::createActions()
         {
             // Path from normal installation
             if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
-                 && !bDebug )
+                 && !bDEBUG )
             {
                 m_iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksIcons()[i][j]), m_pInterWikiLinks->getInterwikiLinksNames()[i][j], this);
             }
@@ -647,7 +651,7 @@ void CInyokaEdit::createMenus()
     // File menu (new from template)
     if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() +
                        "/templates/" + m_pSettings->getTemplateLanguage() + "/articles")
-         && !bDebug )
+         && !bDEBUG )
     {
         articleTemplateDir.setPath("/usr/share/" + m_pApp->applicationName().toLower() +
                                    "/templates/" + m_pSettings->getTemplateLanguage() + "/articles");
@@ -700,7 +704,7 @@ void CInyokaEdit::createMenus()
     {
         // Path from normal installation
         if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
-             && !bDebug )
+             && !bDEBUG )
         {
             m_iWikiGroups.append( m_pUi->iWikiMenu->addMenu(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksGroupIcons()[i]), m_pInterWikiLinks->getInterwikiLinksGroups()[i]) );
         }
@@ -1336,12 +1340,12 @@ void CInyokaEdit::checkSpelling()
     QString sDictPath("");
 
     // Standard path for Hunspell (Linux only)
-    if ( QDir("/usr/share/hunspell").exists() && !bDebug )
+    if ( QDir("/usr/share/hunspell").exists() && !bDEBUG )
     {
         sDictPath = "/usr/share/hunspell/" + m_pSettings->getSpellCheckerLanguage();
     }
     // Otherwise look for MySpell dictionary (Linx only)
-    else if ( QDir("/usr/share/myspell/dicts").exists() && !bDebug )
+    else if ( QDir("/usr/share/myspell/dicts").exists() && !bDEBUG )
     {
         sDictPath = "/usr/share/myspell/dicts/" + m_pSettings->getSpellCheckerLanguage();
     }
@@ -1433,7 +1437,7 @@ void CInyokaEdit::showSyntaxOverview()
     QFile OverviewFile("");
     // Path from normal installation
     if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" +
-                       m_pSettings->getTemplateLanguage() + "/SyntaxOverview") && !bDebug )
+                       m_pSettings->getTemplateLanguage() + "/SyntaxOverview") && !bDEBUG )
     {
         OverviewFile.setFileName( "/usr/share/" + m_pApp->applicationName().toLower() + "/templates/" +
                                   m_pSettings->getTemplateLanguage() + "/SyntaxOverview" );
@@ -1517,7 +1521,7 @@ void CInyokaEdit::about()
 {
     QString sUserIcon("");
     if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png")
-         && !bDebug )
+         && !bDEBUG )
     {
         sUserIcon = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/user.png";
     }
