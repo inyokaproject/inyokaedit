@@ -139,6 +139,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_doc.p
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_fr.png -O ubuntu_fr.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/user.png -O user.png
 cp user.png user-xmas.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/vimeo.png -O vimeo.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikibooks.png -O wikibooks.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikimedia.png -O wikimedia.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia.png -O wikipedia.png

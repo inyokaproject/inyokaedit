@@ -87,6 +87,7 @@
     <iwikilink type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <iwikilink type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
     <iwikilink type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
+    <iwikilink type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
     <iwikilink type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
   </group>
 </menu>
