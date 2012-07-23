@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
-    <height>404</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>528</width>
+     <width>640</width>
      <height>21</height>
     </rect>
    </property>
@@ -232,8 +232,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="previewAct"/>
    <addaction name="downloadArticleAct"/>
+   <addaction name="previewAct"/>
   </widget>
   <widget class="QToolBar" name="inyokaeditorBar">
    <property name="windowTitle">
