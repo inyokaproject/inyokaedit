@@ -148,8 +148,8 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/xfcedocs.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/xubuntu.png -O xubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/youtube.png -O youtube.png
 
-wget -nv http://static.cdn.ubuntu-de.org/img/interwiki/search.png
-wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/17/43/ppa.png
+wget -nv http://static.cdn.ubuntu-de.org/img/interwiki/search.png -O search.png
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/17/43/ppa.png -O ppa.png
 cd ..
 
 if [ ! -d flags ]
@@ -159,12 +159,12 @@ if [ ! -d flags ]
 fi
 cd wiki
 
-wget -nv http://static.cdn.ubuntu-de.org/img/wiki/toc.png
-wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/42/17/button.png
+wget -nv http://static.cdn.ubuntu-de.org/img/wiki/toc.png -O toc.png
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/42/17/button.png -O button.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_left.png -O mouse_left.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_midd.png -O mouse_midd.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_right.png -O mouse_right.png
-wget -nv http://static.cdn.ubuntu-de.org/img/wiki/heading.png
+wget -nv http://static.cdn.ubuntu-de.org/img/wiki/heading.png -O heading.png
 cd ..
 
 if [ ! -d flags ]
@@ -210,7 +210,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/tr.png -O tr.p
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/us.png -O us.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/zh.png -O zh.png
 
-wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/08/15/overview.png
+wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/08/15/overview.png -O overview.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/download.png -O dl.png
 
 cd ..
