@@ -30,7 +30,7 @@
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-bool bDEBUG = false;
+bool bDEBUG = false;  // Don't change this value! Use "--debug" command line option instead.
 
 CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent ) :
     QMainWindow(parent),
@@ -1209,7 +1209,7 @@ void CInyokaEdit::clickedLink()
 
 bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
 {
-    if ( obj == m_pEditor )
+    if ( obj == m_pEditor && event->type() == QEvent::KeyPress )
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
@@ -1220,8 +1220,7 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         bool isCTRL = keyMod.testFlag(Qt::ControlModifier);
 
         // CTRL + SHIFT + arrow right
-        if ( event->type() == QEvent::KeyPress &&
-             keyEvent->key() == Qt::Key_Right &&
+        if ( keyEvent->key() == Qt::Key_Right &&
              isSHIFT && isCTRL )
         {
             QTextCursor cursor(m_pEditor->textCursor());
@@ -1231,9 +1230,8 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
             return true;
         }
         // CTRL + arrow right
-        else if ( event->type() == QEvent::KeyPress &&
-             keyEvent->key() == Qt::Key_Right &&
-             !isSHIFT && isCTRL )
+        else if ( keyEvent->key() == Qt::Key_Right &&
+                  !isSHIFT && isCTRL )
         {
             m_pEditor->moveCursor(QTextCursor::Right);
             m_pEditor->moveCursor(QTextCursor::EndOfWord);
@@ -1244,9 +1242,8 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         // Bug fix for LP: #889321
 
         // CTRL + SHIFT arrow down
-        else if ( event->type() == QEvent::KeyPress &&
-             keyEvent->key() == Qt::Key_Up &&
-             isSHIFT && isCTRL )
+        else if ( keyEvent->key() == Qt::Key_Up &&
+                  isSHIFT && isCTRL )
         {
             QTextCursor cursor(m_pEditor->textCursor());
             cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
@@ -1255,9 +1252,8 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         }
 
         // CTRL + SHIFT arrow down
-        else if ( event->type() == QEvent::KeyPress &&
-             keyEvent->key() == Qt::Key_Down &&
-             isSHIFT && isCTRL )
+        else if ( keyEvent->key() == Qt::Key_Down &&
+                  isSHIFT && isCTRL )
         {
             QTextCursor cursor(m_pEditor->textCursor());
             cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
@@ -1267,9 +1263,8 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         // ---------------------------------------------------------------------------
         // ---------------------------------------------------------------------------
         // CTRL + SHIFT + T (only for debugging)
-        else if ( event->type() == QEvent::KeyPress &&
-             keyEvent->key() == Qt::Key_T &&
-             isSHIFT && isCTRL )
+        else if ( keyEvent->key() == Qt::Key_T &&
+                  isSHIFT && isCTRL )
         {
             static bool bToggle = false;
             static QTextDocument docBackup("");
@@ -1287,41 +1282,24 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
         // ---------------------------------------------------------------------------
         // ---------------------------------------------------------------------------
 
-        // Reload preview at RETURN if preview alongside
-        if ( event->type() == QEvent::KeyPress )
+        // Reload preview at F5 or defined button if preview alongside
+        else if ( (Qt::Key_F5 == keyEvent->key() || m_pSettings->getReloadPreviewKey() == keyEvent->key()) &&
+                  (true == m_pSettings->getPreviewAlongside() && true == m_pSettings->getPreviewInEditor()) )
         {
-
-            switch( keyEvent->key() )
-            {
-                case Qt::Key_Enter:
-                case Qt::Key_Return:
-                case Qt::Key_F5:
-                    if ( true == m_pSettings->getPreviewAlongside() )
-                    {
-                        previewInyokaPage();
-                    }
-                break;
-            }
-            return false;
-        }
-        else
-        {
-            return QObject::eventFilter( obj, event );
+            previewInyokaPage();
         }
     }
 
     // Forward / backward mouse button
-    if ( obj == m_pWebview )
+    else if ( obj == m_pWebview && event->type() == QEvent::MouseButtonPress )
     {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-        if ( event->type() == QEvent::MouseButtonPress &&
-             mouseEvent->button() == Qt::XButton1 )
+        if ( mouseEvent->button() == Qt::XButton1 )
         {
             m_pWebview->back();
         }
-        else if ( event->type() == QEvent::MouseButtonPress &&
-             mouseEvent->button() == Qt::XButton2 )
+        else if ( mouseEvent->button() == Qt::XButton2 )
         {
             m_pWebview->forward();
         }

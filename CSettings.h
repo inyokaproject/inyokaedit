@@ -63,6 +63,7 @@ public:
     bool getCheckLinks() const;
     QString getTemplateLanguage() const;
     unsigned short getAutoSave() const;
+    int getReloadPreviewKey() const;
 
     // Font
     QFont getEditorFont() const;
@@ -92,6 +93,7 @@ private:
     bool m_bCheckLinks;
     QString m_sTemplateLang;
     unsigned short m_nAutosave;
+    QString m_sReloadPreviewKey;
 
     // Font
     QFont m_EditorFont;

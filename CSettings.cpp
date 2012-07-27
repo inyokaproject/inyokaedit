@@ -72,6 +72,7 @@ void CSettings::readSettings()
     m_sTemplateLang = mySettingsObject->value("TemplateLanguage", "de").toString();
     QString sAutosave = mySettingsObject->value("AutoSave", "300").toString();
     m_nAutosave = sAutosave.toUShort();
+    m_sReloadPreviewKey = mySettingsObject->value("ReloadPreviewKey", "0x01000004").toString(); // 0x01000004 = Qt::Key_Return
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -141,6 +142,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
     mySettingsObject->setValue("TemplateLanguage", m_sTemplateLang);
     mySettingsObject->setValue("AutoSave", QString::number(m_nAutosave));
+    mySettingsObject->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -244,6 +246,13 @@ QString CSettings::getTemplateLanguage() const
 unsigned short CSettings::getAutoSave() const
 {
     return m_nAutosave;
+}
+
+
+int CSettings::getReloadPreviewKey() const
+{
+    QString sTmp = m_sReloadPreviewKey;
+    return sTmp.remove("0x", Qt::CaseInsensitive).toInt(0, 16);
 }
 
 // ----------------------------------------------------
