@@ -4,6 +4,8 @@ inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
   * Possibility to choose preview reload key.
   * Added timed preview.
   * Fixed issue with fontsize settings.
+  * Updated styles download script.
+  * Changed some icon possitions on toolbar.
   * Fixed wrong parsing of monospace with other syntax elements.
   * Added syntax overview window.
   * Added new interwiki links.
