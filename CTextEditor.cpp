@@ -123,7 +123,7 @@ CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
     // Install auto save timer
     if ( 0 != nAutosave )
     {
-        m_pTimerAutosave = new QTimer;
+        m_pTimerAutosave = new QTimer(this);
         m_pTimerAutosave->setInterval( nAutosave * 1000 );  // nAutoSave = time in seconds
         connect ( m_pTimerAutosave, SIGNAL(timeout()),
                   this, SLOT(saveArticleAuto()) );

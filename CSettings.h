@@ -62,8 +62,9 @@ public:
     QString getSpellCheckerLanguage() const;
     bool getCheckLinks() const;
     QString getTemplateLanguage() const;
-    unsigned short getAutoSave() const;
+    unsigned int getAutoSave() const;
     int getReloadPreviewKey() const;
+    unsigned int getTimedPreview() const;
 
     // Font
     QFont getEditorFont() const;
@@ -92,13 +93,14 @@ private:
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
     QString m_sTemplateLang;
-    unsigned short m_nAutosave;
+    unsigned int m_nAutosave;
     QString m_sReloadPreviewKey;
+    unsigned int m_nTimedPreview;
 
     // Font
     QFont m_EditorFont;
     QString m_sFontFamily;
-    float m_nFontsize;
+    qreal m_nFontsize;
 
     // Find/replace dialogs
     FindDialog *m_pFDialog;

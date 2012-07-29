@@ -188,6 +188,8 @@ void CInyokaEdit::createObjects()
                                            m_pSettings,
                                            m_pTemplates );
 
+    m_pPreviewTimer = new QTimer(this);
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -275,6 +277,15 @@ void CInyokaEdit::setupEditor()
     }
 
     m_pUi->aboutAct->setText( m_pUi->aboutAct->text() + " " + m_pApp->applicationName() );
+
+    // Timed preview
+    connect( m_pPreviewTimer, SIGNAL(timeout()),
+             this, SLOT(previewInyokaPage()) );
+    if( m_pSettings->getPreviewInEditor() && m_pSettings->getPreviewAlongside() &&
+            m_pSettings->getTimedPreview() != 0 )
+    {
+        m_pPreviewTimer->start( m_pSettings->getTimedPreview() * 1000 );
+    }
 
     qDebug() << "End" << Q_FUNC_INFO;
 }

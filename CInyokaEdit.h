@@ -67,7 +67,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.5.1"
+#define sVERSION "0.6.0"
 
 namespace Ui {
     class CInyokaEdit;
@@ -242,6 +242,8 @@ private:
     QToolButton *m_pCodePopup;
     QMenu *m_pCodeStyles;
     QList<QAction *> m_CodeHighlightActions;
+
+    QTimer *m_pPreviewTimer;
 };
 
 #endif // CINYOKAEDIT_H

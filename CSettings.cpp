@@ -70,16 +70,15 @@ void CSettings::readSettings()
     m_sSpellCheckerLanguage = mySettingsObject->value("SpellCheckerLanguage", "de_DE").toString();
     m_bCheckLinks = mySettingsObject->value("CheckLinks", false).toBool();
     m_sTemplateLang = mySettingsObject->value("TemplateLanguage", "de").toString();
-    QString sAutosave = mySettingsObject->value("AutoSave", "300").toString();
-    m_nAutosave = sAutosave.toUShort();
+    m_nAutosave = mySettingsObject->value("AutoSave", 300).toUInt();
     m_sReloadPreviewKey = mySettingsObject->value("ReloadPreviewKey", "0x01000004").toString(); // 0x01000004 = Qt::Key_Return
+    m_nTimedPreview = mySettingsObject->value("TimedPreview", 15).toUInt();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
     m_sFontFamily = mySettingsObject->value("FontFamily", "Monospace").toString();
     // Used string for font size because float isn't saved human readable...
-    QString sFontsize = mySettingsObject->value("FontSize", "10.5").toString();
-    m_nFontsize = sFontsize.toFloat();
+    m_nFontsize = mySettingsObject->value("FontSize", "10.5").toFloat();
     if ( m_nFontsize <= 0 )
     {
         m_nFontsize = 10.5;
@@ -88,7 +87,7 @@ void CSettings::readSettings()
     m_EditorFont.setFamily( m_sFontFamily );
     m_EditorFont.setFixedPitch( true );
     m_EditorFont.setStyleHint( QFont::TypeWriter );  // Font matcher prefers fixed pitch fonts
-    m_EditorFont.setPointSize( m_nFontsize );
+    m_EditorFont.setPointSizeF( m_nFontsize );
 
     mySettingsObject->endGroup();
 
@@ -141,8 +140,9 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("SpellCheckerLanguage", m_sSpellCheckerLanguage);
     mySettingsObject->setValue("CheckLinks", m_bCheckLinks);
     mySettingsObject->setValue("TemplateLanguage", m_sTemplateLang);
-    mySettingsObject->setValue("AutoSave", QString::number(m_nAutosave));
+    mySettingsObject->setValue("AutoSave", m_nAutosave);
     mySettingsObject->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
+    mySettingsObject->setValue("TimedPreview", m_nTimedPreview);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -151,7 +151,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     // Font settings
     mySettingsObject->beginGroup("Font");
     mySettingsObject->setValue("FontFamily", m_EditorFont.family());
-    mySettingsObject->setValue("FontSize", QString::number(m_EditorFont.pointSize()));
+    mySettingsObject->setValue("FontSize", m_EditorFont.pointSizeF());
     mySettingsObject->endGroup();
 
     // Recent files
@@ -243,7 +243,7 @@ QString CSettings::getTemplateLanguage() const
     return m_sTemplateLang;
 }
 
-unsigned short CSettings::getAutoSave() const
+unsigned int CSettings::getAutoSave() const
 {
     return m_nAutosave;
 }
@@ -253,6 +253,11 @@ int CSettings::getReloadPreviewKey() const
 {
     QString sTmp = m_sReloadPreviewKey;
     return sTmp.remove("0x", Qt::CaseInsensitive).toInt(0, 16);
+}
+
+unsigned int CSettings::getTimedPreview() const
+{
+    return m_nTimedPreview;
 }
 
 // ----------------------------------------------------
