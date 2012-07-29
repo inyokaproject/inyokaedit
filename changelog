@@ -1,13 +1,15 @@
-inyokaedit (0.5.1-0ubuntu1) precise; urgency=low
+inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
 
   [ Thorsten Roth ]
   * Possibility to choose preview reload key.
+  * Added timed preview.
+  * Fixed issue with fontsize settings.
   * Fixed wrong parsing of monospace with other syntax elements.
   * Added syntax overview window.
   * Added new interwiki links.
   * Fixed LP: #1002043 (Support for forward/backward mousebutton in preview)
 
- -- Thorsten Roth <elthoro@gmx.de>  Fri, 27 Jul 2012 17:42:49 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Jul 2012 17:24:28 +0200
 
 inyokaedit (0.5.0-0ubuntu2) precise; urgency=low
 
