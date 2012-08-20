@@ -68,6 +68,7 @@
     <iwikilink type="debianbug" url="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=" name="Debian Bugs" icon="debianbug.png" />
   </group>
   <group name="Misc" icon="youtube.png">
+    <iwikilink type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
     <iwikilink type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <iwikilink type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
     <iwikilink type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
@@ -83,6 +84,7 @@
     <iwikilink type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <iwikilink type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
     <iwikilink type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
+    <iwikilink type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
     <iwikilink type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
     <iwikilink type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <iwikilink type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
