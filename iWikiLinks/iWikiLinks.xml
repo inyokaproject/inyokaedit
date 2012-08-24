@@ -73,7 +73,7 @@
     <iwikilink type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
     <iwikilink type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
     <iwikilink type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
-    <iwikilink type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="fb.png" />
+    <iwikilink type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
     <iwikilink type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
     <iwikilink type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
     <iwikilink type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
