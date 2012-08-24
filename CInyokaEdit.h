@@ -157,6 +157,8 @@ private slots:
 
     void clickedLink();
 
+    void openFile();
+
     /**
     * \brief Insert text sample from menu
     * \param sMenuEntry Selected entry
@@ -209,6 +211,7 @@ private:
     //QTabWidget *myTabwidgetDocuments;
     QTabWidget *m_pTabwidgetRawPreview;
     QWebView *m_pWebview;
+    QPoint m_WebviewScrollPosition;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;

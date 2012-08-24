@@ -26,6 +26,7 @@
 
 #include <QtGui>
 #include <QtWebKit/QWebView>
+#include <QWebFrame>
 
 #include "CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
@@ -308,7 +309,7 @@ void CInyokaEdit::createActions()
     // Open file
     m_pUi->openAct->setShortcuts(QKeySequence::Open);
     connect( m_pUi->openAct, SIGNAL(triggered()),
-             m_pFileOperations, SLOT(open()) );
+             this, SLOT(openFile()) );
 
     // Clear recent files list
     m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
@@ -801,6 +802,17 @@ void CInyokaEdit::createToolBars()
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
+void CInyokaEdit::openFile()
+{
+    // Reset scroll position
+    m_pWebview->page()->mainFrame()->setScrollPosition( QPoint(0,0) );
+
+    m_pFileOperations->open();
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
 // Call parser
 void CInyokaEdit::previewInyokaPage( const int nIndex )
 {
@@ -868,6 +880,9 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         }
         else
         {
+            // Store scroll position
+            m_WebviewScrollPosition = m_pWebview->page()->mainFrame()->scrollPosition();
+
             m_pWebview->load( QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()) );
         }
     }
@@ -1159,6 +1174,9 @@ void CInyokaEdit::downloadArticle()
         bool bSuccess = m_pDownloadModule->downloadArticle( m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(), m_pSettings->getAutomaticImageDownload() );
         if ( bSuccess )
         {
+            // Reset scroll position
+            m_pWebview->page()->mainFrame()->setScrollPosition( QPoint(0,0) );
+
             this->previewInyokaPage();
         }
     }
@@ -1200,6 +1218,9 @@ void CInyokaEdit::loadPreviewFinished( bool bSuccess )
         {
             m_pUi->goForwardBrowserAct->setEnabled(false);
         }
+
+        // Restore scroll position
+        m_pWebview->page()->mainFrame()->setScrollPosition( m_WebviewScrollPosition );
     }
     else
     {
