@@ -1350,12 +1350,12 @@ void CInyokaEdit::checkSpelling()
     QString sDictPath("");
 
     // Standard path for Hunspell (Linux only)
-    if ( QDir("/usr/share/hunspell").exists() && !bDEBUG )
+    if ( QDir("/usr/share/hunspell").exists() ) // && !bDEBUG )
     {
         sDictPath = "/usr/share/hunspell/" + m_pSettings->getSpellCheckerLanguage();
     }
     // Otherwise look for MySpell dictionary (Linx only)
-    else if ( QDir("/usr/share/myspell/dicts").exists() && !bDEBUG )
+    else if ( QDir("/usr/share/myspell/dicts").exists() ) // && !bDEBUG )
     {
         sDictPath = "/usr/share/myspell/dicts/" + m_pSettings->getSpellCheckerLanguage();
     }
@@ -1367,6 +1367,7 @@ void CInyokaEdit::checkSpelling()
 
     if ( !QFile::exists(sDictPath + ".dic") || !QFile::exists(sDictPath + ".aff") )
     {
+        qWarning() << "Spell checker dictionary file does not exist:" << sDictPath << "*.dic *.aff";
         QMessageBox::critical( this, m_pApp->applicationName(), "Error: Spell checker dictionary file does not exist!" );
         return;
     }
@@ -1463,7 +1464,7 @@ void CInyokaEdit::showSyntaxOverview()
     if ( ! OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text) )
     {
         QMessageBox::warning( 0, "Warning", tr("Could not open syntax overview file!") );
-        qWarning() << "Could not open syntax overview file:" <<  OverviewFile.fileName();
+        qWarning() << "Could not open syntax overview file:" << OverviewFile.fileName();
         return;
     }
     pTextDocument->setPlainText( in.readAll() );
