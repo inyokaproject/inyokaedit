@@ -56,8 +56,6 @@ public:
     CParser( QTextDocument *pRawDocument,
              const QDir tmpFileOutputDir,
              const QDir tmpImgDir,
-             const QList<QStringList> sListIWiki,
-             const QList<QStringList> sListIWikiUrl,
              CSettings *pSettings,
              CTemplates *pTemplates );
     // Destructor

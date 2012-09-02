@@ -30,8 +30,6 @@
 CParser::CParser( QTextDocument *pRawDocument,
                   const QDir tmpFileOutputDir,
                   const QDir tmpImgDir,
-                  const QList<QStringList> sListIWiki,
-                  const QList<QStringList> sListIWikiUrl,
                   CSettings *pSettings,
                   CTemplates *pTemplates )
     : m_pRawText( pRawDocument ),
@@ -43,8 +41,8 @@ CParser::CParser( QTextDocument *pRawDocument,
     qDebug() << "Start" << Q_FUNC_INFO;
 
     m_pLinkParser = new CParseLinks( m_pSettings->getInyokaUrl(),
-                                     sListIWiki,
-                                     sListIWikiUrl,
+                                     m_pTemplates->getIWLs()->getElementTypes(),
+                                     m_pTemplates->getIWLs()->getElementUrls(),
                                      m_pSettings->getCheckLinks(),
                                      m_pTemplates->getTransAnchor() );
 

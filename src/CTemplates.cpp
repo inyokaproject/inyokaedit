@@ -43,6 +43,8 @@ CTemplates::CTemplates( const QString sAppName,
     this->initTextformats( "Textformats.conf" );
     this->initTranslations( "Translations.conf" );
 
+    this->initIWLs( "iWikiLinks/iWikiLinks.xml" );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -325,6 +327,19 @@ void CTemplates::initTranslations( const QString sFilename )
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
+
+void CTemplates::initIWLs( const QString sFilePath )
+{
+    m_pInterWikiLinks = new CXmlParser( m_sAppName, m_sAppPath, sFilePath );
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+CXmlParser* CTemplates::getIWLs() const
+{
+    return m_pInterWikiLinks;
+}
 
 QString CTemplates::getPreviewTemplate() const
 {

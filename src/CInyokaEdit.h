@@ -31,7 +31,7 @@
 #include <QWebHistory>
 
 #include "CTemplates.h"
-#include "CInterwiki.h"
+#include "CXmlParser.h"
 #include "CSettings.h"
 #include "CHighlighter.h"
 #include "CParser.h"
@@ -201,7 +201,6 @@ private:
     CParser *m_pParser;            // Parser text to HTML
     CInsertSyntaxElement *m_pInsertSyntaxElement;
     CSettings *m_pSettings;
-    CInterWiki *m_pInterWikiLinks;
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;
     QSplitter *m_pWidgetSplitter;
@@ -212,6 +211,8 @@ private:
     QTabWidget *m_pTabwidgetRawPreview;
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
+
+    QMenu *m_piWikiMenu;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;

@@ -40,8 +40,6 @@
 CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                                 const QDir tmpFileOutputDir,
                                 const QDir tmpImgDir,
-                                const QList<QStringList> sListIWiki,
-                                const QList<QStringList> sListIWikiUrl,
                                 CSettings *pSettings,
                                 CTemplates *pTemplates,
                                 QWidget *pParent )
@@ -76,8 +74,6 @@ CTableTemplate::CTableTemplate( CTextEditor *pEditor,
     m_pParser = new CParser( m_pTextDocument,
                              tmpFileOutputDir,
                              tmpImgDir,
-                             sListIWiki,
-                             sListIWikiUrl,
                              pSettings,
                              m_pTemplates );
 

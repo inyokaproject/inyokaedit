@@ -46,9 +46,8 @@ class CHighlighter : public QSyntaxHighlighter
 
 public:
     // Constructor
-    CHighlighter( const QList<QStringList> sListIWiki,
-                  CTemplates *pTemplates,
-                  QTextDocument *parent = 0 );
+    CHighlighter( CTemplates *pTemplates,
+                  QTextDocument *pParent = 0 );
     // Destrcutor
     ~CHighlighter();
 

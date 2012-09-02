@@ -39,7 +39,7 @@ HEADERS      += src/CInyokaEdit.h \
                 src/qtfindreplacedialog/finddialog.h \
                 src/CProgressDialog.h \
                 src/CSettings.h \
-                src/CInterwiki.h \
+                src/CXmlParser.h \
                 src/CParser.h \
                 src/CDownload.h \
                 src/CFileOperations.h \
@@ -58,7 +58,7 @@ SOURCES      += src/main.cpp \
                 src/qtfindreplacedialog/finddialog.cpp \
                 src/CProgressDialog.cpp \
                 src/CSettings.cpp \
-                src/CInterwiki.cpp \
+                src/CXmlParser.cpp \
                 src/CParser.cpp \
                 src/CDownload.cpp \
                 src/CFileOperations.cpp \
@@ -67,8 +67,8 @@ SOURCES      += src/main.cpp \
 
 RESOURCES     = res/inyokaedit_resources.qrc
 
-FORMS        += src/CTableTemplate.ui \
-                src/CInyokaEdit.ui \
+FORMS        += src/CInyokaEdit.ui \
+                src/CTableTemplate.ui \
                 src/qtfindreplacedialog/findreplaceform.ui \
                 src/qtfindreplacedialog/findreplacedialog.ui \
                 src/CProgressDialog.ui \

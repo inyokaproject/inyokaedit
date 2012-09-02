@@ -33,6 +33,8 @@
 #include <QDir>
 #include <QSettings>
 
+#include "CXmlParser.h"
+
 class QString;
 class QStringList;
 class QFile;
@@ -72,12 +74,16 @@ public:
     QStringList getListFormatHtmlEnd() const;
     QStringList getListFlags() const;
 
+    CXmlParser *getIWLs() const;
+
 private:
     void initTemplates();
     void initHtmlTpl( const QString sFileName );
     void initFlags( const QString sFileName );
     void initTextformats( const QString sFileName );
     void initTranslations( const QString sFileName );
+
+    void initIWLs( const QString sFilePath );
 
     QString m_sAppName;
     QString m_sAppPath;
@@ -105,6 +111,8 @@ private:
     QString m_sTransRevText;
     QString m_sTransTagText;
     QString m_sTransTable;
+
+    CXmlParser *m_pInterWikiLinks;
 };
 
 #endif // CTEMPLATES_H

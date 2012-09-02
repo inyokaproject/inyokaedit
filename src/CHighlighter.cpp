@@ -28,8 +28,7 @@
 
 #include "CHighlighter.h"
 
-CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
-                            CTemplates *pTemplates,
+CHighlighter::CHighlighter( CTemplates *pTemplates,
                             QTextDocument *pParent )
     : QSyntaxHighlighter(pParent)
 {
@@ -70,7 +69,7 @@ CHighlighter::CHighlighter( const QList<QStringList> sListIWiki,
     m_highlightingRules.append(myRule);
 
     // Define interwiki link keywords
-    foreach( QStringList tmpStrList, sListIWiki ) {
+    foreach( QStringList tmpStrList, pTemplates->getIWLs()->getElementTypes() ) {
         foreach( QString tmpStr, tmpStrList )
             interwikiLinksPatterns << "\\b" + tmpStr + "\\b";
     }

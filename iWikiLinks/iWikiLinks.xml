@@ -5,92 +5,92 @@
   
   If you edit this file don't forget to mask ampersands: & -> &amp;
 -->
-<menu>
+<menu name="InterWiki-Links">
   <group name="Inyoka" icon="user.png">
-    <iwikilink type="forum" url="http://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
-    <iwikilink type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
-    <iwikilink type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
-    <iwikilink type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
-    <iwikilink type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
-    <iwikilink type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
-    <iwikilink type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
-    <iwikilink type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
-    <iwikilink type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
-    <iwikilink type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
-    <iwikilink type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
+    <element type="forum" url="http://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
+    <element type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
+    <element type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
+    <element type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
+    <element type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
+    <element type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
+    <element type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
+    <element type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
+    <element type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
+    <element type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
+    <element type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
   </group>
   <group name="Canonical, Ubuntu, Derivate" icon="canonical.png">
-    <iwikilink type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
-    <iwikilink type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
-    <iwikilink type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
-    <iwikilink type="apt" url="apt:" name="Apt" icon="" />
-    <iwikilink type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
-    <iwikilink type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
-    <iwikilink type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
-    <iwikilink type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
-    <iwikilink type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
-    <iwikilink type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
-    <iwikilink type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
-    <iwikilink type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
-    <iwikilink type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
-    <iwikilink type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
-    <iwikilink type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
-    <iwikilink type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
-    <iwikilink type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />
-    <iwikilink type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
-    <iwikilink type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
-    <iwikilink type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
-    <iwikilink type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
-    <iwikilink type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
-    <iwikilink type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
-    <iwikilink type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
-    <iwikilink type="debian_de" url="http://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
+    <element type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
+    <element type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
+    <element type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
+    <element type="apt" url="apt:" name="Apt" icon="" />
+    <element type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
+    <element type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
+    <element type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
+    <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
+    <element type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
+    <element type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
+    <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
+    <element type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
+    <element type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
+    <element type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
+    <element type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
+    <element type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />
+    <element type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
+    <element type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
+    <element type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
+    <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
+    <element type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
+    <element type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
+    <element type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
+    <element type="debian_de" url="http://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
   </group>
   <group name="Wikimedia" icon="wikimedia.png">
-    <iwikilink type="wikipedia" url="http://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
-    <iwikilink type="wikipedia_en" url="http://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
-    <iwikilink type="wikibooks" url="http://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
-    <iwikilink type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
+    <element type="wikipedia" url="http://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
+    <element type="wikipedia_en" url="http://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
+    <element type="wikibooks" url="http://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
+    <element type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
   </group>
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
-    <iwikilink type="freecode" url="http://freecode.com/projects/" name="Freecode" icon="freecode.png" />
-    <iwikilink type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
-    <iwikilink type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
-    <iwikilink type="github" url="https://github.com/" name="GitHub" icon="github.png" />
-    <iwikilink type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
-    <iwikilink type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
-    <iwikilink type="lpcode" url="https://code.launchpad.net/" name="Launchpad Code" icon="lpcode.png" />
-    <iwikilink type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
-    <iwikilink type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />
-    <iwikilink type="playdeb" url="http://www.playdeb.net/software/" name="PlayDeb" icon="playdeb.png" />
-    <iwikilink type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
-    <iwikilink type="sourceforge2" url="http://$PAGE.sourceforge.net" name="Sourceforge 2" icon="sourceforge2.png" />
-    <iwikilink type="debianbug" url="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=" name="Debian Bugs" icon="debianbug.png" />
+    <element type="freecode" url="http://freecode.com/projects/" name="Freecode" icon="freecode.png" />
+    <element type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
+    <element type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
+    <element type="github" url="https://github.com/" name="GitHub" icon="github.png" />
+    <element type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
+    <element type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
+    <element type="lpcode" url="https://code.launchpad.net/" name="Launchpad Code" icon="lpcode.png" />
+    <element type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
+    <element type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />
+    <element type="playdeb" url="http://www.playdeb.net/software/" name="PlayDeb" icon="playdeb.png" />
+    <element type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
+    <element type="sourceforge2" url="http://$PAGE.sourceforge.net" name="Sourceforge 2" icon="sourceforge2.png" />
+    <element type="debianbug" url="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=" name="Debian Bugs" icon="debianbug.png" />
   </group>
   <group name="Misc" icon="youtube.png">
-    <iwikilink type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
-    <iwikilink type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
-    <iwikilink type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
-    <iwikilink type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
-    <iwikilink type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
-    <iwikilink type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
-    <iwikilink type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
-    <iwikilink type="googlevideo" url="http://video.google.de/videoplay?docid=" name="Google Videos" icon="googlevideo" />
-    <iwikilink type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
-    <iwikilink type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
-    <iwikilink type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
-    <iwikilink type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
-    <iwikilink type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
-    <iwikilink type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
-    <iwikilink type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
-    <iwikilink type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
-    <iwikilink type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
-    <iwikilink type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
-    <iwikilink type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
-    <iwikilink type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
-    <iwikilink type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
-    <iwikilink type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
-    <iwikilink type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
-    <iwikilink type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
+    <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
+    <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
+    <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
+    <element type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
+    <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
+    <element type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
+    <element type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
+    <element type="googlevideo" url="http://video.google.de/videoplay?docid=" name="Google Videos" icon="googlevideo" />
+    <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
+    <element type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
+    <element type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
+    <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
+    <element type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
+    <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
+    <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
+    <element type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
+    <element type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
+    <element type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
+    <element type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
+    <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
+    <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
+    <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
+    <element type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
   </group>
 </menu>

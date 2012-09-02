@@ -25,41 +25,43 @@
  */
 
 #include <QDebug>
-#include "CInterwiki.h"
+#include "CXmlParser.h"
 
 extern bool bDEBUG;
 
-CInterWiki::CInterWiki( const QApplication *pApp )
+CXmlParser::CXmlParser( const QString sAppName, const QString sAppPath, const QString sFilePath )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     QFile XmlFile;
 
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml")
+    if ( QFile::exists("/usr/share/" + sAppName.toLower() + "/" + sFilePath )
          && !bDEBUG )
     {
-        XmlFile.setFileName( "/usr/share/" + pApp->applicationName().toLower() + "/iWikiLinks/iWikiLinks.xml" );
+        XmlFile.setFileName( "/usr/share/" + sAppName.toLower() + "/" + sFilePath );
     }
     // No installation: Use app path
     else
     {
-        XmlFile.setFileName( pApp->applicationDirPath() + "/iWikiLinks/iWikiLinks.xml" );
+        XmlFile.setFileName( sAppPath + "/" + sFilePath );
+        QString sDebug = sAppPath + "/" + sFilePath;
+        qDebug() << sDebug;
     }
 
     // Check if file exist and it's readable
     if ( !XmlFile.open(QFile::ReadOnly | QFile::Text) )
     {
         // Call message box from CInyokaEdit
-        std::cerr << "ERROR: Can not open \"" << XmlFile.fileName().toStdString() << "\"." << std::endl;
-        QMessageBox::critical( 0, pApp->applicationName(), "Can not open \"" + XmlFile.fileName() + "\"." );
+        qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
+        QMessageBox::critical( 0, sAppName, "Can not open \"" + XmlFile.fileName() + "\"." );
         exit (-5);
     }
 
     QXmlSimpleReader myXmlReader;
 
     m_myXmlSource = new QXmlInputSource(&XmlFile);
-    m_myHandler = new CIWikiLinksParser;
+    m_myHandler = new CHandler;
 
     myXmlReader.setContentHandler(m_myHandler);
     myXmlReader.setErrorHandler(m_myHandler);
@@ -67,17 +69,18 @@ CInterWiki::CInterWiki( const QApplication *pApp )
     bool ok = myXmlReader.parse(m_myXmlSource);
     if ( !ok )
     {
-        std::cerr << "ERROR: Parsing \"" << XmlFile.fileName().toStdString() << "\"failed." << std::endl;
-        QMessageBox::critical( 0, pApp->applicationName(), "Error while parsing \"" + XmlFile.fileName() + "\"." );
+        qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
+        QMessageBox::critical( 0, sAppName, "Error while parsing \"" + XmlFile.fileName() + "\"." );
         exit (-7);
     }
 
+    m_sMenuName = m_myHandler->m_sMenuName_2;
     m_sListGroups = m_myHandler->m_sListGroups_2;
     m_sListGroupIcons = m_myHandler->m_sListGroupIcons_2;
-    m_sListInterWikiLinks = m_myHandler->m_sListInterWikiLinks_2;
-    m_sListInterWikiLinksUrls = m_myHandler->m_sListInterWikiLinksUrls_2;
-    m_sListInterWikiLinksNames = m_myHandler->m_sListInterWikiLinksNames_2;
-    m_sListInterWikiLinksIcons = m_myHandler->m_sListInterWikiLinksIcons_2;
+    m_sListTypes = m_myHandler->m_sListTypes_2;
+    m_sListUrls = m_myHandler->m_sListUrls_2;
+    m_sListNames = m_myHandler->m_sListNames_2;
+    m_sListIcons = m_myHandler->m_sListIcons_2;
 
     /*
     for ( int i = 0; i < sListGroups.size(); i++ )
@@ -94,59 +97,65 @@ CInterWiki::CInterWiki( const QApplication *pApp )
 
 // -----------------------------------------------------------------------------------------------
 
-QStringList CInterWiki::getInterwikiLinksGroups() const
+QString CXmlParser::getMenuName() const
+{
+    return m_sMenuName;
+}
+
+QStringList CXmlParser::getGrouplist() const
 {
     return m_sListGroups;
 }
 
-QStringList CInterWiki::getInterwikiLinksGroupIcons() const
+QStringList CXmlParser::getGroupIcons() const
 {
     return m_sListGroupIcons;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinks() const
+QList<QStringList> CXmlParser::getElementTypes() const
 {
-    return m_sListInterWikiLinks;
+    return m_sListTypes;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksUrls() const
+QList<QStringList> CXmlParser::getElementUrls() const
 {
-    return m_sListInterWikiLinksUrls;
+    return m_sListUrls;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksNames() const
+QList<QStringList> CXmlParser::getElementNames() const
 {
-    return m_sListInterWikiLinksNames;
+    return m_sListNames;
 }
 
-QList<QStringList> CInterWiki::getInterwikiLinksIcons() const
+QList<QStringList> CXmlParser::getElementIcons() const
 {
-    return m_sListInterWikiLinksIcons;
+    return m_sListIcons;
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::CIWikiLinksParser::startDocument()
+bool CXmlParser::CHandler::startDocument()
 {
-    m_bInInterWikiLink = false;
+    m_bInElement = false;
     return true;
 }
 
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::CIWikiLinksParser::endElement( const QString&, const QString&, const QString &sName )
+bool CXmlParser::CHandler::endElement( const QString&, const QString&, const QString &sName )
 {
     if ( "menu" == sName )
     {
-        m_bInInterWikiLink = false;
+        m_bInElement = false;
+        m_sMenuName_2 = m_tmpMenuName;
     }
     else if ( "group" == sName )
     {
-        m_sListInterWikiLinks_2 << m_tmpListiWikiLinks;
-        m_sListInterWikiLinksUrls_2 << m_tmpListiWikiUrls;
-        m_sListInterWikiLinksNames_2 << m_tmpListiWikiNames;
-        m_sListInterWikiLinksIcons_2 << m_tmpListiWikiIcons;
+        m_sListTypes_2 << m_tmpListTypes;
+        m_sListUrls_2 << m_tmpListUrls;
+        m_sListNames_2 << m_tmpListNames;
+        m_sListIcons_2 << m_tmpListIcons;
     }
 
     return true;
@@ -154,8 +163,9 @@ bool CInterWiki::CIWikiLinksParser::endElement( const QString&, const QString&, 
 
 // -----------------------------------------------------------------------------------------------
 
-bool CInterWiki::CIWikiLinksParser::startElement( const QString&, const QString&, const QString &sElement, const QXmlAttributes &attrs )
+bool CXmlParser::CHandler::startElement( const QString&, const QString&, const QString &sElement, const QXmlAttributes &attrs )
 {
+    QString sMenuName("");
     QString sGroupName("");
     QString sGroupIcon("");
     QString sType("");
@@ -164,12 +174,12 @@ bool CInterWiki::CIWikiLinksParser::startElement( const QString&, const QString&
     QString sIcon("");
 
     // Found group
-    if ( m_bInInterWikiLink && "group" == sElement )
+    if ( m_bInElement && "group" == sElement )
     {
-        m_tmpListiWikiLinks.clear();
-        m_tmpListiWikiUrls.clear();
-        m_tmpListiWikiNames.clear();
-        m_tmpListiWikiIcons.clear();
+        m_tmpListTypes.clear();
+        m_tmpListUrls.clear();
+        m_tmpListNames.clear();
+        m_tmpListIcons.clear();
 
         sGroupName = "GROUPNAME NOT FOUND";
         sGroupIcon = "NO ICON";
@@ -190,7 +200,7 @@ bool CInterWiki::CIWikiLinksParser::startElement( const QString&, const QString&
     }
 
     // Found interwikilink
-    else if ( m_bInInterWikiLink && "iwikilink" == sElement )
+    else if ( m_bInElement && "element" == sElement )
     {
         sType = "TYPE NOT FOUND";
         sUrl = "URL NOT FOUND";
@@ -217,16 +227,26 @@ bool CInterWiki::CIWikiLinksParser::startElement( const QString&, const QString&
             }
         }
 
-        m_tmpListiWikiLinks << sType;
-        m_tmpListiWikiUrls << sUrl;
-        m_tmpListiWikiNames << sName;
-        m_tmpListiWikiIcons << sIcon;
+        m_tmpListTypes << sType;
+        m_tmpListUrls << sUrl;
+        m_tmpListNames << sName;
+        m_tmpListIcons << sIcon;
     }
 
     // Found start of document
     else if ( "menu" == sElement )
     {
-        m_bInInterWikiLink = true;
+        m_bInElement = true;
+
+        sMenuName = "Unnamed";
+        for ( int i = 0; i < attrs.count(); i++ )
+        {
+            if ( "name" == attrs.localName(i) )
+            {
+                sMenuName = attrs.value(i);
+            }
+        }
+        m_tmpMenuName = sMenuName;
     }
 
     return true;

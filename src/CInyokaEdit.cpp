@@ -129,7 +129,7 @@ void CInyokaEdit::createObjects()
 
     m_pTemplates = new CTemplates( m_pApp->applicationName(),
                                    m_pApp->applicationDirPath(),
-                                   m_pSettings->getTemplateLanguage() );
+                                   m_pSettings->getTemplateLanguage() );  // Has to be created before parser
 
     m_pDownloadModule = new CDownload( this,
                                        m_pApp->applicationName(),
@@ -151,20 +151,15 @@ void CInyokaEdit::createObjects()
     m_pFileOperations = new CFileOperations( this,
                                              m_pEditor,
                                              m_pSettings,
-                                             m_pApp->applicationName() );
-
-    m_pInterWikiLinks = new CInterWiki( m_pApp );  // Has to be created before parser
+                                             m_pApp->applicationName() );  
 
     m_pParser = new CParser( m_pEditor->document(),
                              m_UserAppDir,
                              m_tmpPreviewImgDir,
-                             m_pInterWikiLinks->getInterwikiLinks(),
-                             m_pInterWikiLinks->getInterwikiLinksUrls(),
                              m_pSettings,
                              m_pTemplates );
 
-    m_pHighlighter = new CHighlighter( m_pInterWikiLinks->getInterwikiLinks(),
-                                       m_pTemplates,
+    m_pHighlighter = new CHighlighter( m_pTemplates,
                                        m_pEditor->document() );
 
     /**
@@ -184,8 +179,6 @@ void CInyokaEdit::createObjects()
     m_pTableTemplate = new CTableTemplate( m_pEditor,
 										   m_UserAppDir,
 										   m_tmpPreviewImgDir,
-										   m_pInterWikiLinks->getInterwikiLinks(),
-										   m_pInterWikiLinks->getInterwikiLinksUrls(),
                                            m_pSettings,
                                            m_pTemplates );
 
@@ -606,24 +599,25 @@ void CInyokaEdit::createActions()
     QList <QAction *> emptyActionList;
     emptyActionList.clear();
 
-    for ( int i = 0; i < m_pInterWikiLinks->getInterwikiLinksGroups().size(); i++ )
+    // No installation: Use app path
+    QString sTmpPath = m_pApp->applicationDirPath() + "/iWikiLinks/";
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
+         && !bDEBUG )
+    {
+        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikilinks/";
+    }
+
+    for ( int i = 0; i < m_pTemplates->getIWLs()->getGrouplist().size(); i++ )
     {
         m_iWikiLinksActions << emptyActionList;
-        for ( int j = 0; j < m_pInterWikiLinks->getInterwikiLinksNames()[i].size(); j++ )
+        for ( int j = 0; j < m_pTemplates->getIWLs()->getElementNames()[i].size(); j++ )
         {
-            // Path from normal installation
-            if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
-                 && !bDEBUG )
-            {
-                m_iWikiLinksActions[i] << new QAction(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksIcons()[i][j]), m_pInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-            }
-            // No installation: Use app path
-            else
-            {
-                m_iWikiLinksActions[i] << new QAction(QIcon(m_pApp->applicationDirPath() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksIcons()[i][j]), m_pInterWikiLinks->getInterwikiLinksNames()[i][j], this);
-            }
+            m_iWikiLinksActions[i] << new QAction( QIcon( sTmpPath + m_pTemplates->getIWLs()->getElementIcons()[i][j] ),
+                                                   m_pTemplates->getIWLs()->getElementNames()[i][j], this );
 
-            m_pSigMapInterWikiLinks->setMapping( m_iWikiLinksActions[i][j], QString::number(i) + "," + QString::number(j) );
+            m_pSigMapInterWikiLinks->setMapping( m_iWikiLinksActions[i][j],
+                                                 QString::number(i) + "," + QString::number(j) );
             connect( m_iWikiLinksActions[i][j], SIGNAL(triggered()),
                      m_pSigMapInterWikiLinks, SLOT(map()) );
         }
@@ -712,19 +706,23 @@ void CInyokaEdit::createMenus()
     }
 
     // Insert interwiki-links menu
-    for ( int i = 0; i < m_pInterWikiLinks->getInterwikiLinksGroups().size(); i++ )
+    m_piWikiMenu = new QMenu( m_pTemplates->getIWLs()->getMenuName(), this );
+    m_pUi->menuBar->insertMenu( m_pUi->toolsMenu->menuAction(), m_piWikiMenu );
+
+    // No installation: Use app path
+    QString sTmpPath = m_pApp->applicationDirPath() + "/iWikiLinks/";
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
+         && !bDEBUG )
     {
-        // Path from normal installation
-        if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
-             && !bDEBUG )
-        {
-            m_iWikiGroups.append( m_pUi->iWikiMenu->addMenu(QIcon("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksGroupIcons()[i]), m_pInterWikiLinks->getInterwikiLinksGroups()[i]) );
-        }
-        // No installation: Use app path
-        else
-        {
-            m_iWikiGroups.append( m_pUi->iWikiMenu->addMenu(QIcon(m_pApp->applicationDirPath() + "/iWikiLinks/" + m_pInterWikiLinks->getInterwikiLinksGroupIcons()[i]), m_pInterWikiLinks->getInterwikiLinksGroups()[i]) );
-        }
+        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/";
+    }
+
+    for ( int i = 0; i < m_pTemplates->getIWLs()->getGrouplist().size(); i++ )
+    {
+        m_iWikiGroups.append( m_piWikiMenu->addMenu( QIcon(sTmpPath + m_pTemplates->getIWLs()->getGroupIcons()[i]),
+                                                     m_pTemplates->getIWLs()->getGrouplist()[i]) );
+
         m_iWikiGroups[i]->addActions( m_iWikiLinksActions[i] );
     }
 
@@ -827,7 +825,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
             // Disable editor and insert samples/macros toolbars
             m_pUi->editMenu->setDisabled(true);
             m_pUi->insertTextSampleMenu->setDisabled(true);
-            m_pUi->iWikiMenu->setDisabled(true);
+            m_piWikiMenu->setDisabled(true);
             m_pUi->editToolBar->setDisabled(true);
             m_pUi->inyokaeditorBar->setDisabled(true);
             //this->removeToolBar(m_pUi->inyokaeditorBar);
@@ -891,7 +889,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         // Enable editor and insert samples/macros toolbars again
         m_pUi->editMenu->setEnabled(true);
         m_pUi->insertTextSampleMenu->setEnabled(true);
-        m_pUi->iWikiMenu->setEnabled(true);
+        m_piWikiMenu->setEnabled(true);
         m_pUi->editToolBar->setEnabled(true);
         m_pUi->inyokaeditorBar->setEnabled(true);
         //this->addToolBar(m_pUi->inyokaeditorBar);
@@ -1113,7 +1111,8 @@ void CInyokaEdit::insertInterwikiLink( const QString &sMenuEntry )
             QString sText = tr("Text", "Interwiki links: Common text");
 
             // Insert InterWiki-Link
-            m_pEditor->insertPlainText( "[" + m_pInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + sSitename + ":" + sText + "]" );
+            m_pEditor->insertPlainText( "[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()] +
+                                        ":" + sSitename + ":" + sText + "]" );
 
             // Select site name in InterWiki-Link
             QTextCursor textCursor = m_pEditor->textCursor();
@@ -1125,12 +1124,14 @@ void CInyokaEdit::insertInterwikiLink( const QString &sMenuEntry )
         else
         {
             // Insert InterWiki-Link with selected text
-            m_pEditor->insertPlainText( "[" + m_pInterWikiLinks->getInterwikiLinks()[sTmp[0].toInt()][sTmp[1].toInt()] + ":" + m_pEditor->textCursor().selectedText() + ":]" );
+            m_pEditor->insertPlainText( "[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()] +
+                                        ":" + m_pEditor->textCursor().selectedText() + ":]" );
         }
     }
     // Problem with indices
     else
     {
+        qWarning() << "Error while inserting InterWiki link - IWL indice:" << sMenuEntry;
         QMessageBox::warning( this, m_pApp->applicationName(), "Error while inserting InterWiki link: InterWiki indice" );
     }
 
@@ -1473,8 +1474,6 @@ void CInyokaEdit::showSyntaxOverview()
     CParser* pParser = new CParser( pTextDocument,
                                     m_UserAppDir,
                                     m_tmpPreviewImgDir,
-                                    m_pInterWikiLinks->getInterwikiLinks(),
-                                    m_pInterWikiLinks->getInterwikiLinksUrls(),
                                     m_pSettings,
                                     m_pTemplates );
 

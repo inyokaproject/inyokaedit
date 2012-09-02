@@ -60,8 +60,6 @@ public:
     CTableTemplate( CTextEditor *pEditor,
                     const QDir tmpFileOutputDir,
                     const QDir tmpImgDir,
-                    const QList<QStringList> sListIWiki,
-                    const QList<QStringList> sListIWikiUrl,
                     CSettings *pSettings,
                     CTemplates *pTemplates,
                     QWidget *pParent = 0 );
