@@ -77,84 +77,6 @@
     <addaction name="findNextAct"/>
     <addaction name="findPreviousAct"/>
    </widget>
-   <widget class="QMenu" name="insertTextSampleMenu">
-    <property name="locale">
-     <locale language="English" country="UnitedKingdom"/>
-    </property>
-    <property name="title">
-     <string>Text &amp;samples</string>
-    </property>
-    <widget class="QMenu" name="insertImageMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Images</string>
-     </property>
-     <addaction name="insertImageAct"/>
-     <addaction name="insertImageUnderlineAct"/>
-     <addaction name="insertImageCollectionAct"/>
-     <addaction name="insertImageCollectionInTextAct"/>
-    </widget>
-    <widget class="QMenu" name="insertBeginningMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Beginning of an article</string>
-     </property>
-     <addaction name="insertUnderConstructionAct"/>
-     <addaction name="insertTestedForAct"/>
-     <addaction name="insertKnowledgeAct"/>
-     <addaction name="insertTableOfContentsAct"/>
-     <addaction name="insertAdvancedAct"/>
-     <addaction name="insertAwardAct"/>
-    </widget>
-    <widget class="QMenu" name="insertFormatingHelpMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;General formating samples</string>
-     </property>
-     <addaction name="insertBashCommandAct"/>
-     <addaction name="insertNoticeAct"/>
-     <addaction name="insertWarningAct"/>
-     <addaction name="insertExpertsAct"/>
-    </widget>
-    <widget class="QMenu" name="insertPacketinstallationMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Package installation</string>
-     </property>
-     <addaction name="insertPackageInstallAct"/>
-     <addaction name="insertPPAAct"/>
-     <addaction name="insertThirdPartyRepoAct"/>
-     <addaction name="insertThirdPartyRepoAuthAct"/>
-     <addaction name="insertThirdPartyPackageAct"/>
-     <addaction name="insertPackageListAct"/>
-    </widget>
-    <widget class="QMenu" name="insertMiscElementMenu">
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="title">
-      <string>&amp;Misc samples</string>
-     </property>
-     <addaction name="insertImprovableAct"/>
-     <addaction name="insertFixMeAct"/>
-     <addaction name="insertLeftAct"/>
-     <addaction name="insertThirdPartyWarningAct"/>
-    </widget>
-    <addaction name="insertBeginningMenu"/>
-    <addaction name="insertImageMenu"/>
-    <addaction name="insertFormatingHelpMenu"/>
-    <addaction name="insertPacketinstallationMenu"/>
-    <addaction name="insertMiscElementMenu"/>
-    <addaction name="insertTableAct"/>
-   </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
      <string>&amp;Help</string>
@@ -170,13 +92,13 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
+    <addaction name="insertTableAct"/>
     <addaction name="spellCheckerAct"/>
     <addaction name="DownloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
-   <addaction name="insertTextSampleMenu"/>
    <addaction name="toolsMenu"/>
    <addaction name="helpMenu"/>
   </widget>
@@ -817,7 +739,7 @@
   </action>
   <action name="insertTableAct">
    <property name="text">
-    <string>Table...</string>
+    <string>Table generator</string>
    </property>
   </action>
   <action name="showSyntaxOverviewAct">

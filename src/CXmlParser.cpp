@@ -45,8 +45,6 @@ CXmlParser::CXmlParser( const QString sAppName, const QString sAppPath, const QS
     else
     {
         XmlFile.setFileName( sAppPath + "/" + sFilePath );
-        QString sDebug = sAppPath + "/" + sFilePath;
-        qDebug() << sDebug;
     }
 
     // Check if file exist and it's readable

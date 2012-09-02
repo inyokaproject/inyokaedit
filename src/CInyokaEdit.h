@@ -67,7 +67,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.6.0"
+#define sVERSION "0.7.0"
 
 namespace Ui {
     class CInyokaEdit;
@@ -163,7 +163,9 @@ private slots:
     * \brief Insert text sample from menu
     * \param sMenuEntry Selected entry
     */
-    void insertTextSample( const QString &sMenuEntry);
+    void insertSomeSamples( const QString &sMenuEntry);
+
+    void insertMacro( const QString &sMenuEntry );
 
     /**
     * \brief Insert interwiki link from menu
@@ -186,7 +188,11 @@ private:
     // Build gui
     void setupEditor();
     void createActions();
+    void createXmlActions( QSignalMapper *SigMap, const QString sIconPath,
+                           QList<QList<QAction *> >& listActions, CXmlParser* pXmlMenu );
     void createMenus();
+    void insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString sIconPath,
+                        QList<QList<QAction *> > listActions, CXmlParser* pXmlMenu, QAction* pPosition );
     void createToolBars();
 
     // Load / save application settings
@@ -212,7 +218,19 @@ private:
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
 
+    // Inter-Wiki Links
     QMenu *m_piWikiMenu;
+    QList<QMenu *> m_iWikiGroups;
+    QList<QList<QAction *> > m_iWikiLinksActions;
+    QSignalMapper *m_pSigMapInterWikiLinks;
+
+    // Markup templates
+    QMenu *m_pTplMenu;
+    QList<QMenu *> m_TplGroups;
+    QList<QList<QAction *> > m_TplActions;
+    QSignalMapper *m_pSigMapTemplates;
+
+    QSignalMapper *m_pSigMapSomeElements;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
@@ -223,20 +241,10 @@ private:
     // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;
 
-    // InterWiki links menu group list
-    QList<QMenu *> m_iWikiGroups;
-
     // Comboboxes for samplesmacrosBar toolbar
     QComboBox *m_pHeadlineBox;
     QComboBox *m_pTextmacrosBox;
     QComboBox *m_pTextformatBox;
-
-    // Text samples signal mapper
-    QSignalMapper *mySigMapTextSamples;
-
-    // Inter-Wiki Links
-    QList<QList<QAction *> > m_iWikiLinksActions;
-    QSignalMapper *m_pSigMapInterWikiLinks;
 
     QList<QAction *> m_OpenTemplateFilesActions;
     QSignalMapper *m_pSigMapOpenTemplate;

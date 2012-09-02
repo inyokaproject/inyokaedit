@@ -402,8 +402,6 @@ void CInyokaEdit::createActions()
 
     // ---------------------------------------------------------------------------------------------
 
-    mySigMapTextSamples = new QSignalMapper(this);
-
     // Insert headline
     m_pHeadlineBox = new QComboBox();
     m_pHeadlineBox->setStatusTip(tr("Insert a headline - 5 headline steps are supported"));
@@ -419,37 +417,42 @@ void CInyokaEdit::createActions()
     // ---------------------------------------------------------------------------------------------
     // INSERT SYNTAX ELEMENTS
 
+    m_pSigMapSomeElements = new QSignalMapper(this);
+
     // Insert bold element
     m_pUi->boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
-    mySigMapTextSamples->setMapping(m_pUi->boldAct, "boldAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->boldAct, "boldAct");
     connect( m_pUi->boldAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
 
     // Insert italic element
     m_pUi->italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
-    mySigMapTextSamples->setMapping(m_pUi->italicAct, "italicAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->italicAct, "italicAct");
     connect( m_pUi->italicAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
 
     // Insert monotype element
-    mySigMapTextSamples->setMapping(m_pUi->monotypeAct, "monotypeAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->monotypeAct, "monotypeAct");
     connect( m_pUi->monotypeAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
 
     // Insert wiki link
-    mySigMapTextSamples->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
     connect( m_pUi->wikilinkAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
 
     // Insert extern link
-    mySigMapTextSamples->setMapping(m_pUi->externalLinkAct, "externalLinkAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->externalLinkAct, "externalLinkAct");
     connect( m_pUi->externalLinkAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
 
     // Insert image
-    mySigMapTextSamples->setMapping(m_pUi->imageAct, "imageAct");
+    m_pSigMapSomeElements->setMapping(m_pUi->imageAct, "imageAct");
     connect( m_pUi->imageAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
+             m_pSigMapSomeElements, SLOT(map()) );
+
+    connect( m_pSigMapSomeElements, SIGNAL(mapped(QString)),
+            this, SLOT(insertSomeSamples(QString)) );
 
     // Code block + syntax highlighting
     mySigMapCodeHighlight = new QSignalMapper(this);
@@ -487,141 +490,27 @@ void CInyokaEdit::createActions()
     connect( mySigMapCodeHighlight, SIGNAL(mapped(QString)),
              this, SLOT(insertCodeblock(QString)) );
 
-    // ---------------------------------------------------------------------------------------------
-    // TEXT SAMPLES
-
-    mySigMapTextSamples->setMapping(m_pUi->insertUnderConstructionAct, "insertUnderConstructionAct");
-    connect( m_pUi->insertUnderConstructionAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertTestedForAct, "insertTestedForAct");
-    connect( m_pUi->insertTestedForAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertKnowledgeAct, "insertKnowledgeAct");
-    connect( m_pUi->insertKnowledgeAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertTableOfContentsAct, "insertTableOfContentsAct");
-    connect( m_pUi->insertTableOfContentsAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertAdvancedAct, "insertAdvancedAct");
-    connect( m_pUi->insertAdvancedAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertAwardAct, "insertAwardAct");
-    connect( m_pUi->insertAwardAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertImageAct, "imageAct");  // insertImageAct = imageAct !
-    connect( m_pUi->insertImageAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertImageUnderlineAct, "insertImageUnderlineAct");
-    connect( m_pUi->insertImageUnderlineAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertImageCollectionAct, "insertImageCollectionAct");
-    connect( m_pUi->insertImageCollectionAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertImageCollectionInTextAct, "insertImageCollectionInTextAct");
-    connect( m_pUi->insertImageCollectionInTextAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertBashCommandAct, "insertBashCommandAct");
-    connect( m_pUi->insertBashCommandAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertNoticeAct, "insertNoticeAct");
-    connect( m_pUi->insertNoticeAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertWarningAct, "insertWarningAct");
-    connect( m_pUi->insertWarningAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertExpertsAct, "insertExpertsAct");
-    connect( m_pUi->insertExpertsAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertPackageListAct, "insertPackageListAct");
-    connect( m_pUi->insertPackageListAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertPackageInstallAct, "insertPackageInstallAct");
-    connect( m_pUi->insertPackageInstallAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertPPAAct, "insertPPAAct");
-    connect( m_pUi->insertPPAAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoAct, "insertThirdPartyRepoAct");
-    connect( m_pUi->insertThirdPartyRepoAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyRepoAuthAct, "insertThirdPartyRepoAuthAct");
-    connect( m_pUi->insertThirdPartyRepoAuthAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyPackageAct, "insertThirdPartyPackageAct");
-    connect( m_pUi->insertThirdPartyPackageAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertImprovableAct, "insertImprovableAct");
-    connect( m_pUi->insertImprovableAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertFixMeAct, "insertFixMeAct");
-    connect( m_pUi->insertFixMeAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertLeftAct, "insertLeftAct");
-    connect( m_pUi->insertLeftAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    mySigMapTextSamples->setMapping(m_pUi->insertThirdPartyWarningAct, "insertThirdPartyWarningAct");
-    connect( m_pUi->insertThirdPartyWarningAct, SIGNAL(triggered()),
-             mySigMapTextSamples, SLOT(map()) );
-
-    connect( mySigMapTextSamples, SIGNAL(mapped(QString)),
-            this, SLOT(insertTextSample(QString)) );
-
     connect( m_pUi->insertTableAct, SIGNAL(triggered()),
     		m_pTableTemplate, SLOT(newTable()) );
+
+    // ---------------------------------------------------------------------------------------------
+    // MARKUP TEMPLATES MENU
+
+    m_pSigMapTemplates = new QSignalMapper(this);
+
+    this->createXmlActions( m_pSigMapTemplates, "/templates/" + m_pSettings->getTemplateLanguage() + "/",
+                            m_TplActions, m_pTemplates->getTPLs() );
+
+    connect( m_pSigMapTemplates, SIGNAL(mapped(QString)),
+             this, SLOT(insertMacro(QString)) );
 
     // ---------------------------------------------------------------------------------------------
     // INTERWIKI LINKS MENU
 
     m_pSigMapInterWikiLinks = new QSignalMapper(this);
-    QList <QAction *> emptyActionList;
-    emptyActionList.clear();
 
-    // No installation: Use app path
-    QString sTmpPath = m_pApp->applicationDirPath() + "/iWikiLinks/";
-    // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
-         && !bDEBUG )
-    {
-        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikilinks/";
-    }
-
-    for ( int i = 0; i < m_pTemplates->getIWLs()->getGrouplist().size(); i++ )
-    {
-        m_iWikiLinksActions << emptyActionList;
-        for ( int j = 0; j < m_pTemplates->getIWLs()->getElementNames()[i].size(); j++ )
-        {
-            m_iWikiLinksActions[i] << new QAction( QIcon( sTmpPath + m_pTemplates->getIWLs()->getElementIcons()[i][j] ),
-                                                   m_pTemplates->getIWLs()->getElementNames()[i][j], this );
-
-            m_pSigMapInterWikiLinks->setMapping( m_iWikiLinksActions[i][j],
-                                                 QString::number(i) + "," + QString::number(j) );
-            connect( m_iWikiLinksActions[i][j], SIGNAL(triggered()),
-                     m_pSigMapInterWikiLinks, SLOT(map()) );
-        }
-    }
+    this->createXmlActions( m_pSigMapInterWikiLinks, "/iWikiLinks/",
+                            m_iWikiLinksActions, m_pTemplates->getIWLs() );
 
     connect( m_pSigMapInterWikiLinks, SIGNAL(mapped(QString)),
              this, SLOT(insertInterwikiLink(QString)) );
@@ -642,6 +531,39 @@ void CInyokaEdit::createActions()
              this, SLOT(about()) );
 
     qDebug() << "End" << Q_FUNC_INFO;
+}
+
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::createXmlActions( QSignalMapper *SigMap, const QString sIconPath,
+                                    QList<QList<QAction *> >& listActions, CXmlParser* pXmlMenu )
+{
+    QList <QAction *> emptyActionList;
+    emptyActionList.clear();
+
+    // No installation: Use app path
+    QString sTmpPath = m_pApp->applicationDirPath() + sIconPath;
+    // Path from normal installation
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + sIconPath)
+         && !bDEBUG )
+    {
+        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + sIconPath;
+    }
+
+    for ( int i = 0; i < pXmlMenu->getGrouplist().size(); i++ )
+    {
+        listActions.append( emptyActionList );
+        for ( int j = 0; j < pXmlMenu->getElementNames()[i].size(); j++ )
+        {
+            listActions[i].append( new QAction( QIcon( sTmpPath + pXmlMenu->getElementIcons()[i][j] ),
+                                                pXmlMenu->getElementNames()[i][j], this ) );
+
+            SigMap->setMapping( listActions[i][j],
+                                                 QString::number(i) + "," + QString::number(j) );
+            connect( listActions[i][j], SIGNAL(triggered()),
+                     SigMap, SLOT(map()) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------------------------
@@ -705,25 +627,43 @@ void CInyokaEdit::createMenus()
         m_pUi->fileMenuLastOpened->setEnabled(false);
     }
 
-    // Insert interwiki-links menu
+    // Insert IWL menu
+    m_pTplMenu = new QMenu( m_pTemplates->getTPLs()->getMenuName(), this );
+    this->insertXmlMenu( m_pTplMenu, m_TplGroups, "/templates/" + m_pSettings->getTemplateLanguage() + "/",
+                         m_TplActions, m_pTemplates->getTPLs(), m_pUi->toolsMenu->menuAction() );
+
+    // Insert IWL menu
     m_piWikiMenu = new QMenu( m_pTemplates->getIWLs()->getMenuName(), this );
-    m_pUi->menuBar->insertMenu( m_pUi->toolsMenu->menuAction(), m_piWikiMenu );
+    this->insertXmlMenu( m_piWikiMenu, m_iWikiGroups, "/iWikiLinks/",
+                         m_iWikiLinksActions, m_pTemplates->getIWLs(), m_pUi->toolsMenu->menuAction() );
+
+    qDebug() << "End" << Q_FUNC_INFO;
+}
+
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString sIconPath,
+                                 QList<QList<QAction *> > listActions, CXmlParser* pXmlMenu, QAction* pPosition )
+{
+    qDebug() << "Start" << Q_FUNC_INFO;
+
+    m_pUi->menuBar->insertMenu( pPosition, pMenu );
 
     // No installation: Use app path
-    QString sTmpPath = m_pApp->applicationDirPath() + "/iWikiLinks/";
+    QString sTmpPath = m_pApp->applicationDirPath() + sIconPath;
     // Path from normal installation
-    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks")
+    if ( QFile::exists("/usr/share/" + m_pApp->applicationName().toLower() + sIconPath)
          && !bDEBUG )
     {
-        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + "/iWikiLinks/";
+        sTmpPath = "/usr/share/" + m_pApp->applicationName().toLower() + sIconPath;
     }
 
-    for ( int i = 0; i < m_pTemplates->getIWLs()->getGrouplist().size(); i++ )
+    for ( int i = 0; i < pXmlMenu->getGrouplist().size(); i++ )
     {
-        m_iWikiGroups.append( m_piWikiMenu->addMenu( QIcon(sTmpPath + m_pTemplates->getIWLs()->getGroupIcons()[i]),
-                                                     m_pTemplates->getIWLs()->getGrouplist()[i]) );
+        pMenuGroup.append( pMenu->addMenu( QIcon(sTmpPath + pXmlMenu->getGroupIcons()[i]),
+                                           pXmlMenu->getGrouplist()[i]) );
 
-        m_iWikiGroups[i]->addActions( m_iWikiLinksActions[i] );
+        pMenuGroup[i]->addActions( listActions[i] );
     }
 
     qDebug() << "End" << Q_FUNC_INFO;
@@ -824,7 +764,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
         {
             // Disable editor and insert samples/macros toolbars
             m_pUi->editMenu->setDisabled(true);
-            m_pUi->insertTextSampleMenu->setDisabled(true);
+            m_pTplMenu->setDisabled(true);
             m_piWikiMenu->setDisabled(true);
             m_pUi->editToolBar->setDisabled(true);
             m_pUi->inyokaeditorBar->setDisabled(true);
@@ -888,7 +828,7 @@ void CInyokaEdit::previewInyokaPage( const int nIndex )
     {
         // Enable editor and insert samples/macros toolbars again
         m_pUi->editMenu->setEnabled(true);
-        m_pUi->insertTextSampleMenu->setEnabled(true);
+        m_pTplMenu->setEnabled(true);
         m_piWikiMenu->setEnabled(true);
         m_pUi->editToolBar->setEnabled(true);
         m_pUi->inyokaeditorBar->setEnabled(true);
@@ -956,45 +896,45 @@ void CInyokaEdit::insertDropDownTextmacro( const int nSelection )
         {
             default:
             case 1:  // Under construction (Baustelle)
-                insertTextSample("insertUnderConstructionAct");
+                insertSomeSamples("insertUnderConstructionAct");
                 break;
             case 2:  // Table of contents (Inhaltsverzeichnis)
-                insertTextSample("insertTableOfContentsAct");
+                insertSomeSamples("insertTableOfContentsAct");
                 break;
             case 3:  // Tested for (Getestet)
-                insertTextSample("insertTestedForAct");
+                insertSomeSamples("insertTestedForAct");
                 break;
             case 4:  // Package installation (Paketinstallation)
-                insertTextSample("insertPackageInstallAct");
+                insertSomeSamples("insertPackageInstallAct");
                 break;
             case 5:  // Bash command (Befehl)
-                insertTextSample("insertBashCommandAct");
+                insertSomeSamples("insertBashCommandAct");
                 break;
             case 6:  // PPA sample (PPA-Vorlage)
-                insertTextSample("insertPPAAct");
+                insertSomeSamples("insertPPAAct");
                 break;
             case 7:  // Notice (Hinweis)
-                insertTextSample("insertNoticeAct");
+                insertSomeSamples("insertNoticeAct");
                 break;
             case 8:  // Third-party package/repo/software warning
-                insertTextSample("insertThirdPartyWarningAct");
+                insertSomeSamples("insertThirdPartyWarningAct");
                 break;
             case 9:  // Warning (Warnung)
-                insertTextSample("insertWarningAct");
+                insertSomeSamples("insertWarningAct");
                 break;
             case 10:  // Expert information (Experten-Info)
-                insertTextSample("insertExpertsAct");
+                insertSomeSamples("insertExpertsAct");
                 break;
             case 11:  // Keys (Tasten)
-                insertTextSample("Keys");
+                insertSomeSamples("Keys");
                 break;
             case 12:
                 // Table (Tabelle)
-                insertTextSample("Table");
+                insertSomeSamples("Table");
                 break;
             case 13:
                 // Game info box
-                insertTextSample("GameInfoBox");
+                insertSomeSamples("GameInfoBox");
                 break;
         }
         // Reset selection
@@ -1089,9 +1029,80 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 }
 
 // Insert text sample / syntax element
-void CInyokaEdit::insertTextSample( const QString &sMenuEntry )
+void CInyokaEdit::insertSomeSamples( const QString &sMenuEntry )
 {
     m_pEditor->insertPlainText( QString::fromUtf8(m_pInsertSyntaxElement->getElementInyokaCode(sMenuEntry.toStdString(), m_pEditor->textCursor().selectedText().toStdString()).c_str()) );
+    m_pEditor->setFocus();
+}
+
+// Insert macro
+void CInyokaEdit::insertMacro( const QString &sMenuEntry )
+{
+    // Get indices for links
+    QStringList slistTmp = sMenuEntry.split(",");
+    QString sTmp;
+
+    // Check if right number of indices found
+    if ( slistTmp.size() == 2 )
+    {
+        QString sName = m_pTemplates->getTPLs()->getElementUrls()[slistTmp[0].toInt()][slistTmp[1].toInt()];
+        sName.remove(".tpl");
+
+        int nIndex = m_pTemplates->getListTplNames().indexOf(sName);
+        if( nIndex >= 0 )
+        {
+            QString sMacro = m_pTemplates->getListTplMacros()[nIndex];
+            sMacro.replace("\\n", "\n");
+            int nPlaceholder1 = sMacro.indexOf("%%");
+            int nPlaceholder2 = sMacro.lastIndexOf("%%");
+
+            // No text selected
+            if ( m_pEditor->textCursor().selectedText() == "" )
+            {
+                int nCurrentPos =  m_pEditor->textCursor().position();
+
+                // Insert macro
+                sMacro.remove("%%");  // Remove placeholder
+                m_pEditor->insertPlainText( sMacro );
+
+                // Select placeholder
+                if( (nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 && nPlaceholder2 >= 0 )
+                {
+                    QTextCursor textCursor = m_pEditor->textCursor();
+                    textCursor.setPosition( nCurrentPos + nPlaceholder1 );
+                    textCursor.setPosition( nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor );
+                    m_pEditor->setTextCursor( textCursor );
+                }
+            }
+            // Some text is selected
+            else
+            {
+                sTmp = sMacro;
+                if( (nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 && nPlaceholder2 >= 0 )
+                {
+                    sTmp.replace( nPlaceholder1, nPlaceholder2 - nPlaceholder1,
+                                  m_pEditor->textCursor().selectedText() );
+                    m_pEditor->insertPlainText( sTmp.remove("%%") );
+                }
+                // Problem with placeholder
+                else
+                {
+                    m_pEditor->insertPlainText( sMacro.remove("%%") );
+                }
+            }
+        }
+        else
+        {
+            qWarning()  << "Unknown macro choosen:" << sName;
+        }
+    }
+    // Problem with indices
+    else
+    {
+        qWarning() << "Error while inserting template macro - TPL indice:" << sMenuEntry;
+        QMessageBox::warning( this, m_pApp->applicationName(), "Error while inserting template macro: Template indice" );
+    }
+
     m_pEditor->setFocus();
 }
 

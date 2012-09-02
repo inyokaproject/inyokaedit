@@ -74,6 +74,7 @@ public:
     QStringList getListFormatHtmlEnd() const;
     QStringList getListFlags() const;
 
+    CXmlParser *getTPLs() const;
     CXmlParser *getIWLs() const;
 
 private:
@@ -113,6 +114,7 @@ private:
     QString m_sTransTable;
 
     CXmlParser *m_pInterWikiLinks;
+    CXmlParser *m_pMarkupTemplates;
 };
 
 #endif // CTEMPLATES_H

@@ -125,6 +125,10 @@ void CTemplates::initTemplates()
     }
 
     qDebug() << "Loaded templates:" << m_sListTplNames;
+
+    m_pMarkupTemplates = new CXmlParser( m_sAppName, m_sAppPath,
+                                         "templates/" + m_sTplLang + "/Templates.xml");
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -335,6 +339,11 @@ void CTemplates::initIWLs( const QString sFilePath )
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
+
+CXmlParser* CTemplates::getTPLs() const
+{
+    return m_pMarkupTemplates;
+}
 
 CXmlParser* CTemplates::getIWLs() const
 {

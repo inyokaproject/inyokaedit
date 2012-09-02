@@ -77,6 +77,7 @@ CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
             m_sListCompleter << sListTemp[i].remove("[[");
             // Remove markers for description
             m_sListCompleter.last() = sListTemp[i].remove("%%");
+            m_sListCompleter.last() = m_sListCompleter.last().replace("\\n", "\n");
         }
     }
 

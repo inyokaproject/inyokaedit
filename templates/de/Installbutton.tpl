@@ -1,3 +1,4 @@
+## Macro=
 ##
 ## Diese Vorlage soll nur im Parser Paketinstallation eingebunden werden!
 ##
