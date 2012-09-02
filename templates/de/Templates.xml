@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate templates menu in InyokaEdit.
+  
+  If you edit this file don't forget to mask ampersands: & -> &amp;
+-->
+<menu name="Textbau&amp;steine">
+  <group name="&amp;Am Anfang eines Artikels">
+    <element type="" url="Baustelle.tpl" name="Baustelle" icon="" />
+    <element type="" url="Getestet.tpl" name="Getestet" icon="" />
+    <element type="" url="Wissen.tpl" name="Wissensblock" icon="" />
+    <element type="" url="Inhaltsverzeichnis.macro" name="Inhaltsverzeichnis" icon="" />
+    <element type="" url="Experten.tpl" name="Experten-Markierung" icon="" />
+    <element type="" url="Award.tpl" name="Preis-Markierung" icon="" />
+  </group>
+  <group name="B&amp;ilder">
+    <element type="" url="Bild.macro" name="Bild" icon="" />
+    <element type="" url="Bildunterschrift.tpl" name="Bild mit Bildunterschrift" icon="" />
+    <element type="" url="Bildersammlung.tpl" name="Bildersammlung" icon="" />
+  </group>
+  <group name="Allg. &amp;Formatierungshilfen">
+    <element type="" url="Befehl.tpl" name="Shell Befehl" icon="" />
+    <element type="" url="Hinweis.tpl" name="Hinweis" icon="" />
+    <element type="" url="Warnung.tpl" name="Warnung" icon="" />
+    <element type="" url="Experten.tpl" name="Experten-Info" icon="" />
+  </group>
+  <group name="&amp;Paketinstallation">
+    <element type="" url="Paketinstallation.tpl" name="Paketinstallation" icon="" />
+    <element type="" url="PPA.tpl" name="PPA-Vorlage" icon="" />
+    <element type="" url="Fremdquelle.tpl" name="Fremdquellen-Vorlage" icon="" />
+    <element type="" url="Fremdquelle-auth.tpl" name="Fremdquelle authentifizieren Vorlage" icon="" />
+    <element type="" url="Fremdpaket.tpl" name="Fremdpaket-Vorlage" icon="" />
+    <element type="" url="Pakete.tpl" name="Pakete-Makro (veraltet)" icon="" />
+  </group>
+  <group name="&amp;Sonstige Bausteine">
+    <element type="" url="Ausbaufähig.tpl" name="Ausbaufähig-Markierung" icon="" />
+    <element type="" url="Fehlerhaft.tpl" name="Fehlerhaft-Markierung" icon="" />
+    <element type="" url="Verlassen.tpl" name="Verlassen-Markierung" icon="" />
+    <element type="" url="Fremd.tpl" name="Fremdquellen-Warnung" icon="" />
+  </group>
+</menu>
