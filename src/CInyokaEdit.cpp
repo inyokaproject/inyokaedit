@@ -627,7 +627,7 @@ void CInyokaEdit::createMenus()
         m_pUi->fileMenuLastOpened->setEnabled(false);
     }
 
-    // Insert IWL menu
+    // Insert TPL menu
     m_pTplMenu = new QMenu( m_pTemplates->getTPLs()->getMenuName(), this );
     this->insertXmlMenu( m_pTplMenu, m_TplGroups, "/templates/" + m_pSettings->getTemplateLanguage() + "/",
                          m_TplActions, m_pTemplates->getTPLs(), m_pUi->toolsMenu->menuAction() );
@@ -695,21 +695,15 @@ void CInyokaEdit::createToolBars()
 
     // Macros combo box
     m_pUi->samplesmacrosBar->addWidget( m_pTextmacrosBox );
-    m_pTextmacrosBox->addItem(tr("Text macros", "GUI: Text macro combo box"));
+    m_pTextmacrosBox->addItem( m_pTemplates->getDropTPLs()->getMenuName() );
     m_pTextmacrosBox->insertSeparator(1);
-    m_pTextmacrosBox->addItem(tr("Under construction", "GUI: Text macro combo box - Work in progress"));
-    m_pTextmacrosBox->addItem(tr("Table of contents", "GUI: Text macro combo box - Table of contents"));
-    m_pTextmacrosBox->addItem(tr("Tested for", "GUI: Text macro combo box - Tested for"));
-    m_pTextmacrosBox->addItem(tr("Package installation", "GUI: Text macro combo box - Package installation"));
-    m_pTextmacrosBox->addItem(tr("Bash command", "GUI: Text macro combo box - Bash command"));
-    m_pTextmacrosBox->addItem(tr("PPA sample", "GUI: Text macro combo box - PPA sample"));
-    m_pTextmacrosBox->addItem(tr("Notice box", "GUI: Text macro combo box - Notice box"));
-    m_pTextmacrosBox->addItem(tr("Third-party package warning", "GUI: Text macro combo box - Third-party package warning"));
-    m_pTextmacrosBox->addItem(tr("Warning box", "GUI: Text macro combo box - Warning box"));
-    m_pTextmacrosBox->addItem(tr("Experts information", "GUI: Text macro combo box - Experts info box"));
-    m_pTextmacrosBox->addItem(tr("Keys", "GUI: Text macro combo box - Keys"));
-    m_pTextmacrosBox->addItem(tr("Table", "GUI: Text macro combo box - Table"));
-    m_pTextmacrosBox->addItem(tr("Game info box", "GUI: Game info box"));
+    if( m_pTemplates->getDropTPLs()->getElementNames().size() > 0 )
+    {
+        foreach( QString s, m_pTemplates->getDropTPLs()->getElementNames()[0] )
+        {
+            m_pTextmacrosBox->addItem(s);
+        }
+    }
     connect(m_pTextmacrosBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextmacro(int)));
 
@@ -888,60 +882,64 @@ void CInyokaEdit::insertDropDownHeadline( const int nSelection )
 // Macro (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextmacro( const int nSelection )
 {
-
     if ( nSelection != 0 && nSelection != 1 )
     {
-        // -1 because of separator (considered as "item")
-        switch ( nSelection-1 )
-        {
-            default:
-            case 1:  // Under construction (Baustelle)
-                insertSomeSamples("insertUnderConstructionAct");
-                break;
-            case 2:  // Table of contents (Inhaltsverzeichnis)
-                insertSomeSamples("insertTableOfContentsAct");
-                break;
-            case 3:  // Tested for (Getestet)
-                insertSomeSamples("insertTestedForAct");
-                break;
-            case 4:  // Package installation (Paketinstallation)
-                insertSomeSamples("insertPackageInstallAct");
-                break;
-            case 5:  // Bash command (Befehl)
-                insertSomeSamples("insertBashCommandAct");
-                break;
-            case 6:  // PPA sample (PPA-Vorlage)
-                insertSomeSamples("insertPPAAct");
-                break;
-            case 7:  // Notice (Hinweis)
-                insertSomeSamples("insertNoticeAct");
-                break;
-            case 8:  // Third-party package/repo/software warning
-                insertSomeSamples("insertThirdPartyWarningAct");
-                break;
-            case 9:  // Warning (Warnung)
-                insertSomeSamples("insertWarningAct");
-                break;
-            case 10:  // Expert information (Experten-Info)
-                insertSomeSamples("insertExpertsAct");
-                break;
-            case 11:  // Keys (Tasten)
-                insertSomeSamples("Keys");
-                break;
-            case 12:
-                // Table (Tabelle)
-                insertSomeSamples("Table");
-                break;
-            case 13:
-                // Game info box
-                insertSomeSamples("GameInfoBox");
-                break;
-        }
-        // Reset selection
-        m_pTextmacrosBox->setCurrentIndex(0);
+        QString sTmp;
+        QString sName = m_pTemplates->getDropTPLs()->getElementUrls()[0][nSelection -2];
+        sName.remove(".tpl");
+        sName.remove(".macro");
 
-        m_pEditor->setFocus();
+        int nIndex = m_pTemplates->getListTplNamesALL().indexOf(sName);
+        if( nIndex >= 0 )
+        {
+            QString sMacro = m_pTemplates->getListTplMacrosALL()[nIndex];
+            sMacro.replace("\\n", "\n");
+            int nPlaceholder1 = sMacro.indexOf("%%");
+            int nPlaceholder2 = sMacro.lastIndexOf("%%");
+
+            // No text selected
+            if ( m_pEditor->textCursor().selectedText() == "" )
+            {
+                int nCurrentPos =  m_pEditor->textCursor().position();
+
+                // Insert macro
+                sMacro.remove("%%");  // Remove placeholder
+                m_pEditor->insertPlainText( sMacro );
+
+                // Select placeholder
+                if( (nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 && nPlaceholder2 >= 0 )
+                {
+                    QTextCursor textCursor = m_pEditor->textCursor();
+                    textCursor.setPosition( nCurrentPos + nPlaceholder1 );
+                    textCursor.setPosition( nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor );
+                    m_pEditor->setTextCursor( textCursor );
+                }
+            }
+            // Some text is selected
+            else
+            {
+                sTmp = sMacro;
+                if( (nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 && nPlaceholder2 >= 0 )
+                {
+                    sTmp.replace( nPlaceholder1, nPlaceholder2 - nPlaceholder1,
+                                  m_pEditor->textCursor().selectedText() );
+                    m_pEditor->insertPlainText( sTmp.remove("%%") );
+                }
+                // Problem with placeholder
+                else
+                {
+                    m_pEditor->insertPlainText( sMacro.remove("%%") );
+                }
+            }
+        }
+        else
+        {
+            qWarning()  << "Unknown macro choosen:" << sName;
+        }
     }
+
+    m_pTextmacrosBox->setCurrentIndex(0);
+    m_pEditor->setFocus();
 }
 
 // Text format (combobox in toolbar)

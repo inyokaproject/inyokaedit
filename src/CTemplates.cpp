@@ -43,7 +43,8 @@ CTemplates::CTemplates( const QString sAppName,
     this->initTextformats( "Textformats.conf" );
     this->initTranslations( "Translations.conf" );
 
-    this->initIWLs( "iWikiLinks/iWikiLinks.xml" );
+    m_pInterWikiLinks = new CXmlParser( m_sAppName, m_sAppPath, "iWikiLinks/iWikiLinks.xml" );
+    m_pDropdownTemplates = new CXmlParser( m_sAppName, m_sAppPath, "templates/" + m_sTplLang + "/Templates_Dropdown.xml" );
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -374,14 +375,6 @@ void CTemplates::initTranslations( const QString sFilename )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CTemplates::initIWLs( const QString sFilePath )
-{
-    m_pInterWikiLinks = new CXmlParser( m_sAppName, m_sAppPath, sFilePath );
-}
-
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
-
 CXmlParser* CTemplates::getTPLs() const
 {
     return m_pMarkupTemplates;
@@ -390,6 +383,11 @@ CXmlParser* CTemplates::getTPLs() const
 CXmlParser* CTemplates::getIWLs() const
 {
     return m_pInterWikiLinks;
+}
+
+CXmlParser* CTemplates::getDropTPLs() const
+{
+    return m_pDropdownTemplates;
 }
 
 QString CTemplates::getPreviewTemplate() const

@@ -1,4 +1,4 @@
-## Macro=[[Vorlage(Tasten, TASTE)]]
+## Macro=[[Vorlage(Tasten, %%TASTE%%)]]
 <@ for $key in ($arguments join_with ' ') split_by "+" @>
 <@ if $loop.first @><@ else @> + <@ endif @>
 <@ if ['lmb','lmt','linke Maustaste'] contains ($key as stripped) @>[[Bild(Wiki/Vorlagen/Tasten/mouse_left.png, alt="linke Maustaste")]]

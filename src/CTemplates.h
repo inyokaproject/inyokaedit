@@ -78,6 +78,7 @@ public:
 
     CXmlParser *getTPLs() const;
     CXmlParser *getIWLs() const;
+    CXmlParser *getDropTPLs() const;
 
 private:
     void initTemplates();
@@ -85,8 +86,6 @@ private:
     void initFlags( const QString sFileName );
     void initTextformats( const QString sFileName );
     void initTranslations( const QString sFileName );
-
-    void initIWLs( const QString sFilePath );
 
     QString m_sAppName;
     QString m_sAppPath;
@@ -120,6 +119,7 @@ private:
 
     CXmlParser *m_pInterWikiLinks;
     CXmlParser *m_pMarkupTemplates;
+    CXmlParser *m_pDropdownTemplates;
 };
 
 #endif // CTEMPLATES_H
