@@ -138,7 +138,7 @@ void CInyokaEdit::createObjects()
 
     m_pEditor = new CTextEditor( m_pUi,
                                  m_pSettings->getCodeCompletion(),
-                                 m_pTemplates->getListTplMacros(),
+                                 m_pTemplates->getListTplMacrosALL(),
                                  m_pSettings->getAutoSave(),
                                  m_UserAppDir.absolutePath(),
                                  this );
@@ -1047,11 +1047,12 @@ void CInyokaEdit::insertMacro( const QString &sMenuEntry )
     {
         QString sName = m_pTemplates->getTPLs()->getElementUrls()[slistTmp[0].toInt()][slistTmp[1].toInt()];
         sName.remove(".tpl");
+        sName.remove(".macro");
 
-        int nIndex = m_pTemplates->getListTplNames().indexOf(sName);
+        int nIndex = m_pTemplates->getListTplNamesALL().indexOf(sName);
         if( nIndex >= 0 )
         {
-            QString sMacro = m_pTemplates->getListTplMacros()[nIndex];
+            QString sMacro = m_pTemplates->getListTplMacrosALL()[nIndex];
             sMacro.replace("\\n", "\n");
             int nPlaceholder1 = sMacro.indexOf("%%");
             int nPlaceholder2 = sMacro.lastIndexOf("%%");

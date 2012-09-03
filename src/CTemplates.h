@@ -52,9 +52,11 @@ public:
     ~CTemplates();
 
     QString getPreviewTemplate() const;
-    QStringList getListTplNames() const;
-    QStringList getListTemplates() const;
-    QStringList getListTplMacros() const;
+    QStringList getListTplNamesINY() const;
+    QStringList getListTemplatesINY() const;
+    QStringList getListTplMacrosINY() const;
+    QStringList getListTplNamesALL() const;
+    QStringList getListTplMacrosALL() const;
     QStringList getFlaglist() const;
     QString getTransTemplate() const;
     QString getTransTOC() const;
@@ -91,9 +93,12 @@ private:
     QString m_sTplLang;
 
     QString m_sPreviewTemplate;
-    QStringList m_sListTplNames;
-    QStringList m_sListTemplates;
-    QStringList m_sListTplMacros;
+    QStringList m_sListTplNamesINY;
+    QStringList m_sListTemplatesINY;
+    QStringList m_sListTplMacrosINY;
+
+    QStringList m_sListTplNamesALL;
+    QStringList m_sListTplMacrosALL;
 
     // List for text formats (start keyword, end keyword, start HTML code, end HTML code)
     QStringList m_sListFormatStart, m_sListFormatEnd, m_sListFormatHtmlStart, m_sListFormatHtmlEnd;

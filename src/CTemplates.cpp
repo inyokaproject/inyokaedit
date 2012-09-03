@@ -63,6 +63,10 @@ void CTemplates::initTemplates()
     QFile TplFile("");
     QDir TplDir("");
     QString tmpLine("");
+    QString sTempTplText("");
+    QString sTempMacro("");
+    bool bFoundMacro;
+    bool bFoundTpl;
 
     // Path from normal installation
     if ( TplDir.exists("/usr/share/" + m_sAppName.toLower() + "/templates/" + m_sTplLang)
@@ -86,25 +90,36 @@ void CTemplates::initTemplates()
             TplFile.setFileName( fiListTplFiles[nFile].absoluteFilePath() );
             if( TplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
-                m_sListTplNames << fiListTplFiles[nFile].baseName();
-
+                bFoundMacro = false;
+                bFoundTpl = false;
+                sTempTplText = "";
+                sTempMacro = "";
                 QTextStream in(&TplFile);
-                QString sTempTplText("");
+
                 while ( !in.atEnd() )
                 {
                     tmpLine = in.readLine().trimmed();
-                    if ( !tmpLine.trimmed().startsWith("#") )
+                    if ( !tmpLine.startsWith("#") )
                     {
-                        sTempTplText += tmpLine.trimmed() + "\n";
+                        bFoundTpl = true;
+                        sTempTplText += tmpLine + "\n";
                     }
-                    else if ( tmpLine.trimmed().startsWith("## Macro=") )
+                    else if ( tmpLine.startsWith("## Macro=") &&
+                              false == bFoundMacro )
                     {
+                        bFoundMacro = true;
                         tmpLine = tmpLine.remove("## Macro=");
-                        m_sListTplMacros << tmpLine.trimmed();
+                        sTempMacro = tmpLine.trimmed();
                     }
                 }
 
-                m_sListTemplates <<  sTempTplText;
+                // Found complete template
+                if( bFoundMacro && bFoundTpl )
+                {
+                    m_sListTplNamesINY << fiListTplFiles[nFile].baseName();
+                    m_sListTemplatesINY <<  sTempTplText;
+                    m_sListTplMacrosINY << sTempMacro;
+                }
                 TplFile.close();
             }
             else
@@ -116,15 +131,42 @@ void CTemplates::initTemplates()
                               fiListTplFiles[nFile].absoluteFilePath();
             }
         }
+        else if ( "macro" == fiListTplFiles[nFile].completeSuffix() )
+        {
+            TplFile.setFileName( fiListTplFiles[nFile].absoluteFilePath() );
+            if( TplFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                QTextStream in(&TplFile);
+                tmpLine = in.readLine().trimmed();
+                if ( tmpLine.startsWith("## Macro=") )
+                {
+                    tmpLine = tmpLine.remove("## Macro=");
+                    m_sListTplMacrosALL << tmpLine.trimmed();
+                    m_sListTplNamesALL << fiListTplFiles[nFile].baseName();
+                }
+                TplFile.close();
+            }
+            else
+            {
+                QMessageBox::warning( 0, "Warning",
+                                      "Could not open macro file: \n" +
+                                      fiListTplFiles[nFile].absoluteFilePath() );
+                qWarning() << "Could not open macro file:" <<
+                              fiListTplFiles[nFile].absoluteFilePath();
+            }
+        }
     }
 
-    if ( 0 == m_sListTplNames.size() )
+    m_sListTplMacrosALL.append( m_sListTplMacrosINY );
+    m_sListTplNamesALL.append( m_sListTplNamesINY );
+
+    if ( 0 == m_sListTplNamesINY.size() )
     {
         QMessageBox::warning( 0, "Warning", "Could not find any markup template files!" );
         qWarning() << "Could not find any template files in:" << TplDir.absolutePath();
     }
 
-    qDebug() << "Loaded templates:" << m_sListTplNames;
+    qDebug() << "Loaded templates:" << m_sListTplNamesINY;
 
     m_pMarkupTemplates = new CXmlParser( m_sAppName, m_sAppPath,
                                          "templates/" + m_sTplLang + "/Templates.xml");
@@ -355,19 +397,26 @@ QString CTemplates::getPreviewTemplate() const
     return m_sPreviewTemplate;
 }
 
-QStringList CTemplates::getListTplNames() const
+QStringList CTemplates::getListTplNamesINY() const
 {
-    return m_sListTplNames;
+    return m_sListTplNamesINY;
+}
+QStringList CTemplates::getListTemplatesINY() const
+{
+    return m_sListTemplatesINY;
+}
+QStringList CTemplates::getListTplMacrosINY() const
+{
+    return m_sListTplMacrosINY;
 }
 
-QStringList CTemplates::getListTemplates() const
+QStringList CTemplates::getListTplNamesALL() const
 {
-    return m_sListTemplates;
+    return m_sListTplNamesALL;
 }
-
-QStringList CTemplates::getListTplMacros() const
+QStringList CTemplates::getListTplMacrosALL() const
 {
-    return m_sListTplMacros;
+    return m_sListTplMacrosALL;
 }
 
 QStringList CTemplates::getFlaglist() const

@@ -251,12 +251,12 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
         sMacro =  findTemplate.cap(0);
         //qDebug() << "CAPTURED:" << sMacro;
 
-        for( int i = 0; i < m_pTemplates->getListTplNames().size(); i++ )
+        for( int i = 0; i < m_pTemplates->getListTplNamesINY().size(); i++ )
         {
             if( sMacro.startsWith( "[[" +  m_pTemplates->getTransTemplate() +
-                                   "(" + m_pTemplates->getListTplNames()[i], Qt::CaseInsensitive ))
+                                   "(" + m_pTemplates->getListTplNamesINY()[i], Qt::CaseInsensitive ))
             {
-                qDebug() << "Found known macro:" << m_pTemplates->getListTplNames()[i];
+                qDebug() << "Found known macro:" << m_pTemplates->getListTplNamesINY()[i];
                 sMacro.remove( "[[" +  m_pTemplates->getTransTemplate() + "(" );
                 sMacro.remove( ")]]" );
 
@@ -277,7 +277,7 @@ void CParser::replaceTemplates( QTextDocument *p_rawDoc )
                 sListArguments.removeFirst();  // Remove template name
 
                 // Replace arguments
-                sMacro = m_pTemplates->getListTemplates()[i];
+                sMacro = m_pTemplates->getListTemplatesINY()[i];
                 for ( int k = 0; k < sListArguments.size(); k++ ) {
                     sMacro.replace("<@ $arguments." + QString::number(k) + " @>", sListArguments[k].trimmed());
                 }
