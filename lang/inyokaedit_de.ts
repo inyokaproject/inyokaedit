@@ -158,12 +158,6 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Textformat einfügen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="698"/>
-        <source>Text macros</source>
-        <comment>GUI: Text macro combo box</comment>
-        <translation>Textbausteine</translation>
-    </message>
-    <message>
         <location filename="../src/CInyokaEdit.ui" line="41"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
@@ -767,171 +761,99 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="700"/>
-        <source>Under construction</source>
-        <comment>GUI: Text macro combo box - Work in progress</comment>
-        <translation>Baustelle</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="701"/>
-        <source>Table of contents</source>
-        <comment>GUI: Text macro combo box - Table of contents</comment>
-        <translation>Inhaltsverzeichnis</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="702"/>
-        <source>Tested for</source>
-        <comment>GUI: Text macro combo box - Tested for</comment>
-        <translation>Getestet</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="703"/>
-        <source>Package installation</source>
-        <comment>GUI: Text macro combo box - Package installation</comment>
-        <translation>Paketinstallation</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="704"/>
-        <source>Bash command</source>
-        <comment>GUI: Text macro combo box - Bash command</comment>
-        <translation>Shell Befehl</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="705"/>
-        <source>PPA sample</source>
-        <comment>GUI: Text macro combo box - PPA sample</comment>
-        <translation>PPA-Vorlage</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="706"/>
-        <source>Notice box</source>
-        <comment>GUI: Text macro combo box - Notice box</comment>
-        <translation>Hinweis</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="708"/>
-        <source>Warning box</source>
-        <comment>GUI: Text macro combo box - Warning box</comment>
-        <translation>Warnung</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="709"/>
-        <source>Experts information</source>
-        <comment>GUI: Text macro combo box - Experts info box</comment>
-        <translation>Experten-Info</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="710"/>
-        <source>Keys</source>
-        <comment>GUI: Text macro combo box - Keys</comment>
-        <translation>Tasten</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="711"/>
-        <source>Table</source>
-        <comment>GUI: Text macro combo box - Table</comment>
-        <translation>Tabelle</translation>
-    </message>
-    <message>
         <location filename="../src/CInyokaEdit.cpp" line="712"/>
-        <source>Game info box</source>
-        <comment>GUI: Game info box</comment>
-        <translation>Spiel Infobox</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="718"/>
         <source>Text format</source>
         <comment>GUI: Text format combo box</comment>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="720"/>
+        <location filename="../src/CInyokaEdit.cpp" line="714"/>
         <source>Folders</source>
         <comment>GUI: Text format folders</comment>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="721"/>
+        <location filename="../src/CInyokaEdit.cpp" line="715"/>
         <source>Menu entries</source>
         <comment>GUI: Text format menu entries</comment>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="722"/>
+        <location filename="../src/CInyokaEdit.cpp" line="716"/>
         <source>Files</source>
         <comment>GUI: Text format files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="723"/>
+        <location filename="../src/CInyokaEdit.cpp" line="717"/>
         <source>Command</source>
         <comment>GUI: Text format command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="785"/>
+        <location filename="../src/CInyokaEdit.cpp" line="779"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="801"/>
+        <location filename="../src/CInyokaEdit.cpp" line="795"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1239"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1238"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1408"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1407"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung beendet.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1418"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1417"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1429"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1428"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1433"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1432"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1478"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1477"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1500"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1499"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1522"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1521"/>
         <source>Error while starting Apport.</source>
         <translation>Problem beim Aufruf von Apport festgestellt.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1527"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1526"/>
         <source>Error while executing Apport.</source>
         <translation>Problem beim Ausführen von Apport.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1557"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1556"/>
         <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; - Editor for Inyoka-based portals&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; 2011-2012, The %3 developers&lt;br /&gt;Licence: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Special thanks to &lt;img src=&quot;%4&quot; /&gt; bubi97, &lt;img src=&quot;%4&quot; /&gt; Lasall, &lt;img src=&quot;%4&quot; /&gt; Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt;ubuntuusers.de&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.&lt;/p&gt;</source>
         <comment>About dialog text, &lt;sAppName&gt;, &lt;sAppVersion&gt;, &lt;sAppName&gt;, &lt;sUserIcon&gt;</comment>
         <translation>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt; - Editor für Inyoka-basierende Portale&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; 2011-2012, die Autoren von %3&lt;br /&gt;Lizenz: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Besonderen Dank an &lt;img src=&quot;%4&quot; /&gt; bubi97, &lt;img src=&quot;%4&quot; /&gt; Lasall, &lt;img src=&quot;%4&quot; /&gt; Shakesbier und alle Tester von &lt;a href=&quot;http://ubuntuusers.de&quot;&gt;ubuntuusers.de&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Diese Anwendung verwendet Symbole aus dem &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango Projekt&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/CInyokaEdit.cpp" line="684"/>
-        <location filename="../src/CInyokaEdit.cpp" line="856"/>
+        <location filename="../src/CInyokaEdit.cpp" line="850"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
@@ -946,49 +868,43 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Code ohne Highlighting</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="707"/>
-        <source>Third-party package warning</source>
-        <comment>GUI: Text macro combo box - Third-party package warning</comment>
-        <translation>Fremdquellen-Warnung</translation>
-    </message>
-    <message>
-        <location filename="../src/CInyokaEdit.cpp" line="973"/>
+        <location filename="../src/CInyokaEdit.cpp" line="971"/>
         <source>Folders</source>
         <comment>Text format: Folders</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="985"/>
+        <location filename="../src/CInyokaEdit.cpp" line="983"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <comment>Text format: Menu entries example</comment>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="997"/>
+        <location filename="../src/CInyokaEdit.cpp" line="995"/>
         <source>Files</source>
         <comment>GUI: Text format: Files</comment>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1009"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1007"/>
         <source>Command</source>
         <comment>Text format: Command</comment>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1121"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1120"/>
         <source>Sitename</source>
         <comment>InterWiki links: Common sitename</comment>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1122"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1121"/>
         <source>Text</source>
         <comment>Interwiki links: Common text</comment>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1556"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1555"/>
         <source>About %1</source>
         <comment>About dialog &lt;sAppName&gt;</comment>
         <translation>Über %1</translation>
@@ -1743,22 +1659,22 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CTemplates</name>
     <message>
-        <location filename="../src/CTemplates.cpp" line="158"/>
+        <location filename="../src/CTemplates.cpp" line="201"/>
         <source>Could not open preview template file!</source>
         <translation>Die Vorschau-Templatedatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CTemplates.cpp" line="195"/>
+        <location filename="../src/CTemplates.cpp" line="238"/>
         <source>Could not open flag config file!</source>
         <translation>Die Flaggen-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CTemplates.cpp" line="240"/>
+        <location filename="../src/CTemplates.cpp" line="283"/>
         <source>Could not open text formats config file!</source>
         <translation>Die Textformat-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CTemplates.cpp" line="296"/>
+        <location filename="../src/CTemplates.cpp" line="339"/>
         <source>Could not open template translation file!</source>
         <translation>Die Template-Übersetzungsdatei konnte nicht geöffnet werden!</translation>
     </message>

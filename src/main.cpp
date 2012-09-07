@@ -37,83 +37,93 @@
  * InyokaEdit on Launchpad: https://launchpad.net/inyokaedit
  */
 
-#include <QApplication>
-
-// For global translation (Qt MessageBox etc.)
-#include <QTranslator>
-#include <QLocale>
-#include <QLibraryInfo>
-#include <QtGlobal>
-#include <QTime>
 #include <fstream>
+
+#include <QApplication>
+#include <QDebug>
+#include <QtGlobal>
+#include <QLibraryInfo>
+#include <QLocale>
+#include <QTextCodec>
+#include <QTranslator>
+#include <QSettings>
 
 #include "CInyokaEdit.h"
 
 std::ofstream logfile;
 
+void setupLogger( const QString sDebugFilePath, const QString sAppName, const QString sVersion );
 void LoggingHandler( QtMsgType type, const char *msg );
+QString getLanguage( const QString sConfigDir, const QString sAppName );
 
+// ----------------------------------------------------------------------------
 
 int main( int argc, char *argv[] )
 {
-    const QString sDebugFile("Debug.log");
+    QApplication app( argc, argv );
+    app.setApplicationName( "InyokaEdit" );
+    app.setApplicationVersion( sVERSION );
+
+    QTranslator qtTranslator;
+    QTranslator AppTranslator;
+
+    const QDir userAppDir( QDir::homePath() + "/." + app.applicationName() );
+    const QString sLang( getLanguage( userAppDir.absolutePath(), app.applicationName() ) );
+    const QString sDebugFile( "Debug.log" );
 
     // Resource file (images, icons)
     Q_INIT_RESOURCE( inyokaedit_resources );
-
-    // New application
-    QApplication app(argc, argv);
-    app.setApplicationName("InyokaEdit");
-    app.setApplicationVersion( sVERSION );
 
     QTextCodec::setCodecForCStrings( QTextCodec::codecForName( "UTF-8" ) );
     QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") );
     QTextCodec::setCodecForTr( QTextCodec::codecForName("UTF-8") );
 
-    // Set config and styles/images path
-    QDir userAppDir = QDir::homePath() + "/." + app.applicationName();
+    setupLogger( userAppDir.absolutePath() + "/" + sDebugFile,
+                 app.applicationName(), app.applicationVersion() );
 
-    if ( QFile(userAppDir.absolutePath() + "/" + sDebugFile).exists() )
-    {
-        QFile(userAppDir.absolutePath() + "/" + sDebugFile).remove();
-    }
-    logfile.open( QString(userAppDir.absolutePath() + "/" + sDebugFile).toStdString().c_str(), std::ios::app);
-    qInstallMsgHandler( LoggingHandler );
-    qDebug() << app.applicationName() << app.applicationVersion();
-    qDebug() << "Compiled with Qt" << QT_VERSION_STR;
-    qDebug() << "Qt runtime" <<  qVersion();
-
-    // Load global translation
-    QTranslator qtTranslator;
-    // Try to load Qt translation
-    if ( !qtTranslator.load("qt_" + QLocale::system().name(),
-                            QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
+    // Setup gui translation (Qt)
+    if ( !qtTranslator.load("qt_" + sLang, QLibraryInfo::location(QLibraryInfo::TranslationsPath)) )
     {
         // If it fails search in application dircetory
-        qtTranslator.load( "qt_" + QLocale::system().name(), app.applicationDirPath() + "/lang" );
+        qtTranslator.load( "qt_" + sLang, app.applicationName() + "/lang" );
     }
     app.installTranslator( &qtTranslator );
 
-    // Load app translation if it exists
-    QTranslator myAppTranslator;
-    // Try to load app translation (normal installation)
-    if ( !myAppTranslator.load(app.applicationName().toLower() + "_" + QLocale::system().name(),
-                               "/usr/share/" + app.applicationName().toLower() + "/lang") )
+    // Setup gui translation (app)
+    if ( !AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
+                             "/usr/share/" + app.applicationName().toLower() + "/lang") )
     {
         // If it fails search in application dircetory
-        qtTranslator.load( app.applicationName().toLower() + "_"  + QLocale::system().name(),
+        qtTranslator.load( app.applicationName().toLower() + "_"  + sLang,
                            app.applicationDirPath() + "/lang" );
     }
-    app.installTranslator( &myAppTranslator );
+    app.installTranslator( &AppTranslator );
 
-    // New object of InyokaEdit
-    CInyokaEdit myInyokaEdit( &app, userAppDir );
-    myInyokaEdit.show();
-
+    CInyokaEdit InyokaEdit( &app, userAppDir );
+    InyokaEdit.show();
     int nRet = app.exec();
 
     logfile.close();
     return nRet;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void setupLogger( const QString sDebugFilePath, const QString sAppName, const QString sVersion )
+{
+    // Remove old debug file
+    if ( QFile(sDebugFilePath).exists() )
+    {
+        QFile(sDebugFilePath).remove();
+    }
+
+    // Create new file
+    logfile.open( sDebugFilePath.toStdString().c_str(), std::ios::app );
+    qInstallMsgHandler( LoggingHandler );
+    qDebug() << sAppName << sVersion;
+    qDebug() << "Compiled with Qt" << QT_VERSION_STR;
+    qDebug() << "Qt runtime" <<  qVersion();
 }
 
 // ----------------------------------------------------------------------------
@@ -143,5 +153,36 @@ void LoggingHandler( QtMsgType type, const char *sMsg )
                        " Fatal: " << sMsg << "\n";
             logfile.flush();
             logfile.close();
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString getLanguage(const QString sConfigDir, const QString sAppName)
+{
+    #if defined _WIN32
+    QSettings::setPath( QSettings::IniFormat, QSettings::UserScope, sConfigDir );
+    QSettings mySet( QSettings::IniFormat, QSettings::UserScope, sAppName );
+    #else
+    QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, sConfigDir );
+    QSettings mySet( QSettings::NativeFormat, QSettings::UserScope, sAppName );
+    #endif
+
+    QString sLang = mySet.value("GuiLanguage", "auto").toString();
+    if( "auto" == sLang )
+    {
+        #ifdef Q_OS_UNIX
+        QByteArray lang = qgetenv("LANG");
+        if( !lang.isEmpty() )
+        {
+            return QLocale(lang).name();
+        }
+        #endif
+        return QLocale::system().name();
+    }
+    else
+    {
+        return sLang;
     }
 }
