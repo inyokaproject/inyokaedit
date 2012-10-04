@@ -24,35 +24,46 @@
  * Download functions: Styles, article, images
  */
 
+#include <QDebug>
+
 #include "CDownload.h"
 
 extern bool bDEBUG;
 
-CDownload::CDownload(QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir) :
+CDownload::CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QString &sStylesDir,
+                      const QString &sImgDir, const QString &sInyokaUrl, const bool bAutomaticImgDL ) :
     m_pParent(pParent),
     m_sAppName(sAppName),
     m_sAppDir(sAppDir),
-    m_StylesDir(StylesDir)
+    m_sStylesDir(sStylesDir),
+    m_sImgDir(sImgDir),
+    m_sInyokaUrl(sInyokaUrl),
+    m_bAutomaticImageDownload(bAutomaticImgDL)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
-#if defined _WIN32
-    m_sWinBashFolder = m_sAppDir + "/win-bash/";
-    m_sWget = "\"" + m_sWinBashFolder + "wget\"";
-#else
-    m_sWinBashFolder = "";
-    m_sWget = "wget";
-#endif
+
+    m_NwManager = new QNetworkAccessManager(m_pParent);
+    connect( m_NwManager, SIGNAL(finished(QNetworkReply*)),
+             this, SLOT(replyFinished(QNetworkReply*)) );
+
+    m_DlImages = new CDownloadImg();
+
+    connect( m_DlImages, SIGNAL(finsihedImageDownload()),
+             this, SLOT(showArticle()) );
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
-// Call download script for Inyoka styles
+// Call download script for Inyoka styles (ONLY working with Linux!)
 
 bool CDownload::loadInyokaStyles()
 {
     qDebug() << "Start" << Q_FUNC_INFO;
-    int iRet = QMessageBox::question(m_pParent, tr("Download styles"), tr("In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.\n\nDo you want to download these files now?"), QMessageBox::Yes | QMessageBox::No);
+    int iRet = QMessageBox::question( m_pParent, tr("Download styles"),
+                                      tr("In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.\n\nDo you want to download these files now?"),
+                                      QMessageBox::Yes | QMessageBox::No );
 
     if ( QMessageBox::Yes== iRet )
     {
@@ -61,27 +72,16 @@ bool CDownload::loadInyokaStyles()
         // Path from normal installation
         if ( QFile::exists("/usr/share/" + m_sAppName.toLower() + "/GetInyokaStyles") && !bDEBUG )
         {
-            myArticleDownloadProgress = new CProgressDialog("/usr/share/" + m_sAppName.toLower() +"/GetInyokaStyles",
-                                                            QStringList() << m_StylesDir.absolutePath(),
-                                                            m_sAppName, m_pParent);
+            myArticleDownloadProgress = new CProgressDialog( "/usr/share/" + m_sAppName.toLower() +"/GetInyokaStyles",
+                                                             QStringList() << m_sStylesDir,
+                                                             m_sAppName, m_pParent );
         }
         // No installation: Use app path
         else
         {
-#if defined _WIN32
-            if ( QFile::exists(m_StylesDir.absolutePath() + "/GetInyokaStyles") )
-            {
-                QFile::remove(m_StylesDir.absolutePath() + "/GetInyokaStyles");
-                QFile::copy(m_sAppDir + "/GetInyokaStyles", m_StylesDir.absolutePath() + "/GetInyokaStyles");
-            }
-            myArticleDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ",
-                                                            QStringList() << m_StylesDir.absolutePath() + "/GetInyokaStyles" << m_StylesDir.absolutePath(),
-                                                            m_sAppName, m_pParent);
-#else
-            myArticleDownloadProgress = new CProgressDialog(m_sAppDir + "/GetInyokaStyles",
-                                                            QStringList() << m_StylesDir.absolutePath(),
-                                                            m_sAppName, m_pParent);
-#endif
+            myArticleDownloadProgress = new CProgressDialog( m_sAppDir + "/GetInyokaStyles",
+                                                             QStringList() << m_sStylesDir,
+                                                             m_sAppName, m_pParent );
         }
 
         myArticleDownloadProgress->open();
@@ -95,211 +95,177 @@ bool CDownload::loadInyokaStyles()
 // -----------------------------------------------------------------------------------------------
 // DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
-bool CDownload::downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
+void CDownload::downloadArticle()
 {
-    QString sTmpArticle("");
-    QString sSitename("");
-    QString sRevision("");
-    QByteArray tempResult;
+    // Check for internet connection
+#if QT_VERSION >= 0x040700
+    QNetworkConfigurationManager mgr;
+    if( !mgr.isOnline() )
+    {
+        QMessageBox::warning( m_pParent, m_sAppName,
+                              tr("Download not possible, no active internet connection found!") );
+        return;
+    }
+#endif
 
+    QString sUrl("");
     bool ok; // Buttons of input dialog (click on "OK" -> ok = true, click on "Cancel" -> ok = false)
 
     // Show input dialog
-    sSitename = QInputDialog::getText(m_pParent, m_sAppName,
-                                      tr("Please insert name of the article which should be downloaded:"), QLineEdit::Normal,
-                                      tr("Category/Article", "Msg: Input dialog DL article example text"), &ok);
+    m_sSitename = QInputDialog::getText( m_pParent, m_sAppName,
+                                         tr("Please insert name of the article which should be downloaded:"),
+                                         QLineEdit::Normal,
+                                         tr("Category/Article", "Msg: Input dialog DL article example text"),
+                                         &ok );
 
     // Click on "cancel" or string is empty
-    if ( false == ok || sSitename.isEmpty() )
+    if ( false == ok || m_sSitename.isEmpty() )
     {
-        return false;
+        return;
     }
 
     // Replace non valid characters
-    sSitename.replace(QString::fromUtf8("ä"), "a", Qt::CaseInsensitive);
-    sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
-    sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
-    sSitename.replace(" ", "_");
+    m_sSitename.replace( QString::fromUtf8("ä"), "a", Qt::CaseInsensitive );
+    m_sSitename.replace( QString::fromUtf8("ö"), "o", Qt::CaseInsensitive );
+    m_sSitename.replace( QString::fromUtf8("ü"), "u", Qt::CaseInsensitive );
+    m_sSitename.replace( " ", "_" );
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
+#endif 
 
-    // Start article download
-    QProcess procDownloadRawtext;
+    sUrl = m_sInyokaUrl + "/" + m_sSitename + "?action=export&format=raw";
 
     // Download specific revision
-    if ( sSitename.contains("@rev=") )
+    if ( m_sSitename.contains("@rev=") )
     {
-        sRevision = sSitename.mid( sSitename.indexOf("@rev=") );
+        QString sRevision = m_sSitename.mid( m_sSitename.indexOf("@rev=") );
         sRevision.remove("@rev=");
-        sSitename.remove( sSitename.indexOf("@rev="), sSitename.length() );
-        procDownloadRawtext.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sSitename + "?action=export&format=raw&rev=" + sRevision);
-    }
-    // Latest version
-    else
-    {
-        procDownloadRawtext.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sSitename + "?action=export&format=raw");
+        m_sSitename.remove( m_sSitename.indexOf("@rev="), m_sSitename.length() );
+        sUrl += "&rev=" + sRevision;
     }
 
-    if ( !procDownloadRawtext.waitForStarted() )
-    {
-#ifndef QT_NO_CURSOR
-        QApplication::restoreOverrideCursor();
-#endif
-        QMessageBox::critical(m_pParent, m_sAppName, tr("Could not start the download of the raw format of article."));
-        procDownloadRawtext.kill();
-        return false;
-    }
-    if ( !procDownloadRawtext.waitForFinished() )
-    {
-#ifndef QT_NO_CURSOR
-        QApplication::restoreOverrideCursor();
-#endif
-        QMessageBox::critical(m_pParent, m_sAppName, tr("Error while downloading raw format of article."));
-        procDownloadRawtext.kill();
-        return false;
-    }
-
-    tempResult = procDownloadRawtext.readAll();
-    sTmpArticle = QString::fromUtf8(tempResult);
-
-    sTmpArticle.replace("\r\r\n", "\n");  // Replace windows specific newlines
-
-    // Site does not exist etc.
-    if ( "" == sTmpArticle )
-    {
-#ifndef QT_NO_CURSOR
-        QApplication::restoreOverrideCursor();
-#endif
-        QMessageBox::information(m_pParent, m_sAppName, tr("Could not download the article."));
-        return false;
-    }
-
-#ifndef QT_NO_CURSOR
-    QApplication::restoreOverrideCursor();
-#endif
-
-    emit sendArticleText(sTmpArticle, sSitename);
-    return this->downloadImages(sSitename, ImgDir, sInyokaUrl, bAutomaticImageDownload);
+    m_bDownloadArticle = true;
+    QNetworkRequest request(sUrl);
+    m_Reply = m_NwManager->get(request);
 }
 
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 // DOWNLOAD IN ARTICLES INCLUDED IMAGES
 
-bool CDownload::downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload )
+void CDownload::downloadImages()
 {
-    int iRet = 0;
-    QByteArray tempResult;
-    QString sMetadata("");
-    QStringList sListTmp, sListMetadata;
-    const QString sScriptName("tmpDlScript");
+    m_bDownloadArticle = false;
 
-    // Start metadata download
-    QProcess procDownloadMetadata;
-    procDownloadMetadata.start(m_sWget, QStringList() << "-O" << "-" << sInyokaUrl + "/" + sArticlename + "?action=metaexport");
+    QString sUrl( m_sInyokaUrl + "/" + m_sSitename +"?action=metaexport" );
+    QNetworkRequest request(sUrl);
+    m_Reply = m_NwManager->get(request);
+}
 
-    if ( !procDownloadMetadata.waitForStarted() )
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CDownload::replyFinished( QNetworkReply *reply )
+{
+#ifndef QT_NO_CURSOR
+    QApplication::restoreOverrideCursor();
+#endif
+
+    QIODevice *data(reply);
+
+    if( reply->error() != QNetworkReply::NoError )
     {
-        QMessageBox::critical(m_pParent, m_sAppName, tr("Could not start download of the meta data."));
-        procDownloadMetadata.kill();
-        return false;
+        QMessageBox::critical( m_pParent, m_sAppName, data->errorString() );
+        return;
     }
-    if ( !procDownloadMetadata.waitForFinished() )
+    else
     {
-        QMessageBox::critical(m_pParent, m_sAppName, tr("Error while downloading meta data."));
-        procDownloadMetadata.kill();
-        return false;
-    }
+        QString sTmpArticle = data->readAll();
 
-    tempResult = procDownloadMetadata.readAll();
-    sMetadata = QString::fromLocal8Bit(tempResult);
-
-    // Site does not exist etc.
-    if ( "" == sMetadata )
-    {
-        QMessageBox::information(m_pParent, m_sAppName, tr("Could not find meta data."));
-        return false;
-    }
-
-    // Copy metadata line by line in list
-    sListTmp << sMetadata.split("\n");
-
-    // Get only attachments article metadata
-    for ( int i = 0; i < sListTmp.size(); i++ )
-    {
-        if ( sListTmp[i].startsWith("X-Attach: " + sArticlename + "/", Qt::CaseInsensitive) )
+        if( m_bDownloadArticle )
         {
-            sListMetadata << sListTmp[i];
-            //qDebug() << sListTmp[i];
-        }
-    }
+            sTmpArticle.replace("\r\r\n", "\n");  // Replace windows specific newlines
 
-    // If attachments exist
-    if ( sListMetadata.size() > 0 )
-    {
-        // Ask if images should be downloaded (if not enabled by default in settings)
-        if ( false == bAutomaticImageDownload )
-        {
-            iRet = QMessageBox::question(m_pParent, m_sAppName, tr("Do you want to download the images which are attached to the article?"), QMessageBox::Yes, QMessageBox::No);
+            m_Reply->deleteLater();
+
+            // Site does not exist etc.
+            if ( "" == sTmpArticle )
+            {
+                QMessageBox::information( m_pParent, m_sAppName, tr("Could not download the article.") );
+                return;
+            }
+
+            m_sArticleText = sTmpArticle;
+            downloadImages();
         }
+        // ----------------------------------------------------------------------------------------
+        // Download article images metadata
         else
         {
-            iRet = QMessageBox::Yes;
-        }
+            int iRet = 0;
+            QStringList sListTmp, sListMetadata, sListSaveFolder;
 
-        if ( QMessageBox::Yes == iRet )
-        {
-            // File for download script
-            QFile tmpScriptfile(ImgDir.absolutePath() + "/" + sScriptName);
-
-            // No write permission
-            if ( !tmpScriptfile.open(QFile::WriteOnly | QFile::Text) )
+            // Site does not exist etc.
+            if ( "" == sTmpArticle )
             {
-                QMessageBox::warning(m_pParent, m_sAppName, tr("Could not create temporary download file!"));
-                return false;
+                QMessageBox::information( m_pParent, m_sAppName, tr("Could not find meta data.") );
+                return;
             }
 
-            // Stream for output in file
-            QTextStream scriptOutputstream(&tmpScriptfile);
-            scriptOutputstream << "#!/bin/bash\n"
-                                  "# Temporary script for downloading images from an article\n"
-                                  "#\n\necho \"Downloading images...\"\n"
-                                  "cd \"" << ImgDir.absolutePath() << "\"" << endl;  // "..." impoartant for windows because folder can contain white spaces!
+            // Copy metadata line by line in list
+            sListTmp << sTmpArticle.split("\n");
 
-            // Write wget download lines
-            QString sTmp("");
-            for ( int j = 0; j < sListMetadata.size(); j++ )
+            m_Reply->deleteLater();
+
+            // Get only attachments article metadata
+            for ( int i = 0; i < sListTmp.size(); i++ )
             {
-                // Trim image infos lines
-                sListMetadata[j].remove("X-Attach: ");  // Remove "X-Attach: "
-                sListMetadata[j].remove("\r");  // Remove windows specific newline \r
+                if ( sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/", Qt::CaseInsensitive) )
+                {
+                    sListMetadata << sListTmp[i].remove("X-Attach: ");  // Remove "X-Attach: "
+                    sListMetadata.last().remove("\r");  // Remove windows specific newline \r
+                    sListMetadata.last() = m_sInyokaUrl + "/_image?target=" + sListMetadata.last().toLower();
+                    sListSaveFolder << m_sImgDir;
 
-                // http://wiki.ubuntuusers.de/_image?target=Kontact/uebersicht.png
-                sTmp = sListMetadata[j];
-                sTmp = sTmp.remove(sArticlename + "/", Qt::CaseInsensitive);
-                scriptOutputstream << "wget -nv " << sInyokaUrl << "/_image?target=" << sListMetadata[j].toLower() << " -O " << sTmp << endl;
+                    //qDebug() << sListMetadata.last();
+                }
             }
-            scriptOutputstream << "sleep 2\n"
-                                  "echo \"Finished image download.\"\n" << endl;
 
-            tmpScriptfile.close();
+            // If attachments exist
+            if ( sListMetadata.size() > 0 )
+            {
+                // Ask if images should be downloaded (if not enabled by default in settings)
+                if ( false == m_bAutomaticImageDownload )
+                {
+                    iRet = QMessageBox::question( m_pParent, m_sAppName,
+                                                  tr("Do you want to download the images which are attached to the article?"),
+                                                  QMessageBox::Yes, QMessageBox::No );
+                }
+                else
+                {
+                    iRet = QMessageBox::Yes;
+                }
 
-            // Make script executable
-            tmpScriptfile.setPermissions(QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner | QFile::ReadGroup | QFile::ExeGroup | QFile::ReadOther | QFile::ExeOther);
-
-            CProgressDialog *myImageDownloadProgress;
-
-            // Start download script
-            QString sTmpFilePath = ImgDir.absolutePath() + "/" + sScriptName;
-#if defined _WIN32
-            myImageDownloadProgress = new CProgressDialog(m_sWinBashFolder + "bash.exe ", QStringList() << sTmpFilePath << ImgDir.absolutePath(), m_sAppName, m_pParent);
-#else
-            myImageDownloadProgress = new CProgressDialog(sTmpFilePath, QStringList() << ImgDir.absolutePath(), m_sAppName, m_pParent);
-#endif
-            myImageDownloadProgress->open();
+                if ( QMessageBox::Yes == iRet )
+                {
+                    qDebug() << "Starting image download...";
+                    m_DlImages->setDLs( sListMetadata, sListSaveFolder );
+                    QTimer::singleShot(0, m_DlImages, SLOT(startDownloads()));
+                }
+                else
+                {
+                    this->showArticle();
+                }
+            }
         }
     }
-    return true;
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CDownload::showArticle()
+{
+    emit sendArticleText( m_sArticleText, m_sSitename );
 }

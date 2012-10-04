@@ -134,7 +134,10 @@ void CInyokaEdit::createObjects()
     m_pDownloadModule = new CDownload( this,
                                        m_pApp->applicationName(),
                                        m_pApp->applicationDirPath(),
-                                       m_UserAppDir );
+                                       m_UserAppDir.absolutePath(),
+                                       m_tmpPreviewImgDir.absolutePath(),
+                                       m_pSettings->getInyokaUrl(),
+                                       m_pSettings->getAutomaticImageDownload() );
 
     m_pEditor = new CTextEditor( m_pUi,
                                  m_pSettings->getCodeCompletion(),
@@ -1182,14 +1185,7 @@ void CInyokaEdit::downloadArticle()
 {
     if ( m_pFileOperations->maybeSave() )
     {
-        bool bSuccess = m_pDownloadModule->downloadArticle( m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(), m_pSettings->getAutomaticImageDownload() );
-        if ( bSuccess )
-        {
-            // Reset scroll position
-            m_pWebview->page()->mainFrame()->setScrollPosition( QPoint(0,0) );
-
-            this->previewInyokaPage();
-        }
+        m_pDownloadModule->downloadArticle();
     }
 }
 
@@ -1199,6 +1195,11 @@ void CInyokaEdit::displayArticleText( const QString &sArticleText, const QString
     m_pFileOperations->setCurrentFile(sSitename);
     m_pEditor->document()->setModified(true);
     this->documentWasModified();
+
+    // Reset scroll position
+    m_pWebview->page()->mainFrame()->setScrollPosition( QPoint(0,0) );
+
+    this->previewInyokaPage();
 }
 
 // -----------------------------------------------------------------------------------------------

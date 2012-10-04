@@ -27,7 +27,10 @@
 #ifndef CDOWNLOAD_H
 #define CDOWNLOAD_H
 
+#include <QNetworkReply>
+
 #include "CInyokaEdit.h"
+#include "CDownloadImg.h"
 
 class CInyokaEdit;
 
@@ -47,7 +50,8 @@ public:
     * \param sAppDir Application directory
     * \param StylesDir Folder in which Inyoka style elements should be stored
     */
-    CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QDir StylesDir );
+    CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QString &sStylesDir,
+               const QString &sImgDir, const QString &sInyokaUrl, const bool bAutomaticImgDL );
 
     /**
     * \brief Start download of an existing article
@@ -56,7 +60,7 @@ public:
     * \param bAutomaticImageDownload True or false if attached article images should be downloaded without any question
     * \return True or false for successful / not successful download
     */
-    bool downloadArticle( const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
+    void downloadArticle();
 
 public slots:
     /**
@@ -64,6 +68,11 @@ public slots:
     * \return True or false for successful / not successful download
     */
     bool loadInyokaStyles();
+
+    void showArticle();
+
+private slots:
+    void replyFinished( QNetworkReply *reply );
 
 signals:
     void sendArticleText( const QString &, const QString & );  /**< Signal for sending downloaded article text to editor */
@@ -77,15 +86,24 @@ private:
     * \param AutomaticImageDownload True or false if attached article images should be downloaded without any question
     * \return True or false for successful / not successful download
     */
-    bool downloadImages( const QString &sArticlename, const QDir ImgDir, const QString &sInyokaUrl, const bool bAutomaticImageDownload );
+    void downloadImages();
 
-    QWidget *m_pParent;  /**< Pointer to parent window */
-    QString m_sAppName;  /**< Application name */
-    QString m_sAppDir;   /**< Application directory */
-    QDir m_StylesDir;    /**< Folder in which Inyoka style elements should be stored */
+    QWidget *m_pParent;    /**< Pointer to parent window */
+    QString m_sAppName;    /**< Application name */
+    QString m_sAppDir;     /**< Application directory */
+    QString m_sStylesDir;  /**< Folder in which Inyoka style elements should be stored */
+    QString m_sImgDir;
 
-    QString m_sWinBashFolder;  /**< Only for windows: Folder in which WinBash is located */
-    QString m_sWget;           /**< Folder in which Wget is located */
+    QNetworkAccessManager *m_NwManager;
+    QNetworkReply *m_Reply;
+    QString m_sArticleText;
+    QString m_sSitename;
+    QString m_sSource;
+    QString m_sInyokaUrl;
+
+    CDownloadImg *m_DlImages;
+    bool m_bAutomaticImageDownload;
+    bool m_bDownloadArticle;
 };
 
 #endif // CDOWNLOAD_H

@@ -891,18 +891,20 @@ QString CParser::parseMacro( QTextBlock actParagraph )
                 for (int i = 1; i < sListElements.size(); i++){
                     sOutput += "<li>\n"
                                "<p>\n";
-                    if (sListElements[i].toLower() == "precise")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Precise_Pangolin\" class=\"internal\"> Ubuntu Precise Pangolin 12.04 </a>\n";
+                    if (sListElements[i].toLower() == "quantal")
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Quantal_Quetzal\" class=\"internal\">Ubuntu 12.10</a> \"Quantal Quetzal\"\n";
+                    else if (sListElements[i].toLower() == "precise")
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Precise_Pangolin\" class=\"internal\">Ubuntu 12.04</a> \"Precise Pangolin\"\n";
                     else if (sListElements[i].toLower() == "oneiric")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Oneiric_Ocelot\" class=\"internal\"> Ubuntu Oneiric Ocelot 11.10 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Oneiric_Ocelot\" class=\"internal\">Ubuntu 11.10</a> \"Oneiric Ocelot\"\n";
                     else if (sListElements[i].toLower() == "natty")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Natty_Narwhal\" class=\"internal\"> Ubuntu Natty Narwhal 11.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Natty_Narwhal\" class=\"internal\">Ubuntu 11.04</a> \"Natty Narwhal\"\n";
                     else if (sListElements[i].toLower() == "maverick")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Maverick_Meerkat\" class=\"internal\"> Ubuntu Maverick Meerkat 10.10 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Maverick_Meerkat\" class=\"internal\">Ubuntu 10.10</a> \"Maverick Meerkat\"\n";
                     else if (sListElements[i].toLower() == "lucid")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Lucid_Lynx\" class=\"internal\"> Ubuntu Lucid Lynx 10.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Lucid_Lynx\" class=\"internal\">Ubuntu 10.04</a> \"Lucid Lynx\"\n";
                     else if (sListElements[i].toLower() == "hardy")
-                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Hardy_Heron\" class=\"internal\"> Ubuntu Hardy Heron 8.04 </a>\n";
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl() + "/Hardy_Heron\" class=\"internal\">Ubuntu 8.04</a> \"Hardy Heron\"\n";
                     else
                         sOutput +=  "Unknown Version\n";
 

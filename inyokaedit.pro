@@ -44,7 +44,8 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CDownload.h \
                 src/CFileOperations.h \
                 src/CParseLinks.h \
-                src/CTemplates.h
+                src/CTemplates.h \
+                src/CDownloadImg.h
 
 SOURCES      += src/main.cpp \
                 src/CInyokaEdit.cpp \
@@ -63,7 +64,8 @@ SOURCES      += src/main.cpp \
                 src/CDownload.cpp \
                 src/CFileOperations.cpp \
                 src/CParseLinks.cpp \
-                src/CTemplates.cpp
+                src/CTemplates.cpp \
+                src/CDownloadImg.cpp
 
 RESOURCES     = res/inyokaedit_resources.qrc
 
