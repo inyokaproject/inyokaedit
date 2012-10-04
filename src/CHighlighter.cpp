@@ -58,7 +58,8 @@ CHighlighter::CHighlighter( CTemplates *pTemplates,
     // Links (everything between [...])
     m_linksFormat.setForeground(Qt::darkBlue);
     // 1-5 = at beginning and end, between A-Z, a-z, 0-9, space, -, _, #
-    myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
+    //myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
+    myRule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
     myRule.format = m_linksFormat;
     m_highlightingRules.append(myRule);  // Collecting highlighting rules
 

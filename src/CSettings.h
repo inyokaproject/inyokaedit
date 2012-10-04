@@ -65,6 +65,7 @@ public:
     unsigned int getAutoSave() const;
     int getReloadPreviewKey() const;
     unsigned int getTimedPreview() const;
+    bool getSyncScrollbars() const;
 
     // Font
     QFont getEditorFont() const;
@@ -96,6 +97,7 @@ private:
     unsigned int m_nAutosave;
     QString m_sReloadPreviewKey;
     unsigned int m_nTimedPreview;
+    bool m_bSyncScrollbars;
 
     // Font
     QFont m_EditorFont;

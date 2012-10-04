@@ -175,6 +175,13 @@ void CInyokaEdit::createObjects()
     m_pWebview = new QWebView( this );
     m_pWebview->installEventFilter( this );
 
+    connect( m_pWebview->page(), SIGNAL(scrollRequested(int,int,QRect)),
+             this, SLOT(syncScrollbarsWebview()) );
+    connect( m_pEditor->verticalScrollBar(), SIGNAL(valueChanged(int)),
+             this, SLOT(syncScrollbarsEditor()) );
+    bEditorScrolling = false;
+    bWebviewScrolling = false;
+
     m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pTemplates->getTransTemplate(),
                                                        m_pTemplates->getTransImage(),
                                                        m_pTemplates->getTransTOC() );
@@ -937,7 +944,7 @@ void CInyokaEdit::insertDropDownTextmacro( const int nSelection )
         }
         else
         {
-            qWarning()  << "Unknown macro choosen:" << sName;
+            qWarning()  << "Unknown macro chosen:" << sName;
         }
     }
 
@@ -1095,7 +1102,7 @@ void CInyokaEdit::insertMacro( const QString &sMenuEntry )
         }
         else
         {
-            qWarning()  << "Unknown macro choosen:" << sName;
+            qWarning()  << "Unknown macro chosen:" << sName;
         }
     }
     // Problem with indices
@@ -1448,6 +1455,42 @@ void CInyokaEdit::documentWasModified()
     this->setWindowModified( m_pEditor->document()->isModified() );
 }
 
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::syncScrollbarsEditor()
+{
+    if( !bWebviewScrolling && true == m_pSettings->getSyncScrollbars() &&
+        true == m_pSettings->getPreviewAlongside() && true == m_pSettings->getPreviewInEditor() )
+    {
+        int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
+        int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
+        float nRatio = (float)nSizeWebviewBar / nSizeEditorBar;
+
+        bEditorScrolling = true;
+        m_pWebview->page()->mainFrame()->setScrollPosition( QPoint( 0, m_pEditor->verticalScrollBar()->sliderPosition() * nRatio ) );
+        bEditorScrolling = false;
+    }
+}
+
+// -----------------------------------------------------------------------------------------------
+
+void CInyokaEdit::syncScrollbarsWebview()
+{
+    if( !bEditorScrolling && true == m_pSettings->getSyncScrollbars() &&
+        true == m_pSettings->getPreviewAlongside() && true == m_pSettings->getPreviewInEditor() )
+    {
+        int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
+        int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
+        float nRatio = (float)nSizeEditorBar / nSizeWebviewBar;
+
+        bWebviewScrolling = true;
+        m_pEditor->verticalScrollBar()->setSliderPosition( m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio );
+        bWebviewScrolling = false;
+    }
+}
+
+// -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
 void CInyokaEdit::showSyntaxOverview()

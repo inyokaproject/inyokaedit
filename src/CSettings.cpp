@@ -73,6 +73,7 @@ void CSettings::readSettings()
     m_nAutosave = mySettingsObject->value("AutoSave", 300).toUInt();
     m_sReloadPreviewKey = mySettingsObject->value("ReloadPreviewKey", "0x01000004").toString(); // 0x01000004 = Qt::Key_Return
     m_nTimedPreview = mySettingsObject->value("TimedPreview", 15).toUInt();
+    m_bSyncScrollbars = mySettingsObject->value("SyncScrollbars", true).toBool();
 
     // Font settings
     mySettingsObject->beginGroup("Font");
@@ -143,6 +144,7 @@ void CSettings::writeSettings( const QByteArray WinGeometry, const QByteArray Wi
     mySettingsObject->setValue("AutoSave", m_nAutosave);
     mySettingsObject->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
     mySettingsObject->setValue("TimedPreview", m_nTimedPreview);
+    mySettingsObject->setValue("SyncScrollbars", m_bSyncScrollbars);
 
     // Remove obsolete entry
     mySettingsObject->remove( "ConfVersion" );
@@ -259,6 +261,12 @@ unsigned int CSettings::getTimedPreview() const
 {
     return m_nTimedPreview;
 }
+
+bool CSettings::getSyncScrollbars() const
+{
+    return m_bSyncScrollbars;
+}
+
 
 // ----------------------------------------------------
 

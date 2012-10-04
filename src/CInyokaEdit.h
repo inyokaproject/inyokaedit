@@ -179,6 +179,9 @@ private slots:
     */
     void insertCodeblock( const QString &sCodeStyle );
 
+    void syncScrollbarsEditor();
+    void syncScrollbarsWebview();
+
 private:
     Ui::CInyokaEdit *m_pUi;
     QApplication *m_pApp;
@@ -256,6 +259,9 @@ private:
     QList<QAction *> m_CodeHighlightActions;
 
     QTimer *m_pPreviewTimer;
+
+    bool bEditorScrolling;
+    bool bWebviewScrolling;
 };
 
 #endif // CINYOKAEDIT_H

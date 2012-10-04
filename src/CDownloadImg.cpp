@@ -26,7 +26,6 @@
 
 #include <QDebug>
 #include <QMessageBox>
-#include <QMetaEnum>
 #include <QFileInfo>
 
 #include "CDownloadImg.h"
@@ -127,7 +126,8 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
                 file.write( data->readAll() );
                 file.close();
 
-                qDebug() << "Download of " + m_sListBasename[nIndex] + " succeeded - saved to " + m_sListRepliesPath[nIndex];
+                qDebug() << "Download of " + m_sListBasename[nIndex] + " succeeded - saved to " +
+                            m_sListRepliesPath[nIndex];
             }
         }
     }
@@ -152,12 +152,6 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
 QUrl CDownloadImg::redirectUrl( const QUrl& possibleRedirectUrl, const QUrl& oldRedirectUrl ) const
 {
     QUrl redirectUrl;
-    /*
-     * Check if the URL is empty and
-     * that we aren't being fooled into a infinite redirect loop.
-     * We could also keep track of how many redirects we have been to
-     * and set a limit to it, but we'll leave that to you.
-     */
     if( !possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl )
     {
         redirectUrl = possibleRedirectUrl;
