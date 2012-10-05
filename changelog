@@ -1,3 +1,20 @@
+inyokaedit (0.7.0-0ubuntu1) precise; urgency=low
+
+  [ Thorsten Roth ]
+  * Article and article image download via Qt modules.
+  * Added progressbar while article image download.
+  * Added Ubuntu 12.10 Quantal Quetzal.
+  * Code and file reorganization.
+  * Added scrollbar features (save position from preview, sychronous scrolling
+    of editor and preview).
+  * Loading user defined gui language.
+  * Insertion of macros via file.
+  * Defining templates menu and dropdown menu via XML file.
+  * Added new interwiki links and flags.
+  * Some bug fixes (highlighting, infinite loop).
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 05 Oct 2012 20:07:41 +0200
+
 inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
 
   [ Thorsten Roth ]

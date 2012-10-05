@@ -11,13 +11,13 @@ Copyright: 2011, 2012 Thorsten Roth <elthoro@gmx.de>
            2012, Dominique Lasserre <lasserre.d@gmail.com>
 License: GPL-3+
 
-Files: qtfindreplacedialog/*
+Files: src/qtfindreplacedialog/*
 Copyright: 2009 Lorenzo Bettini
 License: LGPL-2.1
 
-Files: CTableTemplate.cpp
-       CTableTemplate.h
-       CTableTemplate.ui
+Files: src/CTableTemplate.cpp
+       src/CTableTemplate.h
+       src/CTableTemplate.ui
 Copyright: 2012 Christian Schärf <code.c.schaerf@t-online.de>
            2012 Thorsten Roth <elthoro@gmx.de>
 License: GPL-3+
