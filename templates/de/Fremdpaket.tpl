@@ -1,4 +1,4 @@
-## Macro=[[Vorlage(Fremdpaket, %%Projekthoster, Projektname|URL, Ubuntuversion(en)%%)]]"
+## Macro=[[Vorlage(Fremdpaket, %%Projekthoster, Projektname|URL, Ubuntuversion(en)%%)]]
 #############################################################
 ## Eingabemöglichkeiten:
 ##  mind. 2 Argumente
@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['precise','oneiric','natty','maverick','lucid','karmic','jaunty','hardy'] contains $arg @>
+<@ if $loop.index < 3 or ['quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,17 +39,15 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'precise' or $arguments contain 'oneiric' or $arguments contain 'natty' or $arguments contain 'maverick' or $arguments contain 'lucid' or $arguments contain 'karmic' or $arguments contain 'jaunty' or $arguments contain 'hardy' @>
+<@ if $arguments contain 'quantal' or $arguments contain 'precise' or $arguments contain 'oneiric' or $arguments contain 'natty' or $arguments contain 'lucid' or $arguments contain 'hardy' @>
 Die Pakete können für
 <@ for $arg in $arguments @>
-<@ if ['precise','oneiric','natty','maverick','lucid','karmic','jaunty','intrepid','hardy'] contains $arg @>
+<@ if ['quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
+<@ if $arg == 'quantal' @>[:Quantal_Quetzal: Quantal Quetzal 12.10]<@ endif @>
 <@ if $arg == 'precise' @>[:Precise_Pangolin: Precise Pangolin 12.04]<@ endif @>
 <@ if $arg == 'oneiric' @>[:Oneiric_Ocelot: Oneiric Ocelot 11.10]<@ endif @>
 <@ if $arg == 'natty' @>[:Natty_Narwhal: Natty Narwhal 11.04]<@ endif @>
-<@ if $arg == 'maverick' @>[:Maverick_Meerkat: Maverick Meerkat 10.10]<@ endif @>
 <@ if $arg == 'lucid' @>[:Lucid Lynx: Lucid Lynx 10.04]<@ endif @>
-<@ if $arg == 'karmic' @>[:Karmic_Koala: Karmic Koala 9.10]<@ endif @>
-<@ if $arg == 'jaunty' @>[:Jaunty_Jackalope: Jaunty Jackalope 9.04]<@ endif @>
 <@ if $arg == 'hardy' @>[:Hardy_Heron: Hardy Heron 8.04]<@ endif @>
 <@ if $loop.revindex > 2 @>, <@ endif @>
 <@ if $loop.revindex == 2 @> und <@ endif @>

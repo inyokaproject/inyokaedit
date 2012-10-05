@@ -42,7 +42,7 @@
 ## Paketmakro bei mehr als N Paketen, N=3:
 ##
 <@ for $row in $arguments split_by '
-' @><@ if $loop.first @><@ if $loop.length > 3 @>
+' @><@ if $loop.first @><@ if $loop.length > 0 @>
 ######
 ## Statt einfach das Makro Pakete hier einzubinden, wird eine Kopie des Makros benutzt,
 ## damit die Backlinksuche des Makros Pakete, nicht auch noch die Artikel auflistet, die
@@ -51,9 +51,9 @@
 ######
 {{|<class="package-list">
 Paketliste zum Kopieren:
-[[Vorlage(Befehl, 'sudo apt-get install<@ for $row in $arguments split_by '
+[[Vorlage(Wiki/Vorlagen/Befehl, 'sudo apt-get install<@ for $row in $arguments split_by '
 ' @> <@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ endfor @>')]]
-[[Vorlage(Befehl, 'sudo aptitude install<@ for $row in $arguments split_by '
+[[Vorlage(Wiki/Vorlagen/Befehl, 'sudo aptitude install<@ for $row in $arguments split_by '
 ' @> <@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ endfor @>')]]
 |}}
 <@ endif @><@ endif @><@ endfor @>

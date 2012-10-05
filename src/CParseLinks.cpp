@@ -205,6 +205,9 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                     sMyDoc.replace( nIndex, nLength, "<a href=\"" + sLinkURL + "\" class=\"internal" + m_sLinkClassAddition + "\">" + sLink.mid( sLink.indexOf(":") + 1, nLength ).trimmed() + "</a>");
                 }
             }
+
+            // Go on with next
+            nIndex = findInyokaWikiLink.indexIn( sMyDoc, nIndex + nLength );
         }
 
         // Skip not closed link and go on with next
@@ -212,9 +215,6 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
         {
             nIndex = findInyokaWikiLink.indexIn( sMyDoc, nIndex + 1 );
         }
-
-        // Go on with next
-        nIndex = findInyokaWikiLink.indexIn( sMyDoc, nIndex + nLength );
     }
 
     // Replace myRawDoc with document with HTML links
@@ -306,6 +306,9 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
                 }
 
             }
+
+            // Go on with next
+            nIndex = findInterwikiLink.indexIn( sMyDoc, nIndex + nLength );
         }
 
         // Skip not closed link and go on with next
@@ -313,9 +316,6 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
         {
             nIndex = findInterwikiLink.indexIn( sMyDoc, nIndex + 1 );
         }
-
-        // Go on with next
-        nIndex = findInterwikiLink.indexIn( sMyDoc, nIndex + nLength );
     }
 
     // Replace myRawDoc with document with HTML links
@@ -360,6 +360,9 @@ void CParseLinks::replaceAnchorLinks( QTextDocument *pRawDoc )
             {
                 sMyDoc.replace(nIndex, nLength, "<a href=\"#" + sLink.mid(0, nSplit) + "\" class=\"crosslink\">#" + sLink.mid(0, nSplit) + "</a>");
             }
+
+            // Go on with next
+            nIndex = findAnchorLink.indexIn( sMyDoc, nIndex + nLength );
         }
 
         // Skip not closed link and go on with next
@@ -367,9 +370,6 @@ void CParseLinks::replaceAnchorLinks( QTextDocument *pRawDoc )
         {
             nIndex = findAnchorLink.indexIn( sMyDoc, nIndex + 1 );
         }
-
-        // Go on with next
-        nIndex = findAnchorLink.indexIn( sMyDoc, nIndex + nLength );
     }
 
     // Replace myRawDoc with document with HTML links

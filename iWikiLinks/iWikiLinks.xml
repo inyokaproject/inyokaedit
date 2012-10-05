@@ -22,17 +22,19 @@
   <group name="Canonical, Ubuntu, Derivate" icon="canonical.png">
     <element type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
     <element type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
+    <element type="canonicalvoices" url="http://voises.canonical.com/" name="Canonical Voises" icon="canonicalvoises.png" />
     <element type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
     <element type="apt" url="apt:" name="Apt" icon="" />
     <element type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <element type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
+    <element type="man" url="http://manpages.ubuntu.com/manpages/" name="Ubuntu Manpage" icon="man.png" />
     <element type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
     <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
     <element type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
     <element type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" />
     <element type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
-    <element type="ubuntuone" url="http://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <element type="ubuntuone" url="https://one.ubuntu.com/" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
     <element type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
     <element type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
@@ -69,10 +71,12 @@
   </group>
   <group name="Misc" icon="youtube.png">
     <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
+    <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
     <element type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
+    <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
     <element type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
     <element type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
     <element type="googlevideo" url="http://video.google.de/videoplay?docid=" name="Google Videos" icon="googlevideo" />
@@ -89,6 +93,7 @@
     <element type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <element type="steam" url="http://store.steampowered.com/$PAGE?l=german" name="Steam" icon="steam.png" />
     <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
     <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
     <element type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
