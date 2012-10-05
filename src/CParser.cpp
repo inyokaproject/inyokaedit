@@ -1308,7 +1308,7 @@ QString CParser::parseMacro( QTextBlock actParagraph )
         // Warning box
         sOutput += insertBox("box warning",
                              trUtf8("Hinweis!"),
-                             "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das Sytem gefährden."));
+                             "<a href=\"" + m_pSettings->getInyokaUrl() + "/" + trUtf8("Fremdquellen") + "\" class=\"internal\">" + trUtf8("Fremdpakete") + "</a> " + trUtf8("können das System gefährden."));
     }
     // -----------------------------------------------------------------------------------------------
 

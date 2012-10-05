@@ -28,6 +28,7 @@
 #define CDOWNLOADIMG_H
 
 #include <QNetworkReply>
+#include <QProgressDialog>
 
 #include <QStringList>
 
@@ -38,7 +39,7 @@ class CDownloadImg : public QObject
     QList<QNetworkReply *> m_listDownloadReplies;
 
 public:
-    CDownloadImg();
+    CDownloadImg( const QString &sAppName );
     void setDLs( const QStringList sListUrls, const QStringList sListSavePath );
 
 public slots:
@@ -46,6 +47,7 @@ public slots:
 
 private slots:
     void downloadFinished( QNetworkReply *reply );
+    void cancelDownloads();
 
 signals:
     void finsihedImageDownload();
@@ -53,6 +55,10 @@ signals:
 private:
     void doDownload( const QUrl &url, const QString sSavePath, const QString sBase = "" );
     QUrl redirectUrl( const QUrl& possibleRedirectUrl, const QUrl& oldRedirectUrl) const;
+
+    QString m_sAppname;
+    QProgressDialog *m_progessDialog;
+    unsigned short nProgress;
 
     QUrl m_urlRedirectedTo;
     QStringList m_sListUrls;

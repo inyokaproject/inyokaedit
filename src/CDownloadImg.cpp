@@ -30,7 +30,8 @@
 
 #include "CDownloadImg.h"
 
-CDownloadImg::CDownloadImg()
+CDownloadImg::CDownloadImg( const QString &sAppName )
+    : m_sAppname(sAppName)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -50,6 +51,18 @@ void CDownloadImg::setDLs( const QStringList sListUrls, const QStringList sListS
 
 void CDownloadImg::startDownloads()
 {
+    // Create progress dialog
+    nProgress = 0;
+    m_progessDialog = new QProgressDialog( tr("Downloading images..."), tr("Cancel"), nProgress,
+                                           m_sListUrls.size(), 0, Qt::WindowTitleHint | Qt::WindowSystemMenuHint );
+    m_progessDialog->setWindowTitle( m_sAppname );
+    m_progessDialog->setMinimumDuration(100);
+    m_progessDialog->setModal(true);
+    m_progessDialog->setMaximumSize(m_progessDialog->size());
+    m_progessDialog->setMinimumSize(m_progessDialog->size());
+    connect( m_progessDialog, SIGNAL(canceled()),
+             this, SLOT(cancelDownloads()) );
+
     if( m_sListUrls.size() == m_sListSavePath.size() && m_sListUrls.size() > 0 )
     {
         for( int i = 0; i < m_sListUrls.size(); i++ )
@@ -80,6 +93,7 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
 {
     QIODevice *data(reply);
     int nIndex = m_listDownloadReplies.indexOf( reply );
+    m_progessDialog->setValue( nProgress );
 
     // Check for redirection
     QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
@@ -88,7 +102,14 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
     // Error
     if( reply->error() != QNetworkReply::NoError )
     {
-        QMessageBox::critical( 0, "Download error", data->errorString() );
+        if( reply->error() != QNetworkReply::OperationCanceledError )
+        {
+            QMessageBox::critical( 0, "Download error", data->errorString() );
+        }
+        qWarning() << "Image download error: " + data->errorString();
+
+        m_progessDialog->setValue( nProgress );
+        nProgress++;
     }
     // No error
     else
@@ -114,6 +135,8 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
         else
         {
             m_urlRedirectedTo.clear();
+            m_progessDialog->setValue( nProgress );
+            nProgress++;
 
             // Save file
             QFile file( m_sListRepliesPath[nIndex] + "/" + m_sListBasename[nIndex] );
@@ -141,6 +164,13 @@ void CDownloadImg::downloadFinished( QNetworkReply *reply )
     // All downloads finished
     if( m_listDownloadReplies.isEmpty() )
     {
+        m_progessDialog->setValue( m_progessDialog->maximum() );
+        m_progessDialog->deleteLater();
+
+        m_sListRepliesPath.clear();
+        m_sListBasename.clear();
+        m_sListRedirect.clear();
+
         qDebug() << "All downloads finished...";
         emit finsihedImageDownload();
     }
@@ -157,4 +187,23 @@ QUrl CDownloadImg::redirectUrl( const QUrl& possibleRedirectUrl, const QUrl& old
         redirectUrl = possibleRedirectUrl;
     }
     return redirectUrl;
+}
+
+// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
+
+void CDownloadImg::cancelDownloads()
+{
+    foreach( QNetworkReply *reply, m_listDownloadReplies)
+    {
+        reply->abort();
+    }
+
+    m_listDownloadReplies.clear();
+    m_sListRepliesPath.clear();
+    m_sListBasename.clear();
+    m_sListRedirect.clear();
+
+    qDebug() << "Canceled downloads...";
+    emit finsihedImageDownload();
 }

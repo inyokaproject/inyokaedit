@@ -220,6 +220,7 @@ void CHighlighter::highlightBlock( const QString &sText )
     foreach ( const HighlightingRule &myRule, m_highlightingRules )
     {
         QRegExp express(myRule.pattern);
+        express.setMinimal(true);
         int nIndex = express.indexIn(sText);
         while ( nIndex >= 0 )
         {

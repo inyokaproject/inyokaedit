@@ -46,7 +46,7 @@ CDownload::CDownload( QWidget *pParent, const QString &sAppName, const QString &
     connect( m_NwManager, SIGNAL(finished(QNetworkReply*)),
              this, SLOT(replyFinished(QNetworkReply*)) );
 
-    m_DlImages = new CDownloadImg();
+    m_DlImages = new CDownloadImg( m_sAppName );
 
     connect( m_DlImages, SIGNAL(finsihedImageDownload()),
              this, SLOT(showArticle()) );
@@ -240,7 +240,7 @@ void CDownload::replyFinished( QNetworkReply *reply )
                 {
                     iRet = QMessageBox::question( m_pParent, m_sAppName,
                                                   tr("Do you want to download the images which are attached to the article?"),
-                                                  QMessageBox::Yes, QMessageBox::No );
+                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
                 }
                 else
                 {
