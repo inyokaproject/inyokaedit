@@ -22,13 +22,14 @@
   <group name="Canonical, Ubuntu, Derivate" icon="canonical.png">
     <element type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
     <element type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
-    <element type="canonicalvoices" url="http://voises.canonical.com/" name="Canonical Voises" icon="canonicalvoises.png" />
+    <element type="canonicalvoices" url="http://voises.canonical.com/" name="Canonical Voises" icon="canonicalvoices.png" />
     <element type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
     <element type="apt" url="apt:" name="Apt" icon="" />
     <element type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <element type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
     <element type="man" url="http://manpages.ubuntu.com/manpages/" name="Ubuntu Manpage" icon="man.png" />
     <element type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
+    <element type="brainstorm" url="http://brainstorm.ubuntu.com/idea/" name="Ubuntu Brainstorm" icon="brainstorm.png" />
     <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
     <element type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
     <element type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
@@ -96,6 +97,7 @@
     <element type="steam" url="http://store.steampowered.com/$PAGE?l=german" name="Steam" icon="steam.png" />
     <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
     <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
+    <element type="wordpress" url="http://$PAGE.wordpress.com/" name="Wordpress" icon="wordpress.png" />
     <element type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
   </group>
 </menu>
