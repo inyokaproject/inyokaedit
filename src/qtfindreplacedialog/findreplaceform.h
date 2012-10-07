@@ -6,8 +6,8 @@
  * See COPYING file that comes with this distribution
  */
 
-#ifndef FINDREPLACEFORM_H
-#define FINDREPLACEFORM_H
+#ifndef INYOKAEDIT_FINDREPLACEFORM_H_
+#define INYOKAEDIT_FINDREPLACEFORM_H_
 
 #include <QWidget>
 #include <QTextCursor>
@@ -54,7 +54,7 @@ class QSettings;
 class FindReplaceForm : public QWidget {
     Q_OBJECT
 public:
-    FindReplaceForm(QWidget *parent = 0);
+    explicit FindReplaceForm( QWidget *parent = 0 );
     virtual ~FindReplaceForm();
 
     /**

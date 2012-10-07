@@ -24,29 +24,29 @@
  * Class definition main application.
  */
 
-#ifndef CINYOKAEDIT_H
-#define CINYOKAEDIT_H
+#ifndef INYOKAEDIT_CINYOKAEDIT_H_
+#define INYOKAEDIT_CINYOKAEDIT_H_
 
 #include <QMainWindow>
 #include <QWebHistory>
 
-#include "CTemplates.h"
-#include "CXmlParser.h"
-#include "CSettings.h"
-#include "CHighlighter.h"
-#include "CParser.h"
-#include "CTextEditor.h"
-#include "CInsertSyntaxElement.h"
-#include "CProgressDialog.h"
-#include "qtfindreplacedialog/finddialog.h"
-#include "qtfindreplacedialog/findreplacedialog.h"
-#include "CDownload.h"
-#include "CFileOperations.h"
-#include "CTableTemplate.h"
+#include "./CTemplates.h"
+#include "./CXmlParser.h"
+#include "./CSettings.h"
+#include "./CHighlighter.h"
+#include "./CParser.h"
+#include "./CTextEditor.h"
+#include "./CInsertSyntaxElement.h"
+#include "./CProgressDialog.h"
+#include "./qtfindreplacedialog/finddialog.h"
+#include "./qtfindreplacedialog/findreplacedialog.h"
+#include "./CDownload.h"
+#include "./CFileOperations.h"
+#include "./CTableTemplate.h"
 
 #ifndef DISABLE_SPELLCHECKER
-#include "CSpellChecker.h"
-#include "CSpellCheckDialog.h"
+#include "./CSpellChecker.h"
+#include "./CSpellCheckDialog.h"
 #endif
 
 // Qt classes
@@ -264,4 +264,4 @@ private:
     bool bWebviewScrolling;
 };
 
-#endif // CINYOKAEDIT_H
+#endif // INYOKAEDIT_CINYOKAEDIT_H_

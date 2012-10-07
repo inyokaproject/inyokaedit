@@ -10,7 +10,7 @@
 #include <QTextEdit>
 #include <QRegExp>
 
-#include "findform.h"
+#include "./findform.h"
 #include "ui_findreplaceform.h"
 
 FindForm::FindForm(QWidget *parent) :

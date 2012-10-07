@@ -24,16 +24,10 @@
  * Class definition.
  */
 
-#ifndef CXMLPARSER_H
-#define CXMLPARSER_H
+#ifndef INYOKAEDIT_CXMLPARSER_H_
+#define INYOKAEDIT_CXMLPARSER_H_
 
-#include <iostream>
-#include <cstdlib>  // exit()
-
-#include <QStringList>
 #include <QXmlSimpleReader>
-#include <QMessageBox>
-#include <QApplication>
 
 /**
  * \class CXmlParser
@@ -159,4 +153,4 @@ private:
     QList<QStringList> m_sListIcons_2;
 };
 
-#endif // CINTERWIKI_H
+#endif // INYOKAEDIT_CINTERWIKI_H_

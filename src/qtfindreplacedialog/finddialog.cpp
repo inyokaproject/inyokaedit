@@ -6,7 +6,7 @@
  * See COPYING file that comes with this distribution
  */
 
-#include "finddialog.h"
+#include "./finddialog.h"
 #include "ui_findreplacedialog.h"
 
 FindDialog::FindDialog(QWidget *parent) :

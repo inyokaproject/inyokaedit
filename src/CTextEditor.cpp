@@ -42,22 +42,18 @@
  * syntax elements.
  */
 
-#include "CTextEditor.h"
-#include "CInyokaEdit.h"
-
 #include <QCompleter>
+#include <QDebug>
 #include <QKeyEvent>
-#include <QAbstractItemView>
-#include <QtDebug>
-#include <QApplication>
-#include <QModelIndex>
-#include <QAbstractItemModel>
 #include <QScrollBar>
+
+#include "./CTextEditor.h"
+
 
 CTextEditor::CTextEditor( Ui::CInyokaEdit *pGUI,
                           bool bCompleter,
                           QStringList sListTplMacros,
-                          unsigned short nAutosave,
+                          quint16 nAutosave,
                           QString sUserAppDir,
                           QWidget *pParent )
     : QTextEdit( pParent ),

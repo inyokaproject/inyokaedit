@@ -24,15 +24,13 @@
  * Class definition for download functions.
  */
 
-#ifndef CDOWNLOAD_H
-#define CDOWNLOAD_H
+#ifndef INYOKAEDIT_CDOWNLOAD_H_
+#define INYOKAEDIT_CDOWNLOAD_H_
 
 #include <QNetworkReply>
 
-#include "CInyokaEdit.h"
-#include "CDownloadImg.h"
-
-class CInyokaEdit;
+#include "./CInyokaEdit.h"
+#include "./CDownloadImg.h"
 
 /**
  * \class CDownload
@@ -106,4 +104,4 @@ private:
     bool m_bDownloadArticle;
 };
 
-#endif // CDOWNLOAD_H
+#endif // INYOKAEDIT_CDOWNLOAD_H_

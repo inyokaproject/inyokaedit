@@ -28,7 +28,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 
-#include "CDownloadImg.h"
+#include "./CDownloadImg.h"
 
 CDownloadImg::CDownloadImg( const QString &sAppName )
     : m_sAppname(sAppName)

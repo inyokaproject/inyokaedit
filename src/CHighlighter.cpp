@@ -26,7 +26,7 @@
 
 #include <QtGui>
 
-#include "CHighlighter.h"
+#include "./CHighlighter.h"
 
 CHighlighter::CHighlighter( CTemplates *pTemplates,
                             QTextDocument *pParent )

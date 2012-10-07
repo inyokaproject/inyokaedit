@@ -6,12 +6,12 @@
  * See COPYING file that comes with this distribution
  */
 
-#ifndef FINDDIALOG_H
-#define FINDDIALOG_H
+#ifndef INYOKAEDIT_FINDDIALOG_H_
+#define INYOKAEDIT_FINDDIALOG_H_
 
 #include <QDialog>
 
-#include "findreplacedialog.h"
+#include "./findreplacedialog.h"
 
 /**
  * \class FindDialog
@@ -20,7 +20,7 @@
 class FindDialog : public FindReplaceDialog {
     Q_OBJECT
 public:
-    FindDialog(QWidget *parent = 0);
+    explicit FindDialog( QWidget *parent = 0 );
     ~FindDialog();
 
     /**
@@ -38,4 +38,4 @@ public:
     virtual void readSettings(QSettings &settings, const QString &prefix = "FindDialog");
 };
 
-#endif // FINDDIALOG_H
+#endif // INYOKAEDIT_FINDDIALOG_H_

@@ -24,15 +24,15 @@
  * Class definition for reading and writing settings.
  */
 
-#ifndef CSETTINGS_H
-#define CSETTINGS_H
+#ifndef INYOKAEDIT_CSETTINGS_H_
+#define INYOKAEDIT_CSETTINGS_H_
 
 #include <QDir>
 #include <QSettings>
 #include <QMessageBox>
 
-#include "qtfindreplacedialog/finddialog.h"
-#include "qtfindreplacedialog/findreplacedialog.h"
+#include "./qtfindreplacedialog/finddialog.h"
+#include "./qtfindreplacedialog/findreplacedialog.h"
 
 /**
  * \class CSettings
@@ -62,9 +62,9 @@ public:
     QString getSpellCheckerLanguage() const;
     bool getCheckLinks() const;
     QString getTemplateLanguage() const;
-    unsigned int getAutoSave() const;
-    int getReloadPreviewKey() const;
-    unsigned int getTimedPreview() const;
+    quint32 getAutoSave() const;
+    qint32 getReloadPreviewKey() const;
+    quint32 getTimedPreview() const;
     bool getSyncScrollbars() const;
 
     // Font
@@ -76,8 +76,8 @@ public:
     QByteArray getSplitterState() const;
 
     // Recent files
-    unsigned short getNumOfRecentFiles() const;
-    unsigned short getMaxNumOfRecentFiles() const;
+    quint16 getNumOfRecentFiles() const;
+    quint16 getMaxNumOfRecentFiles() const;
     QStringList getRecentFiles() const;
     void setRecentFiles( const QStringList &sListNewRecent );
 
@@ -94,9 +94,9 @@ private:
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
     QString m_sTemplateLang;
-    unsigned int m_nAutosave;
+    quint32 m_nAutosave;
     QString m_sReloadPreviewKey;
-    unsigned int m_nTimedPreview;
+    quint32 m_nTimedPreview;
     bool m_bSyncScrollbars;
 
     // Font
@@ -114,9 +114,9 @@ private:
     QByteArray m_aSplitterState;
 
     // Last opened
-    static const unsigned short m_cMAXFILES = 10;
-    int m_nMaxLastOpenedFiles;
+    static const quint16 m_cMAXFILES = 10;
+    qint32 m_nMaxLastOpenedFiles;
     QStringList m_sListRecentFiles;
 };
 
-#endif // CSETTINGS_H
+#endif // INYOKAEDIT_CSETTINGS_H_

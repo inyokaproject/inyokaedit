@@ -37,8 +37,6 @@
  * InyokaEdit on Launchpad: https://launchpad.net/inyokaedit
  */
 
-#include <fstream>
-
 #include <QApplication>
 #include <QDebug>
 #include <QtGlobal>
@@ -48,7 +46,10 @@
 #include <QTranslator>
 #include <QSettings>
 
-#include "CInyokaEdit.h"
+#include <iostream>
+#include <fstream>
+
+#include "./CInyokaEdit.h"
 
 std::ofstream logfile;
 
@@ -63,6 +64,16 @@ int main( int argc, char *argv[] )
     QApplication app( argc, argv );
     app.setApplicationName( "InyokaEdit" );
     app.setApplicationVersion( sVERSION );
+
+    if ( app.arguments().size() >= 2 )
+    {
+        QString sTmp = app.argv()[1];
+        if ( "-v" == sTmp || "--version" == sTmp )
+        {
+            std::cout << app.argv()[0] << "\t v" << app.applicationVersion().toStdString() << std::endl;
+            exit(0);
+        }
+    }
 
     QTranslator qtTranslator;
     QTranslator AppTranslator;

@@ -6,13 +6,13 @@
  * See COPYING file that comes with this distribution
  */
 
-#ifndef FINDFORM_H
-#define FINDFORM_H
+#ifndef INYOKAEDIT_FINDFORM_H_
+#define INYOKAEDIT_FINDFORM_H_
 
 #include <QWidget>
 #include <QTextCursor>
 
-#include "findreplaceform.h"
+#include "./findreplaceform.h"
 
 /**
  * \class FindForm
@@ -21,7 +21,7 @@
 class FindForm : public FindReplaceForm {
     Q_OBJECT
 public:
-    FindForm(QWidget *parent = 0);
+    explicit FindForm( QWidget *parent = 0 );
     ~FindForm();
 
     /**
@@ -43,4 +43,4 @@ protected:
 
 };
 
-#endif // FINDFORM_H
+#endif // INYOKAEDIT_FINDFORM_H_

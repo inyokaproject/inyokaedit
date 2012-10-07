@@ -28,10 +28,10 @@
  */
 
 #include <QDebug>
-#include "CSpellCheckDialog.h"
+#include "./CSpellCheckDialog.h"
 #include "ui_CSpellCheckDialog.h"
 
-#include "CSpellChecker.h"
+#include "./CSpellChecker.h"
 
 CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent ) :
     QDialog(parent),

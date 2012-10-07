@@ -24,7 +24,12 @@
  * Loading and providing templates.
  */
 
-#include "CTemplates.h"
+#include <QDebug>
+#include <QDir>
+#include <QMessageBox>
+#include <QSettings>
+
+#include "./CTemplates.h"
 
 extern bool bDEBUG;
 

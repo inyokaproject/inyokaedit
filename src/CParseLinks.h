@@ -24,8 +24,8 @@
  * Class definition for link parser.
  */
 
-#ifndef CPARSELINKS_H
-#define CPARSELINKS_H
+#ifndef INYOKAEDIT_CPARSELINKS_H_
+#define INYOKAEDIT_CPARSELINKS_H_
 
 #include <QTextDocument>
 #include <QList>
@@ -74,4 +74,4 @@ private:
     QNetworkReply *m_NWreply;
 };
 
-#endif // CPARSELINKS_H
+#endif // INYOKAEDIT_CPARSELINKS_H_

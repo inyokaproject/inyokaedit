@@ -25,7 +25,9 @@
  */
 
 #include <QDebug>
-#include "CXmlParser.h"
+#include <QMessageBox>
+
+#include "./CXmlParser.h"
 
 extern bool bDEBUG;
 

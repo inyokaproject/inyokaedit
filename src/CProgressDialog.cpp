@@ -24,10 +24,15 @@
  * Shows a modal window with download progress messages.
  */
 
-#include "CProgressDialog.h"
+#include <QDebug>
+#include <QDir>
+#include <QMessageBox>
+
+#include "./CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments, const QString &sAppName, QWidget *pParent )
+CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments,
+                                  const QString &sAppName, QWidget *pParent )
     : QDialog( pParent ),
       m_pUi(new Ui::CProgressDialog),
       m_sAppName( sAppName )

@@ -24,10 +24,10 @@
  * Class definition for inserting Inyoka elements.
  */
 
-#ifndef CINSERTSYNTAXELEMENT_H
-#define CINSERTSYNTAXELEMENT_H
+#ifndef INYOKAEDIT_CINSERTSYNTAXELEMENT_H_
+#define INYOKAEDIT_CINSERTSYNTAXELEMENT_H_
 
-#include <string>
+#include <QString>
 
 /**
  * \class CInsertSyntaxElement
@@ -37,9 +37,7 @@ class CInsertSyntaxElement
 {
 public:
     /** \brief Constructor */
-    CInsertSyntaxElement( const QString &sTransTemplate,
-                          const QString &sTransImage,
-                          const QString &sTransTOC );
+    explicit CInsertSyntaxElement( const QString &sTransImage );
 
     /**
     * \brief Get Inyoka syntax element code
@@ -47,16 +45,12 @@ public:
     * \param sSelectedText Text which was selected
     * \return Syntax element code
     */
-    std::string getElementInyokaCode( const std::string &sElement,
-                                      const std::string &sSelectedText );
+    QString getElementInyokaCode( const QString &sElement,
+                                  const QString &sSelectedText );
 
 private:
-    std::string m_sSampleBegin_1;
-    std::string m_sSampleBegin_11;
-    std::string m_sSampleBegin_12;
-    std::string m_sSampleEnd_1;
-    std::string m_sSampleBegin_2;
-    std::string m_sSampleEnd_2;
+    QString m_sSampleBegin_1;
+    QString m_sSampleEnd_1;
 };
 
-#endif // CINSERTSYNTAXELEMENT_H
+#endif // INYOKAEDIT_CINSERTSYNTAXELEMENT_H_

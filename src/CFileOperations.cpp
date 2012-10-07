@@ -24,9 +24,13 @@
  * File operations: New, load, save...
  */
 
+#include <QDebug>
+#include <QFileDialog>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QWebView>
 
-#include "CFileOperations.h"
+#include "./CFileOperations.h"
 
 CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName ) :
     m_pParent(pParent),
@@ -213,7 +217,8 @@ void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRece
         this->updateRecentFiles(sFileName);
         this->setCurrentFile(sFileName);
     }
-    else {
+    else
+    {
         this->setCurrentFile("");
     }
 

@@ -41,10 +41,12 @@
  * Class definition for extended QTextEdit (editor widget).
  */
 
-#ifndef CTEXTEDITOR_H
-#define CTEXTEDITOR_H
+#ifndef INYOKAEDIT_CTEXTEDITOR_H_
+#define INYOKAEDIT_CTEXTEDITOR_H_
 
 #include <QTextEdit>
+#include <QTimer>
+
 #include "ui_CInyokaEdit.h"
 
 class QCompleter;
@@ -61,7 +63,7 @@ public:
     CTextEditor( Ui::CInyokaEdit *pGUI,
                  bool bCompleter,
                  QStringList sListTplMacros,
-                 unsigned short nAutosave,
+                 quint16 nAutosave,
                  QString sUserAppDir,
                  QWidget *pParent = 0 );
     ~CTextEditor();
@@ -86,4 +88,4 @@ private:
     QStringList m_sListCompleter;
 };
 
-#endif // CTEXTEDITOR_H
+#endif // INYOKAEDIT_CTEXTEDITOR_H_

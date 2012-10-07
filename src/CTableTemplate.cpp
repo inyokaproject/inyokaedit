@@ -24,18 +24,12 @@
  * Shows a modal window with table template.
  */
 
-#include "CTableTemplate.h"
+#include <QDebug>
+#include <QTextDocument>
+
+#include "./CTableTemplate.h"
 #include "ui_CTableTemplate.h"
 
-#include <QFile>
-#include <QString>
-#include <QTextDocument>
-#include <QTextStream>
-
-#include <iostream>
-
-#include "CParser.h"
-#include "CTextEditor.h"
 
 CTableTemplate::CTableTemplate( CTextEditor *pEditor,
                                 const QDir &tmpFileOutputDir,

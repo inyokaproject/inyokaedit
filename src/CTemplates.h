@@ -24,21 +24,11 @@
  * Class definition.
  */
 
-#ifndef CTEMPLATES_H
-#define CTEMPLATES_H
+#ifndef INYOKAEDIT_CTEMPLATES_H_
+#define INYOKAEDIT_CTEMPLATES_H_
 
-#include <QWidget>
-#include <QMessageBox>
-#include <QDebug>
-#include <QDir>
-#include <QSettings>
 
-#include "CXmlParser.h"
-
-class QString;
-class QStringList;
-class QFile;
-class QDir;
+#include "./CXmlParser.h"
 
 class CTemplates : public QObject
 {
@@ -122,4 +112,4 @@ private:
     CXmlParser *m_pDropdownTemplates;
 };
 
-#endif // CTEMPLATES_H
+#endif // INYOKAEDIT_CTEMPLATES_H_

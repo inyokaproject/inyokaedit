@@ -25,7 +25,7 @@
  */
 
 #include <QDebug>
-#include "CParseLinks.h"
+#include "./CParseLinks.h"
 
 CParseLinks::CParseLinks( const QString &sUrlToWiki,
                           const QList<QStringList> sListIWiki,
@@ -33,8 +33,10 @@ CParseLinks::CParseLinks( const QString &sUrlToWiki,
                           const bool bCheckLinks,
                           const QString &sTransAnchor )
     : m_sWikiUrl(sUrlToWiki),
+      m_bIsOnline(false),
       m_bCheckLinks(bCheckLinks),
-      m_sTransAnchor( sTransAnchor )
+      m_sTransAnchor( sTransAnchor ),
+      m_NWreply(NULL)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -49,9 +51,6 @@ CParseLinks::CParseLinks( const QString &sUrlToWiki,
     }
 
     m_NWAManager = new QNetworkAccessManager(this);
-
-    m_bIsOnline = false;
-    m_NWreply = NULL;
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -286,7 +285,8 @@ void CParseLinks::replaceInterwikiLinks( QTextDocument *pRawDoc )
                         {
                             sTmpUrl.replace( "$Page", sListLink[1], Qt::CaseInsensitive );
                         }
-                        else {
+                        else
+                        {
                             sTmpUrl.append( sListLink[1] );
                         }
 

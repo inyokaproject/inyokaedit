@@ -24,8 +24,8 @@
  * Class definition for download manager for images.
  */
 
-#ifndef CDOWNLOADIMG_H
-#define CDOWNLOADIMG_H
+#ifndef INYOKAEDIT_CDOWNLOADIMG_H_
+#define INYOKAEDIT_CDOWNLOADIMG_H_
 
 #include <QNetworkReply>
 #include <QProgressDialog>
@@ -39,7 +39,7 @@ class CDownloadImg : public QObject
     QList<QNetworkReply *> m_listDownloadReplies;
 
 public:
-    CDownloadImg( const QString &sAppName );
+    explicit CDownloadImg( const QString &sAppName );
     void setDLs( const QStringList &sListUrls, const QStringList &sListSavePath );
 
 public slots:
@@ -58,7 +58,7 @@ private:
 
     QString m_sAppname;
     QProgressDialog *m_progessDialog;
-    unsigned short nProgress;
+    quint16 nProgress;
 
     QUrl m_urlRedirectedTo;
     QStringList m_sListUrls;
@@ -69,4 +69,4 @@ private:
     QStringList m_sListRedirect;
 };
 
-#endif // CDOWNLOADIMG_H
+#endif // INYOKAEDIT_CDOWNLOADIMG_H_

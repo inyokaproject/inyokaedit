@@ -6,8 +6,8 @@
  * See COPYING file that comes with this distribution
  */
 
-#ifndef FINDREPLACEDIALOG_H
-#define FINDREPLACEDIALOG_H
+#ifndef INYOKAEDIT_FINDREPLACEDIALOG_H_
+#define INYOKAEDIT_FINDREPLACEDIALOG_H_
 
 #include <QDialog>
 
@@ -27,7 +27,7 @@ class QSettings;
 class FindReplaceDialog : public QDialog {
     Q_OBJECT
 public:
-    FindReplaceDialog(QWidget *parent = 0);
+    explicit FindReplaceDialog( QWidget *parent = 0 );
     virtual ~FindReplaceDialog();
 
     /**
@@ -67,4 +67,4 @@ protected:
     Ui::FindReplaceDialog *ui;
 };
 
-#endif // FINDREPLACEDIALOG_H
+#endif // INYOKAEDIT_FINDREPLACEDIALOG_H_

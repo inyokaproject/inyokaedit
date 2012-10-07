@@ -24,23 +24,23 @@
  * Class definition for parser.
  */
 
-#ifndef CPARSER_H
-#define CPARSER_H
+#ifndef INYOKAEDIT_CPARSER_H_
+#define INYOKAEDIT_CPARSER_H_
 
 #include <QWidget>
 #include <QtGui>
 #include <QDir>
 #include <QMessageBox>
 
-#include "CInyokaEdit.h"
-#include "CParseLinks.h"
+#include "./CParseLinks.h"
+#include "./CSettings.h"
+#include "./CTemplates.h"
 
 // Qt classes
 class QString;
 class QTextDocument;
 class QDir;
 
-class CParseLinks;
 
 /**
  * \class CParser
@@ -111,4 +111,4 @@ private:
 
 };
 
-#endif // CPARSER_H
+#endif // INYOKAEDIT_CPARSER_H_

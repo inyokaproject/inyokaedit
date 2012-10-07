@@ -28,7 +28,7 @@
 #include <QtWebKit/QWebView>
 #include <QWebFrame>
 
-#include "CInyokaEdit.h"
+#include "./CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
 bool bDEBUG = false;  // Don't change this value! Use "--debug" command line option instead.
@@ -50,12 +50,7 @@ CInyokaEdit::CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent
     {
         QString sTmp = m_pApp->argv()[1];
 
-        if ( "-v" == sTmp || "--version" == sTmp )
-        {
-            std::cout << m_pApp->argv()[0] << "\t v" << m_pApp->applicationVersion().toStdString() << std::endl;
-            exit(0);
-        }
-        else if ( "--debug" == sTmp )
+        if ( "--debug" == sTmp )
         {
             bDEBUG = true;
         }
@@ -180,9 +175,7 @@ void CInyokaEdit::createObjects()
     bEditorScrolling = false;
     bWebviewScrolling = false;
 
-    m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pTemplates->getTransTemplate(),
-                                                       m_pTemplates->getTransImage(),
-                                                       m_pTemplates->getTransTOC() );
+    m_pInsertSyntaxElement = new CInsertSyntaxElement( m_pTemplates->getTransImage() );
 
     m_pTableTemplate = new CTableTemplate( m_pEditor,
 										   m_UserAppDir,
@@ -600,7 +593,7 @@ void CInyokaEdit::createMenus()
 
     if ( articleTemplateDir.exists() )
     {
-        unsigned short nTplFileCount = 0;
+        quint16 nTplFileCount = 0;
 
         m_pSigMapOpenTemplate = new QSignalMapper(this);
         QFileInfoList fiListFiles = articleTemplateDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
@@ -965,7 +958,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 
     if ( nSelection != 0 && nSelection != 1 )
     {
-        unsigned short iFormatLength = 0;
+        quint16 nFormatLength = 0;
 
         // -1 because of separator (considered as "item")
         switch ( nSelection-1 )
@@ -979,7 +972,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
                 else
                 {
                     sInsertedText = tr("Folders", "Text format: Folders");
-                    iFormatLength = 3;
+                    nFormatLength = 3;
                     m_pEditor->insertPlainText( "'''" + sInsertedText + "'''" );
                 }
                 break;
@@ -991,7 +984,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
                 else
                 {
                     sInsertedText = tr("Menu -> sub menu -> menu entry", "Text format: Menu entries example");
-                    iFormatLength = 3;
+                    nFormatLength = 3;
                     m_pEditor->insertPlainText( "''\"" + sInsertedText + "\"''" );
                 }
                 break;
@@ -1003,7 +996,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
                 else
                 {
                     sInsertedText = tr("Files", "GUI: Text format: Files");
-                    iFormatLength = 3;
+                    nFormatLength = 3;
                     m_pEditor->insertPlainText( "'''" + sInsertedText + "'''" );
                 }
                 break;
@@ -1015,7 +1008,7 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
                 else
                 {
                     sInsertedText = tr("Command", "Text format: Command");
-                    iFormatLength = 1;
+                    nFormatLength = 1;
                     m_pEditor->insertPlainText( "`" + sInsertedText + "`" );
                 }
                 break;
@@ -1027,8 +1020,8 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
         if ( !bSelected )
         {
             QTextCursor myTextCursor = m_pEditor->textCursor();
-            myTextCursor.setPosition( m_pEditor->textCursor().position() - sInsertedText.length() - iFormatLength );
-            myTextCursor.setPosition( m_pEditor->textCursor().position() - iFormatLength, QTextCursor::KeepAnchor );
+            myTextCursor.setPosition( m_pEditor->textCursor().position() - sInsertedText.length() - nFormatLength );
+            myTextCursor.setPosition( m_pEditor->textCursor().position() - nFormatLength, QTextCursor::KeepAnchor );
             m_pEditor->setTextCursor( myTextCursor );
         }
 
@@ -1039,7 +1032,8 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 // Insert text sample / syntax element
 void CInyokaEdit::insertSomeSamples( const QString &sMenuEntry )
 {
-    m_pEditor->insertPlainText( QString::fromUtf8(m_pInsertSyntaxElement->getElementInyokaCode(sMenuEntry.toStdString(), m_pEditor->textCursor().selectedText().toStdString()).c_str()) );
+    m_pEditor->insertPlainText( m_pInsertSyntaxElement->getElementInyokaCode(
+                                    sMenuEntry, m_pEditor->textCursor().selectedText()) );
     m_pEditor->setFocus();
 }
 
@@ -1320,11 +1314,13 @@ bool CInyokaEdit::eventFilter( QObject *obj, QEvent *event )
             static bool bToggle = false;
             static QTextDocument docBackup("");
 
-            if ( !bToggle ) {
+            if ( !bToggle )
+            {
                 docBackup.setPlainText( m_pEditor->document()->toPlainText() );
                 m_pParser->replaceTemplates( m_pEditor->document() );
             }
-            else {
+            else
+            {
                 m_pEditor->setText( docBackup.toPlainText() );
             }
             bToggle = !bToggle;
@@ -1399,7 +1395,8 @@ void CInyokaEdit::checkSpelling()
         {
             userDictFile.close();
         }
-        else {
+        else
+        {
             QMessageBox::warning( 0, m_pApp->applicationName(), "User dictionary file could not be created." );
         }
     }
@@ -1465,7 +1462,7 @@ void CInyokaEdit::syncScrollbarsEditor()
     {
         int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-        float nRatio = (float)nSizeWebviewBar / nSizeEditorBar;
+        float nRatio = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
 
         bEditorScrolling = true;
         m_pWebview->page()->mainFrame()->setScrollPosition( QPoint( 0, m_pEditor->verticalScrollBar()->sliderPosition() * nRatio ) );
@@ -1482,7 +1479,7 @@ void CInyokaEdit::syncScrollbarsWebview()
     {
         int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-        float nRatio = (float)nSizeEditorBar / nSizeWebviewBar;
+        float nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
         bWebviewScrolling = true;
         m_pEditor->verticalScrollBar()->setSliderPosition( m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio );

@@ -27,17 +27,19 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef CSPELLCHECKER_H
-#define CSPELLCHECKER_H
+#ifndef INYOKAEDIT_CSPELLCHECKER_H_
+#define INYOKAEDIT_CSPELLCHECKER_H_
 
 #include <QString>
 
-#include "CSpellCheckDialog.h"
-#include "CTextEditor.h"
+#include "./CSpellCheckDialog.h"
+#include "./CTextEditor.h"
 
-class Hunspell;
-class CTextEditor;
-class CSpellCheckDialog;
+#if defined _WIN32
+    #include "./windows_files/hunspell-mingw/include/hunspell.hxx"
+#else
+    #include <hunspell/hunspell.hxx>
+#endif
 
 /**
  * \class CSpellChecker
@@ -64,4 +66,4 @@ private:
     CSpellCheckDialog *m_pCheckDialog;
 };
 
-#endif // CSPELLCHECKER_H
+#endif // INYOKAEDIT_CSPELLCHECKER_H_

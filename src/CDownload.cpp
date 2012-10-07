@@ -26,12 +26,13 @@
 
 #include <QDebug>
 
-#include "CDownload.h"
+#include "./CDownload.h"
 
 extern bool bDEBUG;
 
-CDownload::CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QString &sStylesDir,
-                      const QString &sImgDir, const QString &sInyokaUrl, const bool bAutomaticImgDL ) :
+CDownload::CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir,
+                      const QString &sStylesDir, const QString &sImgDir, const QString &sInyokaUrl,
+                      const bool bAutomaticImgDL ) :
     m_pParent(pParent),
     m_sAppName(sAppName),
     m_sAppDir(sAppDir),
@@ -42,7 +43,7 @@ CDownload::CDownload( QWidget *pParent, const QString &sAppName, const QString &
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    m_NwManager = new QNetworkAccessManager(m_pParent);
+    m_NwManager = new QNetworkAccessManager( m_pParent );
     connect( m_NwManager, SIGNAL(finished(QNetworkReply*)),
              this, SLOT(replyFinished(QNetworkReply*)) );
 

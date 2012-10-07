@@ -24,14 +24,14 @@
  * Class definition for syntax highlighting.
  */
 
-#ifndef CHIGHLIGHTER_H
-#define CHIGHLIGHTER_H
+#ifndef INYOKAEDIT_CHIGHLIGHTER_H_
+#define INYOKAEDIT_CHIGHLIGHTER_H_
 
 #include <QSyntaxHighlighter>
 #include <QHash>
 #include <QTextCharFormat>
 
-#include "CTemplates.h"
+#include "./CTemplates.h"
 
 // Qt classes
 class QTextDocument;
@@ -76,4 +76,4 @@ private:
 
 };
 
-#endif // CHIGHLIGHTER_H
+#endif // INYOKAEDIT_CHIGHLIGHTER_H_

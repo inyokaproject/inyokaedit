@@ -27,8 +27,8 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef CSPELLCHECKDIALOG_H
-#define CSPELLCHECKDIALOG_H
+#ifndef INYOKAEDIT_CSPELLCHECKDIALOG_H_
+#define INYOKAEDIT_CSPELLCHECKDIALOG_H_
 
 #include <QDialog>
 
@@ -71,4 +71,4 @@ private:
     SpellCheckAction _returnCode;
 };
 
-#endif // CSPELLCHECKDIALOG_H
+#endif // INYOKAEDIT_CSPELLCHECKDIALOG_H_

@@ -24,13 +24,14 @@
  * Class definition for file operations (new, load, save...).
  */
 
-#ifndef CFILEOPERATIONS_H
-#define CFILEOPERATIONS_H
+#ifndef INYOKAEDIT_CFILEOPERATIONS_H_
+#define INYOKAEDIT_CFILEOPERATIONS_H_
 
-#include "CInyokaEdit.h"
+#include <QAction>
+#include <QSignalMapper>
 
-class CTextEditor;
-class CSettings;
+#include "./CSettings.h"
+#include "./CTextEditor.h"
 
 /**
  * \class CFileOperations
@@ -141,4 +142,4 @@ private:
     QString m_sAppName;  /**< Application name */
 };
 
-#endif // CFILEOPERATIONS_H
+#endif // INYOKAEDIT_CFILEOPERATIONS_H_

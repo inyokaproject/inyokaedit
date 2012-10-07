@@ -24,12 +24,16 @@
  * Class definition table insert dialog
  */
 
-#ifndef CTABLETEMPLATE_H
-#define CTABLETEMPLATE_H
+#ifndef INYOKAEDIT_CTABLETEMPLATE_H_
+#define INYOKAEDIT_CTABLETEMPLATE_H_
 
+#include <QDir>
 #include <QtGui/QDialog>
 #include <QString>
-#include <QDir>
+
+#include "./CParser.h"
+#include "./CTextEditor.h"
+
 
 namespace Ui{
 	class CTableTemplateClass;
@@ -94,4 +98,4 @@ private:
     QStringList m_sListTableStylesPrefix;
 };
 
-#endif // CTABLETEMPLATE_H
+#endif // INYOKAEDIT_CTABLETEMPLATE_H_

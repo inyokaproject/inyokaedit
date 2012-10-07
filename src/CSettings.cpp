@@ -25,7 +25,7 @@
  */
 
 #include <QDebug>
-#include "CSettings.h"
+#include "./CSettings.h"
 
 CSettings::CSettings( const QDir &SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
     m_pFDialog(&FDialog), m_pFRDialog(&FRDialog)
@@ -247,19 +247,19 @@ QString CSettings::getTemplateLanguage() const
     return m_sTemplateLang;
 }
 
-unsigned int CSettings::getAutoSave() const
+quint32 CSettings::getAutoSave() const
 {
     return m_nAutosave;
 }
 
 
-int CSettings::getReloadPreviewKey() const
+qint32 CSettings::getReloadPreviewKey() const
 {
     QString sTmp = m_sReloadPreviewKey;
     return sTmp.remove("0x", Qt::CaseInsensitive).toInt(0, 16);
 }
 
-unsigned int CSettings::getTimedPreview() const
+quint32 CSettings::getTimedPreview() const
 {
     return m_nTimedPreview;
 }
@@ -279,14 +279,14 @@ QFont CSettings::getEditorFont() const
 
 // ----------------------------------------------------
 
-unsigned short CSettings::getNumOfRecentFiles() const
+quint16 CSettings::getNumOfRecentFiles() const
 {
-    return (unsigned short)m_nMaxLastOpenedFiles;
+    return (quint16)m_nMaxLastOpenedFiles;
 }
 
-unsigned short CSettings::getMaxNumOfRecentFiles() const
+quint16 CSettings::getMaxNumOfRecentFiles() const
 {
-    return (unsigned short)m_cMAXFILES;
+    return (quint16)m_cMAXFILES;
 }
 
 QStringList CSettings::getRecentFiles() const
@@ -296,7 +296,7 @@ QStringList CSettings::getRecentFiles() const
 
 void CSettings::setRecentFiles( const QStringList &sListNewRecent )
 {
-    unsigned short iCnt;
+    quint16 iCnt;
     if ( sListNewRecent.size() > m_cMAXFILES )
     {
         iCnt = m_cMAXFILES;

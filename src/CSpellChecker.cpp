@@ -27,7 +27,7 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#include "CSpellChecker.h"
+#include "./CSpellChecker.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -36,12 +36,6 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QCoreApplication>
-
-#if defined _WIN32
-    #include "windows_files/hunspell-mingw/include/hunspell.hxx"
-#else
-    #include <hunspell/hunspell.hxx>
-#endif
 
 CSpellChecker::CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent )
 {

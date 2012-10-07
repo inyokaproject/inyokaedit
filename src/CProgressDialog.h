@@ -24,15 +24,13 @@
  * Class definition of download progress dialog.
  */
 
-#ifndef CPROGRESSDIALOG_H
-#define CPROGRESSDIALOG_H
+#ifndef INYOKAEDIT_CPROGRESSDIALOG_H_
+#define INYOKAEDIT_CPROGRESSDIALOG_H_
 
 #include <QDialog>
 #include <QProcess>
 #include <QtGui/QCloseEvent>
-#include <QDir>
 
-#include "CInyokaEdit.h"
 
 namespace Ui {
     class CProgressDialog;
@@ -49,7 +47,8 @@ class CProgressDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CProgressDialog(const QString &sScriptname, QStringList sListArguments, const QString &sAppname, QWidget *pParent = 0);
+    explicit CProgressDialog( const QString &sScriptname, QStringList sListArguments,
+                              const QString &sAppname, QWidget *pParent = 0 );
     ~CProgressDialog();
 
 private slots:
@@ -68,4 +67,4 @@ private:
     QProcess *m_myProc;
 };
 
-#endif // CPROGRESSDIALOG_H
+#endif // INYOKAEDIT_CPROGRESSDIALOG_H_

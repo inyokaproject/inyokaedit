@@ -11,7 +11,7 @@
 #include <QRegExp>
 #include <QSettings>
 
-#include "findreplaceform.h"
+#include "./findreplaceform.h"
 #include "ui_findreplaceform.h"
 
 #define TEXT_TO_FIND "textToFind"
