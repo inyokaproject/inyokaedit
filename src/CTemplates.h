@@ -45,9 +45,9 @@ class CTemplates : public QObject
     Q_OBJECT
 
 public:
-    CTemplates( const QString sAppName,
-                const QString sAppPath,
-                const QString sTplLang );
+    CTemplates( const QString &sAppName,
+                const QString &sAppPath,
+                const QString &sTplLang );
     // Destructor
     ~CTemplates();
 
@@ -82,10 +82,10 @@ public:
 
 private:
     void initTemplates();
-    void initHtmlTpl( const QString sFileName );
-    void initFlags( const QString sFileName );
-    void initTextformats( const QString sFileName );
-    void initTranslations( const QString sFileName );
+    void initHtmlTpl( const QString &sFileName );
+    void initFlags( const QString &sFileName );
+    void initTextformats( const QString &sFileName );
+    void initTranslations( const QString &sFileName );
 
     QString m_sAppName;
     QString m_sAppPath;

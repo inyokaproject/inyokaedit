@@ -54,8 +54,8 @@ class CParser : public QObject
 public:
     // Constructor
     CParser( QTextDocument *pRawDocument,
-             const QDir tmpFileOutputDir,
-             const QDir tmpImgDir,
+             const QDir &tmpFileOutputDir,
+             const QDir &tmpImgDir,
              CSettings *pSettings,
              CTemplates *pTemplates );
     // Destructor
@@ -70,7 +70,7 @@ public:
 private:
     //void replaceTemplates( QTextDocument *p_rawDoc );
     void replaceTextformat( QTextDocument *p_rawDoc );
-    QString reinstertNoTranslate( const QString sRawDoc );
+    QString reinstertNoTranslate( const QString &sRawDoc );
     void replaceFlags( QTextDocument *p_rawDoc );
     void replaceKeys( QTextDocument *p_rawDoc );
     void replaceImages( QTextDocument *p_rawDoc );

@@ -58,8 +58,8 @@ public:
      * \param pEditor Pointer to editor module
      */
     CTableTemplate( CTextEditor *pEditor,
-                    const QDir tmpFileOutputDir,
-                    const QDir tmpImgDir,
+                    const QDir &tmpFileOutputDir,
+                    const QDir &tmpImgDir,
                     CSettings *pSettings,
                     CTemplates *pTemplates,
                     QWidget *pParent = 0 );

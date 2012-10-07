@@ -191,10 +191,10 @@ private:
     // Build gui
     void setupEditor();
     void createActions();
-    void createXmlActions( QSignalMapper *SigMap, const QString sIconPath,
+    void createXmlActions( QSignalMapper *SigMap, const QString &sIconPath,
                            QList<QList<QAction *> >& listActions, CXmlParser* pXmlMenu );
     void createMenus();
-    void insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString sIconPath,
+    void insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString &sIconPath,
                         QList<QList<QAction *> > listActions, CXmlParser* pXmlMenu, QAction* pPosition );
     void createToolBars();
 

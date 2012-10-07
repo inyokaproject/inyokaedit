@@ -37,9 +37,9 @@ class CInsertSyntaxElement
 {
 public:
     /** \brief Constructor */
-    CInsertSyntaxElement( const QString sTransTemplate,
-                          const QString sTransImage,
-                          const QString sTransTOC );
+    CInsertSyntaxElement( const QString &sTransTemplate,
+                          const QString &sTransImage,
+                          const QString &sTransTOC );
 
     /**
     * \brief Get Inyoka syntax element code
@@ -47,7 +47,8 @@ public:
     * \param sSelectedText Text which was selected
     * \return Syntax element code
     */
-    std::string getElementInyokaCode( const std::string sElement, const std::string sSelectedText );
+    std::string getElementInyokaCode( const std::string &sElement,
+                                      const std::string &sSelectedText );
 
 private:
     std::string m_sSampleBegin_1;

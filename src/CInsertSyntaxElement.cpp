@@ -27,9 +27,9 @@
 #include <QDebug>
 #include "CInsertSyntaxElement.h"
 
-CInsertSyntaxElement::CInsertSyntaxElement( const QString sTransTemplate,
-                                            const QString sTransImage,
-                                            const QString sTransTOC )
+CInsertSyntaxElement::CInsertSyntaxElement( const QString &sTransTemplate,
+                                            const QString &sTransImage,
+                                            const QString &sTransTOC )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
     m_sSampleBegin_1  = "[[" + sTransTemplate.toStdString() + "(";
@@ -41,7 +41,8 @@ CInsertSyntaxElement::CInsertSyntaxElement( const QString sTransTemplate,
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-std::string CInsertSyntaxElement::getElementInyokaCode( const std::string sElement, const std::string sSelectedText )
+std::string CInsertSyntaxElement::getElementInyokaCode( const std::string &sElement,
+                                                        const std::string &sSelectedText )
 {
     // Toolbar buttons
     if ( sElement == "boldAct" )

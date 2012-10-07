@@ -38,8 +38,8 @@
 #include "CTextEditor.h"
 
 CTableTemplate::CTableTemplate( CTextEditor *pEditor,
-                                const QDir tmpFileOutputDir,
-                                const QDir tmpImgDir,
+                                const QDir &tmpFileOutputDir,
+                                const QDir &tmpImgDir,
                                 CSettings *pSettings,
                                 CTemplates *pTemplates,
                                 QWidget *pParent )

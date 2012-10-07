@@ -40,7 +40,7 @@ class CDownloadImg : public QObject
 
 public:
     CDownloadImg( const QString &sAppName );
-    void setDLs( const QStringList sListUrls, const QStringList sListSavePath );
+    void setDLs( const QStringList &sListUrls, const QStringList &sListSavePath );
 
 public slots:
     void startDownloads();
@@ -53,7 +53,7 @@ signals:
     void finsihedImageDownload();
 
 private:
-    void doDownload( const QUrl &url, const QString sSavePath, const QString sBase = "" );
+    void doDownload( const QUrl &url, const QString &sSavePath, const QString sBase = "" );
     QUrl redirectUrl( const QUrl& possibleRedirectUrl, const QUrl& oldRedirectUrl) const;
 
     QString m_sAppname;

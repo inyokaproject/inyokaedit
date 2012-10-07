@@ -72,7 +72,7 @@ CHighlighter::CHighlighter( CTemplates *pTemplates,
     // Define interwiki link keywords
     foreach( QStringList tmpStrList, pTemplates->getIWLs()->getElementTypes() ) {
         foreach( QString tmpStr, tmpStrList )
-            interwikiLinksPatterns << "\\b" + tmpStr + "\\b";
+            interwikiLinksPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
     }
 
     // Format Interwiki Links

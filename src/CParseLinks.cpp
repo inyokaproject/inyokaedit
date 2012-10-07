@@ -31,7 +31,7 @@ CParseLinks::CParseLinks( const QString &sUrlToWiki,
                           const QList<QStringList> sListIWiki,
                           const QList<QStringList> sListIWikiUrl,
                           const bool bCheckLinks,
-                          const QString sTransAnchor )
+                          const QString &sTransAnchor )
     : m_sWikiUrl(sUrlToWiki),
       m_bCheckLinks(bCheckLinks),
       m_sTransAnchor( sTransAnchor )
@@ -49,6 +49,9 @@ CParseLinks::CParseLinks( const QString &sUrlToWiki,
     }
 
     m_NWAManager = new QNetworkAccessManager(this);
+
+    m_bIsOnline = false;
+    m_NWreply = NULL;
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -134,7 +137,6 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
     QString sLinkURL("");
 
     // Check for internet connection
-    m_bIsOnline = false;
     #if QT_VERSION >= 0x040700
         QNetworkConfigurationManager mgr;
         m_bIsOnline = mgr.isOnline();
@@ -167,7 +169,8 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                     {
                         m_NWreply = m_NWAManager->get(QNetworkRequest(QUrl( sLinkURL + "?action=metaexport" )));
                         QEventLoop loop;  // Workaround for getting reply synchronously
-                        connect(m_NWreply, SIGNAL(finished()), &loop, SLOT(quit()));
+                        connect( m_NWreply, SIGNAL(finished()),
+                                 &loop, SLOT(quit()) );
                         loop.exec();
 
                         if ( QNetworkReply::NoError == m_NWreply->error() )
@@ -190,7 +193,8 @@ void CParseLinks::replaceInyokaWikiLinks( QTextDocument *pRawDoc )
                     {
                         m_NWreply = m_NWAManager->get(QNetworkRequest(QUrl( sLinkURL + "?action=metaexport" )));
                         QEventLoop loop;
-                        connect(m_NWreply, SIGNAL(finished()), &loop, SLOT(quit()));
+                        connect( m_NWreply, SIGNAL(finished()),
+                                 &loop, SLOT(quit()) );
                         loop.exec();
 
                         if ( QNetworkReply::NoError == m_NWreply->error() )

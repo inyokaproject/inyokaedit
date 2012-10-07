@@ -43,14 +43,14 @@ class CSettings
 {
 
 public:
-    CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog );
+    CSettings( const QDir &SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog );
     ~CSettings();
 
     // Load / save application settings
     void readSettings();
     void writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState = 0 );
 
-    void setLastOpenedDir( const QDir LastDir );
+    void setLastOpenedDir( const QDir &LastDir );
 
     // General
     bool getCodeCompletion() const;

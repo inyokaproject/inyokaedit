@@ -41,7 +41,7 @@ CDownloadImg::CDownloadImg( const QString &sAppName )
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-void CDownloadImg::setDLs( const QStringList sListUrls, const QStringList sListSavePath )
+void CDownloadImg::setDLs( const QStringList &sListUrls, const QStringList &sListSavePath )
 {
     m_sListUrls = sListUrls;
     m_sListSavePath = sListSavePath;
@@ -76,7 +76,7 @@ void CDownloadImg::startDownloads()
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CDownloadImg::doDownload( const QUrl &url, const QString sSavePath, const QString sBase )
+void CDownloadImg::doDownload( const QUrl &url, const QString &sSavePath, const QString sBase )
 {
     QNetworkRequest request(url);
     QNetworkReply *reply = m_NwManager.get(request);

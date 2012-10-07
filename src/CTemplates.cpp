@@ -28,9 +28,9 @@
 
 extern bool bDEBUG;
 
-CTemplates::CTemplates( const QString sAppName,
-                        const QString sAppPath,
-                        const QString sTplLang )
+CTemplates::CTemplates( const QString &sAppName,
+                        const QString &sAppPath,
+                        const QString &sTplLang )
     : m_sAppName( sAppName ),
       m_sAppPath( sAppPath ),
       m_sTplLang( sTplLang )
@@ -178,7 +178,7 @@ void CTemplates::initTemplates()
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CTemplates::initHtmlTpl( const QString sTplFile )
+void CTemplates::initHtmlTpl( const QString &sTplFile )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -215,7 +215,7 @@ void CTemplates::initHtmlTpl( const QString sTplFile )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CTemplates::initFlags( const QString sFilename )
+void CTemplates::initFlags( const QString &sFilename )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -259,7 +259,7 @@ void CTemplates::initFlags( const QString sFilename )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CTemplates::initTextformats( const QString sFilename )
+void CTemplates::initTextformats( const QString &sFilename )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 
@@ -316,7 +316,7 @@ void CTemplates::initTextformats( const QString sFilename )
 // -----------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------
 
-void CTemplates::initTranslations( const QString sFilename )
+void CTemplates::initTranslations( const QString &sFilename )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 

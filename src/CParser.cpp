@@ -28,8 +28,8 @@
 
 // Constructor
 CParser::CParser( QTextDocument *pRawDocument,
-                  const QDir tmpFileOutputDir,
-                  const QDir tmpImgDir,
+                  const QDir &tmpFileOutputDir,
+                  const QDir &tmpImgDir,
                   CSettings *pSettings,
                   CTemplates *pTemplates )
     : m_pRawText( pRawDocument ),
@@ -471,7 +471,7 @@ void CParser::replaceTextformat( QTextDocument *p_rawDoc )
     p_rawDoc->setPlainText( sMyDoc );
 }
 
-QString CParser::reinstertNoTranslate( const QString sRawDoc )
+QString CParser::reinstertNoTranslate( const QString &sRawDoc )
 {
     QString sMyDoc = sRawDoc;
 

@@ -29,7 +29,7 @@
 
 extern bool bDEBUG;
 
-CXmlParser::CXmlParser( const QString sAppName, const QString sAppPath, const QString sFilePath )
+CXmlParser::CXmlParser( const QString &sAppName, const QString &sAppPath, const QString &sFilePath )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
 

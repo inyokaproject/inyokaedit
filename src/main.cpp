@@ -52,9 +52,9 @@
 
 std::ofstream logfile;
 
-void setupLogger( const QString sDebugFilePath, const QString sAppName, const QString sVersion );
+void setupLogger( const QString &sDebugFilePath, const QString &sAppName, const QString &sVersion );
 void LoggingHandler( QtMsgType type, const char *msg );
-QString getLanguage( const QString sConfigDir, const QString sAppName );
+QString getLanguage( const QString &sConfigDir, const QString &sAppName );
 
 // ----------------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ int main( int argc, char *argv[] )
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void setupLogger( const QString sDebugFilePath, const QString sAppName, const QString sVersion )
+void setupLogger( const QString &sDebugFilePath, const QString &sAppName, const QString &sVersion )
 {
     // Remove old debug file
     if ( QFile(sDebugFilePath).exists() )
@@ -159,7 +159,7 @@ void LoggingHandler( QtMsgType type, const char *sMsg )
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString getLanguage(const QString sConfigDir, const QString sAppName)
+QString getLanguage(const QString &sConfigDir, const QString &sAppName)
 {
     #if defined _WIN32
     QSettings::setPath( QSettings::IniFormat, QSettings::UserScope, sConfigDir );

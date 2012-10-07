@@ -50,7 +50,7 @@ public:
                  const QList<QStringList> sListIWiki,
                  const QList<QStringList> sListIWikiUrl,
                  const bool bCheckLinks,
-                 const QString sTransAnchor );
+                 const QString &sTransAnchor );
 
     void startParsing( QTextDocument *pRawDoc );
 

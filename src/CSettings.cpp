@@ -27,7 +27,7 @@
 #include <QDebug>
 #include "CSettings.h"
 
-CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
+CSettings::CSettings( const QDir &SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog ) :
     m_pFDialog(&FDialog), m_pFRDialog(&FRDialog)
 {
     qDebug() << "Start" << Q_FUNC_INFO;
@@ -39,6 +39,8 @@ CSettings::CSettings( const QDir SettingsDir, const QString &sName, FindDialog &
     QSettings::setPath( QSettings::NativeFormat, QSettings::UserScope, SettingsDir.absolutePath() );
     mySettingsObject = new QSettings( QSettings::NativeFormat, QSettings::UserScope, sName );
 #endif
+
+    this->readSettings();
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -225,7 +227,7 @@ QDir CSettings::getLastOpenedDir() const
     return m_LastOpenedDir;
 }
 
-void CSettings::setLastOpenedDir( const QDir LastDir )
+void CSettings::setLastOpenedDir( const QDir &LastDir )
 {
     m_LastOpenedDir = LastDir;
 }

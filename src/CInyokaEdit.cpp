@@ -124,8 +124,6 @@ void CInyokaEdit::createObjects()
     m_pSettings = new CSettings( m_UserAppDir,
                                  m_pApp->applicationName(),
                                  *m_findDialog, *m_findReplaceDialog );
-    // Load settings from config file
-    m_pSettings->readSettings();
 
     m_pTemplates = new CTemplates( m_pApp->applicationName(),
                                    m_pApp->applicationDirPath(),
@@ -545,7 +543,7 @@ void CInyokaEdit::createActions()
 
 // -----------------------------------------------------------------------------------------------
 
-void CInyokaEdit::createXmlActions( QSignalMapper *SigMap, const QString sIconPath,
+void CInyokaEdit::createXmlActions( QSignalMapper *SigMap, const QString &sIconPath,
                                     QList<QList<QAction *> >& listActions, CXmlParser* pXmlMenu )
 {
     QList <QAction *> emptyActionList;
@@ -600,9 +598,10 @@ void CInyokaEdit::createMenus()
         articleTemplateDir.setPath( m_pApp->applicationDirPath() + "/templates/" + m_pSettings->getTemplateLanguage() + "/articles" );
     }
 
-    unsigned short nTplFileCount = 0;
     if ( articleTemplateDir.exists() )
     {
+        unsigned short nTplFileCount = 0;
+
         m_pSigMapOpenTemplate = new QSignalMapper(this);
         QFileInfoList fiListFiles = articleTemplateDir.entryInfoList( QDir::NoDotAndDotDot | QDir::Files );
         for ( int nFile = 0; nFile < fiListFiles.count(); nFile++ )
@@ -652,7 +651,7 @@ void CInyokaEdit::createMenus()
 
 // -----------------------------------------------------------------------------------------------
 
-void CInyokaEdit::insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString sIconPath,
+void CInyokaEdit::insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString &sIconPath,
                                  QList<QList<QAction *> > listActions, CXmlParser* pXmlMenu, QAction* pPosition )
 {
     qDebug() << "Start" << Q_FUNC_INFO;
@@ -957,7 +956,6 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 {
     bool bSelected = false;
     QString sInsertedText = "";
-    unsigned short iFormatLength = 0;
 
     // Some text was selected
     if ( m_pEditor->textCursor().selectedText() != "" )
@@ -967,6 +965,8 @@ void CInyokaEdit::insertDropDownTextformat( const int nSelection )
 
     if ( nSelection != 0 && nSelection != 1 )
     {
+        unsigned short iFormatLength = 0;
+
         // -1 because of separator (considered as "item")
         switch ( nSelection-1 )
         {
