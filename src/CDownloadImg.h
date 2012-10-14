@@ -32,29 +32,32 @@
 
 #include <QStringList>
 
-class CDownloadImg : public QObject
-{
+class CDownloadImg : public QObject {
     Q_OBJECT
     QNetworkAccessManager m_NwManager;
     QList<QNetworkReply *> m_listDownloadReplies;
 
-public:
-    explicit CDownloadImg( const QString &sAppName );
-    void setDLs( const QStringList &sListUrls, const QStringList &sListSavePath );
+  public:
+    explicit CDownloadImg(const QString &sAppName);
+    void setDLs(const QStringList &sListUrls,
+                const QStringList &sListSavePath);
 
-public slots:
+  public slots:
     void startDownloads();
 
-private slots:
-    void downloadFinished( QNetworkReply *reply );
+  private slots:
+    void downloadFinished(QNetworkReply *reply);
     void cancelDownloads();
 
-signals:
+  signals:
     void finsihedImageDownload();
 
-private:
-    void doDownload( const QUrl &url, const QString &sSavePath, const QString sBase = "" );
-    QUrl redirectUrl( const QUrl& possibleRedirectUrl, const QUrl& oldRedirectUrl) const;
+  private:
+    void doDownload(const QUrl &url,
+                    const QString &sSavePath,
+                    const QString sBase = "");
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl) const;
 
     QString m_sAppname;
     QProgressDialog *m_progessDialog;
@@ -69,4 +72,4 @@ private:
     QStringList m_sListRedirect;
 };
 
-#endif // INYOKAEDIT_CDOWNLOADIMG_H_
+#endif  // INYOKAEDIT_CDOWNLOADIMG_H_

@@ -77,23 +77,23 @@ namespace Ui {
  * \class CInyokaEdit
  * \brief Main application definition (gui, objects, etc.)
  */
-class CInyokaEdit : public QMainWindow
-{
+class CInyokaEdit : public QMainWindow {
     Q_OBJECT
-    
-public:
+
+  public:
     /**
     * \brief Constructor
     * \param ptrApp Pointer to main application
     * \param parent pointer to parent window
     */
-    explicit CInyokaEdit( QApplication *ptrApp, QDir userAppDir, QWidget *parent = 0 );   // Constructor
+    explicit CInyokaEdit(QApplication *ptrApp, QDir userAppDir,
+                         QWidget *parent = 0);
 
     /** \brief Destructor */
     ~CInyokaEdit();
-    
-public slots:
-    //void newDocumentTab();
+
+  public slots:
+    // void newDocumentTab();
 
     /** \brief Called when text in editor was changed */
     void documentWasModified();
@@ -103,22 +103,23 @@ public slots:
     * \param sArticleText Raw text
     * \param sSitename Name of downloaded site
     */
-    void displayArticleText( const QString &sArticleText, const QString &sSitename );
+    void displayArticleText(const QString &sArticleText,
+                            const QString &sSitename);
 
-protected:
+  protected:
     /**
     * \brief Close event handler
     * \param event Close event
     */
-    void closeEvent( QCloseEvent *event );
+    void closeEvent(QCloseEvent *event);
 
-    bool eventFilter( QObject *obj, QEvent *event );
+    bool eventFilter(QObject *obj, QEvent *event);
 
-protected slots:
+  protected slots:
     /** \brief Call spell checker */
     void checkSpelling();
 
-private slots:
+  private slots:
     void showSyntaxOverview();
 
     /** \brief Call Apport for bug report */
@@ -131,19 +132,19 @@ private slots:
     * \brief Insert headline from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownHeadline( const int nSelection );
+    void insertDropDownHeadline(const int nSelection);
 
     /**
     * \brief Insert text macro from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownTextmacro( const int nSelection );
+    void insertDropDownTextmacro(const int nSelection);
 
     /**
     * \brief Insert text format from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownTextformat( const int nSelection );
+    void insertDropDownTextformat(const int nSelection);
 
     /** \brief Download an existing article */
     void downloadArticle();
@@ -152,8 +153,8 @@ private slots:
     void deleteTempImages();
 
     // Preview / download toolbar
-    void previewInyokaPage( const int nIndex = 999 );
-    void loadPreviewFinished( bool bSuccess );
+    void previewInyokaPage(const int nIndex = 999);
+    void loadPreviewFinished(const bool bSuccess);
 
     void clickedLink();
 
@@ -163,26 +164,26 @@ private slots:
     * \brief Insert text sample from menu
     * \param sMenuEntry Selected entry
     */
-    void insertSomeSamples( const QString &sMenuEntry);
+    void insertSomeSamples(const QString &sMenuEntry);
 
-    void insertMacro( const QString &sMenuEntry );
+    void insertMacro(const QString &sMenuEntry);
 
     /**
     * \brief Insert interwiki link from menu
     * \param sMenuEntry Selected entry
     */
-    void insertInterwikiLink( const QString &sMenuEntry );
+    void insertInterwikiLink(const QString &sMenuEntry);
 
     /**
     * \brief Insert code block from toolbar
     * \param sCodeStyle Selected highlighting style
     */
-    void insertCodeblock( const QString &sCodeStyle );
+    void insertCodeblock(const QString &sCodeStyle);
 
     void syncScrollbarsEditor();
     void syncScrollbarsWebview();
 
-private:
+  private:
     Ui::CInyokaEdit *m_pUi;
     QApplication *m_pApp;
 
@@ -191,11 +192,14 @@ private:
     // Build gui
     void setupEditor();
     void createActions();
-    void createXmlActions( QSignalMapper *SigMap, const QString &sIconPath,
-                           QList<QList<QAction *> >& listActions, CXmlParser* pXmlMenu );
+    void createXmlActions(QSignalMapper *SigMap, const QString &sIconPath,
+                          QList<QList<QAction *> > &listActions,
+                          CXmlParser* pXmlMenu);
     void createMenus();
-    void insertXmlMenu( QMenu* pMenu, QList<QMenu *> pMenuGroup, const QString &sIconPath,
-                        QList<QList<QAction *> > listActions, CXmlParser* pXmlMenu, QAction* pPosition );
+    void insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
+                       const QString &sIconPath,
+                       QList<QList<QAction *> > listActions,
+                       CXmlParser* pXmlMenu, QAction* pPosition);
     void createToolBars();
 
     // Load / save application settings
@@ -216,7 +220,7 @@ private:
     QBoxLayout *m_pFrameLayout;
     QFrame *m_pWebviewFrame;
 
-    //QTabWidget *myTabwidgetDocuments;
+    // QTabWidget *myTabwidgetDocuments;
     QTabWidget *m_pTabwidgetRawPreview;
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
@@ -264,4 +268,4 @@ private:
     bool bWebviewScrolling;
 };
 
-#endif // INYOKAEDIT_CINYOKAEDIT_H_
+#endif  // INYOKAEDIT_CINYOKAEDIT_H_

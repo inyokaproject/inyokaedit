@@ -55,31 +55,30 @@ class QCompleter;
  * \class CTextEditor
  * \brief Extended QTextEdit (editor widget) with simple code completition.
  */
-class CTextEditor : public QTextEdit
-{
+class CTextEditor : public QTextEdit {
     Q_OBJECT
 
-public:
-    CTextEditor( Ui::CInyokaEdit *pGUI,
-                 bool bCompleter,
-                 QStringList sListTplMacros,
-                 quint16 nAutosave,
-                 QString sUserAppDir,
-                 QWidget *pParent = 0 );
+  public:
+    CTextEditor(Ui::CInyokaEdit *pGUI,
+                bool bCompleter,
+                QStringList sListTplMacros,
+                quint16 nAutosave,
+                QString sUserAppDir,
+                QWidget *pParent = 0);
     ~CTextEditor();
 
-    void setCompleter( QCompleter *c );
+    void setCompleter(QCompleter *c);
     QCompleter *completer() const;
 
-protected:
-    void keyPressEvent( QKeyEvent *e );
-    void focusInEvent( QFocusEvent *e );
+  protected:
+    void keyPressEvent(QKeyEvent *e);
+    void focusInEvent(QFocusEvent *e);
 
-private slots:
-    void insertCompletion( const QString &completion );
+  private slots:
+    void insertCompletion(const QString &sCompletion);
     void saveArticleAuto();
 
-private:
+  private:
     QTimer *m_pTimerAutosave;
     QString m_UserAppDir;
     QString textUnderCursor() const;
@@ -88,4 +87,4 @@ private:
     QStringList m_sListCompleter;
 };
 
-#endif // INYOKAEDIT_CTEXTEDITOR_H_
+#endif  // INYOKAEDIT_CTEXTEDITOR_H_

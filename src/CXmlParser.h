@@ -33,19 +33,18 @@
  * \class CXmlParser
  * \brief Delivering templates (groups, url, icon) from xml file.
  */
-class CXmlParser
-{
-
+class CXmlParser {
 class CHandler;
 
-public:
+  public:
     /**
     * \brief Constructor
     * \param sAppName Application name
     * \param sAppPath Application path
     * \param sFilePath (Relative) path and filename to xml file
     */
-    CXmlParser( const QString &sAppName, const QString &sAppPath, const QString &sFilePath );
+    CXmlParser(const QString &sAppName, const QString &sAppPath,
+               const QString &sFilePath);
 
     /**
     * \brief Get menu name
@@ -89,31 +88,29 @@ public:
     */
     QList<QStringList> getElementIcons() const;
 
-private:
+  private:
     QXmlInputSource *m_myXmlSource;  /**< Pointer to xml input source file */
     CHandler *m_myHandler;  /**< Handle to xml parser module */
 
     QString m_sMenuName;
     QStringList m_sListGroups;        /**< Interwiki link groups list */
     QStringList m_sListGroupIcons;    /**< Interwiki link group icons list */
-    QList<QStringList> m_sListTypes;  /**< List of list of interwiki links */
-    QList<QStringList> m_sListUrls;   /**< List of list of interwiki link urls */
-    QList<QStringList> m_sListNames;  /**< List of list of interwiki link names */
-    QList<QStringList> m_sListIcons;  /**< List of list of interwiki link icons */
-
+    QList<QStringList> m_sListTypes;  /**< List of list interwiki links */
+    QList<QStringList> m_sListUrls;   /**< List of list interwiki link urls */
+    QList<QStringList> m_sListNames;  /**< List of list interwiki link names */
+    QList<QStringList> m_sListIcons;  /**< List of list interwiki link icons */
 };
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 /**
  * \class CXmlParser::Handler
  * \brief Reading definitions from xml file.
  */
-class CXmlParser::CHandler : public QXmlDefaultHandler
-{
+class CXmlParser::CHandler : public QXmlDefaultHandler {
     friend class CXmlParser;
 
-public:
+  public:
     /**
     * \brief Called at document start
     * \return True
@@ -125,7 +122,7 @@ public:
     * \param name Element name
     * \return True
     */
-    bool endElement( const QString&, const QString&, const QString &name );
+    bool endElement(const QString&, const QString&, const QString &name);
 
     /**
     * \brief Found start of a xml element
@@ -133,9 +130,10 @@ public:
     * \param attrs Attribute name
     * \return True
     */
-    bool startElement( const QString&, const QString&, const QString &name, const QXmlAttributes &attrs );
+    bool startElement(const QString&, const QString&, const QString &name,
+                      const QXmlAttributes &attrs);
 
-private:
+  private:
     bool m_bInElement;
 
     QString m_tmpMenuName;
@@ -153,4 +151,4 @@ private:
     QList<QStringList> m_sListIcons_2;
 };
 
-#endif // INYOKAEDIT_CINTERWIKI_H_
+#endif  // INYOKAEDIT_CINTERWIKI_H_

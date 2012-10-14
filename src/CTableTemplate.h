@@ -35,8 +35,8 @@
 #include "./CTextEditor.h"
 
 
-namespace Ui{
-	class CTableTemplateClass;
+namespace Ui {
+    class CTableTemplateClass;
 }
 
 class CParser;
@@ -51,35 +51,34 @@ class QTextDocument;
  * \class CTableTemplate
  * \brief Dialog for table insertion
  */
-class CTableTemplate : public QDialog
-{
+class CTableTemplate : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     /**
      * \brief Constructor
      * \param pParent Pointer to parent windiw
      * \param pEditor Pointer to editor module
      */
-    CTableTemplate( CTextEditor *pEditor,
-                    const QDir &tmpFileOutputDir,
-                    const QDir &tmpImgDir,
-                    CSettings *pSettings,
-                    CTemplates *pTemplates,
-                    QWidget *pParent = 0 );
+    CTableTemplate(CTextEditor *pEditor,
+                   const QDir &tmpFileOutputDir,
+                   const QDir &tmpImgDir,
+                   CSettings *pSettings,
+                   CTemplates *pTemplates,
+                   QWidget *pParent = 0);
 
-public slots:
+  public slots:
     /** \brief Open dialog */
     void newTable();
 
-private slots:
+  private slots:
     /** \brief Show preview */
     void preview();
 
     /** \brief Dialog finished */
     void accept();
 
-private:
+  private:
     /** \brief Generate specific table */
     void generateTable();
 
@@ -98,4 +97,4 @@ private:
     QStringList m_sListTableStylesPrefix;
 };
 
-#endif // INYOKAEDIT_CTABLETEMPLATE_H_
+#endif  // INYOKAEDIT_CTABLETEMPLATE_H_

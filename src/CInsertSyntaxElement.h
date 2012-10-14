@@ -33,11 +33,10 @@
  * \class CInsertSyntaxElement
  * \brief Delivering html code of Inyoka elements
  */
-class CInsertSyntaxElement
-{
-public:
+class CInsertSyntaxElement {
+  public:
     /** \brief Constructor */
-    explicit CInsertSyntaxElement( const QString &sTransImage );
+    explicit CInsertSyntaxElement(const QString &sTransImage);
 
     /**
     * \brief Get Inyoka syntax element code
@@ -45,12 +44,12 @@ public:
     * \param sSelectedText Text which was selected
     * \return Syntax element code
     */
-    QString getElementInyokaCode( const QString &sElement,
-                                  const QString &sSelectedText );
+    QString getElementInyokaCode(const QString &sElement,
+                                 const QString &sSelectedText);
 
-private:
+  private:
     QString m_sSampleBegin_1;
     QString m_sSampleEnd_1;
 };
 
-#endif // INYOKAEDIT_CINSERTSYNTAXELEMENT_H_
+#endif  // INYOKAEDIT_CINSERTSYNTAXELEMENT_H_

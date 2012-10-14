@@ -28,37 +28,44 @@
 
 #include "./CHighlighter.h"
 
-CHighlighter::CHighlighter( CTemplates *pTemplates,
-                            QTextDocument *pParent )
-    : QSyntaxHighlighter(pParent)
-{
+CHighlighter::CHighlighter(CTemplates *pTemplates,
+                           QTextDocument *pParent)
+    : QSyntaxHighlighter(pParent) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     QStringList sListMacroKeywords;
-    sListMacroKeywords << pTemplates->getTransTemplate() << pTemplates->getTransTOC() <<
-                          pTemplates->getTransImage() << pTemplates->getTransAnchor() <<
-                          pTemplates->getTransAttachment() << pTemplates->getTransDate();
+    sListMacroKeywords << pTemplates->getTransTemplate()
+                       << pTemplates->getTransTOC()
+                       << pTemplates->getTransImage()
+                       << pTemplates->getTransAnchor()
+                       << pTemplates->getTransAttachment()
+                       << pTemplates->getTransDate();
 
     QStringList sListParserKeywords;
-    sListParserKeywords << pTemplates->getTransTemplate().toLower() <<
-                           pTemplates->getTransCodeBlock().toLower();
+    sListParserKeywords << pTemplates->getTransTemplate().toLower()
+                        << pTemplates->getTransCodeBlock().toLower();
 
     HighlightingRule myRule;
-    QStringList interwikiLinksPatterns, macroPatterns, parserPatterns, textformatPatterns, flagsPatterns;
+    QStringList interwikiLinksPatterns;
+    QStringList macroPatterns;
+    QStringList parserPatterns;
+    QStringList textformatPatterns;
+    QStringList flagsPatterns;
 
-    // Headings (= Heading =)
+    // Headings(= Heading =)
     m_headingsFormat.setFontWeight(QFont::Bold);
     m_headingsFormat.setForeground(Qt::darkGreen);
-    // 1-5 = at beginning and end, between A-Z, a-z, 0-9 (\\w), space (\\s), :, ", !, -, _, +, "
-    //myrule.pattern = QRegExp("={1,5}[A-Za-z0-9\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
+    // 1-5 = at beginning and end, between A-Z, a-z,
+    // 0-9(\\w), space(\\s), :, ", !, -, _, +, "
+    // myrule.pattern=QRegExp("={1,5}[A-Za-z0-9\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
     myRule.pattern = QRegExp("={1,5}[\\w\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
     myRule.format = m_headingsFormat;
     m_highlightingRules.append(myRule);  // Collecting highlighting rules
 
-    // Links (everything between [...])
+    // Links(everything between [...])
     m_linksFormat.setForeground(Qt::darkBlue);
     // 1-5 = at beginning and end, between A-Z, a-z, 0-9, space, -, _, #
-    //myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
+    // myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
     myRule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
     myRule.format = m_linksFormat;
     m_highlightingRules.append(myRule);  // Collecting highlighting rules
@@ -70,93 +77,92 @@ CHighlighter::CHighlighter( CTemplates *pTemplates,
     m_highlightingRules.append(myRule);
 
     // Define interwiki link keywords
-    foreach( QStringList tmpStrList, pTemplates->getIWLs()->getElementTypes() ) {
-        foreach( QString tmpStr, tmpStrList )
+    foreach (QStringList tmpStrList, pTemplates->getIWLs()->getElementTypes()) {
+        foreach (QString tmpStr, tmpStrList) {
             interwikiLinksPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
+        }
     }
 
     // Format Interwiki Links
     m_interwikiLinksFormat.setForeground(Qt::blue);
     // Collecting highlighting rules
-    foreach ( const QString &sPattern, interwikiLinksPatterns )
-    {
+    foreach (const QString &sPattern, interwikiLinksPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_interwikiLinksFormat;
         m_highlightingRules.append(myRule);
     }
 
-    // Define macro keywords ([[Vorlage(...) etc.)
-    foreach ( QString tmpStr, sListMacroKeywords )
-    {
-        macroPatterns << QRegExp::escape( "[[" + tmpStr + "(" );
+    // Define macro keywords([[Vorlage(...) etc.)
+    foreach (QString tmpStr, sListMacroKeywords) {
+        macroPatterns << QRegExp::escape("[[" + tmpStr + "(");
     }
-    macroPatterns << QRegExp::escape( ")]]" );
+    macroPatterns << QRegExp::escape(")]]");
 
     // Format macros
     m_macrosFormat.setForeground(Qt::darkCyan);
     // Collecting highlighting rules
-    foreach ( const QString &sPattern, macroPatterns )
-    {
+    foreach (const QString &sPattern, macroPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
         myRule.format = m_macrosFormat;
         m_highlightingRules.append(myRule);
     }
 
-    // Define parser keywords ({{{#!code etc.)
-    foreach ( QString tmpStr, sListParserKeywords )
-    {
-        parserPatterns << QRegExp::escape( "{{{#!" + tmpStr );
+    // Define parser keywords({{{#!code etc.)
+    foreach (QString tmpStr, sListParserKeywords) {
+        parserPatterns << QRegExp::escape("{{{#!" + tmpStr);
     }
-    parserPatterns << QRegExp::escape( "{{{" ) << QRegExp::escape( "}}}" );
+    parserPatterns << QRegExp::escape("{{{") << QRegExp::escape("}}}");
 
     // Format parser
     m_parserFormat.setForeground(Qt::darkRed);
     m_parserFormat.setFontWeight(QFont::Bold);
     // Collecting highlighting rules
-    foreach ( const QString &sPattern, parserPatterns )
-    {
+    foreach (const QString &sPattern, parserPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
         myRule.format = m_parserFormat;
         m_highlightingRules.append(myRule);
     }
 
-    // Define textformat keywords (Bold, italic etc.)
-    textformatPatterns << QRegExp::escape("'''") << QRegExp::escape("''") << QRegExp::escape("`") << QRegExp::escape(" * ")
-            << QRegExp::escape("__") << QRegExp::escape("--(") << QRegExp::escape(")--") << QRegExp::escape("^^(")
-            << QRegExp::escape(")^^") << QRegExp::escape(",,(") << QRegExp::escape("),,") << QRegExp::escape("~+(")
-            << QRegExp::escape(")+~") << QRegExp::escape("~-(") << QRegExp::escape(")-~") << QRegExp::escape("[[BR]]")
-            << QRegExp::escape("\\\\") << QRegExp::escape("#tag:") << QRegExp::escape("# tag:") << QRegExp::escape("+++")
-            << QRegExp::escape(" 1. ") << QRegExp::escape("----") << QRegExp::escape("||");
+    // Define textformat keywords(Bold, italic etc.)
+    textformatPatterns << QRegExp::escape("'''") << QRegExp::escape("''")
+                       << QRegExp::escape("`") << QRegExp::escape(" * ")
+                       << QRegExp::escape("__") << QRegExp::escape("--(")
+                       << QRegExp::escape(")--") << QRegExp::escape("^^(")
+                       << QRegExp::escape(")^^") << QRegExp::escape(",,(")
+                       << QRegExp::escape("),,") << QRegExp::escape("~+(")
+                       << QRegExp::escape(")+~") << QRegExp::escape("~-(")
+                       << QRegExp::escape(")-~") << QRegExp::escape("[[BR]]")
+                       << QRegExp::escape("\\\\") << QRegExp::escape("#tag:")
+                       << QRegExp::escape("# tag:") << QRegExp::escape("+++")
+                       << QRegExp::escape(" 1. ") << QRegExp::escape("----")
+                       << QRegExp::escape("||");
 
     // Format textformats
     m_textformatFormat.setForeground(Qt::red);
     // Collecting highlighting rules
-    foreach ( const QString &sPattern, textformatPatterns )
-    {
+    foreach (const QString &sPattern, textformatPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_textformatFormat;
         m_highlightingRules.append(myRule);
     }
 
-    // Comments (## comment)
+    // Comments(## comment)
     m_singleLineCommentFormat.setForeground(Qt::gray);
     myRule.pattern = QRegExp("^##[^\n]*");
     myRule.format = m_singleLineCommentFormat;
-    m_highlightingRules.append(myRule); // Collecting highlighting rules
+    m_highlightingRules.append(myRule);  // Collecting highlighting rules
 
     // Define flags
-    foreach ( QString tmpStr, pTemplates->getListFlags() )
-    {
+    foreach (QString tmpStr, pTemplates->getListFlags()) {
         flagsPatterns << QRegExp::escape("{" + tmpStr + "}");
     }
     // Overview flag
-    flagsPatterns << QRegExp::escape("{" + pTemplates->getTransOverview() + "}");
+    flagsPatterns << QRegExp::escape("{"+ pTemplates->getTransOverview() +"}");
 
     // Format flags
     m_flagsFormat.setForeground(Qt::darkYellow);
     // Collecting highlighting rules
-    foreach ( const QString &sPattern, flagsPatterns )
-    {
+    foreach (const QString &sPattern, flagsPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_flagsFormat;
         m_highlightingRules.append(myRule);
@@ -164,19 +170,18 @@ CHighlighter::CHighlighter( CTemplates *pTemplates,
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-CHighlighter::~CHighlighter()
-{
+CHighlighter::~CHighlighter() {
 }
 
-// -----------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 /****************************************************************************
 *****************************************************************************
 **
-** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright(C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
-** Contact: Nokia Corporation (qt-info@nokia.com)
+** Contact: Nokia Corporation(qt-info@nokia.com)
 **
 ** This code is part of the examples of the Qt Toolkit.
 **
@@ -202,30 +207,27 @@ CHighlighter::~CHighlighter()
 ** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
 ** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 ** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES(INCLUDING, BUT NOT
 ** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 ** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+**(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
 // Apply collected highlighting rules
-void CHighlighter::highlightBlock( const QString &sText )
-{
+void CHighlighter::highlightBlock(const QString &sText) {
     // Go through each highlighting rule
     // rules for every syntax element had been appended in constructor
-    foreach ( const HighlightingRule &myRule, m_highlightingRules )
-    {
+    foreach (const HighlightingRule &myRule, m_highlightingRules) {
         QRegExp express(myRule.pattern);
         express.setMinimal(true);
         int nIndex = express.indexIn(sText);
-        while ( nIndex >= 0 )
-        {
+        while (nIndex >= 0) {
             int nLength = express.matchedLength();
-            this->setFormat( nIndex, nLength, myRule.format );
+            this->setFormat(nIndex, nLength, myRule.format);
             nIndex = express.indexIn(sText, nIndex + nLength);
         }
     }

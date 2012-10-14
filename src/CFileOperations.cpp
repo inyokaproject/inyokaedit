@@ -32,59 +32,55 @@
 
 #include "./CFileOperations.h"
 
-CFileOperations::CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName ) :
-    m_pParent(pParent),
-    m_pEditor(pEditor),
-    m_pSettings(pSettings),
-    m_sAppName(sAppName)
-{
+CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
+                                 CSettings *pSettings,
+                                 const QString &sAppName)
+    : m_pParent(pParent),
+      m_pEditor(pEditor),
+      m_pSettings(pSettings),
+      m_sAppName(sAppName) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     // Generate recent files list
     m_pSigMapLastOpenedFiles = new QSignalMapper(this);
-    for ( int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++ )
-    {
-        if ( i < m_pSettings->getRecentFiles().size() )
-        {
-            m_LastOpenedFilesAct << new QAction(m_pSettings->getRecentFiles()[i], this);
-        }
-        else
-        {
+    for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
+        if (i < m_pSettings->getRecentFiles().size()) {
+            m_LastOpenedFilesAct << new QAction(
+                                        m_pSettings->getRecentFiles()[i], this);
+        } else {
             m_LastOpenedFilesAct << new QAction("EMPTY", this);
             m_LastOpenedFilesAct[i]->setVisible(false);
         }
         m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
-        connect( m_LastOpenedFilesAct[i], SIGNAL(triggered()),
-                 m_pSigMapLastOpenedFiles, SLOT(map()) );
+        connect(m_LastOpenedFilesAct[i], SIGNAL(triggered()),
+                m_pSigMapLastOpenedFiles, SLOT(map()));
     }
-    connect( m_pSigMapLastOpenedFiles, SIGNAL(mapped(int)),
-             this, SLOT(openRecentFile(int)) );
+    connect(m_pSigMapLastOpenedFiles, SIGNAL(mapped(int)),
+            this, SLOT(openRecentFile(int)));
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::newFile()
-{
-    if ( this->maybeSave() )
-    {
+void CFileOperations::newFile() {
+    if (this->maybeSave()) {
         m_pEditor->clear();
         this->setCurrentFile("");
         emit this->loadedFile();
     }
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::open()
-{
-    if ( this->maybeSave() )
-    {
-        QString sFileName = QFileDialog::getOpenFileName(m_pParent, tr("Open file", "GUI: Open file dialog"), m_pSettings->getLastOpenedDir().absolutePath());  // File dialog opens last used folder
-        if ( !sFileName.isEmpty() )
-        {
+void CFileOperations::open() {
+    if (this->maybeSave()) {
+        // File dialog opens last used folder
+        QString sFileName = QFileDialog::getOpenFileName(
+                    m_pParent, tr("Open file"),
+                    m_pSettings->getLastOpenedDir().absolutePath());
+        if (!sFileName.isEmpty()) {
             QFileInfo tmpFI(sFileName);
             m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
             this->loadFile(sFileName, true, false);
@@ -92,46 +88,42 @@ void CFileOperations::open()
     }
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::openRecentFile( const int nEntry )
-{
-    this->loadFile( m_pSettings->getRecentFiles()[nEntry], true, true );
+void CFileOperations::openRecentFile(const int nEntry) {
+    this->loadFile(m_pSettings->getRecentFiles()[nEntry], true, true);
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-bool CFileOperations::save()
-{
-    if ( m_sCurFile.isEmpty() )
-    {
+bool CFileOperations::save() {
+    if (m_sCurFile.isEmpty()) {
         return this->saveAs();
-    }
-    else
-    {
+    } else {
         return this->saveFile(m_sCurFile);
     }
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-bool CFileOperations::saveAs()
-{
+bool CFileOperations::saveAs() {
     QString sCurFileName("");
-    if ( m_sCurFile != "" )
-    {
-        sCurFileName = m_pSettings->getLastOpenedDir().absolutePath() + "/" + m_sCurFile;
-    }
-    else
-    {
+    if ("" != m_sCurFile) {
+        sCurFileName = m_pSettings->getLastOpenedDir().absolutePath()
+                + "/" + m_sCurFile;
+    } else {
         sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
     }
-    QString sFileName = QFileDialog::getSaveFileName(m_pParent, tr("Save file", "GUI: Save file dialog"), sCurFileName);  // File dialog opens last used folder
-    if (sFileName.isEmpty())
+
+    // File dialog opens last used folder
+    QString sFileName = QFileDialog::getSaveFileName(
+                m_pParent, tr("Save file"), sCurFileName);
+    if (sFileName.isEmpty()) {
         return false;
+    }
 
     QFileInfo tmpFI(sFileName);
     m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
@@ -139,61 +131,54 @@ bool CFileOperations::saveAs()
     return this->saveFile(sFileName);
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // Handle unsaved files
-bool CFileOperations::maybeSave()
-{
-    if ( m_pEditor->document()->isModified() )
-    {
+bool CFileOperations::maybeSave() {
+    if (m_pEditor->document()->isModified()) {
         QMessageBox::StandardButton ret;
         QString sTempCurFileName;
-        if ( "" == m_sCurFile )
-        {
+        if ("" == m_sCurFile) {
             sTempCurFileName = tr("Untitled", "No file name set");
-        }
-        else
-        {
+        } else {
             QFileInfo tempCurFile(m_sCurFile);
             sTempCurFileName = tempCurFile.fileName();
         }
 
         ret = QMessageBox::warning(m_pParent, m_sAppName,
                                    tr("The document \"%1\" has been modified.\n"
-                                      "Do you want to save your changes or discard them?", "Msg: Unsaved <sTempCurFileName>").arg(sTempCurFileName),
-                                   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+                                      "Do you want to save your changes or "
+                                      "discard them?").arg(sTempCurFileName),
+                                   QMessageBox::Save | QMessageBox::Discard
+                                   | QMessageBox::Cancel);
 
-        if ( QMessageBox::Save == ret )
-        {
+        if (QMessageBox::Save == ret) {
             return save();
-        }
-        else if ( QMessageBox::Cancel == ret )
-        {
+        } else if (QMessageBox::Cancel == ret) {
             return false;
         }
     }
     return true;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRecent, const bool bCheckSave )
-{
-    if ( bCheckSave )
-    {
-        if ( !this->maybeSave() ) {
+void CFileOperations::loadFile(const QString &sFileName,
+                               const bool bUpdateRecent,
+                               const bool bCheckSave) {
+    if (bCheckSave) {
+        if (!this->maybeSave()) {
             return;
         }
     }
 
     QFile file(sFileName);
     // No permission to read
-    if ( !file.open(QFile::ReadOnly | QFile::Text) )
-    {
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(m_pParent, m_sAppName,
-                             tr("The file \"%1\" could not be opened:\n%2.", "Msg: Can not open file, <sFileName>, <ErrorString>")
+                             tr("The file \"%1\" could not be opened:\n%2.")
                              .arg(sFileName)
                              .arg(file.errorString()));
         return;
@@ -212,30 +197,25 @@ void CFileOperations::loadFile( const QString &sFileName, const bool bUpdateRece
 #endif
 
     // Do not update recent files if template is loaded
-    if ( bUpdateRecent )
-    {
+    if (bUpdateRecent) {
         this->updateRecentFiles(sFileName);
         this->setCurrentFile(sFileName);
-    }
-    else
-    {
+    } else {
         this->setCurrentFile("");
     }
 
     emit this->loadedFile();
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-bool CFileOperations::saveFile( const QString &sFileName )
-{
+bool CFileOperations::saveFile(const QString &sFileName) {
     QFile file(sFileName);
     // No write permission
-    if ( !file.open(QFile::WriteOnly | QFile::Text) )
-    {
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(m_pParent, m_sAppName,
-                             tr("The file \"%1\" could not be saved:\n%2.", "Msg: Can not save file, <sFileName>, <ErrorString>")
+                             tr("The file \"%1\" could not be saved:\n%2.")
                              .arg(sFileName)
                              .arg(file.errorString()));
         return false;
@@ -260,117 +240,101 @@ bool CFileOperations::saveFile( const QString &sFileName )
     return true;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::printPreview()
-{
+void CFileOperations::printPreview() {
 #if not defined _WIN32
     QWebView myPreviewWebView;
     QPrinter myPrinter;
 
     // Configure printer : format A4, PDF
     myPrinter.setPageSize(QPrinter::A4);
-    myPrinter.setFullPage( true );
-    myPrinter.setOrientation( QPrinter::Portrait );
-    myPrinter.setPrintRange( QPrinter::AllPages );
+    myPrinter.setFullPage(true);
+    myPrinter.setOrientation(QPrinter::Portrait);
+    myPrinter.setPrintRange(QPrinter::AllPages);
     myPrinter.setOutputFormat(QPrinter::PdfFormat);
     myPrinter.setOutputFileName("Preview.pdf");  // Default name
 
     // Load preview from url
-    myPreviewWebView.load(QUrl::fromLocalFile(QDir::homePath() + "/." + m_sAppName + "/tmpinyoka.html"));
+    myPreviewWebView.load(QUrl::fromLocalFile(QDir::homePath()
+                                              + "/." + m_sAppName
+                                              + "/tmpinyoka.html"));
 
     QPrintDialog myPrintDialog(&myPrinter);
-    if ( myPrintDialog.exec() == QDialog::Accepted )
-    {
+    if (QDialog::Accepted == myPrintDialog.exec()) {
         myPreviewWebView.print(&myPrinter);
     }
 #else
-    QMessageBox::information(m_pParent, m_sAppName, trUtf8("Printing is not supported under Windows, yet."));
+    QMessageBox::information(m_pParent, m_sAppName,
+                             tr("Printing not supported under Windows, yet."));
 #endif
 }
 
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-QString CFileOperations::getCurrentFile() const
-{
+QString CFileOperations::getCurrentFile() const {
     return m_sCurFile;
 }
 
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::setCurrentFile( const QString &sFileName )
-{
+void CFileOperations::setCurrentFile(const QString &sFileName) {
     m_sCurFile = sFileName;
     m_pEditor->document()->setModified(false);
     m_pParent->setWindowModified(false);
 
     QString sShownName = m_sCurFile;
-    if ( m_sCurFile.isEmpty() )
-    {
+    if (m_sCurFile.isEmpty()) {
         sShownName = tr("Untitled");
     }
     m_pParent->setWindowFilePath(sShownName);
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-QList<QAction *> CFileOperations::getLastOpenedFiles() const
-{
+QList<QAction *> CFileOperations::getLastOpenedFiles() const {
     return m_LastOpenedFilesAct;
 }
 
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::updateRecentFiles( const QString &sFileName )
-{
-
+void CFileOperations::updateRecentFiles(const QString &sFileName) {
     QStringList sListTmp;
 
-    if ( sFileName != "_-CL3AR#R3C3NT#F!L35-_" )
-    {
+    if ("_-CL3AR#R3C3NT#F!L35-_" != sFileName) {
         sListTmp = m_pSettings->getRecentFiles();
 
         // Remove entry if exists
-        if ( sListTmp.contains(sFileName) )
-        {
+        if (sListTmp.contains(sFileName)) {
             sListTmp.removeAll(sFileName);
         }
         // Add file name to list
         sListTmp.push_front(sFileName);
 
         // Remove all entries from end, if list is too long
-        while ( sListTmp.size() > m_pSettings->getMaxNumOfRecentFiles() || sListTmp.size() > m_pSettings->getNumOfRecentFiles() )
-        {
+        while (sListTmp.size() > m_pSettings->getMaxNumOfRecentFiles()
+               || sListTmp.size() > m_pSettings->getNumOfRecentFiles()) {
             sListTmp.removeLast();
         }
 
-        for ( int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++ )
-        {
+        for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
             // Set list menu entries
-            if ( i < sListTmp.size() )
-            {
+            if (i < sListTmp.size()) {
                 m_LastOpenedFilesAct[i]->setText(sListTmp[i]);
                 m_LastOpenedFilesAct[i]->setVisible(true);
-            }
-            else
-            {
+            } else {
                 m_LastOpenedFilesAct[i]->setVisible(false);
             }
-
         }
-        if ( sListTmp.size() > 0 )
-        {
+        if (sListTmp.size() > 0) {
             emit this->setMenuLastOpenedEnabled(true);
         }
-    }
-
-    // Clear list
-    else
-    {
+    } else {
+        // Clear list
         sListTmp.clear();
         emit this->setMenuLastOpenedEnabled(false);
     }
@@ -378,9 +342,8 @@ void CFileOperations::updateRecentFiles( const QString &sFileName )
     m_pSettings->setRecentFiles(sListTmp);
 }
 
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFileOperations::clearRecentFiles()
-{
+void CFileOperations::clearRecentFiles() {
     this->updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
 }

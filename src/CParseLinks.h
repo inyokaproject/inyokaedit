@@ -41,26 +41,25 @@
  * \class CParseLinks
  * \brief Part of parser module responsible for any kind of links.
  */
-class CParseLinks : public QObject
-{
+class CParseLinks : public QObject {
     Q_OBJECT
 
-public:
-    CParseLinks( const QString &sUrlToWiki,
-                 const QList<QStringList> sListIWiki,
-                 const QList<QStringList> sListIWikiUrl,
-                 const bool bCheckLinks,
-                 const QString &sTransAnchor );
+  public:
+    CParseLinks(const QString &sUrlToWiki,
+                const QList<QStringList> sListIWiki,
+                const QList<QStringList> sListIWikiUrl,
+                const bool bCheckLinks,
+                const QString &sTransAnchor);
 
-    void startParsing( QTextDocument *pRawDoc );
+    void startParsing(QTextDocument *pRawDoc);
 
-private:
-    void replaceHyperlinks( QTextDocument *pRawDoc );
-    void replaceInyokaWikiLinks( QTextDocument *pRawDoc );
-    void replaceInterwikiLinks( QTextDocument *pRawDoc );
-    void replaceAnchorLinks( QTextDocument *pRawDoc );
-    void replaceKnowledgeBoxLinks( QTextDocument *pRawDoc );
-    void createAnchor( QTextDocument *pRawDoc );
+  private:
+    void replaceHyperlinks(QTextDocument *pRawDoc);
+    void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
+    void replaceInterwikiLinks(QTextDocument *pRawDoc);
+    void replaceAnchorLinks(QTextDocument *pRawDoc);
+    void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
+    void createAnchor(QTextDocument *pRawDoc);
 
     const QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
@@ -74,4 +73,4 @@ private:
     QNetworkReply *m_NWreply;
 };
 
-#endif // INYOKAEDIT_CPARSELINKS_H_
+#endif  // INYOKAEDIT_CPARSELINKS_H_

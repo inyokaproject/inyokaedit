@@ -36,11 +36,10 @@
  * \class CDownload
  * \brief Download functions (Inyoka styles, articles, article images)
  */
-class CDownload : public QObject
-{
+class CDownload : public QObject {
     Q_OBJECT
 
-public:
+  public:
     /**
     * \brief Constructor
     * \param pParent Pointer to parent window
@@ -48,19 +47,22 @@ public:
     * \param sAppDir Application directory
     * \param StylesDir Folder in which Inyoka style elements should be stored
     */
-    CDownload( QWidget *pParent, const QString &sAppName, const QString &sAppDir, const QString &sStylesDir,
-               const QString &sImgDir, const QString &sInyokaUrl, const bool bAutomaticImgDL );
+    CDownload(QWidget *pParent, const QString &sAppName,
+              const QString &sAppDir, const QString &sStylesDir,
+              const QString &sImgDir, const QString &sInyokaUrl,
+              const bool bAutomaticImgDL);
 
     /**
     * \brief Start download of an existing article
     * \param ImgDir Folder in which attached images should be downloaded
     * \param sInyokaUrl Full url to the Inyoka wiki
-    * \param bAutomaticImageDownload True or false if attached article images should be downloaded without any question
+    * \param bAutomaticImageDownload True or false if attached article images
+    *        should be downloaded without any question
     * \return True or false for successful / not successful download
     */
     void downloadArticle();
 
-public slots:
+  public slots:
     /**
     * \brief Start download of Inyoka style elements
     * \return True or false for successful / not successful download
@@ -69,19 +71,21 @@ public slots:
 
     void showArticle();
 
-private slots:
-    void replyFinished( QNetworkReply *reply );
+  private slots:
+    void replyFinished(QNetworkReply *reply);
 
-signals:
-    void sendArticleText( const QString &, const QString & );  /**< Signal for sending downloaded article text to editor */
+  signals:
+    /** Signal for sending downloaded article text to editor */
+    void sendArticleText(const QString &, const QString &);
 
-private:
+  private:
     /**
     * \brief Start download of images which are attached to an article
     * \param sArticlename Name of the article
     * \param ImgDir Folder in which attached images should be downloaded
     * \param sInyokaUrl Full url to the Inyoka wiki
-    * \param AutomaticImageDownload True or false if attached article images should be downloaded without any question
+    * \param AutomaticImageDownload True or false if attached article images
+    *        should be downloaded without any question
     * \return True or false for successful / not successful download
     */
     void downloadImages();
@@ -89,7 +93,7 @@ private:
     QWidget *m_pParent;    /**< Pointer to parent window */
     QString m_sAppName;    /**< Application name */
     QString m_sAppDir;     /**< Application directory */
-    QString m_sStylesDir;  /**< Folder in which Inyoka style elements should be stored */
+    QString m_sStylesDir;  /**< Folder in which style elements are stored */
     QString m_sImgDir;
 
     QNetworkAccessManager *m_NwManager;
@@ -104,4 +108,4 @@ private:
     bool m_bDownloadArticle;
 };
 
-#endif // INYOKAEDIT_CDOWNLOAD_H_
+#endif  // INYOKAEDIT_CDOWNLOAD_H_

@@ -45,20 +45,20 @@
  * \class CSpellChecker
  * \brief Spell checker using hunspell.
  */
-class CSpellChecker
-{
-public:
-    CSpellChecker( const QString &dictionaryPath, const QString &userDictionary, QWidget *pParent );
+class CSpellChecker {
+  public:
+    CSpellChecker(const QString &dictionaryPath, const QString &userDictionary,
+                  QWidget *pParent);
     ~CSpellChecker();
 
-    void start( CTextEditor *pEdito );
-    bool spell( const QString &word );
-    QStringList suggest( const QString &word );
-    void ignoreWord( const QString &word );
-    void addToUserWordlist (const QString &word );
+    void start(CTextEditor *pEdito);
+    bool spell(const QString &sWord);
+    QStringList suggest(const QString &sWord);
+    void ignoreWord(const QString &sWord);
+    void addToUserWordlist(const QString &sWord);
 
-private:
-    void put_word( const QString &word );
+  private:
+    void put_word(const QString &sWord);
     Hunspell *_hunspell;
     QString _userDictionary;
     QString _encoding;
@@ -66,4 +66,4 @@ private:
     CSpellCheckDialog *m_pCheckDialog;
 };
 
-#endif // INYOKAEDIT_CSPELLCHECKER_H_
+#endif  // INYOKAEDIT_CSPELLCHECKER_H_

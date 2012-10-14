@@ -39,18 +39,18 @@
  * \brief Load and save settings.
  * \todo Adding a graphical settings dialog.
  */
-class CSettings
-{
-
-public:
-    CSettings( const QDir &SettingsDir, const QString &sName, FindDialog &FDialog, FindReplaceDialog &FRDialog );
+class CSettings {
+  public:
+    CSettings(const QDir &SettingsDir, const QString &sName,
+              FindDialog &FDialog, FindReplaceDialog &FRDialog);
     ~CSettings();
 
     // Load / save application settings
     void readSettings();
-    void writeSettings( const QByteArray WinGeometry, const QByteArray WinState, const QByteArray SplitterState = 0 );
+    void writeSettings(const QByteArray WinGeometry, const QByteArray WinState,
+                       const QByteArray SplitterState = 0);
 
-    void setLastOpenedDir( const QDir &LastDir );
+    void setLastOpenedDir(const QDir &LastDir);
 
     // General
     bool getCodeCompletion() const;
@@ -79,18 +79,18 @@ public:
     quint16 getNumOfRecentFiles() const;
     quint16 getMaxNumOfRecentFiles() const;
     QStringList getRecentFiles() const;
-    void setRecentFiles( const QStringList &sListNewRecent );
+    void setRecentFiles(const QStringList &sListNewRecent);
 
-private:
-    QSettings *mySettingsObject;
+  private:
+    QSettings *m_pSettings;
 
     // General
-    bool m_bCodeCompletion;  // Enable / disable code completion
-    bool m_bPreviewInEditor; // Enable / disable preview in edior
+    bool m_bCodeCompletion;   // Enable / disable code completion
+    bool m_bPreviewInEditor;  // Enable / disable preview in edior
     bool m_bPreviewAlongside;
-    QString m_sInyokaUrl;    // Url to inyoka
+    QString m_sInyokaUrl;     // Url to inyoka
     QDir m_LastOpenedDir;
-    bool m_bAutomaticImageDownload;  // Enable / disable download of article images
+    bool m_bAutomaticImageDownload;  // Enable/disable download article images
     QString m_sSpellCheckerLanguage;
     bool m_bCheckLinks;
     QString m_sTemplateLang;
@@ -119,4 +119,4 @@ private:
     QStringList m_sListRecentFiles;
 };
 
-#endif // INYOKAEDIT_CSETTINGS_H_
+#endif  // INYOKAEDIT_CSETTINGS_H_

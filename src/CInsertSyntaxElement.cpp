@@ -27,86 +27,56 @@
 #include <QDebug>
 #include "./CInsertSyntaxElement.h"
 
-CInsertSyntaxElement::CInsertSyntaxElement( const QString &sTransImage )
-{
+CInsertSyntaxElement::CInsertSyntaxElement(const QString &sTransImage) {
     qDebug() << "Start" << Q_FUNC_INFO;
     m_sSampleBegin_1 = "[[" + sTransImage + "(";
-    m_sSampleEnd_1    = ")]]\n" ;
+    m_sSampleEnd_1   = ")]]\n";
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-QString CInsertSyntaxElement::getElementInyokaCode( const QString &sElement,
-                                                    const QString &sSelectedText )
-{
+QString CInsertSyntaxElement::getElementInyokaCode(const QString &sElement,
+                                                   const QString &sSelectedText) {
     // Toolbar buttons
-    if ( sElement == "boldAct" )
-    {
-        if ( sSelectedText == "" )
-        {
+    if (sElement == "boldAct") {
+        if (sSelectedText == "") {
             return "'''Fett'''";
-        }
-        else
-        {
+        } else {
             return "'''" + sSelectedText + "'''";
         }
-    }
-    else if ( sElement == "italicAct" )
-    {
-        if ( sSelectedText == "" )
-        {
+    } else if (sElement == "italicAct") {
+        if (sSelectedText == "") {
             return "''Kursiv''";
-        }
-        else
-        {
+        } else {
             return "''" + sSelectedText + "''";
         }
-    }
-    else if ( sElement == "monotypeAct" )
-    {
-        if ( sSelectedText == "" )
-        {
+    } else if (sElement == "monotypeAct") {
+        if (sSelectedText == "") {
             return "`Monotype`";
-        }
-        else
-        {
+        } else {
             return "`" + sSelectedText + "`";
         }
-    }
-    else if ( sElement == "wikilinkAct" )
-    {
-        if ( sSelectedText == "" )
-        {
+    } else if (sElement == "wikilinkAct") {
+        if (sSelectedText == "") {
             return "[:Seitenname:]";
-        }
-        else
-        {
+        } else {
             return "[:" + sSelectedText + ":]";
         }
-    }
-    else if ( sElement == "externalLinkAct" )
-    {
-        if ( sSelectedText == "" )
-        {
+    } else if (sElement == "externalLinkAct") {
+        if (sSelectedText == "") {
             return "[http://www.example.org/]";
-        }
-        else
-        {
+        } else {
             return "[" + sSelectedText + "]";
         }
-    }
-    else if ( sElement == "imageAct" )
-    {
-        if ( sSelectedText == "" )
-        {
-            return m_sSampleBegin_1 + "Bild.png, 200 (optional), left|right (optional)" + m_sSampleEnd_1;
-        }
-        else
-        {
+    } else if (sElement == "imageAct") {
+        if (sSelectedText == "") {
+            return m_sSampleBegin_1
+                   + "Bild.png, 200 (optional), left|right (optional)"
+                   + m_sSampleEnd_1;
+        } else {
             return m_sSampleBegin_1 + sSelectedText + m_sSampleEnd_1;
         }
-    }
-
-    // Unkonwn element
-    else
+    } else {
+        // Unkonwn element
         return sSelectedText;
+    }
 }

@@ -47,55 +47,55 @@ class QDir;
  * \brief Main parser module.
  * \todo Separate some parts in smaler modules.
  */
-class CParser : public QObject
-{
+class CParser : public QObject {
     Q_OBJECT
 
-public:
+  public:
     // Constructor
-    CParser( QTextDocument *pRawDocument,
-             const QDir &tmpFileOutputDir,
-             const QDir &tmpImgDir,
-             CSettings *pSettings,
-             CTemplates *pTemplates );
+    CParser(QTextDocument *pRawDocument,
+            const QDir &tmpFileOutputDir,
+            const QDir &tmpImgDir,
+            CSettings *pSettings,
+            CTemplates *pTemplates);
     // Destructor
     ~CParser();
 
     // PUBLIC FOR DEBUGGING
-    void replaceTemplates( QTextDocument *p_rawDoc );
+    void replaceTemplates(QTextDocument *p_rawDoc);
 
     // Starts generating HTML-code
-    QString genOutput( QString sActFile) ;
+    QString genOutput(const QString &sActFile);
 
-private:
-    //void replaceTemplates( QTextDocument *p_rawDoc );
-    void replaceTextformat( QTextDocument *p_rawDoc );
-    QString reinstertNoTranslate( const QString &sRawDoc );
-    void replaceFlags( QTextDocument *p_rawDoc );
-    void replaceKeys( QTextDocument *p_rawDoc );
-    void replaceImages( QTextDocument *p_rawDoc );
-    void replaceBreaks( QTextDocument *p_rawDoc );
-    void replaceHorLine( QTextDocument *p_rawDoc );
+  private:
+    // void replaceTemplates(QTextDocument *p_rawDoc);
+    void replaceTextformat(QTextDocument *p_rawDoc);
+    QString reinstertNoTranslate(const QString &sRawDoc);
+    void replaceFlags(QTextDocument *p_rawDoc);
+    void replaceKeys(QTextDocument *p_rawDoc);
+    void replaceImages(QTextDocument *p_rawDoc);
+    void replaceBreaks(QTextDocument *p_rawDoc);
+    void replaceHorLine(QTextDocument *p_rawDoc);
 
     // Parse Macros ([[Vorlage(...) etc.)
-    QString parseMacro( QTextBlock actParagraph );
+    QString parseMacro(const QTextBlock actParagraph);
     // Generates table of content
-    QString parseTableOfContents( QTextBlock tabofcontents );
+    QString parseTableOfContents(const QTextBlock tabofcontents);
     // Generate tags (#tag: ...)
-    QString generateTags( QTextBlock actParagraph );
+    QString generateTags(const QTextBlock actParagraph);
     // Parse headline
-    QString parseHeadline( QTextBlock actParagraph );
+    QString parseHeadline(const QTextBlock actParagraph);
     // Parse text samples ({{{#!vorlage)
-    QString parseTextSample( QString actParagraph );
+    QString parseTextSample(const QString &s_ActParagraph);
     // Parse code blocks ({{{ and {{{#!code)
-    QString parseCodeBlock( QString actParagraph );
+    QString parseCodeBlock(const QString &s_ActParagraph);
     // Parse image collection[[Vorlage(Bildersammlung, ... )]]
-    QString parseImageCollection( QString actParagraph );
+    QString parseImageCollection(const QString &s_ActParagraph);
     // Parse List *
-    QString parseList( QString actParagraph );
+    QString parseList(const QString &s_ActParagraph);
 
     // Insert a box
-    QString insertBox( const QString &sClass, const QString &sHeadline, const QString &sContents, const QString &sRemark = "" );
+    QString insertBox(const QString &sClass, const QString &sHeadline,
+                      const QString &sContents, const QString &sRemark = "");
 
     // Text from editor
     QTextDocument *m_pRawText;
@@ -108,7 +108,6 @@ private:
     QDir m_tmpImgDir;
     CSettings *m_pSettings;
     CTemplates *m_pTemplates;
-
 };
 
-#endif // INYOKAEDIT_CPARSER_H_
+#endif  // INYOKAEDIT_CPARSER_H_

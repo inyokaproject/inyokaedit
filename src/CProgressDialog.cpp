@@ -31,98 +31,84 @@
 #include "./CProgressDialog.h"
 #include "ui_CProgressDialog.h"
 
-CProgressDialog::CProgressDialog( const QString &sScriptname, QStringList sListArguments,
-                                  const QString &sAppName, QWidget *pParent )
-    : QDialog( pParent ),
+CProgressDialog::CProgressDialog(const QString &sScriptname,
+                                 QStringList sListArguments,
+                                 const QString &sAppName, QWidget *pParent)
+    : QDialog(pParent),
       m_pUi(new Ui::CProgressDialog),
-      m_sAppName( sAppName )
-{
+      m_sAppName(sAppName) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
-    this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowContextHelpButtonHint);
 
-    if ( sListArguments.size() == 0 )
-    {
+    if (sListArguments.size() == 0) {
         sListArguments << QDir::homePath() + "/." + m_sAppName;
     }
 
     m_myProc = new QProcess();
-    m_myProc->start( sScriptname, sListArguments );
+    m_myProc->start(sScriptname, sListArguments);
 
     // Show output
-    connect( m_myProc, SIGNAL(readyReadStandardOutput()),
-             this, SLOT(showMessage()) );
-    connect( m_myProc, SIGNAL(readyReadStandardError()),
-             this, SLOT(showErrorMessage()) );
+    connect(m_myProc, SIGNAL(readyReadStandardOutput()),
+            this, SLOT(showMessage()));
+    connect(m_myProc, SIGNAL(readyReadStandardError()),
+            this, SLOT(showErrorMessage()));
 
-    connect( m_myProc, SIGNAL(finished(int)),
-             this, SLOT(downloadScriptFinished()) );
+    connect(m_myProc, SIGNAL(finished(int)),
+            this, SLOT(downloadScriptFinished()));
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-CProgressDialog::~CProgressDialog()
-{
+CProgressDialog::~CProgressDialog() {
     m_myProc->kill();
 
-    if (  m_myProc != NULL )
-    {
+    if (NULL != m_myProc) {
         delete  m_myProc;
     }
-     m_myProc = NULL;
+    m_myProc = NULL;
 
-    if ( m_pUi != NULL )
-    {
+    if (NULL != m_pUi) {
         delete m_pUi;
     }
     m_pUi = NULL;
 }
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CProgressDialog::closeEvent( QCloseEvent *pEvent )
-{
+void CProgressDialog::closeEvent(QCloseEvent *pEvent) {
     m_myProc->kill();  // Kill download process
     pEvent->accept();  // Close window
 }
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // Show message
-void CProgressDialog::showMessage()
-{
+void CProgressDialog::showMessage() {
     QByteArray strdata = m_myProc->readAllStandardOutput();
     m_pUi->textEditProcessOut->setTextColor(Qt::black);
     m_pUi->textEditProcessOut->append(strdata);
 }
 
 // Show error message
-void CProgressDialog::showErrorMessage()
-{
+void CProgressDialog::showErrorMessage() {
     QByteArray strdata = m_myProc->readAllStandardError();
     m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
     m_pUi->textEditProcessOut->append(strdata);
 }
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CProgressDialog::downloadScriptFinished()
-{
-#if defined _WIN32
-    QProcess killWinBash;
-    // Kill bash if button "Cancel" was clicked, needed because bash.exe is started via batch file...
-    killWinBash.start( "taskkill", QStringList() << "/F" << "/IM" << "bash.exe" );
-#endif
-
+void CProgressDialog::downloadScriptFinished() {
     QMessageBox::information(0, m_sAppName, "Download finished.");
     this->close();
 }
 
-// -----------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // Click on cancel button
-void CProgressDialog::on_pushButtonClosProc_clicked()
-{
+void CProgressDialog::on_pushButtonClosProc_clicked() {
     this->close();  // Send close event
 }

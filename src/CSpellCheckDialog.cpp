@@ -33,60 +33,55 @@
 
 #include "./CSpellChecker.h"
 
-CSpellCheckDialog::CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent ) :
-    QDialog(parent),
-    m_pUi( new Ui::CSpellCheckDialog )
-{
+CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *spellChecker,
+                                     QWidget *parent)
+    : QDialog(parent),
+      m_pUi(new Ui::CSpellCheckDialog) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
     _spellChecker = spellChecker;
 
-    this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowContextHelpButtonHint);
 
-    connect( m_pUi->listWidget, SIGNAL(currentTextChanged(QString)),
-             m_pUi->ledtReplaceWith, SLOT(setText(QString)) );
+    connect(m_pUi->listWidget, SIGNAL(currentTextChanged(QString)),
+            m_pUi->ledtReplaceWith, SLOT(setText(QString)));
 
-    connect( m_pUi->btnAddToDict, SIGNAL(clicked()),
-             this, SLOT(addToDict()) );
-    connect( m_pUi->btnReplaceOnce, SIGNAL(clicked()),
-             this, SLOT(replaceOnce()) );
-    connect( m_pUi->btnReplaceAll, SIGNAL(clicked()),
-             this, SLOT(replaceAll()) );
-    connect( m_pUi->btnIgnoreOnce, SIGNAL(clicked()),
-             this, SLOT(ignoreOnce()) );
-    connect( m_pUi->btnIgnoreAll, SIGNAL(clicked()),
-             this, SLOT(ignoreAll()) );
-    connect( m_pUi->btnCancel, SIGNAL(clicked()),
-             this, SLOT(reject()) );
+    connect(m_pUi->btnAddToDict, SIGNAL(clicked()),
+            this, SLOT(addToDict()));
+    connect(m_pUi->btnReplaceOnce, SIGNAL(clicked()),
+            this, SLOT(replaceOnce()));
+    connect(m_pUi->btnReplaceAll, SIGNAL(clicked()),
+            this, SLOT(replaceAll()));
+    connect(m_pUi->btnIgnoreOnce, SIGNAL(clicked()),
+            this, SLOT(ignoreOnce()));
+    connect(m_pUi->btnIgnoreAll, SIGNAL(clicked()),
+            this, SLOT(ignoreAll()));
+    connect(m_pUi->btnCancel, SIGNAL(clicked()),
+            this, SLOT(reject()));
 
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
-
-CSpellCheckDialog::~CSpellCheckDialog()
-{
-    if ( m_pUi != NULL )
-    {
+CSpellCheckDialog::~CSpellCheckDialog() {
+    if (NULL != m_pUi) {
         delete m_pUi;
     }
     m_pUi = NULL;
 }
 
-
-CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord( const QString &word )
-{
-    _unkownWord = word;
+CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(const QString &sWord) {
+    _unkownWord = sWord;
     m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(_unkownWord));
 
     m_pUi->ledtReplaceWith->clear();
 
-    QStringList suggestions = _spellChecker->suggest(word);
+    QStringList suggestions = _spellChecker->suggest(sWord);
     m_pUi->listWidget->clear();
     m_pUi->listWidget->addItems(suggestions);
 
-    if( suggestions.count() > 0 )
-    {
+    if (suggestions.count() > 0) {
         m_pUi->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
     }
 
@@ -95,44 +90,32 @@ CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord( const QString 
     return _returnCode;
 }
 
-
-QString CSpellCheckDialog::replacement() const
-{
+QString CSpellCheckDialog::replacement() const {
     return m_pUi->ledtReplaceWith->text();
 }
 
-
-void CSpellCheckDialog::ignoreOnce()
-{
+void CSpellCheckDialog::ignoreOnce() {
     _returnCode = IgnoreOnce;
     accept();
 }
 
-
-void CSpellCheckDialog::ignoreAll()
-{
+void CSpellCheckDialog::ignoreAll() {
     _spellChecker->ignoreWord(_unkownWord);
     _returnCode = IgnoreAll;
     accept();
 }
 
-
-void CSpellCheckDialog::replaceOnce()
-{
+void CSpellCheckDialog::replaceOnce() {
     _returnCode = ReplaceOnce;
     accept();
 }
 
-
-void CSpellCheckDialog::replaceAll()
-{
+void CSpellCheckDialog::replaceAll() {
     _returnCode = ReplaceAll;
     accept();
 }
 
-
-void CSpellCheckDialog::addToDict()
-{
+void CSpellCheckDialog::addToDict() {
     _spellChecker->addToUserWordlist(_unkownWord);
     _returnCode = AddToDict;
     accept();

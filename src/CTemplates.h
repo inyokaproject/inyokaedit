@@ -30,14 +30,13 @@
 
 #include "./CXmlParser.h"
 
-class CTemplates : public QObject
-{
+class CTemplates : public QObject {
     Q_OBJECT
 
-public:
-    CTemplates( const QString &sAppName,
-                const QString &sAppPath,
-                const QString &sTplLang );
+  public:
+    CTemplates(const QString &sAppName,
+               const QString &sAppPath,
+               const QString &sTplLang);
     // Destructor
     ~CTemplates();
 
@@ -70,12 +69,12 @@ public:
     CXmlParser *getIWLs() const;
     CXmlParser *getDropTPLs() const;
 
-private:
+  private:
     void initTemplates();
-    void initHtmlTpl( const QString &sFileName );
-    void initFlags( const QString &sFileName );
-    void initTextformats( const QString &sFileName );
-    void initTranslations( const QString &sFileName );
+    void initHtmlTpl(const QString &sFileName);
+    void initFlags(const QString &sFileName);
+    void initTextformats(const QString &sFileName);
+    void initTranslations(const QString &sFileName);
 
     QString m_sAppName;
     QString m_sAppPath;
@@ -89,8 +88,12 @@ private:
     QStringList m_sListTplNamesALL;
     QStringList m_sListTplMacrosALL;
 
-    // List for text formats (start keyword, end keyword, start HTML code, end HTML code)
-    QStringList m_sListFormatStart, m_sListFormatEnd, m_sListFormatHtmlStart, m_sListFormatHtmlEnd;
+    // List for text formats (start keyword, end keyword,
+    // start HTML code, end HTML code)
+    QStringList m_sListFormatStart;
+    QStringList m_sListFormatEnd;
+    QStringList m_sListFormatHtmlStart;
+    QStringList m_sListFormatHtmlEnd;
     // List for flags
     QStringList m_sListFlags;
 
@@ -112,4 +115,4 @@ private:
     CXmlParser *m_pDropdownTemplates;
 };
 
-#endif // INYOKAEDIT_CTEMPLATES_H_
+#endif  // INYOKAEDIT_CTEMPLATES_H_

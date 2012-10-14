@@ -37,11 +37,10 @@
  * \class CFileOperations
  * \brief File handling (open, load, save, etc.)
  */
-class CFileOperations : public QObject
-{
+class CFileOperations : public QObject {
     Q_OBJECT
 
-public:
+  public:
     /**
     * \brief Constructor
     * \param pParent Pointer to parent window
@@ -49,7 +48,8 @@ public:
     * \param pSettings Pointer to settings module
     * \param sAppName Application name
     */
-    CFileOperations( QWidget *pParent, CTextEditor *pEditor, CSettings *pSettings, const QString &sAppName );
+    CFileOperations(QWidget *pParent, CTextEditor *pEditor,
+                    CSettings *pSettings, const QString &sAppName);
 
     /**
     * \brief Get current file name
@@ -69,7 +69,7 @@ public:
     */
     QList<QAction *> getLastOpenedFiles() const;
 
-public slots:
+  public slots:
     /** \brief Start with new clean file */
     void newFile();
 
@@ -80,7 +80,7 @@ public slots:
     * \brief Open recent opened file
     * \param nEntry Number of file which should be opened
     */
-    void openRecentFile( const int nEntry );
+    void openRecentFile(const int nEntry);
 
     /** \brief Clear recent files list in file menu */
     void clearRecentFiles();
@@ -101,14 +101,15 @@ public slots:
     * \brief Load existing file
     * \param sFileName Path and name of file which should be loaded
     */
-    void loadFile( const QString &sFileName, const bool bUpdateRecent = false, const bool bCheckSave = true );
+    void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
+                  const bool bCheckSave = true);
 
     /**
     * \brief Save current file
     * \param sFileName Path and name of file which should be saved
     * \return True or false if saving was successful / not successful
     */
-    bool saveFile( const QString &sFileName );
+    bool saveFile(const QString &sFileName);
 
     /** \brief Print preview (printer / PDF) */
     void printPreview();
@@ -117,29 +118,32 @@ public slots:
     * \brief Change / set current file name
     * \param sFileName Path and name of current file
     */
-    void setCurrentFile( const QString &sFileName );
+    void setCurrentFile(const QString &sFileName);
 
-signals:
-    void setMenuLastOpenedEnabled( const bool );  /**< Signal for sending state of recent files menu entry (enabled / disabled) */
+  signals:
+    /**
+    * \brief Signal for sending state of recent files menu entry
+    */
+    void setMenuLastOpenedEnabled(const bool);
     void loadedFile();
 
-private:
+  private:
     /**
     * \brief Update list of recent opened files
     * \param sFileName Path and name of a newly opened file
     */
-    void updateRecentFiles( const QString &sFileName );
+    void updateRecentFiles(const QString &sFileName);
 
-    QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Pointer to signal mapper for the actions which open recent files */
+    QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Actions open recent files */
 
     QWidget *m_pParent;      /**< Pointer to parent window */
     CTextEditor *m_pEditor;  /**< Pointer to editor module */
     CSettings *m_pSettings;  /**< Pointer to settings module */
 
-    QList<QAction *> m_LastOpenedFilesAct;  /**< List with actions which open recent files */
+    QList<QAction *> m_LastOpenedFilesAct;  /**< Actions open recent files */
 
     QString m_sCurFile;  /**< Current file (full path and name) */
     QString m_sAppName;  /**< Application name */
 };
 
-#endif // INYOKAEDIT_CFILEOPERATIONS_H_
+#endif  // INYOKAEDIT_CFILEOPERATIONS_H_

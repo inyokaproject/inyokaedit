@@ -31,74 +31,74 @@
 #include "ui_CTableTemplate.h"
 
 
-CTableTemplate::CTableTemplate( CTextEditor *pEditor,
-                                const QDir &tmpFileOutputDir,
-                                const QDir &tmpImgDir,
-                                CSettings *pSettings,
-                                CTemplates *pTemplates,
-                                QWidget *pParent )
-    : QDialog(pParent)
-    , m_pEditor(pEditor)
-    , m_dirPreview(tmpFileOutputDir)
-    , m_pTextDocument(new QTextDocument(this))
-    , m_pTemplates(pTemplates)
-{
+CTableTemplate::CTableTemplate(CTextEditor *pEditor,
+                               const QDir &tmpFileOutputDir,
+                               const QDir &tmpImgDir,
+                               CSettings *pSettings,
+                               CTemplates *pTemplates,
+                               QWidget *pParent)
+    : QDialog(pParent),
+      m_pEditor(pEditor),
+      m_dirPreview(tmpFileOutputDir),
+      m_pTextDocument(new QTextDocument(this)),
+      m_pTemplates(pTemplates) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     // Build UI
     m_pUi = new Ui::CTableTemplateClass();
     m_pUi->setupUi(this);
-    this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
-    this->setModal( true );
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowContextHelpButtonHint);
+    this->setModal(true);
 
     // Table styles
-    m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu" <<
-                          "Ubuntu Studio" << "Lubuntu";
-    m_sListTableStylesPrefix << "" << "kde-" << "xfce-" << "edu-" <<
-                                "studio-" << "lxde-";
-    m_pUi->tableStyleBox->addItems( m_sListTableStyles );
+    m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
+                       << "Ubuntu Studio" << "Lubuntu";
+    m_sListTableStylesPrefix << "" << "kde-" << "xfce-" << "edu-"
+                             << "studio-" << "lxde-";
+    m_pUi->tableStyleBox->addItems(m_sListTableStyles);
 
-    connect( m_pUi->previewButton, SIGNAL(pressed()),
-                this, SLOT(preview()) );
+    connect(m_pUi->previewButton, SIGNAL(pressed()),
+            this, SLOT(preview()));
 
-    connect( m_pUi->buttonBox, SIGNAL(accepted()),
-                this, SLOT(accept()) );
+    connect(m_pUi->buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
 
     // Setup parser
-    m_pParser = new CParser( m_pTextDocument,
-                             tmpFileOutputDir,
-                             tmpImgDir,
-                             pSettings,
-                             m_pTemplates );
+    m_pParser = new CParser(m_pTextDocument,
+                            tmpFileOutputDir,
+                            tmpImgDir,
+                            pSettings,
+                            m_pTemplates);
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CTableTemplate::newTable(){
+void CTableTemplate::newTable() {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     m_pUi->tableStyleBox->setCurrentIndex(0);
-    m_pUi->showHeadBox->setChecked( false );
-    m_pUi->showTitleBox->setChecked( false );
-    m_pUi->HighlightSecondBox->setChecked( false );
-    m_pUi->colsNum->setValue( m_pUi->colsNum->minimum() );
-    m_pUi->rowsNum->setValue( m_pUi->rowsNum->minimum() );
+    m_pUi->showHeadBox->setChecked(false);
+    m_pUi->showTitleBox->setChecked(false);
+    m_pUi->HighlightSecondBox->setChecked(false);
+    m_pUi->colsNum->setValue(m_pUi->colsNum->minimum());
+    m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
 
     m_sTableString = "";
-    m_pUi->previewBox->setHtml( "" );
+    m_pUi->previewBox->setHtml("");
     this->show();
     this->exec();
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CTableTemplate::preview(){
+void CTableTemplate::preview() {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     this->generateTable();
@@ -106,29 +106,31 @@ void CTableTemplate::preview(){
 
     QString sRetHtml = m_pParser->genOutput("");
     // Remove for preview useless elements
-    sRetHtml.remove( QRegExp("<h1 class=\"pagetitle\">.*</h1>") );
-    sRetHtml.remove( QRegExp("<p class=\"meta\">.*</p>") );
-    sRetHtml.replace( "</style>", "#page table{margin:0px;}</style>");
+    sRetHtml.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
+    sRetHtml.remove(QRegExp("<p class=\"meta\">.*</p>"));
+    sRetHtml.replace("</style>", "#page table{margin:0px;}</style>");
 
-    m_pUi->previewBox->setHtml( sRetHtml, QUrl::fromLocalFile(m_dirPreview.absolutePath() + "/") );
+    m_pUi->previewBox->setHtml(sRetHtml,
+                               QUrl::fromLocalFile(m_dirPreview.absolutePath()
+                                                   + "/"));
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
-// ---------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CTableTemplate::generateTable(){
+void CTableTemplate::generateTable() {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     int colsNum = m_pUi->colsNum->value();
     int rowsNum = m_pUi->rowsNum->value();
 
-    m_sTableString = "{{{#!" + m_pTemplates->getTransTemplate().toLower() +
-            " " + m_pTemplates->getTransTable() + "\n";
+    m_sTableString = "{{{#!" + m_pTemplates->getTransTemplate().toLower()
+            + " " + m_pTemplates->getTransTable() + "\n";
 
     // Create title if set
-    if ( m_pUi->showTitleBox->isChecked()  ) {
+    if (m_pUi->showTitleBox->isChecked()) {
          m_sTableString += QString("<rowclass=\"%1titel\"-%2> %3\n+++\n")
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                 .arg(colsNum)
@@ -136,35 +138,37 @@ void CTableTemplate::generateTable(){
     }
 
     // Create head if set
-    if ( m_pUi->showHeadBox->isChecked() ) {
-         m_sTableString += QString("<rowclass=\"%1kopf\"> ")
+    if (m_pUi->showHeadBox->isChecked()) {
+        m_sTableString += QString("<rowclass=\"%1kopf\"> ")
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()]);
 
-        for ( int i=0; i<colsNum; i++ )
-            m_sTableString += QString(tr("Head") + " %1 \n").arg(i+1);
+        for (int i = 0; i < colsNum; i++) {
+            m_sTableString += QString(tr("Head") + " %1 \n").arg(i + 1);
+        }
 
         m_sTableString += "+++\n";
     }
 
     // Create body
-    for ( int i=0; i<rowsNum; i++ ) {
-        if ( m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2 ) {
+    for (int i = 0; i < rowsNum; i++) {
+        if (m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2) {
             m_sTableString += QString("<rowclass=\"%1highlight\">")
-                    .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()]);;
+                    .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()]);
         }
-        for( int j=0; j<colsNum; j++ ) {
-			m_sTableString += "\n";
+        for (int j = 0; j < colsNum; j++) {
+            m_sTableString += "\n";
         }
-		if(i != rowsNum-1)
+        if (i != rowsNum-1) {
             m_sTableString += "+++\n";
-	}
+        }
+    }
 
     m_sTableString += "}}}\n";
 
     qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
-void CTableTemplate::accept(){
+void CTableTemplate::accept() {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     this->generateTable();

@@ -42,29 +42,29 @@ class QCloseEvent;
  * \class CProgressDialog
  * \brief Showing a progress dialog while downloading styles or article images.
  */
-class CProgressDialog : public QDialog
-{
+class CProgressDialog : public QDialog {
     Q_OBJECT
 
-public:
-    explicit CProgressDialog( const QString &sScriptname, QStringList sListArguments,
-                              const QString &sAppname, QWidget *pParent = 0 );
+  public:
+    explicit CProgressDialog(const QString &sScriptname,
+                             QStringList sListArguments,
+                             const QString &sAppname, QWidget *pParent = 0);
     ~CProgressDialog();
 
-private slots:
+  private slots:
     void showMessage();
     void showErrorMessage();
 
     void downloadScriptFinished();
     void on_pushButtonClosProc_clicked();
 
-protected:
+  protected:
     void closeEvent(QCloseEvent *pEvent);
 
-private:
+  private:
     Ui::CProgressDialog *m_pUi;
     QString m_sAppName;
     QProcess *m_myProc;
 };
 
-#endif // INYOKAEDIT_CPROGRESSDIALOG_H_
+#endif  // INYOKAEDIT_CPROGRESSDIALOG_H_

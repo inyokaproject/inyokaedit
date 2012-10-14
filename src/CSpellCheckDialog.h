@@ -42,33 +42,35 @@ namespace Ui {
  * \class CSpellCheckDialog
  * \brief Spell checker dialog.
  */
-class CSpellCheckDialog : public QDialog
-{
+class CSpellCheckDialog : public QDialog {
     Q_OBJECT
 
-public:
-    enum SpellCheckAction { AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict };
+  public:
+    enum SpellCheckAction {
+        AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict
+    };
 
-    explicit CSpellCheckDialog( CSpellChecker *spellChecker, QWidget *parent = 0 );
+    explicit CSpellCheckDialog(CSpellChecker *spellChecker,
+                               QWidget *parent = 0);
     ~CSpellCheckDialog();
 
     QString replacement() const;
 
-public slots:
-    SpellCheckAction checkWord( const QString &word );
+  public slots:
+    SpellCheckAction checkWord(const QString &sWord);
 
-protected slots:
+  protected slots:
     void ignoreOnce();
     void ignoreAll();
     void replaceOnce();
     void replaceAll();
     void addToDict();
 
-private:
+  private:
     Ui::CSpellCheckDialog *m_pUi;
     CSpellChecker *_spellChecker;
     QString _unkownWord;
     SpellCheckAction _returnCode;
 };
 
-#endif // INYOKAEDIT_CSPELLCHECKDIALOG_H_
+#endif  // INYOKAEDIT_CSPELLCHECKDIALOG_H_

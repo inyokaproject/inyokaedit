@@ -40,24 +40,21 @@ class QTextDocument;
  * \class CHighlighter
  * \brief Syntax highlighting
  */
-class CHighlighter : public QSyntaxHighlighter
-{
+class CHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
 
-public:
+  public:
     // Constructor
-    CHighlighter( CTemplates *pTemplates,
-                  QTextDocument *pParent = 0 );
+    CHighlighter(CTemplates *pTemplates, QTextDocument *pParent = 0);
     // Destrcutor
     ~CHighlighter();
 
-protected:
+  protected:
     // Apply highlighting rules
-    void highlightBlock( const QString &sText );
+    void highlightBlock(const QString &sText);
 
-private:
-    struct HighlightingRule
-    {
+  private:
+    struct HighlightingRule {
         QRegExp pattern;
         QTextCharFormat format;
     };
@@ -73,7 +70,6 @@ private:
     QTextCharFormat m_textformatFormat;
     QTextCharFormat m_singleLineCommentFormat;
     QTextCharFormat m_flagsFormat;
-
 };
 
-#endif // INYOKAEDIT_CHIGHLIGHTER_H_
+#endif  // INYOKAEDIT_CHIGHLIGHTER_H_
