@@ -23,7 +23,7 @@
     <element type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
     <element type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
     <element type="canonicalvoices" url="http://voises.canonical.com/" name="Canonical Voises" icon="canonicalvoices.png" />
-    <element type="packages" url="http://packages.ubuntu.com/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=" name="Ubuntu Packages" icon="packages.png" />
+    <element type="packages" url="http://packages.ubuntu.com/" name="Ubuntu Packages" icon="packages.png" />
     <element type="apt" url="apt:" name="Apt" icon="" />
     <element type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <element type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
