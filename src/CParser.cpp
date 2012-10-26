@@ -36,7 +36,8 @@ CParser::CParser(QTextDocument *pRawDocument,
       m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir),
       m_pSettings(pSettings),
-      m_pTemplates(pTemplates) {
+      m_pTemplates(pTemplates),
+      m_sSEPARATOR("$UGLY_SEPARATOR$") {
     qDebug() << "Start" << Q_FUNC_INFO;
 
     m_pLinkParser = new CParseLinks(m_pSettings->getInyokaUrl(),
@@ -132,7 +133,7 @@ QString CParser::genOutput(const QString &sActFile) {
             for (; it.isValid()
                  && !(p_docCopyOfRawText->lastBlock() < it)
                  && it.text().trimmed() != "}}}"; it = it.next()) {
-                sSample += "§" + it.text();
+                sSample += m_sSEPARATOR + it.text();
             }
             sHtmlBody += parseTextSample(sSample);
             // it = it.next();
@@ -155,7 +156,7 @@ QString CParser::genOutput(const QString &sActFile) {
                 for (; it.isValid()
                      && !(p_docCopyOfRawText->lastBlock() < it)
                      && it.text().trimmed() != "}}}"; it = it.next()) {
-                    sSample += "§" + it.text();
+                    sSample += m_sSEPARATOR + it.text();
                     if (it.text().endsWith("}}}")) {
                         break;
                     }
@@ -171,7 +172,7 @@ QString CParser::genOutput(const QString &sActFile) {
             for (; it.isValid()
                  && !(p_docCopyOfRawText->lastBlock() < it)
                  && it.text().trimmed() != ")]]"; it = it.next()) {
-                sSample += "§" + it.text();
+                sSample += m_sSEPARATOR + it.text();
             }
             sHtmlBody += parseImageCollection(sSample);
         } else if (it.text().trimmed().startsWith("* ")
@@ -184,7 +185,7 @@ QString CParser::genOutput(const QString &sActFile) {
                  && !(p_docCopyOfRawText->lastBlock() < it); it = it.next()) {
                 if (it.text().trimmed().startsWith("* ")
                         || it.text().trimmed().startsWith("1. ")) {
-                    sSample += "§" + it.text();
+                    sSample += m_sSEPARATOR + it.text();
                     tmpBlock = it;
                 } else {
                     it = tmpBlock;
@@ -1657,8 +1658,8 @@ QString CParser::parseTextSample(const QString &s_ActParagraph) {
                       + m_pTemplates->getTransTemplate().toLower() + " ");
     sParagraph.remove("{{{#!" + m_pTemplates->getTransTemplate() + " ");
 
-    // Separate elementes from macro (between §)
-    QStringList sListElements = sParagraph.split("§");
+    // Separate elementes from macro (between separator)
+    QStringList sListElements = sParagraph.split(m_sSEPARATOR);
     for (int i = 0; i < sListElements.length(); i++) {
         sListElements[i] = sListElements[i].trimmed();
     }
@@ -1976,8 +1977,8 @@ QString CParser::parseCodeBlock(const QString &s_ActParagraph) {
     sParagraph.remove("{{{");
     sParagraph.remove("}}}");
 
-    // Separate elementes from macro (between §)
-    QStringList sListElements = sParagraph.split("§");
+    // Separate elementes from macro (between separator)
+    QStringList sListElements = sParagraph.split(m_sSEPARATOR);
     for (int i = 0; i < sListElements.length(); i++) {
         sListElements[i] = sListElements[i].trimmed();
     }
@@ -2118,8 +2119,8 @@ QString CParser::parseImageCollection(const QString &s_ActParagraph) {
     QStringList sListImages;
     double iImgHeight, iImgWidth;
 
-    // Separate elementes from macro (between §)
-    QStringList sListElements = sParagraph.split("§");
+    // Separate elementes from macro (between separator)
+    QStringList sListElements = sParagraph.split(m_sSEPARATOR);
     if (sListElements.length() == 0) {
         return "<strong>ERROR: Image collection</strong>\n";
     }
@@ -2344,8 +2345,8 @@ QString CParser::parseList(const QString &s_ActParagraph) {
     QString sParagraph = s_ActParagraph;
     QString sOutput("<strong>ERROR: List</strong>\n");
 
-    // Separate elementes from macro (between §)
-    QStringList sListElements = sParagraph.split("§");
+    // Separate elementes from macro (between separator)
+    QStringList sListElements = sParagraph.split(m_sSEPARATOR);
     int iArrayLevel[sListElements.length()];
     bool iArrayArabic[sListElements.length()];
 

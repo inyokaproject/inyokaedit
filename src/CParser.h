@@ -108,6 +108,8 @@ class CParser : public QObject {
     QDir m_tmpImgDir;
     CSettings *m_pSettings;
     CTemplates *m_pTemplates;
+
+    const QString m_sSEPARATOR;
 };
 
 #endif  // INYOKAEDIT_CPARSER_H_
