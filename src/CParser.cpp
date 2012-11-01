@@ -321,6 +321,7 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc) {
     int iLength;
     QString sFormatedText, sTmpRegExp;
     unsigned int nNoTranslate = 0;
+    m_sListNoTranslate.clear();
 
     patternTextformat.setCaseSensitivity(Qt::CaseInsensitive);
     // Find "smallest" match.
