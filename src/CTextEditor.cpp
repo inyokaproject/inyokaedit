@@ -44,6 +44,7 @@
 
 #include <QCompleter>
 #include <QDebug>
+#include <QFile>
 #include <QKeyEvent>
 #include <QScrollBar>
 
