@@ -83,6 +83,7 @@ cd interwiki
 
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/archwiki.png -O archwiki.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/askubuntu.png -O askubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bitbucket.png -O bitbucket.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/brainstorm.png -O brainstorm.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bug.png -O bug.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonical.png -O canonical.png

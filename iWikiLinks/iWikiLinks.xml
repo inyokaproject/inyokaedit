@@ -56,6 +56,7 @@
     <element type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
   </group>
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
+    <element type="bitbucket" url="https://bitbucket.org/" name="Bitbucket" icon="bitbucket.png" />
     <element type="freecode" url="http://freecode.com/projects/" name="Freecode" icon="freecode.png" />
     <element type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
     <element type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
