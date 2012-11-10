@@ -1,3 +1,11 @@
+inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
+
+  [ Thorsten Roth ]
+  * Fixed ugly highlighting bug of headlines.
+  * Fixed LP: #880407 (Mark embedded text when inserting syntax element).
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 10 Nov 2012 17:05:32 +0200
+
 inyokaedit (0.7.0-0ubuntu1) precise; urgency=low
 
   [Dominique Lasserre]
