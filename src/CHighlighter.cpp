@@ -55,12 +55,12 @@ CHighlighter::CHighlighter(CTemplates *pTemplates,
     // Headings(= Heading =)
     m_headingsFormat.setFontWeight(QFont::Bold);
     m_headingsFormat.setForeground(Qt::darkGreen);
-    // 1-5 = at beginning and end, between A-Z, a-z,
-    // 0-9(\\w), space(\\s), :, ", !, -, _, +, "
-    // myrule.pattern=QRegExp("={1,5}[A-Za-z0-9\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
-    myRule.pattern = QRegExp("={1,5}[\\w\\s\\?\\(\\):!-_\\+/\"]+={1,5}");
     myRule.format = m_headingsFormat;
-    m_highlightingRules.append(myRule);  // Collecting highlighting rules
+    for (int i = 5; i > 0; i--) {
+        myRule.pattern = QRegExp("={" + QString::number(i) + "}[^=]+={" +
+                                 QString::number(i) + "}");
+        m_highlightingRules.append(myRule);  // Collecting highlighting rules
+    }
 
     // Links(everything between [...])
     m_linksFormat.setForeground(Qt::darkBlue);
