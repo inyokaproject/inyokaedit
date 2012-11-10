@@ -36,7 +36,6 @@
 #include "./CHighlighter.h"
 #include "./CParser.h"
 #include "./CTextEditor.h"
-#include "./CInsertSyntaxElement.h"
 #include "./CProgressDialog.h"
 #include "./qtfindreplacedialog/finddialog.h"
 #include "./qtfindreplacedialog/findreplacedialog.h"
@@ -67,7 +66,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.7.0"
+#define sVERSION "0.7.1"
 
 namespace Ui {
     class CInyokaEdit;
@@ -160,11 +159,7 @@ class CInyokaEdit : public QMainWindow {
 
     void openFile();
 
-    /**
-    * \brief Insert text sample from menu
-    * \param sMenuEntry Selected entry
-    */
-    void insertSomeSamples(const QString &sMenuEntry);
+    void insertMainEditorButtons(const QString &sAction);
 
     void insertMacro(const QString &sMenuEntry);
 
@@ -212,7 +207,6 @@ class CInyokaEdit : public QMainWindow {
     CFileOperations *m_pFileOperations;
     CHighlighter *m_pHighlighter;  // Syntax highlighting
     CParser *m_pParser;            // Parser text to HTML
-    CInsertSyntaxElement *m_pInsertSyntaxElement;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;
@@ -237,7 +231,7 @@ class CInyokaEdit : public QMainWindow {
     QList<QList<QAction *> > m_TplActions;
     QSignalMapper *m_pSigMapTemplates;
 
-    QSignalMapper *m_pSigMapSomeElements;
+    QSignalMapper *m_pSigMapMainEditorToolbar;
 
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;

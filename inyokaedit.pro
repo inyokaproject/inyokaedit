@@ -32,7 +32,6 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CTableTemplate.h \
                 src/CHighlighter.h \
                 src/CTextEditor.h \
-                src/CInsertSyntaxElement.h \
                 src/qtfindreplacedialog/findreplaceform.h \
                 src/qtfindreplacedialog/findreplacedialog.h \
                 src/qtfindreplacedialog/findform.h \
@@ -52,7 +51,6 @@ SOURCES      += src/main.cpp \
                 src/CTableTemplate.cpp \
                 src/CHighlighter.cpp \
                 src/CTextEditor.cpp \
-                src/CInsertSyntaxElement.cpp \
                 src/qtfindreplacedialog/findreplaceform.cpp \
                 src/qtfindreplacedialog/findreplacedialog.cpp \
                 src/qtfindreplacedialog/findform.cpp \

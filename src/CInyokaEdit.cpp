@@ -172,9 +172,6 @@ void CInyokaEdit::createObjects() {
     bEditorScrolling = false;
     bWebviewScrolling = false;
 
-    m_pInsertSyntaxElement = new CInsertSyntaxElement(
-                m_pTemplates->getTransImage());
-
     m_pTableTemplate = new CTableTemplate(m_pEditor,
                                           m_UserAppDir,
                                           m_tmpPreviewImgDir,
@@ -414,43 +411,43 @@ void CInyokaEdit::createActions() {
     // ------------------------------------------------------------------------
     // INSERT SYNTAX ELEMENTS
 
-    m_pSigMapSomeElements = new QSignalMapper(this);
+    m_pSigMapMainEditorToolbar = new QSignalMapper(this);
 
     // Insert bold element
     m_pUi->boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
-    m_pSigMapSomeElements->setMapping(m_pUi->boldAct, "boldAct");
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->boldAct, "boldAct");
     connect(m_pUi->boldAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert italic element
     m_pUi->italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
-    m_pSigMapSomeElements->setMapping(m_pUi->italicAct, "italicAct");
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->italicAct, "italicAct");
     connect(m_pUi->italicAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert monotype element
-    m_pSigMapSomeElements->setMapping(m_pUi->monotypeAct, "monotypeAct");
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->monotypeAct, "monotypeAct");
     connect(m_pUi->monotypeAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert wiki link
-    m_pSigMapSomeElements->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
     connect(m_pUi->wikilinkAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert extern link
-    m_pSigMapSomeElements->setMapping(m_pUi->externalLinkAct,
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->externalLinkAct,
                                       "externalLinkAct");
     connect(m_pUi->externalLinkAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert image
-    m_pSigMapSomeElements->setMapping(m_pUi->imageAct, "imageAct");
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->imageAct, "imageAct");
     connect(m_pUi->imageAct, SIGNAL(triggered()),
-            m_pSigMapSomeElements, SLOT(map()));
+            m_pSigMapMainEditorToolbar, SLOT(map()));
 
-    connect(m_pSigMapSomeElements, SIGNAL(mapped(QString)),
-            this, SLOT(insertSomeSamples(QString)));
+    connect(m_pSigMapMainEditorToolbar, SIGNAL(mapped(QString)),
+            this, SLOT(insertMainEditorButtons(QString)));
 
     // Code block + syntax highlighting
     mySigMapCodeHighlight = new QSignalMapper(this);
@@ -878,6 +875,8 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
     m_pEditor->setFocus();
 }
 
+// ----------------------------------------------------------------------------
+
 // Macro (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
     if (nSelection != 0 && nSelection != 1) {
@@ -932,6 +931,8 @@ void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
     m_pTextmacrosBox->setCurrentIndex(0);
     m_pEditor->setFocus();
 }
+
+// ----------------------------------------------------------------------------
 
 // Text format (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
@@ -1008,8 +1009,10 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
 
         if (!bSelected) {
             QTextCursor myTextCursor = m_pEditor->textCursor();
-            myTextCursor.setPosition(m_pEditor->textCursor().position() - sInsertedText.length() - nFormatLength);
-            myTextCursor.setPosition(m_pEditor->textCursor().position() - nFormatLength, QTextCursor::KeepAnchor);
+            myTextCursor.setPosition(m_pEditor->textCursor().position() -
+                                     sInsertedText.length() - nFormatLength);
+            myTextCursor.setPosition(m_pEditor->textCursor().position() -
+                                     nFormatLength, QTextCursor::KeepAnchor);
             m_pEditor->setTextCursor(myTextCursor);
         }
 
@@ -1017,13 +1020,110 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
     }
 }
 
-// Insert text sample / syntax element
-void CInyokaEdit::insertSomeSamples(const QString &sMenuEntry) {
-    m_pEditor->insertPlainText(m_pInsertSyntaxElement->getElementInyokaCode(
-                                   sMenuEntry,
-                                   m_pEditor->textCursor().selectedText()));
+// ----------------------------------------------------------------------------
+
+// Insert main syntax element from toolbar (bold, italic, ...)
+void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
+    bool bSelected = false;
+    QString sInsertedText = "";
+    quint16 nFormatLength = 0;
+
+    // Some text was selected
+    if (m_pEditor->textCursor().selectedText() != "") {
+        bSelected = true;
+    }
+
+    if ("boldAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("'''"
+                                       + m_pEditor->textCursor().selectedText()
+                                       + "'''");
+        } else {
+            sInsertedText = tr("Bold");
+            nFormatLength = 3;
+            m_pEditor->insertPlainText("'''"
+                                       + sInsertedText
+                                       + "'''");
+        }
+    } else if ("italicAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("''"
+                                       + m_pEditor->textCursor().selectedText()
+                                       + "''");
+        } else {
+            sInsertedText = tr("Italic");
+            nFormatLength = 2;
+            m_pEditor->insertPlainText("''"
+                                       + sInsertedText
+                                       + "''");
+        }
+    } else if ("monotypeAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("`"
+                                       + m_pEditor->textCursor().selectedText()
+                                       + "`");
+        } else {
+            sInsertedText = tr("Monotype");
+            nFormatLength = 1;
+            m_pEditor->insertPlainText("`"
+                                       + sInsertedText
+                                       + "`");
+        }
+    } else if ("wikilinkAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("[:"
+                                       + m_pEditor->textCursor().selectedText()
+                                       + ":]");
+        } else {
+            sInsertedText = tr("Site name");
+            nFormatLength = 2;
+            m_pEditor->insertPlainText("[:"
+                                       + sInsertedText
+                                       + ":]");
+        }
+    } else if ("externalLinkAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("["
+                                       + m_pEditor->textCursor().selectedText()
+                                       + "]");
+        } else {
+            sInsertedText = "http://www.example.org/";
+            nFormatLength = 1;
+            m_pEditor->insertPlainText("["
+                                       + sInsertedText
+                                       + "]");
+        }
+    } else if ("imageAct" == sAction) {
+        if (bSelected) {
+            m_pEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
+                                       + m_pEditor->textCursor().selectedText()
+                                       + ")]]");
+        } else {
+            sInsertedText = tr("Image.png");
+            nFormatLength = 3;
+            m_pEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
+                                       + sInsertedText
+                                       + ")]]");
+        }
+    } else {
+        QMessageBox::warning(this, m_pApp->applicationName(),
+                             "Error while inserting syntax element: "
+                             "Unknown action");
+    }
+
+    if (!bSelected) {
+        QTextCursor myTextCursor = m_pEditor->textCursor();
+        myTextCursor.setPosition(m_pEditor->textCursor().position() -
+                                 sInsertedText.length() - nFormatLength);
+        myTextCursor.setPosition(m_pEditor->textCursor().position() -
+                                 nFormatLength, QTextCursor::KeepAnchor);
+        m_pEditor->setTextCursor(myTextCursor);
+    }
+
     m_pEditor->setFocus();
 }
+
+// ----------------------------------------------------------------------------
 
 // Insert macro
 void CInyokaEdit::insertMacro(const QString &sMenuEntry) {
@@ -1090,6 +1190,8 @@ void CInyokaEdit::insertMacro(const QString &sMenuEntry) {
     m_pEditor->setFocus();
 }
 
+// ----------------------------------------------------------------------------
+
 // Insert interwiki-link
 void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
     // Get indices for links
@@ -1129,6 +1231,8 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
     m_pEditor->setFocus();
 }
 
+// ----------------------------------------------------------------------------
+
 // Insert code block
 void CInyokaEdit::insertCodeblock(const QString &sCodeStyle) {
     // No text selected
@@ -1143,8 +1247,10 @@ void CInyokaEdit::insertCodeblock(const QString &sCodeStyle) {
 
         // Select the word "code"
         QTextCursor textCursor = m_pEditor->textCursor();
-        textCursor.setPosition(m_pEditor->textCursor().position() - sCode.length() - 5);
-        textCursor.setPosition(m_pEditor->textCursor().position() - 5, QTextCursor::KeepAnchor);
+        textCursor.setPosition(m_pEditor->textCursor().position() -
+                               sCode.length() - 5);
+        textCursor.setPosition(m_pEditor->textCursor().position() -
+                               5, QTextCursor::KeepAnchor);
         m_pEditor->setTextCursor(textCursor);
     } else {
         // Some text is selected
