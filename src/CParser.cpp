@@ -841,7 +841,11 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
                 for (int i = 1; i < sListElements.size(); i++) {
                     sOutput += "<li>\n"
                                "<p>\n";
-                    if (sListElements[i].toLower() == "quantal") {
+                    if (sListElements[i].toLower() == "raring") {
+                        sOutput += "<a href=\"" + m_pSettings->getInyokaUrl()
+                                + "/Raring_Ringtail\" class=\"internal\">"
+                                "Ubuntu 13.04</a> \"Raring Ringtail\"\n";
+                    } else if (sListElements[i].toLower() == "quantal") {
                         sOutput += "<a href=\"" + m_pSettings->getInyokaUrl()
                                 + "/Quantal_Quetzal\" class=\"internal\">"
                                 "Ubuntu 12.10</a> \"Quantal Quetzal\"\n";
