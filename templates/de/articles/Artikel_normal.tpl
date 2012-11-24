@@ -2,7 +2,7 @@
 [[Vorlage(Baustelle, Datum, Bearbeiter)]]
 
 ##Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, precise, lucid)]]
+[[Vorlage(Getestet, quantal, precise, oneiric, lucid)]]
 
 ##Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird
 {{{#!vorlage Wissen

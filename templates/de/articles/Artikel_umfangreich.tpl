@@ -1,8 +1,8 @@
 ##Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen.
-[[Vorlage(Baustelle, 11.11.2111, Nutzername)]]
+[[Vorlage(Baustelle, Datum, Nutzername)]]
 Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "InArbeit"-Zeile herauslöschen.
 ##Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, precise, oneiric, natty, lucid)]]
+[[Vorlage(Getestet, quantal, precise, oneiric, lucid)]]
 
 
 ##Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird
