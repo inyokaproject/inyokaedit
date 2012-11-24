@@ -105,6 +105,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gameolith.pn
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/getdeb.png -O getdeb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/github.png -O github.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gnome.png -O gnome.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gog.png -O gog.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/googlecode.png -O googlecode.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/googlevideo.png -O googlevideo.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gplus.png -O gplus.png

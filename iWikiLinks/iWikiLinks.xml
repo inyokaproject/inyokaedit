@@ -80,6 +80,7 @@
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
     <element type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
+    <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
     <element type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
     <element type="googlevideo" url="http://video.google.de/videoplay?docid=" name="Google Videos" icon="googlevideo" />
     <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
