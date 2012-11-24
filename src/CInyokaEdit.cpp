@@ -92,6 +92,8 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
         m_pFileOperations->loadFile(m_pApp->argv()[1], true);
     }
 
+    m_bReloadPreviewBlocked = false;
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -169,8 +171,8 @@ void CInyokaEdit::createObjects() {
             this, SLOT(syncScrollbarsWebview()));
     connect(m_pEditor->verticalScrollBar(), SIGNAL(valueChanged(int)),
             this, SLOT(syncScrollbarsEditor()));
-    bEditorScrolling = false;
-    bWebviewScrolling = false;
+    m_bEditorScrolling = false;
+    m_bWebviewScrolling = false;
 
     m_pTableTemplate = new CTableTemplate(m_pEditor,
                                           m_UserAppDir,
@@ -1309,6 +1311,7 @@ void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
 
         // Restore scroll position
         m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
+        m_bReloadPreviewBlocked = false;
     } else {
         QMessageBox::warning(this, m_pApp->applicationName(),
                              tr("Error while loading preview."));
@@ -1387,7 +1390,9 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
         else if ((Qt::Key_F5 == keyEvent->key()
                   || m_pSettings->getReloadPreviewKey() == keyEvent->key())
                  && (true == m_pSettings->getPreviewAlongside()
-                     && true == m_pSettings->getPreviewInEditor())) {
+                     && true == m_pSettings->getPreviewInEditor())
+                 && !m_bReloadPreviewBlocked) {
+            m_bReloadPreviewBlocked = true;
             previewInyokaPage();
         }
     }
@@ -1504,7 +1509,7 @@ void CInyokaEdit::documentWasModified() {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsEditor() {
-    if (!bWebviewScrolling
+    if (!m_bWebviewScrolling
             && true == m_pSettings->getSyncScrollbars()
             &&true == m_pSettings->getPreviewAlongside()
             && true == m_pSettings->getPreviewInEditor()) {
@@ -1513,17 +1518,17 @@ void CInyokaEdit::syncScrollbarsEditor() {
                     Qt::Vertical);
         float nRatio = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
 
-        bEditorScrolling = true;
+        m_bEditorScrolling = true;
         m_pWebview->page()->mainFrame()->setScrollPosition(
                     QPoint(0, m_pEditor->verticalScrollBar()->sliderPosition() * nRatio));
-        bEditorScrolling = false;
+        m_bEditorScrolling = false;
     }
 }
 
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsWebview() {
-    if (!bEditorScrolling
+    if (!m_bEditorScrolling
             && true == m_pSettings->getSyncScrollbars()
             && true == m_pSettings->getPreviewAlongside()
             && true == m_pSettings->getPreviewInEditor()) {
@@ -1532,10 +1537,10 @@ void CInyokaEdit::syncScrollbarsWebview() {
                     Qt::Vertical);
         float nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
-        bWebviewScrolling = true;
+        m_bWebviewScrolling = true;
         m_pEditor->verticalScrollBar()->setSliderPosition(
                     m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio);
-        bWebviewScrolling = false;
+        m_bWebviewScrolling = false;
     }
 }
 

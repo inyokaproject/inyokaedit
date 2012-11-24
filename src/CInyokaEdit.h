@@ -66,7 +66,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.7.1"
+#define sVERSION "0.8.0"
 
 namespace Ui {
     class CInyokaEdit;
@@ -258,8 +258,9 @@ class CInyokaEdit : public QMainWindow {
 
     QTimer *m_pPreviewTimer;
 
-    bool bEditorScrolling;
-    bool bWebviewScrolling;
+    bool m_bEditorScrolling;
+    bool m_bWebviewScrolling;
+    bool m_bReloadPreviewBlocked;
 };
 
 #endif  // INYOKAEDIT_CINYOKAEDIT_H_
