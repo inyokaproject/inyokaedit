@@ -73,6 +73,7 @@
   </group>
   <group name="Misc" icon="youtube.png">
     <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
+    <element type="blogspot" url="http://$PAGE.blogspot.de/" name="Diaspora" icon="blogspot.png" />
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
