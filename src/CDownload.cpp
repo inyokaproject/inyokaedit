@@ -255,6 +255,8 @@ void CDownload::replyFinished(QNetworkReply *reply) {
                 } else {
                     this->showArticle();
                 }
+            } else {
+                this->showArticle();
             }
         }
     }
