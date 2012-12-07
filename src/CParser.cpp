@@ -46,6 +46,8 @@ CParser::CParser(QTextDocument *pRawDocument,
                                     m_pSettings->getCheckLinks(),
                                     m_pTemplates->getTransAnchor());
 
+    m_pMapParser = new CParseImgMap();
+
     qDebug() << "End" << Q_FUNC_INFO;
 }
 
@@ -79,7 +81,13 @@ QString CParser::genOutput(const QString &sActFile) {
     m_pLinkParser->startParsing(p_docCopyOfRawText);
 
     // Replace flags
-    this->replaceFlags(p_docCopyOfRawText);
+    m_pMapParser->startParsing(p_docCopyOfRawText,
+                               m_pTemplates->getListFlags(),
+                               m_pTemplates->getListFlagsImg());
+    // Replace smilies
+    m_pMapParser->startParsing(p_docCopyOfRawText,
+                               m_pTemplates->getListSmilies(),
+                               m_pTemplates->getListSmiliesImg());
 
     // Replace keys
     this->replaceKeys(p_docCopyOfRawText);
@@ -471,44 +479,6 @@ QString CParser::reinstertNoTranslate(const QString &sRawDoc) {
     }
 
     return sMyDoc;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-// Replace FLAGS
-void CParser::replaceFlags(QTextDocument *p_rawDoc) {
-    QRegExp findFlags("\\{[a-z\\w][a-z]+\\}");
-    QString sMyDoc = p_rawDoc->toPlainText();
-    int iLength;
-    QString sTmpFlag;
-
-    int myindex = findFlags.indexIn(sMyDoc);
-    while (myindex >= 0) {
-        iLength = findFlags.matchedLength();
-        sTmpFlag = findFlags.cap();
-        sTmpFlag.remove("{");
-        sTmpFlag.remove("}");
-
-        if (sTmpFlag.toLower() == m_pTemplates->getTransOverview().toLower()) {
-            sMyDoc.replace(myindex, iLength,
-                           "<img src=\"img/flags/overview.png\" alt=\"&#123;"
-                           + m_pTemplates->getTransOverview() + "&#125;\" />");
-        } else if (sTmpFlag.length() == 2) {
-            if (m_pTemplates->getFlaglist().contains(sTmpFlag)) {
-                sMyDoc.replace(myindex, iLength,
-                               "<img src=\"img/flags/" + sTmpFlag
-                               + ".png\" alt=\"&#123;" + sTmpFlag
-                               + "&#125;\" />");
-            }
-        }
-
-        // Go on with RegExp-Search
-        myindex = findFlags.indexIn(sMyDoc, myindex + iLength);
-    }
-
-    // Replace p_rawDoc with document with HTML links
-    p_rawDoc->setPlainText(sMyDoc);
 }
 
 // ----------------------------------------------------------------------------

@@ -33,6 +33,7 @@
 #include <QMessageBox>
 
 #include "./CParseLinks.h"
+#include "./CParseImgMap.h"
 #include "./CSettings.h"
 #include "./CTemplates.h"
 
@@ -103,6 +104,7 @@ class CParser : public QObject {
     QStringList m_sListNoTranslate;
 
     CParseLinks *m_pLinkParser;
+    CParseImgMap *m_pMapParser;
 
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;

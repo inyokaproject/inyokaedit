@@ -43,7 +43,8 @@ CTemplates::CTemplates(const QString &sAppName,
 
     this->initTemplates();
     this->initHtmlTpl("Preview.tpl");
-    this->initFlags("Flags.conf");
+    this->initImgMap("Flags.conf", m_sListFlags, m_sListFlagsImg);
+    this->initImgMap("Smilies.conf", m_sListSmilies, m_sListSmiliesImg);
     this->initTextformats("Textformats.conf");
     this->initTranslations("Translations.conf");
 
@@ -200,37 +201,46 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTemplates::initFlags(const QString &sFilename) {
+void CTemplates::initImgMap(const QString &sFilename,
+                            QStringList &sListElements,
+                            QStringList &sListImgSource) {
     qDebug() << "Start" << Q_FUNC_INFO;
 
-    QFile flagsFile(sFilename);
+    QFile ImgMapFile(sFilename);
+    QStringList sListTmpLine;
+    sListElements.clear();
+    sListImgSource.clear();
 
     // Path from normal installation
     if (QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/"
-                      + flagsFile.fileName()) && !bDEBUG) {
-        flagsFile.setFileName("/usr/share/" + m_sAppName.toLower()
-                              + "/templates/" + flagsFile.fileName());
+                      + ImgMapFile.fileName()) && !bDEBUG) {
+        ImgMapFile.setFileName("/usr/share/" + m_sAppName.toLower()
+                              + "/templates/" + ImgMapFile.fileName());
     } else {  // No installation: Use app path
-        flagsFile.setFileName(m_sAppPath + "/templates/"
-                              + flagsFile.fileName());
+        ImgMapFile.setFileName(m_sAppPath + "/templates/"
+                              + ImgMapFile.fileName());
     }
 
-    if (!flagsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, "Warning",
-                             tr("Could not open flag config file!"));
+                             tr("Could not open image map file!"));
         qWarning() << "Could not open flag config file:"
-                   << flagsFile.fileName();
-        m_sListFlags << "ERROR";
+                   << ImgMapFile.fileName();
+        sListElements << "ERROR";
     } else {
-        QTextStream in(&flagsFile);
+        QTextStream in(&ImgMapFile);
         QString tmpLine;
         while (!in.atEnd()) {
             tmpLine = in.readLine().trimmed();
             if (!tmpLine.startsWith("#") && "" != tmpLine.trimmed()) {
-                m_sListFlags << tmpLine.trimmed();
+                sListTmpLine = tmpLine.split("=");
+                if (2 == sListTmpLine.size()) {
+                    sListElements << sListTmpLine[0].trimmed();
+                    sListImgSource << sListTmpLine[1].trimmed();
+                }
             }
         }
-        flagsFile.close();
+        ImgMapFile.close();
     }
     qDebug() << "End" << Q_FUNC_INFO;
 }
@@ -342,10 +352,6 @@ void CTemplates::initTranslations(const QString &sFilename) {
     if ("ERROR" == m_sTransDate) {
         qWarning() << "Date translation not found.";
     }
-    m_sTransOverview = configTransl.value("Overview", "ERROR").toString();
-    if ("ERROR" == m_sTransOverview) {
-        qWarning() << "Overview translation not found.";
-    }
     m_sTransRevText = configTransl.value("RevText", "ERROR").toString();
     if ("ERROR" == m_sTransRevText) {
         qWarning() << "Revision text translation not found.";
@@ -400,10 +406,6 @@ QStringList CTemplates::getListTplMacrosALL() const {
     return m_sListTplMacrosALL;
 }
 
-QStringList CTemplates::getFlaglist() const {
-    return m_sListFlags;
-}
-
 QString CTemplates::getTransTemplate() const {
     return m_sTransTemplate;
 }
@@ -430,10 +432,6 @@ QString CTemplates::getTransAnchor() const {
 
 QString CTemplates::getTransDate() const {
     return m_sTransDate;
-}
-
-QString CTemplates::getTransOverview() const {
-    return m_sTransOverview;
 }
 
 QString CTemplates::getTransTable() const {
@@ -464,6 +462,19 @@ QStringList CTemplates::getListFormatHtmlEnd() const {
     return m_sListFormatHtmlEnd;
 }
 
+// ----------------------------------------------------------------------------
+// Image maps
+
 QStringList CTemplates::getListFlags() const {
     return m_sListFlags;
+}
+QStringList CTemplates::getListFlagsImg() const {
+    return m_sListFlagsImg;
+}
+
+QStringList CTemplates::getListSmilies() const {
+    return m_sListSmilies;
+}
+QStringList CTemplates::getListSmiliesImg() const {
+    return m_sListSmiliesImg;
 }

@@ -46,7 +46,6 @@ class CTemplates : public QObject {
     QStringList getListTplMacrosINY() const;
     QStringList getListTplNamesALL() const;
     QStringList getListTplMacrosALL() const;
-    QStringList getFlaglist() const;
     QString getTransTemplate() const;
     QString getTransTOC() const;
     QString getTransImage() const;
@@ -54,7 +53,6 @@ class CTemplates : public QObject {
     QString getTransAttachment() const;
     QString getTransAnchor() const;
     QString getTransDate() const;
-    QString getTransOverview() const;
     QString getTransTable() const;
     QString getTransRev() const;
     QString getTransTag() const;
@@ -63,7 +61,12 @@ class CTemplates : public QObject {
     QStringList getListFormatEnd() const;
     QStringList getListFormatHtmlStart() const;
     QStringList getListFormatHtmlEnd() const;
+
+    // Image map
     QStringList getListFlags() const;
+    QStringList getListFlagsImg() const;
+    QStringList getListSmilies() const;
+    QStringList getListSmiliesImg() const;
 
     CXmlParser *getTPLs() const;
     CXmlParser *getIWLs() const;
@@ -72,7 +75,9 @@ class CTemplates : public QObject {
   private:
     void initTemplates();
     void initHtmlTpl(const QString &sFileName);
-    void initFlags(const QString &sFileName);
+    void initImgMap(const QString &sFileName,
+                    QStringList &sListElements,
+                    QStringList &sListImgSource);
     void initTextformats(const QString &sFileName);
     void initTranslations(const QString &sFileName);
 
@@ -94,8 +99,12 @@ class CTemplates : public QObject {
     QStringList m_sListFormatEnd;
     QStringList m_sListFormatHtmlStart;
     QStringList m_sListFormatHtmlEnd;
-    // List for flags
+
+    // Lists for image maps
     QStringList m_sListFlags;
+    QStringList m_sListFlagsImg;
+    QStringList m_sListSmilies;
+    QStringList m_sListSmiliesImg;
 
     // Translations
     QString m_sTransTemplate;
@@ -105,7 +114,6 @@ class CTemplates : public QObject {
     QString m_sTransAttachment;
     QString m_sTransAnchor;
     QString m_sTransDate;
-    QString m_sTransOverview;
     QString m_sTransRevText;
     QString m_sTransTagText;
     QString m_sTransTable;

@@ -50,7 +50,7 @@ CHighlighter::CHighlighter(CTemplates *pTemplates,
     QStringList macroPatterns;
     QStringList parserPatterns;
     QStringList textformatPatterns;
-    QStringList flagsPatterns;
+    QStringList imgMapPatterns;
 
     // Headings(= Heading =)
     m_headingsFormat.setFontWeight(QFont::Bold);
@@ -152,17 +152,18 @@ CHighlighter::CHighlighter(CTemplates *pTemplates,
     myRule.format = m_singleLineCommentFormat;
     m_highlightingRules.append(myRule);  // Collecting highlighting rules
 
-    // Define flags
+    // Define image map elements
     foreach (QString tmpStr, pTemplates->getListFlags()) {
-        flagsPatterns << QRegExp::escape("{" + tmpStr + "}");
+        imgMapPatterns << QRegExp::escape(tmpStr);
     }
-    // Overview flag
-    flagsPatterns << QRegExp::escape("{"+ pTemplates->getTransOverview() +"}");
+    foreach (QString tmpStr, pTemplates->getListSmilies()) {
+        imgMapPatterns << QRegExp::escape(tmpStr);
+    }
 
     // Format flags
     m_flagsFormat.setForeground(Qt::darkYellow);
     // Collecting highlighting rules
-    foreach (const QString &sPattern, flagsPatterns) {
+    foreach (const QString &sPattern, imgMapPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_flagsFormat;
         m_highlightingRules.append(myRule);
