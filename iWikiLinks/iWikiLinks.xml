@@ -59,8 +59,10 @@
     <element type="bitbucket" url="https://bitbucket.org/" name="Bitbucket" icon="bitbucket.png" />
     <element type="freecode" url="http://freecode.com/projects/" name="Freecode" icon="freecode.png" />
     <element type="freshmeat" url="http://freecode.com/projects/" name="Freshmeat" icon="freshmeat.png" />
+    <element type="freedesktop" url="https://bugs.freedesktop.org/show_bug.cgi?id=" name="Freedesktop Bugs" icon="freedesktop.png" />
     <element type="getdeb" url="http://www.getdeb.net/software/" name="GetDeb" icon="getdeb.png" />
     <element type="github" url="https://github.com/" name="GitHub" icon="github.png" />
+    <element type="gnome" url="https://bugzilla.gnome.org/show_bug.cgi?id=" name="Gnome Bugs" icon="gnome.png" />
     <element type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
     <element type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
     <element type="lpcode" url="https://code.launchpad.net/" name="Launchpad Code" icon="lpcode.png" />

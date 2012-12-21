@@ -100,6 +100,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ean.png -O e
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/edubuntu.png -O edubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/fb.png -O fb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freecode.png -O freecode.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freedesktop.png -O freedesktop.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freenode.png -O freenode.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freshmeat.png -O freshmeat.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gameolith.png -O gameolith.png
