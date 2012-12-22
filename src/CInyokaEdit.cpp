@@ -35,13 +35,13 @@
 bool bDEBUG = false;
 
 CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
-                         QDir userAppDir,
+                         QDir userDataDir,
                          QWidget *parent)
     : QMainWindow(parent),
       m_pUi(new Ui::CInyokaEdit),
       m_pApp(ptrApp),
-      m_UserAppDir(userAppDir) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+      m_UserDataDir(userDataDir) {
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     bool bOpenFileAfterStart = false;
 
@@ -59,7 +59,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     }
 
     // Create folder for downloaded article images
-    m_tmpPreviewImgDir = m_UserAppDir.absolutePath() + "/tmpImages";
+    m_tmpPreviewImgDir = m_UserDataDir.absolutePath() + "/tmpImages";
     if (!m_tmpPreviewImgDir.exists()) {
         // Create folder including possible parent directories (mkPATH)!
         m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());
@@ -75,14 +75,14 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     this->createToolBars();
 
     // Download style files if preview/styles/imgages folders doesn't
-    // exist (/home/user/.InyokaEdit)
-    if (!m_UserAppDir.exists()
-            || !QDir(m_UserAppDir.absolutePath() + "/img").exists()
-            || !QDir(m_UserAppDir.absolutePath() + "/styles").exists()
-            || !QDir(m_UserAppDir.absolutePath() + "/Wiki").exists()) {
+    // exist (see QDesktopServices::DataLocation)
+    if (!m_UserDataDir.exists()
+            || !QDir(m_UserDataDir.absolutePath() + "/img").exists()
+            || !QDir(m_UserDataDir.absolutePath() + "/styles").exists()
+            || !QDir(m_UserDataDir.absolutePath() + "/Wiki").exists()) {
         // Create folder because user may not start download.
         // Folder is needed for preview.
-        m_UserAppDir.mkdir(m_UserAppDir.absolutePath());
+        m_UserDataDir.mkdir(m_UserDataDir.absolutePath());
 #if !defined _WIN32
         m_pDownloadModule->loadInyokaStyles();
 #endif
@@ -93,8 +93,6 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     }
 
     m_bReloadPreviewBlocked = false;
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CInyokaEdit::~CInyokaEdit() {
@@ -109,14 +107,13 @@ CInyokaEdit::~CInyokaEdit() {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::createObjects() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Has to be create before readSettings
     m_findDialog = new FindDialog(this);
     m_findReplaceDialog = new FindReplaceDialog(this);
 
-    m_pSettings = new CSettings(m_UserAppDir,
-                                m_pApp->applicationName(),
+    m_pSettings = new CSettings(m_pApp->applicationName(),
                                 *m_findDialog, *m_findReplaceDialog);
 
     // Has to be created before parser
@@ -127,7 +124,7 @@ void CInyokaEdit::createObjects() {
     m_pDownloadModule = new CDownload(this,
                                       m_pApp->applicationName(),
                                       m_pApp->applicationDirPath(),
-                                      m_UserAppDir.absolutePath(),
+                                      m_UserDataDir.absolutePath(),
                                       m_tmpPreviewImgDir.absolutePath(),
                                       m_pSettings->getInyokaUrl(),
                                       m_pSettings->getAutomaticImageDownload());
@@ -136,7 +133,7 @@ void CInyokaEdit::createObjects() {
                                 m_pSettings->getCodeCompletion(),
                                 m_pTemplates->getListTplMacrosALL(),
                                 m_pSettings->getAutoSave(),
-                                m_UserAppDir.absolutePath(),
+                                m_UserDataDir.absolutePath(),
                                 this);
 
 //  if (true == m_pSettings->getPreviewAlongside()) {
@@ -149,7 +146,7 @@ void CInyokaEdit::createObjects() {
                                             m_pApp->applicationName());
 
     m_pParser = new CParser(m_pEditor->document(),
-                            m_UserAppDir,
+                            m_UserDataDir,
                             m_tmpPreviewImgDir,
                             m_pSettings,
                             m_pTemplates);
@@ -175,21 +172,19 @@ void CInyokaEdit::createObjects() {
     m_bWebviewScrolling = false;
 
     m_pTableTemplate = new CTableTemplate(m_pEditor,
-                                          m_UserAppDir,
+                                          m_UserDataDir,
                                           m_tmpPreviewImgDir,
                                           m_pSettings,
                                           m_pTemplates);
 
     m_pPreviewTimer = new QTimer(this);
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::setupEditor() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Application icon
     this->setWindowIcon(QIcon(":/images/"
@@ -279,8 +274,6 @@ void CInyokaEdit::setupEditor() {
             && m_pSettings->getTimedPreview() != 0) {
         m_pPreviewTimer->start(m_pSettings->getTimedPreview() * 1000);
     }
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -288,7 +281,7 @@ void CInyokaEdit::setupEditor() {
 
 // Generate actions (buttons / menu entries)
 void CInyokaEdit::createActions() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // File menu
     // New file
@@ -533,8 +526,6 @@ void CInyokaEdit::createActions() {
     // Open about windwow
     connect(m_pUi->aboutAct, SIGNAL(triggered()),
             this, SLOT(about()));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -576,7 +567,7 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
 
 // Generate menus
 void CInyokaEdit::createMenus() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QDir articleTemplateDir("");
 
@@ -647,8 +638,6 @@ void CInyokaEdit::createMenus() {
     this->insertXmlMenu(m_piWikiMenu, m_iWikiGroups, "/iWikiLinks/",
                         m_iWikiLinksActions, m_pTemplates->getIWLs(),
                         m_pUi->toolsMenu->menuAction());
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -657,7 +646,7 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
                                 const QString &sIconPath,
                                 QList<QList<QAction *> > listActions,
                                 CXmlParser* pXmlMenu, QAction* pPosition) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->menuBar->insertMenu(pPosition, pMenu);
 
@@ -679,8 +668,6 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
 
         pMenuGroup[i]->addActions(listActions[i]);
     }
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -688,7 +675,7 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
 
 // Generate tool bars
 void CInyokaEdit::createToolBars() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Tool bar for combo boxes (samples and macros)
     m_pUi->samplesmacrosBar->addWidget(m_pHeadlineBox);
@@ -738,8 +725,6 @@ void CInyokaEdit::createToolBars() {
             m_pWebview, SLOT(reload()));
     connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
             this, SLOT(clickedLink()));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -791,7 +776,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         }
 
         // File for temporary html output
-        QFile tmphtmlfile(m_UserAppDir.absolutePath() + "/tmpinyoka.html");
+        QFile tmphtmlfile(m_UserDataDir.absolutePath() + "/tmpinyoka.html");
 
         // No write permission
         if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
@@ -1442,7 +1427,7 @@ void CInyokaEdit::checkSpelling() {
         return;
     }
 
-    QString sUserDict= m_UserAppDir.absolutePath() + "/userDict_"
+    QString sUserDict= m_UserDataDir.absolutePath() + "/userDict_"
             + m_pSettings->getSpellCheckerLanguage() + ".txt";
     if (!QFile::exists(sUserDict)) {
         QFile userDictFile(sUserDict);
@@ -1586,7 +1571,7 @@ void CInyokaEdit::showSyntaxOverview() {
     OverviewFile.close();
 
     CParser* pParser = new CParser(pTextDocument,
-                                   m_UserAppDir,
+                                   m_UserDataDir,
                                    m_tmpPreviewImgDir,
                                    m_pSettings,
                                    m_pTemplates);
@@ -1603,7 +1588,7 @@ void CInyokaEdit::showSyntaxOverview() {
     dialog->setWindowTitle(tr("Syntax overview"));
 
     webview->setHtml(pTextDocument->toPlainText(),
-                     QUrl::fromLocalFile(m_UserAppDir.absolutePath() + "/"));
+                     QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
     dialog->show();
 }
 

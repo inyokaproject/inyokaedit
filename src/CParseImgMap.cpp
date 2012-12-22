@@ -31,8 +31,7 @@
 #include "./CParseImgMap.h"
 
 CParseImgMap::CParseImgMap() {
-    qDebug() << "Start" << Q_FUNC_INFO;
-    qDebug() << "End" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 }
 
 void CParseImgMap::startParsing(QTextDocument *pRawDoc,

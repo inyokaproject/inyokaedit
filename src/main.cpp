@@ -57,7 +57,7 @@ void setupLogger(const QString &sDebugFilePath,
                  const QString &sAppName,
                  const QString &sVersion);
 void LoggingHandler(QtMsgType type, const char *sMsg);
-QString getLanguage(const QString &sConfigDir, const QString &sAppName);
+QString getLanguage(const QString &sAppName);
 
 // ----------------------------------------------------------------------------
 
@@ -78,10 +78,12 @@ int main(int argc, char *argv[]) {
     QTranslator qtTranslator;
     QTranslator AppTranslator;
 
-    const QDir userAppDir(QDir::homePath() + "/." + app.applicationName());
-    const QString sLang(getLanguage(userAppDir.absolutePath(),
-                                    app.applicationName()));
-    const QString sDebugFile("Debug.log");
+    const QDir userDataDir(
+                QDesktopServices::storageLocation(
+                    QDesktopServices::DataLocation).toLower());
+
+    const QString sLang(getLanguage(app.applicationName()));
+    const QString sDebugFile("debug.log");
 
     // Resource file (images, icons)
     Q_INIT_RESOURCE(inyokaedit_resources);
@@ -90,14 +92,16 @@ int main(int argc, char *argv[]) {
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-    setupLogger(userAppDir.absolutePath() + "/" + sDebugFile,
+    setupLogger(userDataDir.absolutePath() + "/" + sDebugFile,
                 app.applicationName(), app.applicationVersion());
 
     // Setup gui translation (Qt)
     if (!qtTranslator.load("qt_" + sLang,
                            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         // If it fails search in application dircetory
-        qtTranslator.load("qt_" + sLang, app.applicationName() + "/lang");
+        if (!qtTranslator.load("qt_" + sLang, app.applicationDirPath() + "/lang")) {
+            qWarning() << "Could not load any Qt translations.";
+        }
     }
     app.installTranslator(&qtTranslator);
 
@@ -106,15 +110,18 @@ int main(int argc, char *argv[]) {
                             "/usr/share/" + app.applicationName().toLower()
                             + "/lang")) {
         // If it fails search in application dircetory
-        qtTranslator.load(app.applicationName().toLower() + "_"  + sLang,
-                          app.applicationDirPath() + "/lang");
+        if (!qtTranslator.load(app.applicationName().toLower() + "_"  + sLang,
+                          app.applicationDirPath() + "/lang")) {
+            qWarning() << "Could not load any application translations.";
+        }
     }
     app.installTranslator(&AppTranslator);
 
-    CInyokaEdit InyokaEdit(&app, userAppDir);
+    CInyokaEdit InyokaEdit(&app, userDataDir);
     InyokaEdit.show();
     int nRet = app.exec();
 
+    qDebug() << "Closing" << app.applicationName();
     logfile.close();
     return nRet;
 }
@@ -168,13 +175,13 @@ void LoggingHandler(QtMsgType type, const char *sMsg) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString getLanguage(const QString &sConfigDir, const QString &sAppName) {
+QString getLanguage(const QString &sAppName) {
 #if defined _WIN32
-    QSettings::setPath(QSettings::IniFormat, QSettings::UserScope, sConfigDir);
-    QSettings mySet(QSettings::IniFormat, QSettings::UserScope, sAppName);
+    QSettings mySet(QSettings::IniFormat, QSettings::UserScope,
+                    sAppName.toLower(), sAppName.toLower());
 #else
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, sConfigDir);
-    QSettings mySet(QSettings::NativeFormat, QSettings::UserScope, sAppName);
+    QSettings mySet(QSettings::NativeFormat, QSettings::UserScope,
+                    sAppName.toLower(), sAppName.toLower());
 #endif
 
     QString sLang = mySet.value("GuiLanguage", "auto").toString();

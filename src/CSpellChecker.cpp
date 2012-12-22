@@ -40,7 +40,7 @@
 CSpellChecker::CSpellChecker(const QString &dictionaryPath,
                              const QString &userDictionary,
                              QWidget *pParent) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     _userDictionary = userDictionary;
 
@@ -93,8 +93,6 @@ CSpellChecker::CSpellChecker(const QString &dictionaryPath,
     }
 
     m_pCheckDialog = new CSpellCheckDialog(this, pParent);
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CSpellChecker::~CSpellChecker() {

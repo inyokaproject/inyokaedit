@@ -38,7 +38,7 @@ CParser::CParser(QTextDocument *pRawDocument,
       m_pSettings(pSettings),
       m_pTemplates(pTemplates),
       m_sSEPARATOR("$UGLY_SEPARATOR$") {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pLinkParser = new CParseLinks(m_pSettings->getInyokaUrl(),
                                     m_pTemplates->getIWLs()->getElementTypes(),
@@ -47,8 +47,6 @@ CParser::CParser(QTextDocument *pRawDocument,
                                     m_pTemplates->getTransAnchor());
 
     m_pMapParser = new CParseImgMap();
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // Destructor

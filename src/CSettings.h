@@ -41,8 +41,8 @@
  */
 class CSettings {
   public:
-    CSettings(const QDir &SettingsDir, const QString &sName,
-              FindDialog &FDialog, FindReplaceDialog &FRDialog);
+    CSettings(const QString &sName, FindDialog &FDialog,
+              FindReplaceDialog &FRDialog);
     ~CSettings();
 
     // Load / save application settings

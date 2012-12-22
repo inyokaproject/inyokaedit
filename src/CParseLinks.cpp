@@ -37,7 +37,7 @@ CParseLinks::CParseLinks(const QString &sUrlToWiki,
       m_bCheckLinks(bCheckLinks),
       m_sTransAnchor(sTransAnchor),
       m_NWreply(NULL) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Copy interwiki links to lists
     for (int i = 0; i < sListIWiki.size(); i++) {
@@ -48,8 +48,6 @@ CParseLinks::CParseLinks(const QString &sUrlToWiki,
     }
 
     m_NWAManager = new QNetworkAccessManager(this);
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------

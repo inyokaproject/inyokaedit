@@ -32,12 +32,10 @@
 
 CDownloadImg::CDownloadImg(const QString &sAppName)
     : m_sAppname(sAppName) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(downloadFinished(QNetworkReply*)));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 void CDownloadImg::setDLs(const QStringList &sListUrls,

@@ -31,7 +31,7 @@
 CHighlighter::CHighlighter(CTemplates *pTemplates,
                            QTextDocument *pParent)
     : QSyntaxHighlighter(pParent) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QStringList sListMacroKeywords;
     sListMacroKeywords << pTemplates->getTransTemplate()
@@ -168,7 +168,6 @@ CHighlighter::CHighlighter(CTemplates *pTemplates,
         myRule.format = m_flagsFormat;
         m_highlightingRules.append(myRule);
     }
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CHighlighter::~CHighlighter() {

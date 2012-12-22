@@ -27,27 +27,21 @@
 #include <QDebug>
 #include "./CSettings.h"
 
-CSettings::CSettings(const QDir &SettingsDir, const QString &sName,
-                     FindDialog &FDialog, FindReplaceDialog &FRDialog)
+CSettings::CSettings(const QString &sName, FindDialog &FDialog,
+                     FindReplaceDialog &FRDialog)
     : m_pFDialog(&FDialog),
       m_pFRDialog(&FRDialog) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
-    QSettings::setPath(QSettings::IniFormat, QSettings::UserScope,
-                       SettingsDir.absolutePath());
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
-                                sName);
+                                sName.toLower(), sName.toLower());
 #else
-    QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope,
-                       SettingsDir.absolutePath());
     m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
-                                sName);
+                                sName.toLower(), sName.toLower());
 #endif
 
     this->readSettings();
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CSettings::~CSettings() {

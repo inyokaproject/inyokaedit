@@ -41,7 +41,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
       m_sImgDir(sImgDir),
       m_sInyokaUrl(sInyokaUrl),
       m_bAutomaticImageDownload(bAutomaticImgDL) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_NwManager = new QNetworkAccessManager(m_pParent);
     connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
@@ -50,8 +50,6 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
     m_DlImages = new CDownloadImg(m_sAppName);
     connect(m_DlImages, SIGNAL(finsihedImageDownload()),
             this, SLOT(showArticle()));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -59,7 +57,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
 // Call download script for Inyoka styles (ONLY working with Linux!)
 
 bool CDownload::loadInyokaStyles() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
     int iRet = QMessageBox::question(m_pParent, tr("Download styles"),
                                      tr("In order to preview articles "
                                         "correctly, Inyoka resources have to "
@@ -89,8 +87,6 @@ bool CDownload::loadInyokaStyles() {
         }
 
         myArticleDownloadProgress->open();
-
-        qDebug() << "End" << Q_FUNC_INFO;
         return true;
     }
     return false;

@@ -42,7 +42,7 @@ CTableTemplate::CTableTemplate(CTextEditor *pEditor,
       m_dirPreview(tmpFileOutputDir),
       m_pTextDocument(new QTextDocument(this)),
       m_pTemplates(pTemplates) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Build UI
     m_pUi = new Ui::CTableTemplateClass();
@@ -70,15 +70,13 @@ CTableTemplate::CTableTemplate(CTextEditor *pEditor,
                             tmpImgDir,
                             pSettings,
                             m_pTemplates);
-
-    qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTableTemplate::newTable() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->tableStyleBox->setCurrentIndex(0);
     m_pUi->showHeadBox->setChecked(false);
@@ -99,7 +97,7 @@ void CTableTemplate::newTable() {
 // ----------------------------------------------------------------------------
 
 void CTableTemplate::preview() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     this->generateTable();
     m_pTextDocument->setPlainText(m_sTableString);
@@ -121,7 +119,7 @@ void CTableTemplate::preview() {
 // ----------------------------------------------------------------------------
 
 void CTableTemplate::generateTable() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     int colsNum = m_pUi->colsNum->value();
     int rowsNum = m_pUi->rowsNum->value();
@@ -169,7 +167,7 @@ void CTableTemplate::generateTable() {
 }
 
 void CTableTemplate::accept() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     this->generateTable();
     m_pEditor->insertPlainText(m_sTableString);

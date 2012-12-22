@@ -39,7 +39,7 @@ CTemplates::CTemplates(const QString &sAppName,
     : m_sAppName(sAppName),
       m_sAppPath(sAppPath),
       m_sTplLang(sTplLang) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     this->initTemplates();
     this->initHtmlTpl("Preview.tpl");
@@ -53,8 +53,6 @@ CTemplates::CTemplates(const QString &sAppName,
     m_pDropdownTemplates = new CXmlParser(m_sAppName, m_sAppPath,
                                           "templates/" + m_sTplLang
                                           + "/Templates_Dropdown.xml");
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // Destructor
@@ -65,7 +63,7 @@ CTemplates::~CTemplates() {
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTemplates() {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile TplFile("");
     QDir TplDir("");
@@ -161,15 +159,13 @@ void CTemplates::initTemplates() {
     m_pMarkupTemplates = new CXmlParser(m_sAppName, m_sAppPath,
                                         "templates/" + m_sTplLang
                                         + "/Templates.xml");
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTemplates::initHtmlTpl(const QString &sTplFile) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile HTMLTplFile(sTplFile);
 
@@ -195,7 +191,6 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
 
         HTMLTplFile.close();
     }
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -204,7 +199,7 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
 void CTemplates::initImgMap(const QString &sFilename,
                             QStringList &sListElements,
                             QStringList &sListImgSource) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile ImgMapFile(sFilename);
     QStringList sListTmpLine;
@@ -242,14 +237,13 @@ void CTemplates::initImgMap(const QString &sFilename,
         }
         ImgMapFile.close();
     }
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTextformats(const QString &sFilename) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile formatsFile(sFilename);
     QStringList sListInput;
@@ -292,14 +286,13 @@ void CTemplates::initTextformats(const QString &sFilename) {
             m_sListFormatHtmlEnd << sListInput[i+3];
         }
     }
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTranslations(const QString &sFilename) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile translFile;
 
@@ -366,8 +359,6 @@ void CTemplates::initTranslations(const QString &sFilename) {
     if ("ERROR" == m_sTransTable) {
         qWarning() << "Table translation not found.";
     }
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------

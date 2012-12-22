@@ -37,7 +37,7 @@ CProgressDialog::CProgressDialog(const QString &sScriptname,
     : QDialog(pParent),
       m_pUi(new Ui::CProgressDialog),
       m_sAppName(sAppName) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
     this->setWindowFlags(this->windowFlags()
@@ -58,8 +58,6 @@ CProgressDialog::CProgressDialog(const QString &sScriptname,
 
     connect(m_myProc, SIGNAL(finished(int)),
             this, SLOT(downloadScriptFinished()));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CProgressDialog::~CProgressDialog() {

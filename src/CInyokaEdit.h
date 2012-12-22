@@ -85,7 +85,7 @@ class CInyokaEdit : public QMainWindow {
     * \param ptrApp Pointer to main application
     * \param parent pointer to parent window
     */
-    explicit CInyokaEdit(QApplication *ptrApp, QDir userAppDir,
+    explicit CInyokaEdit(QApplication *ptrApp, QDir userDataDir,
                          QWidget *parent = 0);
 
     /** \brief Destructor */
@@ -236,7 +236,7 @@ class CInyokaEdit : public QMainWindow {
     FindDialog *m_findDialog;
     FindReplaceDialog *m_findReplaceDialog;
 
-    QDir m_UserAppDir;
+    QDir m_UserDataDir;
     QDir m_tmpPreviewImgDir;
 
     // File menu: Clear recent opened files list

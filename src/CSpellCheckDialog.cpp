@@ -37,7 +37,7 @@ CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *spellChecker,
                                      QWidget *parent)
     : QDialog(parent),
       m_pUi(new Ui::CSpellCheckDialog) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
     _spellChecker = spellChecker;
@@ -60,8 +60,6 @@ CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *spellChecker,
             this, SLOT(ignoreAll()));
     connect(m_pUi->btnCancel, SIGNAL(clicked()),
             this, SLOT(reject()));
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CSpellCheckDialog::~CSpellCheckDialog() {

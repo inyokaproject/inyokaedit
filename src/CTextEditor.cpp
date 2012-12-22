@@ -61,7 +61,7 @@ CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
       m_UserAppDir(sUserAppDir),
       m_bCodeCompState(bCompleter),
       m_sListCompleter(sListTplMacros) {
-    qDebug() << "Start" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 
     QStringList sListTemp = m_sListCompleter;
     m_sListCompleter.clear();
@@ -124,8 +124,6 @@ CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
                 this, SLOT(saveArticleAuto()));
         m_pTimerAutosave->start();
     }
-
-    qDebug() << "End" << Q_FUNC_INFO;
 }
 
 CTextEditor::~CTextEditor() {
