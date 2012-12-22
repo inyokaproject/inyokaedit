@@ -918,11 +918,11 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
                   "<p>";
         sOutput += trUtf8("Paketliste zum Kopieren:");
         sOutput += " <strong>apt-get</strong></p>\n"
-                   "<div class=\"bash\" style=\"display: block;\">"
+                   "<div class=\"bash\">"
                    "<div class=\"contents\">\n"
-                   "<pre> sudo apt-get install";
+                   "<pre class=\"notranslate\"> sudo apt-get install";
         for (int i = 1; i < sListElements.size(); i++) {
-            sOutput += " " + sListElements[i];
+            sOutput += " " + sListElements[i].trimmed();
         }
         sOutput += "</pre>\n</div>\n</div>\n</div>\n</div>\n";
     }
@@ -1746,9 +1746,40 @@ QString CParser::parseTextSample(const QString &s_ActParagraph) {
         }
 
         sOutput += "\" rel=\"nofollow\" class=\"external\">"
-                "<img src=\"img/wiki/button.png\" "
-                "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a>"
-                "</p>";
+                   "<img src=\"img/wiki/button.png\" "
+                   "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
+                   "mit <a href=\"" + m_pSettings->getInyokaUrl() + "/apturl\" "
+                   "class=\"internal\">apturl</a></p>";
+
+        // Copy console output
+        sOutput += "<div class=\"package-list\">\n"
+                   "<div class=\"contents\">\n"
+                   "<p>";
+        sOutput += trUtf8("Paketliste zum Kopieren:");
+        sOutput += " <strong>apt-get</strong></p>\n"
+                   "<div class=\"bash\">"
+                   "<div class=\"contents\">\n"
+                   "<pre class=\"notranslate\"> sudo apt-get install";
+        for (int i = 0; i < sListPackages.size(); i++) {
+            sOutput += " " + sListPackages[i].trimmed();
+        }
+        sOutput += "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+    }
+
+    // BUILD DEPENDENCY INSTALLATION (Builddeps)
+    else if (sListElements[0].toLower() == trUtf8("Builddeps").toLower()) {
+        sOutput = "<div class=\"package-list\">\n"
+                  "<div class=\"contents\">\n"
+                  "<p>";
+        sOutput += trUtf8("Befehl zum Installieren der Build-Abhängigkeiten:");
+        sOutput += " <strong>apt-get</strong></p>\n"
+                   "<div class=\"bash\">"
+                   "<div class=\"contents\">\n"
+                   "<pre class=\"notranslate\"> sudo apt-get build-dep";
+        for (int i = 1; i < sListElements.size(); i++) {
+            sOutput += " " + sListElements[i].trimmed();
+        }
+        sOutput += "</pre>\n</div>\n</div>\n</div>\n</div>\n";
     }
 
     // TABLE (Tabelle)

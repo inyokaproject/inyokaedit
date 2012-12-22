@@ -30,6 +30,7 @@
     <element type="" url="Fremdquelle.tpl" name="Fremdquellen-Vorlage" icon="" />
     <element type="" url="Fremdquelle-auth.tpl" name="Fremdquelle authentifizieren Vorlage" icon="" />
     <element type="" url="Fremdpaket.tpl" name="Fremdpaket-Vorlage" icon="" />
+    <element type="" url="Builddeps.tpl" name="Build-Abhängigkeiten" icon="" />
     <element type="" url="Pakete.tpl" name="Pakete-Makro (veraltet)" icon="" />
   </group>
   <group name="&amp;Sonstige Bausteine">

@@ -38,6 +38,7 @@
 ##
 [[Vorlage(Installbutton,<@ for $row in $arguments split_by '
 ' @><@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ if $loop.revindex > 1 @>,<@ endif @><@ endfor @>)]]
+mit [:apturl:]
 ##
 ## Paketmakro bei mehr als N Paketen, N=3:
 ##
