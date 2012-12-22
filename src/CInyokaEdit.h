@@ -37,8 +37,7 @@
 #include "./CParser.h"
 #include "./CTextEditor.h"
 #include "./CProgressDialog.h"
-#include "./qtfindreplacedialog/finddialog.h"
-#include "./qtfindreplacedialog/findreplacedialog.h"
+#include "./CFindReplace.h"
 #include "./CDownload.h"
 #include "./CFileOperations.h"
 #include "./CTableTemplate.h"
@@ -58,8 +57,7 @@ class QDir;
 // Own classes
 class CTemplates;
 class CParser;
-class FindDialog;
-class FindReplaceDialog;
+class CFindReplace;
 class CProgressDialog;
 class CSettings;
 class CDownload;
@@ -117,6 +115,9 @@ class CInyokaEdit : public QMainWindow {
   protected slots:
     /** \brief Call spell checker */
     void checkSpelling();
+
+    void callSearch();
+    void callReplace();
 
   private slots:
     void showSyntaxOverview();
@@ -210,6 +211,7 @@ class CInyokaEdit : public QMainWindow {
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;
+    CFindReplace *m_pFindReplace;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
     QFrame *m_pWebviewFrame;
@@ -232,9 +234,6 @@ class CInyokaEdit : public QMainWindow {
     QSignalMapper *m_pSigMapTemplates;
 
     QSignalMapper *m_pSigMapMainEditorToolbar;
-
-    FindDialog *m_findDialog;
-    FindReplaceDialog *m_findReplaceDialog;
 
     QDir m_UserDataDir;
     QDir m_tmpPreviewImgDir;

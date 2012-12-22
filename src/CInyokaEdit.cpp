@@ -109,12 +109,9 @@ CInyokaEdit::~CInyokaEdit() {
 void CInyokaEdit::createObjects() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    // Has to be create before readSettings
-    m_findDialog = new FindDialog(this);
-    m_findReplaceDialog = new FindReplaceDialog(this);
+    m_pSettings = new CSettings(m_pApp->applicationName());
 
-    m_pSettings = new CSettings(m_pApp->applicationName(),
-                                *m_findDialog, *m_findReplaceDialog);
+    m_pFindReplace = new CFindReplace(m_pSettings);
 
     // Has to be created before parser
     m_pTemplates = new CTemplates(m_pApp->applicationName(),
@@ -194,8 +191,7 @@ void CInyokaEdit::setupEditor() {
     m_pEditor->setFont(m_pSettings->getEditorFont());
 
     // Find/replace dialogs
-    m_findDialog->setTextEdit(m_pEditor);
-    m_findReplaceDialog->setTextEdit(m_pEditor);
+    m_pFindReplace->setEditor(m_pEditor);
 
     connect(m_pFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
             m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)));
@@ -328,13 +324,13 @@ void CInyokaEdit::createActions() {
     // Find
     m_pUi->searchAct->setShortcuts(QKeySequence::Find);
     connect(m_pUi->searchAct, SIGNAL(triggered()),
-            m_findDialog, SLOT(show()));
+            this, SLOT(callSearch()));
 
     // Replace
     m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
     connect(m_pUi->replaceAct, SIGNAL(triggered()),
-            m_findReplaceDialog, SLOT(show()));
-
+            this, SLOT(callReplace()));
+/*
     // Find next
     m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
     connect(m_pUi->findNextAct, SIGNAL(triggered()),
@@ -344,7 +340,7 @@ void CInyokaEdit::createActions() {
     m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
     connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
             m_findDialog, SLOT(findPrev()));
-
+*/
     // Initialize cut / copy / redo / undo
     m_pUi->cutAct->setEnabled(false);
     m_pUi->copyAct->setEnabled(false);
@@ -740,6 +736,19 @@ void CInyokaEdit::openFile() {
     // Reset scroll position
     m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
     m_pFileOperations->open();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CInyokaEdit::callSearch() {
+    m_pFindReplace->toggleSearchReplace(false);
+    m_pFindReplace->show();
+}
+
+void CInyokaEdit::callReplace() {
+    m_pFindReplace->toggleSearchReplace(true);
+    m_pFindReplace->show();
 }
 
 // ----------------------------------------------------------------------------

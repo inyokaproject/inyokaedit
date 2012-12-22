@@ -27,10 +27,7 @@
 #include <QDebug>
 #include "./CSettings.h"
 
-CSettings::CSettings(const QString &sName, FindDialog &FDialog,
-                     FindReplaceDialog &FRDialog)
-    : m_pFDialog(&FDialog),
-      m_pFRDialog(&FRDialog) {
+CSettings::CSettings(const QString &sName) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
@@ -127,8 +124,14 @@ void CSettings::readSettings() {
     m_pSettings->endGroup();
 
     // Find/replace dialogs
-    m_pFDialog->readSettings(*m_pSettings);
-    m_pFRDialog->readSettings(*m_pSettings);
+    m_pSettings->beginGroup("FindReplace");
+    m_sTextFind = m_pSettings->value("TextFind", "").toString();
+    m_sTextReplace = m_pSettings->value("TextReplace", "").toString();
+    m_bSearchForward = m_pSettings->value("SearchForward", true).toBool();
+    m_bCheckCase = m_pSettings->value("CaseSensitive", false).toBool();
+    m_bCheckWholeWord = m_pSettings->value("MatchCases", false).toBool();
+    m_bUseRegExp = m_pSettings->value("UseRegExp", false).toBool();
+    m_pSettings->endGroup();
 
     // Window state
     m_pSettings->beginGroup("Window");
@@ -182,9 +185,15 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     }
     m_pSettings->endGroup();
 
-    // Find/replace dialogs
-    m_pFDialog->writeSettings(*m_pSettings);
-    m_pFRDialog->writeSettings(*m_pSettings);
+    // Find / replace
+    m_pSettings->beginGroup("FindReplace");
+    m_pSettings->setValue("TextFind", m_sTextFind);
+    m_pSettings->setValue("TextReplace", m_sTextReplace);
+    m_pSettings->setValue("SearchForward", m_bSearchForward);
+    m_pSettings->setValue("CaseSensitive", m_bCheckCase);
+    m_pSettings->setValue("MatchCases", m_bCheckWholeWord);
+    m_pSettings->setValue("UseRegExp", m_bUseRegExp);
+    m_pSettings->endGroup();
 
     // Save toolbar position etc.
     m_pSettings->beginGroup("Window");
@@ -195,7 +204,6 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     } else {
         m_pSettings->setValue("SplitterState", m_aSplitterState);
     }
-
     m_pSettings->endGroup();
 }
 
@@ -291,6 +299,49 @@ void CSettings::setRecentFiles(const QStringList &sListNewRecent) {
     for (int i = 0; i < iCnt; i++) {
         m_sListRecentFiles << sListNewRecent[i];
     }
+}
+
+// ----------------------------------------------------
+
+QString CSettings::getTextFind() const {
+    return m_sTextFind;
+}
+QString CSettings::getTextReplace() const {
+    return m_sTextReplace;
+}
+void CSettings::setTextFind(const QString sNewText) {
+    m_sTextFind = sNewText;
+}
+void CSettings::setTextReplace(const QString sNewText) {
+    m_sTextReplace = sNewText;
+}
+
+bool CSettings::getSearchForwardState() const {
+    return m_bSearchForward;
+}
+void CSettings::setSearchForwardState(const bool bForward) {
+    m_bSearchForward = bForward;
+}
+
+bool CSettings::getCaseState() const {
+    return m_bCheckCase;
+}
+void CSettings::setCaseState(const bool bNewState) {
+    m_bCheckCase = bNewState;
+}
+
+bool CSettings::getWholeWordState() const {
+    return m_bCheckWholeWord;
+}
+void CSettings::setWholeWordState(const bool bNewState) {
+    m_bCheckWholeWord = bNewState;
+}
+
+bool CSettings::getUseRegExpState() const {
+    return m_bUseRegExp;
+}
+void CSettings::setUseRegExpState(const bool bNewState) {
+    m_bUseRegExp = bNewState;
 }
 
 // ----------------------------------------------------

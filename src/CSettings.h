@@ -31,9 +31,6 @@
 #include <QSettings>
 #include <QMessageBox>
 
-#include "./qtfindreplacedialog/finddialog.h"
-#include "./qtfindreplacedialog/findreplacedialog.h"
-
 /**
  * \class CSettings
  * \brief Load and save settings.
@@ -41,8 +38,7 @@
  */
 class CSettings {
   public:
-    CSettings(const QString &sName, FindDialog &FDialog,
-              FindReplaceDialog &FRDialog);
+    CSettings(const QString &sName);
     ~CSettings();
 
     // Load / save application settings
@@ -81,6 +77,20 @@ class CSettings {
     QStringList getRecentFiles() const;
     void setRecentFiles(const QStringList &sListNewRecent);
 
+    // Find / replace
+    QString getTextFind() const;
+    QString getTextReplace() const;
+    void setTextFind(const QString sNewText);
+    void setTextReplace(const QString sNewText);
+    bool getSearchForwardState() const;
+    void setSearchForwardState(const bool bForward);
+    bool getCaseState() const;
+    void setCaseState(const bool bNewState);
+    bool getWholeWordState() const;
+    void setWholeWordState(const bool bNewState);
+    bool getUseRegExpState() const;
+    void setUseRegExpState(const bool bNewState);
+
   private:
     QSettings *m_pSettings;
 
@@ -104,10 +114,6 @@ class CSettings {
     QString m_sFontFamily;
     qreal m_nFontsize;
 
-    // Find/replace dialogs
-    FindDialog *m_pFDialog;
-    FindReplaceDialog *m_pFRDialog;
-
     // Window state
     QByteArray m_aWindowState;
     QByteArray m_aWindowGeometry;
@@ -117,6 +123,14 @@ class CSettings {
     static const quint16 m_cMAXFILES = 10;
     qint32 m_nMaxLastOpenedFiles;
     QStringList m_sListRecentFiles;
+
+    // Find / replace
+    QString m_sTextFind;
+    QString m_sTextReplace;
+    bool m_bSearchForward;
+    bool m_bCheckCase;
+    bool m_bCheckWholeWord;
+    bool m_bUseRegExp;
 };
 
 #endif  // INYOKAEDIT_CSETTINGS_H_

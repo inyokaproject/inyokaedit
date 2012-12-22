@@ -32,10 +32,6 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CTableTemplate.h \
                 src/CHighlighter.h \
                 src/CTextEditor.h \
-                src/qtfindreplacedialog/findreplaceform.h \
-                src/qtfindreplacedialog/findreplacedialog.h \
-                src/qtfindreplacedialog/findform.h \
-                src/qtfindreplacedialog/finddialog.h \
                 src/CProgressDialog.h \
                 src/CSettings.h \
                 src/CXmlParser.h \
@@ -45,17 +41,14 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CParseLinks.h \
                 src/CTemplates.h \
                 src/CDownloadImg.h \
-                src/CParseImgMap.h
+                src/CParseImgMap.h \
+                src/CFindReplace.h
 
 SOURCES      += src/main.cpp \
                 src/CInyokaEdit.cpp \
                 src/CTableTemplate.cpp \
                 src/CHighlighter.cpp \
                 src/CTextEditor.cpp \
-                src/qtfindreplacedialog/findreplaceform.cpp \
-                src/qtfindreplacedialog/findreplacedialog.cpp \
-                src/qtfindreplacedialog/findform.cpp \
-                src/qtfindreplacedialog/finddialog.cpp \
                 src/CProgressDialog.cpp \
                 src/CSettings.cpp \
                 src/CXmlParser.cpp \
@@ -65,16 +58,16 @@ SOURCES      += src/main.cpp \
                 src/CParseLinks.cpp \
                 src/CTemplates.cpp \
                 src/CDownloadImg.cpp \
-                src/CParseImgMap.cpp
+                src/CParseImgMap.cpp \
+                src/CFindReplace.cpp
 
 RESOURCES     = res/inyokaedit_resources.qrc
 
 FORMS        += src/CInyokaEdit.ui \
                 src/CTableTemplate.ui \
-                src/qtfindreplacedialog/findreplaceform.ui \
-                src/qtfindreplacedialog/findreplacedialog.ui \
                 src/CProgressDialog.ui \
-                src/CSpellCheckDialog.ui
+                src/CSpellCheckDialog.ui \
+                src/CFindReplace.ui
 
 TRANSLATIONS += lang/inyokaedit_de.ts
 
