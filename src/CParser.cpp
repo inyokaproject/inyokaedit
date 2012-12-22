@@ -203,6 +203,15 @@ QString CParser::genOutput(const QString &sActFile) {
                 }
             }
             sHtmlBody += parseList(sSample);
+        } else if (it.text().trimmed().startsWith(">")) {
+            // Quotes
+            sSample = it.text();
+            int nQuotes = sSample.count(">");
+            sSample.remove(QRegExp("^>*"));
+            for (int n = 0; n < nQuotes; n++) {
+                sSample = "<blockquote>" + sSample + "</blockquote>";
+            }
+            sHtmlBody += sSample;
         } else {
             // Everything else
             // Filter comments (##)
