@@ -1,3 +1,15 @@
+inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
+
+  [ Thorsten Roth ]
+  * Using XDG directories.
+  * Reorganized image map hnadling; added smilies :-).
+  * Fixed LP: #1082678 (crash after pressing ENTER some seconds),
+    LP: 970365 (supporting quotes).
+  * Fixed downloading article wihout images.
+  * New IWLs.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 22 Dez 2012 14:33:39 +0200
+
 inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
   [ Thorsten Roth ]
