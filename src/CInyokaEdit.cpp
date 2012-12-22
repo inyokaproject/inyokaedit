@@ -570,6 +570,8 @@ void CInyokaEdit::createMenus() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QDir articleTemplateDir("");
+    QDir userArticleTemplateDir(m_UserDataDir.absolutePath() +
+                                "/templates/articles");
 
     // File menu (new from template)
     if (QFile::exists("/usr/share/" + m_pApp->applicationName().toLower()
@@ -588,11 +590,18 @@ void CInyokaEdit::createMenus() {
                                    + "/articles");
     }
 
+    QList<QDir> listTplDirs;
     if (articleTemplateDir.exists()) {
-        quint16 nTplFileCount = 0;
+        listTplDirs << articleTemplateDir;
+    }
+    if (userArticleTemplateDir.exists()) {
+        listTplDirs << userArticleTemplateDir;
+    }
 
-        m_pSigMapOpenTemplate = new QSignalMapper(this);
-        QFileInfoList fiListFiles = articleTemplateDir.entryInfoList(
+    m_pSigMapOpenTemplate = new QSignalMapper(this);
+
+    foreach (QDir tplDir, listTplDirs) {
+        QFileInfoList fiListFiles = tplDir.entryInfoList(
                     QDir::NoDotAndDotDot | QDir::Files);
         for (int nFile = 0; nFile < fiListFiles.count(); nFile++) {
             if ("tpl" == fiListFiles.at(nFile).suffix()) {
@@ -603,17 +612,14 @@ void CInyokaEdit::createMenus() {
                                                   fiListFiles.at(nFile).absoluteFilePath() );
                 connect(m_OpenTemplateFilesActions.last(), SIGNAL(triggered()),
                         m_pSigMapOpenTemplate, SLOT(map()));
-                nTplFileCount++;
             }
         }
-        m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
-        connect(m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
-                m_pFileOperations, SLOT(loadFile(QString)));
+    }
+    m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
+    connect(m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
+            m_pFileOperations, SLOT(loadFile(QString)));
 
-        if (0 == nTplFileCount) {
-            m_pUi->fileMenuFromTemplate->setDisabled(true);
-        }
-    } else {
+    if (0 == m_OpenTemplateFilesActions.size()) {
         m_pUi->fileMenuFromTemplate->setDisabled(true);
     }
 
