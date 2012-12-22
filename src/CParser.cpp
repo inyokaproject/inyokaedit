@@ -187,14 +187,14 @@ QString CParser::genOutput(const QString &sActFile) {
             sSample = it.text();
             it = it.next();
             QTextBlock tmpBlock = it;  // Next to last block
-            for (; it.isValid()
-                 && !(p_docCopyOfRawText->lastBlock() < it); it = it.next()) {
-                if (it.text().trimmed().startsWith("* ")
-                        || it.text().trimmed().startsWith("1. ")) {
-                    sSample += m_sSEPARATOR + it.text();
-                    tmpBlock = it;
+            for (; tmpBlock.isValid()
+                 && !(p_docCopyOfRawText->lastBlock() < tmpBlock);
+                 tmpBlock = tmpBlock.next()) {
+                if (tmpBlock.text().trimmed().startsWith("* ")
+                        || tmpBlock.text().trimmed().startsWith("1. ")) {
+                    sSample += m_sSEPARATOR + tmpBlock.text();
                 } else {
-                    it = tmpBlock;
+                    it = tmpBlock.previous();
                     break;
                 }
 
