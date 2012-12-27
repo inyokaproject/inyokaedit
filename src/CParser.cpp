@@ -1131,11 +1131,24 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
     else if (sListElements[0].toLower() == trUtf8("PPA").toLower()) {
         QString sOutsideBox("");
         QString sRemark("");
+        QString sUser("");
+        QString sPPA("");
         sOutput = "";
-        if (sListElements.size() == 3) {
+        if (sListElements.size() >= 2) {
             // Replace possible spaces
-            for (int i = 1; i < sListElements.size(); i++) {
-                sListElements[i].replace(" ", "_");
+            sListElements[1].replace(" ", "_");
+            if (sListElements[1].contains('/')) {
+                QStringList sList;
+                sList = sListElements[1].split("/");
+                sUser = sList[0];
+                sPPA = sList[1];
+            } else if (sListElements.size() >= 3) {
+                sListElements[2].replace(" ", "_");
+                sUser = sListElements[1];
+                sPPA = sListElements[2];
+            } else {
+                sUser = sListElements[1];
+                sPPA = sListElements[1];
             }
 
             // Generate output
@@ -1145,8 +1158,7 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
                     + "\" class=\"internal\">" + trUtf8("Hinzufügen") + "</a> "
                     + trUtf8("des PPAs:") + "</p>";
             sOutsideBox += "<ul>\n<li>\n";
-            sOutsideBox += "<p><strong>ppa:" + sListElements[1] + "/"
-                    + sListElements[2] + "</strong></p>\n";
+            sOutsideBox += "<p><strong>ppa:" + sUser + "/" + sPPA + "</strong></p>\n";
             sOutsideBox += "</li>\n</ul>";
 
             sOutput = trUtf8("Zusätzliche") + " <a href=\""
@@ -1155,14 +1167,16 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
                     + "</a> " + trUtf8("können das System gefährden.");
             QString sTmpLink = "<img src=\"img/interwiki/ppa.png\" "
                     "class=\"image-default\" alt=\"PPA\" /> "
-                    "<a href=\"https://launchpad.net/~" + sListElements[1]
-                    + "/+archive/" + sListElements[2] + "\" rel=\"nofollow\" "
+                    "<a href=\"https://launchpad.net/~" + sUser
+                    + "/+archive/" + sPPA + "\" rel=\"nofollow\" "
                     "class=\"external\">" + trUtf8("PPA Beschreibung") + "</a>";
             QString sTmpLink2 = "<a href=\"https://launchpad.net/~"
-                    + sListElements[1] + "\" class=\"interwiki "
-                    "interwiki-lpuser\">" + sListElements[1] + "</a>";
-            sRemark = trUtf8("Weitere Informationen bietet die %1 vom Benutzer"
-                             "/Team %2.").arg(sTmpLink).arg(sTmpLink2);
+                    + sUser + "\" class=\"interwiki "
+                    "interwiki-lpuser\">" + sUser + "</a>";
+            sRemark = trUtf8("Ein PPA unterstützt nicht zwangsläufig alle "
+                             "Ubuntu-Versionen. Weitere Informationen bietet "
+                             "die %1 vom Benutzer/Team %2.")
+                      .arg(sTmpLink).arg(sTmpLink2);
         }
 
         sOutput = sOutsideBox + insertBox("box warning",
@@ -1236,10 +1250,11 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
                     + trUtf8("Fremdquelle") + "</a>";
             QString sTmpLink2 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/"
                     + trUtf8("Paketquellen_freischalten") + "\" "
-                    "class=\"internal\">" + trUtf8("Paketquellen freischalten")
+                    "class=\"internal\">" + trUtf8("Paketquelle freischalten")
                     + "</a>";
             sOutput = "<p>" + trUtf8("Um aus der %1 zu installieren, muss man "
-                                     "die folgenden %2:")
+                                     "unabhängig von der Ubuntu-Version die "
+                                     "folgende %2:")
                     .arg(sTmpLink).arg(sTmpLink2) + "</p>\n";
 
             QString sTmpLink3 = "<a href=\"" + m_pSettings->getInyokaUrl() + "/"
@@ -1434,7 +1449,7 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
 
         // No style info -> default
         if (sImageStyle == "") {
-            sOutput += "<tr class=\"kopf\">\n";
+            sOutput += "<tr class=\"normal\">\n";
         } else {
             sOutput += "<tr class=\"" + sImageStyle + "-kopf\">\n";
         }
