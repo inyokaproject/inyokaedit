@@ -1,6 +1,7 @@
 inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
 
   [ Thorsten Roth ]
+  * Syntax highlighting via config file.
   * Using XDG directories.
   * Template updates (added Builddeps).
   * Reorganized image map hnadling; added smilies :-).
@@ -10,7 +11,7 @@ inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
   * Reorganized search/replace.
   * New IWLs.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 22 Dez 2012 23:03:53 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 27 Dez 2012 21:49:12 +0200
 
 inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
