@@ -95,7 +95,6 @@ void CFindReplace::showEvent(QShowEvent *event) {
     } else {
         event->accept();
     }
-
 }
 
 // ----------------------------------------------------------------------------

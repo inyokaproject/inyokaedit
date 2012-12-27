@@ -29,148 +29,363 @@
 #include "./CHighlighter.h"
 
 CHighlighter::CHighlighter(CTemplates *pTemplates,
+                           const QString &sAppName,
+                           const QString &sStyleFile,
                            QTextDocument *pParent)
-    : QSyntaxHighlighter(pParent) {
+    : QSyntaxHighlighter(pParent),
+      m_pTemplates(pTemplates),
+      m_sSEPARATOR("|") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QStringList sListMacroKeywords;
-    sListMacroKeywords << pTemplates->getTransTemplate()
-                       << pTemplates->getTransTOC()
-                       << pTemplates->getTransImage()
-                       << pTemplates->getTransAnchor()
-                       << pTemplates->getTransAttachment()
-                       << pTemplates->getTransDate();
+#if defined _WIN32
+    m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+                                sAppName.toLower(), sStyleFile);
+#else
+    m_pStyleSet = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+                                sAppName.toLower(), sStyleFile);
+#endif
 
-    QStringList sListParserKeywords;
-    sListParserKeywords << pTemplates->getTransTemplate().toLower()
-                        << pTemplates->getTransCodeBlock().toLower();
+    this->readStyle();
+    this->getTranslations();
+    this->defineRules();
+}
 
-    HighlightingRule myRule;
-    QStringList interwikiLinksPatterns;
-    QStringList macroPatterns;
-    QStringList parserPatterns;
-    QStringList textformatPatterns;
-    QStringList imgMapPatterns;
+CHighlighter::~CHighlighter() {
+}
 
-    // Headings(= Heading =)
-    m_headingsFormat.setFontWeight(QFont::Bold);
-    m_headingsFormat.setForeground(Qt::darkGreen);
-    myRule.format = m_headingsFormat;
-    for (int i = 5; i > 0; i--) {
-        myRule.pattern = QRegExp("={" + QString::number(i) + "}[^=]+={" +
-                                 QString::number(i) + "}");
-        m_highlightingRules.append(myRule);  // Collecting highlighting rules
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::readStyle() {
+    bool bOk = false;
+    bSystemForeground = false;
+    bSystemBackground = false;
+    QString sTmpKey;
+    QColor tmpColor;
+
+    if (!QFile::exists(m_pStyleSet->fileName())) {
+        qWarning() << "Could not find/open highlighting style file:"  <<
+                      m_pStyleSet->fileName();
     }
 
-    // Links(everything between [...])
-    m_linksFormat.setForeground(Qt::darkBlue);
-    // 1-5 = at beginning and end, between A-Z, a-z, 0-9, space, -, _, #
-    // myRule.pattern = QRegExp("\\[{1,1}[\\w\\s-_:\\(\\)/\\.#]+\\]{1,1}");
-    myRule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
-    myRule.format = m_linksFormat;
-    m_highlightingRules.append(myRule);  // Collecting highlighting rules
+    m_colorForeground = QApplication::palette().color(QPalette::Text);
+    sTmpKey = m_pStyleSet->value("Foreground", "System")
+            .toString();
+    if (sTmpKey.toLower() != "system") {
+        tmpColor.setRgb(sTmpKey.toInt(&bOk, 16));
+        if (bOk) {
+            m_colorForeground = tmpColor;
+        }
+    } else {
+        bSystemForeground = true;
+    }
 
-    // Cells style in tables
-    m_tablecellsFormat.setForeground(Qt::darkMagenta);
-    myRule.pattern = QRegExp("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
-    myRule.format = m_tablecellsFormat;
-    m_highlightingRules.append(myRule);
+    m_colorBackground = QApplication::palette().color(QPalette::Base);
+    sTmpKey = m_pStyleSet->value("Background", "System")
+            .toString();
+    if (sTmpKey.toLower() != "system") {
+        tmpColor.setRgb(sTmpKey.toInt(&bOk, 16));
+        if (bOk) {
+            m_colorBackground = tmpColor;
+        }
+    } else {
+        bSystemBackground = true;
+    }
 
-    // Define interwiki link keywords
-    foreach (QStringList tmpStrList, pTemplates->getIWLs()->getElementTypes()) {
-        foreach (QString tmpStr, tmpStrList) {
-            interwikiLinksPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
+    m_pStyleSet->beginGroup("Style");
+    sTmpKey = m_pStyleSet->value("Heading", "0x008000" + m_sSEPARATOR + "true")
+            .toString();
+    this->evalKey(sTmpKey, m_headingsFormat);
+    sTmpKey = m_pStyleSet->value("Hyperlink", "0x000080").toString();
+    this->evalKey(sTmpKey, m_linksFormat);
+    sTmpKey = m_pStyleSet->value("InterWiki", "0x0000ff").toString();
+    this->evalKey(sTmpKey, m_interwikiLinksFormat);
+    sTmpKey = m_pStyleSet->value("Macro", "0x008080").toString();
+    this->evalKey(sTmpKey, m_macrosFormat);
+    sTmpKey = m_pStyleSet->value("Parser", "0x800000" + m_sSEPARATOR + "true")
+            .toString();
+    this->evalKey(sTmpKey, m_parserFormat);
+    sTmpKey = m_pStyleSet->value("Comment", "0xa0a0a4").toString();
+    this->evalKey(sTmpKey, m_commentFormat);
+    sTmpKey = m_pStyleSet->value("ImgMap", "0x808000").toString();
+    this->evalKey(sTmpKey, m_imgMapFormat);
+    sTmpKey = m_pStyleSet->value("TableCellFormating", "0x800080").toString();
+    this->evalKey(sTmpKey, m_tablecellsFormat);
+    sTmpKey = m_pStyleSet->value("TextFormating", "0xff0000").toString();
+    this->evalKey(sTmpKey, m_textformatFormat);
+    sTmpKey = m_pStyleSet->value("List", "0xff0000").toString();
+    this->evalKey(sTmpKey, m_listFormat);
+    sTmpKey = m_pStyleSet->value("NewTableLine", "0xff0000").toString();
+    this->evalKey(sTmpKey, m_newTableLineFormat);
+    sTmpKey = m_pStyleSet->value("Misc", "0xff0000").toString();
+    this->evalKey(sTmpKey, m_miscFormat);
+    m_pStyleSet->endGroup();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
+    bool bOk = false;
+    QColor tmpColor;
+    QBrush tmpBrush;
+
+    // Set defaults
+    tmpBrush.setColor(Qt::transparent);
+    tmpBrush.setStyle(Qt::SolidPattern);
+    charFormat.setBackground(tmpBrush);
+    tmpBrush.setColor(Qt::black);
+    tmpBrush.setStyle(Qt::SolidPattern);
+    charFormat.setForeground(tmpBrush);
+    charFormat.setFontWeight(QFont::Normal);
+    charFormat.setFontItalic(false);
+
+    QStringList sListTmp = sKey.split(m_sSEPARATOR);
+
+    // Foreground color
+    if (sListTmp.size() > 0) {
+        tmpColor.setRgb(sListTmp[0].trimmed().toInt(&bOk, 16));
+        if (bOk) {
+            tmpBrush.setColor(tmpColor);
+            charFormat.setForeground(tmpBrush);
+        }
+        // Font weight
+        if (sListTmp.size() > 1) {
+            if ("true" == sListTmp[1].trimmed().toLower()) {
+                charFormat.setFontWeight(QFont::Bold);
+            }
+            // Italic
+            if (sListTmp.size() > 2) {
+                if ("true" == sListTmp[2].trimmed().toLower()) {
+                    charFormat.setFontItalic(true);
+                }
+                // Background
+                if (sListTmp.size() > 3) {
+                    tmpColor.setRgb(sListTmp[3].trimmed().toInt(&bOk, 16));
+                    if (bOk) {
+                        tmpBrush.setColor(tmpColor);
+                        charFormat.setBackground(tmpBrush);
+                    }
+                }
+            }
         }
     }
+}
 
-    // Format Interwiki Links
-    m_interwikiLinksFormat.setForeground(Qt::blue);
-    // Collecting highlighting rules
-    foreach (const QString &sPattern, interwikiLinksPatterns) {
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::saveStyle() {
+    if (bSystemForeground) {
+        m_pStyleSet->setValue("Foreground", "System");
+    } else {
+        m_pStyleSet->setValue("Foreground", "0x" + m_colorForeground.name()
+                              .remove("#"));
+    }
+    if (bSystemBackground) {
+        m_pStyleSet->setValue("Background", "System");
+    } else {
+        m_pStyleSet->setValue("Background", "0x" + m_colorBackground.name()
+                              .remove("#"));
+    }
+
+    m_pStyleSet->beginGroup("Style");
+    this->writeFormat("TextFormating", m_textformatFormat);
+    this->writeFormat("Heading", m_headingsFormat);
+    this->writeFormat("Hyperlink", m_linksFormat);
+    this->writeFormat("InterWiki", m_interwikiLinksFormat);
+    this->writeFormat("Macro", m_macrosFormat);
+    this->writeFormat("Parser", m_parserFormat);
+    this->writeFormat("List", m_listFormat);
+    this->writeFormat("NewTableLine", m_newTableLineFormat);
+    this->writeFormat("TableCellFormating", m_tablecellsFormat);
+    this->writeFormat("ImgMap", m_imgMapFormat);
+    this->writeFormat("Misc", m_miscFormat);
+    this->writeFormat("Comment", m_commentFormat);
+    m_pStyleSet->endGroup();
+}
+
+// ----------------------------------------------------------------------------
+
+void CHighlighter::writeFormat(const QString &sKey,
+                               const QTextCharFormat &charFormat) {
+    // Foreground color
+    QString sValue = "0x" + charFormat.foreground().color().name().remove("#");
+
+    // Font weight
+    if (QFont::Bold == charFormat.fontWeight()) {
+        sValue += m_sSEPARATOR + "true";
+    } else {
+        sValue += m_sSEPARATOR + "false";
+    }
+
+    // Italic
+    if (charFormat.fontItalic()) {
+        sValue += m_sSEPARATOR + "true";
+    } else {
+        sValue += m_sSEPARATOR + "false";
+    }
+
+    // Background color
+    if (charFormat.background().isOpaque()) {
+        sValue += m_sSEPARATOR +
+                  "0x" + charFormat.background().color().name().remove("#");
+    }
+
+    m_pStyleSet->setValue(sKey, sValue);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::getTranslations() {
+    m_sListMacroKeywords << m_pTemplates->getTransTemplate()
+                         << m_pTemplates->getTransTOC()
+                         << m_pTemplates->getTransImage()
+                         << m_pTemplates->getTransAnchor()
+                         << m_pTemplates->getTransAttachment()
+                         << m_pTemplates->getTransDate();
+
+    m_sListParserKeywords << m_pTemplates->getTransTemplate().toLower()
+                          << m_pTemplates->getTransCodeBlock().toLower();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::defineRules() {
+    HighlightingRule myRule;
+    QStringList sListRegExpPatterns;
+    QString sTmpRegExp;
+
+    // Headings (= Heading =)
+    myRule.format = m_headingsFormat;
+    for (int i = 5; i > 0; i--) {
+        myRule.pattern = QRegExp("^\\s*={" + QString::number(i) + "}[^=]+={" +
+                                 QString::number(i) + "}");
+        m_highlightingRules.append(myRule);
+    }
+
+    // Links - everything between [...]
+    myRule.format = m_linksFormat;
+    myRule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
+    m_highlightingRules.append(myRule);
+
+    // New table line
+    sListRegExpPatterns.clear();
+    sListRegExpPatterns << QRegExp::escape("+++") << QRegExp::escape("||");
+    foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_newTableLineFormat;
+        m_highlightingRules.append(myRule);
+    }
+
+    // Cell style in tables
+    myRule.format = m_tablecellsFormat;
+    myRule.pattern = QRegExp("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+    m_highlightingRules.append(myRule);
+
+    // InterWiki-Links
+    sListRegExpPatterns.clear();
+    foreach (QStringList tmpStrList, m_pTemplates->getIWLs()->getElementTypes()) {
+        foreach (QString tmpStr, tmpStrList) {
+            sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
+        }
+    }
+    foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.format = m_interwikiLinksFormat;
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         m_highlightingRules.append(myRule);
     }
 
-    // Define macro keywords([[Vorlage(...) etc.)
-    foreach (QString tmpStr, sListMacroKeywords) {
-        macroPatterns << QRegExp::escape("[[" + tmpStr + "(");
+    // Macros ([[Vorlage(...) etc.)
+    sListRegExpPatterns.clear();
+    foreach (QString tmpStr, m_sListMacroKeywords) {
+        sListRegExpPatterns << QRegExp::escape("[[" + tmpStr + "(");
     }
-    macroPatterns << QRegExp::escape(")]]");
-
-    // Format macros
-    m_macrosFormat.setForeground(Qt::darkCyan);
-    // Collecting highlighting rules
-    foreach (const QString &sPattern, macroPatterns) {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
+    sListRegExpPatterns << QRegExp::escape(")]]");
+    foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.format = m_macrosFormat;
-        m_highlightingRules.append(myRule);
-    }
-
-    // Define parser keywords({{{#!code etc.)
-    foreach (QString tmpStr, sListParserKeywords) {
-        parserPatterns << QRegExp::escape("{{{#!" + tmpStr);
-    }
-    parserPatterns << QRegExp::escape("{{{") << QRegExp::escape("}}}");
-
-    // Format parser
-    m_parserFormat.setForeground(Qt::darkRed);
-    m_parserFormat.setFontWeight(QFont::Bold);
-    // Collecting highlighting rules
-    foreach (const QString &sPattern, parserPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
+        m_highlightingRules.append(myRule);
+    }
+
+    // Parser ({{{#!code etc.)
+    sListRegExpPatterns.clear();
+    foreach (QString tmpStr, m_sListParserKeywords) {
+        sListRegExpPatterns << QRegExp::escape("{{{#!" + tmpStr);
+    }
+    sListRegExpPatterns << QRegExp::escape("{{{") << QRegExp::escape("}}}");
+    foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.format = m_parserFormat;
+        myRule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
         m_highlightingRules.append(myRule);
     }
 
-    // Define textformat keywords(Bold, italic etc.)
-    textformatPatterns << QRegExp::escape("'''") << QRegExp::escape("''")
-                       << QRegExp::escape("`") << QRegExp::escape(" * ")
-                       << QRegExp::escape("__") << QRegExp::escape("--(")
-                       << QRegExp::escape(")--") << QRegExp::escape("^^(")
-                       << QRegExp::escape(")^^") << QRegExp::escape(",,(")
-                       << QRegExp::escape("),,") << QRegExp::escape("~+(")
-                       << QRegExp::escape(")+~") << QRegExp::escape("~-(")
-                       << QRegExp::escape(")-~") << QRegExp::escape("[[BR]]")
-                       << QRegExp::escape("\\\\") << QRegExp::escape("#tag:")
-                       << QRegExp::escape("# tag:") << QRegExp::escape("+++")
-                       << QRegExp::escape(" 1. ") << QRegExp::escape("----")
-                       << QRegExp::escape("||");
-
-    // Format textformats
-    m_textformatFormat.setForeground(Qt::red);
-    // Collecting highlighting rules
-    foreach (const QString &sPattern, textformatPatterns) {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+    // Define textformat keywords (bold, italic, etc.)
+    sListRegExpPatterns.clear();
+    sListRegExpPatterns.append(m_pTemplates->getListFormatStart());
+    sListRegExpPatterns.append(m_pTemplates->getListFormatEnd());
+    sListRegExpPatterns.removeDuplicates();
+    foreach (QString sPattern, sListRegExpPatterns) {
         myRule.format = m_textformatFormat;
+        if (sPattern.startsWith("RegExp=")) {
+            sTmpRegExp = sPattern.remove("RegExp=");
+        } else {
+            sTmpRegExp = QRegExp::escape(sPattern);
+        }
+        myRule.pattern = QRegExp(sTmpRegExp, Qt::CaseSensitive);
         m_highlightingRules.append(myRule);
     }
 
-    // Comments(## comment)
-    m_singleLineCommentFormat.setForeground(Qt::gray);
+    // Comments (## comment)
+    myRule.format = m_commentFormat;
     myRule.pattern = QRegExp("^##.*$");
-    myRule.format = m_singleLineCommentFormat;
-    m_highlightingRules.append(myRule);  // Collecting highlighting rules
+    m_highlightingRules.append(myRule);
 
-    // Define image map elements
-    foreach (QString tmpStr, pTemplates->getListFlags()) {
-        imgMapPatterns << QRegExp::escape(tmpStr);
+    // Image map elements (flags, smilies, etc.)
+    sListRegExpPatterns.clear();
+    foreach (QString tmpStr, m_pTemplates->getListFlags()) {
+        sListRegExpPatterns << QRegExp::escape(tmpStr);
     }
-    foreach (QString tmpStr, pTemplates->getListSmilies()) {
-        imgMapPatterns << QRegExp::escape(tmpStr);
+    foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
+        sListRegExpPatterns << QRegExp::escape(tmpStr);
     }
-
-    // Format flags
-    m_flagsFormat.setForeground(Qt::darkYellow);
-    // Collecting highlighting rules
-    foreach (const QString &sPattern, imgMapPatterns) {
+    foreach (const QString &sPattern, sListRegExpPatterns) {
+        myRule.format = m_imgMapFormat;
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
-        myRule.format = m_flagsFormat;
+        m_highlightingRules.append(myRule);
+    }
+
+    // List
+    sListRegExpPatterns.clear();
+    sListRegExpPatterns << QRegExp::escape(" * ") << QRegExp::escape(" 1. ");
+    foreach (const QString &sPattern, sListRegExpPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_listFormat;
+        m_highlightingRules.append(myRule);
+    }
+
+    // Misc
+    sListRegExpPatterns.clear();
+    sListRegExpPatterns << QRegExp::escape("[[BR]]") << QRegExp::escape("\\\\")
+                        << QRegExp::escape("#tag:") << QRegExp::escape("# tag:")
+                        << QRegExp::escape("----");
+    foreach (const QString &sPattern, sListRegExpPatterns) {
+        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+        myRule.format = m_miscFormat;
         m_highlightingRules.append(myRule);
     }
 }
 
-CHighlighter::~CHighlighter() {
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QColor CHighlighter::getForeground() const {
+    return m_colorForeground;
+}
+QColor CHighlighter::getBackground() const {
+    return m_colorBackground;
 }
 
 // ----------------------------------------------------------------------------
