@@ -63,6 +63,7 @@ class CSettings {
     qint32 getReloadPreviewKey() const;
     quint32 getTimedPreview() const;
     bool getSyncScrollbars() const;
+    QString getStyleFile() const;
 
     // Font
     QFont getEditorFont() const;
@@ -112,6 +113,7 @@ class CSettings {
     QString m_sReloadPreviewKey;
     quint32 m_nTimedPreview;
     bool m_bSyncScrollbars;
+    QString m_sStyleFile;
 
     // Font
     QFont m_EditorFont;

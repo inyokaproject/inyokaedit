@@ -149,6 +149,8 @@ void CInyokaEdit::createObjects() {
                             m_pTemplates);
 
     m_pHighlighter = new CHighlighter(m_pTemplates,
+                                      m_pApp->applicationName(),
+                                      m_pSettings->getStyleFile(),
                                       m_pEditor->document());
 
     /**
@@ -192,6 +194,10 @@ void CInyokaEdit::setupEditor() {
                               + "_64x64.png"));
 
     m_pEditor->setFont(m_pSettings->getEditorFont());
+    QPalette pal;
+    pal.setColor(QPalette::Base, m_pHighlighter->getBackground().name());
+    pal.setColor(QPalette::Text, m_pHighlighter->getForeground().name());
+    m_pEditor->setPalette(pal);
 
     // Find/replace dialogs
     m_pFindReplace->setEditor(m_pEditor);
@@ -1688,6 +1694,7 @@ void CInyokaEdit::closeEvent(QCloseEvent *event) {
         } else {
             m_pSettings->writeSettings(saveGeometry(), saveState());
         }
+        m_pHighlighter->saveStyle();
         event->accept();
     } else {
         event->ignore();
