@@ -96,6 +96,7 @@
     <addaction name="spellCheckerAct"/>
     <addaction name="DownloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
+    <addaction name="preferencesAct"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
@@ -745,6 +746,11 @@
   <action name="showSyntaxOverviewAct">
    <property name="text">
     <string>&amp;Syntax overview</string>
+   </property>
+  </action>
+  <action name="preferencesAct">
+   <property name="text">
+    <string>Preferences</string>
    </property>
   </action>
  </widget>

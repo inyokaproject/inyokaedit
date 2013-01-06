@@ -42,7 +42,8 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CTemplates.h \
                 src/CDownloadImg.h \
                 src/CParseImgMap.h \
-                src/CFindReplace.h
+                src/CFindReplace.h \
+                src/CSettingsDialog.h
 
 SOURCES      += src/main.cpp \
                 src/CInyokaEdit.cpp \
@@ -59,7 +60,8 @@ SOURCES      += src/main.cpp \
                 src/CTemplates.cpp \
                 src/CDownloadImg.cpp \
                 src/CParseImgMap.cpp \
-                src/CFindReplace.cpp
+                src/CFindReplace.cpp  \
+                src/CSettingsDialog.cpp
 
 RESOURCES     = res/inyokaedit_resources.qrc
 
@@ -67,7 +69,8 @@ FORMS        += src/CInyokaEdit.ui \
                 src/CTableTemplate.ui \
                 src/CProgressDialog.ui \
                 src/CSpellCheckDialog.ui \
-                src/CFindReplace.ui
+                src/CFindReplace.ui \
+                src/CSettingsDialog.ui
 
 TRANSLATIONS += lang/inyokaedit_de.ts
 

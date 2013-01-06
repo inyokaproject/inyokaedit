@@ -41,6 +41,7 @@
 #include "./CDownload.h"
 #include "./CFileOperations.h"
 #include "./CTableTemplate.h"
+#include "./CSettingsDialog.h"
 
 #ifndef DISABLE_SPELLCHECKER
 #include "./CSpellChecker.h"
@@ -63,6 +64,7 @@ class CSettings;
 class CDownload;
 class CFileOperations;
 class CTabelTemplate;
+class CSettingsDialog;
 
 #define sVERSION "0.8.0"
 
@@ -212,6 +214,7 @@ class CInyokaEdit : public QMainWindow {
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;
     CFindReplace *m_pFindReplace;
+    CSettingsDialog *m_pSettingsDialog;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
     QFrame *m_pWebviewFrame;
