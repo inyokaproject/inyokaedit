@@ -175,6 +175,9 @@ void CInyokaEdit::createObjects() {
                                           m_pTemplates);
 
     m_pPreviewTimer = new QTimer(this);
+    
+    m_pSettingsDialog = new CSettingsDialog(m_pSettings,
+                                            this);
 }
 
 // ----------------------------------------------------------------------------
@@ -368,6 +371,10 @@ void CInyokaEdit::createActions() {
     // Clear temp. image download folder
     connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()),
             this, SLOT(deleteTempImages()));
+    
+    // Show settings dialog
+    connect(m_pUi->preferencesAct,SIGNAL(triggered()),
+            m_pSettingsDialog,SLOT(show()));
 
     // ------------------------------------------------------------------------
 

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CSettingsDialog</class>
+ <widget class="QDialog" name="CSettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>457</width>
+    <height>363</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="generalTab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="previewInEditorCheck">
+         <property name="text">
+          <string>Enable preview in editor</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="previewAlongsideCheck">
+         <property name="text">
+          <string>Enable preview alongside</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="inyokaUrlLabel">
+         <property name="text">
+          <string>URL to Inyoka</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="inyokaUrlEdit"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QCheckBox" name="articleImageDownloadCheck">
+         <property name="text">
+          <string>Enable download of article images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="spellCheckLangLabel">
+         <property name="text">
+          <string>Language of spell checker</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="spellCheckerLangEdit"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QCheckBox" name="linkCheckingCheck">
+         <property name="text">
+          <string>Enable link checking</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="autosaveEdit">
+         <property name="toolTip">
+          <string>Time which to autosave an article after (sec, 0 means disabled)</string>
+         </property>
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="autosaveLabel">
+         <property name="text">
+          <string>Autosave time delay</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="reloadPreviewKeyLabel">
+         <property name="text">
+          <string>Reload preview key</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QSpinBox" name="timedPreviewsEdit"/>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="timedPreviewLabel">
+         <property name="text">
+          <string>Number of timed previews</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QCheckBox" name="scrollbarSyncCheck">
+         <property name="text">
+          <string>Enable scrollbar synchronization</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="codeCompletionCheck">
+         <property name="text">
+          <string>Enable code completion</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="reloadPreviewKeyEdit"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="fontTab">
+      <attribute name="title">
+       <string>Font</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="fontFamilyLabel">
+         <property name="text">
+          <string>Font Family</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="fontFamilyEdit"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="fontSizeEdit"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="fontSizeLabel">
+         <property name="text">
+          <string>Font size</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="lastOpenedTab">
+      <attribute name="title">
+       <string>Last opened</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="numberRecentFilesLabel">
+         <property name="text">
+          <string>Number of entries in recent files list</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="numberRecentFilesEdit">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>CSettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CSettingsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

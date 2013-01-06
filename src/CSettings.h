@@ -31,10 +31,11 @@
 #include <QSettings>
 #include <QMessageBox>
 
+class CSettingsDialog;
+
 /**
  * \class CSettings
  * \brief Load and save settings.
- * \todo Adding a graphical settings dialog.
  */
 class CSettings {
   public:
@@ -90,6 +91,9 @@ class CSettings {
     void setWholeWordState(const bool bNewState);
     bool getUseRegExpState() const;
     void setUseRegExpState(const bool bNewState);
+    
+    // Allow CSettingsDialog to access private members
+    friend class CSettingsDialog;
 
   private:
     QSettings *m_pSettings;
