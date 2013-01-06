@@ -29,5 +29,6 @@
         <file>images/view-refresh.png</file>
         <file>images/go-previous.png</file>
         <file>images/document-print.png</file>
+        <file>images/preferences-system.png</file>
     </qresource>
 </RCC>

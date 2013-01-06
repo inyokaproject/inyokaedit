@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -82,7 +82,6 @@ void CSettings::readSettings() {
                                          15).toUInt();
     m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
                                            true).toBool();
-    m_sStyleFile = m_pSettings->value("Style", "standard-style").toString();
 
     // Font settings
     m_pSettings->beginGroup("Font");
@@ -162,22 +161,15 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
     m_pSettings->setValue("TimedPreview", m_nTimedPreview);
     m_pSettings->setValue("SyncScrollbars", m_bSyncScrollbars);
-    m_pSettings->setValue("Style", m_sStyleFile);
 
     // Remove obsolete entry
     m_pSettings->remove("ConfVersion");
     m_pSettings->remove("ShowStatusbar");
-    m_pSettings->beginGroup("FindDialog");
-    m_pSettings->remove("");
-    m_pSettings->endGroup();
-    m_pSettings->beginGroup("FindReplaceDialog");
-    m_pSettings->remove("");
-    m_pSettings->endGroup();
 
     // Font settings
     m_pSettings->beginGroup("Font");
-    m_pSettings->setValue("FontFamily", m_EditorFont.family());
-    m_pSettings->setValue("FontSize", m_EditorFont.pointSizeF());
+    m_pSettings->setValue("FontFamily", m_sFontFamily);
+    m_pSettings->setValue("FontSize", m_nFontsize);
     m_pSettings->endGroup();
 
     // Recent files
@@ -273,10 +265,6 @@ quint32 CSettings::getTimedPreview() const {
 
 bool CSettings::getSyncScrollbars() const {
     return m_bSyncScrollbars;
-}
-
-QString CSettings::getStyleFile() const {
-    return m_sStyleFile;
 }
 
 // ----------------------------------------------------

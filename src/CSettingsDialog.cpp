@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,26 +21,30 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Provide a graphical interface to the application's settings.
+ * Settings gui.
  */
 
-
-#include "CSettingsDialog.h"
+#include <QDebug>
+#include "./CSettingsDialog.h"
 #include "ui_CSettingsDialog.h"
 
 #include "./CSettings.h"
 
 CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *parent)
     : QDialog(parent),
-      m_pSettings(pSettings)
-{
+      m_pSettings(pSettings) {
+    qDebug() << "Calling" << Q_FUNC_INFO;
+
     m_pUi = new Ui::CSettingsDialog();
     m_pUi->setupUi(this);
-    
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowContextHelpButtonHint);
+    m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
+
     ///////////////////
     // Load Settings //
     ///////////////////
-    
+
     // General
     m_pUi->codeCompletionCheck->setChecked(m_pSettings->getCodeCompletion());
     m_pUi->previewInEditorCheck->setChecked(m_pSettings->getPreviewInEditor());
@@ -50,32 +54,35 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *parent)
     m_pUi->spellCheckerLangEdit->setText(m_pSettings->getSpellCheckerLanguage());
     m_pUi->linkCheckingCheck->setChecked(m_pSettings->getCheckLinks());
     m_pUi->autosaveEdit->setValue(m_pSettings->getAutoSave());
-    m_pUi->reloadPreviewKeyEdit->setValue(m_pSettings->getReloadPreviewKey());
+    m_pUi->reloadPreviewKeyEdit->setText("0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->getTimedPreview());
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->getSyncScrollbars());
-    
+
     // Font
-    m_pUi->fontFamilyEdit->setText(m_pSettings->m_sFontFamily);
+    m_pUi->fontComboBox->setCurrentFont(QFont(m_pSettings->m_sFontFamily));
     m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
-    
+
     // Recent files
-    m_pUi->numberRecentFilesEdit->setValue(m_pSettings->getMaxNumOfRecentFiles());
-    
+    m_pUi->numberRecentFilesEdit->setValue(m_pSettings->getNumOfRecentFiles());
     m_pUi->numberRecentFilesEdit->setMaximum(m_pSettings->getMaxNumOfRecentFiles());
 }
 
-CSettingsDialog::~CSettingsDialog(){
-    if (m_pUi){
+CSettingsDialog::~CSettingsDialog() {
+    if (m_pUi) {
         delete m_pUi;
         m_pUi = NULL;
     }
 }
 
-void CSettingsDialog::accept(){
-    QString tmpReloadPreviewKey;
-    tmpReloadPreviewKey.setNum(m_pUi->reloadPreviewKeyEdit->value());
-    tmpReloadPreviewKey.append("0x");
-    
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CSettingsDialog::accept() {
+    QString tmpReloadPreviewKey(m_pUi->reloadPreviewKeyEdit->text());
+    if (!tmpReloadPreviewKey.startsWith("0x")) {
+        tmpReloadPreviewKey = "0x" + tmpReloadPreviewKey;
+    }
+
     // General
     m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
     m_pSettings->m_bPreviewInEditor = m_pUi->previewInEditorCheck->isChecked();
@@ -88,13 +95,13 @@ void CSettingsDialog::accept(){
     m_pSettings->m_sReloadPreviewKey = tmpReloadPreviewKey;
     m_pSettings->m_nTimedPreview = m_pUi->timedPreviewsEdit->value();
     m_pSettings->m_bSyncScrollbars = m_pUi->scrollbarSyncCheck->isChecked();
-    
+
     // Font
-    m_pSettings->m_sFontFamily = m_pUi->fontFamilyEdit->text();
+    m_pSettings->m_sFontFamily = m_pUi->fontComboBox->currentFont().family();
     m_pSettings->m_nFontsize = m_pUi->fontSizeEdit->value();
-    
+
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
-    
+
     QDialog::accept();
 }

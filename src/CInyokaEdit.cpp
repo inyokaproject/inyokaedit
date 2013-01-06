@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -149,8 +149,6 @@ void CInyokaEdit::createObjects() {
                             m_pTemplates);
 
     m_pHighlighter = new CHighlighter(m_pTemplates,
-                                      m_pApp->applicationName(),
-                                      m_pSettings->getStyleFile(),
                                       m_pEditor->document());
 
     /**
@@ -194,10 +192,6 @@ void CInyokaEdit::setupEditor() {
                               + "_64x64.png"));
 
     m_pEditor->setFont(m_pSettings->getEditorFont());
-    QPalette pal;
-    pal.setColor(QPalette::Base, m_pHighlighter->getBackground().name());
-    pal.setColor(QPalette::Text, m_pHighlighter->getForeground().name());
-    m_pEditor->setPalette(pal);
 
     // Find/replace dialogs
     m_pFindReplace->setEditor(m_pEditor);
@@ -1653,6 +1647,7 @@ void CInyokaEdit::reportBug() {
 
 // About info box
 void CInyokaEdit::about() {
+    QDate nYear = QDate::currentDate();
     QString sUserIcon("");
     if (QFile::exists("/usr/share/"
                       + m_pApp->applicationName().toLower()
@@ -1669,13 +1664,14 @@ void CInyokaEdit::about() {
                        tr("About %1").arg(m_pApp->applicationName()),
                        tr("<p><b>%1</b> - Editor for Inyoka-based portals<br />"
                        "Version: %2</p>"
-                       "<p>&copy; 2011-2012, The %3 developers<br />"
+                       "<p>&copy; 2011-%3, The %4 developers<br />"
                        "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
-                       "<p>Special thanks to <img src=\"%4\" /> bubi97, <img src=\"%4\" /> Lasall, <img src=\"%4\" /> Shakesbier"
+                       "<p>Special thanks to <img src=\"%5\" /> bubi97, <img src=\"%5\" /> Lasall, <img src=\"%5\" /> Shakesbier"
                        " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a>.</p>"
                        "<p>This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.</p>")
                        .arg(m_pApp->applicationName())
                        .arg(m_pApp->applicationVersion())
+                       .arg(nYear.year())
                        .arg(m_pApp->applicationName())
                        .arg(sUserIcon));
 }
@@ -1692,7 +1688,6 @@ void CInyokaEdit::closeEvent(QCloseEvent *event) {
         } else {
             m_pSettings->writeSettings(saveGeometry(), saveState());
         }
-        m_pHighlighter->saveStyle();
         event->accept();
     } else {
         event->ignore();

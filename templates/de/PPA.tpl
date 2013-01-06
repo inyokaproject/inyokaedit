@@ -39,7 +39,7 @@ Adresszeile zum [:Paketquellen_freischalten/PPA#PPA-hinzufuegen:Hinzufügen] des
 {{|<title="Hinweis!" class="box warning">
 Zusätzliche [:Fremdquellen:] können das System gefährden.
 ----
-Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ for $arg in $arguments.0 split_by "/"@>
+Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ for $arg in $arguments.0 split_by "/"@>
 <@ if $loop.first @><@ $arg @>
 <@ endif @>
 <@ endfor @>/+archive/<@ for $arg in $arguments.0 split_by "/"@>
@@ -67,7 +67,7 @@ Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informat
 {{|<title="Hinweis!" class="box warning">
 Zusätzliche [:Fremdquellen:] können das System gefährden.
 ----
-Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ $arguments.0 @>/+archive/
+Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ $arguments.0 @>/+archive/
 <@ for $arg in $arguments @>
 <@ if $loop.last @>
 <@ if $loop.length > 2 @>ppa

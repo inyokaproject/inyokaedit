@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,16 +21,15 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for providing a graphical interface to the application's settings.
+ * Class definition of settings gui.
  */
 
-
-#ifndef CSETTINGSDIALOG_H
-#define CSETTINGSDIALOG_H
+#ifndef INYOKAEDIT_CSETTINGSDIALOG_H_
+#define INYOKAEDIT_CSETTINGSDIALOG_H_
 
 #include <QDialog>
 
-namespace Ui{
+namespace Ui {
     class CSettingsDialog;
 }
 
@@ -44,14 +43,13 @@ class CSettingsDialog : public QDialog {
   public:
     CSettingsDialog(CSettings *pSettings, QWidget *parent = 0);
     virtual ~CSettingsDialog();
-    
+
   public slots:
     void accept();
-    
+
   private:
     Ui::CSettingsDialog *m_pUi;
-    
     CSettings *m_pSettings;
 };
 
-#endif // CSETTINGSDIALOG_H
+#endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

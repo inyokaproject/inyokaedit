@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -40,6 +40,9 @@ void CParseImgMap::startParsing(QTextDocument *pRawDoc,
     QString sMyDoc = pRawDoc->toPlainText();
 
     for (int i = 0; i < sListFlags.size(); i++) {
+        if (0 == i && "error" == sListFlags[0].toLower()) {
+            break;
+        }
         sMyDoc.replace(sListFlags[i], "<img src=\"" + sListFlagsImg[i] + "\" />");
     }
 

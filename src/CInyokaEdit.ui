@@ -96,6 +96,7 @@
     <addaction name="spellCheckerAct"/>
     <addaction name="DownloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
+    <addaction name="separator"/>
     <addaction name="preferencesAct"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -749,6 +750,10 @@
    </property>
   </action>
   <action name="preferencesAct">
+   <property name="icon">
+    <iconset resource="../res/inyokaedit_resources.qrc">
+     <normaloff>:/images/preferences-system.png</normaloff>:/images/preferences-system.png</iconset>
+   </property>
    <property name="text">
     <string>Preferences</string>
    </property>

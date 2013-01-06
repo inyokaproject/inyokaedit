@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -27,14 +27,13 @@
 #ifndef INYOKAEDIT_CHIGHLIGHTER_H_
 #define INYOKAEDIT_CHIGHLIGHTER_H_
 
-#include <QHash>
 #include <QSyntaxHighlighter>
+#include <QHash>
 #include <QTextCharFormat>
 
 #include "./CTemplates.h"
 
 // Qt classes
-class QSettings;
 class QTextDocument;
 
 /**
@@ -46,32 +45,15 @@ class CHighlighter : public QSyntaxHighlighter {
 
   public:
     // Constructor
-    CHighlighter(CTemplates *pTemplates, const QString &sAppName,
-                 const QString &sStyleFile, QTextDocument *pParent = 0);
+    CHighlighter(CTemplates *pTemplates, QTextDocument *pParent = 0);
     // Destrcutor
     ~CHighlighter();
-
-    QColor getForeground() const;
-    QColor getBackground() const;
-    void saveStyle();
 
   protected:
     // Apply highlighting rules
     void highlightBlock(const QString &sText);
 
   private:
-    void readStyle();
-    void getTranslations();
-    void defineRules();
-    void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
-
-    void evalKey(const QString &sKey, QTextCharFormat &charFormat);
-
-    QSettings *m_pStyleSet;
-    CTemplates *m_pTemplates;
-    QStringList m_sListMacroKeywords;
-    QStringList m_sListParserKeywords;
-
     struct HighlightingRule {
         QRegExp pattern;
         QTextCharFormat format;
@@ -83,21 +65,11 @@ class CHighlighter : public QSyntaxHighlighter {
     QTextCharFormat m_interwikiLinksFormat;
     QTextCharFormat m_linksFormat;
     QTextCharFormat m_tablecellsFormat;
-    QTextCharFormat m_newTableLineFormat;
     QTextCharFormat m_macrosFormat;
     QTextCharFormat m_parserFormat;
     QTextCharFormat m_textformatFormat;
-    QTextCharFormat m_commentFormat;
-    QTextCharFormat m_imgMapFormat;
-    QTextCharFormat m_listFormat;
-    QTextCharFormat m_miscFormat;
-
-    bool bSystemForeground;
-    bool bSystemBackground;
-    QColor m_colorForeground;
-    QColor m_colorBackground;
-
-    const QString m_sSEPARATOR;
+    QTextCharFormat m_singleLineCommentFormat;
+    QTextCharFormat m_flagsFormat;
 };
 
 #endif  // INYOKAEDIT_CHIGHLIGHTER_H_

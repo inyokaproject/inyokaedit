@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2012 The InyokaEdit developers
+ * Copyright (C) 2011-2013 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -43,7 +43,7 @@ namespace Ui {
 
 class CFindReplace : public QDialog {
     Q_OBJECT
-
+    
   public:
     explicit CFindReplace(CSettings *pSettings, QWidget *parent = 0);
     ~CFindReplace();
