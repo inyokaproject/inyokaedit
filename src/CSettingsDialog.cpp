@@ -28,10 +28,8 @@
 #include "./CSettingsDialog.h"
 #include "ui_CSettingsDialog.h"
 
-#include "./CSettings.h"
-
-CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *parent)
-    : QDialog(parent),
+CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *pParent)
+    : QDialog(pParent),
       m_pSettings(pSettings) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
@@ -39,6 +37,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *parent)
     m_pUi->setupUi(this);
     this->setWindowFlags(this->windowFlags()
                          & ~Qt::WindowContextHelpButtonHint);
+    this->setModal(true);
     m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
 
     ///////////////////
@@ -99,9 +98,12 @@ void CSettingsDialog::accept() {
     // Font
     m_pSettings->m_sFontFamily = m_pUi->fontComboBox->currentFont().family();
     m_pSettings->m_nFontsize = m_pUi->fontSizeEdit->value();
+    m_pSettings->m_EditorFont.setFamily(m_pSettings->m_sFontFamily);
+    m_pSettings->m_EditorFont.setPointSizeF(m_pSettings->m_nFontsize);
 
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
 
     QDialog::accept();
+    emit updatedSettings();
 }

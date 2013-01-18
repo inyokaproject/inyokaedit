@@ -31,15 +31,19 @@
 #include <QSettings>
 #include <QMessageBox>
 
+#include "./CSettingsDialog.h"
+
 class CSettingsDialog;
 
 /**
  * \class CSettings
  * \brief Load and save settings.
  */
-class CSettings {
+class CSettings : public QObject {
+    Q_OBJECT
+
   public:
-    CSettings(const QString &sName);
+    CSettings(const QString &sName, QWidget *pParent);
     ~CSettings();
 
     // Load / save application settings
@@ -96,8 +100,13 @@ class CSettings {
     // Allow CSettingsDialog to access private members
     friend class CSettingsDialog;
 
+  signals:
+    void showSettingsDialog();
+    void updateEditorSettings();
+
   private:
     QSettings *m_pSettings;
+    CSettingsDialog *m_pSettingsDialog;
 
     // General
     bool m_bCodeCompletion;   // Enable / disable code completion

@@ -28,6 +28,7 @@
 #define INYOKAEDIT_CSETTINGSDIALOG_H_
 
 #include <QDialog>
+#include "./CSettings.h"
 
 namespace Ui {
     class CSettingsDialog;
@@ -40,12 +41,17 @@ class CSettings;
  * \brief Graphcal interface to settings
  */
 class CSettingsDialog : public QDialog {
+    Q_OBJECT
+
   public:
-    CSettingsDialog(CSettings *pSettings, QWidget *parent = 0);
+    CSettingsDialog(CSettings *pSettings, QWidget *pParent = 0);
     virtual ~CSettingsDialog();
 
   public slots:
     void accept();
+
+  signals:
+    void updatedSettings();
 
   private:
     Ui::CSettingsDialog *m_pUi;

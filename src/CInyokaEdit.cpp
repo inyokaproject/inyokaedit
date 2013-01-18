@@ -109,7 +109,7 @@ CInyokaEdit::~CInyokaEdit() {
 void CInyokaEdit::createObjects() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    m_pSettings = new CSettings(m_pApp->applicationName());
+    m_pSettings = new CSettings(m_pApp->applicationName(), this);
 
     m_pFindReplace = new CFindReplace(m_pSettings);
 
@@ -177,9 +177,6 @@ void CInyokaEdit::createObjects() {
                                           m_pTemplates);
 
     m_pPreviewTimer = new QTimer(this);
-    
-    m_pSettingsDialog = new CSettingsDialog(m_pSettings,
-                                            this);
 }
 
 // ----------------------------------------------------------------------------
@@ -193,11 +190,9 @@ void CInyokaEdit::setupEditor() {
                               + m_pApp->applicationName().toLower()
                               + "_64x64.png"));
 
-    m_pEditor->setFont(m_pSettings->getEditorFont());
-    QPalette pal;
-    pal.setColor(QPalette::Base, m_pHighlighter->getBackground().name());
-    pal.setColor(QPalette::Text, m_pHighlighter->getForeground().name());
-    m_pEditor->setPalette(pal);
+    this->updateEditorSettings();
+    connect(m_pSettings, SIGNAL(updateEditorSettings()),
+            this, SLOT(updateEditorSettings()));
 
     // Find/replace dialogs
     m_pFindReplace->setEditor(m_pEditor);
@@ -379,8 +374,8 @@ void CInyokaEdit::createActions() {
             this, SLOT(deleteTempImages()));
     
     // Show settings dialog
-    connect(m_pUi->preferencesAct,SIGNAL(triggered()),
-            m_pSettingsDialog,SLOT(show()));
+    connect(m_pUi->preferencesAct, SIGNAL(triggered()),
+            m_pSettings, SIGNAL(showSettingsDialog()));
 
     // ------------------------------------------------------------------------
 
@@ -1336,6 +1331,17 @@ void CInyokaEdit::clickedLink() {
     // Disable forward / backward button
     m_pUi->goForwardBrowserAct->setEnabled(false);
     m_pUi->goBackBrowserAct->setEnabled(false);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CInyokaEdit::updateEditorSettings() {
+    m_pEditor->setFont(m_pSettings->getEditorFont());
+    QPalette pal;
+    pal.setColor(QPalette::Base, m_pHighlighter->getBackground().name());
+    pal.setColor(QPalette::Text, m_pHighlighter->getForeground().name());
+    m_pEditor->setPalette(pal);
 }
 
 // ----------------------------------------------------------------------------

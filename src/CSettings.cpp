@@ -27,7 +27,7 @@
 #include <QDebug>
 #include "./CSettings.h"
 
-CSettings::CSettings(const QString &sName) {
+CSettings::CSettings(const QString &sName, QWidget *pParent) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
@@ -39,6 +39,14 @@ CSettings::CSettings(const QString &sName) {
 #endif
 
     this->readSettings();
+
+    m_pSettingsDialog = new CSettingsDialog(this, pParent);
+
+    connect(this, SIGNAL(showSettingsDialog()),
+            m_pSettingsDialog, SLOT(show()));
+
+    connect (m_pSettingsDialog, SIGNAL(updatedSettings()),
+             this, SIGNAL(updateEditorSettings()));
 }
 
 CSettings::~CSettings() {
@@ -48,6 +56,7 @@ CSettings::~CSettings() {
     }
 }
 
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CSettings::readSettings() {
