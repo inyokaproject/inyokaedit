@@ -59,12 +59,8 @@ class CTextEditor : public QTextEdit {
     Q_OBJECT
 
   public:
-    CTextEditor(Ui::CInyokaEdit *pGUI,
-                bool bCompleter,
-                QStringList sListTplMacros,
-                quint16 nAutosave,
-                QString sUserAppDir,
-                QWidget *pParent = 0);
+    CTextEditor(Ui::CInyokaEdit *pGUI, QStringList sListTplMacros,
+                QString sUserAppDir, QWidget *pParent = 0);
     ~CTextEditor();
 
     void setCompleter(QCompleter *c);
@@ -73,6 +69,9 @@ class CTextEditor : public QTextEdit {
   protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
+
+  public slots:
+    void updateTextEditorSettings(bool bCompleter, quint16 nAutosave);
 
   private slots:
     void insertCompletion(const QString &sCompletion);
@@ -85,6 +84,8 @@ class CTextEditor : public QTextEdit {
     QCompleter *m_pCompleter;
     bool m_bCodeCompState;
     QStringList m_sListCompleter;
+
+    const quint16 nTimeMultiplier;
 };
 
 #endif  // INYOKAEDIT_CTEXTEDITOR_H_

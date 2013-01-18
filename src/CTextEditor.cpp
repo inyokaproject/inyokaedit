@@ -52,15 +52,14 @@
 
 
 CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
-                         bool bCompleter,
                          QStringList sListTplMacros,
-                         quint16 nAutosave,
                          QString sUserAppDir,
                          QWidget *pParent)
     : QTextEdit(pParent),
       m_UserAppDir(sUserAppDir),
-      m_bCodeCompState(bCompleter),
-      m_sListCompleter(sListTplMacros) {
+      m_bCodeCompState(false),
+      m_sListCompleter(sListTplMacros),
+      nTimeMultiplier(1000) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QStringList sListTemp = m_sListCompleter;
@@ -116,17 +115,26 @@ CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
             pParent, SLOT(documentWasModified()));
 
     // Install auto save timer
-    if (0 != nAutosave) {
-        m_pTimerAutosave = new QTimer(this);
-        // nAutoSave = time in seconds
-        m_pTimerAutosave->setInterval(nAutosave * 1000);
-        connect(m_pTimerAutosave, SIGNAL(timeout()),
-                this, SLOT(saveArticleAuto()));
-        m_pTimerAutosave->start();
-    }
+    m_pTimerAutosave = new QTimer(this);
+    connect(m_pTimerAutosave, SIGNAL(timeout()),
+            this, SLOT(saveArticleAuto()));
 }
 
 CTextEditor::~CTextEditor() {
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CTextEditor::updateTextEditorSettings(bool bCompleter,
+                                           quint16 nAutosave) {
+    m_bCodeCompState = bCompleter;
+
+    m_pTimerAutosave->stop();
+    m_pTimerAutosave->setInterval(nAutosave * nTimeMultiplier);
+    if (0 != nAutosave) {
+        m_pTimerAutosave->start();
+    }
 }
 
 // ----------------------------------------------------------------------------
