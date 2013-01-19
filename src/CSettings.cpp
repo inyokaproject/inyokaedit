@@ -67,6 +67,8 @@ void CSettings::readSettings() {
                                             true).toBool();
     m_bPreviewAlongside = m_pSettings->value("PreviewAlongside",
                                              false).toBool();
+    m_bTmpPreviewInEditor = m_bPreviewInEditor;
+    m_bTmpPreviewAlongside = m_bPreviewAlongside;
     m_sInyokaUrl = m_pSettings->value("InyokaUrl",
                                       "http://wiki.ubuntuusers.de").toString();
     if (m_sInyokaUrl.endsWith("/")) {
@@ -159,8 +161,8 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
                               const QByteArray SplitterState) {
     // General settings
     m_pSettings->setValue("CodeCompletion", m_bCodeCompletion);
-    m_pSettings->setValue("PreviewInEditor", m_bPreviewInEditor);
-    m_pSettings->setValue("PreviewAlongside", m_bPreviewAlongside);
+    m_pSettings->setValue("PreviewInEditor", m_bTmpPreviewInEditor);
+    m_pSettings->setValue("PreviewAlongside", m_bTmpPreviewAlongside);
     m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
     m_pSettings->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
     m_pSettings->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);

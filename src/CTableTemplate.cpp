@@ -32,16 +32,18 @@
 
 
 CTableTemplate::CTableTemplate(CTextEditor *pEditor,
-                               const QDir &tmpFileOutputDir,
-                               const QDir &tmpImgDir,
-                               CSettings *pSettings,
-                               CTemplates *pTemplates,
+                               CParser *pParser,
+                               const QDir &PreviewDir,
+                               const QString &sTransTemplate,
+                               const QString &sTransTable,
                                QWidget *pParent)
     : QDialog(pParent),
       m_pEditor(pEditor),
-      m_dirPreview(tmpFileOutputDir),
-      m_pTextDocument(new QTextDocument(this)),
-      m_pTemplates(pTemplates) {
+      m_pParser(pParser),
+      m_dirPreview(PreviewDir),
+      m_sTransTemplate(sTransTemplate),
+      m_sTransTable(sTransTable),
+      m_pTextDocument(new QTextDocument(this)) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Build UI
@@ -63,13 +65,6 @@ CTableTemplate::CTableTemplate(CTextEditor *pEditor,
 
     connect(m_pUi->buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
-
-    // Setup parser
-    m_pParser = new CParser(m_pTextDocument,
-                            tmpFileOutputDir,
-                            tmpImgDir,
-                            pSettings,
-                            m_pTemplates);
 }
 
 // ----------------------------------------------------------------------------
@@ -89,8 +84,6 @@ void CTableTemplate::newTable() {
     m_pUi->previewBox->setHtml("");
     this->show();
     this->exec();
-
-    qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -102,7 +95,7 @@ void CTableTemplate::preview() {
     this->generateTable();
     m_pTextDocument->setPlainText(m_sTableString);
 
-    QString sRetHtml = m_pParser->genOutput("");
+    QString sRetHtml = m_pParser->genOutput("", m_pTextDocument);
     // Remove for preview useless elements
     sRetHtml.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
     sRetHtml.remove(QRegExp("<p class=\"meta\">.*</p>"));
@@ -111,8 +104,6 @@ void CTableTemplate::preview() {
     m_pUi->previewBox->setHtml(sRetHtml,
                                QUrl::fromLocalFile(m_dirPreview.absolutePath()
                                                    + "/"));
-
-    qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
 // ----------------------------------------------------------------------------
@@ -124,8 +115,8 @@ void CTableTemplate::generateTable() {
     int colsNum = m_pUi->colsNum->value();
     int rowsNum = m_pUi->rowsNum->value();
 
-    m_sTableString = "{{{#!" + m_pTemplates->getTransTemplate().toLower()
-            + " " + m_pTemplates->getTransTable() + "\n";
+    m_sTableString = "{{{#!" + m_sTransTemplate.toLower() + " "
+            + m_sTransTable + "\n";
 
     // Create title if set
     if (m_pUi->showTitleBox->isChecked()) {
@@ -162,8 +153,6 @@ void CTableTemplate::generateTable() {
     }
 
     m_sTableString += "}}}\n";
-
-    qDebug() << "Stop" << Q_FUNC_INFO;
 }
 
 void CTableTemplate::accept() {
@@ -172,6 +161,4 @@ void CTableTemplate::accept() {
     this->generateTable();
     m_pEditor->insertPlainText(m_sTableString);
     done(Accepted);
-
-    qDebug() << "Stop" << Q_FUNC_INFO;
 }

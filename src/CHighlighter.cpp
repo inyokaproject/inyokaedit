@@ -349,7 +349,7 @@ void CHighlighter::defineRules() {
         sListRegExpPatterns << QRegExp::escape(tmpStr);
     }
     foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
-        sListRegExpPatterns << QRegExp::escape(tmpStr);
+        sListRegExpPatterns << QRegExp::escape(tmpStr) + "\\s+";
     }
     foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.format = m_imgMapFormat;

@@ -53,10 +53,10 @@ class CParser : public QObject {
 
   public:
     // Constructor
-    CParser(QTextDocument *pRawDocument,
-            const QDir &tmpFileOutputDir,
+    CParser(const QDir &tmpFileOutputDir,
             const QDir &tmpImgDir,
-            CSettings *pSettings,
+            const QString sInyokaUrl,
+            const bool bCheckLinks,
             CTemplates *pTemplates);
     // Destructor
     ~CParser();
@@ -65,7 +65,10 @@ class CParser : public QObject {
     void replaceTemplates(QTextDocument *p_rawDoc);
 
     // Starts generating HTML-code
-    QString genOutput(const QString &sActFile);
+    QString genOutput(const QString &sActFile, QTextDocument *pRawDocument);
+
+  public slots:
+    void updateSettings(const QString sInyokaUrl, const bool bCheckLinks);
 
   private:
     // void replaceTemplates(QTextDocument *p_rawDoc);
@@ -108,7 +111,7 @@ class CParser : public QObject {
 
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
-    CSettings *m_pSettings;
+    QString m_sInyokaUrl;
     CTemplates *m_pTemplates;
 
     const QString m_sSEPARATOR;

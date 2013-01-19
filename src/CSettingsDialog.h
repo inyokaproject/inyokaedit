@@ -53,9 +53,16 @@ class CSettingsDialog : public QDialog {
   signals:
     void updatedSettings();
 
+  private slots:
+    void changedPreviewAlongside(bool bState);
+    void changedPreviewInEditor(bool bState);
+
   private:
     Ui::CSettingsDialog *m_pUi;
     CSettings *m_pSettings;
+
+    bool m_bTmpPreviewInEditor;
+    bool m_bTmpPreviewAlongside;
 };
 
 #endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

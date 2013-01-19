@@ -71,7 +71,8 @@ class CTextEditor : public QTextEdit {
     void focusInEvent(QFocusEvent *e);
 
   public slots:
-    void updateTextEditorSettings(bool bCompleter, quint16 nAutosave);
+    void updateTextEditorSettings(const bool bCompleter,
+                                  const quint16 nAutosave);
 
   private slots:
     void insertCompletion(const QString &sCompletion);

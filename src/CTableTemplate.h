@@ -40,8 +40,6 @@ namespace Ui {
 }
 
 class CParser;
-class CSettings;
-class CTemplates;
 class CTextEditor;
 
 class QDir;
@@ -61,10 +59,10 @@ class CTableTemplate : public QDialog {
      * \param pEditor Pointer to editor module
      */
     CTableTemplate(CTextEditor *pEditor,
-                   const QDir &tmpFileOutputDir,
-                   const QDir &tmpImgDir,
-                   CSettings *pSettings,
-                   CTemplates *pTemplates,
+                   CParser *pParser,
+                   const QDir &PreviewDir,
+                   const QString &sTransTemplate,
+                   const QString &sTransTable,
                    QWidget *pParent = 0);
 
   public slots:
@@ -85,14 +83,13 @@ class CTableTemplate : public QDialog {
     Ui::CTableTemplateClass *m_pUi;
 
     CTextEditor *m_pEditor;
-    QDir m_dirPreview;
     CParser *m_pParser;
-
-    QString m_sTableString;
+    QDir m_dirPreview;
+    QString m_sTransTemplate;
+    QString m_sTransTable;
     QTextDocument *m_pTextDocument;
 
-    CTemplates *m_pTemplates;
-
+    QString m_sTableString;
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;
 };

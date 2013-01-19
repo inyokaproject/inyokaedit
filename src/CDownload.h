@@ -49,8 +49,7 @@ class CDownload : public QObject {
     */
     CDownload(QWidget *pParent, const QString &sAppName,
               const QString &sAppDir, const QString &sStylesDir,
-              const QString &sImgDir, const QString &sInyokaUrl,
-              const bool bAutomaticImgDL);
+              const QString &sImgDir);
 
     /**
     * \brief Start download of an existing article
@@ -70,6 +69,8 @@ class CDownload : public QObject {
     bool loadInyokaStyles();
 
     void showArticle();
+    void updateSettings(const bool bCompleter,
+                        const QString sInyokaUrl);
 
   private slots:
     void replyFinished(QNetworkReply *reply);

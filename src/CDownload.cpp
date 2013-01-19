@@ -32,15 +32,14 @@ extern bool bDEBUG;
 
 CDownload::CDownload(QWidget *pParent, const QString &sAppName,
                      const QString &sAppDir, const QString &sStylesDir,
-                     const QString &sImgDir, const QString &sInyokaUrl,
-                     const bool bAutomaticImgDL)
+                     const QString &sImgDir)
     : m_pParent(pParent),
       m_sAppName(sAppName),
       m_sAppDir(sAppDir),
       m_sStylesDir(sStylesDir),
       m_sImgDir(sImgDir),
-      m_sInyokaUrl(sInyokaUrl),
-      m_bAutomaticImageDownload(bAutomaticImgDL) {
+      m_sInyokaUrl("http://wiki.ubuntuusers.de"),
+      m_bAutomaticImageDownload(false) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_NwManager = new QNetworkAccessManager(m_pParent);
@@ -50,6 +49,15 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
     m_DlImages = new CDownloadImg(m_sAppName);
     connect(m_DlImages, SIGNAL(finsihedImageDownload()),
             this, SLOT(showArticle()));
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CDownload::updateSettings(const bool bCompleter,
+                               const QString sInyokaUrl) {
+    m_bAutomaticImageDownload = bCompleter;
+    m_sInyokaUrl = sInyokaUrl;
 }
 
 // ----------------------------------------------------------------------------

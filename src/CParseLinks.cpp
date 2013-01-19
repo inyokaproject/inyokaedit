@@ -53,6 +53,15 @@ CParseLinks::CParseLinks(const QString &sUrlToWiki,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CParseLinks::updateSettings(const QString sUrlToWiki,
+                                 const bool bCheckLinks) {
+    m_sWikiUrl = sUrlToWiki;
+    m_bCheckLinks = bCheckLinks;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CParseLinks::startParsing(QTextDocument *pRawDoc) {
     this->replaceHyperlinks(pRawDoc);
     this->replaceInyokaWikiLinks(pRawDoc);

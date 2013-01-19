@@ -53,6 +53,9 @@ class CParseLinks : public QObject {
 
     void startParsing(QTextDocument *pRawDoc);
 
+  public slots:
+    void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
+
   private:
     void replaceHyperlinks(QTextDocument *pRawDoc);
     void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
@@ -61,7 +64,7 @@ class CParseLinks : public QObject {
     void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
     void createAnchor(QTextDocument *pRawDoc);
 
-    const QString m_sWikiUrl;   // Inyoka wiki url
+    QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
     QStringList m_sListInterwikiLink;  // Interwiki link urls
 

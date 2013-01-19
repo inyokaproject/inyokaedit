@@ -122,9 +122,7 @@ void CInyokaEdit::createObjects() {
                                       m_pApp->applicationName(),
                                       m_pApp->applicationDirPath(),
                                       m_UserDataDir.absolutePath(),
-                                      m_tmpPreviewImgDir.absolutePath(),
-                                      m_pSettings->getInyokaUrl(),
-                                      m_pSettings->getAutomaticImageDownload());
+                                      m_tmpPreviewImgDir.absolutePath());
 
     m_pEditor = new CTextEditor(m_pUi,
                                 m_pTemplates->getListTplMacrosALL(),
@@ -140,10 +138,10 @@ void CInyokaEdit::createObjects() {
                                             m_pSettings,
                                             m_pApp->applicationName());
 
-    m_pParser = new CParser(m_pEditor->document(),
-                            m_UserDataDir,
+    m_pParser = new CParser(m_UserDataDir,
                             m_tmpPreviewImgDir,
-                            m_pSettings,
+                            m_pSettings->getInyokaUrl(),
+                            m_pSettings->getCheckLinks(),
                             m_pTemplates);
 
     m_pHighlighter = new CHighlighter(m_pTemplates,
@@ -169,10 +167,10 @@ void CInyokaEdit::createObjects() {
     m_bWebviewScrolling = false;
 
     m_pTableTemplate = new CTableTemplate(m_pEditor,
+                                          m_pParser,
                                           m_UserDataDir,
-                                          m_tmpPreviewImgDir,
-                                          m_pSettings,
-                                          m_pTemplates);
+                                          m_pTemplates->getTransTemplate(),
+                                          m_pTemplates->getTransTable());
 
     m_pPreviewTimer = new QTimer(this);
 }
@@ -187,6 +185,10 @@ void CInyokaEdit::setupEditor() {
     this->setWindowIcon(QIcon(":/images/"
                               + m_pApp->applicationName().toLower()
                               + "_64x64.png"));
+
+    // Timed preview
+    connect(m_pPreviewTimer, SIGNAL(timeout()),
+            this, SLOT(previewInyokaPage()));
 
     this->updateEditorSettings();
     connect(m_pSettings, SIGNAL(updateEditorSettings()),
@@ -263,15 +265,6 @@ void CInyokaEdit::setupEditor() {
 
     m_pUi->aboutAct->setText(m_pUi->aboutAct->text()
                              + " " + m_pApp->applicationName());
-
-    // Timed preview
-    connect(m_pPreviewTimer, SIGNAL(timeout()),
-            this, SLOT(previewInyokaPage()));
-    if (m_pSettings->getPreviewInEditor()
-            && m_pSettings->getPreviewAlongside()
-            && m_pSettings->getTimedPreview() != 0) {
-        m_pPreviewTimer->start(m_pSettings->getTimedPreview() * 1000);
-    }
 }
 
 // ----------------------------------------------------------------------------
@@ -602,6 +595,7 @@ void CInyokaEdit::createMenus() {
 
     m_pSigMapOpenTemplate = new QSignalMapper(this);
 
+    bool bFirstLoop = true;
     foreach (QDir tplDir, listTplDirs) {
         QFileInfoList fiListFiles = tplDir.entryInfoList(
                     QDir::NoDotAndDotDot | QDir::Files);
@@ -615,6 +609,13 @@ void CInyokaEdit::createMenus() {
                 connect(m_OpenTemplateFilesActions.last(), SIGNAL(triggered()),
                         m_pSigMapOpenTemplate, SLOT(map()));
             }
+        }
+
+        // Add separator between templates and user templates
+        if (bFirstLoop) {
+            bFirstLoop = false;
+            m_OpenTemplateFilesActions << new QAction(this);
+            m_OpenTemplateFilesActions.last()->setSeparator(true);
         }
     }
     m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
@@ -790,10 +791,11 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         QString sRetHTML;
         if ("" == m_pFileOperations->getCurrentFile()
                 || tr("Untitled") == m_pFileOperations->getCurrentFile()) {
-            sRetHTML = m_pParser->genOutput("");
+            sRetHTML = m_pParser->genOutput("", m_pEditor->document());
         } else {
             QFileInfo fi(m_pFileOperations->getCurrentFile());
-            sRetHTML = m_pParser->genOutput(fi.fileName());
+            sRetHTML = m_pParser->genOutput(fi.fileName(),
+                                            m_pEditor->document());
         }
 
         // File for temporary html output
@@ -1341,8 +1343,21 @@ void CInyokaEdit::updateEditorSettings() {
     m_pEditor->setPalette(pal);
     m_pEditor->setFont(m_pSettings->getEditorFont());
 
+    m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
+                              m_pSettings->getCheckLinks());
+
+    m_pPreviewTimer->stop();
+    if (m_pSettings->getPreviewInEditor()
+            && m_pSettings->getPreviewAlongside()
+            && m_pSettings->getTimedPreview() != 0) {
+        m_pPreviewTimer->start(m_pSettings->getTimedPreview() * 1000);
+    }
+
     m_pEditor->updateTextEditorSettings(m_pSettings->getCodeCompletion(),
                                         m_pSettings->getAutoSave());
+
+    m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
+                                      m_pSettings->getInyokaUrl());
 }
 
 // ----------------------------------------------------------------------------
@@ -1605,13 +1620,7 @@ void CInyokaEdit::showSyntaxOverview() {
     pTextDocument->setPlainText(in.readAll());
     OverviewFile.close();
 
-    CParser* pParser = new CParser(pTextDocument,
-                                   m_UserDataDir,
-                                   m_tmpPreviewImgDir,
-                                   m_pSettings,
-                                   m_pTemplates);
-
-    QString sRet = pParser->genOutput("");
+    QString sRet = m_pParser->genOutput("", pTextDocument);
     sRet.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
     sRet.remove(QRegExp("<p class=\"meta\">.*</p>"));
     sRet.replace("</style>", "#page table{margin:0px;}</style>");

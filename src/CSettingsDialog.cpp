@@ -46,8 +46,8 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *pParent)
 
     // General
     m_pUi->codeCompletionCheck->setChecked(m_pSettings->getCodeCompletion());
-    m_pUi->previewInEditorCheck->setChecked(m_pSettings->getPreviewInEditor());
-    m_pUi->previewAlongsideCheck->setChecked(m_pSettings->getPreviewAlongside());
+    m_pUi->previewInEditorCheck->setChecked(m_pSettings->m_bTmpPreviewInEditor);
+    m_pUi->previewAlongsideCheck->setChecked(m_pSettings->m_bTmpPreviewAlongside);
     m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
     m_pUi->articleImageDownloadCheck->setChecked(m_pSettings->getAutomaticImageDownload());
     m_pUi->spellCheckerLangEdit->setText(m_pSettings->getSpellCheckerLanguage());
@@ -57,6 +57,9 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *pParent)
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->getTimedPreview());
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->getSyncScrollbars());
 
+    m_bTmpPreviewInEditor = m_pSettings->getPreviewInEditor();
+    m_bTmpPreviewAlongside = m_pSettings->getPreviewAlongside();
+
     // Font
     m_pUi->fontComboBox->setCurrentFont(QFont(m_pSettings->m_sFontFamily));
     m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
@@ -64,6 +67,11 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *pParent)
     // Recent files
     m_pUi->numberRecentFilesEdit->setValue(m_pSettings->getNumOfRecentFiles());
     m_pUi->numberRecentFilesEdit->setMaximum(m_pSettings->getMaxNumOfRecentFiles());
+
+    connect(m_pUi->previewAlongsideCheck, SIGNAL(clicked(bool)),
+            this, SLOT(changedPreviewAlongside(bool)));
+    connect(m_pUi->previewInEditorCheck, SIGNAL(clicked(bool)),
+            this, SLOT(changedPreviewInEditor(bool)));
 }
 
 CSettingsDialog::~CSettingsDialog() {
@@ -84,8 +92,8 @@ void CSettingsDialog::accept() {
 
     // General
     m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
-    m_pSettings->m_bPreviewInEditor = m_pUi->previewInEditorCheck->isChecked();
-    m_pSettings->m_bPreviewAlongside = m_pUi->previewAlongsideCheck->isChecked();
+    m_pSettings->m_bTmpPreviewInEditor = m_pUi->previewInEditorCheck->isChecked();
+    m_pSettings->m_bTmpPreviewAlongside = m_pUi->previewAlongsideCheck->isChecked();
     m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
     m_pSettings->m_bAutomaticImageDownload = m_pUi->articleImageDownloadCheck->isChecked();
     m_pSettings->m_sSpellCheckerLanguage = m_pUi->spellCheckerLangEdit->text();
@@ -104,6 +112,28 @@ void CSettingsDialog::accept() {
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
 
+    // If the following settings have been changed, a restart is needed
+    if (m_pUi->previewAlongsideCheck->isChecked() != m_bTmpPreviewAlongside
+            || m_pUi->previewInEditorCheck->isChecked() != m_bTmpPreviewInEditor) {
+        QMessageBox::information(0, this->windowTitle(),
+                                 tr("The editor has to be restarted for applying the changes."));
+    }
+
     QDialog::accept();
     emit updatedSettings();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CSettingsDialog::changedPreviewAlongside(bool bState) {
+    if(bState) {
+        m_pUi->previewInEditorCheck->setChecked(true);
+    }
+}
+
+void CSettingsDialog::changedPreviewInEditor(bool bState) {
+    if(!bState) {
+        m_pUi->previewAlongsideCheck->setChecked(false);
+    }
 }

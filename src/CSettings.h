@@ -112,6 +112,8 @@ class CSettings : public QObject {
     bool m_bCodeCompletion;   // Enable / disable code completion
     bool m_bPreviewInEditor;  // Enable / disable preview in edior
     bool m_bPreviewAlongside;
+    bool m_bTmpPreviewInEditor;   // Temp. variables needed, changes may only be
+    bool m_bTmpPreviewAlongside;  // saved when app will be closed!
     QString m_sInyokaUrl;     // Url to inyoka
     QDir m_LastOpenedDir;
     bool m_bAutomaticImageDownload;  // Enable/disable download article images
