@@ -12,9 +12,10 @@ inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
     LP: 970365 (supporting quotes), LP: #975615 (missing line after list).
   * Fixed downloading article wihout images.
   * Reorganized search/replace.
+  * Applying changes from settings dialog directly.
   * New IWLs.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 06 Jan 2013 22:30:33 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 19 Jan 2013 17:22:33 +0200
 
 inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
