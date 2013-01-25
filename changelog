@@ -1,13 +1,14 @@
 inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
 
   [ Christian Schärf ]
-  * Added graphical settings dialog.
+  * Added graphical settings dialog (LP: #879320).
 
   [ Thorsten Roth ]
   * Syntax highlighting via config file.
-  * Using XDG directories.
-  * Template updates (added Builddeps).
+  * Using XDG directories (LP: #1090580).
+  * Template updates (added Builddeps, dropped Award).
   * Reorganized image map handling; added smilies :-).
+  * Searching for images in article folder primarily.
   * Fixed LP: #1082678 (crash after pressing ENTER some seconds),
     LP: 970365 (supporting quotes), LP: #975615 (missing line after list).
   * Fixed downloading article wihout images.
@@ -15,7 +16,7 @@ inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
   * Applying changes from settings dialog directly.
   * New IWLs.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 19 Jan 2013 17:22:33 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 25 Jan 2013 23:01:28 +0200
 
 inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
