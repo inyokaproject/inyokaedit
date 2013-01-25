@@ -892,33 +892,6 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
     }
     // ------------------------------------------------------------------------
 
-    // AWARD (Auszeichnung)
-    else if (sListElements[0].toLower() == trUtf8("Award").toLower()) {
-        QString sAward("");
-
-        if (sListElements.size() < 4) {
-            sAward = "Award";
-            sOutput = "";
-        } else {
-            sAward = sListElements[1];
-            QString sTmpAwardLink = "<a href=\"" + sListElements[2]
-                    + "\" rel=\"nofollow\" class=\"external\">"
-                    + sListElements[1] + "</a>";
-            sOutput = trUtf8("Diese Anwendung hat die Auszeichnung %1 in der "
-                             "Kategorie %2 gewonnen.")
-                    .arg(sTmpAwardLink).arg(sListElements[3]);
-
-            // Awardee defined?
-            if (sListElements.size() >= 5) {
-                sOutput += " " + trUtf8("Die Auszeichnung wurde an %1 "
-                                        "überreicht.").arg(sListElements[4]);
-            }
-        }
-
-        sOutput = insertBox("box award", sAward, sOutput);
-    }
-    // ------------------------------------------------------------------------
-
     // PACKAGE-LIST (Pakete-Makro)  -- OBSOLETE --
     else if (sListElements[0].toLower() == trUtf8("Pakete").toLower()) {
         // Generate output
