@@ -59,6 +59,9 @@ void setupLogger(const QString &sDebugFilePath,
 void LoggingHandler(QtMsgType type, const char *sMsg);
 QString getLanguage(const QString &sAppName);
 
+// Don't change this value! Use "--debug" command line option instead.
+bool bDEBUG = false;
+
 // ----------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
@@ -67,11 +70,13 @@ int main(int argc, char *argv[]) {
     app.setApplicationVersion(sVERSION);
 
     if (app.arguments().size() >= 2) {
-        QString sTmp = app.argv()[1];
+        QString sTmp = QString(app.argv()[1]).toLower();
         if ("-v" == sTmp || "--version" == sTmp) {
             std::cout << app.argv()[0] << "\t v"
                       << app.applicationVersion().toStdString() << std::endl;
             exit(0);
+        } else if ("--debug" == sTmp) {
+            bDEBUG = true;
         }
     }
 
@@ -97,20 +102,23 @@ int main(int argc, char *argv[]) {
 
     // Setup gui translation (Qt)
     if (!qtTranslator.load("qt_" + sLang,
-                           QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+                           QLibraryInfo::location(
+                               QLibraryInfo::TranslationsPath))) {
         // If it fails search in application dircetory
-        if (!qtTranslator.load("qt_" + sLang, app.applicationDirPath() + "/lang")) {
+        if (!qtTranslator.load("qt_" + sLang, app.applicationDirPath()
+                               + "/lang")) {
             qWarning() << "Could not load any Qt translations.";
         }
     }
     app.installTranslator(&qtTranslator);
 
     // Setup gui translation (app)
-    if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
-                            "/usr/share/" + app.applicationName().toLower()
-                            + "/lang")) {
+    if (bDEBUG ||
+            !AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
+                                "/usr/share/" + app.applicationName().toLower()
+                                + "/lang")) {
         // If it fails search in application dircetory
-        if (!qtTranslator.load(app.applicationName().toLower() + "_"  + sLang,
+        if (!AppTranslator.load(app.applicationName().toLower() + "_"  + sLang,
                           app.applicationDirPath() + "/lang")) {
             qWarning() << "Could not load any application translations.";
         }

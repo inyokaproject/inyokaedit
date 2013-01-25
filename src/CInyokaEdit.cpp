@@ -31,8 +31,7 @@
 #include "./CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-// Don't change this value! Use "--debug" command line option instead.
-bool bDEBUG = false;
+extern bool bDEBUG;
 
 CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
                          QDir userDataDir,
@@ -47,15 +46,10 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
 
     m_pUi->setupUi(this);
 
-    // Check for command line arguments
-    if (m_pApp->argc() >= 2)     {
-        QString sTmp = m_pApp->argv()[1];
-
-        if ("--debug" == sTmp) {
-            bDEBUG = true;
-        } else {
+    // Check for command line arguments (except version/debug)
+    if ((!bDEBUG && m_pApp->argc() >= 2)
+            || (bDEBUG && m_pApp->argc() >= 3)) {
             bOpenFileAfterStart = true;
-        }
     }
 
     // Create folder for downloaded article images
@@ -89,7 +83,11 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     }
 
     if (true == bOpenFileAfterStart) {
-        m_pFileOperations->loadFile(m_pApp->argv()[1], true);
+        if (bDEBUG) {
+            m_pFileOperations->loadFile(m_pApp->argv()[2], true);
+        } else {
+            m_pFileOperations->loadFile(m_pApp->argv()[1], true);
+        }
     }
 
     m_bReloadPreviewBlocked = false;
