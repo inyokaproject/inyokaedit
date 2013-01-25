@@ -791,8 +791,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
                 || tr("Untitled") == m_pFileOperations->getCurrentFile()) {
             sRetHTML = m_pParser->genOutput("", m_pEditor->document());
         } else {
-            QFileInfo fi(m_pFileOperations->getCurrentFile());
-            sRetHTML = m_pParser->genOutput(fi.fileName(),
+            sRetHTML = m_pParser->genOutput(m_pFileOperations->getCurrentFile(),
                                             m_pEditor->document());
         }
 

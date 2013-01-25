@@ -74,6 +74,7 @@ QString CParser::genOutput(const QString &sActFile,
     QString sWikitags("");
     QString sSample("");
     QTextBlock it;
+    m_sCurrentFile = sActFile;
 
     // Need a copy otherwise text in editor will be changed
     m_pRawText = pRawDocument->clone();
@@ -235,11 +236,11 @@ QString CParser::genOutput(const QString &sActFile,
     sHtmlBody = this->reinstertNoTranslate(sHtmlBody);
 
     // File name
-    QFileInfo fi(sActFile);
     QString sFilename;
-    if ("" == sActFile) {
+    if ("" == m_sCurrentFile) {
         sFilename = tr("Untitled", "No file name set");
     } else {
+        QFileInfo fi(m_sCurrentFile);
         sFilename = fi.fileName();
     }
 
@@ -1368,18 +1369,27 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
 
     // IMAGE WITH SUBSCRIPTION
     else if (sListElements[0].toLower() == trUtf8("Bildunterschrift").toLower()) {
-        QString sImageLink("");
+        QString sImageUrl("");
         QString sImageWidth("");
         QString sImageDescription("");
         QString sImageAlign("left");
         QString sImageStyle("");
         double iImgHeight, iImgWidth;
 
-        sImageLink = sListElements[1].trimmed();
-        if (sImageLink.startsWith("Wiki/")) {
-            sImageLink = m_tmpFileDir.absolutePath() + "/" + sImageLink;
-        } else if (QFile(m_tmpImgDir.absolutePath() + "/" + sImageLink).exists()) {
-            sImageLink = m_tmpImgDir.absolutePath() + "/" + sImageLink;
+        QString sImagePath("");
+        if ("" != m_sCurrentFile) {
+            QFileInfo fiArticleFile(m_sCurrentFile);
+            sImagePath = fiArticleFile.absolutePath();
+        }
+
+        sImageUrl = sListElements[1].trimmed();
+        if (sImageUrl.startsWith("Wiki/")) {
+            sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+        } else if (QFile(sImagePath + "/" + sImageUrl).exists()) {
+            sImageUrl = sImagePath + "/" + sImageUrl;
+        } else if (QFile(m_tmpImgDir.absolutePath() + "/"
+                        + sImageUrl).exists()) {
+           sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
         }
 
         for (int i = 2; i < sListElements.length(); i++) {
@@ -1403,13 +1413,13 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
             }
         }
 
-        iImgWidth = QImage(sImageLink).width();
+        iImgWidth = QImage(sImageUrl).width();
         if (sImageWidth != "") {
-            iImgHeight = static_cast<double>(QImage(sImageLink).height()) / (iImgWidth / sImageWidth.toDouble());
+            iImgHeight = static_cast<double>(QImage(sImageUrl).height()) / (iImgWidth / sImageWidth.toDouble());
         } else {
             // Default
             sImageWidth = "140";
-            iImgHeight = static_cast<double>(QImage(sImageLink).height()) / (iImgWidth / 140);
+            iImgHeight = static_cast<double>(QImage(sImageUrl).height()) / (iImgWidth / 140);
         }
 
         sOutput = "<table style=\"float: " + sImageAlign
@@ -1422,9 +1432,9 @@ QString CParser::parseMacro(QTextBlock actParagraph) {
             sOutput += "<tr class=\"" + sImageStyle + "-titel\">\n";
         }
 
-        sOutput += "<td>\n<a href=\"" + sImageLink + "\" "
-                "class=\"crosslink\">\n" + "<img src=\"" + sImageLink + "\" "
-                "alt=\"" + sImageLink + "\" class=\"image-default\" "
+        sOutput += "<td>\n<a href=\"" + sImageUrl + "\" "
+                "class=\"crosslink\">\n" + "<img src=\"" + sImageUrl + "\" "
+                "alt=\"" + sImageUrl + "\" class=\"image-default\" "
                 + "height=\"" + QString::number(static_cast<int>(iImgHeight))
                 + "\" width=\"" + sImageWidth + "\"/>\n</a>\n"
                 + "</td>\n</tr>\n";
@@ -2129,6 +2139,12 @@ QString CParser::parseImageCollection(const QString &s_ActParagraph) {
     QStringList sListImages;
     double iImgHeight, iImgWidth;
 
+    QString sImagePath("");
+    if ("" != m_sCurrentFile) {
+        QFileInfo fiArticleFile(m_sCurrentFile);
+        sImagePath = fiArticleFile.absolutePath();
+    }
+
     // Separate elementes from macro (between separator)
     QStringList sListElements = sParagraph.split(m_sSEPARATOR);
     if (sListElements.length() == 0) {
@@ -2168,9 +2184,11 @@ QString CParser::parseImageCollection(const QString &s_ActParagraph) {
             sImageUrl = sListImages[0].trimmed();
             if (sImageUrl.startsWith("Wiki/")) {
                 sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+            } else if (QFile(sImagePath + "/" + sImageUrl).exists()) {
+                sImageUrl = sImagePath + "/" + sImageUrl;
             } else if (QFile(m_tmpImgDir.absolutePath() + "/"
-                             + sImageUrl).exists()) {
-                sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+                            + sImageUrl).exists()) {
+               sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
             }
 
             iImgHeight = QImage(sImageUrl).height();
@@ -2206,9 +2224,11 @@ QString CParser::parseImageCollection(const QString &s_ActParagraph) {
             sImageUrl = sListImages[0].trimmed();
             if (sImageUrl.startsWith("Wiki/")) {
                 sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+            } else if (QFile(sImagePath + "/" + sImageUrl).exists()) {
+                sImageUrl = sImagePath + "/" + sImageUrl;
             } else if (QFile(m_tmpImgDir.absolutePath() + "/"
-                           + sImageUrl).exists()) {
-                sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+                            + sImageUrl).exists()) {
+               sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
             }
 
             iImgHeight = QImage(sImageUrl).height();
@@ -2252,6 +2272,12 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     QString sImageAlign("left");
     // QString sImageAlt("");
 
+    QString sImagePath("");
+    if ("" != m_sCurrentFile) {
+        QFileInfo fiArticleFile(m_sCurrentFile);
+        sImagePath = fiArticleFile.absolutePath();
+    }
+
     double iImgHeight, iImgWidth;
     double tmpH, tmpW;
 
@@ -2277,12 +2303,12 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sImageUrl = sListTmpImageInfo[0].trimmed();
         if (sImageUrl.startsWith("Wiki/")) {
             sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+        } else if (QFile(sImagePath + "/" + sImageUrl).exists()) {
+            sImageUrl = sImagePath + "/" + sImageUrl;
         } else if (QFile(m_tmpImgDir.absolutePath() + "/"
-                         + sImageUrl).exists()) {
-            sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
+                        + sImageUrl).exists()) {
+           sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
         }
-
-        // sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
 
         for (int i = 1; i < sListTmpImageInfo.length(); i++) {
             // Found integer (width)

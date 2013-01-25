@@ -112,6 +112,7 @@ class CParser : public QObject {
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
     QString m_sInyokaUrl;
+    QString m_sCurrentFile;
     CTemplates *m_pTemplates;
 
     const QString m_sSEPARATOR;
