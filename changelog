@@ -1,6 +1,6 @@
 inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
 
-  [ Christian Schärf ]
+  [ Christian Schaerf ]
   * Added graphical settings dialog (LP: #879320).
 
   [ Thorsten Roth ]
@@ -11,12 +11,12 @@ inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
   * Searching for images in article folder primarily.
   * Fixed LP: #1082678 (crash after pressing ENTER some seconds),
     LP: 970365 (supporting quotes), LP: #975615 (missing line after list).
-  * Fixed downloading article wihout images.
+  * Fixed downloading article wihout images and image downloading issues.
   * Reorganized search/replace.
   * Applying changes from settings dialog directly.
   * New IWLs.
 
- -- Thorsten Roth <elthoro@gmx.de>  Fri, 25 Jan 2013 23:01:28 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 26 Jan 2013 15:48:28 +0200
 
 inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
@@ -28,7 +28,7 @@ inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
 inyokaedit (0.7.0-0ubuntu1) precise; urgency=low
 
-  [Dominique Lasserre]
+  [ Dominique Lasserre ]
   * No longer needed lintian override removed (spelling Programm - Program).
 
   [ Thorsten Roth ]
@@ -64,7 +64,7 @@ inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
 
 inyokaedit (0.5.0-0ubuntu2) precise; urgency=low
 
-  [ Christian Schärf ]
+  [ Christian Schaerf ]
   * New uploader.
   * Added table template dialog.
   * Fixed LP: #1014367 (table dialog heading failure)
@@ -96,14 +96,14 @@ inyokaedit (0.5.0-0ubuntu2) precise; urgency=low
 
 inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
-  [Dominique Lasserre]
+  [ Dominique Lasserre ]
   * Improved Makefile (installation target). Hunspell dependency now optional
     (dynamic check with pkg-config which is a new dependency). Spellchecker can
     be disabled (but is enabled by default). LP: #951056
   * Added me to authors of debian/*.
   * Accept libqt4-dev << 4:4.7.0 as replacement of libqtwebkit-dev.
 
-  [Thorsten Roth]
+  [ Thorsten Roth ]
   * Fixed LP: #941308 (No edit after search), LP: #904439 (Show preview
     alongside editor), LP: #969649 (crash on startup), LP: #889321 and #922808
     (cursor moving and marking issues).
@@ -120,7 +120,7 @@ inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
 
 inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
 
-  [Dominique Lasserre]
+  [ Dominique Lasserre ]
   * Apply new versions scheme.
   * Bump to Standards version 3.9.3.
   * Bump to DEP-5 copyright format 1.0.
@@ -133,7 +133,7 @@ inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
   * Install manpages from plain text files.
   * Added watch and debian menu file.
 
-  [Thorsten Roth]
+  [ Thorsten Roth ]
   * Added Dominique Lasserre as uploader
   * Added back/forward/reload button to toolbar in preview (LP: #940968).
   * Switched to source format 3.0 (quilt)
