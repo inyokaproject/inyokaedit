@@ -767,7 +767,8 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
     if (m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame) == nIndex
             || 999 == nIndex) {
         // Only disable buttons if preview is not shown alongside editor
-        if (false == m_pSettings->getPreviewAlongside()) {
+        if (false == m_pSettings->getPreviewAlongside()
+                && true == m_pSettings->getPreviewInEditor()) {
             // Disable editor and insert samples/macros toolbars
             m_pUi->editMenu->setDisabled(true);
             m_pTplMenu->setDisabled(true);
