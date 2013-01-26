@@ -229,7 +229,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
                     // Remove windows specific newline \r
                     sListMetadata.last().remove("\r");
                     sListMetadata.last() = m_sInyokaUrl + "/_image?target="
-                            + sListMetadata.last().toLower();
+                            + sListMetadata.last();
                     sListSaveFolder << m_sImgDir;
 
                     // qDebug() << sListMetadata.last();
