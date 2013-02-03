@@ -129,6 +129,9 @@ void CSettingsDialog::accept() {
 void CSettingsDialog::changedPreviewAlongside(bool bState) {
     if(bState) {
         m_pUi->previewInEditorCheck->setChecked(true);
+        m_pUi->scrollbarSyncCheck->setEnabled(true);
+    } else {
+        m_pUi->scrollbarSyncCheck->setEnabled(false);
     }
 }
 
