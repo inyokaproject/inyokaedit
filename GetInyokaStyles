@@ -20,9 +20,15 @@
 
 PROJECT="${1}"
 
+if [ "${PROJECT}" == "" ]
+  then
+    echo "USAGE: ./`basename $0` [STYLES FOLDER]"
+    exit
+fi
+
 if [ ! -d ${PROJECT} ]
   then
-    echo "Creating main folder..."
+    echo "Creating styles main folder..."
     mkdir -p ${PROJECT}
 fi
 

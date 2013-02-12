@@ -49,7 +49,8 @@ class CFileOperations : public QObject {
     * \param sAppName Application name
     */
     CFileOperations(QWidget *pParent, CTextEditor *pEditor,
-                    CSettings *pSettings, const QString &sAppName);
+                    CSettings *pSettings, const QString &sAppName,
+                    const QString &sPreviewFile);
 
     /**
     * \brief Get current file name
@@ -144,6 +145,7 @@ class CFileOperations : public QObject {
 
     QString m_sCurFile;  /**< Current file (full path and name) */
     QString m_sAppName;  /**< Application name */
+    QString m_sPreviewFile;
 };
 
 #endif  // INYOKAEDIT_CFILEOPERATIONS_H_

@@ -27,6 +27,7 @@
 #include <QDebug>
 
 #include "./CDownload.h"
+#include "./CProgressDialog.h"
 
 extern bool bDEBUG;
 

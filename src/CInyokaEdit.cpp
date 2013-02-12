@@ -39,7 +39,8 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     : QMainWindow(parent),
       m_pUi(new Ui::CInyokaEdit),
       m_pApp(ptrApp),
-      m_UserDataDir(userDataDir) {
+      m_UserDataDir(userDataDir),
+      m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     bool bOpenFileAfterStart = false;
@@ -134,7 +135,8 @@ void CInyokaEdit::createObjects() {
     m_pFileOperations = new CFileOperations(this,
                                             m_pEditor,
                                             m_pSettings,
-                                            m_pApp->applicationName());
+                                            m_pApp->applicationName(),
+                                            m_sPreviewFile);
 
     m_pParser = new CParser(m_UserDataDir,
                             m_tmpPreviewImgDir,
@@ -797,7 +799,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         }
 
         // File for temporary html output
-        QFile tmphtmlfile(m_UserDataDir.absolutePath() + "/tmpinyoka.html");
+        QFile tmphtmlfile(m_sPreviewFile);
 
         // No write permission
         if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {

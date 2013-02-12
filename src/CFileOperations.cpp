@@ -34,11 +34,13 @@
 
 CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
                                  CSettings *pSettings,
-                                 const QString &sAppName)
+                                 const QString &sAppName,
+                                 const QString &sPreviewFile)
     : m_pParent(pParent),
       m_pEditor(pEditor),
       m_pSettings(pSettings),
-      m_sAppName(sAppName) {
+      m_sAppName(sAppName),
+      m_sPreviewFile(sPreviewFile) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Generate recent files list
@@ -256,9 +258,7 @@ void CFileOperations::printPreview() {
     myPrinter.setOutputFileName("Preview.pdf");  // Default name
 
     // Load preview from url
-    myPreviewWebView.load(QUrl::fromLocalFile(QDir::homePath()
-                                              + "/." + m_sAppName
-                                              + "/tmpinyoka.html"));
+    myPreviewWebView.load(QUrl::fromLocalFile(m_sPreviewFile));
 
     QPrintDialog myPrintDialog(&myPrinter);
     if (QDialog::Accepted == myPrintDialog.exec()) {

@@ -36,7 +36,6 @@
 #include "./CHighlighter.h"
 #include "./CParser.h"
 #include "./CTextEditor.h"
-#include "./CProgressDialog.h"
 #include "./CFindReplace.h"
 #include "./CDownload.h"
 #include "./CFileOperations.h"
@@ -58,13 +57,12 @@ class QDir;
 class CTemplates;
 class CParser;
 class CFindReplace;
-class CProgressDialog;
 class CSettings;
 class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.8.0"
+#define sVERSION "0.8.1"
 
 namespace Ui {
     class CInyokaEdit;
@@ -239,6 +237,7 @@ class CInyokaEdit : public QMainWindow {
 
     QDir m_UserDataDir;
     QDir m_tmpPreviewImgDir;
+    QString m_sPreviewFile;
 
     // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;

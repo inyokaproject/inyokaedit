@@ -43,10 +43,6 @@ CProgressDialog::CProgressDialog(const QString &sScriptname,
     this->setWindowFlags(this->windowFlags()
                          & ~Qt::WindowContextHelpButtonHint);
 
-    if (sListArguments.size() == 0) {
-        sListArguments << QDir::homePath() + "/." + m_sAppName;
-    }
-
     m_myProc = new QProcess();
     m_myProc->start(sScriptname, sListArguments);
 

@@ -25,6 +25,7 @@
  */
 
 #include <QDebug>
+#include <QDesktopServices>
 #include "./CSettings.h"
 
 CSettings::CSettings(const QString &sName, QWidget *pParent) {
@@ -75,7 +76,9 @@ void CSettings::readSettings() {
         m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
     }
     m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
-                                         QDir::homePath()).toString();
+                                         QDesktopServices::storageLocation(
+                                             QDesktopServices::DocumentsLocation))
+                                         .toString();
     m_bAutomaticImageDownload = m_pSettings->value("AutomaticImageDownload",
                                                    false).toBool();
     m_sSpellCheckerLanguage = m_pSettings->value("SpellCheckerLanguage",
