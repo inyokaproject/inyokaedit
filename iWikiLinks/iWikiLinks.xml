@@ -72,6 +72,7 @@
     <element type="sourceforge" url="http://sourceforge.net/projects/" name="Sourceforge" icon="sourceforge.png" />
     <element type="sourceforge2" url="http://$PAGE.sourceforge.net" name="Sourceforge 2" icon="sourceforge2.png" />
     <element type="debianbug" url="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=" name="Debian Bugs" icon="debianbug.png" />
+    <element type="kdebugs" url="https://bugs.kde.org/show_bug.cgi?id=" name="KDE Bugs" icon="kdebugs.png" />
   </group>
   <group name="Misc" icon="youtube.png">
     <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
