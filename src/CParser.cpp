@@ -2058,7 +2058,7 @@ QString CParser::parseCodeBlock(const QString &s_ActParagraph) {
         }
 
         // Syntax highlighting with Pygments (only on Unix)
-#if not defined _WIN32
+#ifndef _WIN32
         if (QFile("/usr/bin/pygmentize").exists()) {
             QString sHighlightLang = sListElements[0].remove(
                         "#!" +  m_pTemplates->getTransCodeBlock(),
@@ -2383,8 +2383,8 @@ QString CParser::parseList(const QString &s_ActParagraph) {
 
     // Separate elementes from macro (between separator)
     QStringList sListElements = sParagraph.split(m_sSEPARATOR);
-    int iArrayLevel[sListElements.length()];
-    bool iArrayArabic[sListElements.length()];
+    int *pArrayLevel = new int[sListElements.length()];
+    bool *pArrayArabic = new bool[sListElements.length()];
 
     for (int i = 0; i < sListElements.length(); i++) {
         if (sListElements[i].trimmed().startsWith("*")) {
@@ -2392,33 +2392,33 @@ QString CParser::parseList(const QString &s_ActParagraph) {
                 sOutput = "<ul>\n";
             }
 
-            iArrayLevel[i] = sListElements[i].indexOf("*");
-            iArrayArabic[i] = false;
+            pArrayLevel[i] = sListElements[i].indexOf("*");
+            pArrayArabic[i] = false;
             sListElements[i] = sListElements[i].remove(
-                        0, iArrayLevel[i]+1).trimmed();
+                        0, pArrayLevel[i]+1).trimmed();
         } else {
             if (i == 0) {
                 sOutput = "<ol class=\"arabic\">\n";
             }
 
-            iArrayLevel[i] = sListElements[i].indexOf("1.");
-            iArrayArabic[i] = true;
+            pArrayLevel[i] = sListElements[i].indexOf("1.");
+            pArrayArabic[i] = true;
             sListElements[i] = sListElements[i].remove(
-                        0, iArrayLevel[i]+2).trimmed();
+                        0, pArrayLevel[i]+2).trimmed();
         }
 
-        if (i > 0 && (iArrayLevel[i-1] < iArrayLevel[i])) {
-            for (int j = iArrayLevel[i] - iArrayLevel[i-1]; j > 0; j--) {
-                if (iArrayArabic[i] == false) {
+        if (i > 0 && (pArrayLevel[i-1] < pArrayLevel[i])) {
+            for (int j = pArrayLevel[i] - pArrayLevel[i-1]; j > 0; j--) {
+                if (pArrayArabic[i] == false) {
                     sOutput += "<ul>\n";
                 } else {
                     sOutput += "<ol class=\"arabic\">\n";
                 }
             }
         }
-        if (i > 0 && (iArrayLevel[i-1] > iArrayLevel[i])) {
-            for (int j = iArrayLevel[i-1] - iArrayLevel[i]; j > 0; j--) {
-                if (iArrayArabic[i] == false) {
+        if (i > 0 && (pArrayLevel[i-1] > pArrayLevel[i])) {
+            for (int j = pArrayLevel[i-1] - pArrayLevel[i]; j > 0; j--) {
+                if (pArrayArabic[i] == false) {
                     sOutput += "</ul>\n";
                 } else {
                     sOutput += "</ol>\n";
@@ -2429,8 +2429,8 @@ QString CParser::parseList(const QString &s_ActParagraph) {
         sOutput += "<li><p>" + sListElements[i] + "</p></li>\n";
 
         if (i == sListElements.length() - 1) {
-            for (int k = iArrayLevel[i]; k > 0; k--) {
-                if (iArrayArabic[i] == false) {
+            for (int k = pArrayLevel[i]; k > 0; k--) {
+                if (pArrayArabic[i] == false) {
                     sOutput += "</ul>\n";
                 } else {
                     sOutput += "</ol>\n";
@@ -2440,6 +2440,15 @@ QString CParser::parseList(const QString &s_ActParagraph) {
     }
 
     sOutput += "</ul>";
+
+    if (NULL != pArrayLevel) {
+        delete[] pArrayLevel;
+    }
+    pArrayLevel = NULL;
+    if (NULL != pArrayArabic) {
+        delete[] pArrayArabic;
+    }
+    pArrayArabic = NULL;
 
     return sOutput;
 }

@@ -245,7 +245,7 @@ bool CFileOperations::saveFile(const QString &sFileName) {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::printPreview() {
-#if not defined _WIN32
+#ifndef _WIN32
     QWebView myPreviewWebView;
     QPrinter myPrinter;
 
