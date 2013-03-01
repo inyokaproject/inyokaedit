@@ -82,13 +82,20 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QSpinBox" name="rowsNum">
+      <widget class="QSpinBox" name="colsNum">
        <property name="minimum">
         <number>1</number>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
+      <widget class="QLabel" name="colsNumLabel">
+       <property name="text">
+        <string>Number of columns</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="rowsNumLabel">
        <property name="text">
         <string>Number of rows</string>
@@ -96,16 +103,9 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QSpinBox" name="colsNum">
+      <widget class="QSpinBox" name="rowsNum">
        <property name="minimum">
         <number>1</number>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="colsNumLabel">
-       <property name="text">
-        <string>Number of columns</string>
        </property>
       </widget>
      </item>

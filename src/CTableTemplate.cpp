@@ -77,7 +77,7 @@ void CTableTemplate::newTable() {
     m_pUi->showHeadBox->setChecked(false);
     m_pUi->showTitleBox->setChecked(false);
     m_pUi->HighlightSecondBox->setChecked(false);
-    m_pUi->colsNum->setValue(m_pUi->colsNum->minimum());
+    m_pUi->colsNum->setValue(2);
     m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
 
     m_sTableString = "";

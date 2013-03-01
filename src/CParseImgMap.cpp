@@ -35,15 +35,15 @@ CParseImgMap::CParseImgMap() {
 }
 
 void CParseImgMap::startParsing(QTextDocument *pRawDoc,
-                                QStringList sListFlags,
-                                QStringList sListFlagsImg) {
+                                QStringList sListElements,
+                                QStringList sListImages) {
     QString sMyDoc = pRawDoc->toPlainText();
 
-    for (int i = 0; i < sListFlags.size(); i++) {
-        if (0 == i && "error" == sListFlags[0].toLower()) {
+    for (int i = 0; i < sListElements.size(); i++) {
+        if (0 == i && "error" == sListElements[0].toLower()) {
             break;
         }
-        sMyDoc.replace(sListFlags[i], "<img src=\"" + sListFlagsImg[i] + "\" />");
+        sMyDoc.replace(sListElements[i], "<img src=\"" + sListImages[i] + "\" />");
     }
 
     // Replace raw document with new replaced doc

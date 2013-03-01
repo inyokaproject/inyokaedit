@@ -401,7 +401,7 @@ void CParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
 void CParseLinks::createAnchor(QTextDocument *pRawDoc) {
     QRegExp findAnchor("\\[{2,2}\\b("
                        + m_sTransAnchor
-                       + ")\\([A-Za-z_\\s-]+\\)\\]{2,2}");
+                       + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
     QString sMyDoc = pRawDoc->toPlainText();
     int nIndex;
     int nLength;
