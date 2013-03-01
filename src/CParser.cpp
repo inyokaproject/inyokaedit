@@ -2260,7 +2260,7 @@ QString CParser::parseImageCollection(const QString &s_ActParagraph) {
 
 void CParser::replaceImages(QTextDocument *p_rawDoc) {
     QRegExp findImages("\\[\\[" + m_pTemplates->getTransImage()
-                       + "\\([\\w\\s\\-,./=\"]+\\)\\]\\]");
+                       + "\\(.+\\)\\]\\]");
     QString sMyDoc = p_rawDoc->toPlainText();
     int iLength;
     QString sTmpImage;
@@ -2281,6 +2281,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     double iImgHeight, iImgWidth;
     double tmpH, tmpW;
 
+    findImages.setMinimal(true);
     int myindex = findImages.indexIn(sMyDoc);
     while (myindex >= 0) {
         iLength = findImages.matchedLength();
@@ -2291,7 +2292,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 
         sImageWidth = "";
         sImageHeight = "";
-        sImageAlign = "left";
+        sImageAlign = "";
         iImgHeight = 0;
         iImgWidth = 0;
         tmpH = 0;
@@ -2315,22 +2316,18 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
             if (sListTmpImageInfo[i].trimmed().toUInt() != 0) {
                 sImageWidth = sListTmpImageInfo[i].trimmed();
                 tmpW = sListTmpImageInfo[i].trimmed().toUInt();
-            } else if (sListTmpImageInfo[i].startsWith("x\\d")) {
+            } else if (sListTmpImageInfo[i].trimmed().startsWith("x")) {
                 // Found x+integer (height)
-                sImageHeight = sListTmpImageInfo[i].remove("x").trimmed();
-                tmpH = sImageHeight.toUInt();
-            } else if (sListTmpImageInfo[i].contains("\\dx\\d")) {
+                tmpH = sListTmpImageInfo[i].remove("x").trimmed().toUInt();
+            } else if (sListTmpImageInfo[i].contains("x")) {
                 // Found int x int (width x height)
-                QString sTmp;
-                sTmp = sListTmpImageInfo[i];
-                sImageWidth = sListTmpImageInfo[i].remove(
+                QString sTmp = sListTmpImageInfo[i];  // Copy needed!
+                tmpW = sListTmpImageInfo[i].remove(
                             sListTmpImageInfo[i].indexOf("x"),
-                            sListTmpImageInfo[i].length() ).trimmed();
-                tmpW = sImageWidth.toUInt();
-                sImageHeight = sTmp.remove(0, sTmp.indexOf("x")).trimmed();
-                tmpH = sImageHeight.toUInt();
+                            sListTmpImageInfo[i].length()).trimmed().toUInt();
+                tmpH = sTmp.remove(0, sTmp.indexOf("x")+1).trimmed().toUInt();
             } else if (sListTmpImageInfo[i].trimmed() == "left"
-                     || sListTmpImageInfo[i].trimmed() == "align=left") {
+                       || sListTmpImageInfo[i].trimmed() == "align=left") {
                 // Found alignment
                 sImageAlign = "left";
             } else if (sListTmpImageInfo[i].trimmed() == "right"
