@@ -74,17 +74,12 @@ void CFindReplace::showEvent(QShowEvent *event) {
     m_pUi->button_Replace->setEnabled(m_pUi->text_Search->text().size() > 0);
     m_pUi->button_ReplaceAll->setEnabled(m_pUi->text_Search->text().size() > 0);
 
-    m_pUi->text_Search->setText(m_pSettings->getTextFind());
     m_pUi->text_Replace->setText(m_pSettings->getTextReplace());
     m_pUi->radio_Forward->setChecked(m_pSettings->getSearchForwardState());
     m_pUi->radio_Backward->setChecked(!m_pSettings->getSearchForwardState());
     m_pUi->check_Case->setChecked(m_pSettings->getCaseState());
     m_pUi->check_WholeWord->setChecked(m_pSettings->getWholeWordState());
     m_pUi->check_Regexp->setChecked(m_pSettings->getUseRegExpState());
-
-    // Always select search input box
-    m_pUi->text_Search->selectAll();
-    m_pUi->text_Search->setFocus();
 
     // Check if editor was set before
     if (!m_pEditor) {
@@ -93,6 +88,16 @@ void CFindReplace::showEvent(QShowEvent *event) {
         event->ignore();
         this->close();
     } else {
+        // If some text is selected in editor
+        if ("" != m_pEditor->textCursor().selectedText()) {
+            m_pUi->text_Search->setText(m_pEditor->textCursor().selectedText());
+        } else {  // If not use last used string
+            m_pUi->text_Search->setText(m_pSettings->getTextFind());
+        }
+        // Always select search input box
+        m_pUi->text_Search->selectAll();
+        m_pUi->text_Search->setFocus();
+
         event->accept();
     }
 }
