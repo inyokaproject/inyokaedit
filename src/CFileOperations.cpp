@@ -246,23 +246,69 @@ bool CFileOperations::saveFile(const QString &sFileName) {
 
 void CFileOperations::printPreview() {
 #ifndef _WIN32
-    QWebView myPreviewWebView;
+    QWebView previewWebView;
     QPrinter myPrinter;
+    QFile previewFile(m_sPreviewFile);
+    QString sHtml("");
 
-    // Configure printer : format A4, PDF
-    myPrinter.setPageSize(QPrinter::A4);
+    // Configure printer: format A4, PDF
+    myPrinter.setPaperSize(QPrinter::A4);
     myPrinter.setFullPage(true);
     myPrinter.setOrientation(QPrinter::Portrait);
     myPrinter.setPrintRange(QPrinter::AllPages);
     myPrinter.setOutputFormat(QPrinter::PdfFormat);
-    myPrinter.setOutputFileName("Preview.pdf");  // Default name
+    myPrinter.setOutputFileName(m_pSettings->getLastOpenedDir().absolutePath()
+                                + "/Preview.pdf");
 
+    if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(0, "Warning",
+                             tr("Could not open html preview file for printing!"));
+        qWarning() << "Could not open text html preview file for printing:"
+                   << m_sPreviewFile;
+    } else {
+        QTextStream in(&previewFile);
+        QString sTmpLine1("");
+        QString sTmpLine2("");
+        while (!in.atEnd()) {
+            sTmpLine1 = in.readLine() + "\n";
+            sTmpLine2 = in.readLine() + "\n";
+            // If line == </body> skip previous line
+            // See below: <div class=\"wrap\">...</div>\n</body>)
+            if ("</body>" == sTmpLine2.trimmed()) {
+                sHtml += sTmpLine2;
+            } else {
+                sHtml += sTmpLine1;
+                sHtml += sTmpLine2;
+            }
+        }
+        previewFile.close();
+    }
+
+    /*
     // Load preview from url
-    myPreviewWebView.load(QUrl::fromLocalFile(m_sPreviewFile));
+    previewWebView.load(QUrl::fromLocalFile(m_sPreviewFile));
+    */
+
+    // Add style format; remove unwanted div for printing
+    sHtml.replace("</style>",
+                  "html{background-color:#ffffff; margin:40px;}\n"
+                  "body{background-color:#ffffff;\n</style>");
+    sHtml.remove("<div class=\"wrap\">");
+
+    previewWebView.setHtml(sHtml, QUrl::fromLocalFile(
+                                 QFileInfo(m_sPreviewFile)
+                                 .absoluteDir().absolutePath() + "/"));
+
+    /*
+    previewWebView.setContent(sHtml.toLocal8Bit(), "application/xhtml+xml",
+                                QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
+                                                    .absoluteDir()
+                                                    .absolutePath() + "/"));
+    */
 
     QPrintDialog myPrintDialog(&myPrinter);
     if (QDialog::Accepted == myPrintDialog.exec()) {
-        myPreviewWebView.print(&myPrinter);
+        previewWebView.print(&myPrinter);
     }
 #else
     QMessageBox::information(m_pParent, m_sAppName,
