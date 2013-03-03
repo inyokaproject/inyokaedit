@@ -76,6 +76,8 @@
     <addaction name="replaceAct"/>
     <addaction name="findNextAct"/>
     <addaction name="findPreviousAct"/>
+    <addaction name="separator"/>
+    <addaction name="preferencesAct"/>
    </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
@@ -96,8 +98,6 @@
     <addaction name="spellCheckerAct"/>
     <addaction name="DownloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
-    <addaction name="separator"/>
-    <addaction name="preferencesAct"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>

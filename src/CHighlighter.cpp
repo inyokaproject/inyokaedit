@@ -272,17 +272,15 @@ void CHighlighter::defineRules() {
     m_highlightingRules.append(myRule);
 
     // New table line
-    sListRegExpPatterns.clear();
-    sListRegExpPatterns << QRegExp::escape("+++") << QRegExp::escape("||");
-    foreach (const QString &sPattern, sListRegExpPatterns) {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
-        myRule.format = m_newTableLineFormat;
-        m_highlightingRules.append(myRule);
-    }
+    myRule.format = m_newTableLineFormat;
+    myRule.pattern = QRegExp("^\\+{3}$");
+    m_highlightingRules.append(myRule);
+    myRule.pattern = QRegExp("\\|\\|");
+    m_highlightingRules.append(myRule);
 
     // Cell style in tables
     myRule.format = m_tablecellsFormat;
-    myRule.pattern = QRegExp("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+    myRule.pattern = QRegExp("^\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
     m_highlightingRules.append(myRule);
 
     // InterWiki-Links
@@ -358,24 +356,30 @@ void CHighlighter::defineRules() {
     }
 
     // List
-    sListRegExpPatterns.clear();
-    sListRegExpPatterns << QRegExp::escape(" * ") << QRegExp::escape(" 1. ");
-    foreach (const QString &sPattern, sListRegExpPatterns) {
-        myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
-        myRule.format = m_listFormat;
-        m_highlightingRules.append(myRule);
-    }
+    myRule.format = m_listFormat;
+    myRule.pattern = QRegExp("^\\s\\*\\s");
+    m_highlightingRules.append(myRule);
+    myRule.format = m_listFormat;
+    myRule.pattern = QRegExp("^\\s1\\.\\s");
+    m_highlightingRules.append(myRule);
 
     // Misc
     sListRegExpPatterns.clear();
-    sListRegExpPatterns << QRegExp::escape("[[BR]]") << QRegExp::escape("\\\\")
-                        << QRegExp::escape("#tag:") << QRegExp::escape("# tag:")
-                        << QRegExp::escape("----");
+    sListRegExpPatterns << QRegExp::escape("[[BR]]") << QRegExp::escape("\\\\");
     foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
         myRule.format = m_miscFormat;
         m_highlightingRules.append(myRule);
     }
+    myRule.format = m_miscFormat;
+    myRule.pattern = QRegExp("^#tag:");
+    m_highlightingRules.append(myRule);
+    myRule.pattern = QRegExp("^# tag:");
+    m_highlightingRules.append(myRule);
+    myRule.pattern = QRegExp("^----$");
+    m_highlightingRules.append(myRule);
+    myRule.pattern = QRegExp("^>+");
+    m_highlightingRules.append(myRule);
 }
 
 // ----------------------------------------------------------------------------

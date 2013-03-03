@@ -43,7 +43,8 @@ void CParseImgMap::startParsing(QTextDocument *pRawDoc,
         if (0 == i && "error" == sListElements[0].toLower()) {
             break;
         }
-        sMyDoc.replace(sListElements[i], "<img src=\"" + sListImages[i] + "\" />");
+        sMyDoc.replace(sListElements[i],
+                       "<img src=\"" + sListImages[i] + "\" />");
     }
 
     // Replace raw document with new replaced doc
