@@ -262,7 +262,7 @@ void CHighlighter::defineRules() {
     myRule.format = m_headingsFormat;
     for (int i = 5; i > 0; i--) {
         myRule.pattern = QRegExp("^\\s*={" + QString::number(i) + "}[^=]+={" +
-                                 QString::number(i) + "}");
+                                 QString::number(i) + "}\\s*$");
         m_highlightingRules.append(myRule);
     }
 

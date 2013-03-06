@@ -29,48 +29,48 @@ CODECFORSRC   = UTF-8
 CODECFORTR    = UTF-8
 
 HEADERS      += src/CInyokaEdit.h \
-                src/CTableTemplate.h \
-                src/CHighlighter.h \
-                src/CTextEditor.h \
-                src/CProgressDialog.h \
-                src/CSettings.h \
-                src/CXmlParser.h \
-                src/CParser.h \
                 src/CDownload.h \
-                src/CFileOperations.h \
-                src/CParseLinks.h \
-                src/CTemplates.h \
                 src/CDownloadImg.h \
-                src/CParseImgMap.h \
+                src/CFileOperations.h \
                 src/CFindReplace.h \
-                src/CSettingsDialog.h
+                src/CHighlighter.h \
+                src/CParser.h \
+                src/CParseImgMap.h \
+                src/CParseLinks.h \
+                src/CProgressDialog.h \
+                src/CTableTemplate.h \
+                src/CTemplates.h \
+                src/CTextEditor.h \
+                src/CSettings.h \
+                src/CSettingsDialog.h \
+                src/CXmlParser.h
 
 SOURCES      += src/main.cpp \
                 src/CInyokaEdit.cpp \
-                src/CTableTemplate.cpp \
-                src/CHighlighter.cpp \
-                src/CTextEditor.cpp \
-                src/CProgressDialog.cpp \
-                src/CSettings.cpp \
-                src/CXmlParser.cpp \
-                src/CParser.cpp \
                 src/CDownload.cpp \
-                src/CFileOperations.cpp \
-                src/CParseLinks.cpp \
-                src/CTemplates.cpp \
                 src/CDownloadImg.cpp \
-                src/CParseImgMap.cpp \
+                src/CFileOperations.cpp \
                 src/CFindReplace.cpp  \
-                src/CSettingsDialog.cpp
+                src/CHighlighter.cpp \
+                src/CParser.cpp \
+                src/CParseImgMap.cpp \
+                src/CParseLinks.cpp \
+                src/CProgressDialog.cpp \
+                src/CTableTemplate.cpp \
+                src/CTemplates.cpp \
+                src/CTextEditor.cpp \
+                src/CSettings.cpp \
+                src/CSettingsDialog.cpp \
+                src/CXmlParser.cpp
 
 RESOURCES     = res/inyokaedit_resources.qrc
 
 FORMS        += src/CInyokaEdit.ui \
-                src/CTableTemplate.ui \
-                src/CProgressDialog.ui \
-                src/CSpellCheckDialog.ui \
                 src/CFindReplace.ui \
-                src/CSettingsDialog.ui
+                src/CProgressDialog.ui \
+                src/CSettingsDialog.ui \
+                src/CSpellCheckDialog.ui \
+                src/CTableTemplate.ui
 
 TRANSLATIONS += lang/inyokaedit_de.ts
 

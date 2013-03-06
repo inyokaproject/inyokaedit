@@ -25,6 +25,7 @@
  */
 
 #include <QtGui>
+#include <QNetworkProxy>
 #include <QtWebKit/QWebView>
 #include <QWebFrame>
 
@@ -261,6 +262,23 @@ void CInyokaEdit::setupEditor() {
 
     if (false == m_pSettings->getPreviewAlongside()) {
         this->removeToolBar(m_pUi->browserBar);
+    }
+
+    // Setting proxy if available
+    QString sHostname = m_pSettings->getProxyHostname();
+    quint16 nPort = m_pSettings->getProxyPort();
+    if ("" != sHostname && 0 != nPort) {
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(sHostname);
+        proxy.setPort(nPort);
+        QString sUser = m_pSettings->getProxyUsername();
+        QString sPassword = m_pSettings->getProxyPassword();
+        if ("" != sUser && "" != sPassword) {
+            proxy.setUser(sUser);
+            proxy.setPassword(sPassword);
+        }
+        QNetworkProxy::setApplicationProxy(proxy);
     }
 
     m_pUi->aboutAct->setText(m_pUi->aboutAct->text()

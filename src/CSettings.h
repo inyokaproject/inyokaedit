@@ -97,6 +97,12 @@ class CSettings : public QObject {
     bool getUseRegExpState() const;
     void setUseRegExpState(const bool bNewState);
     
+    // Proxy
+    QString getProxyHostname() const;
+    quint16 getProxyPort() const;
+    QString getProxyUsername() const;
+    QString getProxyPassword() const;
+
     // Allow CSettingsDialog to access private members
     friend class CSettingsDialog;
 
@@ -148,6 +154,12 @@ class CSettings : public QObject {
     bool m_bCheckCase;
     bool m_bCheckWholeWord;
     bool m_bUseRegExp;
+
+    // Proxy
+    QString m_sProxyHostname;
+    quint16 m_nProxyPort;
+    QString m_sProxyUsername;
+    QString m_sProxyPassword;
 };
 
 #endif  // INYOKAEDIT_CSETTINGS_H_

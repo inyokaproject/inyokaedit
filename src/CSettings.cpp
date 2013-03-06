@@ -148,6 +148,14 @@ void CSettings::readSettings() {
     m_bUseRegExp = m_pSettings->value("UseRegExp", false).toBool();
     m_pSettings->endGroup();
 
+    // Proxy
+    m_pSettings->beginGroup("Proxy");
+    m_sProxyHostname = m_pSettings->value("HostName", "").toString();
+    m_nProxyPort = m_pSettings->value("Port", "").toUInt();
+    m_sProxyUsername = m_pSettings->value("UserName", "").toString();
+    m_sProxyPassword = m_pSettings->value("Password", "").toString();
+    m_pSettings->endGroup();
+
     // Window state
     m_pSettings->beginGroup("Window");
     m_aWindowGeometry = m_pSettings->value("Geometry").toByteArray();
@@ -215,6 +223,17 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("CaseSensitive", m_bCheckCase);
     m_pSettings->setValue("MatchCases", m_bCheckWholeWord);
     m_pSettings->setValue("UseRegExp", m_bUseRegExp);
+    m_pSettings->endGroup();
+
+    m_pSettings->beginGroup("Proxy");
+    m_pSettings->setValue("HostName", m_sProxyHostname);
+    if (0 == m_nProxyPort) {
+        m_pSettings->setValue("Port", "");
+    } else {
+        m_pSettings->setValue("Port", m_nProxyPort);
+    }
+    m_pSettings->setValue("UserName", m_sProxyUsername);
+    m_pSettings->setValue("Password", m_sProxyPassword);
     m_pSettings->endGroup();
 
     // Save toolbar position etc.
@@ -375,11 +394,24 @@ void CSettings::setUseRegExpState(const bool bNewState) {
 QByteArray CSettings::getWindowGeometry() const {
     return m_aWindowGeometry;
 }
-
 QByteArray CSettings::getWindowState() const {
     return m_aWindowState;
 }
-
 QByteArray CSettings::getSplitterState() const {
     return m_aSplitterState;
+}
+
+// ----------------------------------------------------
+
+QString CSettings::getProxyHostname() const {
+    return m_sProxyHostname;
+}
+quint16 CSettings::getProxyPort() const {
+    return m_nProxyPort;
+}
+QString CSettings::getProxyUsername() const {
+    return m_sProxyUsername;
+}
+QString CSettings::getProxyPassword() const{
+    return m_sProxyPassword;
 }
