@@ -357,10 +357,10 @@ void CHighlighter::defineRules() {
 
     // List
     myRule.format = m_listFormat;
-    myRule.pattern = QRegExp("^\\s\\*\\s");
+    myRule.pattern = QRegExp("^\\s+\\*\\s+");
     m_highlightingRules.append(myRule);
     myRule.format = m_listFormat;
-    myRule.pattern = QRegExp("^\\s1\\.\\s");
+    myRule.pattern = QRegExp("^\\s+1\\.\\s+");
     m_highlightingRules.append(myRule);
 
     // Misc

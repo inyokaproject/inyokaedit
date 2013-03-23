@@ -37,7 +37,9 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CParser.h \
                 src/CParseImgMap.h \
                 src/CParseLinks.h \
+                src/CParseTemplates.h \
                 src/CProgressDialog.h \
+                src/CProvisionalTplParser.h \
                 src/CTableTemplate.h \
                 src/CTemplates.h \
                 src/CTextEditor.h \
@@ -55,7 +57,9 @@ SOURCES      += src/main.cpp \
                 src/CParser.cpp \
                 src/CParseImgMap.cpp \
                 src/CParseLinks.cpp \
+                src/CParseTemplates.cpp \
                 src/CProgressDialog.cpp \
+                src/CProvisionalTplParser.cpp \
                 src/CTableTemplate.cpp \
                 src/CTemplates.cpp \
                 src/CTextEditor.cpp \
