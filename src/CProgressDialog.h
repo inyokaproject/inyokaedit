@@ -40,7 +40,7 @@ class QCloseEvent;
 
 /**
  * \class CProgressDialog
- * \brief Showing a progress dialog while downloading styles or article images.
+ * \brief Showing a progress dialog while downloading styles.
  */
 class CProgressDialog : public QDialog {
     Q_OBJECT
@@ -48,7 +48,7 @@ class CProgressDialog : public QDialog {
   public:
     explicit CProgressDialog(const QString &sScriptname,
                              QStringList sListArguments,
-                             const QString &sAppname, QWidget *pParent = 0);
+                             const QString &sAppname);
     ~CProgressDialog();
 
   private slots:
@@ -64,7 +64,7 @@ class CProgressDialog : public QDialog {
   private:
     Ui::CProgressDialog *m_pUi;
     QString m_sAppName;
-    QProcess *m_myProc;
+    QProcess *m_pProcess;
 };
 
 #endif  // INYOKAEDIT_CPROGRESSDIALOG_H_

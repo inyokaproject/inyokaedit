@@ -77,25 +77,25 @@ bool CDownload::loadInyokaStyles() {
                                      QMessageBox::No);
 
     if (iRet != QMessageBox::No) {
-        CProgressDialog *myArticleDownloadProgress;
+        CProgressDialog *pDownloadProgress;
 
         // Path from normal installation
         if (QFile::exists("/usr/share/" + m_sAppName.toLower()
                           + "/GetInyokaStyles") && !bDEBUG) {
-            myArticleDownloadProgress =
+            pDownloadProgress =
                     new CProgressDialog("/usr/share/" + m_sAppName.toLower() +
                                         "/GetInyokaStyles",
                                         QStringList() << m_sStylesDir,
-                                        m_sAppName, m_pParent);
+                                        m_sAppName);
         } else {
             // No installation: Use app path
-            myArticleDownloadProgress =
+            pDownloadProgress =
                     new CProgressDialog(m_sAppDir + "/GetInyokaStyles",
                                         QStringList() << m_sStylesDir,
-                                        m_sAppName, m_pParent);
+                                        m_sAppName);
         }
 
-        myArticleDownloadProgress->open();
+        pDownloadProgress->show();
         return true;
     }
     return false;

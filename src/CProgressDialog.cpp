@@ -33,36 +33,36 @@
 
 CProgressDialog::CProgressDialog(const QString &sScriptname,
                                  QStringList sListArguments,
-                                 const QString &sAppName, QWidget *pParent)
-    : QDialog(pParent),
+                                 const QString &sAppName)
+    : QDialog(),
       m_pUi(new Ui::CProgressDialog),
       m_sAppName(sAppName) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
-    this->setWindowFlags(this->windowFlags()
-                         & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowFlags((this->windowFlags() & ~Qt::WindowContextHelpButtonHint)
+                         | Qt::WindowStaysOnTopHint);
 
-    m_myProc = new QProcess();
-    m_myProc->start(sScriptname, sListArguments);
+    m_pProcess = new QProcess();
+    m_pProcess->start(sScriptname, sListArguments);
 
     // Show output
-    connect(m_myProc, SIGNAL(readyReadStandardOutput()),
+    connect(m_pProcess, SIGNAL(readyReadStandardOutput()),
             this, SLOT(showMessage()));
-    connect(m_myProc, SIGNAL(readyReadStandardError()),
+    connect(m_pProcess, SIGNAL(readyReadStandardError()),
             this, SLOT(showErrorMessage()));
 
-    connect(m_myProc, SIGNAL(finished(int)),
+    connect(m_pProcess, SIGNAL(finished(int)),
             this, SLOT(downloadScriptFinished()));
 }
 
 CProgressDialog::~CProgressDialog() {
-    m_myProc->kill();
+    m_pProcess->kill();
 
-    if (NULL != m_myProc) {
-        delete  m_myProc;
+    if (NULL != m_pProcess) {
+        delete  m_pProcess;
     }
-    m_myProc = NULL;
+    m_pProcess = NULL;
 
     if (NULL != m_pUi) {
         delete m_pUi;
@@ -73,22 +73,22 @@ CProgressDialog::~CProgressDialog() {
 // ----------------------------------------------------------------------------
 
 void CProgressDialog::closeEvent(QCloseEvent *pEvent) {
-    m_myProc->kill();  // Kill download process
-    pEvent->accept();  // Close window
+    m_pProcess->kill();  // Kill download process
+    pEvent->accept();    // Close window
 }
 
 // ----------------------------------------------------------------------------
 
 // Show message
 void CProgressDialog::showMessage() {
-    QByteArray strdata = m_myProc->readAllStandardOutput();
+    QByteArray strdata = m_pProcess->readAllStandardOutput();
     m_pUi->textEditProcessOut->setTextColor(Qt::black);
     m_pUi->textEditProcessOut->append(strdata);
 }
 
 // Show error message
 void CProgressDialog::showErrorMessage() {
-    QByteArray strdata = m_myProc->readAllStandardError();
+    QByteArray strdata = m_pProcess->readAllStandardError();
     m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
     m_pUi->textEditProcessOut->append(strdata);
 }

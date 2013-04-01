@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Parse all kind of links (external, InterWiki, etc.)
+ * Class definition for parsing templates.
  */
 
 #ifndef INYOKAEDIT_CPARSETEMPLATES_H_
