@@ -104,6 +104,7 @@ QString CParser::genOutput(const QString &sActFile,
     this->replaceHeadlines(m_pRawText);        // And generate list for TOC
     this->replaceTableOfContents(m_pRawText);  // Use before link parser!
     this->replaceLists(m_pRawText);
+    this->replaceTables(m_pRawText);
 
     m_pLinkParser->startParsing(m_pRawText);
 
@@ -1109,4 +1110,33 @@ void CParser::replaceLists(QTextDocument *p_rawDoc) {
 
     return sOutput;
     */
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CParser::replaceTables(QTextDocument *p_rawDoc) {
+/*
+    QString sDoc("");
+    QString sLine("");
+    bool bLineStart = false;
+    bool bLineEnd = false;
+
+    // Go through each text block
+    for (QTextBlock block = p_rawDoc->firstBlock();
+         block.isValid() && !(p_rawDoc->lastBlock() < block);
+         block = block.next()) {
+        if (block.text().trimmed().startsWith("||")
+                && block.text().trimmed().endsWith("||")
+                && bLineStart == false) {
+
+
+        } else if (block.text().trimmed().startsWith("||")) {
+            bLineStart = true;
+            sLine = block.text().trimmed()
+        } else if(bLineStart) {
+
+        }
+    }
+*/
 }

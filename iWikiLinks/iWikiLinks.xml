@@ -96,6 +96,7 @@
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
     <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <element type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
+    <element type="lgdb" url="http://www.lgdb.org/" name="Linux game database" icon="lgdb.png" />
     <element type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
     <element type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
     <element type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
