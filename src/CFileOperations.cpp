@@ -40,7 +40,9 @@ CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
       m_pEditor(pEditor),
       m_pSettings(pSettings),
       m_sAppName(sAppName),
-      m_sPreviewFile(sPreviewFile) {
+      m_sPreviewFile(sPreviewFile),
+      m_sFileFilter(tr("Inyoka article") + " (*.inyoka *.iny);;"
+                    + tr("All files") + " (*)") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Generate recent files list
@@ -80,7 +82,8 @@ void CFileOperations::open() {
         // File dialog opens last used folder
         QString sFileName = QFileDialog::getOpenFileName(
                     m_pParent, tr("Open file"),
-                    m_pSettings->getLastOpenedDir().absolutePath());
+                    m_pSettings->getLastOpenedDir().absolutePath(),
+                    m_sFileFilter);
         if (!sFileName.isEmpty()) {
             QFileInfo tmpFI(sFileName);
             m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
@@ -113,15 +116,16 @@ bool CFileOperations::save() {
 bool CFileOperations::saveAs() {
     QString sCurFileName("");
     if ("" != m_sCurFile) {
-        sCurFileName = m_pSettings->getLastOpenedDir().absolutePath()
-                + "/" + m_sCurFile;
+        sCurFileName = m_sCurFile;
     } else {
         sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
     }
 
     // File dialog opens last used folder
-    QString sFileName = QFileDialog::getSaveFileName(
-                m_pParent, tr("Save file"), sCurFileName);
+    QString sFileName = QFileDialog::getSaveFileName(m_pParent,
+                                                     tr("Save file"),
+                                                     sCurFileName,
+                                                     m_sFileFilter);
     if (sFileName.isEmpty()) {
         return false;
     }
