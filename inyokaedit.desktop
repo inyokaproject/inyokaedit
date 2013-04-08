@@ -2,10 +2,11 @@
 Name=InyokaEdit
 GenericName=Inyoka Markup Editor
 Comment=Edit and preview Inyoka markup
+Comment[de]=Inyoka-Markup-Text bearbeiten und ansehen
 Exec=inyokaedit %U
 Terminal=false
 Type=Application
 StartupNotify=true
-MimeType=text/plain;
+MimeType=text/x-inyoka;
 Icon=inyokaedit_64x64.png
 Categories=Qt;Utility;TextEditor;

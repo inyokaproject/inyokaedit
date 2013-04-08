@@ -114,12 +114,15 @@ unix {
     pixmap.files += res/images/inyokaedit_64x64.png
     man.path = /usr/share
     man.files += man
+    mime.path = /usr/share/mime/packages
+    mime.files += inyokaedit.xml
     target.path = /usr/bin
     INSTALLS += data \
         lang \
         desktop \
         pixmap \
         man \
+        mime \
         target
 }
 

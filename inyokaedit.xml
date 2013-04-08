@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/x-inyoka">
+    <comment>Inyoka document</comment>
+    <comment xml:lang="de">Inyoka-Dokument</comment>
+    <glob pattern="*.inyoka"/>
+    <glob pattern="*.iny"/>
+    <magic priority="90">
+      <match type="string" offset="0" value="[[Vorlage"/>
+      <match type="string" offset="0" value="{{{#!vorlage"/>
+      <match type="string" offset="0" value="[[Inhaltsverzeichnis"/>
+    </magic>
+  </mime-type>
+</mime-info>
