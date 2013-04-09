@@ -1,5 +1,5 @@
 Source: inyokaedit
-Section: doc
+Section: editors
 Priority: extra
 Maintainer: Thorsten Roth <elthoro@gmx.de>
 Uploaders: Dominique Lasserre <lasserre.d@gmail.com>,
@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 7.0.50~),
          libqtgui4,
          pkg-config,
          libhunspell-dev
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 Homepage: https://launchpad.net/inyokaedit
 Vcs-Bzr: https://code.launchpad.net/~elthoro/inyokaedit/packaging
 Vcs-Browser: http://bazaar.launchpad.net/~elthoro/inyokaedit/packaging
