@@ -41,7 +41,7 @@ CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
       m_pSettings(pSettings),
       m_sAppName(sAppName),
       m_sPreviewFile(sPreviewFile),
-      m_sFileFilter(tr("Inyoka article") + " (*.inyoka *.iny);;"
+      m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;"
                     + tr("All files") + " (*)") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
