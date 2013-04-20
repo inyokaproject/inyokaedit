@@ -7,15 +7,18 @@ inyokaedit (0.9.0-0ubuntu1) quantal; urgency=low
 
   [ Thorsten Roth ]
   * Parser completly rewritten.
+  * Fixed LP: #829113 (combination of numbered / unnumbered list)
+  * Fixed LP: #946701 (unsupported templates)
+  * Fixed LP: #1162586 (minimizing styles download dialog)
   * Fixed printing / PDF export.
   * Highlighter corrections.
   * Fix for building under Windows with VS2010.
   * Using selected word in search dialog.
-  * Added simple proxy support.
+  * Added simple proxy support (fixed LP: #1126036).
   * Minor gui changes.
   * New IWLs and template updates.
 
- -- Dominique Lasserre <lasserre.d@gmail.com>  Mon, 08 Apr 2013 21:26:12 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 20 Apr 2013 21:25:51 +0200
 
 inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
 
