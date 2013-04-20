@@ -408,7 +408,7 @@ void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
     patternFormat.setMinimal(true);  // Search only for smallest match
 
     sDoc = p_rawDoc->toPlainText();
-    qDebug() << "\n\n" << sDoc << "\n\n";
+    // qDebug() << "\n\n" << sDoc << "\n\n";
     nNoTranslate = m_sListNoTranslate.size();
     for (int i = 0; i < sListHtmlStart.size(); i++) {
         patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
@@ -950,12 +950,9 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 void CParser::replaceLists(QTextDocument *p_rawDoc) {
     QString sDoc("");
     QString sLine("");
-    bool bFirstBullet = false;
-    bool bListFinished = false;
-    bool bInList = false;
-    bool bNoListElement = true;
-    bool bUnsorted = false;
-    bool bSorted = false;
+    int nPreviousIndex = -1;
+    int nCurrentIndex = -1;
+    QList<bool> bArrayListType;  // Unsorted = false, sorted = true
 
     // Go through each text block
     for (QTextBlock block = p_rawDoc->firstBlock();
@@ -965,157 +962,109 @@ void CParser::replaceLists(QTextDocument *p_rawDoc) {
                 || block.text().trimmed().startsWith("1.")) {
             sLine = block.text();
 
-            if (-1 != sLine.indexOf(" * ")) {  // Unsorted list
+            if (sLine.indexOf(" * ") >= 0) {  // Unsorted list
+                nPreviousIndex = nCurrentIndex;
+                nCurrentIndex = sLine.indexOf(" * ");
                 sLine.remove(0, sLine.indexOf(" * ") + 3);
-                bUnsorted = true;
-                bSorted = false;
-                if (!bInList && !bFirstBullet) {
-                    bFirstBullet = true;
-                } else {
-                    bFirstBullet = false;
+                // qDebug() << "LIST:" << sLine << nCurrentIndex << false;
+
+                if (nCurrentIndex != nPreviousIndex) {
+                    if (nCurrentIndex > nPreviousIndex) {  // New tag
+                        sDoc += "<ul>\n";
+                        bArrayListType << false;
+                    } else {  // Close previous tag and maybe create new
+                        if (!bArrayListType.isEmpty()) {
+                            if (false == bArrayListType.last()) {
+                                sDoc += "</ul>\n";
+                            } else {
+                                sDoc += "</ol>\n";
+                            }
+                            bArrayListType.removeLast();
+                        }
+
+                        if (!bArrayListType.isEmpty()) {
+                            if (true == bArrayListType.last()) {
+                                sDoc += "</ol>\n<ul>\n";
+                                bArrayListType.removeLast();
+                                bArrayListType << false;
+                            }
+                        }
+                    }
                 }
-                bInList = true;
-                bNoListElement = false;
-            } else if (-1 != sLine.indexOf(" 1. ")) {  // Sorted list
+                sDoc += "<li>" + sLine + "</li>\n";
+
+            } else if (sLine.indexOf(" 1. ") >= 0) {  // Sorted list
+                nPreviousIndex = nCurrentIndex;
+                nCurrentIndex = sLine.indexOf(" 1. ");
                 sLine.remove(0, sLine.indexOf(" 1. ") + 4);
-                bUnsorted = false;
-                bSorted = true;
-                if (!bInList && !bFirstBullet) {
-                    bFirstBullet = true;
-                } else {
-                    bFirstBullet = false;
+                // qDebug() << "LIST:" << sLine << nCurrentIndex << true;
+
+                if (nCurrentIndex != nPreviousIndex) {
+                    if (nCurrentIndex > nPreviousIndex) {  // New tag
+                        sDoc += "<ol class=\"arabic\">\n";
+                        bArrayListType << true;
+                    } else {  // Close previous tag and maybe create new
+                        if (!bArrayListType.isEmpty()) {
+                            if (false == bArrayListType.last()) {
+                                sDoc += "</ul>\n";
+                            } else {
+                                sDoc += "</ol>\n";
+                            }
+                            bArrayListType.removeLast();
+                        }
+
+                        if (!bArrayListType.isEmpty()) {
+                            if (false == bArrayListType.last()) {
+                                sDoc += "</ul>\n<ol class=\"arabic\">\n";
+                                bArrayListType.removeLast();
+                                bArrayListType << true;
+                            }
+                        }
+                    }
                 }
-                bInList = true;
-                bNoListElement = false;
-            } else {  // Not an list element
-                bFirstBullet = false;
-                bNoListElement = true;
-            }
-        } else {  // Evrything else
-            bFirstBullet = false;
-            bNoListElement = true;
-        }
+                sDoc += "<li>" + sLine + "</li>\n";
 
-
-        if (bFirstBullet && bUnsorted) {
-            sDoc += "<ul>\n";
-            bFirstBullet = false;
-        } else if (bFirstBullet && bSorted) {
-            sDoc += "<ol class=\"arabic\">";
-            bFirstBullet = false;
-        }
-
-        if ((bUnsorted || bSorted) && !bNoListElement) {
-            sDoc += "<li>" + sLine + "</li>\n";
-        } else  {
-            if (bInList) {
-                bListFinished = true;
-            } else {
-                bListFinished = false;
+            } else {  // Not a list element
+                // Close all open tags
+                while (!bArrayListType.isEmpty()) {
+                    if (false == bArrayListType.last()) {
+                        sDoc += "</ul>\n";
+                    } else {
+                        sDoc += "</ol>\n";
+                    }
+                    bArrayListType.removeLast();
+                }
+                nPreviousIndex = -1;
+                nCurrentIndex = -1;
                 sDoc += block.text() + "\n";
-            }
-        }
-
-        if (bListFinished) {
-            if (bUnsorted && bNoListElement) {
-                sDoc += "</ul>\n";
-            } else if (bSorted && bNoListElement) {
-                sDoc += "</ol>\n";
+                // qDebug() << "LIST END";
             }
 
+        } else {  // Everything else
+            // Close all open tags
+            while (!bArrayListType.isEmpty()) {
+                if (false == bArrayListType.last()) {
+                    sDoc += "</ul>\n";
+                } else {
+                    sDoc += "</ol>\n";
+                }
+                bArrayListType.removeLast();
+            }
+            nPreviousIndex = -1;
+            nCurrentIndex = -1;
             sDoc += block.text() + "\n";
-            bInList = false;
-            bFirstBullet = false;
-            bUnsorted = false;
-            bSorted = false;
-            bListFinished = false;
+            // qDebug() << "LIST END";
         }
     }
 
     p_rawDoc->setPlainText(sDoc);
-
-
-    /*
-    QString sParagraph = s_ActParagraph;
-    QString sOutput("<strong>ERROR: List</strong>\n");
-
-    // Separate elementes from macro (between separator)
-    QStringList sListElements = sParagraph.split(m_sSEPARATOR);
-    int *pArrayLevel = new int[sListElements.length()];
-    bool *pArrayArabic = new bool[sListElements.length()];
-
-    for (int i = 0; i < sListElements.length(); i++) {
-        if (sListElements[i].trimmed().startsWith("*")) {
-            if (i == 0) {
-                sOutput = "<ul>\n";
-            }
-
-            pArrayLevel[i] = sListElements[i].indexOf("*");
-            pArrayArabic[i] = false;
-            sListElements[i] = sListElements[i].remove(
-                        0, pArrayLevel[i]+1).trimmed();
-        } else {
-            if (i == 0) {
-                sOutput = "<ol class=\"arabic\">\n";
-            }
-
-            pArrayLevel[i] = sListElements[i].indexOf("1.");
-            pArrayArabic[i] = true;
-            sListElements[i] = sListElements[i].remove(
-                        0, pArrayLevel[i]+2).trimmed();
-        }
-
-        if (i > 0 && (pArrayLevel[i-1] < pArrayLevel[i])) {
-            for (int j = pArrayLevel[i] - pArrayLevel[i-1]; j > 0; j--) {
-                if (pArrayArabic[i] == false) {
-                    sOutput += "<ul>\n";
-                } else {
-                    sOutput += "<ol class=\"arabic\">\n";
-                }
-            }
-        }
-        if (i > 0 && (pArrayLevel[i-1] > pArrayLevel[i])) {
-            for (int j = pArrayLevel[i-1] - pArrayLevel[i]; j > 0; j--) {
-                if (pArrayArabic[i] == false) {
-                    sOutput += "</ul>\n";
-                } else {
-                    sOutput += "</ol>\n";
-                }
-            }
-        }
-
-        sOutput += "<li><p>" + sListElements[i] + "</p></li>\n";
-
-        if (i == sListElements.length() - 1) {
-            for (int k = pArrayLevel[i]; k > 0; k--) {
-                if (pArrayArabic[i] == false) {
-                    sOutput += "</ul>\n";
-                } else {
-                    sOutput += "</ol>\n";
-                }
-            }
-        }
-    }
-
-    sOutput += "</ul>";
-
-    if (NULL != pArrayLevel) {
-        delete[] pArrayLevel;
-    }
-    pArrayLevel = NULL;
-    if (NULL != pArrayArabic) {
-        delete[] pArrayArabic;
-    }
-    pArrayArabic = NULL;
-
-    return sOutput;
-    */
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CParser::replaceTables(QTextDocument *p_rawDoc) {
+    Q_UNUSED(p_rawDoc);
 /*
     QString sDoc("");
     QString sLine("");

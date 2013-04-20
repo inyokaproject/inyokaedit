@@ -337,23 +337,29 @@ cd Icons
 
 # Linux
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu.png -O ubuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kubuntu.png -O kubuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/edubuntu.png -O edubuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gobuntu.png -O gobuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/lubuntu.png -O lubuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu-community.png -O ubuntu-community.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu64.png -O ubuntu64.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kubuntu.png -O kubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/lubuntu.png -O lubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/xubuntu.png -O xubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/edubuntu.png -O edubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntustudio.png -O ubuntustudio.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/mythbuntu.png -O mythbuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/unity.png -O unity.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu_server.png -O ubuntu_server.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntukylin.png -O ubuntukylin.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kxubuntu.png -O kxubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/brainstorm.png -O brainstorm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu-community.png -O ubuntu-community.png
+
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome.png -O gnome.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnu.png -O gnu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/debian.png -O debian.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/redhat.png -O redhat.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/tux.png -O tux.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/suse.png -O suse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/debian.png -O debian.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/arch.png -O arch.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/slackware.png -O slackware.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gentoo.png -O gentoo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/suse.png -O suse.png
+
 
 # Programme
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/calc.png -O calc.png
@@ -436,6 +442,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/burning.png -O burn
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/community-help.png -O community-help.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/contact.png -O contact.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/date.png -O date.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/dtp.png -O dtp.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/email.png -O email.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/hint.png -O hint.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/improvements.png -O improvements.png
@@ -446,6 +453,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/panel.png -O panel.
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/pencil.png -O pencil.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/rss.png -O rss.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/save_all.png -O save_all.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/synaptic.png -O synaptic.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/time.png -O time.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/wiki.png -O wiki.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/unknown.png -O unknown.png
@@ -453,6 +461,8 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/openstreetmap.png -
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/users.png -O users.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/windows_users.png -O windows_users.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/window.png -O window.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/win-ubuntu.png -O win-ubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/wubi.png -O wubi.png
 
 
 if [ ! -d Protokolle ]
@@ -497,26 +507,31 @@ cd Tango
 
 # Tango - Dokument
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/accessories-text-editor.png -O accessories-text-editor.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-new.png -O document-new.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-print.png -O document-print.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save.png -O document-save.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-copy.png -O edit-copy.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-delete.png -O edit-delete.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-paste.png -O edit-paste.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-new.png -O folder-new.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-remote.png -O folder-remote.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/user-home.png -O user-home.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/contact-new.png -O contact-new.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/bookmark-new.png -O bookmark-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/calc.png -O calc.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/contact-new.png -O contact-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-new.png -O document-new.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-open.png -O document-open.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save-as.png -O document-save-as.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-clear.png -O edit-clear.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-cut.png -O edit-cut.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-find.png -O edit-find.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-select-all.png -O edit-select-all.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder.png -O folder.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-saved-search.png -O folder-saved-search.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-print.png -O document-print.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-properties.png -O document-properties.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save-as.png -O document-save-as.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/document-save.png -O document-save.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-clear.png -O edit-clear.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-copy.png -O edit-copy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-cut.png -O edit-cut.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-delete.png -O edit-delete.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-find.png -O edit-find.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-paste.png -O edit-paste.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/edit-select-all.png -O edit-select-all.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/file-manager.png -O file-manager.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-new.png -O folder-new.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder.png -O folder.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-remote.png -O folder-remote.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/folder-saved-search.png -O folder-saved-search.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/text-editor.png -O text-editor.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/user-home.png -O user-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/video-display.png -O video-display.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/info.png -O info.png
 
 # Tango - Dateityp
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-x-generic.png -O audio-x-generic.png
@@ -526,14 +541,14 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/video-x-gener
 
 # Tango - Navigation
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-bottom.png -O go-bottom.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-first.png -O go-first.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-jump.png -O go-jump.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-next.png -O go-next.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-top.png -O go-top.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-down.png -O go-down.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-first.png -O go-first.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-home.png -O go-home.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-jump.png -O go-jump.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-last.png -O go-last.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-next.png -O go-next.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-previous.png -O go-previous.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-top.png -O go-top.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/go-up.png -O go-up.png
 
 # Tango - Internet
@@ -585,34 +600,41 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/zoom-out.png 
 
 # Tango - Diverse
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/camera-photo.png -O camera-photo.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/camera-video.png -O camera-video.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/computer.png -O computer.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-harddisk.png -O drive-harddisk.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-optical.png -O drive-optical.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-removable-media.png -O drive-removable-media.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-gaming.png -O input-gaming.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-keyboard.png -O input-keyboard.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-mouse.png -O input-mouse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-flash.png -O media-flash.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-floppy.png -O media-floppy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-optical.png -O media-optical.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/multimedia-player.png -O multimedia-player.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/printer.png -O printer.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-card.png -O audio-card.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-input-microphone.png -O audio-input-microphone.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/battery.png -O battery.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/office-calendar.png -O office-calendar.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/help-browser.png -O help-browser.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop.png -O preferences-desktop.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-locale.png -O preferences-desktop-locale.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-accessibility.png -O preferences-desktop-accessibility.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-assistive-technology.png -O preferences-desktop-assistive-technology.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-font.png -O preferences-desktop-font.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-keyboard-shortcuts.png -O preferences-desktop-keyboard-shortcuts.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-theme.png -O preferences-desktop-theme.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-wallpaper.png -O preferences-desktop-wallpaper.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/emblem-favorite.png -O emblem-favorite.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/camera-video.png -O camera-video.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-harddisk.png -O drive-harddisk.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/drive-removable-media.png -O drive-removable-media.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/input-keyboard.png -O input-keyboard.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-flash.png -O media-flash.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/media-optical.png -O media-optical.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/printer.png -O printer.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/audio-input-microphone.png -O audio-input-microphone.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/office-calendar.png -O office-calendar.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop.png -O preferences-desktop.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-accessibility.png -O preferences-desktop-accessibility.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-font.png -O preferences-desktop-font.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/preferences-desktop-theme.png -O preferences-desktop-theme.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/X.png -O X.png
+
+# Tango - Dialoge
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/dialog-ok.png -O dialog-ok.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/dialog-cancel.png -O dialog-cancel.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/dialog-information.png -O dialog-information.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/dialog-warning.png -O dialog-warning.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango/dialog-error.png -O dialog-error.png
+
 
 cd ..
 
@@ -705,6 +727,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-log-o
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system-shutdown.png -O system-shutdown.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/user-trash.png -O user-trash.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/system_users.png -O system_users.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/preferences.png -O preferences.png
 
 # Oxygen - Ansichtsmodi
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Oxygen/view-fullscreen.png -O view-fullscreen.png
