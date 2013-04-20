@@ -364,6 +364,7 @@ QString CProvisionalTplParser::parseForeignPackage(const QStringList &sListArgs)
 QString CProvisionalTplParser::parseForeignSource(const QStringList &sListArgs) {
     QStringList sArgs(sListArgs);
     QString sOutput("");
+    QStringList sListVersions;
 
     sOutput = "<p>Um aus der [:Fremdquellen:Fremdquelle] zu installieren, "
               "muss man unabhängig von der Ubuntu-Version die folgende "
@@ -375,20 +376,29 @@ QString CProvisionalTplParser::parseForeignSource(const QStringList &sListArgs) 
                          "gefährden.");
 
     if (sArgs.size() >= 2) {
-         sOutput += "<div class=\"thirpartyrepo-outer\">\n"
+        sListVersions = sArgs[1].split(" ", QString::SkipEmptyParts);
+        QString sVersions("");
+        foreach (QString s, sListVersions) {
+            s = s.toLower();
+            s[0] = s[0].toUpper();
+            sVersions += "<a href=\"#\">" + s + "</a> | ";
+        }
+        sVersions.remove(sVersions.size() - 2, 2);
+
+        sOutput += "<div class=\"thirpartyrepo-outer\">\n"
                    "<div class=\"contents\">\n"
                    "<div class=\"selector\">\n"
-                   "'''Version:''' " + sArgs[1] + "\n"
+                   "'''Version:''' " + sVersions + "\n"
                    "</div>\n";
 
         if (sArgs.size() == 2) {
-            sOutput += "<pre> deb " + sArgs[0] + " " + sArgs[1] + " </pre>";
+            sOutput += "<pre> deb " + sArgs[0] + " " + sListVersions[0] + " </pre>";
         } else {
             if (sArgs[2].startsWith(" ")) {
                 sArgs[2].remove(0, 1);
             }
             sOutput += "<pre> deb " + sArgs[0] + " "
-                    + sArgs[1] + " " + sArgs[2] + "</pre>";
+                    + sArgs[1] + " " + sListVersions[0] + "</pre>";
         }
 
         sOutput += "</div>\n"
@@ -841,7 +851,7 @@ QString CProvisionalTplParser::parseKnowledge(const QStringList &sListArgs) {
     QString sOutput("");
     QString sTmp("");
     for (int i = 0; i < sListArgs.length(); i++) {
-        sOutput += "\n * [[Anker(source-" + QString::number(i + 1) + ")]]";
+        sOutput += "\n 1. [[Anker(source-" + QString::number(i + 1) + ")]]";
         if (sListArgs[i].contains(",")) {
             sOutput += sListArgs[i].left(sListArgs[i].indexOf(",")).trimmed();
             sTmp = sListArgs[i].right(sListArgs[i].length()
@@ -993,10 +1003,10 @@ QString CProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
 
         sOutput = "Zusätzliche [:Fremdquellen:] können das System gefährden.";
         sRemark = "Ein PPA unterstützt nicht zwangsläufig alle "
-                  "Ubuntu-Versionen. Weitere Informationen bietet die "
+                  "Ubuntu-Versionen. Weitere Informationen sind der "
                   "[[Bild(../img/interwiki/ppa.png)]] [https://launchpad.net/~"
-                  + sUser + "/+archive/" + sPPA + " PPA-Beschreibung] vom "
-                  "Benutzer/Team [lpuser:" + sUser + ":].";
+                  + sUser + "/+archive/" + sPPA + " PPA-Beschreibung] des "
+                  "Eigentümers/Teams [lpuser:" + sUser + ":] zu entnehmen.";
     }
 
     return sOutsideBox + insertBox("box warning",
