@@ -130,7 +130,7 @@ QString CParser::genOutput(const QString &sActFile,
         sFilename = tr("Untitled", "No file name set");
     } else {
         QFileInfo fi(m_sCurrentFile);
-        sFilename = fi.fileName();
+        sFilename = fi.baseName();
     }
 
     // Replace template tags
