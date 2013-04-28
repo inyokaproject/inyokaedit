@@ -258,6 +258,7 @@ class CInyokaEdit : public QMainWindow {
 
     QTimer *m_pPreviewTimer;
 
+    bool m_bOpenFileAfterStart;
     bool m_bEditorScrolling;
     bool m_bWebviewScrolling;
     bool m_bReloadPreviewBlocked;

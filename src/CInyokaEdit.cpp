@@ -44,14 +44,14 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
       m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    bool bOpenFileAfterStart = false;
+    m_bOpenFileAfterStart = false;
 
     m_pUi->setupUi(this);
 
     // Check for command line arguments (except version/debug)
     if ((!bDEBUG && m_pApp->argc() >= 2)
             || (bDEBUG && m_pApp->argc() >= 3)) {
-            bOpenFileAfterStart = true;
+            m_bOpenFileAfterStart = true;
     }
 
     // Create folder for downloaded article images
@@ -84,7 +84,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
 #endif
     }
 
-    if (true == bOpenFileAfterStart) {
+    if (true == m_bOpenFileAfterStart) {
         if (bDEBUG) {
             m_pFileOperations->loadFile(m_pApp->argv()[2], true);
         } else {
@@ -217,6 +217,9 @@ void CInyokaEdit::setupEditor() {
     m_pWebviewFrame->setLayout(m_pFrameLayout);
     m_pWebviewFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
+    connect(m_pWebview, SIGNAL(loadFinished(bool)),
+            this, SLOT(loadPreviewFinished(bool)));
+
     if (true == m_pSettings->getPreviewAlongside()
             && true == m_pSettings->getPreviewInEditor()) {
         m_pWidgetSplitter = new QSplitter;
@@ -230,8 +233,10 @@ void CInyokaEdit::setupEditor() {
         setCentralWidget(m_pWidgetSplitter);
         m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
-        // Show an empty website after start
-        this->previewInyokaPage();
+        if (!m_bOpenFileAfterStart) {
+            // Show an empty website after start
+            this->previewInyokaPage();
+        }
     } else {
         setCentralWidget(m_pTabwidgetRawPreview);
         m_pTabwidgetRawPreview->setTabPosition(QTabWidget::West);
@@ -244,9 +249,6 @@ void CInyokaEdit::setupEditor() {
                             m_pWebviewFrame), false);
         }
     }
-
-    connect(m_pWebview, SIGNAL(loadFinished(bool)),
-            this, SLOT(loadPreviewFinished(bool)));
 
     m_pFileOperations->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
