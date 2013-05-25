@@ -150,9 +150,9 @@ void CSettings::readSettings() {
 
     // Proxy
     m_pSettings->beginGroup("Proxy");
-    m_sProxyHostname = m_pSettings->value("HostName", "").toString();
+    m_sProxyHostName = m_pSettings->value("HostName", "").toString();
     m_nProxyPort = m_pSettings->value("Port", "").toUInt();
-    m_sProxyUsername = m_pSettings->value("UserName", "").toString();
+    m_sProxyUserName = m_pSettings->value("UserName", "").toString();
     m_sProxyPassword = m_pSettings->value("Password", "").toString();
     m_pSettings->endGroup();
 
@@ -226,13 +226,13 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->endGroup();
 
     m_pSettings->beginGroup("Proxy");
-    m_pSettings->setValue("HostName", m_sProxyHostname);
+    m_pSettings->setValue("HostName", m_sProxyHostName);
     if (0 == m_nProxyPort) {
         m_pSettings->setValue("Port", "");
     } else {
         m_pSettings->setValue("Port", m_nProxyPort);
     }
-    m_pSettings->setValue("UserName", m_sProxyUsername);
+    m_pSettings->setValue("UserName", m_sProxyUserName);
     m_pSettings->setValue("Password", m_sProxyPassword);
     m_pSettings->endGroup();
 
@@ -403,14 +403,14 @@ QByteArray CSettings::getSplitterState() const {
 
 // ----------------------------------------------------
 
-QString CSettings::getProxyHostname() const {
-    return m_sProxyHostname;
+QString CSettings::getProxyHostName() const {
+    return m_sProxyHostName;
 }
 quint16 CSettings::getProxyPort() const {
     return m_nProxyPort;
 }
-QString CSettings::getProxyUsername() const {
-    return m_sProxyUsername;
+QString CSettings::getProxyUserName() const {
+    return m_sProxyUserName;
 }
 QString CSettings::getProxyPassword() const{
     return m_sProxyPassword;

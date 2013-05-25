@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>457</width>
-    <height>363</height>
+    <height>373</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,10 +41,71 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="previewInEditorCheck">
+       <item row="5" column="0">
+        <widget class="QLabel" name="spellCheckLangLabel">
          <property name="text">
-          <string>Preview in editor</string>
+          <string>Spell checker language</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="spellCheckerLangEdit"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="autosaveLabel">
+         <property name="text">
+          <string>Autosave time (in sec)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="autosaveEdit">
+         <property name="toolTip">
+          <string>Time which to autosave an article after (sec, 0 means disabled)</string>
+         </property>
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="reloadPreviewKeyLabel">
+         <property name="text">
+          <string>Reload preview key</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="reloadPreviewKeyEdit"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="timedPreviewLabel">
+         <property name="text">
+          <string>Auto reload preview (in sec)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="timedPreviewsEdit"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="numberRecentFilesLabel">
+         <property name="text">
+          <string>Number of entries in recent files list</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSpinBox" name="numberRecentFilesEdit">
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="linkCheckingCheck">
+         <property name="text">
+          <string>Enable link checking</string>
          </property>
         </widget>
        </item>
@@ -55,81 +116,17 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="inyokaUrlLabel">
-         <property name="text">
-          <string>URL to Inyoka wiki</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="inyokaUrlEdit"/>
-       </item>
-       <item row="5" column="1">
-        <widget class="QCheckBox" name="articleImageDownloadCheck">
-         <property name="text">
-          <string>Download article images automatically</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="spellCheckLangLabel">
-         <property name="text">
-          <string>Spell checker language</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="spellCheckerLangEdit"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QCheckBox" name="linkCheckingCheck">
-         <property name="text">
-          <string>Enable link checking</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="autosaveLabel">
-         <property name="text">
-          <string>Autosave time (in sec)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QSpinBox" name="autosaveEdit">
-         <property name="toolTip">
-          <string>Time which to autosave an article after (sec, 0 means disabled)</string>
-         </property>
-         <property name="maximum">
-          <number>999</number>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="reloadPreviewKeyLabel">
-         <property name="text">
-          <string>Reload preview key</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="reloadPreviewKeyEdit"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="timedPreviewLabel">
-         <property name="text">
-          <string>Auto reload preview (in sec)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QSpinBox" name="timedPreviewsEdit"/>
-       </item>
        <item row="2" column="1">
         <widget class="QCheckBox" name="previewAlongsideCheck">
          <property name="text">
           <string>Preview alongside</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="previewInEditorCheck">
+         <property name="text">
+          <string>Preview in editor</string>
          </property>
         </widget>
        </item>
@@ -150,6 +147,9 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QFontComboBox" name="fontComboBox"/>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="fontSizeLabel">
          <property name="text">
@@ -164,30 +164,92 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QFontComboBox" name="fontComboBox"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="lastOpenedTab">
       <attribute name="title">
-       <string>Last opened</string>
+       <string>Connection</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="numberRecentFilesLabel">
+        <widget class="QLabel" name="inyokaUrlLabel">
          <property name="text">
-          <string>Number of entries in recent files list</string>
+          <string>URL to Inyoka wiki</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="numberRecentFilesEdit">
-         <property name="minimum">
-          <number>0</number>
+        <widget class="QLineEdit" name="inyokaUrlEdit"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="articleImageDownloadCheck">
+         <property name="text">
+          <string>Download article images automatically</string>
          </property>
-         <property name="value">
-          <number>5</number>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="proxyHostNameLabel">
+         <property name="text">
+          <string>Proxy host name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="proxyHostNameEdit"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="proxyPortLabel">
+         <property name="text">
+          <string>Port</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="proxyPortSpinBox">
+         <property name="maximum">
+          <number>99999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="proxyUserNameLabel">
+         <property name="text">
+          <string>User name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="proxyUserNameEdit"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="proxyPasswordLabel">
+         <property name="text">
+          <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="proxyPasswordEdit">
+         <property name="echoMode">
+          <enum>QLineEdit::Normal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="proxyPasswordHintLabel">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Attention: Password not encrypted!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

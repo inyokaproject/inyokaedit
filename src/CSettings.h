@@ -98,9 +98,9 @@ class CSettings : public QObject {
     void setUseRegExpState(const bool bNewState);
     
     // Proxy
-    QString getProxyHostname() const;
+    QString getProxyHostName() const;
     quint16 getProxyPort() const;
-    QString getProxyUsername() const;
+    QString getProxyUserName() const;
     QString getProxyPassword() const;
 
     // Allow CSettingsDialog to access private members
@@ -156,9 +156,9 @@ class CSettings : public QObject {
     bool m_bUseRegExp;
 
     // Proxy
-    QString m_sProxyHostname;
+    QString m_sProxyHostName;
     quint16 m_nProxyPort;
-    QString m_sProxyUsername;
+    QString m_sProxyUserName;
     QString m_sProxyPassword;
 };
 

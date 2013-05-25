@@ -63,6 +63,10 @@ class CSettingsDialog : public QDialog {
 
     bool m_bTmpPreviewInEditor;
     bool m_bTmpPreviewAlongside;
+    QString m_sProxyHostName;
+    quint16 m_nProxyPort;
+    QString m_sProxyUserName;
+    QString m_sProxyPassword;
 };
 
 #endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

@@ -64,9 +64,20 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings, QWidget *pParent)
     m_pUi->fontComboBox->setCurrentFont(QFont(m_pSettings->m_sFontFamily));
     m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
 
+    // Misc
     // Recent files
     m_pUi->numberRecentFilesEdit->setValue(m_pSettings->getNumOfRecentFiles());
     m_pUi->numberRecentFilesEdit->setMaximum(m_pSettings->getMaxNumOfRecentFiles());
+    // Proxy
+    m_pUi->proxyHostNameEdit->setText(m_pSettings->getProxyHostName());
+    m_pUi->proxyPortSpinBox->setValue(m_pSettings->getProxyPort());
+    m_pUi->proxyUserNameEdit->setText(m_pSettings->getProxyUserName());
+    m_pUi->proxyPasswordEdit->setText(m_pSettings->getProxyPassword());
+
+    m_sProxyHostName = m_pSettings->getProxyHostName();
+    m_nProxyPort = m_pSettings->getProxyPort();
+    m_sProxyUserName = m_pSettings->getProxyUserName();
+    m_sProxyPassword = m_pSettings->getProxyPassword();
 
     connect(m_pUi->previewAlongsideCheck, SIGNAL(clicked(bool)),
             this, SLOT(changedPreviewAlongside(bool)));
@@ -112,9 +123,19 @@ void CSettingsDialog::accept() {
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
 
+    //Proxy
+    m_pSettings->m_sProxyHostName = m_pUi->proxyHostNameEdit->text();
+    m_pSettings->m_nProxyPort = m_pUi->proxyPortSpinBox->value();
+    m_pSettings->m_sProxyUserName = m_pUi->proxyUserNameEdit->text();
+    m_pSettings->m_sProxyPassword = m_pUi->proxyPasswordEdit->text();
+
     // If the following settings have been changed, a restart is needed
     if (m_pUi->previewAlongsideCheck->isChecked() != m_bTmpPreviewAlongside
-            || m_pUi->previewInEditorCheck->isChecked() != m_bTmpPreviewInEditor) {
+            || m_pUi->previewInEditorCheck->isChecked() != m_bTmpPreviewInEditor
+            || m_pUi->proxyHostNameEdit->text() != m_sProxyHostName
+            || m_pUi->proxyPortSpinBox->value() != m_nProxyPort
+            || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
+            || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword) {
         QMessageBox::information(0, this->windowTitle(),
                                  tr("The editor has to be restarted for applying the changes."));
     }

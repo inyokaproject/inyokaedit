@@ -267,14 +267,14 @@ void CInyokaEdit::setupEditor() {
     }
 
     // Setting proxy if available
-    QString sHostname = m_pSettings->getProxyHostname();
+    QString sHostName = m_pSettings->getProxyHostName();
     quint16 nPort = m_pSettings->getProxyPort();
-    if ("" != sHostname && 0 != nPort) {
+    if ("" != sHostName && 0 != nPort) {
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
-        proxy.setHostName(sHostname);
+        proxy.setHostName(sHostName);
         proxy.setPort(nPort);
-        QString sUser = m_pSettings->getProxyUsername();
+        QString sUser = m_pSettings->getProxyUserName();
         QString sPassword = m_pSettings->getProxyPassword();
         if ("" != sUser && "" != sPassword) {
             proxy.setUser(sUser);
