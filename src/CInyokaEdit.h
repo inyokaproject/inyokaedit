@@ -62,7 +62,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.9.0"
+#define sVERSION "0.10.0"
 
 namespace Ui {
     class CInyokaEdit;

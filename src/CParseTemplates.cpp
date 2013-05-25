@@ -48,8 +48,8 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
     m_sCurrentFile = sCurrentFile;
 
     QStringList sListTplRegExp;
-    sListTplRegExp << "\\[\\[" + m_sTransTpl + "\\(.+\\)\\]\\]"
-                   << "\\{\\{\\{#!" + m_sTransTpl + " .+\\}\\}\\}";
+    sListTplRegExp << "\\{\\{\\{#!" + m_sTransTpl + " .+\\}\\}\\}"
+                   << "\\[\\[" + m_sTransTpl + "\\s*\\(.+\\)\\]\\]";
     QString sMyDoc = pRawDoc->toPlainText();
     QString sMacro;
     QStringList sListArguments;
@@ -62,12 +62,17 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
 
         while ((nPos = findTemplate.indexIn(sMyDoc, nPos)) != -1) {
             sMacro = findTemplate.cap(0);
+            if (sMacro.startsWith("[[" + m_sTransTpl, Qt::CaseInsensitive)) {
+                // Step needed because of possible spaces
+                sMacro.remove("[[" + m_sTransTpl, Qt::CaseInsensitive);
+                sMacro = sMacro.trimmed();
+            }
 
             // Check if macro exists
             for (int i = 0; i < m_sListTplNames.size(); i++) {
-                if (sMacro.startsWith("[[" + m_sTransTpl + "(" + m_sListTplNames[i],
+                if (sMacro.startsWith("(" + m_sListTplNames[i],
                                       Qt::CaseInsensitive)) {
-                    sMacro.remove("[[" + m_sTransTpl + "(", Qt::CaseInsensitive);
+                    sMacro.remove(0, 1);  // Remove (
                     sMacro.remove("\n)]]");
                     sMacro.remove(")]]");
                     sListArguments.clear();
@@ -102,12 +107,13 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                             sListArguments.removeAt(i);
                         }
                     }
-
                 } else if (sMacro.startsWith("{{{#!" +  m_sTransTpl + " "
                                              + m_sListTplNames[i],
                                              Qt::CaseInsensitive)) {
                     sMacro.remove("{{{#!" + m_sTransTpl + " ",
                                   Qt::CaseInsensitive);
+                    sMacro.remove("\n\\}}}");
+                    sMacro.remove("\\}}}");
                     sMacro.remove("\n}}}");
                     sMacro.remove("}}}");
                     sListArguments.clear();

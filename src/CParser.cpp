@@ -372,6 +372,7 @@ QString CParser::highlightCode(const QString &sLanguage, const QString &sCode) {
         return sCode;
     }
 #else
+    Q_UNUSED(sLanguage);
     return sCode;
 #endif
 }

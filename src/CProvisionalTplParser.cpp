@@ -1226,7 +1226,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "raring") {
+                if (sListArgs[i].toLower() == "saucy") {
+                    sOutput += "[:Saucy_Salamander:Ubuntu 13.10] "
+                               "\"Saucy Salamander\"";
+                } else if (sListArgs[i].toLower() == "raring") {
                     sOutput += "[:Raring_Ringtail:Ubuntu 13.04] "
                                "\"Raring Ringtail\"";
                 } else if (sListArgs[i].toLower() == "quantal") {

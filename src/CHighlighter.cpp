@@ -301,6 +301,10 @@ void CHighlighter::defineRules() {
     foreach (QString tmpStr, m_sListMacroKeywords) {
         sListRegExpPatterns << QRegExp::escape("[[" + tmpStr + "(");
     }
+    // Bad workaround for space between keyword and (
+    foreach (QString tmpStr, m_sListMacroKeywords) {
+        sListRegExpPatterns << QRegExp::escape("[[" + tmpStr + " (");
+    }
     sListRegExpPatterns << QRegExp::escape(")]]");
     foreach (const QString &sPattern, sListRegExpPatterns) {
         myRule.format = m_macrosFormat;
