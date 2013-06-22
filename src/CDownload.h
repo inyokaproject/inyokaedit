@@ -70,7 +70,7 @@ class CDownload : public QObject {
 
     void showArticle();
     void updateSettings(const bool bCompleter,
-                        const QString sInyokaUrl);
+                        const QString &sInyokaUrl);
 
   private slots:
     void replyFinished(QNetworkReply *reply);

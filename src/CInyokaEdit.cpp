@@ -133,6 +133,8 @@ void CInyokaEdit::createObjects() {
     m_pEditor->installEventFilter(this);
 //  }
 
+    m_pSettings->init(m_pTemplates, m_pEditor->document());
+
     m_pFileOperations = new CFileOperations(this,
                                             m_pEditor,
                                             m_pSettings,
@@ -144,11 +146,6 @@ void CInyokaEdit::createObjects() {
                             m_pSettings->getInyokaUrl(),
                             m_pSettings->getCheckLinks(),
                             m_pTemplates);
-
-    m_pHighlighter = new CHighlighter(m_pTemplates,
-                                      m_pApp->applicationName(),
-                                      m_pSettings->getStyleFile(),
-                                      m_pEditor->document());
 
     /**
      * \todo Add tabs for editing multiple documents.
@@ -383,7 +380,7 @@ void CInyokaEdit::createActions() {
     // Clear temp. image download folder
     connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()),
             this, SLOT(deleteTempImages()));
-    
+
     // Show settings dialog
     connect(m_pUi->preferencesAct, SIGNAL(triggered()),
             m_pSettings, SIGNAL(showSettingsDialog()));
@@ -727,7 +724,7 @@ void CInyokaEdit::createToolBars() {
     m_pTextmacrosBox->addItem(m_pTemplates->getDropTPLs()->getMenuName());
     m_pTextmacrosBox->insertSeparator(1);
     if (m_pTemplates->getDropTPLs()->getElementNames().size() > 0) {
-        foreach( QString s, m_pTemplates->getDropTPLs()->getElementNames()[0]) {
+        foreach (QString s, m_pTemplates->getDropTPLs()->getElementNames()[0]) {
             m_pTextmacrosBox->addItem(s);
         }
     }
@@ -1358,8 +1355,8 @@ void CInyokaEdit::clickedLink() {
 
 void CInyokaEdit::updateEditorSettings() {
     QPalette pal;
-    pal.setColor(QPalette::Base, m_pHighlighter->getBackground().name());
-    pal.setColor(QPalette::Text, m_pHighlighter->getForeground().name());
+    pal.setColor(QPalette::Base, m_pSettings->getHighlightBG());
+    pal.setColor(QPalette::Text, m_pSettings->getHighlightFG());
     m_pEditor->setPalette(pal);
     m_pEditor->setFont(m_pSettings->getEditorFont());
 
@@ -1730,7 +1727,6 @@ void CInyokaEdit::closeEvent(QCloseEvent *event) {
         } else {
             m_pSettings->writeSettings(saveGeometry(), saveState());
         }
-        m_pHighlighter->saveStyle();
         event->accept();
     } else {
         event->ignore();

@@ -266,7 +266,7 @@ void CFileOperations::printPreview() {
 
     if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, "Warning",
-                             tr("Could not open html preview file for printing!"));
+                             tr("Could not open preview file for printing!"));
         qWarning() << "Could not open text html preview file for printing:"
                    << m_sPreviewFile;
     } else {

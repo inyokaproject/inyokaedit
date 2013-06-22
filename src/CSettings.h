@@ -32,8 +32,10 @@
 #include <QMessageBox>
 
 #include "./CSettingsDialog.h"
+#include "./CHighlighter.h"
 
 class CSettingsDialog;
+class CHighlighter;
 
 /**
  * \class CSettings
@@ -43,8 +45,9 @@ class CSettings : public QObject {
     Q_OBJECT
 
   public:
-    CSettings(const QString &sName, QWidget *pParent);
+    CSettings(const QString &sAppName, QWidget *pParent);
     ~CSettings();
+    void init(CTemplates *pTemplates, QTextDocument *pDoc);
 
     // Load / save application settings
     void readSettings();
@@ -96,12 +99,18 @@ class CSettings : public QObject {
     void setWholeWordState(const bool bNewState);
     bool getUseRegExpState() const;
     void setUseRegExpState(const bool bNewState);
-    
+
     // Proxy
     QString getProxyHostName() const;
     quint16 getProxyPort() const;
     QString getProxyUserName() const;
     QString getProxyPassword() const;
+
+    // Highlighting
+    QString getHighlightBG() const;
+    QString getHighlightFG() const;
+
+    QString getFileName() const;
 
     // Allow CSettingsDialog to access private members
     friend class CSettingsDialog;
@@ -111,8 +120,11 @@ class CSettings : public QObject {
     void updateEditorSettings();
 
   private:
+    QString m_sAppName;
+    QWidget *m_pParent;
     QSettings *m_pSettings;
     CSettingsDialog *m_pSettingsDialog;
+    CHighlighter *m_pHighlighter;
 
     // General
     bool m_bCodeCompletion;   // Enable / disable code completion

@@ -34,34 +34,46 @@ CHighlighter::CHighlighter(CTemplates *pTemplates,
                            QTextDocument *pParent)
     : QSyntaxHighlighter(pParent),
       m_pTemplates(pTemplates),
-      m_sSEPARATOR("|") {
+      m_sSEPARATOR("|"),
+      m_sAppName(sAppName) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-#if defined _WIN32
-    m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
-                                sAppName.toLower(), sStyleFile);
-#else
-    m_pStyleSet = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
-                                sAppName.toLower(), sStyleFile);
-#endif
-
-    this->readStyle();
     this->getTranslations();
-    this->defineRules();
+
+    m_pStyleSet = NULL;
+    QFileInfo fiStylePath(sStyleFile);
+    this->readStyle(fiStylePath.baseName());
 }
 
 CHighlighter::~CHighlighter() {
+    if (NULL != m_pStyleSet) {
+        delete m_pStyleSet;
+    }
+    m_pStyleSet = NULL;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::readStyle() {
+void CHighlighter::readStyle(const QString &sStyle) {
     bool bOk = false;
-    bSystemForeground = false;
-    bSystemBackground = false;
+    m_bSystemForeground = false;
+    m_bSystemBackground = false;
     QString sTmpKey;
     QColor tmpColor;
+
+    if (NULL != m_pStyleSet) {
+        delete m_pStyleSet;
+    }
+    m_pStyleSet = NULL;
+
+#if defined _WIN32
+    m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+                                m_sAppName.toLower(), sStyle);
+#else
+    m_pStyleSet = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+                                m_sAppName.toLower(), sStyle);
+#endif
 
     if (!QFile::exists(m_pStyleSet->fileName())) {
         qWarning() << "Could not find/open highlighting style file:"  <<
@@ -77,7 +89,7 @@ void CHighlighter::readStyle() {
             m_colorForeground = tmpColor;
         }
     } else {
-        bSystemForeground = true;
+        m_bSystemForeground = true;
     }
 
     m_colorBackground = QApplication::palette().color(QPalette::Base);
@@ -89,7 +101,7 @@ void CHighlighter::readStyle() {
             m_colorBackground = tmpColor;
         }
     } else {
-        bSystemBackground = true;
+        m_bSystemBackground = true;
     }
 
     m_pStyleSet->beginGroup("Style");
@@ -120,6 +132,8 @@ void CHighlighter::readStyle() {
     sTmpKey = m_pStyleSet->value("Misc", "0xff0000").toString();
     this->evalKey(sTmpKey, m_miscFormat);
     m_pStyleSet->endGroup();
+
+    this->defineRules();
 }
 
 // ----------------------------------------------------------------------------
@@ -176,13 +190,13 @@ void CHighlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
 // ----------------------------------------------------------------------------
 
 void CHighlighter::saveStyle() {
-    if (bSystemForeground) {
+    if (m_bSystemForeground) {
         m_pStyleSet->setValue("Foreground", "System");
     } else {
         m_pStyleSet->setValue("Foreground", "0x" + m_colorForeground.name()
                               .remove("#"));
     }
-    if (bSystemBackground) {
+    if (m_bSystemBackground) {
         m_pStyleSet->setValue("Background", "System");
     } else {
         m_pStyleSet->setValue("Background", "0x" + m_colorBackground.name()
@@ -257,6 +271,7 @@ void CHighlighter::defineRules() {
     HighlightingRule myRule;
     QStringList sListRegExpPatterns;
     QString sTmpRegExp;
+    m_highlightingRules.clear();
 
     // Headings (= Heading =)
     myRule.format = m_headingsFormat;
@@ -389,11 +404,11 @@ void CHighlighter::defineRules() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QColor CHighlighter::getForeground() const {
-    return m_colorForeground;
+QString CHighlighter::getHighlightBG() const {
+    return m_colorBackground.name();
 }
-QColor CHighlighter::getBackground() const {
-    return m_colorBackground;
+QString CHighlighter::getHighlightFG() const {
+    return m_colorForeground.name();
 }
 
 // ----------------------------------------------------------------------------

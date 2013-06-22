@@ -56,7 +56,7 @@ class CParser : public QObject {
     // Constructor
     CParser(const QDir &tmpFileOutputDir,
             const QDir &tmpImgDir,
-            const QString sInyokaUrl,
+            const QString &sInyokaUrl,
             const bool bCheckLinks,
             CTemplates *pTemplates);
     // Destructor
@@ -69,7 +69,7 @@ class CParser : public QObject {
     QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument);
 
   public slots:
-    void updateSettings(const QString sInyokaUrl, const bool bCheckLinks);
+    void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
 
   private:
     // void replaceTemplates(QTextDocument *p_rawDoc);

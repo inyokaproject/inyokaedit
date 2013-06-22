@@ -51,16 +51,19 @@ class CHighlighter : public QSyntaxHighlighter {
     // Destrcutor
     ~CHighlighter();
 
-    QColor getForeground() const;
-    QColor getBackground() const;
+    QString getHighlightBG() const;
+    QString getHighlightFG() const;
     void saveStyle();
+
+    // Allow CSettingsDialog to access private members
+    friend class CSettingsDialog;
 
   protected:
     // Apply highlighting rules
     void highlightBlock(const QString &sText);
 
   private:
-    void readStyle();
+    void readStyle(const QString &sStyle);
     void getTranslations();
     void defineRules();
     void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
@@ -92,12 +95,13 @@ class CHighlighter : public QSyntaxHighlighter {
     QTextCharFormat m_listFormat;
     QTextCharFormat m_miscFormat;
 
-    bool bSystemForeground;
-    bool bSystemBackground;
+    bool m_bSystemForeground;
+    bool m_bSystemBackground;
     QColor m_colorForeground;
     QColor m_colorBackground;
 
     const QString m_sSEPARATOR;
+    QString m_sAppName;
 };
 
 #endif  // INYOKAEDIT_CHIGHLIGHTER_H_

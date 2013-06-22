@@ -33,7 +33,6 @@
 #include "./CTemplates.h"
 #include "./CXmlParser.h"
 #include "./CSettings.h"
-#include "./CHighlighter.h"
 #include "./CParser.h"
 #include "./CTextEditor.h"
 #include "./CFindReplace.h"
@@ -206,8 +205,7 @@ class CInyokaEdit : public QMainWindow {
     CTemplates *m_pTemplates;
     CTextEditor *m_pEditor;
     CFileOperations *m_pFileOperations;
-    CHighlighter *m_pHighlighter;  // Syntax highlighting
-    CParser *m_pParser;            // Parser text to HTML
+    CParser *m_pParser;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;

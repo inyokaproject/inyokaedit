@@ -28,29 +28,32 @@
 #include <QDesktopServices>
 #include "./CSettings.h"
 
-CSettings::CSettings(const QString &sName, QWidget *pParent) {
+CSettings::CSettings(const QString &sAppName, QWidget *pParent)
+    : m_sAppName(sAppName),
+      m_pParent(pParent) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
-                                sName.toLower(), sName.toLower());
+                                m_sAppName.toLower(), m_sAppName.toLower());
 #else
     m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
-                                sName.toLower(), sName.toLower());
+                                m_sAppName.toLower(), m_sAppName.toLower());
 #endif
 
     this->readSettings();
-
-    m_pSettingsDialog = new CSettingsDialog(this, pParent);
-
-    connect(this, SIGNAL(showSettingsDialog()),
-            m_pSettingsDialog, SLOT(show()));
-
-    connect (m_pSettingsDialog, SIGNAL(updatedSettings()),
-             this, SIGNAL(updateEditorSettings()));
 }
 
 CSettings::~CSettings() {
+    if (NULL != m_pSettingsDialog) {
+        delete m_pSettingsDialog;
+    }
+    m_pSettingsDialog = NULL;
+    if (NULL != m_pHighlighter) {
+        delete m_pHighlighter;
+    }
+    m_pHighlighter = NULL;
+
     if (NULL != m_pSettings) {
         delete m_pSettings;
         m_pSettings = NULL;
@@ -59,6 +62,19 @@ CSettings::~CSettings() {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
+
+void CSettings::init(CTemplates *pTemplates, QTextDocument *pDoc) {
+    m_pHighlighter = new CHighlighter(pTemplates, m_sAppName,
+                                      m_sStyleFile, pDoc);
+
+    m_pSettingsDialog = new CSettingsDialog(this, m_pHighlighter, m_pParent);
+
+    connect(this, SIGNAL(showSettingsDialog()),
+            m_pSettingsDialog, SLOT(show()));
+
+    connect (m_pSettingsDialog, SIGNAL(updatedSettings()),
+             this, SIGNAL(updateEditorSettings()));
+}
 
 void CSettings::readSettings() {
     // General settings
@@ -96,7 +112,14 @@ void CSettings::readSettings() {
                                          15).toUInt();
     m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
                                            true).toBool();
-    m_sStyleFile = m_pSettings->value("Style", "standard-style").toString();
+
+    QString sStyle = m_pSettings->value("Style", "standard-style").toString();
+    QFileInfo fiStylePath(m_pSettings->fileName());
+#if defined _WIN32
+    m_sStyleFile = fiStylePath.absolutePath() + "/" + sStyle + ".ini";
+#else
+    m_sStyleFile = fiStylePath.absolutePath() + "/" + sStyle + ".conf";
+#endif
 
     // Font settings
     m_pSettings->beginGroup("Font");
@@ -184,7 +207,9 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
     m_pSettings->setValue("TimedPreview", m_nTimedPreview);
     m_pSettings->setValue("SyncScrollbars", m_bSyncScrollbars);
-    m_pSettings->setValue("Style", m_sStyleFile);
+
+    QFileInfo fiStylePath(m_sStyleFile);
+    m_pSettings->setValue("Style", fiStylePath.baseName());
 
     // Remove obsolete entry
     m_pSettings->remove("ConfVersion");
@@ -246,6 +271,9 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
         m_pSettings->setValue("SplitterState", m_aSplitterState);
     }
     m_pSettings->endGroup();
+
+    // Save syntax highlighting
+    m_pHighlighter->saveStyle();
 }
 
 // ----------------------------------------------------------------------------
@@ -412,6 +440,21 @@ quint16 CSettings::getProxyPort() const {
 QString CSettings::getProxyUserName() const {
     return m_sProxyUserName;
 }
-QString CSettings::getProxyPassword() const{
+QString CSettings::getProxyPassword() const {
     return m_sProxyPassword;
+}
+
+// ----------------------------------------------------
+
+QString CSettings::getFileName() const {
+    return m_pSettings->fileName();
+}
+
+// ----------------------------------------------------
+
+QString CSettings::getHighlightBG() const {
+    return m_pHighlighter->getHighlightBG();
+}
+QString CSettings::getHighlightFG() const {
+    return m_pHighlighter->getHighlightFG();
 }

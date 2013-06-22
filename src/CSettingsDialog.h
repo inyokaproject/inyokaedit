@@ -28,6 +28,7 @@
 #define INYOKAEDIT_CSETTINGSDIALOG_H_
 
 #include <QDialog>
+#include "./CHighlighter.h"
 #include "./CSettings.h"
 
 namespace Ui {
@@ -35,6 +36,7 @@ namespace Ui {
 }
 
 class CSettings;
+class CHighlighter;
 
 /**
  * \class CSettingsDialog
@@ -44,7 +46,8 @@ class CSettingsDialog : public QDialog {
     Q_OBJECT
 
   public:
-    CSettingsDialog(CSettings *pSettings, QWidget *pParent = 0);
+    CSettingsDialog(CSettings *pSettings, CHighlighter *pHighlighter,
+                    QWidget *pParent = 0);
     virtual ~CSettingsDialog();
 
   public slots:
@@ -56,10 +59,18 @@ class CSettingsDialog : public QDialog {
   private slots:
     void changedPreviewAlongside(bool bState);
     void changedPreviewInEditor(bool bState);
+    void changedStyle(int nIndex);
+    void clickedStyleCell(int nRow, int nCol);
 
   private:
+    void loadHighlighting(const QString &sStyleFile);
+    void readValue(const quint16 nRow,
+                   const QTextCharFormat &charFormat);
+    void saveHighlighting();
+    QString createValues(const quint16 nRow);
     Ui::CSettingsDialog *m_pUi;
     CSettings *m_pSettings;
+    CHighlighter *m_pHighlighter;
 
     bool m_bTmpPreviewInEditor;
     bool m_bTmpPreviewAlongside;
@@ -67,6 +78,10 @@ class CSettingsDialog : public QDialog {
     quint16 m_nProxyPort;
     QString m_sProxyUserName;
     QString m_sProxyPassword;
+    QString m_sStyleFile;
+    QString m_sExt;
+
+    QStringList m_sListStyleFiles;
 };
 
 #endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

@@ -29,7 +29,7 @@
 // Constructor
 CParser::CParser(const QDir &tmpFileOutputDir,
                  const QDir &tmpImgDir,
-                 const QString sInyokaUrl,
+                 const QString &sInyokaUrl,
                  const bool bCheckLinks,
                  CTemplates *pTemplates)
     : m_tmpFileDir(tmpFileOutputDir),
@@ -64,7 +64,7 @@ CParser::~CParser() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CParser::updateSettings(const QString sInyokaUrl,
+void CParser::updateSettings(const QString &sInyokaUrl,
                              const bool bCheckLinks) {
     m_sInyokaUrl = sInyokaUrl;
     m_pLinkParser->updateSettings(sInyokaUrl, bCheckLinks);
@@ -398,7 +398,7 @@ void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
             sListFormatStart << m_pTemplates->getListFormatStart()[i];
             sListFormatEnd << m_pTemplates->getListFormatEnd()[i];
             sListHtmlStart << m_pTemplates->getListFormatHtmlStart()[i];
-            sListHtmlEnd << m_pTemplates->getListFormatHtmlEnd()[i];;
+            sListHtmlEnd << m_pTemplates->getListFormatHtmlEnd()[i];
         }
     }
 
@@ -787,7 +787,7 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
     findMacro.setMinimal(true);
     QString sMacro;
     int nPos = 0;
-    //quint16 nTOCLevel;
+    // quint16 nTOCLevel;
 
     // Replace characters for valid links (ä, ü, ö, spaces)
     QStringList sListHeadline_1_Links;

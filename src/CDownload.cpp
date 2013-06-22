@@ -56,7 +56,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
 // ----------------------------------------------------------------------------
 
 void CDownload::updateSettings(const bool bCompleter,
-                               const QString sInyokaUrl) {
+                               const QString &sInyokaUrl) {
     m_bAutomaticImageDownload = bCompleter;
     m_sInyokaUrl = sInyokaUrl;
 }
@@ -120,7 +120,7 @@ void CDownload::downloadArticle() {
     QString sUrl("");
     // Buttons of input dialog (click on "OK" -> ok = true,
     // click on "Cancel" -> ok = false)
-    bool ok;
+    bool bOk;
 
     // Show input dialog
     m_sSitename = QInputDialog::getText(m_pParent, m_sAppName,
@@ -128,10 +128,10 @@ void CDownload::downloadArticle() {
                                            "which should be downloaded:"),
                                         QLineEdit::Normal,
                                         tr("Category/Article"),
-                                        &ok);
+                                        &bOk);
 
     // Click on "cancel" or string is empty
-    if (true != ok || m_sSitename.isEmpty()) {
+    if (true != bOk || m_sSitename.isEmpty()) {
         return;
     }
 
