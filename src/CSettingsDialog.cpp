@@ -44,6 +44,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
                          & ~Qt::WindowContextHelpButtonHint);
     this->setModal(true);
     m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
+    m_pUi->styleTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
 #if defined _WIN32
     m_sExt = ".ini";
