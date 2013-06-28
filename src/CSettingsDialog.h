@@ -56,6 +56,9 @@ class CSettingsDialog : public QDialog {
   signals:
     void updatedSettings();
 
+  protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
   private slots:
     void changedPreviewAlongside(bool bState);
     void changedPreviewInEditor(bool bState);

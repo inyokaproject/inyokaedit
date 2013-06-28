@@ -788,7 +788,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="129"/>
+        <location filename="../src/CSettingsDialog.ui" line="133"/>
         <source>Preview in editor</source>
         <translation>Vorschau im Editor</translation>
     </message>
@@ -798,22 +798,22 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Codevervollständigung</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="122"/>
+        <location filename="../src/CSettingsDialog.ui" line="126"/>
         <source>Preview alongside</source>
         <translation>Vorschau neben Editor</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="688"/>
+        <location filename="../src/CSettingsDialog.ui" line="698"/>
         <source>Connection</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="697"/>
+        <location filename="../src/CSettingsDialog.ui" line="707"/>
         <source>URL to Inyoka wiki</source>
         <translation>URL zum Inyoka Wiki</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="707"/>
+        <location filename="../src/CSettingsDialog.ui" line="717"/>
         <source>Download article images automatically</source>
         <translation>Artikelbilder autom. herunterladen</translation>
     </message>
@@ -823,7 +823,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Sprache der Rechtschreibprüfung</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="108"/>
+        <location filename="../src/CSettingsDialog.ui" line="112"/>
         <source>Enable link checking</source>
         <translation>Inyoka-Links überprüfen</translation>
     </message>
@@ -843,168 +843,173 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Taste Vorschau neu laden</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="84"/>
+        <location filename="../src/CSettingsDialog.ui" line="81"/>
+        <source>Select input box and press the desired reload key. Press DEL to remove the key.</source>
+        <translation>Eingabefeld markieren und gewünschte Reload-Taste drücken. Drücke &quot;Entf&quot; zum löschen der eingestellten Taste.</translation>
+    </message>
+    <message>
+        <location filename="../src/CSettingsDialog.ui" line="88"/>
         <source>Auto reload preview (in sec)</source>
         <translation>Auto-Vorschau (in sek)</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="115"/>
+        <location filename="../src/CSettingsDialog.ui" line="119"/>
         <source>Scrollbar synchronization</source>
         <translation>Scrollbalken synchronisieren</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="137"/>
+        <location filename="../src/CSettingsDialog.ui" line="141"/>
         <source>Font &amp;&amp; Color</source>
         <translation>Schrift &amp;&amp; Farbe</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="146"/>
+        <location filename="../src/CSettingsDialog.ui" line="150"/>
         <source>Font</source>
         <translation>Schriftart</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="156"/>
+        <location filename="../src/CSettingsDialog.ui" line="160"/>
         <source>Font size</source>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="177"/>
+        <location filename="../src/CSettingsDialog.ui" line="181"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="721"/>
+        <location filename="../src/CSettingsDialog.ui" line="731"/>
         <source>Proxy host name</source>
         <translation>Proxy Hostname</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="731"/>
+        <location filename="../src/CSettingsDialog.ui" line="741"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="745"/>
+        <location filename="../src/CSettingsDialog.ui" line="755"/>
         <source>User name</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="755"/>
+        <location filename="../src/CSettingsDialog.ui" line="765"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="769"/>
+        <location filename="../src/CSettingsDialog.ui" line="779"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Attention: Password not encrypted!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Achtung: Passwort wird nicht verschlüsselt!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.ui" line="94"/>
+        <location filename="../src/CSettingsDialog.ui" line="98"/>
         <source>Number of entries in recent files list</source>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="87"/>
+        <location filename="../src/CSettingsDialog.cpp" line="91"/>
         <source>Create new style...</source>
         <translation>Neuen Stil erstellen...</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="119"/>
+        <location filename="../src/CSettingsDialog.cpp" line="123"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="119"/>
+        <location filename="../src/CSettingsDialog.cpp" line="123"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="120"/>
+        <location filename="../src/CSettingsDialog.cpp" line="124"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="120"/>
-        <location filename="../src/CSettingsDialog.cpp" line="123"/>
+        <location filename="../src/CSettingsDialog.cpp" line="124"/>
+        <location filename="../src/CSettingsDialog.cpp" line="127"/>
         <source>Background</source>
         <translation>Hintergrund</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="123"/>
+        <location filename="../src/CSettingsDialog.cpp" line="127"/>
         <source>Text formating</source>
         <translation>Textformatierung</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="123"/>
+        <location filename="../src/CSettingsDialog.cpp" line="127"/>
         <source>Text color</source>
         <translation>Textfarbe</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="124"/>
+        <location filename="../src/CSettingsDialog.cpp" line="128"/>
         <source>Heading</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="124"/>
+        <location filename="../src/CSettingsDialog.cpp" line="128"/>
         <source>Hyperlink</source>
         <translation>Hyperlink</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="124"/>
+        <location filename="../src/CSettingsDialog.cpp" line="128"/>
         <source>InterWiki</source>
         <translation>InterWiki</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="125"/>
+        <location filename="../src/CSettingsDialog.cpp" line="129"/>
         <source>Macro</source>
         <translation>Macro</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="125"/>
+        <location filename="../src/CSettingsDialog.cpp" line="129"/>
         <source>Parser</source>
         <translation>Parser</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="125"/>
+        <location filename="../src/CSettingsDialog.cpp" line="129"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="126"/>
+        <location filename="../src/CSettingsDialog.cpp" line="130"/>
         <source>Table line</source>
         <translation>Tabellenzeile</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="126"/>
+        <location filename="../src/CSettingsDialog.cpp" line="130"/>
         <source>Table cell format</source>
         <translation>Zellformatierung</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="126"/>
+        <location filename="../src/CSettingsDialog.cpp" line="130"/>
         <source>ImgMap</source>
         <translation>ImgMap</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="127"/>
+        <location filename="../src/CSettingsDialog.cpp" line="131"/>
         <source>Misc</source>
         <translation>Sonstiges</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="127"/>
+        <location filename="../src/CSettingsDialog.cpp" line="131"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="190"/>
+        <location filename="../src/CSettingsDialog.cpp" line="194"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="377"/>
+        <location filename="../src/CSettingsDialog.cpp" line="381"/>
         <source>New style</source>
         <translation>Neuer Stil</translation>
     </message>
     <message>
-        <location filename="../src/CSettingsDialog.cpp" line="378"/>
+        <location filename="../src/CSettingsDialog.cpp" line="382"/>
         <source>Please insert name of new style file:</source>
         <translation>Bitte Namen für die neue Stildatei eingeben:</translation>
     </message>

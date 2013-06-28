@@ -27,6 +27,7 @@
 #include <QColorDialog>
 #include <QDebug>
 #include <QInputDialog>
+#include <QKeyEvent>
 
 #include "./CSettingsDialog.h"
 #include "ui_CSettingsDialog.h"
@@ -68,6 +69,9 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->reloadPreviewKeyEdit->setText("0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
+
+    // Enter Qt keycode automatically in text box
+    m_pUi->reloadPreviewKeyEdit->installEventFilter(this);
 
     m_bTmpPreviewInEditor = m_pSettings->m_bPreviewInEditor;
     m_bTmpPreviewAlongside = m_pSettings->m_bPreviewAlongside;
@@ -408,4 +412,25 @@ void CSettingsDialog::changedStyle(int nIndex) {
     }
 
     loadHighlighting(sFileName);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CSettingsDialog::eventFilter(QObject *obj, QEvent *event) {
+    // Enter Qt keycode automatically in text box
+    if (m_pUi->reloadPreviewKeyEdit == obj) {
+        if (QEvent::KeyPress == event->type()) {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            // Remove key with DEL
+            if (Qt::Key_Delete != keyEvent->key()) {
+                m_pUi->reloadPreviewKeyEdit->setText(
+                            "0x" + QString::number(keyEvent->key(), 16));
+                return true;
+            } else {
+                m_pUi->reloadPreviewKeyEdit->setText("0x0");
+            }
+        }
+    }
+    return QObject::eventFilter(obj, event);
 }

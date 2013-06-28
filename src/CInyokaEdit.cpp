@@ -1461,7 +1461,7 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
     }
 
     // Else
-    return QObject::eventFilter( obj, event );
+    return QObject::eventFilter(obj, event);
 }
 
 // ----------------------------------------------------------------------------
