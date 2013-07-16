@@ -88,6 +88,7 @@ class CParser : public QObject {
                            const QStringList &sListHtmlEnd);
 
     void replaceTables(QTextDocument *p_rawDoc);
+    QString createTable(const QStringList &sListLines);
     void replaceLists(QTextDocument *p_rawDoc);
     void replaceFlags(QTextDocument *p_rawDoc);
     void replaceImages(QTextDocument *p_rawDoc);

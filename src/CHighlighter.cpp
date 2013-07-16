@@ -286,16 +286,18 @@ void CHighlighter::defineRules() {
     myRule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
     m_highlightingRules.append(myRule);
 
+    // Cell style in tables
+    myRule.format = m_tablecellsFormat;
+    myRule.pattern = QRegExp("^\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+    m_highlightingRules.append(myRule);
+    myRule.pattern = QRegExp("\\|\\|\\s*\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+    m_highlightingRules.append(myRule);
+
     // New table line
     myRule.format = m_newTableLineFormat;
     myRule.pattern = QRegExp("^\\+{3}$");
     m_highlightingRules.append(myRule);
     myRule.pattern = QRegExp("\\|\\|");
-    m_highlightingRules.append(myRule);
-
-    // Cell style in tables
-    myRule.format = m_tablecellsFormat;
-    myRule.pattern = QRegExp("^\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
     m_highlightingRules.append(myRule);
 
     // InterWiki-Links
