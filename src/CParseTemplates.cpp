@@ -52,6 +52,7 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                    << "\\[\\[" + m_sTransTpl + "\\s*\\(.+\\)\\]\\]";
     QString sMyDoc = pRawDoc->toPlainText();
     QString sMacro;
+    QString sBackupMacro;
     QStringList sListArguments;
     int nPos;
 
@@ -62,11 +63,13 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
 
         while ((nPos = findTemplate.indexIn(sMyDoc, nPos)) != -1) {
             sMacro = findTemplate.cap(0);
+            sBackupMacro = sMacro;
             if (sMacro.startsWith("[[" + m_sTransTpl, Qt::CaseInsensitive)) {
                 // Step needed because of possible spaces
                 sMacro.remove("[[" + m_sTransTpl, Qt::CaseInsensitive);
                 sMacro = sMacro.trimmed();
             }
+            sListArguments.clear();
 
             // Check if macro exists
             for (int i = 0; i < m_sListTplNames.size(); i++) {
@@ -75,7 +78,6 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                     sMacro.remove(0, 1);  // Remove (
                     sMacro.remove("\n)]]");
                     sMacro.remove(")]]");
-                    sListArguments.clear();
 
                     // Extract arguments
                     // Split by ',' but don't split quoted strings with comma
@@ -129,6 +131,9 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
 
             qDebug() << "TPL:" << sListArguments;
             sMacro = m_pProvTplTarser->parseTpl(sListArguments, m_sCurrentFile);
+            if (sMacro.isEmpty()) {
+                sMacro = sBackupMacro;
+            }
             sMyDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
 
             // Go on with new start position
