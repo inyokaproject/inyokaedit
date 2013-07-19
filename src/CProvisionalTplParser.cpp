@@ -59,6 +59,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString("Builddeps").toLower()) {
             sArgs.removeFirst();
             return this->parseBuilddeps(sArgs);
+        } else if (sArgs[0].toLower() == QString("Code").toLower()) {
+            sArgs.removeFirst();
+            return this->parseCode(sArgs);
         } else if (sArgs[0].toLower() == QString("Kopie").toLower()) {
             sArgs.removeFirst();
             return this->parseCopy(sArgs);
@@ -198,6 +201,17 @@ QString CProvisionalTplParser::parseBuilddeps(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+QString CProvisionalTplParser::parseCode(const QStringList &sListArgs) {
+    QString sOutput("<pre>");
+    foreach (QString s, sListArgs) {
+        sOutput += s + "\n";
+    }
+    return sOutput + "</pre>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 QString CProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
     QString sLink("");
 
@@ -205,11 +219,11 @@ QString CProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
         sLink = sListArgs[0];
     }
 
-    return  insertBox("box warning",
-                      "Achtung!",
-                      "Diese Seite wird aktuell überarbeitet. Bitte hier "
-                      "keine Änderungen mehr vornehmen, sondern in %1!")
-            .arg("[:Baustelle/" + sLink.replace(" ", "_") + ":]");
+    return insertBox("box warning",
+                     "Achtung!",
+                     "Diese Seite wird aktuell überarbeitet. Bitte hier "
+                     "keine Änderungen mehr vornehmen, sondern in %1!")
+           .arg("[:Baustelle/" + sLink.replace(" ", "_") + ":]");
 }
 
 // ----------------------------------------------------------------------------

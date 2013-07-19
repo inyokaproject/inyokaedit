@@ -43,6 +43,7 @@ class CProvisionalTplParser {
     QString parseArchived(const QStringList &sListArgs);
     QString parseBash(const QStringList &sListArgs);
     QString parseBuilddeps(const QStringList &sListArgs);
+    QString parseCode(const QStringList &sListArgs);
     QString parseCopy(const QStringList &sListArgs);
     QString parseExperts(const QStringList &sListArgs);
     QString parseFixme(const QStringList &sListArgs);
