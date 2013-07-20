@@ -266,6 +266,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/uk.png -O uk.p
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/us.png -O us.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/uz.png -O uz.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/vi.png -O vi.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/za.png -O za.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/zh.png -O zh.png
 
 cd ..
