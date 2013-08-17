@@ -452,6 +452,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/movies.png -O movie
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/package.png -O package.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/panel.png -O panel.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/pencil.png -O pencil.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/pfeiltasten.png -O pfeiltasten.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/rss.png -O rss.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/save_all.png -O save_all.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/synaptic.png -O synaptic.png
