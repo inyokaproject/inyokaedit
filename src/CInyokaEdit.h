@@ -27,7 +27,10 @@
 #ifndef INYOKAEDIT_CINYOKAEDIT_H_
 #define INYOKAEDIT_CINYOKAEDIT_H_
 
+#include <QBoxLayout>
 #include <QMainWindow>
+#include <QSplitter>
+#include <QToolButton>
 #include <QWebHistory>
 
 #include "./CTemplates.h"

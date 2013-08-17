@@ -25,6 +25,7 @@
  */
 
 #include <QDebug>
+#include <QInputDialog>
 
 #include "./CDownload.h"
 #include "./CProgressDialog.h"
@@ -186,7 +187,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
         QMessageBox::critical(m_pParent, m_sAppName, data->errorString());
         return;
     } else {
-        QString sTmpArticle = data->readAll();
+        QString sTmpArticle = QString::fromUtf8(data->readAll());
 
         if (m_bDownloadArticle) {
             // Replace windows specific newlines

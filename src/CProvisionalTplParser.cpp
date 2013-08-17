@@ -1235,8 +1235,8 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
     QString sOutput("");
     if (sListArgs.size() >= 1) {
         if (sListArgs[0].toLower() == QString("general").toLower()) {
-            sOutput = "Dieser Artikel ist größtenteils für alle "
-                      "Ubuntu-Versionen gültig.";
+            sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
+                                        "alle Ubuntu-Versionen gültig.");
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
@@ -1274,14 +1274,16 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
             sOutput += "\n";
         }
     } else {
-        sOutput = "Dieser Artikel ist mit keiner aktuell unterstützten "
-                  "Ubuntu-Version getestet! Bitte diesen Artikel testen und "
-                  "das getestet-Tag entsprechend anpassen.";
+        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
+                                    "unterstützten Ubuntu-Version getestet! "
+                                    "Bitte diesen Artikel testen und das "
+                                    "getestet-Tag entsprechend anpassen.");
     }
 
     return this->insertBox("box tested_for",
-                           "Dieser Artikel wurde für die folgenden "
-                           "Ubuntu-Versionen getestet:",
+                           QString::fromUtf8("Dieser Artikel wurde für die "
+                                             "folgenden Ubuntu-Versionen "
+                                             "getestet:"),
                            sOutput);
 }
 

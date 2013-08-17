@@ -24,6 +24,7 @@
  * Syntax highlighting with builtin Qt functions.
  */
 
+#include <QApplication>
 #include <QtGui>
 
 #include "./CHighlighter.h"

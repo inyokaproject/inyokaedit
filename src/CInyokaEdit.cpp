@@ -24,10 +24,17 @@
  * Main application generation (gui, object creation etc.).
  */
 
+#include <QComboBox>
 #include <QtGui>
 #include <QNetworkProxy>
-#include <QtWebKit/QWebView>
+#include <QScrollBar>
 #include <QWebFrame>
+
+#if QT_VERSION >= 0x050000
+    #include <QtWebKitWidgets/QWebView>
+#else
+    #include <QWebView>
+#endif
 
 #include "./CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
@@ -49,8 +56,8 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     m_pUi->setupUi(this);
 
     // Check for command line arguments (except version/debug)
-    if ((!bDEBUG && m_pApp->argc() >= 2)
-            || (bDEBUG && m_pApp->argc() >= 3)) {
+    if ((!bDEBUG && m_pApp->arguments().size() >= 2)
+            || (bDEBUG && m_pApp->arguments().size() >= 3)) {
             m_bOpenFileAfterStart = true;
     }
 
@@ -86,9 +93,9 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
 
     if (true == m_bOpenFileAfterStart) {
         if (bDEBUG) {
-            m_pFileOperations->loadFile(m_pApp->argv()[2], true);
+            m_pFileOperations->loadFile(m_pApp->arguments()[2], true);
         } else {
-            m_pFileOperations->loadFile(m_pApp->argv()[1], true);
+            m_pFileOperations->loadFile(m_pApp->arguments()[1], true);
         }
     }
 
@@ -210,9 +217,6 @@ void CInyokaEdit::setupEditor() {
 
     m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     m_pFrameLayout->addWidget(m_pWebview);
-    m_pWebviewFrame = new QFrame;
-    m_pWebviewFrame->setLayout(m_pFrameLayout);
-    m_pWebviewFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
     connect(m_pWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
@@ -221,8 +225,7 @@ void CInyokaEdit::setupEditor() {
             && true == m_pSettings->getPreviewInEditor()) {
         m_pWidgetSplitter = new QSplitter;
         m_pWidgetSplitter->addWidget(m_pEditor);
-        // m_pWidgetSplitter->addWidget(m_pWebview);
-        m_pWidgetSplitter->addWidget(m_pWebviewFrame);
+        m_pWidgetSplitter->addWidget(m_pWebview);
 
         connect(m_pFileOperations, SIGNAL(loadedFile()),
                 this, SLOT(previewInyokaPage()));
@@ -239,11 +242,11 @@ void CInyokaEdit::setupEditor() {
         m_pTabwidgetRawPreview->setTabPosition(QTabWidget::West);
         m_pTabwidgetRawPreview->addTab(m_pEditor, tr("Raw format"));
 
-        m_pTabwidgetRawPreview->addTab(m_pWebviewFrame, tr("Preview"));
+        m_pTabwidgetRawPreview->addTab(m_pWebview, tr("Preview"));
         if (false == m_pSettings->getPreviewInEditor()) {
             m_pTabwidgetRawPreview->setTabEnabled(
                         m_pTabwidgetRawPreview->indexOf(
-                            m_pWebviewFrame), false);
+                            m_pWebview), false);
         }
     }
 
