@@ -50,8 +50,8 @@ void CDownloadImg::setDLs(const QStringList &sListUrls,
 void CDownloadImg::startDownloads() {
     // Create progress dialog
     nProgress = 0;
-    m_progessDialog = new QProgressDialog(tr("Downloading images..."),
-                                          tr("Cancel"), nProgress,
+    m_progessDialog = new QProgressDialog(trUtf8("Downloading images..."),
+                                          trUtf8("Cancel"), nProgress,
                                           m_sListUrls.size(), 0,
                                           Qt::WindowTitleHint
                                           | Qt::WindowSystemMenuHint);

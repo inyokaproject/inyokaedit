@@ -123,7 +123,7 @@ void CTableTemplate::generateTable() {
          m_sTableString += QString("<rowclass=\"%1titel\"-%2> %3\n+++\n")
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                 .arg(colsNum)
-                .arg(tr("Title"));
+                .arg(trUtf8("Title"));
     }
 
     // Create head if set
@@ -132,7 +132,7 @@ void CTableTemplate::generateTable() {
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()]);
 
         for (int i = 0; i < colsNum; i++) {
-            m_sTableString += QString(tr("Head") + " %1 \n").arg(i + 1);
+            m_sTableString += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
         }
 
         m_sTableString += "+++\n";

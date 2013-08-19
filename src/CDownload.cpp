@@ -68,12 +68,12 @@ void CDownload::updateSettings(const bool bCompleter,
 
 bool CDownload::loadInyokaStyles() {
     qDebug() << "Calling" << Q_FUNC_INFO;
-    int iRet = QMessageBox::question(m_pParent, tr("Download styles"),
-                                     tr("In order to preview articles "
-                                        "correctly, Inyoka resources have to "
-                                        "be downloaded. This process may take "
-                                        "a few minutes.\n\nDo you want to "
-                                        "download these files now?"),
+    int iRet = QMessageBox::question(m_pParent, trUtf8("Download styles"),
+                                     trUtf8("In order to preview articles "
+                                            "correctly, Inyoka resources have "
+                                            "to be downloaded. This process may "
+                                            "take a few minutes.\n\nDo you want "
+                                            "to download these files now?"),
                                      QMessageBox::Yes | QMessageBox::No,
                                      QMessageBox::No);
 
@@ -112,8 +112,8 @@ void CDownload::downloadArticle() {
     QNetworkConfigurationManager mgr;
     if (!mgr.isOnline()) {
         QMessageBox::warning(m_pParent, m_sAppName,
-                             tr("Download not possible, "
-                                "no active internet connection found!"));
+                             trUtf8("Download not possible, no active internet "
+                                    "connection found!"));
         return;
     }
 #endif
@@ -125,10 +125,10 @@ void CDownload::downloadArticle() {
 
     // Show input dialog
     m_sSitename = QInputDialog::getText(m_pParent, m_sAppName,
-                                        tr("Please insert name of the article "
-                                           "which should be downloaded:"),
+                                        trUtf8("Please insert name of the article "
+                                               "which should be downloaded:"),
                                         QLineEdit::Normal,
-                                        tr("Category/Article"),
+                                        trUtf8("Category/Article"),
                                         &bOk);
 
     // Click on "cancel" or string is empty
@@ -185,6 +185,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         QMessageBox::critical(m_pParent, m_sAppName, data->errorString());
+        qCritical() << "Error while NW reply:" << data->errorString();
         return;
     } else {
         QString sTmpArticle = QString::fromUtf8(data->readAll());
@@ -198,7 +199,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
             // Site does not exist etc.
             if ("" == sTmpArticle) {
                 QMessageBox::information(m_pParent, m_sAppName,
-                                         tr("Could not download the article."));
+                                         trUtf8("Could not download the article."));
                 return;
             }
 
@@ -213,7 +214,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
             // Site does not exist etc.
             if ("" == sTmpArticle) {
                 QMessageBox::information(m_pParent, m_sAppName,
-                                         tr("Could not find meta data."));
+                                         trUtf8("Could not find meta data."));
                 return;
             }
 
@@ -244,9 +245,9 @@ void CDownload::replyFinished(QNetworkReply *reply) {
                 // if not enabled by default in settings
                 if (true != m_bAutomaticImageDownload) {
                     iRet = QMessageBox::question(m_pParent, m_sAppName,
-                                                 tr("Do you want to download "
-                                                    "the images which are "
-                                                    "attached to the article?"),
+                                                 trUtf8("Do you want to download "
+                                                        "the images which are "
+                                                        "attached to the article?"),
                                                  QMessageBox::Yes
                                                  | QMessageBox::No,
                                                  QMessageBox::No);

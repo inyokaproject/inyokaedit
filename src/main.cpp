@@ -93,6 +93,7 @@ int main(int argc, char *argv[]) {
     QStringList sListPaths = QStandardPaths::standardLocations(
                 QStandardPaths::DataLocation);
     if (sListPaths.isEmpty()) {
+        qCritical() << "Error while getting data standard path.";
         sListPaths << "";
     }
     const QDir userDataDir(sListPaths[0].toLower());

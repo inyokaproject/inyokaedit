@@ -127,7 +127,7 @@ QString CParser::genOutput(const QString &sActFile,
     // File name
     QString sFilename;
     if ("" == m_sCurrentFile) {
-        sFilename = tr("Untitled", "No file name set");
+        sFilename = trUtf8("Untitled", "No file name set");
     } else {
         QFileInfo fi(m_sCurrentFile);
         sFilename = fi.baseName();
@@ -338,12 +338,14 @@ QString CParser::highlightCode(const QString &sLanguage, const QString &sCode) {
         if (!procEcho.waitForStarted()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Could not start echo.");
+            qCritical() << "Pygments error: Could not start echo.";
             procEcho.kill();
             return sCode;
         }
         if (!procEcho.waitForFinished()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Error while using echo.");
+            qCritical() << "Pygments error: While using echo.";
             procEcho.kill();
             return sCode;
         }
@@ -357,12 +359,14 @@ QString CParser::highlightCode(const QString &sLanguage, const QString &sCode) {
         if (!procPygmentize.waitForStarted()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Could not start pygmentize.");
+            qCritical() << "Error while starting pygmentize - waitForStarted()";
             procPygmentize.kill();
             return sCode;
         }
         if (!procPygmentize.waitForFinished()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Error while using pygmentize.");
+            qCritical() << "Error while executing pygmentize - waitForFinished()";
             procPygmentize.kill();
             return sCode;
         }

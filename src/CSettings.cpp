@@ -102,6 +102,7 @@ void CSettings::readSettings() {
     QStringList sListPaths = QStandardPaths::standardLocations(
                 QStandardPaths::DocumentsLocation);
     if (sListPaths.isEmpty()) {
+        qCritical() << "Error while getting documents standard path.";
         sListPaths << "";
     }
     m_LastOpenedDir = m_pSettings->value("LastOpenedDir", sListPaths[0]).toString();

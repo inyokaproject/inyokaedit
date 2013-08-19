@@ -180,8 +180,8 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
     }
 
     if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning",
-                             tr("Could not open preview template file!"));
+        QMessageBox::warning(0, trUtf8("Warning"),
+                             trUtf8("Could not open preview template file!"));
         qWarning() << "Could not open preview template file:"
                    << HTMLTplFile.fileName();
         m_sPreviewTemplate = "ERROR";
@@ -217,8 +217,8 @@ void CTemplates::initImgMap(const QString &sFilename,
     }
 
     if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning",
-                             tr("Could not open image map file!"));
+        QMessageBox::warning(0, trUtf8("Warning"),
+                             trUtf8("Could not open image map file!"));
         qWarning() << "Could not open flag config file:"
                    << ImgMapFile.fileName();
         sListElements << "ERROR";
@@ -259,8 +259,8 @@ void CTemplates::initTextformats(const QString &sFilename) {
     }
 
     if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning",
-                             tr("Could not open text formats config file!"));
+        QMessageBox::warning(0, trUtf8("Warning"),
+                             trUtf8("Could not open text formats config file!"));
         qWarning() << "Could not open text formats config file:"
                    << formatsFile.fileName();
         // Initialize possible text formats
@@ -308,7 +308,7 @@ void CTemplates::initTranslations(const QString &sFilename) {
 
     if (!translFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::critical(0, "Error",
-                              tr("Could not open template translation file!"));
+                              trUtf8("Could not open template translation file!"));
         qCritical() << "Could not open template translation file:"
                     << translFile.fileName();
         exit(-1);
@@ -319,45 +319,45 @@ void CTemplates::initTranslations(const QString &sFilename) {
 
     m_sTransTemplate = configTransl.value("Template", "ERROR").toString();
     if ("ERROR" == m_sTransTemplate) {
-        qWarning() << "Template translation not found.";
+        qCritical() << "Template translation not found.";
     }
     m_sTransTOC = configTransl.value("TableOfContents", "ERROR").toString();
     if ("ERROR" == m_sTransTOC) {
-        qWarning() << "TOC translation not found.";
+        qCritical() << "TOC translation not found.";
     }
     m_sTransImage = configTransl.value("Image", "ERROR").toString();
     if ("ERROR" == m_sTransImage) {
-        qWarning() << "Image translation not found.";
+        qCritical() << "Image translation not found.";
     }
     m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
     if ("ERROR" == m_sTransCodeBlock) {
-        qWarning() << "Code block translation not found.";
+        qCritical() << "Code block translation not found.";
     }
     m_sTransAttachment = configTransl.value("Attachment", "ERROR").toString();
     if ("ERROR" == m_sTransAttachment) {
-        qWarning() << "Attachment translation not found.";
+        qCritical() << "Attachment translation not found.";
     }
     m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
     if ("ERROR" == m_sTransAnchor) {
-        qWarning() << "Anchor translation not found.";
+        qCritical() << "Anchor translation not found.";
     }
     m_sTransDate = configTransl.value("Date", "ERROR").toString();
     if ("ERROR" == m_sTransDate) {
-        qWarning() << "Date translation not found.";
+        qCritical() << "Date translation not found.";
     }
     m_sTransRevText = configTransl.value("RevText", "ERROR").toString();
     if ("ERROR" == m_sTransRevText) {
-        qWarning() << "Revision text translation not found.";
+        qCritical() << "Revision text translation not found.";
     }
     m_sTransTagText = configTransl.value("TagText", "ERROR").toString();
     if ("ERROR" == m_sTransTagText) {
-        qWarning() << "Tag text translation not found.";
+        qCritical() << "Tag text translation not found.";
     }
 
     // Translation needed for table template
     m_sTransTable = configTransl.value("Table", "ERROR").toString();
     if ("ERROR" == m_sTransTable) {
-        qWarning() << "Table translation not found.";
+        qCritical() << "Table translation not found.";
     }
 }
 
