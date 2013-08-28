@@ -1,5 +1,5 @@
 /**
- * \file CInterwiki.cpp
+ * \file CXmlParser.cpp
  *
  * \section LICENSE
  *

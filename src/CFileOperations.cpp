@@ -346,7 +346,7 @@ void CFileOperations::setCurrentFile(const QString &sFileName) {
 
     QString sShownName = m_sCurFile;
     if (m_sCurFile.isEmpty()) {
-        sShownName = tr("Untitled");
+        sShownName = trUtf8("Untitled");
     }
     m_pParent->setWindowFilePath(sShownName);
 }
