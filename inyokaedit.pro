@@ -23,10 +23,9 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += core gui webkit xml network
-
-CODECFORSRC   = UTF-8
-CODECFORTR    = UTF-8
+QT           += core gui xml network
+lessThan(QT_MAJOR_VERSION, 5): QT += webkit
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport webkitwidgets
 
 HEADERS      += src/CInyokaEdit.h \
                 src/CDownload.h \

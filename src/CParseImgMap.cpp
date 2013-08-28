@@ -41,6 +41,7 @@ void CParseImgMap::startParsing(QTextDocument *pRawDoc,
 
     for (int i = 0; i < sListElements.size(); i++) {
         if (0 == i && "error" == sListElements[0].toLower()) {
+            qCritical() << "Error while parsing image map.";
             break;
         }
         sMyDoc.replace(sListElements[i],

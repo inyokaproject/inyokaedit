@@ -24,10 +24,17 @@
  * Main application generation (gui, object creation etc.).
  */
 
+#include <QComboBox>
 #include <QtGui>
 #include <QNetworkProxy>
-#include <QtWebKit/QWebView>
+#include <QScrollBar>
 #include <QWebFrame>
+
+#if QT_VERSION >= 0x050000
+    #include <QtWebKitWidgets/QWebView>
+#else
+    #include <QWebView>
+#endif
 
 #include "./CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
@@ -49,8 +56,8 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     m_pUi->setupUi(this);
 
     // Check for command line arguments (except version/debug)
-    if ((!bDEBUG && m_pApp->argc() >= 2)
-            || (bDEBUG && m_pApp->argc() >= 3)) {
+    if ((!bDEBUG && m_pApp->arguments().size() >= 2)
+            || (bDEBUG && m_pApp->arguments().size() >= 3)) {
             m_bOpenFileAfterStart = true;
     }
 
@@ -86,9 +93,9 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
 
     if (true == m_bOpenFileAfterStart) {
         if (bDEBUG) {
-            m_pFileOperations->loadFile(m_pApp->argv()[2], true);
+            m_pFileOperations->loadFile(m_pApp->arguments()[2], true);
         } else {
-            m_pFileOperations->loadFile(m_pApp->argv()[1], true);
+            m_pFileOperations->loadFile(m_pApp->arguments()[1], true);
         }
     }
 
@@ -205,14 +212,11 @@ void CInyokaEdit::setupEditor() {
     myTabwidgetDocuments->setMovable(true);
     myTabwidgetDocuments->setDocumentMode(true);
 
-    myTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, tr("Untitled"));
+    myTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, trUtf8("Untitled"));
     */
 
     m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     m_pFrameLayout->addWidget(m_pWebview);
-    m_pWebviewFrame = new QFrame;
-    m_pWebviewFrame->setLayout(m_pFrameLayout);
-    m_pWebviewFrame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
     connect(m_pWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
@@ -221,8 +225,7 @@ void CInyokaEdit::setupEditor() {
             && true == m_pSettings->getPreviewInEditor()) {
         m_pWidgetSplitter = new QSplitter;
         m_pWidgetSplitter->addWidget(m_pEditor);
-        // m_pWidgetSplitter->addWidget(m_pWebview);
-        m_pWidgetSplitter->addWidget(m_pWebviewFrame);
+        m_pWidgetSplitter->addWidget(m_pWebview);
 
         connect(m_pFileOperations, SIGNAL(loadedFile()),
                 this, SLOT(previewInyokaPage()));
@@ -237,13 +240,13 @@ void CInyokaEdit::setupEditor() {
     } else {
         setCentralWidget(m_pTabwidgetRawPreview);
         m_pTabwidgetRawPreview->setTabPosition(QTabWidget::West);
-        m_pTabwidgetRawPreview->addTab(m_pEditor, tr("Raw format"));
+        m_pTabwidgetRawPreview->addTab(m_pEditor, trUtf8("Raw format"));
 
-        m_pTabwidgetRawPreview->addTab(m_pWebviewFrame, tr("Preview"));
+        m_pTabwidgetRawPreview->addTab(m_pWebview, trUtf8("Preview"));
         if (false == m_pSettings->getPreviewInEditor()) {
             m_pTabwidgetRawPreview->setTabEnabled(
                         m_pTabwidgetRawPreview->indexOf(
-                            m_pWebviewFrame), false);
+                            m_pWebview), false);
         }
     }
 
@@ -303,7 +306,7 @@ void CInyokaEdit::createActions() {
             this, SLOT(openFile()));
 
     // Clear recent files list
-    m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
+    m_pClearRecentFilesAct = new QAction(trUtf8("Clear list"), this);
     connect(m_pClearRecentFilesAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(clearRecentFiles()));
 
@@ -404,16 +407,10 @@ void CInyokaEdit::createActions() {
 
     // Insert headline
     m_pHeadlineBox = new QComboBox();
-    m_pHeadlineBox->setStatusTip(
-                tr("Insert a headline - 5 headline steps are supported"));
-
     // Insert sample
     m_pTextmacrosBox = new QComboBox();
-    m_pTextmacrosBox->setStatusTip(tr("Insert text sample"));
-
     // Insert text format
     m_pTextformatBox = new QComboBox();
-    m_pTextformatBox->setStatusTip(tr("Insert text format"));
 
     // ------------------------------------------------------------------------
     // INSERT SYNTAX ELEMENTS
@@ -459,7 +456,7 @@ void CInyokaEdit::createActions() {
     // Code block + syntax highlighting
     mySigMapCodeHighlight = new QSignalMapper(this);
     QStringList sListHighlightText, sListHighlightLang;
-    sListHighlightText << tr("Raw text") << tr("Code without highlighting")
+    sListHighlightText << trUtf8("Raw text") << trUtf8("Code without highlighting")
                        << "Bash" << "C" << "C#" << "C++" << "CSS" << "D"
                        << "Django / Jinja Templates" << "HTML" << "IRC Logs"
                        << "Java" << "JavaScript" << "Perl" << "PHP" << "Python"
@@ -707,8 +704,8 @@ void CInyokaEdit::createToolBars() {
     m_pUi->samplesmacrosBar->addWidget(m_pHeadlineBox);
 
     // Headline combo box
-    QString sHeadline = tr("Headline");
-    QString sHeadlineStep = tr("Step");
+    QString sHeadline = trUtf8("Headline");
+    QString sHeadlineStep = trUtf8("Step");
     m_pHeadlineBox->addItem(sHeadline);
     m_pHeadlineBox->insertSeparator(1);
     m_pHeadlineBox->addItem(sHeadline + ": " + sHeadlineStep + " 1");
@@ -733,12 +730,12 @@ void CInyokaEdit::createToolBars() {
 
     // Text format combo box
     m_pUi->samplesmacrosBar->addWidget(m_pTextformatBox);
-    m_pTextformatBox->addItem(tr("Text format"));
+    m_pTextformatBox->addItem(trUtf8("Text format"));
     m_pTextformatBox->insertSeparator(1);
-    m_pTextformatBox->addItem(tr("Folders"));
-    m_pTextformatBox->addItem(tr("Menu entries"));
-    m_pTextformatBox->addItem(tr("Files"));
-    m_pTextformatBox->addItem(tr("Command"));
+    m_pTextformatBox->addItem(trUtf8("Folders"));
+    m_pTextformatBox->addItem(trUtf8("Menu entries"));
+    m_pTextformatBox->addItem(trUtf8("Files"));
+    m_pTextformatBox->addItem(trUtf8("Command"));
     connect(m_pTextformatBox, SIGNAL(activated(int)),
             this, SLOT(insertDropDownTextformat(int)));
 
@@ -808,7 +805,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
 
         QString sRetHTML;
         if ("" == m_pFileOperations->getCurrentFile()
-                || tr("Untitled") == m_pFileOperations->getCurrentFile()) {
+                || trUtf8("Untitled") == m_pFileOperations->getCurrentFile()) {
             sRetHTML = m_pParser->genOutput("", m_pEditor->document());
         } else {
             sRetHTML = m_pParser->genOutput(m_pFileOperations->getCurrentFile(),
@@ -821,7 +818,9 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         // No write permission
         if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
             QMessageBox::warning(this, m_pApp->applicationName(),
-                                 tr("Could not create temporary HTML file!"));
+                                 trUtf8("Could not create temporary HTML file!"));
+            qWarning() << "Could not create temporary HTML file:"
+                       << m_sPreviewFile;
             return;
         }
 
@@ -870,7 +869,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
 // Headline (combobox in toolbar)
 void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
     if (nSelection > 1) {
-        QString sHeadline = tr("Headline");
+        QString sHeadline = trUtf8("Headline");
         QString sHeadTag = "";
 
         // Generate headline tag
@@ -983,7 +982,7 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
                                                + m_pEditor->textCursor().selectedText()
                                                + "'''");
                 } else {
-                    sInsertedText = tr("Folders");
+                    sInsertedText = trUtf8("Folders");
                     nFormatLength = 3;
                     m_pEditor->insertPlainText("'''"
                                                + sInsertedText
@@ -996,7 +995,7 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
                                                + m_pEditor->textCursor().selectedText()
                                                + "\"''");
                 } else {
-                    sInsertedText = tr("Menu -> sub menu -> menu entry");
+                    sInsertedText = trUtf8("Menu -> sub menu -> menu entry");
                     nFormatLength = 3;
                     m_pEditor->insertPlainText("''\""
                                                + sInsertedText
@@ -1009,7 +1008,7 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
                                                + m_pEditor->textCursor().selectedText()
                                                + "'''");
                 } else {
-                    sInsertedText = tr("Files");
+                    sInsertedText = trUtf8("Files");
                     nFormatLength = 3;
                     m_pEditor->insertPlainText("'''"
                                                + sInsertedText
@@ -1022,7 +1021,7 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
                                                + m_pEditor->textCursor().selectedText()
                                                + "`");
                 } else {
-                    sInsertedText = tr("Command");
+                    sInsertedText = trUtf8("Command");
                     nFormatLength = 1;
                     m_pEditor->insertPlainText("`"
                                                + sInsertedText
@@ -1066,7 +1065,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                                        + m_pEditor->textCursor().selectedText()
                                        + "'''");
         } else {
-            sInsertedText = tr("Bold");
+            sInsertedText = trUtf8("Bold");
             nFormatLength = 3;
             m_pEditor->insertPlainText("'''"
                                        + sInsertedText
@@ -1078,7 +1077,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                                        + m_pEditor->textCursor().selectedText()
                                        + "''");
         } else {
-            sInsertedText = tr("Italic");
+            sInsertedText = trUtf8("Italic");
             nFormatLength = 2;
             m_pEditor->insertPlainText("''"
                                        + sInsertedText
@@ -1090,7 +1089,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                                        + m_pEditor->textCursor().selectedText()
                                        + "`");
         } else {
-            sInsertedText = tr("Monotype");
+            sInsertedText = trUtf8("Monotype");
             nFormatLength = 1;
             m_pEditor->insertPlainText("`"
                                        + sInsertedText
@@ -1102,7 +1101,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                                        + m_pEditor->textCursor().selectedText()
                                        + ":]");
         } else {
-            sInsertedText = tr("Site name");
+            sInsertedText = trUtf8("Site name");
             nFormatLength = 2;
             m_pEditor->insertPlainText("[:"
                                        + sInsertedText
@@ -1126,7 +1125,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                                        + m_pEditor->textCursor().selectedText()
                                        + ")]]");
         } else {
-            sInsertedText = tr("Image.png");
+            sInsertedText = trUtf8("Image.png");
             nFormatLength = 3;
             m_pEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
                                        + sInsertedText
@@ -1136,6 +1135,8 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         QMessageBox::warning(this, m_pApp->applicationName(),
                              "Error while inserting syntax element: "
                              "Unknown action");
+        qWarning() << "Error while inserting syntax element:"
+                   << "UNKNOWN ACTION" << sAction;
     }
 
     if (!bSelected) {
@@ -1228,8 +1229,8 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
     if (sTmp.size() == 2) {
         // No text selected
         if (m_pEditor->textCursor().selectedText() == "") {
-            QString sSitename = tr("Sitename");
-            QString sText = tr("Text");
+            QString sSitename = trUtf8("Sitename");
+            QString sText = trUtf8("Text");
 
             // Insert InterWiki-Link
             m_pEditor->insertPlainText("[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
@@ -1248,11 +1249,11 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
         }
     } else {
         // Problem with indices
-        qWarning() << "Error while inserting InterWiki link - IWL indice:"
-                   << sMenuEntry;
         QMessageBox::warning(this, m_pApp->applicationName(),
                              "Error while inserting InterWiki link: "
                              "InterWiki indice");
+        qWarning() << "Error while inserting InterWiki link - IWL indice:"
+                   << sMenuEntry;
     }
 
     m_pEditor->setFocus();
@@ -1339,7 +1340,8 @@ void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
         m_bReloadPreviewBlocked = false;
     } else {
         QMessageBox::warning(this, m_pApp->applicationName(),
-                             tr("Error while loading preview."));
+                             trUtf8("Error while loading preview."));
+        qWarning() << "Error while loading preview:" << m_sPreviewFile;
     }
 }
 
@@ -1489,8 +1491,8 @@ void CInyokaEdit::checkSpelling() {
             || !QFile::exists(sDictPath + ".aff")) {
         qWarning() << "Spell checker dictionary file does not exist:"
                    << sDictPath << "*.dic *.aff";
-        QMessageBox::critical(this, m_pApp->applicationName(),
-                              "Spell checker dictionary file does not exist!");
+        QMessageBox::warning(this, m_pApp->applicationName(),
+                             "Spell checker dictionary file does not exist!");
         return;
     }
 
@@ -1503,6 +1505,8 @@ void CInyokaEdit::checkSpelling() {
         } else {
             QMessageBox::warning(0, m_pApp->applicationName(),
                                  "User dictionary file could not be created.");
+            qWarning() << "User dictionary file could not be created:"
+                       << sUserDict;
         }
     }
     CSpellChecker *spellChecker = new CSpellChecker(sDictPath, sUserDict, this);
@@ -1514,7 +1518,7 @@ void CInyokaEdit::checkSpelling() {
     spellChecker = NULL;
 
     QMessageBox::information(this, m_pApp->applicationName(),
-                             tr("Spell check has finished."));
+                             trUtf8("Spell check has finished."));
   #endif
 }
 
@@ -1523,8 +1527,8 @@ void CInyokaEdit::checkSpelling() {
 // Delete images in temp. download folder (images downloaded with articles)
 void CInyokaEdit::deleteTempImages() {
     int nRet = QMessageBox::question(this, m_pApp->applicationName(),
-                                     tr("Do you really want to delete all "
-                                        "images downloaded with articles?"),
+                                     trUtf8("Do you really want to delete all "
+                                            "images downloaded with articles?"),
                                      QMessageBox::Yes | QMessageBox::No);
 
     if (QMessageBox::Yes== nRet) {
@@ -1535,13 +1539,15 @@ void CInyokaEdit::deleteTempImages() {
             if (!m_tmpPreviewImgDir.remove(fiListFiles.at(nFile).fileName())) {
                 // Problem while removing
                 QMessageBox::warning(this, m_pApp->applicationName(),
-                                     tr("Could not delete file: ")
+                                     trUtf8("Could not delete file: ")
                                      + fiListFiles.at(nFile).fileName());
+                qWarning() << "Could not delete files:" <<
+                              fiListFiles.at(nFile).fileName();
                 return;
             }
         }
         QMessageBox::information(this, m_pApp->applicationName(),
-                                 tr("Images successfully deleted."));
+                                 trUtf8("Images successfully deleted."));
     } else {
         return;
     }
@@ -1629,7 +1635,7 @@ void CInyokaEdit::showSyntaxOverview() {
     QTextStream in(&OverviewFile);
     if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, "Warning",
-                             tr("Could not open syntax overview file!"));
+                             trUtf8("Could not open syntax overview file!"));
         qWarning() << "Could not open syntax overview file:"
                    << OverviewFile.fileName();
         return;
@@ -1646,7 +1652,7 @@ void CInyokaEdit::showSyntaxOverview() {
     layout->setMargin(2);
     layout->setSpacing(0);
     layout->addWidget(webview);
-    dialog->setWindowTitle(tr("Syntax overview"));
+    dialog->setWindowTitle(trUtf8("Syntax overview"));
 
     webview->setHtml(pTextDocument->toPlainText(),
                      QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
@@ -1668,12 +1674,14 @@ void CInyokaEdit::reportBug() {
 
         if (!procApport.waitForStarted()) {
             QMessageBox::critical(this, m_pApp->applicationName(),
-                                  tr("Error while starting Apport."));
+                                  trUtf8("Error while starting Apport."));
+            qCritical() << "Error while starting Apport - waitForStarted()";
             return;
         }
         if (!procApport.waitForFinished()) {
             QMessageBox::critical(this, m_pApp->applicationName(),
-                                  tr("Error while executing Apport."));
+                                  trUtf8("Error while executing Apport."));
+            qCritical() << "Error while executing Apport - waitForFinished()";
             return;
         }
     } else {
@@ -1700,9 +1708,9 @@ void CInyokaEdit::about() {
     }
 
     QMessageBox::about(this,
-                       tr("About %1").arg(m_pApp->applicationName()),
-                       tr("<p><b>%1</b> - Editor for Inyoka-based portals<br />"
-                       "Version: %2</p>"
+                       trUtf8("About %1").arg(m_pApp->applicationName()),
+                       trUtf8("<p><b>%1</b> - Editor for Inyoka-based portals"
+                       "<br />Version: %2</p>"
                        "<p>&copy; 2011-%3, The %4 developers<br />"
                        "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
                        "<p>Special thanks to <img src=\"%5\" /> bubi97, <img src=\"%5\" /> Lasall, <img src=\"%5\" /> Shakesbier"

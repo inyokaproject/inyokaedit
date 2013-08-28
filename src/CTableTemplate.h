@@ -28,7 +28,7 @@
 #define INYOKAEDIT_CTABLETEMPLATE_H_
 
 #include <QDir>
-#include <QtGui/QDialog>
+#include <QDialog>
 #include <QString>
 
 #include "./CParser.h"

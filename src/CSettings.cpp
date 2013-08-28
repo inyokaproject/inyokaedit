@@ -25,7 +25,13 @@
  */
 
 #include <QDebug>
-#include <QDesktopServices>
+
+#if QT_VERSION >= 0x050000
+    #include <QStandardPaths>
+#else
+    #include <QDesktopServices>
+#endif
+
 #include "./CSettings.h"
 
 CSettings::CSettings(const QString &sAppName, QWidget *pParent)
@@ -91,10 +97,22 @@ void CSettings::readSettings() {
     if (m_sInyokaUrl.endsWith("/")) {
         m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
     }
+
+#if QT_VERSION >= 0x050000
+    QStringList sListPaths = QStandardPaths::standardLocations(
+                QStandardPaths::DocumentsLocation);
+    if (sListPaths.isEmpty()) {
+        qCritical() << "Error while getting documents standard path.";
+        sListPaths << "";
+    }
+    m_LastOpenedDir = m_pSettings->value("LastOpenedDir", sListPaths[0]).toString();
+#else
     m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
                                          QDesktopServices::storageLocation(
                                              QDesktopServices::DocumentsLocation))
                                          .toString();
+#endif
+
     m_bAutomaticImageDownload = m_pSettings->value("AutomaticImageDownload",
                                                    false).toBool();
     m_sSpellCheckerLanguage = m_pSettings->value("SpellCheckerLanguage",

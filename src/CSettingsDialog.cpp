@@ -45,7 +45,13 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
                          & ~Qt::WindowContextHelpButtonHint);
     this->setModal(true);
     m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
+
+#if QT_VERSION >= 0x050000
+    m_pUi->styleTable->horizontalHeader()->setSectionResizeMode(
+                QHeaderView::Stretch);
+#else
     m_pUi->styleTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
 
 #if defined _WIN32
     m_sExt = ".ini";
@@ -89,7 +95,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
             m_sListStyleFiles << fiListFiles.at(nFile).fileName().remove(m_sExt);
         }
     }
-    m_sListStyleFiles.push_front(tr("Create new style..."));
+    m_sListStyleFiles.push_front(trUtf8("Create new style..."));
     m_pUi->styleFilesBox->addItems(m_sListStyleFiles);
     m_pUi->styleFilesBox->insertSeparator(1);
     QFileInfo fiStyle(m_pSettings->m_sStyleFile);
@@ -121,15 +127,16 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
             this, SLOT(changedStyle(int)));
 
     QStringList sListHeader;
-    sListHeader << tr("Color") << tr("Bold")
-                << tr("Italic") << tr("Background");
+    sListHeader << trUtf8("Color") << trUtf8("Bold")
+                << trUtf8("Italic") << trUtf8("Background");
     m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
     sListHeader.clear();
-    sListHeader << tr("Background") << tr("Text color") << tr("Text formating")
-                << tr("Heading") << tr("Hyperlink") << tr("InterWiki")
-                << tr("Macro") << tr("Parser") << tr("List")
-                << tr("Table line") << tr("Table cell format") << tr("ImgMap")
-                << tr("Misc") << tr("Comment");
+    sListHeader << trUtf8("Background") << trUtf8("Text color")
+                << trUtf8("Text formating") << trUtf8("Heading")
+                << trUtf8("Hyperlink") << trUtf8("InterWiki")
+                << trUtf8("Macro") << trUtf8("Parser") << trUtf8("List")
+                << trUtf8("Table line") << trUtf8("Table cell format")
+                << trUtf8("ImgMap") << trUtf8("Misc") << trUtf8("Comment");
     m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 
     connect(m_pUi->styleTable, SIGNAL(cellDoubleClicked(int, int)),
@@ -192,7 +199,8 @@ void CSettingsDialog::accept() {
             || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
             || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword) {
         QMessageBox::information(0, this->windowTitle(),
-                                 tr("The editor has to be restarted for applying the changes."));
+                                 trUtf8("The editor has to be restarted for "
+                                        "applying the changes."));
     }
 
     QDialog::accept();
@@ -379,9 +387,9 @@ void CSettingsDialog::changedStyle(int nIndex) {
         bool bOk;
         QFileInfo fiStyle(m_pSettings->getStyleFile());
 
-        sFileName = QInputDialog::getText(0, tr("New style"),
-                                              tr("Please insert name of new "
-                                                 "style file:"),
+        sFileName = QInputDialog::getText(0, trUtf8("New style"),
+                                              trUtf8("Please insert name of "
+                                                     "new style file:"),
                                               QLineEdit::Normal,
                                               "",
                                               &bOk);

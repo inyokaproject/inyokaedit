@@ -28,7 +28,12 @@
 #include <QFileDialog>
 #include <QPrinter>
 #include <QPrintDialog>
-#include <QWebView>
+
+#if QT_VERSION >= 0x050000
+    #include <QtWebKitWidgets/QWebView>
+#else
+    #include <QWebView>
+#endif
 
 #include "./CFileOperations.h"
 
@@ -41,8 +46,8 @@ CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
       m_pSettings(pSettings),
       m_sAppName(sAppName),
       m_sPreviewFile(sPreviewFile),
-      m_sFileFilter(tr("Inyoka document") + " (*.iny *.inyoka);;"
-                    + tr("All files") + " (*)") {
+      m_sFileFilter(trUtf8("Inyoka document") + " (*.iny *.inyoka);;"
+                    + trUtf8("All files") + " (*)") {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     // Generate recent files list
@@ -81,7 +86,7 @@ void CFileOperations::open() {
     if (this->maybeSave()) {
         // File dialog opens last used folder
         QString sFileName = QFileDialog::getOpenFileName(
-                    m_pParent, tr("Open file"),
+                    m_pParent, trUtf8("Open file"),
                     m_pSettings->getLastOpenedDir().absolutePath(),
                     m_sFileFilter);
         if (!sFileName.isEmpty()) {
@@ -123,7 +128,7 @@ bool CFileOperations::saveAs() {
 
     // File dialog opens last used folder
     QString sFileName = QFileDialog::getSaveFileName(m_pParent,
-                                                     tr("Save file"),
+                                                     trUtf8("Save file"),
                                                      sCurFileName,
                                                      m_sFileFilter);
     if (sFileName.isEmpty()) {
@@ -145,16 +150,16 @@ bool CFileOperations::maybeSave() {
         QMessageBox::StandardButton ret;
         QString sTempCurFileName;
         if ("" == m_sCurFile) {
-            sTempCurFileName = tr("Untitled", "No file name set");
+            sTempCurFileName = trUtf8("Untitled", "No file name set");
         } else {
             QFileInfo tempCurFile(m_sCurFile);
             sTempCurFileName = tempCurFile.fileName();
         }
 
         ret = QMessageBox::warning(m_pParent, m_sAppName,
-                                   tr("The document \"%1\" has been modified.\n"
-                                      "Do you want to save your changes or "
-                                      "discard them?").arg(sTempCurFileName),
+                                   trUtf8("The document \"%1\" has been modified.\n"
+                                          "Do you want to save your changes or "
+                                          "discard them?").arg(sTempCurFileName),
                                    QMessageBox::Save | QMessageBox::Discard
                                    | QMessageBox::Cancel);
 
@@ -183,9 +188,11 @@ void CFileOperations::loadFile(const QString &sFileName,
     // No permission to read
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(m_pParent, m_sAppName,
-                             tr("The file \"%1\" could not be opened:\n%2.")
+                             trUtf8("The file \"%1\" could not be opened:\n%2.")
                              .arg(sFileName)
                              .arg(file.errorString()));
+        qWarning() << "File" << sFileName << "could not be opened:"
+                   << file.errorString();
         return;
     }
 
@@ -220,9 +227,11 @@ bool CFileOperations::saveFile(const QString &sFileName) {
     // No write permission
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(m_pParent, m_sAppName,
-                             tr("The file \"%1\" could not be saved:\n%2.")
+                             trUtf8("The file \"%1\" could not be saved:\n%2.")
                              .arg(sFileName)
                              .arg(file.errorString()));
+        qWarning() << "File" << sFileName << "could not be saved:"
+                   << file.errorString();
         return false;
     }
 
@@ -265,8 +274,8 @@ void CFileOperations::printPreview() {
                                 + "/Preview.pdf");
 
     if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning",
-                             tr("Could not open preview file for printing!"));
+        QMessageBox::warning(0, trUtf8("Warning"),
+                             trUtf8("Could not open preview file for printing!"));
         qWarning() << "Could not open text html preview file for printing:"
                    << m_sPreviewFile;
     } else {
@@ -316,7 +325,7 @@ void CFileOperations::printPreview() {
     }
 #else
     QMessageBox::information(m_pParent, m_sAppName,
-                             tr("Printing not supported under Windows, yet."));
+                             trUtf8("Printing not supported under Windows, yet."));
 #endif
 }
 
@@ -337,7 +346,7 @@ void CFileOperations::setCurrentFile(const QString &sFileName) {
 
     QString sShownName = m_sCurFile;
     if (m_sCurFile.isEmpty()) {
-        sShownName = tr("Untitled");
+        sShownName = trUtf8("Untitled");
     }
     m_pParent->setWindowFilePath(sShownName);
 }

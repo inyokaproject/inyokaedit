@@ -27,7 +27,10 @@
 #ifndef INYOKAEDIT_CINYOKAEDIT_H_
 #define INYOKAEDIT_CINYOKAEDIT_H_
 
+#include <QBoxLayout>
 #include <QMainWindow>
+#include <QSplitter>
+#include <QToolButton>
 #include <QWebHistory>
 
 #include "./CTemplates.h"
@@ -61,7 +64,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 
-#define sVERSION "0.10.0"
+#define sVERSION "0.11.0"
 
 namespace Ui {
     class CInyokaEdit;
