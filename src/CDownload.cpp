@@ -137,10 +137,12 @@ void CDownload::downloadArticle() {
     }
 
     // Replace non valid characters
+    m_sSitenameUtf = m_sSitename;
     m_sSitename.replace(QString::fromUtf8("ä"), "a", Qt::CaseInsensitive);
     m_sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
     m_sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
     m_sSitename.replace(" ", "_");
+    m_sSitenameUtf.replace(" ", "_");
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -157,6 +159,7 @@ void CDownload::downloadArticle() {
     }
 
     m_bDownloadArticle = true;
+    qDebug() << "DOWNLOADING article:" << sUrl;
     QNetworkRequest request(sUrl);
     m_Reply = m_NwManager->get(request);
 }
@@ -169,6 +172,7 @@ void CDownload::downloadImages() {
     m_bDownloadArticle = false;
 
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"?action=metaexport");
+    qDebug() << "DOWNLOADING meta data:" << sUrl;
     QNetworkRequest request(sUrl);
     m_Reply = m_NwManager->get(request);
 }
@@ -220,13 +224,16 @@ void CDownload::replyFinished(QNetworkReply *reply) {
 
             // Copy metadata line by line in list
             sListTmp << sTmpArticle.split("\n");
+            // qDebug() << "META files:" << sListTmp;
 
             m_Reply->deleteLater();
 
             // Get only attachments article metadata
             for (int i = 0; i < sListTmp.size(); i++) {
                 if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
-                                           Qt::CaseInsensitive)) {
+                                           Qt::CaseInsensitive)
+                        || sListTmp[i].startsWith("X-Attach: " + m_sSitenameUtf + "/",
+                                                  Qt::CaseInsensitive)) {
                     // Remove "X-Attach: "
                     sListMetadata << sListTmp[i].remove("X-Attach: ");
                     // Remove windows specific newline \r
