@@ -912,6 +912,9 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
             } else if (sListTmpImageInfo[i].trimmed() == "right"
                        ||  sListTmpImageInfo[i].trimmed() == "align=right") {
                 sImageAlign = "right";
+            } else if (sListTmpImageInfo[i].trimmed() == "center"
+                       ||  sListTmpImageInfo[i].trimmed() == "align=center") {
+                sImageAlign = "center";
             }
         }
 

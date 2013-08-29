@@ -1,4 +1,4 @@
-## Macro=
+## Macro= [[Vorlage(Installbutton,%%paketname1 paketname2%%)]]
 ##
 ## Diese Vorlage soll nur im Parser Paketinstallation eingebunden werden!
 ##

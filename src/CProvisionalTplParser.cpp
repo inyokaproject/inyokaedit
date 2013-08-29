@@ -83,6 +83,21 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Fremd").toLower()) {
             sArgs.removeFirst();
             return this->parseForeignWarning(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Icon-Übersicht").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIconOverview(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("IkhayaAutor").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIkhayaAuthor(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Ikhaya-Award").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIkhayaAward(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Ikhayabild").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIkhayaImage(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Ikhaya-Projektvorstellung").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIkhayaProjectPresentation();
         } else if (sArgs[0].toLower() == QString::fromUtf8("Bildersammlung").toLower()) {
             sArgs.removeFirst();
             return this->parseImageCollection(sArgs);
@@ -110,6 +125,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Paketinstallation").toLower()) {
             sArgs.removeFirst();
             return this->parsePackageInstallation(sArgs);
+        } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Installbutton").toLower()) {
+            sArgs.removeFirst();
+            return this->parsePackageInstallButton(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("PPA").toLower()) {
             sArgs.removeFirst();
             return this->parsePPA(sArgs);
@@ -454,6 +472,130 @@ QString CProvisionalTplParser::parseForeignWarning(const QStringList &sListArgs)
     }
 
     return insertBox("box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
+    QString sOutput("<table style=\"width:95%\">\n<tbody>\n");
+    QStringList sListTitle;
+    QString sStyle("");
+    QString sImage("");
+
+    if (sListArgs.size() > 0) {
+        sListTitle << sListArgs[0].split("/");
+        if (sListTitle.size() > 1) {
+            sStyle = sListTitle[1].trimmed() + "-";
+        }
+    }
+
+    for (int i = 0; i < sListArgs.size(); i++) {
+        if (0 == i) {
+            sOutput += "<tr class=\"" + sStyle + "titel\">\n"
+                       "<td colspan=\"4\">" + sListTitle[0] + "</td>\n</tr>\n"
+                       "<tr class=\"" + sStyle + "kopf\">\n"
+                       "<td style=\"width: 24%\">Icon</td>\n"
+                       "<td style=\"width: 25%\">Dateiname</td>\n"
+                       "<td style=\"width: 24%\">Icon</td>\n"
+                       "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
+        }
+        else
+        {
+            if (1 == i % 2) {
+                sOutput += "<tr>\n";
+            }
+            sOutput += "<td>[[Bild(Wiki/Icons/" + sListArgs[i] + ", x32, center)]]</td>"
+                    "<td><strong>" + sListArgs[i] + "</strong></td>\n";
+            /*
+            sOutput += "<td><a href=\"" + sImage + "\" rel=\"nofollow\" "
+                       "class=\"external\"><img src=\"" + sImage + "\" "
+                       "alt=\"" + sImage + "\" class=\"image-center\"></a></td>"
+                    "<td><strong>" + sListArgs[i] + "</strong></td>\n";
+            */
+
+            if (0 == i % 2) {
+                sOutput += "</tr>\n";
+            }
+
+            if ((1 == i % 2) && (i == sListArgs.size() - 1)) {  // Empty cell
+                sOutput += "<td colspan=\"2\"> </td>\n</tr>\n";
+            }
+        }
+    }
+
+    return sOutput + "\n</tbody>\n</table>\n";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs) {
+    QString sOutput("");
+
+    foreach (QString s, sListArgs) {
+        sOutput += s + " ";
+    }
+
+    return this->insertBox("box tested_for",
+                           QString::fromUtf8("Über den Autor"),
+                           sOutput);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs) {
+    QString sOutput("");
+
+    foreach (QString s, sListArgs) {
+        sOutput += s + " ";
+    }
+
+    return this->insertBox("box award",
+                           QString::fromUtf8("Award:"),
+                           sOutput);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
+    QString sImage("");
+    QString sText("");
+    QString sStyle("width: auto; float: left; margin-right: 1em");
+
+    if (sListArgs.size() > 1) {
+        sImage = sListArgs[0].trimmed();
+        sText = sListArgs[1].trimmed();
+        if (sImage.contains("right") || sText.contains("right")) {
+            sImage.remove("right").trimmed();
+            sText.remove("right").trimmed();
+            sStyle = "width: auto; float: right; margin-left: 1em";
+        }
+    }
+
+    return "<table style=\"" + sStyle + "\">\n<tbody>\n<tr>\n"
+           "<td style=\"text-align: center; background-color: #F2F2F2\">\n"
+           "<img src=\"" + sImage + "\" alt=\"" + sImage + "\" class=\"image-default\">"
+           "</td>\n</tr><tr>\n<td style=\"text-align: center; background-color: #F9EAAF\">"
+           + sText + "</td>\n</tr>\n</tbody></table\n";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIkhayaProjectPresentation() {
+    return this->insertBox("box notice",
+                           QString::fromUtf8("Hinweis"),
+                           QString::fromUtf8("Dieser Artikel gehört zur Reihe "
+                           "der Projektvorstellungen, die in unregelmäßigen "
+                           "Abständen vergleichsweise unbekannte Projekte "
+                           "vorstellt, um sie so einem breiteren Publikum näher "
+                           "zu bringen. Diese Artikelreihe existiert seit 2008. "
+                           "Alle Projektvorstellungen können im Wikiartikel "
+                           "[:ubuntuusers/Ikhayateam/Projektvorstellungen:"
+                           "Projektvorstellungen] eingesehen werden."));
 }
 
 // ----------------------------------------------------------------------------
@@ -945,6 +1087,7 @@ QString CProvisionalTplParser::parsePackageInstallation(const QStringList &sList
     QStringList sListPackages;
     QStringList sListPackagesTMP;
     QString sOutput("");
+    QString sPackages("");
 
     for (int i = 0; i < sListArgs.length(); i++) {
         sListPackagesTMP.clear();
@@ -955,26 +1098,16 @@ QString CProvisionalTplParser::parsePackageInstallation(const QStringList &sList
             sOutput += "\n * '''" + sListPackagesTMP[0].trimmed() + "'''"
                     + " (''" + sListPackagesTMP[1].trimmed() + "'')";
         } else {  // Only package
-            sOutput += " * '''" + sListPackagesTMP[0].trimmed() + "'''";
+            sOutput += "\n * '''" + sListPackagesTMP[0].trimmed() + "'''";
         }
 
         sListPackages << sListPackagesTMP[0].trimmed();
-    }
-    sOutput += "<p>\n"
-               "<a href=\"apt://";
-
-    // Apt packages install list / button
-    for (int i = 0; i < sListPackages.length(); i++) {
-        sOutput += sListPackages[i].trimmed();
-        if (i < sListPackages.size() - 1) {
-            sOutput += ",";
+        sPackages += sListPackagesTMP[0].trimmed();
+        if (i < sListArgs.size() - 1) {
+            sPackages += ",";
         }
     }
-
-    sOutput += "\" rel=\"nofollow\" class=\"external\">"
-               "<img src=\"img/wiki/button.png\" "
-               "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
-               "mit [:apturl:]</p>";
+    sOutput += QString::fromUtf8("\n[[Vorlage(Installbutton,%1)]]").arg(sPackages);
 
     // Copy console output
     sOutput += "<div class=\"package-list\">\n"
@@ -989,6 +1122,33 @@ QString CProvisionalTplParser::parsePackageInstallation(const QStringList &sList
         sOutput += " " + sListPackages[i].trimmed();
     }
     return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parsePackageInstallButton(const QStringList &sListArgs) {
+    QString sTmp("");
+    QString sOutput("");
+
+    sOutput += "<p>\n"
+               "<a href=\"apt://";
+
+    // Apt packages install list / button
+    for (int i = 0; i < sListArgs.length(); i++) {
+        sTmp = sListArgs[i];
+        sOutput += sTmp.replace(" ", ",").trimmed();
+        if (i < sListArgs.size() - 1) {
+            sOutput += ",";
+        }
+    }
+
+    sOutput += "\" rel=\"nofollow\" class=\"external\">"
+               "<img src=\"img/wiki/button.png\" "
+               "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
+               "mit [:apturl:]</p>";
+
+    return sOutput;
 }
 
 // ----------------------------------------------------------------------------

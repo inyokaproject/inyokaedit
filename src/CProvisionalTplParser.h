@@ -51,6 +51,11 @@ class CProvisionalTplParser {
     QString parseForeignPackage(const QStringList &sListArgs);
     QString parseForeignSource(const QStringList &sListArgs);
     QString parseForeignWarning(const QStringList &sListArgs);
+    QString parseIconOverview(const QStringList &sListArgs);
+    QString parseIkhayaAuthor(const QStringList &sListArgs);
+    QString parseIkhayaAward(const QStringList &sListArgs);
+    QString parseIkhayaImage(const QStringList &sListArgs);
+    QString parseIkhayaProjectPresentation();
     QString parseImageCollection(const QStringList &sListArgs);
     QString parseImageSubscrition(const QStringList &sListArgs);
     QString parseImprovable(const QStringList &sListArgs);
@@ -60,6 +65,7 @@ class CProvisionalTplParser {
     QString parseNotice(const QStringList &sListArgs);
     QString parsePackage(const QStringList &sListArgs);
     QString parsePackageInstallation(const QStringList &sListArgs);
+    QString parsePackageInstallButton(const QStringList &sListArgs);
     QString parsePPA(const QStringList &sListArgs);
     QString parseTable(const QStringList &sListArgs);
     QString parseTested(const QStringList &sListArgs);
