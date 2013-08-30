@@ -131,6 +131,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("PPA").toLower()) {
             sArgs.removeFirst();
             return this->parsePPA(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Projekte").toLower()) {
+            sArgs.removeFirst();
+            return this->parseProjects(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
             sArgs.removeFirst();
             return this->parseTable(sArgs);
@@ -1201,6 +1204,69 @@ QString CProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
                                 "können, müssen die Paketquellen neu "
                                 "[:apt/apt-get#apt-get-update:eingelesen] "
                                 "werden.</p>");
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
+    QList <QStringList> sListList;
+    QStringList sListTmp;
+    QString sOutput("<table style=\"width: 96%; margin-left: 1em\">\n<tbody>");
+    QString sImage("");
+    QString sTitle("");
+    QString sText("");
+    QString sLinks("");
+
+    // Split arguments by "+++"
+    for (int j = 0; j < sListArgs.size(); j++) {
+        if ("+++" == sListArgs[j]) {
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else if (sListArgs.size() - 1 == j) {
+            sListTmp << sListArgs[j];
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else {
+            sListTmp << sListArgs[j];
+        }
+    }
+    // qDebug() << sListList;
+
+    for (int i = 0; i < sListList.size(); i++) {
+        if (0 == i) {
+            if (sListList[i].size() >= 1) {
+                sOutput += "<tr class=\"verlauf\">\n<td colspan=\"2\">"
+                        + sListList[i][0] + "</td>\n</tr>";
+            }
+        } else {
+            sImage = "";
+            sTitle = "";
+            sText = "";
+            sLinks = "";
+            for (int k = 0; k < sListList[i].size(); k++) {
+                if (0 == k) {
+                    sImage = sListList[i][k];
+                } else if (1 == k) {
+                    sTitle = sListList[i][k];
+                } else if (2 == k) {
+                    sText = sListList[i][k];
+                } else if (3 == k) {
+                    sLinks = sListList[i][k];
+                    sLinks.replace(", ", " | ");
+                }
+            }
+            sOutput += "<tr style=\"background-color: #f2f2f2\">"
+                    "<td style=\"text-align: center; border-right-color: #f2f2f2; font-weight: bold\">"
+                    "[[Bild(" + sImage + ", 32)]][[BR]]" + sTitle + "</td>"
+                    "<td style=\"padding-top: 0.8em; border-left-color: #f2f2f2\">"
+                    + sText + "\n<div style=\"color: #000000; margin-left: 1em\">\n"
+                    "<div class=\"contents\">\n<p>" + sLinks + "</p>\n"
+                    "</div>\n</div>""</td></tr>";
+        }
+    }
+
+    return sOutput + "</tbody></table>";
 }
 
 // ----------------------------------------------------------------------------

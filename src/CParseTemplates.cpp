@@ -122,6 +122,30 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
 
                     // Extract arguments
                     sListArguments = sMacro.split(QRegExp("\\n"));
+
+                    if (sListArguments.size() > 0) {
+                        // Split by ' ' but don't split quoted strings with space
+                        QStringList sList;
+                        QStringList sList2 = sListArguments[0].split(QRegExp("\""));
+                        bool bInside = false;
+                        foreach (QString s, sList2) {
+                            if (bInside) {
+                                // If 's' is inside quotes, get the whole string
+                                sList.append(s);
+                            } else {
+                                // If 's' is outside quotes, get the splitted string
+                                sList.append(s.split(QRegExp("\\s+"),
+                                                              QString::SkipEmptyParts));
+                            }
+                            bInside = !bInside;
+                        }
+                        if (sList.size() > 1) {
+                            sListArguments.removeFirst();
+                            for (int i = sList.size() - 1; i >= 0; i--) {
+                                sListArguments.push_front(sList[i]);
+                            }
+                        }
+                    }
                 }
             }
 

@@ -67,6 +67,7 @@ class CProvisionalTplParser {
     QString parsePackageInstallation(const QStringList &sListArgs);
     QString parsePackageInstallButton(const QStringList &sListArgs);
     QString parsePPA(const QStringList &sListArgs);
+    QString parseProjects(const QStringList &sListArgs);
     QString parseTable(const QStringList &sListArgs);
     QString parseTested(const QStringList &sListArgs);
     QString parseUnderConstruction(const QStringList &sListArgs);
