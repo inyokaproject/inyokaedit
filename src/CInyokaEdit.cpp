@@ -804,7 +804,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         m_pWebview->history()->clear();  // Clear history (clicked links)
 
         QString sRetHTML;
-        if ("" == m_pFileOperations->getCurrentFile()
+        if (m_pFileOperations->getCurrentFile().isEmpty()
                 || trUtf8("Untitled") == m_pFileOperations->getCurrentFile()) {
             sRetHTML = m_pParser->genOutput("", m_pEditor->document());
         } else {

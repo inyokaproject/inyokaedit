@@ -89,7 +89,7 @@ void CFindReplace::showEvent(QShowEvent *event) {
         this->close();
     } else {
         // If some text is selected in editor
-        if ("" != m_pEditor->textCursor().selectedText()) {
+        if (!m_pEditor->textCursor().selectedText().isEmpty()) {
             m_pUi->text_Search->setText(m_pEditor->textCursor().selectedText());
         } else {  // If not use last used string
             m_pUi->text_Search->setText(m_pSettings->getTextFind());

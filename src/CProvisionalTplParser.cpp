@@ -119,6 +119,12 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
             sArgs.removeFirst();
             return this->parseNotice(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht").toLower()) {
+            sArgs.removeFirst();
+            return this->parseOverview(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht2").toLower()) {
+            sArgs.removeFirst();
+            return this->parseOverview2(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Pakete").toLower()) {
             sArgs.removeFirst();
             return this->parsePackage(sArgs);
@@ -134,6 +140,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Projekte").toLower()) {
             sArgs.removeFirst();
             return this->parseProjects(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Seitenleiste").toLower()) {
+            sArgs.removeFirst();
+            return this->parseSidebar(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
             sArgs.removeFirst();
             return this->parseTable(sArgs);
@@ -1069,6 +1078,118 @@ QString CProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+QString CProvisionalTplParser::parseOverview(const QStringList &sListArgs) {
+    QList <QStringList> sListList;
+    QStringList sListTmp;
+    QString sOutput("<table style=\"border: none; margin-top: 0; margin-right: 0\">\n<tbody>");
+
+    // Split arguments by 'empty line'
+    for (int j = 0; j < sListArgs.size(); j++) {
+        if (sListArgs[j].isEmpty()) {
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else if (sListArgs.size() - 1 == j) {
+            sListTmp << sListArgs[j];
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else {
+            sListTmp << sListArgs[j];
+        }
+    }
+    // qDebug() << sListList;
+
+    for (int i = 0; i < sListList.size(); i++) {
+        for (int k = 0; k < sListList[i].size(); k++) {
+            if (0 == k && 0 == i) {
+                if (sListList[i].size() >= 1) {
+                    sOutput += "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
+                            "background-color: #E2C889; font-size: 1.1em; "
+                            "border-width: 0 10px 0 0; border-color: #FFFFFF\">"
+                            + sListList[i][k].trimmed() +
+                            "</td>\n</tr>\n";
+                }
+            } else if (sListList[i].size() > 1) {
+                if (0 == k) {
+                    sOutput += "<tr>\n";
+                }
+                sOutput += "<td style=\"text-align: center; background-color: #F9EAAF; "
+                           "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
+                           "width: 32%\">" + sListList[i][k] + "</td>\n";
+                if (2 == k) {
+                    sOutput += "</tr>\n";
+                    continue;
+                }
+            } else {
+                sOutput += "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
+                        "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
+                        "background-color: #F9EAAF; \">" + sListList[i][k].trimmed() +
+                        "</td>\n</tr>\n";
+            }
+        }
+    }
+
+    return sOutput + "\n<tbody>\n</table>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseOverview2(const QStringList &sListArgs) {
+    QList <QStringList> sListList;
+    QStringList sListTmp;
+    QString sOutput("<table style=\"width: 98%; border: none;\">\n<tbody>");
+    QString sStyle("");
+
+    // Split arguments by 'empty line'
+    for (int j = 0; j < sListArgs.size(); j++) {
+        if (sListArgs[j].isEmpty()) {
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else if (sListArgs.size() - 1 == j) {
+            sListTmp << sListArgs[j];
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else {
+            sListTmp << sListArgs[j];
+        }
+    }
+    // qDebug() << sListList;
+
+    for (int i = 0; i < sListList.size(); i++) {
+        for (int k = 0; k < sListList[i].size(); k++) {
+            if (0 == k && 0 == i) {
+                if (sListList[i].size() >= 1) {
+                    sOutput += "<tr>\n<td colspan=\"6\" style=\"text-align: center; "
+                            "background-color: #E2C889; font-size: 1.1em; "
+                            "border-width: 0 10px 10px 0; border-color: #FFFFFF\">"
+                            + sListList[i][k].trimmed() +
+                            "</td>\n</tr>\n";
+                }
+            } else if (sListList[i].size() > 1) {
+                if (0 == k) {
+                    sOutput += "<tr>\n";
+                }
+                if (0 == k % 2) {
+                    sStyle = "border-width: 0 0 10px 0; ";
+                } else {
+                    sStyle = "border-width: 0 10px 10px 0; width: 26%; ";
+                }
+                sOutput += "<td style=\"" + sStyle + "background-color: #F9EAAF; "
+                           "border-color: #FFFFFF; \">" + sListList[i][k] + "</td>\n";
+                if (5 == k) {
+                    sOutput += "</tr>\n";
+                    continue;
+                }
+            }
+        }
+    }
+
+    return sOutput + "\n<tbody>\n</table>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 QString CProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
     QString sOutput(QString::fromUtf8("<div class=\"package-list\">\n"
                     "<div class=\"contents\">\n"
@@ -1267,6 +1388,57 @@ QString CProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
     }
 
     return sOutput + "</tbody></table>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseSidebar(const QStringList &sListArgs) {
+    QList <QStringList> sListList;
+    QStringList sListTmp;
+    QString sOutput("<table style=\"float: right; clear: right; border: none; "
+                    "margin-top: 0; margin-left: 5px\">\n<tbody>");
+
+    // Split arguments by 'empty line'
+    for (int j = 0; j < sListArgs.size(); j++) {
+        if (sListArgs[j].isEmpty()) {
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else if (sListArgs.size() - 1 == j) {
+            sListTmp << sListArgs[j];
+            sListList << sListTmp;
+            sListTmp.clear();
+        } else {
+            sListTmp << sListArgs[j];
+        }
+    }
+
+    for (int i = 0; i < sListList.size(); i++) {
+        for (int k = 0; k < sListList[i].size(); k++) {
+            if (0 == k) {
+                if (sListList[i].size() >= 1) {
+                    sOutput += "<tr>\n<td style=\"text-align: center; "
+                            "background-color: #E2C889; font-size: 1.1em; "
+                            "border: none\">" + sListList[i][k].trimmed() +
+                            "</td>\n</tr>\n";
+                }
+            } else if (sListList[i][k].contains("[[BR]]")
+                       || k == sListList[i].size() - 1) {
+                sListTmp = sListList[i][k].split("[[BR]]", QString::SkipEmptyParts);
+                foreach (QString s, sListTmp) {
+                    sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
+                                "border-width: 0 0 10px 0; border-color: #FFFFFF\">"
+                                + s + "</td>\n</tr>\n";
+                }
+            } else {
+                sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
+                        "border: none\">" + sListList[i][k].trimmed() +
+                        "</td>\n</tr>\n";
+            }
+        }
+    }
+
+    return sOutput + "\n<tbody>\n</table>";
 }
 
 // ----------------------------------------------------------------------------

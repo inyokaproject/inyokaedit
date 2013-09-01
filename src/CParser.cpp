@@ -32,7 +32,8 @@ CParser::CParser(const QDir &tmpFileOutputDir,
                  const QString &sInyokaUrl,
                  const bool bCheckLinks,
                  CTemplates *pTemplates)
-    : m_tmpFileDir(tmpFileOutputDir),
+    : m_pRawText(NULL),
+      m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir),
       m_sInyokaUrl(sInyokaUrl),
       m_pTemplates(pTemplates) {

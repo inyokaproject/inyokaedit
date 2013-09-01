@@ -46,7 +46,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
 
     m_NwManager = new QNetworkAccessManager(m_pParent);
     connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
-             this, SLOT(replyFinished(QNetworkReply*)));
+            this, SLOT(replyFinished(QNetworkReply*)));
 
     m_DlImages = new CDownloadImg(m_sAppName);
     connect(m_DlImages, SIGNAL(finsihedImageDownload()),
