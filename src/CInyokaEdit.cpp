@@ -1509,7 +1509,9 @@ void CInyokaEdit::checkSpelling() {
                        << sUserDict;
         }
     }
-    CSpellChecker *spellChecker = new CSpellChecker(sDictPath, sUserDict, this);
+    CSpellChecker *spellChecker = new CSpellChecker(sDictPath, sUserDict,
+                                                    m_pApp->applicationDirPath(),
+                                                    this);
     spellChecker->start(m_pEditor);
 
     if (spellChecker != NULL) {

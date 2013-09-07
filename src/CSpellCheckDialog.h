@@ -50,8 +50,8 @@ class CSpellCheckDialog : public QDialog {
         AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict
     };
 
-    explicit CSpellCheckDialog(CSpellChecker *spellChecker,
-                               QWidget *parent = 0);
+    explicit CSpellCheckDialog(CSpellChecker *pSpellChecker,
+                               QWidget *pParent = 0);
     ~CSpellCheckDialog();
 
     QString replacement() const;
@@ -68,9 +68,9 @@ class CSpellCheckDialog : public QDialog {
 
   private:
     Ui::CSpellCheckDialog *m_pUi;
-    CSpellChecker *_spellChecker;
-    QString _unkownWord;
-    SpellCheckAction _returnCode;
+    CSpellChecker *m_pSpellChecker;
+    QString m_sUnkownWord;
+    SpellCheckAction m_returnCode;
 };
 
 #endif  // INYOKAEDIT_CSPELLCHECKDIALOG_H_

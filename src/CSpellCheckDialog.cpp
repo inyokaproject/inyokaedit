@@ -33,14 +33,14 @@
 
 #include "./CSpellChecker.h"
 
-CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *spellChecker,
-                                     QWidget *parent)
-    : QDialog(parent),
+CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *pSpellChecker,
+                                     QWidget *pParent)
+    : QDialog(pParent),
       m_pUi(new Ui::CSpellCheckDialog) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
-    _spellChecker = spellChecker;
+    m_pSpellChecker = pSpellChecker;
 
     this->setWindowFlags(this->windowFlags()
                          & ~Qt::WindowContextHelpButtonHint);
@@ -69,52 +69,64 @@ CSpellCheckDialog::~CSpellCheckDialog() {
     m_pUi = NULL;
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(const QString &sWord) {
-    _unkownWord = sWord;
-    m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(_unkownWord));
+    m_sUnkownWord = sWord;
+    m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(m_sUnkownWord));
 
     m_pUi->ledtReplaceWith->clear();
 
-    QStringList suggestions = _spellChecker->suggest(sWord);
+    QStringList sListSuggestions = m_pSpellChecker->suggest(sWord);
     m_pUi->listWidget->clear();
-    m_pUi->listWidget->addItems(suggestions);
+    m_pUi->listWidget->addItems(sListSuggestions);
 
-    if (suggestions.count() > 0) {
+    if (sListSuggestions.count() > 0) {
         m_pUi->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
     }
 
-    _returnCode = AbortCheck;
+    m_returnCode = AbortCheck;
     QDialog::exec();
-    return _returnCode;
+    return m_returnCode;
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 QString CSpellCheckDialog::replacement() const {
     return m_pUi->ledtReplaceWith->text();
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CSpellCheckDialog::ignoreOnce() {
-    _returnCode = IgnoreOnce;
+    m_returnCode = IgnoreOnce;
     accept();
 }
 
 void CSpellCheckDialog::ignoreAll() {
-    _spellChecker->ignoreWord(_unkownWord);
-    _returnCode = IgnoreAll;
+    m_pSpellChecker->ignoreWord(m_sUnkownWord);
+    m_returnCode = IgnoreAll;
     accept();
 }
 
 void CSpellCheckDialog::replaceOnce() {
-    _returnCode = ReplaceOnce;
+    m_returnCode = ReplaceOnce;
     accept();
 }
 
 void CSpellCheckDialog::replaceAll() {
-    _returnCode = ReplaceAll;
+    m_returnCode = ReplaceAll;
     accept();
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CSpellCheckDialog::addToDict() {
-    _spellChecker->addToUserWordlist(_unkownWord);
-    _returnCode = AddToDict;
+    m_pSpellChecker->addToUserWordlist(m_sUnkownWord);
+    m_returnCode = AddToDict;
     accept();
 }

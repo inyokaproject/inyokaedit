@@ -47,8 +47,8 @@
  */
 class CSpellChecker {
   public:
-    CSpellChecker(const QString &dictionaryPath, const QString &userDictionary,
-                  QWidget *pParent);
+    CSpellChecker(const QString &sDictionaryPath, const QString &sUserDictionary,
+                  const QString &aAppPath, QWidget *pParent);
     ~CSpellChecker();
 
     void start(CTextEditor *pEdito);
@@ -58,11 +58,14 @@ class CSpellChecker {
     void addToUserWordlist(const QString &sWord);
 
   private:
-    void put_word(const QString &sWord);
-    Hunspell *_hunspell;
-    QString _userDictionary;
-    QString _encoding;
-    QTextCodec *_codec;
+    void putWord(const QString &sWord);
+    void loadAdditionalDict(const QString &sFilename);
+
+    Hunspell *m_pHunspell;
+    QString m_sUserDictionary;
+    QString m_sAppPath;
+    QString m_sEncoding;
+    QTextCodec *m_pCodec;
     CSpellCheckDialog *m_pCheckDialog;
 };
 
