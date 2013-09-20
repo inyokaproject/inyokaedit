@@ -319,6 +319,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/tux.png -O tux.pn
 # icons
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/download.png -O download.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntu.png -O ubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntugnome.png -O ubuntugnome.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/kubuntu.png -O kubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/lubuntu.png -O lubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/mythbuntu.png -O mythbuntu.png
@@ -465,7 +466,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/windows_users.png -
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/window.png -O window.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/win-ubuntu.png -O win-ubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/wubi.png -O wubi.png
-
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/tasten_wasd.png -O tasten_wasd.png
 
 if [ ! -d Protokolle ]
   then
