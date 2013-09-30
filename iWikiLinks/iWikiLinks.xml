@@ -45,6 +45,7 @@
     <element type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
     <element type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
+    <element type="ubuntugnome" url="http://ubuntugnome.org/" name="Ubuntu GNOME" icon="ubuntugnome.png" />
     <element type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
     <element type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
     <element type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
@@ -84,7 +85,7 @@
     <element type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
-    <element type="gameolith" url="http://www.gameolith.eu/game/" name="Gameolith" icon="gameolith.png" />
+    <element type="gameolith" url="http://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
     <element type="gnomeprojects" url="http://projects.gnome.org/" name="GNOME projects" icon="gnomeprojects.png" />
     <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
     <element type="google" url="http://www.google.de/search?q=" name="Google" icon="" />

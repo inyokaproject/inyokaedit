@@ -156,6 +156,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_forum.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_member.png -O uf_member.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_thread.png -O uf_thread.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntuone.png -O ubuntuone.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntugnome.png -O ubuntugnome.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntustudio.png -O ubuntustudio.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_doc.png -O ubuntu_doc.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu_fr.png -O ubuntu_fr.png
