@@ -1,3 +1,18 @@
+inyokaedit (0.11.0-0ubuntu1) raring; urgency=low
+
+  [ Dominique Lasserre ]
+  * Added keywords to .desktop file.
+
+  [ Thorsten Roth ]
+  * Compiles with Qt4 and Qt5.
+  * Fixed LP: #957943 (extended spell checker)
+  * Support of macros: Installbutton, Ikhaya, icon overview, sidebar, overview,
+    overview2, projects template.
+  * Parser bug fixes.
+  * New IWLs.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 30 Sep 2013 14:57:00 +0200
+
 inyokaedit (0.10.0-0ubuntu1) raring; urgency=low
 
   [ Thorsten Roth ]
