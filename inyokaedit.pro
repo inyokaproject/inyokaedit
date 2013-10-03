@@ -44,6 +44,7 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CTextEditor.h \
                 src/CSettings.h \
                 src/CSettingsDialog.h \
+                src/CUtils.h \
                 src/CXmlParser.h
 
 SOURCES      += src/main.cpp \
@@ -64,6 +65,7 @@ SOURCES      += src/main.cpp \
                 src/CTextEditor.cpp \
                 src/CSettings.cpp \
                 src/CSettingsDialog.cpp \
+                src/CUtils.cpp \
                 src/CXmlParser.cpp
 
 RESOURCES     = res/inyokaedit_resources.qrc

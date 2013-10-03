@@ -29,6 +29,7 @@
 
 #include "./CDownload.h"
 #include "./CProgressDialog.h"
+#include "./CUtils.h"
 
 extern bool bDEBUG;
 
@@ -78,6 +79,14 @@ bool CDownload::loadInyokaStyles() {
                                      QMessageBox::No);
 
     if (iRet != QMessageBox::No) {
+        // Check for internet connection
+        if (!CUtils::getOnlineState()) {
+            QMessageBox::warning(m_pParent, m_sAppName,
+                                 trUtf8("Download not possible, no active internet "
+                                        "connection found!"));
+            return false;
+        }
+
         CProgressDialog *pDownloadProgress;
 
         // Path from normal installation
@@ -108,15 +117,12 @@ bool CDownload::loadInyokaStyles() {
 
 void CDownload::downloadArticle() {
     // Check for internet connection
-#if QT_VERSION >= 0x040700
-    QNetworkConfigurationManager mgr;
-    if (!mgr.isOnline()) {
+    if (!CUtils::getOnlineState()) {
         QMessageBox::warning(m_pParent, m_sAppName,
                              trUtf8("Download not possible, no active internet "
                                     "connection found!"));
         return;
     }
-#endif
 
     QString sUrl("");
     // Buttons of input dialog (click on "OK" -> ok = true,

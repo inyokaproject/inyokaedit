@@ -26,7 +26,6 @@
 
 #include <QComboBox>
 #include <QtGui>
-#include <QNetworkProxy>
 #include <QScrollBar>
 #include <QWebFrame>
 
@@ -37,6 +36,7 @@
 #endif
 
 #include "./CInyokaEdit.h"
+#include "./CUtils.h"
 #include "ui_CInyokaEdit.h"
 
 extern bool bDEBUG;
@@ -267,21 +267,8 @@ void CInyokaEdit::setupEditor() {
     }
 
     // Setting proxy if available
-    QString sHostName = m_pSettings->getProxyHostName();
-    quint16 nPort = m_pSettings->getProxyPort();
-    if ("" != sHostName && 0 != nPort) {
-        QNetworkProxy proxy;
-        proxy.setType(QNetworkProxy::HttpProxy);
-        proxy.setHostName(sHostName);
-        proxy.setPort(nPort);
-        QString sUser = m_pSettings->getProxyUserName();
-        QString sPassword = m_pSettings->getProxyPassword();
-        if ("" != sUser && "" != sPassword) {
-            proxy.setUser(sUser);
-            proxy.setPassword(sPassword);
-        }
-        QNetworkProxy::setApplicationProxy(proxy);
-    }
+    CUtils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
+                     m_pSettings->getProxyUserName(), m_pSettings->getProxyPassword());
 
     m_pUi->aboutAct->setText(m_pUi->aboutAct->text()
                              + " " + m_pApp->applicationName());
