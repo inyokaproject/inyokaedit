@@ -34,8 +34,6 @@
 
 class CDownloadImg : public QObject {
     Q_OBJECT
-    QNetworkAccessManager m_NwManager;
-    QList<QNetworkReply *> m_listDownloadReplies;
 
   public:
     explicit CDownloadImg(const QString &sAppName);
@@ -58,6 +56,9 @@ class CDownloadImg : public QObject {
                     const QString sBase = "");
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl) const;
+
+    QNetworkAccessManager m_NwManager;
+    QList<QNetworkReply *> m_listDownloadReplies;
 
     QString m_sAppname;
     QProgressDialog *m_progessDialog;

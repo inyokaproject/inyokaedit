@@ -27,8 +27,8 @@
     <element type="apt" url="apt:" name="Apt" icon="" />
     <element type="ubuntu" url="https://wiki.ubuntu.com/" name="Ubuntu" icon="ubuntu.png" />
     <element type="ubuntu_doc" url="https://help.ubuntu.com/" name="Ubuntu Help" icon="ubuntu_doc.png" />
-    <element type="man" url="http://manpages.ubuntu.com/manpages/" name="Ubuntu Manpage" icon="man.png" />
-    <element type="man_de" url="http://manpages.ubuntu.com/cgi-bin/search.py?lr=lang_de&amp;q=" name="Ubuntu Manpage (deutsch)" icon="" />
+    <element type="man" url="http://manpages.ubuntu.com/cgi-bin/search.py?lr=lang_en&amp;q=" name="Ubuntu Manpage" icon="man.png" />
+    <element type="man_de" url="http://manpages.ubuntu.com/cgi-bin/search.py?lr=lang_de&amp;q=" name="Ubuntu Manpage (deutsch)" icon="man_de.png" />
     <element type="ml" url="https://lists.ubuntu.com/archives/" name="Ubuntu Mailinglist" icon="ml.png" />
     <element type="brainstorm" url="http://brainstorm.ubuntu.com/idea/" name="Ubuntu Brainstorm" icon="brainstorm.png" />
     <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
