@@ -71,6 +71,8 @@ class CSettings : public QObject {
     quint32 getTimedPreview() const;
     bool getSyncScrollbars() const;
     QString getStyleFile() const;
+    bool getWindowsCheckUpdate() const;
+    void setWindowsCheckUpdate(const bool bValue);
 
     // Font
     QFont getEditorFont() const;
@@ -143,6 +145,7 @@ class CSettings : public QObject {
     quint32 m_nTimedPreview;
     bool m_bSyncScrollbars;
     QString m_sStyleFile;
+    bool m_bWinCheckUpdate;
 
     // Font
     QFont m_EditorFont;

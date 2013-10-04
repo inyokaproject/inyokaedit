@@ -27,13 +27,33 @@
 #ifndef INYOKAEDIT_CUTILS_H_
 #define INYOKAEDIT_CUTILS_H_
 
-class CUtils {
+#include <QApplication>
+#include <QNetworkAccessManager>
+
+extern bool bDEBUG;
+
+class CUtils : public QObject {
+    Q_OBJECT
+
   public:
-    CUtils();
+    CUtils(QWidget *pParent, QApplication *pApp);
 
     static bool getOnlineState();
     static void setProxy(const QString &sHostName, const quint16 nPort,
                          const QString &sUser, const QString &sPassword);
+    bool checkWindowsUpdate();
+
+  public slots:
+    void reportBug();
+    void showAbout();
+
+  private slots:
+    void replyFinished(QNetworkReply *pReply);
+
+  private:
+    QWidget *m_pParent;
+    QApplication *m_pApp;
+    QNetworkAccessManager *NwManager;
 };
 
 #endif  // INYOKAEDIT_CUTILS_H_

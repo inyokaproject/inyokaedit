@@ -40,6 +40,7 @@
 #include "./CTextEditor.h"
 #include "./CFindReplace.h"
 #include "./CDownload.h"
+#include "./CUtils.h"
 #include "./CFileOperations.h"
 #include "./CTableTemplate.h"
 
@@ -63,6 +64,7 @@ class CSettings;
 class CDownload;
 class CFileOperations;
 class CTabelTemplate;
+class CUtils;
 
 #define sVERSION "0.12.0"
 
@@ -123,12 +125,6 @@ class CInyokaEdit : public QMainWindow {
 
   private slots:
     void showSyntaxOverview();
-
-    /** \brief Call Apport for bug report */
-    void reportBug();
-
-    /** \brief Call about dialog */
-    void about();
 
     /**
     * \brief Insert headline from drop down box
@@ -213,6 +209,7 @@ class CInyokaEdit : public QMainWindow {
     CDownload *m_pDownloadModule;
     CTableTemplate *m_pTableTemplate;
     CFindReplace *m_pFindReplace;
+    CUtils *m_pUtils;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
     QFrame *m_pWebviewFrame;

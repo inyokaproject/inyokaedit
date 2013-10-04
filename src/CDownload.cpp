@@ -45,8 +45,8 @@ CDownload::CDownload(QWidget *pParent, const QString &sAppName,
       m_bAutomaticImageDownload(false) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    m_NwManager = new QNetworkAccessManager(m_pParent);
-    connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
+    m_pNwManager = new QNetworkAccessManager(m_pParent);
+    connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
 
     m_DlImages = new CDownloadImg(m_sAppName);
@@ -167,7 +167,7 @@ void CDownload::downloadArticle() {
     m_bDownloadArticle = true;
     qDebug() << "DOWNLOADING article:" << sUrl;
     QNetworkRequest request(sUrl);
-    m_Reply = m_NwManager->get(request);
+    m_pReply = m_pNwManager->get(request);
 }
 
 // ----------------------------------------------------------------------------
@@ -180,31 +180,31 @@ void CDownload::downloadImages() {
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"?action=metaexport");
     qDebug() << "DOWNLOADING meta data:" << sUrl;
     QNetworkRequest request(sUrl);
-    m_Reply = m_NwManager->get(request);
+    m_pReply = m_pNwManager->get(request);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CDownload::replyFinished(QNetworkReply *reply) {
+void CDownload::replyFinished(QNetworkReply *pReply) {
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
 
-    QIODevice *data(reply);
+    QIODevice *pData(pReply);
 
-    if (QNetworkReply::NoError != reply->error()) {
-        QMessageBox::critical(m_pParent, m_sAppName, data->errorString());
-        qCritical() << "Error while NW reply:" << data->errorString();
+    if (QNetworkReply::NoError != pReply->error()) {
+        QMessageBox::critical(m_pParent, m_sAppName, pData->errorString());
+        qCritical() << "Error while NW reply:" << pData->errorString();
         return;
     } else {
-        QString sTmpArticle = QString::fromUtf8(data->readAll());
+        QString sTmpArticle = QString::fromUtf8(pData->readAll());
 
         if (m_bDownloadArticle) {
             // Replace windows specific newlines
             sTmpArticle.replace("\r\r\n", "\n");
 
-            m_Reply->deleteLater();
+            m_pReply->deleteLater();
 
             // Site does not exist etc.
             if ("" == sTmpArticle) {
@@ -232,7 +232,7 @@ void CDownload::replyFinished(QNetworkReply *reply) {
             sListTmp << sTmpArticle.split("\n");
             // qDebug() << "META files:" << sListTmp;
 
-            m_Reply->deleteLater();
+            m_pReply->deleteLater();
 
             // Get only attachments article metadata
             for (int i = 0; i < sListTmp.size(); i++) {

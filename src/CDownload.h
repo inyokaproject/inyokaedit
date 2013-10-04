@@ -73,7 +73,7 @@ class CDownload : public QObject {
                         const QString &sInyokaUrl);
 
   private slots:
-    void replyFinished(QNetworkReply *reply);
+    void replyFinished(QNetworkReply *pReply);
 
   signals:
     /** Signal for sending downloaded article text to editor */
@@ -97,8 +97,8 @@ class CDownload : public QObject {
     QString m_sStylesDir;  /**< Folder in which style elements are stored */
     QString m_sImgDir;
 
-    QNetworkAccessManager *m_NwManager;
-    QNetworkReply *m_Reply;
+    QNetworkAccessManager *m_pNwManager;
+    QNetworkReply *m_pReply;
     QString m_sArticleText;
     QString m_sSitename;
     QString m_sSitenameUtf;

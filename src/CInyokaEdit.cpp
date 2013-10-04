@@ -36,7 +36,6 @@
 #endif
 
 #include "./CInyokaEdit.h"
-#include "./CUtils.h"
 #include "ui_CInyokaEdit.h"
 
 extern bool bDEBUG;
@@ -100,6 +99,12 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     }
 
     m_bReloadPreviewBlocked = false;
+
+    if (CUtils::getOnlineState() && m_pSettings->getWindowsCheckUpdate()) {
+        if (m_pUtils->checkWindowsUpdate()) {
+            m_pSettings->setWindowsCheckUpdate(false);
+        }
+    }
 }
 
 CInyokaEdit::~CInyokaEdit() {
@@ -176,6 +181,8 @@ void CInyokaEdit::createObjects() {
                                           m_UserDataDir,
                                           m_pTemplates->getTransTemplate(),
                                           m_pTemplates->getTransTable());
+
+    m_pUtils = new CUtils(this, m_pApp);
 
     m_pPreviewTimer = new QTimer(this);
 }
@@ -517,11 +524,12 @@ void CInyokaEdit::createActions() {
 
     // Report a bug using apport
     connect(m_pUi->reportBugAct, SIGNAL(triggered()),
-            this, SLOT(reportBug()));
+            m_pUtils, SLOT(reportBug()));
 
     // Open about windwow
     connect(m_pUi->aboutAct, SIGNAL(triggered()),
-            this, SLOT(about()));
+            m_pUtils, SLOT(showAbout()));
+
 }
 
 // ----------------------------------------------------------------------------
@@ -1646,70 +1654,6 @@ void CInyokaEdit::showSyntaxOverview() {
     webview->setHtml(pTextDocument->toPlainText(),
                      QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
     dialog->show();
-}
-
-// ----------------------------------------------------------------------------
-
-// Report a bug
-void CInyokaEdit::reportBug() {
-    // Ubuntu: Using Apport, if needed files exist
-    if (QFile::exists("/usr/bin/ubuntu-bug")
-            && QFile::exists("/etc/apport/crashdb.conf.d/inyokaedit-crashdb.conf")
-            && QFile::exists("/usr/share/apport/package-hooks/source_inyokaedit.py")) {
-        // Start apport
-        QProcess procApport;
-        procApport.start("ubuntu-bug", QStringList()
-                         << m_pApp->applicationName().toLower());
-
-        if (!procApport.waitForStarted()) {
-            QMessageBox::critical(this, m_pApp->applicationName(),
-                                  trUtf8("Error while starting Apport."));
-            qCritical() << "Error while starting Apport - waitForStarted()";
-            return;
-        }
-        if (!procApport.waitForFinished()) {
-            QMessageBox::critical(this, m_pApp->applicationName(),
-                                  trUtf8("Error while executing Apport."));
-            qCritical() << "Error while executing Apport - waitForFinished()";
-            return;
-        }
-    } else {
-        // Not Ubuntu or apport files not found: Load Launchpad bug tracker
-        QDesktopServices::openUrl(QUrl("https://bugs.launchpad.net/inyokaedit"));
-    }
-}
-
-// ----------------------------------------------------------------------------
-
-// About info box
-void CInyokaEdit::about() {
-    QDate nYear = QDate::currentDate();
-    QString sUserIcon("");
-    if (QFile::exists("/usr/share/"
-                      + m_pApp->applicationName().toLower()
-                      + "/iWikiLinks/user.png") && !bDEBUG) {
-        sUserIcon = "/usr/share/"
-                + m_pApp->applicationName().toLower()
-                + "/iWikiLinks/user.png";
-    } else {
-        // No installation: Use app path
-        sUserIcon =  m_pApp->applicationDirPath() + "/iWikiLinks/user.png";
-    }
-
-    QMessageBox::about(this,
-                       trUtf8("About %1").arg(m_pApp->applicationName()),
-                       trUtf8("<p><b>%1</b> - Editor for Inyoka-based portals"
-                       "<br />Version: %2</p>"
-                       "<p>&copy; 2011-%3, The %4 developers<br />"
-                       "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
-                       "<p>Special thanks to <img src=\"%5\" /> bubi97, <img src=\"%5\" /> Lasall, <img src=\"%5\" /> Shakesbier"
-                       " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a>.</p>"
-                       "<p>This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.</p>")
-                       .arg(m_pApp->applicationName())
-                       .arg(m_pApp->applicationVersion())
-                       .arg(nYear.year())
-                       .arg(m_pApp->applicationName())
-                       .arg(sUserIcon));
 }
 
 // ----------------------------------------------------------------------------

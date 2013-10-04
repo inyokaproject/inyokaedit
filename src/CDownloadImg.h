@@ -61,7 +61,7 @@ class CDownloadImg : public QObject {
     QList<QNetworkReply *> m_listDownloadReplies;
 
     QString m_sAppname;
-    QProgressDialog *m_progessDialog;
+    QProgressDialog *m_pProgessDialog;
     quint16 nProgress;
 
     QUrl m_urlRedirectedTo;

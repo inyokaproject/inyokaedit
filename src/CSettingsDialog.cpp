@@ -57,6 +57,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_sExt = ".ini";
 #else
     m_sExt = ".conf";
+    m_pUi->WindowsUpdateCheck->setEnabled(false);
 #endif
 
     ///////////////////
@@ -75,6 +76,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->reloadPreviewKeyEdit->setText("0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
+    m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
     // Enter Qt keycode automatically in text box
     m_pUi->reloadPreviewKeyEdit->installEventFilter(this);
@@ -171,6 +173,7 @@ void CSettingsDialog::accept() {
     m_pSettings->m_sReloadPreviewKey = tmpReloadPreviewKey;
     m_pSettings->m_nTimedPreview = m_pUi->timedPreviewsEdit->value();
     m_pSettings->m_bSyncScrollbars = m_pUi->scrollbarSyncCheck->isChecked();
+    m_pSettings->m_bWinCheckUpdate = m_pUi->WindowsUpdateCheck->isChecked();
 
     // Font
     m_pSettings->m_sFontFamily = m_pUi->fontComboBox->currentFont().family();

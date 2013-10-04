@@ -130,6 +130,8 @@ void CSettings::readSettings() {
                                          15).toUInt();
     m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
                                            true).toBool();
+    m_bWinCheckUpdate = m_pSettings->value("WindowsCheckForUpdate",
+                                           false).toBool();
 
     QString sStyle = m_pSettings->value("Style", "standard-style").toString();
     QFileInfo fiStylePath(m_pSettings->fileName());
@@ -225,6 +227,9 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
     m_pSettings->setValue("TimedPreview", m_nTimedPreview);
     m_pSettings->setValue("SyncScrollbars", m_bSyncScrollbars);
+#if defined _WIN32
+    m_pSettings->setValue("WindowsCheckForUpdate", m_bWinCheckUpdate);
+#endif
 
     QFileInfo fiStylePath(m_sStyleFile);
     m_pSettings->setValue("Style", fiStylePath.baseName());
@@ -268,6 +273,7 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("UseRegExp", m_bUseRegExp);
     m_pSettings->endGroup();
 
+    // Proxy
     m_pSettings->beginGroup("Proxy");
     m_pSettings->setValue("HostName", m_sProxyHostName);
     if (0 == m_nProxyPort) {
@@ -390,6 +396,16 @@ void CSettings::setRecentFiles(const QStringList &sListNewRecent) {
     for (int i = 0; i < iCnt; i++) {
         m_sListRecentFiles << sListNewRecent[i];
     }
+}
+
+// ----------------------------------------------------
+
+bool CSettings::getWindowsCheckUpdate() const {
+    return m_bWinCheckUpdate;
+}
+
+void CSettings::setWindowsCheckUpdate(const bool bValue) {
+    m_bWinCheckUpdate = bValue;
 }
 
 // ----------------------------------------------------
