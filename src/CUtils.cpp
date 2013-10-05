@@ -81,7 +81,7 @@ void CUtils::setProxy(const QString &sHostName, const quint16 nPort,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CUtils::checkWindowsUpdate() {
+void CUtils::checkWindowsUpdate() {
     QString sDownloadUrl("http://bazaar.launchpad.net/~elthoro/inyokaedit/windows_files/view/head:/LatestVersion.txt");
     qDebug() << "Looking for updates...";
     NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
@@ -136,6 +136,7 @@ void CUtils::replyFinished(QNetworkReply *pReply)   {
 
                     if (msgBox->clickedButton() == noDontAskAgainButton) {
                         qDebug() << "Don't want to download an update and DON'T ASK AGAIN!";
+                        emit this->setWindowsUpdateCheck(false);
                         return;
                     } else if (msgBox->clickedButton() == yesButton) {
                         qDebug() << "Calling download page.";

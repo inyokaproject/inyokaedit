@@ -101,9 +101,7 @@ CInyokaEdit::CInyokaEdit(QApplication *ptrApp,
     m_bReloadPreviewBlocked = false;
 
     if (CUtils::getOnlineState() && m_pSettings->getWindowsCheckUpdate()) {
-        if (m_pUtils->checkWindowsUpdate()) {
-            m_pSettings->setWindowsCheckUpdate(false);
-        }
+        m_pUtils->checkWindowsUpdate();
     }
 }
 
@@ -183,6 +181,8 @@ void CInyokaEdit::createObjects() {
                                           m_pTemplates->getTransTable());
 
     m_pUtils = new CUtils(this, m_pApp);
+    connect(m_pUtils, SIGNAL(setWindowsUpdateCheck(bool)),
+            m_pSettings, SLOT(setWindowsCheckUpdate(bool)));
 
     m_pPreviewTimer = new QTimer(this);
 }

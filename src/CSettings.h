@@ -72,7 +72,6 @@ class CSettings : public QObject {
     bool getSyncScrollbars() const;
     QString getStyleFile() const;
     bool getWindowsCheckUpdate() const;
-    void setWindowsCheckUpdate(const bool bValue);
 
     // Font
     QFont getEditorFont() const;
@@ -116,6 +115,9 @@ class CSettings : public QObject {
 
     // Allow CSettingsDialog to access private members
     friend class CSettingsDialog;
+
+  public slots:
+    void setWindowsCheckUpdate(const bool bValue);
 
   signals:
     void showSettingsDialog();

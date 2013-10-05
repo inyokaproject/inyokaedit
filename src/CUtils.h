@@ -41,7 +41,7 @@ class CUtils : public QObject {
     static bool getOnlineState();
     static void setProxy(const QString &sHostName, const quint16 nPort,
                          const QString &sUser, const QString &sPassword);
-    bool checkWindowsUpdate();
+    void checkWindowsUpdate();
 
   public slots:
     void reportBug();
@@ -49,6 +49,9 @@ class CUtils : public QObject {
 
   private slots:
     void replyFinished(QNetworkReply *pReply);
+
+  signals:
+    void setWindowsUpdateCheck(const bool);
 
   private:
     QWidget *m_pParent;
