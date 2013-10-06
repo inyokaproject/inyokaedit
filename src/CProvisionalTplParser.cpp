@@ -851,7 +851,7 @@ QString CProvisionalTplParser::parseImprovable(const QStringList &sListArgs) {
 QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
     QString sTmpKey("");
     QString sTmpKeyCode("");
-    bool bIsMouseButton;
+    bool bImage;
     QStringList sListTmpKeys;
 
     if (sListArgs.size() > 0) {
@@ -862,7 +862,7 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
     sTmpKey.clear();
 
     for (int i = 0; i < sListTmpKeys.size(); i++) {
-        bIsMouseButton = false;
+        bImage = false;
         // Remove possible spaces before and after string
         sListTmpKeys[i] = sListTmpKeys[i].trimmed();
         sListTmpKeys[i][0] = sListTmpKeys[i][0].toLower();
@@ -987,19 +987,22 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
         } else {
             if (sListTmpKeys[i] == "lmt"
                     || sListTmpKeys[i] == "lmb") {
-                bIsMouseButton = true;
-                sTmpKey += "<img src=\"img/wiki/mouse_left.png\" alt="
-                        "\"linke Maustaste\" class=\"image-default\" />";
+                bImage = true;
+                sTmpKey += "[[Bild(img/wiki/mouse_left.png, alt=\"linke Maustaste\")]]";
             } else if (sListTmpKeys[i] == "rmt"
                        || sListTmpKeys[i] == "rmb") {
-                bIsMouseButton = true;
-                sTmpKey += "<img src=\"img/wiki/mouse_right.png\" alt="
-                        "\"rechte Maustaste\" class=\"image-default\" />";
+                bImage = true;
+                sTmpKey += "[[Bild(img/wiki/mouse_right.png, alt=\"rechte Maustaste\")]]";
             } else if (sListTmpKeys[i] == "mmt"
                        || sListTmpKeys[i] == "mmb") {
-                bIsMouseButton = true;
-                sTmpKey += "<img src=\"img/wiki/mouse_midd.png\" alt="
-                        "\"mittlere Maustaste\" class=\"image-default\" />";
+                bImage = true;
+                sTmpKey += "[[Bild(img/wiki/mouse_midd.png, alt=\"mittlere Maustaste\")]]";
+            } else if (sListTmpKeys[i] == "pfeiltasten") {
+                bImage = true;
+                sTmpKey += "[[Bild(Wiki/Icons/pfeiltasten.png, 66, alt=\"Pfeiltasten\")]]";
+            } else if (sListTmpKeys[i] == "wasd") {
+                bImage = true;
+                sTmpKey += "[[Bild(Wiki/Icons/tasten_wasd.png, 66, alt=\"W A S D Tasten\")]]";
             } else {
                 // Everything else: First character to Upper
                 // first characters had been changed to lower at beginning
@@ -1008,7 +1011,7 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
             }
         }
 
-        if (!bIsMouseButton) {
+        if (!bImage) {
             sTmpKey += "<span class=\"key\">" + sTmpKeyCode + "</span>";
         }
 

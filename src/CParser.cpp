@@ -883,7 +883,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sListTmpImageInfo << sTmpImage.split(",");
 
         sImageUrl = sListTmpImageInfo[0].trimmed();
-        if (sImageUrl.startsWith("Wiki/")) {
+        if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
             sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
         } else if ("" != sImagePath &&
                    QFile(sImagePath + "/" + sImageUrl).exists()) {
