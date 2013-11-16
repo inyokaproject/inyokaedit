@@ -82,19 +82,19 @@
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
-    <element type="ean" url="http://www.onlinegamesdatenbank.de/index.php?section=gameslist&amp;BarCode=" name="EAN" icon="ean.png" />
+    <element type="ean" url="https://startpage.com/do/search?cat=web&amp;language=deutsch&amp;query=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
     <element type="gameolith" url="http://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
     <element type="gnomeprojects" url="http://projects.gnome.org/" name="GNOME projects" icon="gnomeprojects.png" />
     <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
     <element type="google" url="http://www.google.de/search?q=" name="Google" icon="" />
-    <element type="googlevideo" url="http://video.google.de/videoplay?docid=" name="Google Videos" icon="googlevideo" />
     <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
     <element type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
     <element type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
     <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
     <element type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
+    <element type="indiedb" url="http://www.indiedb.com/games/" name="Indie DB Video Games" icon="indiedb.png" />
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
     <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <element type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
@@ -103,7 +103,9 @@
     <element type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
     <element type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
+    <element type="opensuse" url="http://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
     <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <element type="startpage" url="https://startpage.com/do/search?cat=web&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Startpage Suche" icon="startpage.png" />
     <element type="steam" url="http://store.steampowered.com/$PAGE?l=german" name="Steam" icon="steam.png" />
     <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
     <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />

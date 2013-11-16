@@ -55,6 +55,9 @@ Ringtail
 saucy
 Saucy
 Salamander
+trusty
+Trusty
+Tahr
 Ubuntu
 Kubuntu
 Xubuntu

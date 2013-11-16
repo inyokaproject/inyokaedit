@@ -1654,7 +1654,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "saucy") {
+                if (sListArgs[i].toLower() == "trusty") {
+                    sOutput += "[:Trusty_Tahr:Ubuntu 14.04] "
+                               "\"Trusty Tahr\"";
+                } else if (sListArgs[i].toLower() == "saucy") {
                     sOutput += "[:Saucy_Salamander:Ubuntu 13.10] "
                                "\"Saucy Salamander\"";
                 } else if (sListArgs[i].toLower() == "raring") {
