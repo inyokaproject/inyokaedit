@@ -212,7 +212,6 @@ class CInyokaEdit : public QMainWindow {
     CUtils *m_pUtils;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
-    QFrame *m_pWebviewFrame;
 
     // QTabWidget *myTabwidgetDocuments;
     QTabWidget *m_pTabwidgetRawPreview;

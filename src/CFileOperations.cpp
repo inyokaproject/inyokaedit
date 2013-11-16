@@ -126,11 +126,12 @@ bool CFileOperations::saveAs() {
         sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
     }
 
-    // File dialog opens last used folder
-    QString sFileName = QFileDialog::getSaveFileName(m_pParent,
-                                                     trUtf8("Save file"),
-                                                     sCurFileName,
-                                                     m_sFileFilter);
+    QFileDialog saveDialog(m_pParent);
+    saveDialog.setDefaultSuffix(".iny");
+    QString sFileName = saveDialog.getSaveFileName(m_pParent,
+                                                   trUtf8("Save file"),
+                                                   sCurFileName,
+                                                   m_sFileFilter);
     if (sFileName.isEmpty()) {
         return false;
     }

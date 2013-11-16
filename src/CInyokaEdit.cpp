@@ -775,7 +775,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
     // Call parser if iIndex == index of m_pWebview -> Click on tab preview
     // or if iIndex == 999 -> Default parameter value when calling the function
     // e.g. by clicking on button preview
-    if (m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame) == nIndex
+    if (m_pTabwidgetRawPreview->indexOf(m_pWebview) == nIndex
             || 999 == nIndex) {
         // Only disable buttons if preview is not shown alongside editor
         if (false == m_pSettings->getPreviewAlongside()
@@ -1315,7 +1315,7 @@ void CInyokaEdit::displayArticleText(const QString &sArticleText,
 void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
     if (bSuccess) {
         m_pTabwidgetRawPreview->setCurrentIndex(
-                    m_pTabwidgetRawPreview->indexOf(m_pWebviewFrame));
+                    m_pTabwidgetRawPreview->indexOf(m_pWebview));
         // Enable / disbale back button
         if (m_pWebview->history()->canGoBack()) {
             m_pUi->goBackBrowserAct->setEnabled(true);
