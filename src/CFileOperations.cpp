@@ -127,7 +127,7 @@ bool CFileOperations::saveAs() {
     }
 
     QFileDialog saveDialog(m_pParent);
-    saveDialog.setDefaultSuffix(".iny");
+    saveDialog.setDefaultSuffix("iny");
     QString sFileName = saveDialog.getSaveFileName(m_pParent,
                                                    trUtf8("Save file"),
                                                    sCurFileName,
