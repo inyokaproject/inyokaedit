@@ -82,6 +82,7 @@ Apache
 OpenOffice
 Calligra
 KOffice
+KWin
 KWord
 Kexi
 KPlato

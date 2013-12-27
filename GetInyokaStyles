@@ -89,6 +89,7 @@ cd interwiki
 
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/archwiki.png -O archwiki.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/askubuntu.png -O askubuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/atomicgamer.png -O atomicgamer.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bitbucket.png -O bitbucket.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/blogspot.png -O blogspot.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/brainstorm.png -O brainstorm.png
@@ -171,6 +172,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/user.png -O 
 cp user.png user-xmas.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/vimeo.png -O vimeo.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikibooks.png -O wikibooks.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikibooks_en.png -O wikibooks_en.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikimedia.png -O wikimedia.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia.png -O wikipedia.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/wikipedia_en.png -O wikipedia_en.png

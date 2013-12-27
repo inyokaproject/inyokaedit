@@ -41,6 +41,7 @@
 #include "./CFindReplace.h"
 #include "./CDownload.h"
 #include "./CUtils.h"
+// #include "./CUpload.h"
 #include "./CFileOperations.h"
 #include "./CTableTemplate.h"
 
@@ -65,6 +66,7 @@ class CDownload;
 class CFileOperations;
 class CTabelTemplate;
 class CUtils;
+// class CUpload;
 
 #define sVERSION "0.12.0"
 
@@ -207,6 +209,7 @@ class CInyokaEdit : public QMainWindow {
     CParser *m_pParser;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
+    // CUpload *m_pUploadModule;
     CTableTemplate *m_pTableTemplate;
     CFindReplace *m_pFindReplace;
     CUtils *m_pUtils;

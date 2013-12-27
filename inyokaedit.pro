@@ -1,16 +1,16 @@
 #  This file is part of InyokaEdit.
 #  Copyright (C) 2011-2013 The InyokaEdit developers
-#  
+#
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
-#  
+#
 #  InyokaEdit is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#  
+#
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -44,6 +44,7 @@ HEADERS      += src/CInyokaEdit.h \
                 src/CTextEditor.h \
                 src/CSettings.h \
                 src/CSettingsDialog.h \
+                # src/CUpload.h \
                 src/CUtils.h \
                 src/CXmlParser.h
 
@@ -65,6 +66,7 @@ SOURCES      += src/main.cpp \
                 src/CTextEditor.cpp \
                 src/CSettings.cpp \
                 src/CSettingsDialog.cpp \
+                # src/CUpload.cpp \
                 src/CUtils.cpp \
                 src/CXmlParser.cpp
 
@@ -79,11 +81,11 @@ FORMS        += src/CInyokaEdit.ui \
 
 TRANSLATIONS += lang/inyokaedit_de.ts
 
-defineTest(pkgconfigcheck) { 
+defineTest(pkgconfigcheck) {
     isEmpty(2):PKG_STR = "Checking for $${1}..."
     else:PKG_STR = "Checking $$1 is at least version $${2}..."
-    system(pkg-config --exists $$1) { 
-        !isEmpty(2):!system(pkg-config $$1 --atleast-version $$2) { 
+    system(pkg-config --exists $$1) {
+        !isEmpty(2):!system(pkg-config $$1 --atleast-version $$2) {
             message("$$PKG_STR no")
             return(false)
         }
@@ -98,8 +100,8 @@ defineTest(pkgconfigcheck) {
     return(false)
 }
 
-unix { 
-    !DISABLE_SPELLCHECKER:!pkgconfigcheck(hunspell) { 
+unix {
+    !DISABLE_SPELLCHECKER:!pkgconfigcheck(hunspell) {
         CONFIG += DISABLE_SPELLCHECKER
         warning("spellchecker disabled")
     }
@@ -128,13 +130,13 @@ unix {
         target
 }
 
-win32 { 
-    !DISABLE_SPELLCHECKER { 
-        exists(windows_files/hunspell-mingw/bin/libhunspell.dll) { 
+win32 {
+    !DISABLE_SPELLCHECKER {
+        exists(windows_files/hunspell-mingw/bin/libhunspell.dll) {
             LIBS += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
             message("Checking for hunspell... ok")
         }
-        else { 
+        else {
             message("Checking for hunspell... no")
             warning("spellchecker disabled")
             CONFIG += DISABLE_SPELLCHECKER
@@ -143,7 +145,7 @@ win32 {
     RC_FILE = res/inyokaedit.rc
 }
 
-!DISABLE_SPELLCHECKER { 
+!DISABLE_SPELLCHECKER {
     HEADERS += src/CSpellChecker.h \
                src/CSpellCheckDialog.h
     SOURCES += src/CSpellChecker.cpp \

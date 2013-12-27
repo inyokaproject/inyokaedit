@@ -145,6 +145,11 @@ void CInyokaEdit::createObjects() {
 
     m_pSettings->init(m_pTemplates, m_pEditor->document());
 
+    /*
+    m_pUploadModule = new CUpload(this, m_pSettings->getInyokaUrl(),
+                                  m_pEditor->document());
+    */
+
     m_pFileOperations = new CFileOperations(this,
                                             m_pEditor,
                                             m_pSettings,
@@ -396,6 +401,12 @@ void CInyokaEdit::createActions() {
     // Download Inyoka article
     connect(m_pUi->downloadArticleAct, SIGNAL(triggered()),
             this, SLOT(downloadArticle()));
+
+    /*
+    // Upload Inyoka article
+    connect(m_pUi->uploadArticleAct, SIGNAL(triggered()),
+            m_pUploadModule, SLOT(uploadArticle()));
+    */
 
     // ------------------------------------------------------------------------
 

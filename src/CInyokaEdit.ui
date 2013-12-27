@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -149,6 +149,7 @@
    </attribute>
    <addaction name="downloadArticleAct"/>
    <addaction name="previewAct"/>
+   <addaction name="uploadArticleAct"/>
   </widget>
   <widget class="QToolBar" name="inyokaeditorBar">
    <property name="windowTitle">
@@ -391,7 +392,7 @@
   <action name="downloadArticleAct">
    <property name="icon">
     <iconset resource="../res/inyokaedit_resources.qrc">
-     <normaloff>:/images/network-receive.png</normaloff>:/images/network-receive.png</iconset>
+     <normaloff>:/images/download.png</normaloff>:/images/download.png</iconset>
    </property>
    <property name="text">
     <string>Download raw format</string>
@@ -564,6 +565,18 @@
    </property>
    <property name="text">
     <string>Preferences</string>
+   </property>
+  </action>
+  <action name="uploadArticleAct">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../res/inyokaedit_resources.qrc">
+     <normaloff>:/images/upload.png</normaloff>:/images/upload.png</iconset>
+   </property>
+   <property name="text">
+    <string>Upload article</string>
    </property>
   </action>
  </widget>
