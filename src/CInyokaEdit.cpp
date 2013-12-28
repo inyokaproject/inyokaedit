@@ -615,7 +615,7 @@ void CInyokaEdit::createMenus() {
 
     m_pSigMapOpenTemplate = new QSignalMapper(this);
 
-    bool bFirstLoop = true;
+    bool bFirstLoop(true);
     foreach (QDir tplDir, listTplDirs) {
         QFileInfoList fiListFiles = tplDir.entryInfoList(
                     QDir::NoDotAndDotDot | QDir::Files);
@@ -680,7 +680,7 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
     m_pUi->menuBar->insertMenu(pPosition, pMenu);
 
     // No installation: Use app path
-    QString sTmpPath = m_pApp->applicationDirPath() + sIconPath;
+    QString sTmpPath(m_pApp->applicationDirPath() + sIconPath);
     // Path from normal installation
     if (QFile::exists("/usr/share/"
                       + m_pApp->applicationName().toLower()
@@ -710,8 +710,8 @@ void CInyokaEdit::createToolBars() {
     m_pUi->samplesmacrosBar->addWidget(m_pHeadlineBox);
 
     // Headline combo box
-    QString sHeadline = trUtf8("Headline");
-    QString sHeadlineStep = trUtf8("Step");
+    QString sHeadline(trUtf8("Headline"));
+    QString sHeadlineStep(trUtf8("Step"));
     m_pHeadlineBox->addItem(sHeadline);
     m_pHeadlineBox->insertSeparator(1);
     m_pHeadlineBox->addItem(sHeadline + ": " + sHeadlineStep + " 1");
@@ -753,7 +753,10 @@ void CInyokaEdit::createToolBars() {
     connect(m_pUi->reloadBrowserAct, SIGNAL(triggered()),
             m_pWebview, SLOT(reload()));
     connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
-            this, SLOT(clickedLink()));
+            this, SLOT(changedUrl()));
+    m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
+            this, SLOT(clickedLink(QUrl)));
 }
 
 // ----------------------------------------------------------------------------
@@ -809,7 +812,7 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
 
         m_pWebview->history()->clear();  // Clear history (clicked links)
 
-        QString sRetHTML;
+        QString sRetHTML("");
         if (m_pFileOperations->getCurrentFile().isEmpty()
                 || trUtf8("Untitled") == m_pFileOperations->getCurrentFile()) {
             sRetHTML = m_pParser->genOutput("", m_pEditor->document());
@@ -875,8 +878,8 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
 // Headline (combobox in toolbar)
 void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
     if (nSelection > 1) {
-        QString sHeadline = trUtf8("Headline");
-        QString sHeadTag = "";
+        QString sHeadline(trUtf8("Headline"));
+        QString sHeadTag("");
 
         // Generate headline tag
         for (int i = 1; i < nSelection; i++) {
@@ -884,7 +887,7 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
         }
 
         // Some text was selected
-        if (m_pEditor->textCursor().selectedText() != "") {
+        if (!m_pEditor->textCursor().selectedText().isEmpty()) {
             m_pEditor->insertPlainText(sHeadTag + " "
                                        + m_pEditor->textCursor().selectedText()
                                        + " " + sHeadTag);
@@ -894,7 +897,7 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
                                        + sHeadline + " "
                                        + sHeadTag);
 
-            QTextCursor myTextCursor = m_pEditor->textCursor();
+            QTextCursor myTextCursor(m_pEditor->textCursor());
             myTextCursor.setPosition(m_pEditor->textCursor().position() - sHeadline.length() - nSelection);
             myTextCursor.setPosition(m_pEditor->textCursor().position() - nSelection, QTextCursor::KeepAnchor);
             m_pEditor->setTextCursor(myTextCursor);
@@ -912,20 +915,20 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
 // Macro (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
     if (nSelection != 0 && nSelection != 1) {
-        QString sTmp;
-        QString sName = m_pTemplates->getDropTPLs()->getElementUrls()[0][nSelection -2];
+        QString sTmp("");
+        QString sName(m_pTemplates->getDropTPLs()->getElementUrls()[0][nSelection -2]);
         sName.remove(".tpl");
         sName.remove(".macro");
 
         int nIndex = m_pTemplates->getListTplNamesALL().indexOf(sName);
         if (nIndex >= 0) {
-            QString sMacro = m_pTemplates->getListTplMacrosALL()[nIndex];
+            QString sMacro(m_pTemplates->getListTplMacrosALL()[nIndex]);
             sMacro.replace("\\n", "\n");
             int nPlaceholder1 = sMacro.indexOf("%%");
             int nPlaceholder2 = sMacro.lastIndexOf("%%");
 
             // No text selected
-            if (m_pEditor->textCursor().selectedText() == "") {
+            if (m_pEditor->textCursor().selectedText().isEmpty()) {
                 int nCurrentPos = m_pEditor->textCursor().position();
 
                 // Insert macro
@@ -936,7 +939,7 @@ void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
                 if ((nPlaceholder1 != nPlaceholder2)
                         && nPlaceholder1 >= 0
                         && nPlaceholder2 >= 0) {
-                    QTextCursor textCursor = m_pEditor->textCursor();
+                    QTextCursor textCursor(m_pEditor->textCursor());
                     textCursor.setPosition(nCurrentPos + nPlaceholder1);
                     textCursor.setPosition(nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor);
                     m_pEditor->setTextCursor(textCursor);
@@ -968,16 +971,16 @@ void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
 
 // Text format (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
-    bool bSelected = false;
-    QString sInsertedText = "";
+    bool bSelected(false);
+    QString sInsertedText("");
 
     // Some text was selected
-    if (m_pEditor->textCursor().selectedText() != "") {
+    if (!m_pEditor->textCursor().selectedText().isEmpty()) {
         bSelected = true;
     }
 
     if (nSelection != 0 && nSelection != 1) {
-        quint16 nFormatLength = 0;
+        quint16 nFormatLength(0);
 
         // -1 because of separator (considered as "item")
         switch (nSelection-1) {
@@ -1040,7 +1043,7 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
         m_pTextformatBox->setCurrentIndex(0);
 
         if (!bSelected) {
-            QTextCursor myTextCursor = m_pEditor->textCursor();
+            QTextCursor myTextCursor(m_pEditor->textCursor());
             myTextCursor.setPosition(m_pEditor->textCursor().position() -
                                      sInsertedText.length() - nFormatLength);
             myTextCursor.setPosition(m_pEditor->textCursor().position() -
@@ -1056,12 +1059,12 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
 
 // Insert main syntax element from toolbar (bold, italic, ...)
 void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
-    bool bSelected = false;
-    QString sInsertedText = "";
-    quint16 nFormatLength = 0;
+    bool bSelected(false);
+    QString sInsertedText("");
+    quint16 nFormatLength(0);
 
     // Some text was selected
-    if (m_pEditor->textCursor().selectedText() != "") {
+    if (!m_pEditor->textCursor().selectedText().isEmpty()) {
         bSelected = true;
     }
 
@@ -1146,7 +1149,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
     }
 
     if (!bSelected) {
-        QTextCursor myTextCursor = m_pEditor->textCursor();
+        QTextCursor myTextCursor(m_pEditor->textCursor());
         myTextCursor.setPosition(m_pEditor->textCursor().position() -
                                  sInsertedText.length() - nFormatLength);
         myTextCursor.setPosition(m_pEditor->textCursor().position() -
@@ -1163,23 +1166,23 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
 void CInyokaEdit::insertMacro(const QString &sMenuEntry) {
     // Get indices for links
     QStringList slistTmp = sMenuEntry.split(",");
-    QString sTmp;
+    QString sTmp("");
 
     // Check if right number of indices found
     if (slistTmp.size() == 2) {
-        QString sName = m_pTemplates->getTPLs()->getElementUrls()[slistTmp[0].toInt()][slistTmp[1].toInt()];
+        QString sName(m_pTemplates->getTPLs()->getElementUrls()[slistTmp[0].toInt()][slistTmp[1].toInt()]);
         sName.remove(".tpl");
         sName.remove(".macro");
 
         int nIndex = m_pTemplates->getListTplNamesALL().indexOf(sName);
         if (nIndex >= 0) {
-            QString sMacro = m_pTemplates->getListTplMacrosALL()[nIndex];
+            QString sMacro(m_pTemplates->getListTplMacrosALL()[nIndex]);
             sMacro.replace("\\n", "\n");
-            int nPlaceholder1 = sMacro.indexOf("%%");
-            int nPlaceholder2 = sMacro.lastIndexOf("%%");
+            int nPlaceholder1(sMacro.indexOf("%%"));
+            int nPlaceholder2(sMacro.lastIndexOf("%%"));
 
             // No text selected
-            if (m_pEditor->textCursor().selectedText() == "") {
+            if (m_pEditor->textCursor().selectedText().isEmpty()) {
                 int nCurrentPos =  m_pEditor->textCursor().position();
 
                 // Insert macro
@@ -1190,7 +1193,7 @@ void CInyokaEdit::insertMacro(const QString &sMenuEntry) {
                 if ((nPlaceholder1 != nPlaceholder2)
                         && nPlaceholder1 >= 0
                         && nPlaceholder2 >= 0) {
-                    QTextCursor textCursor = m_pEditor->textCursor();
+                    QTextCursor textCursor(m_pEditor->textCursor());
                     textCursor.setPosition(nCurrentPos + nPlaceholder1);
                     textCursor.setPosition(nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor);
                     m_pEditor->setTextCursor(textCursor);
@@ -1234,16 +1237,16 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
     // Check if right number of indices found
     if (sTmp.size() == 2) {
         // No text selected
-        if (m_pEditor->textCursor().selectedText() == "") {
-            QString sSitename = trUtf8("Sitename");
-            QString sText = trUtf8("Text");
+        if (m_pEditor->textCursor().selectedText().isEmpty()) {
+            QString sSitename(trUtf8("Sitename"));
+            QString sText(trUtf8("Text"));
 
             // Insert InterWiki-Link
             m_pEditor->insertPlainText("[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
                                        + ":" + sSitename + ":" + sText + "]");
 
             // Select site name in InterWiki-Link
-            QTextCursor textCursor = m_pEditor->textCursor();
+            QTextCursor textCursor(m_pEditor->textCursor());
             textCursor.setPosition(m_pEditor->textCursor().position() - sSitename.length() - sText.length() - 2);
             textCursor.setPosition(m_pEditor->textCursor().position() - sText.length() - 2, QTextCursor::KeepAnchor);
             m_pEditor->setTextCursor(textCursor);
@@ -1270,7 +1273,7 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
 // Insert code block
 void CInyokaEdit::insertCodeblock(const QString &sCodeStyle) {
     // No text selected
-    if (m_pEditor->textCursor().selectedText() == "") {
+    if (m_pEditor->textCursor().selectedText().isEmpty()) {
         QString sCode("Code");
 
         // Insert code block
@@ -1280,7 +1283,7 @@ void CInyokaEdit::insertCodeblock(const QString &sCodeStyle) {
                                    + "\n}}}\n");
 
         // Select the word "code"
-        QTextCursor textCursor = m_pEditor->textCursor();
+        QTextCursor textCursor(m_pEditor->textCursor());
         textCursor.setPosition(m_pEditor->textCursor().position() -
                                sCode.length() - 5);
         textCursor.setPosition(m_pEditor->textCursor().position() -
@@ -1351,11 +1354,20 @@ void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
     }
 }
 
-// A link on preview page was clicked
-void CInyokaEdit::clickedLink() {
+void CInyokaEdit::changedUrl() {
     // Disable forward / backward button
     m_pUi->goForwardBrowserAct->setEnabled(false);
     m_pUi->goBackBrowserAct->setEnabled(false);
+}
+
+void CInyokaEdit::clickedLink(QUrl newUrl) {
+    if (!newUrl.toString().endsWith(m_sPreviewFile)
+            && newUrl.isLocalFile()) {
+        qDebug() << "Trying to open file:" << newUrl;
+        QDesktopServices::openUrl(newUrl);
+    } else {
+        m_pWebview->load(newUrl);
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -1394,8 +1406,8 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
 
         // Bug fix for LP: #922808
         Qt::KeyboardModifiers keyMod = QApplication::keyboardModifiers();
-        bool isSHIFT = keyMod.testFlag(Qt::ShiftModifier);
-        bool isCTRL = keyMod.testFlag(Qt::ControlModifier);
+        bool isSHIFT(keyMod.testFlag(Qt::ShiftModifier));
+        bool isCTRL(keyMod.testFlag(Qt::ControlModifier));
 
         if (keyEvent->key() == Qt::Key_Right
                 && isSHIFT && isCTRL) {
@@ -1431,7 +1443,7 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
         // CTRL + SHIFT + T (only for debugging)
         else if (keyEvent->key() == Qt::Key_T
                  && isSHIFT && isCTRL) {
-            static bool bToggle = false;
+            static bool bToggle(false);
             static QTextDocument docBackup("");
 
             if (!bToggle) {
@@ -1502,8 +1514,8 @@ void CInyokaEdit::checkSpelling() {
         return;
     }
 
-    QString sUserDict= m_UserDataDir.absolutePath() + "/userDict_"
-            + m_pSettings->getSpellCheckerLanguage() + ".txt";
+    QString sUserDict(m_UserDataDir.absolutePath() + "/userDict_"
+                      + m_pSettings->getSpellCheckerLanguage() + ".txt");
     if (!QFile::exists(sUserDict)) {
         QFile userDictFile(sUserDict);
         if (userDictFile.open(QIODevice::WriteOnly)) {
@@ -1651,7 +1663,7 @@ void CInyokaEdit::showSyntaxOverview() {
     pTextDocument->setPlainText(in.readAll());
     OverviewFile.close();
 
-    QString sRet = m_pParser->genOutput("", pTextDocument);
+    QString sRet(m_pParser->genOutput("", pTextDocument));
     sRet.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
     sRet.remove(QRegExp("<p class=\"meta\">.*</p>"));
     sRet.replace("</style>", "#page table{margin:0px;}</style>");

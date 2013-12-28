@@ -31,11 +31,15 @@ CParseLinks::CParseLinks(const QString &sUrlToWiki,
                          const QList<QStringList> sListIWiki,
                          const QList<QStringList> sListIWikiUrl,
                          const bool bCheckLinks,
-                         const QString &sTransAnchor)
+                         const QString &sTransAnchor,
+                         const QString &sTransAttach,
+                         const QString &sTmpFilePath)
     : m_sWikiUrl(sUrlToWiki),
       m_bIsOnline(false),
       m_bCheckLinks(bCheckLinks),
       m_sTransAnchor(sTransAnchor),
+      m_sTransAttach(sTransAttach),
+      m_sTmpFilePath(sTmpFilePath),
       m_NWreply(NULL) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
@@ -69,6 +73,7 @@ void CParseLinks::startParsing(QTextDocument *pRawDoc) {
     this->replaceAnchorLinks(pRawDoc);
     this->replaceKnowledgeBoxLinks(pRawDoc);
     this->createAnchor(pRawDoc);
+    this->replaceAttachments(pRawDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -281,7 +286,7 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
                         QString sTmpDescr(sListLink[1]);
 
                         // With description
-                        if (sListLink[2] != "") {
+                        if (!sListLink[2].isEmpty()) {
                             sTmpDescr = sListLink[2];
                             // Append description with ":" if any exist
                             for (int i = 3; i < sListLink.size(); i++) {
@@ -437,4 +442,32 @@ void CParseLinks::createAnchor(QTextDocument *pRawDoc) {
 
     // Replace myRawDoc with document with HTML links
     pRawDoc->setPlainText(sMyDoc);
+}
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CParseLinks::replaceAttachments(QTextDocument *p_RawDoc) {
+    QString sDoc(p_RawDoc->toPlainText());
+    QString sRegExp("\\[\\[" + m_sTransAttach + "\\(.*\\)\\]\\]");
+    QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
+    findMacro.setMinimal(true);
+    QString sMacro;
+    int nPos = 0;
+
+    while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
+        sMacro = findMacro.cap(0);
+        sMacro.remove("[[" + m_sTransAttach + "(");
+        sMacro.remove(")]]");
+        sMacro.remove('"');
+
+        sMacro = "<a href=\"" + m_sTmpFilePath + "/" + sMacro +
+                "\" class=\"crosslink\">" + sMacro + "</a>";
+
+        sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+        // Go on with new start position
+        nPos += sMacro.length();
+    }
+
+    // Replace p_rawDoc with adapted document
+    p_RawDoc->setPlainText(sDoc);
 }

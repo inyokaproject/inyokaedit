@@ -45,8 +45,8 @@ CSpellChecker::CSpellChecker(const QString &sDictionaryPath,
       m_sAppPath(sAppPath){
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QString sDictFile = sDictionaryPath + ".dic";
-    QString sAffixFile = sDictionaryPath + ".aff";
+    QString sDictFile(sDictionaryPath + ".dic");
+    QString sAffixFile(sDictionaryPath + ".aff");
     QByteArray dictFilePathBA = sDictFile.toLocal8Bit();
     QByteArray affixFilePathBA = sAffixFile.toLocal8Bit();
     m_pHunspell = new Hunspell(affixFilePathBA.constData(),
@@ -114,7 +114,7 @@ void CSpellChecker::start(CTextEditor *pEditor) {
     // highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
 
     // Save the position of the current cursor
-    QTextCursor oldCursor = pEditor->textCursor();
+    QTextCursor oldCursor(pEditor->textCursor());
 
     // Create a new cursor to walk through the text
     QTextCursor cursor(pEditor->document());
@@ -125,7 +125,7 @@ void CSpellChecker::start(CTextEditor *pEditor) {
     while (!cursor.atEnd()) {
         QCoreApplication::processEvents();
         cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
-        QString sWord = cursor.selectedText();
+        QString sWord(cursor.selectedText());
 
         // Workaround for better recognition of words punctuation etc.
         // does not belong to words

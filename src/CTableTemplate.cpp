@@ -80,7 +80,7 @@ void CTableTemplate::newTable() {
     m_pUi->colsNum->setValue(2);
     m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
 
-    m_sTableString = "";
+    m_sTableString.clear();
     m_pUi->previewBox->setHtml("");
     this->show();
     this->exec();
@@ -95,7 +95,7 @@ void CTableTemplate::preview() {
     this->generateTable();
     m_pTextDocument->setPlainText(m_sTableString);
 
-    QString sRetHtml = m_pParser->genOutput("", m_pTextDocument);
+    QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
     // Remove for preview useless elements
     sRetHtml.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
     sRetHtml.remove(QRegExp("<p class=\"meta\">.*</p>"));

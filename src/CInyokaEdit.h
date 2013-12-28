@@ -156,7 +156,8 @@ class CInyokaEdit : public QMainWindow {
     void previewInyokaPage(const int nIndex = 999);
     void loadPreviewFinished(const bool bSuccess);
 
-    void clickedLink();
+    void changedUrl();
+    void clickedLink(QUrl newUrl);
 
     void openFile();
 

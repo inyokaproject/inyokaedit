@@ -41,7 +41,7 @@
 CUtils::CUtils(QWidget *pParent, QApplication *pApp)
     : m_pParent(pParent),
       m_pApp(pApp) {
-    qDebug() << "Calling" << Q_FUNC_INFO;    
+    qDebug() << "Calling" << Q_FUNC_INFO;
     NwManager = new QNetworkAccessManager(this);
     connect(NwManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
@@ -65,12 +65,12 @@ bool CUtils::getOnlineState() {
 
 void CUtils::setProxy(const QString &sHostName, const quint16 nPort,
                       const QString &sUser, const QString &sPassword) {
-    if ("" != sHostName && 0 != nPort) {
+    if (!sHostName.isEmpty() && 0 != nPort) {
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(sHostName);
         proxy.setPort(nPort);
-        if ("" != sUser && "" != sPassword) {
+        if (!sUser.isEmpty() && !sPassword.isEmpty()) {
             proxy.setUser(sUser);
             proxy.setPassword(sPassword);
         }

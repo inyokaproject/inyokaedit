@@ -120,7 +120,7 @@ bool CFileOperations::save() {
 
 bool CFileOperations::saveAs() {
     QString sCurFileName("");
-    if ("" != m_sCurFile) {
+    if (!m_sCurFile.isEmpty()) {
         sCurFileName = m_sCurFile;
     } else {
         sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
@@ -150,7 +150,7 @@ bool CFileOperations::maybeSave() {
     if (m_pEditor->document()->isModified()) {
         QMessageBox::StandardButton ret;
         QString sTempCurFileName;
-        if ("" == m_sCurFile) {
+        if (m_sCurFile.isEmpty()) {
             sTempCurFileName = trUtf8("Untitled", "No file name set");
         } else {
             QFileInfo tempCurFile(m_sCurFile);

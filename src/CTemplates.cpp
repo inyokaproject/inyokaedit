@@ -92,8 +92,8 @@ void CTemplates::initTemplates() {
             if (TplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
                 bFoundMacro = false;
                 bFoundTpl = false;
-                sTempTplText = "";
-                sTempMacro = "";
+                sTempTplText.clear();
+                sTempMacro.clear();
                 QTextStream in(&TplFile);
 
                 while (!in.atEnd()) {
@@ -147,7 +147,7 @@ void CTemplates::initTemplates() {
     m_sListTplMacrosALL.append(m_sListTplMacrosINY);
     m_sListTplNamesALL.append(m_sListTplNamesINY);
 
-    if (0 == m_sListTplNamesINY.size()) {
+    if (m_sListTplNamesINY.isEmpty()) {
         QMessageBox::warning(0, "Warning",
                              "Could not find any markup template files!");
         qWarning() << "Could not find any template files in:"
@@ -227,7 +227,7 @@ void CTemplates::initImgMap(const QString &sFilename,
         QString tmpLine;
         while (!in.atEnd()) {
             tmpLine = in.readLine().trimmed();
-            if (!tmpLine.startsWith("#") && "" != tmpLine.trimmed()) {
+            if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
                 sListTmpLine = tmpLine.split("=");
                 if (2 == sListTmpLine.size()) {
                     sListElements << sListTmpLine[0].trimmed();
@@ -273,7 +273,7 @@ void CTemplates::initTextformats(const QString &sFilename) {
         QString tmpLine;
         while (!in.atEnd()) {
             tmpLine = in.readLine().trimmed();
-            if (!tmpLine.startsWith("#") && "" != tmpLine.trimmed()) {
+            if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
                 sListInput << tmpLine.trimmed();
             }
         }

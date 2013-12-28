@@ -49,7 +49,9 @@ CParser::CParser(const QDir &tmpFileOutputDir,
                                     m_pTemplates->getIWLs()->getElementTypes(),
                                     m_pTemplates->getIWLs()->getElementUrls(),
                                     bCheckLinks,
-                                    m_pTemplates->getTransAnchor());
+                                    m_pTemplates->getTransAnchor(),
+                                    m_pTemplates->getTransAttachment(),
+                                    m_tmpImgDir.absolutePath());
 
     m_pMapParser = new CParseImgMap();
 }
@@ -82,7 +84,7 @@ QString CParser::genOutput(const QString &sActFile,
     QString sWikitags("");
 
     // Replace macros with Inyoka markup templates
-    // this->replaceTemplates( m_pRawText );
+    // this->replaceTemplates(m_pRawText);
 
     this->removeComments(m_pRawText);
 
@@ -127,7 +129,7 @@ QString CParser::genOutput(const QString &sActFile,
 
     // File name
     QString sFilename;
-    if ("" == m_sCurrentFile) {
+    if (m_sCurrentFile.isEmpty()) {
         sFilename = trUtf8("Untitled", "No file name set");
     } else {
         QFileInfo fi(m_sCurrentFile);
@@ -302,7 +304,7 @@ void CParser::replaceCodeblocks(QTextDocument *p_rawDoc) {
 
                 // Syntax highlighting (with pygments if available)
                 if (sListLines.size() > 0) {
-                    if ("" != sListLines[0].trimmed()) {
+                    if (!sListLines[0].trimmed().isEmpty()) {
                         sCode = this->highlightCode(sListLines[0], sCode);
                     }
                 }
@@ -473,7 +475,7 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
-                    if (sCap == "") {
+                    if (sCap.isEmpty()) {
                         sDoc.replace(myindex, iLength, sListHtmlStart[i]);
                     } else {
                         sDoc.replace(myindex, iLength,
@@ -500,7 +502,7 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
-                    if (sCap == "") {
+                    if (sCap.isEmpty()) {
                         sDoc.replace(myindex, iLength, sListHtmlEnd[i]);
                     } else {
                         sDoc.replace(myindex, iLength,
@@ -539,7 +541,7 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
-                    if (sCap == "") {
+                    if (sCap.isEmpty()) {
                         if (bFoundStart) {
                             sDoc.replace(myindex, iLength, sListHtmlStart[i]);
                         } else {
@@ -856,7 +858,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     // QString sImageAlt("");
 
     QString sImagePath("");
-    if ("" != m_sCurrentFile) {
+    if (!m_sCurrentFile.isEmpty()) {
         QFileInfo fiArticleFile(m_sCurrentFile);
         sImagePath = fiArticleFile.absolutePath();
     }
@@ -873,7 +875,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sTmpImage.remove("[[" + m_pTemplates->getTransImage() + "(");
         sTmpImage.remove(")]]");
 
-        sImageAlign = "";
+        sImageAlign.clear();
         iImgHeight = 0;
         iImgWidth = 0;
         tmpH = 0;
@@ -885,7 +887,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sImageUrl = sListTmpImageInfo[0].trimmed();
         if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
             sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
-        } else if ("" != sImagePath &&
+        } else if (!sImagePath.isEmpty() &&
                    QFile(sImagePath + "/" + sImageUrl).exists()) {
             sImageUrl = sImagePath + "/" + sImageUrl;
         } else {
@@ -1090,13 +1092,13 @@ void CParser::replaceTables(QTextDocument *p_rawDoc) {
             // Line completed
             if (block.text().trimmed().endsWith("||")) {
                 sListLines << sLine.trimmed();
-                sLine = "";
+                sLine.clear();
 
                 // Table finished
                 if (!(block.next().text().trimmed().startsWith("||"))) {
                     sDoc += this->createTable(sListLines);
                     sListLines.clear();
-                    sLine = "";
+                    sLine.clear();
                     bTable = false;
                 }
             }

@@ -174,7 +174,7 @@ void CSettings::readSettings() {
     for (int i = 0; i < m_nMaxLastOpenedFiles; i++) {
         sTmpFile = m_pSettings->value("File_" + QString::number(i)
                                       , "").toString();
-        if (sTmpFile != "") {
+        if (!sTmpFile.isEmpty()) {
             m_sListRecentFiles << sTmpFile;
         }
     }

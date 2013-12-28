@@ -49,7 +49,9 @@ class CParseLinks : public QObject {
                 const QList<QStringList> sListIWiki,
                 const QList<QStringList> sListIWikiUrl,
                 const bool bCheckLinks,
-                const QString &sTransAnchor);
+                const QString &sTransAnchor,
+                const QString &sTransAttach,
+                const QString &sTmpFilePath);
 
     void startParsing(QTextDocument *pRawDoc);
 
@@ -63,6 +65,7 @@ class CParseLinks : public QObject {
     void replaceAnchorLinks(QTextDocument *pRawDoc);
     void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
     void createAnchor(QTextDocument *pRawDoc);
+    void replaceAttachments(QTextDocument *p_RawDoc);
 
     QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
@@ -71,6 +74,8 @@ class CParseLinks : public QObject {
     bool m_bIsOnline;
     bool m_bCheckLinks;
     QString m_sTransAnchor;
+    QString m_sTransAttach;
+    QString m_sTmpFilePath;
     QString m_sLinkClassAddition;
     QNetworkAccessManager *m_NWAManager;
     QNetworkReply *m_NWreply;

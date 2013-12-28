@@ -116,7 +116,7 @@ void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
 
         // Basename has to be set before possible redirection
         // (redirected file could have other basename)
-        if ("" == m_sListBasename[nIndex]) {
+        if (m_sListBasename[nIndex].isEmpty()) {
             m_sListBasename[nIndex] = url.toString().mid(
                         url.toString().lastIndexOf("/") + 1);
         }

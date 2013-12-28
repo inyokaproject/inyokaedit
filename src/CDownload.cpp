@@ -207,7 +207,7 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
             m_pReply->deleteLater();
 
             // Site does not exist etc.
-            if ("" == sTmpArticle) {
+            if (sTmpArticle.isEmpty()) {
                 QMessageBox::information(m_pParent, m_sAppName,
                                          trUtf8("Could not download the article."));
                 return;
@@ -222,7 +222,7 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
             QStringList sListTmp, sListMetadata, sListSaveFolder;
 
             // Site does not exist etc.
-            if ("" == sTmpArticle) {
+            if (sTmpArticle.isEmpty()) {
                 QMessageBox::information(m_pParent, m_sAppName,
                                          trUtf8("Could not find meta data."));
                 return;

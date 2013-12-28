@@ -37,7 +37,7 @@ CParseImgMap::CParseImgMap() {
 void CParseImgMap::startParsing(QTextDocument *pRawDoc,
                                 QStringList sListElements,
                                 QStringList sListImages) {
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sMyDoc(pRawDoc->toPlainText());
 
     for (int i = 0; i < sListElements.size(); i++) {
         if (0 == i && "error" == sListElements[0].toLower()) {

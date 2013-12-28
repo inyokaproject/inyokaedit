@@ -623,7 +623,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
     bool bContinue(false);
 
     QString sImagePath("");
-    if ("" != m_sCurrentFile) {
+    if (!m_sCurrentFile.isEmpty()) {
         QFileInfo fiArticleFile(m_sCurrentFile);
         sImagePath = fiArticleFile.absolutePath();
     }
@@ -642,7 +642,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
     }
 
 
-    if ("" == sImageCollAlign) {  // With word wrap
+    if (sImageCollAlign.isEmpty()) {  // With word wrap
         sOutput = "<div style=\"clear: both\">\n<div "
                 "class=\"contents\"> </div>\n</div>";
     } else {  // In continuous text (sImageCollAlign = left | rigth)
@@ -667,7 +667,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
         sImageUrl = sListArgs[i];
         if (sImageUrl.startsWith("Wiki/")) {
             sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
-        } else if ("" != sImagePath &&
+        } else if (!sImagePath.isEmpty() &&
                    QFile(sImagePath + "/" + sImageUrl).exists()) {
             sImageUrl = sImagePath + "/" + sImageUrl;
         } else {
@@ -677,12 +677,12 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
         iImgHeight = QImage(sImageUrl).height();
         iImgWidth = static_cast<double>(QImage(sImageUrl).width()) / (iImgHeight / sImageCollHeight.toDouble());
 
-        if ("" == sImageCollAlign) {  // With word wrap
+        if (sImageCollAlign.isEmpty()) {  // With word wrap
             if ((i+1) < sListArgs.size()) {
                 sDescription = sListArgs[i+1];
                 bContinue = true;
             } else {
-                sDescription = "";
+                sDescription.clear();
             }
 
             sOutput += "<table style=\"float: left; margin: 10px 5px; border: none\">\n<tbody>\n<tr>\n"
@@ -701,7 +701,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
         }
     }
 
-    if ("" == sImageCollAlign) {  // With word wrap
+    if (sImageCollAlign.isEmpty()) {  // With word wrap
         sOutput += "<div style=\"clear: both\">\n<div class=\"contents\"> "
                 "</div>\n</div>";
     } else {  // In continuous text (sImageCollAlign = left | rigth)
@@ -724,7 +724,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
                 sDescription = sListArgs[i+1];
                 bContinue = true;
             } else {
-                sDescription = "";
+                sDescription.clear();
             }
 
             sOutput += "<td style=\"text-align: center; border-width: "
@@ -750,7 +750,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
     double iImgHeight, iImgWidth;
 
     QString sImagePath("");
-    if ("" != m_sCurrentFile) {
+    if (!m_sCurrentFile.isEmpty()) {
         QFileInfo fiArticleFile(m_sCurrentFile);
         sImagePath = fiArticleFile.absolutePath();
     }
@@ -758,7 +758,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
     sImageUrl = sListArgs[0].trimmed();
     if (sImageUrl.startsWith("Wiki/")) {
         sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
-    } else if ("" != sImagePath &&
+    } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
         sImageUrl = sImagePath + "/" + sImageUrl;
     } else {
@@ -787,7 +787,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
     }
 
     iImgWidth = QImage(sImageUrl).width();
-    if (sImageWidth != "") {
+    if (!sImageWidth.isEmpty()) {
         iImgHeight = static_cast<double>(QImage(sImageUrl).height()) / (iImgWidth / sImageWidth.toDouble());
     } else {
         // Default
@@ -799,7 +799,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
             + "; clear: both; border: none\">\n<tbody>\n";
 
     // No style info -> default
-    if (sImageStyle == "") {
+    if (sImageStyle.isEmpty()) {
         sOutput += "<tr class=\"titel\">\n";
     } else {
         sOutput += "<tr class=\"" + sImageStyle + "-titel\">\n";
@@ -813,7 +813,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
                + "</td>\n</tr>\n";
 
     // No style info -> default
-    if (sImageStyle == "") {
+    if (sImageStyle.isEmpty()) {
         sOutput += "<tr class=\"normal\">\n";
     } else {
         sOutput += "<tr class=\"" + sImageStyle + "-kopf\">\n";
@@ -1364,10 +1364,10 @@ QString CProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
                         + sListList[i][0] + "</td>\n</tr>";
             }
         } else {
-            sImage = "";
-            sTitle = "";
-            sText = "";
-            sLinks = "";
+            sImage.clear();
+            sTitle.clear();
+            sText.clear();
+            sLinks.clear();
             for (int k = 0; k < sListList[i].size(); k++) {
                 if (0 == k) {
                     sImage = sListList[i][k];
@@ -1711,13 +1711,13 @@ QString CProvisionalTplParser::parseUnderConstruction(const QStringList &sListAr
     QStringList sArgs = sListArgs;
     QString sOutput("");
     // Get and check date
-    QString sDate;
+    QString sDate("");
     if (sArgs.size() >= 1) {
         // Extract date
         QStringList sListDate = sArgs[0].split(".");
         // Wrong date format
         if (3 != sListDate.size()) {
-            sDate = "";
+            sDate.clear();
         } else {  // Correct number of date elements
             // Wrong date
             if (sListDate[0].toInt() <= 0
@@ -1725,7 +1725,7 @@ QString CProvisionalTplParser::parseUnderConstruction(const QStringList &sListAr
                     || sListDate[1].toInt() <= 0
                     || sListDate[1].toInt() > 12
                     || sListDate[2].toInt() <= 0) {
-                sDate = "";
+                sDate.clear();
             } else {  // Correct date
                 // Add 0 to date if < 10
                 for (int i = 0; i < sListDate.size(); i++) {
@@ -1740,7 +1740,7 @@ QString CProvisionalTplParser::parseUnderConstruction(const QStringList &sListAr
 
         QString sUsers("");
         int iCntUser;
-        if (sDate == "") {
+        if (sDate.isEmpty()) {
             // Entry with index 0 = first user (no correct date given)
             iCntUser = 0;
         } else {
@@ -1761,7 +1761,7 @@ QString CProvisionalTplParser::parseUnderConstruction(const QStringList &sListAr
         sOutput = QString::fromUtf8("Dieser Artikel wird momentan von %1 "
                                     "erstellt.").arg(sUsers);
 
-        if (sDate != "") {
+        if (!sDate.isEmpty()) {
             sOutput += " "
                     + QString::fromUtf8("Als Fertigstellungsdatum wurde der %1 "
                                         "angegeben.").arg(sDate);
@@ -1868,7 +1868,7 @@ QString CProvisionalTplParser::insertBox(const QString &sClass,
     sReturn += "<div class=\"contents\">\n";
     sReturn += "<p>" + sContents + "</p>\n";
     // Remark available
-    if (sRemark != "" && sRemark != " ") {
+    if (!sRemark.isEmpty() && sRemark != " ") {
         sReturn += QString::fromUtf8("<hr />\n<p><strong>Anmerkung:</strong> ")
                 + sRemark + "</p>\n";
     }

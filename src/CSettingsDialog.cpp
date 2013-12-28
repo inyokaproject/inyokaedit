@@ -300,7 +300,7 @@ void CSettingsDialog::clickedStyleCell(int nRow, int nCol) {
         QColor newColor = colorDialog.getColor(initialColor);
         if (newColor.isValid()) {
             m_pUi->styleTable->item(nRow, nCol)->setText(newColor.name());
-        } else if ("" == newColor.name()) {
+        } else if (newColor.name().isEmpty()) {
             m_pUi->styleTable->item(nRow, nCol)->setText("");
         }
     }
