@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2013 The InyokaEdit developers
+ * Copyright (C) 2011-2014 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -43,7 +43,7 @@ class CParseTemplates {
     void startParsing(QTextDocument *pRawDoc,
                       const QString &sCurrentFile);
 
-  private:  
+  private:
     CProvisionalTplParser *m_pProvTplTarser;
     QString m_sTransTpl;
     QStringList m_sListTplNames;
