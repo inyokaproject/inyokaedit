@@ -1302,14 +1302,14 @@ void CParser::replaceDates(QTextDocument *p_rawDoc) {
         datetime = QDateTime::fromString(sMacro, Qt::ISODate);
         bConversionOk = true;
         // Otherwise handle input as unix timestamp
-        if (datetime.toString(Qt::SystemLocaleShortDate).isEmpty()) {
+        if (!datetime.isValid()) {
             datetime.setTime_t(sMacro.toUInt(&bConversionOk));
         }
 
-        if (bConversionOk) {
+        if (bConversionOk && datetime.isValid()) {
             sMacro = datetime.toString(Qt::SystemLocaleShortDate);
         } else {
-            sMacro = trUtf8("Ungültiges Datum");
+            sMacro = trUtf8("Invalid date");
         }
 
         sDoc.replace(nPos, findMacro.matchedLength(), sMacro);

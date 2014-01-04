@@ -81,54 +81,54 @@ Möchten Sie die Ressourcen jetzt herunterladen?</translation>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="131"/>
+        <location filename="../src/CFileOperations.cpp" line="132"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="153"/>
+        <location filename="../src/CFileOperations.cpp" line="154"/>
         <source>Untitled</source>
         <comment>No file name set</comment>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="160"/>
+        <location filename="../src/CFileOperations.cpp" line="161"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="191"/>
+        <location filename="../src/CFileOperations.cpp" line="192"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="230"/>
+        <location filename="../src/CFileOperations.cpp" line="231"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="277"/>
+        <location filename="../src/CFileOperations.cpp" line="278"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="278"/>
+        <location filename="../src/CFileOperations.cpp" line="279"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschau Datei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="328"/>
+        <location filename="../src/CFileOperations.cpp" line="329"/>
         <source>Printing not supported under Windows, yet.</source>
         <translation>Druckerunterstützung unter Windows bisher nicht verfügbar.</translation>
     </message>
     <message>
-        <location filename="../src/CFileOperations.cpp" line="349"/>
+        <location filename="../src/CFileOperations.cpp" line="350"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -225,17 +225,17 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CInyokaEdit</name>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="250"/>
+        <location filename="../src/CInyokaEdit.cpp" line="255"/>
         <source>Raw format</source>
         <translation>Rohformat</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="252"/>
+        <location filename="../src/CInyokaEdit.cpp" line="257"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="303"/>
+        <location filename="../src/CInyokaEdit.cpp" line="308"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
@@ -285,441 +285,446 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Vorschau / Download</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="155"/>
+        <location filename="../src/CInyokaEdit.ui" line="156"/>
         <source>Inyoka editor</source>
         <translation>Inyoka editor</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="172"/>
+        <location filename="../src/CInyokaEdit.ui" line="173"/>
         <source>Samples and macros</source>
         <translation>Vorlagen und Makros</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="183"/>
+        <location filename="../src/CInyokaEdit.ui" line="184"/>
         <source>Browser toolbar</source>
         <translation>Browser Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="204"/>
+        <location filename="../src/CInyokaEdit.ui" line="205"/>
         <source>Report a bug - For this a launchpad account is needed!</source>
         <translation>Fehler melden - Hierzu wird ein Launchpad-Account benötigt!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="216"/>
+        <location filename="../src/CInyokaEdit.ui" line="217"/>
         <source>Shows the about box of this application</source>
         <translation>Infobox zu dieser Anwendung anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="225"/>
+        <location filename="../src/CInyokaEdit.ui" line="226"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="228"/>
+        <location filename="../src/CInyokaEdit.ui" line="229"/>
         <source>Create a new file</source>
         <translation>Eine neue Datei erstellen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="237"/>
+        <location filename="../src/CInyokaEdit.ui" line="238"/>
         <source>&amp;Open...</source>
         <translation>&amp;Öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="240"/>
+        <location filename="../src/CInyokaEdit.ui" line="241"/>
         <source>Open a file</source>
         <translation>Eine Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="249"/>
+        <location filename="../src/CInyokaEdit.ui" line="250"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="252"/>
+        <location filename="../src/CInyokaEdit.ui" line="253"/>
         <source>Save current document</source>
         <translation>Das aktuelle Dokument speichern</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="257"/>
+        <location filename="../src/CInyokaEdit.ui" line="258"/>
         <source>Save as...</source>
         <translation>Speichern unter...</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="260"/>
+        <location filename="../src/CInyokaEdit.ui" line="261"/>
         <source>Save current document under a new name</source>
         <translation>Das aktuelle Dokment unter neuem Namen speichern</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="265"/>
+        <location filename="../src/CInyokaEdit.ui" line="266"/>
         <source>&amp;Quit</source>
         <translation>B&amp;eenden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="268"/>
+        <location filename="../src/CInyokaEdit.ui" line="269"/>
         <source>Quit the application</source>
         <translation>Das Programm beenden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="277"/>
+        <location filename="../src/CInyokaEdit.ui" line="278"/>
         <source>Undo</source>
         <translation>Rückgängig</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="280"/>
+        <location filename="../src/CInyokaEdit.ui" line="281"/>
         <source>Undo changes</source>
         <translation>Änderungen rückgängig machen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="289"/>
+        <location filename="../src/CInyokaEdit.ui" line="290"/>
         <source>Redo</source>
         <translation>Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="292"/>
+        <location filename="../src/CInyokaEdit.ui" line="293"/>
         <source>Redo changes</source>
         <translation>Änderungen wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="301"/>
+        <location filename="../src/CInyokaEdit.ui" line="302"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="304"/>
+        <location filename="../src/CInyokaEdit.ui" line="305"/>
         <source>Cut highlighted text</source>
         <translation>Den markierten Text ausschneiden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="313"/>
+        <location filename="../src/CInyokaEdit.ui" line="314"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="316"/>
+        <location filename="../src/CInyokaEdit.ui" line="317"/>
         <source>Copy highlighted text</source>
         <translation>Den markierten Text in die Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="325"/>
+        <location filename="../src/CInyokaEdit.ui" line="326"/>
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="328"/>
+        <location filename="../src/CInyokaEdit.ui" line="329"/>
         <source>Paste text from clipboard</source>
         <translation>Text aus der Zwischenablage einfügen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="337"/>
+        <location filename="../src/CInyokaEdit.ui" line="338"/>
         <source>Find...</source>
         <translation>Suchen...</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="340"/>
+        <location filename="../src/CInyokaEdit.ui" line="341"/>
         <source>Find text</source>
         <translation>Einen Ausdruck suchen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="349"/>
+        <location filename="../src/CInyokaEdit.ui" line="350"/>
         <source>Replace...</source>
         <translation>Ersetzen...</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="352"/>
+        <location filename="../src/CInyokaEdit.ui" line="353"/>
         <source>Replace text</source>
         <translation>Einen bestimmten Ausdruck ersetzen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="361"/>
+        <location filename="../src/CInyokaEdit.ui" line="362"/>
         <source>Find next</source>
         <translation>Weitersuchen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="364"/>
+        <location filename="../src/CInyokaEdit.ui" line="365"/>
         <source>Find next (search forward)</source>
         <translation>Weitersuchen (vorwärts)</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="373"/>
+        <location filename="../src/CInyokaEdit.ui" line="374"/>
         <source>Find previous</source>
         <translation>Rückwärts weitersuchen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="376"/>
+        <location filename="../src/CInyokaEdit.ui" line="377"/>
         <source>Find previous (search backward)</source>
         <translation>Weitersuchen (rückwärts)</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="385"/>
+        <location filename="../src/CInyokaEdit.ui" line="386"/>
         <source>Open preview</source>
         <translation>Vorschau öffnen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="388"/>
+        <location filename="../src/CInyokaEdit.ui" line="389"/>
         <source>Open preview of current article</source>
         <translation>Die Vorschau des aktuellen Artikels anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="397"/>
+        <location filename="../src/CInyokaEdit.ui" line="398"/>
         <source>Download raw format</source>
         <translation>Rohformat herunterladen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="400"/>
+        <location filename="../src/CInyokaEdit.ui" line="401"/>
         <source>Downloads raw format of an existing Inyoka article</source>
         <translation>Den Rohtext eines bestehenden Inyoka Wikiartikels herunterladen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="409"/>
-        <location filename="../src/CInyokaEdit.cpp" line="1063"/>
+        <location filename="../src/CInyokaEdit.ui" line="410"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1077"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="412"/>
+        <location filename="../src/CInyokaEdit.ui" line="413"/>
         <source>Bold - File names, folders, packages, file extensions</source>
         <translation>Fett - Dateinamen, Verzeichnisse, Paketnamen, Formatnamen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="421"/>
-        <location filename="../src/CInyokaEdit.cpp" line="1075"/>
+        <location filename="../src/CInyokaEdit.ui" line="422"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1089"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="424"/>
+        <location filename="../src/CInyokaEdit.ui" line="425"/>
         <source>Italic - Menu entries, buttons, G-Conf keys - Always enclosed by quotation marks!</source>
         <translation>Kursiv - Menüelemente, Schaltflächen, G-Conf-Schlüssel, immer in Anführungszeichen!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="433"/>
-        <location filename="../src/CInyokaEdit.cpp" line="1087"/>
+        <location filename="../src/CInyokaEdit.ui" line="434"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1101"/>
         <source>Monotype</source>
         <translation>Monotype</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="436"/>
+        <location filename="../src/CInyokaEdit.ui" line="437"/>
         <source>Monotype - Commands and their options, console outputs in continuous text, modules, users, groups</source>
         <translation>Monotype - Befehle und ihre Optionen, Terminalausgaben im Fließtext, Module, Benutzer, Gruppen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="445"/>
+        <location filename="../src/CInyokaEdit.ui" line="446"/>
         <source>Link to wikipage</source>
         <translation>Link zu Wikiseite</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="448"/>
+        <location filename="../src/CInyokaEdit.ui" line="449"/>
         <source>Link to an Inyoka wiki page</source>
         <translation>Link auf eine Inyoka-Wikiseite</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="457"/>
+        <location filename="../src/CInyokaEdit.ui" line="458"/>
         <source>External link</source>
         <translation>Externer Link</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="460"/>
+        <location filename="../src/CInyokaEdit.ui" line="461"/>
         <source>Link to an external website - always with flag e.g. {en}, {de}!</source>
         <translation>Link auf eine externe Webseite, immer mit Fahne z.B. {de}, {en}!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="469"/>
+        <location filename="../src/CInyokaEdit.ui" line="470"/>
         <source>Insert image</source>
         <translation>Bild einfügen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="472"/>
+        <location filename="../src/CInyokaEdit.ui" line="473"/>
         <source>Insert an image</source>
         <translation>Ein Bild einfügen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="514"/>
+        <location filename="../src/CInyokaEdit.ui" line="515"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="523"/>
+        <location filename="../src/CInyokaEdit.ui" line="524"/>
         <source>Forward</source>
         <translation>Vorwärts</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="532"/>
-        <location filename="../src/CInyokaEdit.ui" line="535"/>
+        <location filename="../src/CInyokaEdit.ui" line="533"/>
+        <location filename="../src/CInyokaEdit.ui" line="536"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="544"/>
+        <location filename="../src/CInyokaEdit.ui" line="545"/>
         <source>Print preview</source>
         <translation>Vorschau drucken</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="547"/>
+        <location filename="../src/CInyokaEdit.ui" line="548"/>
         <source>Print preview or export to PDF</source>
         <translation>Vorschau ausdrucken oder als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="552"/>
+        <location filename="../src/CInyokaEdit.ui" line="553"/>
         <source>Table generator</source>
         <translation>Tabellengenerator</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="557"/>
+        <location filename="../src/CInyokaEdit.ui" line="558"/>
         <source>&amp;Syntax overview</source>
         <translation>&amp;Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="566"/>
+        <location filename="../src/CInyokaEdit.ui" line="567"/>
         <source>Preferences</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="481"/>
-        <location filename="../src/CInyokaEdit.ui" line="484"/>
+        <location filename="../src/CInyokaEdit.ui" line="579"/>
+        <source>Upload article</source>
+        <translation>Artikel hochladen</translation>
+    </message>
+    <message>
+        <location filename="../src/CInyokaEdit.ui" line="482"/>
+        <location filename="../src/CInyokaEdit.ui" line="485"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="201"/>
+        <location filename="../src/CInyokaEdit.ui" line="202"/>
         <source>Report &amp;bug</source>
         <translation>&amp;Fehler melden</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="213"/>
+        <location filename="../src/CInyokaEdit.ui" line="214"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="493"/>
+        <location filename="../src/CInyokaEdit.ui" line="494"/>
         <source>Delete temporarily images</source>
         <translation>Heruntergeladene Bilder löschen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="496"/>
+        <location filename="../src/CInyokaEdit.ui" line="497"/>
         <source>Delete images which had been downloaded with an article.</source>
         <translation>Temporär mit Artikeln heruntergeladene Bilder löschen.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.ui" line="505"/>
+        <location filename="../src/CInyokaEdit.ui" line="506"/>
         <source>Download Inyoka styles</source>
         <translation>Inyoka-Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="703"/>
+        <location filename="../src/CInyokaEdit.cpp" line="714"/>
         <source>Step</source>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="728"/>
+        <location filename="../src/CInyokaEdit.cpp" line="739"/>
         <source>Text format</source>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="730"/>
-        <location filename="../src/CInyokaEdit.cpp" line="980"/>
+        <location filename="../src/CInyokaEdit.cpp" line="741"/>
+        <location filename="../src/CInyokaEdit.cpp" line="994"/>
         <source>Folders</source>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="731"/>
+        <location filename="../src/CInyokaEdit.cpp" line="742"/>
         <source>Menu entries</source>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="732"/>
-        <location filename="../src/CInyokaEdit.cpp" line="1006"/>
+        <location filename="../src/CInyokaEdit.cpp" line="743"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1020"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="733"/>
-        <location filename="../src/CInyokaEdit.cpp" line="1019"/>
+        <location filename="../src/CInyokaEdit.cpp" line="744"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1033"/>
         <source>Command</source>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="803"/>
+        <location filename="../src/CInyokaEdit.cpp" line="817"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="816"/>
+        <location filename="../src/CInyokaEdit.cpp" line="830"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="993"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1007"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1099"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1113"/>
         <source>Site name</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1123"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1137"/>
         <source>Image.png</source>
         <translation>Bild.png</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1227"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1241"/>
         <source>Sitename</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1228"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1242"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1338"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1352"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1518"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1541"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung beendet.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1527"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1550"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1539"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1562"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1547"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1570"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1635"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1658"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="1652"/>
+        <location filename="../src/CInyokaEdit.cpp" line="1675"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="702"/>
-        <location filename="../src/CInyokaEdit.cpp" line="867"/>
+        <location filename="../src/CInyokaEdit.cpp" line="713"/>
+        <location filename="../src/CInyokaEdit.cpp" line="881"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="453"/>
+        <location filename="../src/CInyokaEdit.cpp" line="464"/>
         <source>Raw text</source>
         <translation>Rohtext</translation>
     </message>
     <message>
-        <location filename="../src/CInyokaEdit.cpp" line="453"/>
+        <location filename="../src/CInyokaEdit.cpp" line="464"/>
         <source>Code without highlighting</source>
         <translation>Code ohne Highlighting</translation>
     </message>
@@ -727,10 +732,15 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CParser</name>
     <message>
-        <location filename="../src/CParser.cpp" line="131"/>
+        <location filename="../src/CParser.cpp" line="134"/>
         <source>Untitled</source>
         <comment>No file name set</comment>
         <translation>Unbenannt</translation>
+    </message>
+    <message>
+        <location filename="../src/CParser.cpp" line="1312"/>
+        <source>Invalid date</source>
+        <translation>Ungültiges Datum</translation>
     </message>
 </context>
 <context>
