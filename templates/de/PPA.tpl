@@ -20,11 +20,11 @@ Adresszeile zum [:Paketquellen_freischalten/PPA#PPA-hinzufuegen:Hinzufügen] des
 ## <@ endif @><@ endfor @>
 ##
 ## Ziel ist folgender Code:
-## * '''ppa:shkn/xnoise'''
+## * '''ppa:shkn/xnoise''' 
 ## {{|<title="Hinweis!" class="box warning">
-## Zusätzliche [:Fremdquellen:] können das System gefährden.
+## Zusätzliche [:Fremdquellen:] können das System gefährden. 
 ## ----
-## Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~shkn/+archive/xnoise PPA Beschreibung] vom Benutzer/Team [lpuser:shkn:].
+## Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~shkn/+archive/xnoise PPA Beschreibung] des Eigentümers/Teams [lpuser:shkn:] zu entnehmen.
 ## |}}
 ##
 ## Darin ersetzt man nun alle Vorkommen von shkn und xnoise durch die oben aufgeführten Codeschnipsel.
@@ -35,20 +35,20 @@ Adresszeile zum [:Paketquellen_freischalten/PPA#PPA-hinzufuegen:Hinzufügen] des
 <@ endfor @>/<@ for $arg in $arguments.0 split_by "/"@>
 <@ if $loop.last @>
 <@ $arg @>
-<@ endif @><@ endfor @>'''
+<@ endif @><@ endfor @>''' 
 {{|<title="Hinweis!" class="box warning">
-Zusätzliche [:Fremdquellen:] können das System gefährden.
+Zusätzliche [:Fremdquellen:] können das System gefährden. 
 ----
-Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ for $arg in $arguments.0 split_by "/"@>
+Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ for $arg in $arguments.0 split_by "/"@>
 <@ if $loop.first @><@ $arg @>
 <@ endif @>
 <@ endfor @>/+archive/<@ for $arg in $arguments.0 split_by "/"@>
 <@ if $loop.last @>
 <@ $arg @>
-<@ endif @><@ endfor @> PPA-Beschreibung] vom Benutzer/Team [lpuser:<@ for $arg in $arguments.0 split_by "/"@>
+<@ endif @><@ endfor @> PPA-Beschreibung] des Eigentümers/Teams [lpuser:<@ for $arg in $arguments.0 split_by "/"@>
 <@ if $loop.first @><@ $arg @>
 <@ endif @>
-<@ endfor @>:].
+<@ endfor @>:] zu entnehmen.
 |}}
 <@ else @>
 ## nun zur wesentlich eleganteren Variante
@@ -58,24 +58,24 @@ Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informat
 ## nur zur Kompatibilität noch ein workaround für "ppa-PPAs"
  * '''ppa:<@ $arguments.0 @>/<@ for $arg in $arguments @>
 <@ if $loop.last @>
-<@ if $loop.length > 2 @>ppa
+<@ if $loop.length > 2 @>ppa 
 <@ else @><@ $arguments.1 @>
 <@ endif @>
 <@ if $loop.length == 1 @>ppa
 <@ endif @>
-<@ endif @><@ endfor @>'''
+<@ endif @><@ endfor @>''' 
 {{|<title="Hinweis!" class="box warning">
-Zusätzliche [:Fremdquellen:] können das System gefährden.
+Zusätzliche [:Fremdquellen:] können das System gefährden. 
 ----
-Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen bietet die [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ $arguments.0 @>/+archive/
+Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]] [https://launchpad.net/~<@ $arguments.0 @>/+archive/
 <@ for $arg in $arguments @>
 <@ if $loop.last @>
-<@ if $loop.length > 2 @>ppa
+<@ if $loop.length > 2 @>ppa 
 <@ else @><@ $arguments.1 @>
 <@ endif @>
 <@ if $loop.length == 1 @>ppa
 <@ endif @>
-<@ endif @><@ endfor @> PPA-Beschreibung] vom Benutzer/Team [lpuser:<@ $arguments.0 @>:].
+<@ endif @><@ endfor @> PPA-Beschreibung] des Eigentümers/Teams [lpuser:<@ $arguments.0 @>:] zu entnehmen.
 |}}
 <@ endif @>
-Damit Pakete aus dem PPA genutzt werden können, müssen die Paketquellen neu [:apt/apt-get#apt-get-update:eingelesen] werden.
+Damit Pakete aus dem PPA genutzt werden können, müssen die Paketquellen [:Paketquellen_freischalten:neu eingelesen] werden.

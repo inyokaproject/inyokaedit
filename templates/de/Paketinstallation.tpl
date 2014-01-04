@@ -15,7 +15,6 @@
 ## paket7, playdeb
 ## paket8, getdeb, ab karmic; hier noch weitere Angaben
 ## paket9, partner ab karmic
-## paket10, medibuntu
 ## }}}
 ##
 #############################################################
@@ -29,21 +28,55 @@
 ##
 <@ for $row in $arguments join_with '
 ' split_by '
-' @><@ for $col in $row split_by ',' @><@ if $loop.first @>
- * '''<@ $col @>'''<@ else @><@ if $loop.index==2 @> (<@ endif @><@ for $word in $col split_by ' '@><@ if ['main','restricted','universe','multiverse','security','ppa','partner','medibuntu','getdeb','playdeb'] contains $word @><@ if ['main','restricted','universe','multiverse','security','ppa'] contains $word @>''<@ $word @>''<@ endif @><@ if ['partner'] contains $word @>''[:Canonical_Partner:]''<@ endif @><@ if ['medibuntu'] contains $word @>''[:Medibuntu:]''<@ endif @><@ if ['getdeb'] contains $word @>''[:GetDeb:]''<@ endif @><@ if ['playdeb'] contains $word @>''[:PlayDeb:]''<@ endif @><@ else @><@ $word @><@ endif @><@ if $loop.last or $loop.first @><@ else @> <@ endif @><@ endfor @><@ if $loop.last @>)<@ else @>, <@ endif @><@ endif @>
+' @>
+<@ for $col in $row split_by ',' @>
+<@ if $loop.first @>
+ * '''<@ $col @>'''
+<@ else @>
+<@ if $loop.index==2 @> (
+<@ endif @>
+<@ for $word in $col split_by ' '@>
+<@ if ['main','restricted','universe','multiverse','security','ppa','partner','getdeb','playdeb'] contains $word @>
+<@ if ['main','restricted','universe','multiverse','security','ppa'] contains $word @>''<@ $word @>''
+<@ endif @>
+<@ if ['partner'] contains $word @>''[:Canonical_Partner:]''
+<@ endif @>
+<@ if ['getdeb'] contains $word @>''[:GetDeb:]''
+<@ endif @>
+<@ if ['playdeb'] contains $word @>''[:PlayDeb:]''
+<@ endif @>
+<@ else @><@ $word @>
+<@ endif @>
+<@ if $loop.last or $loop.first @>
+<@ else @> 
+<@ endif @>
+<@ endfor @>
+<@ if $loop.last @>)
+<@ else @>, 
+<@ endif @>
+<@ endif @>
 <@ endfor @>
 <@ endfor @>
 ##
 ## Jetzt Installieren - Button
 ##
 [[Vorlage(Installbutton,<@ for $row in $arguments split_by '
-' @><@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ if $loop.revindex > 1 @>,<@ endif @><@ endfor @>)]]
+' @>
+<@ for $col in $row split_by "," @>
+<@ if $loop.first @><@ $col @>
+<@ endif @>
+<@ endfor @>
+<@ if $loop.revindex > 1 @>,
+<@ endif @>
+<@ endfor @>)]]
 mit [:apturl:]
 ##
-## Paketmakro bei mehr als N Paketen, N=3:
+## Paketmakro bei mehr als N Paketen, N=0:
 ##
 <@ for $row in $arguments split_by '
-' @><@ if $loop.first @><@ if $loop.length > 0 @>
+' @>
+<@ if $loop.first @>
+<@ if $loop.length > 0 @>
 ######
 ## Statt einfach das Makro Pakete hier einzubinden, wird eine Kopie des Makros benutzt,
 ## damit die Backlinksuche des Makros Pakete, nicht auch noch die Artikel auflistet, die
@@ -53,8 +86,20 @@ mit [:apturl:]
 {{|<class="package-list">
 Paketliste zum Kopieren:
 [[Vorlage(Wiki/Vorlagen/Befehl, 'sudo apt-get install<@ for $row in $arguments split_by '
-' @> <@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ endfor @>')]]
+' @> 
+<@ for $col in $row split_by "," @>
+<@ if $loop.first @><@ $col @>
+<@ endif @>
+<@ endfor @>
+<@ endfor @>')]]
 [[Vorlage(Wiki/Vorlagen/Befehl, 'sudo aptitude install<@ for $row in $arguments split_by '
-' @> <@ for $col in $row split_by "," @><@ if $loop.first @><@ $col @><@ endif @><@ endfor @><@ endfor @>')]]
+' @> 
+<@ for $col in $row split_by "," @>
+<@ if $loop.first @><@ $col @>
+<@ endif @>
+<@ endfor @>
+<@ endfor @>')]]
 |}}
-<@ endif @><@ endif @><@ endfor @>
+<@ endif @>
+<@ endif @>
+<@ endfor @>

@@ -114,6 +114,7 @@ QString CParser::genOutput(const QString &sActFile,
     this->replaceQuotes(m_pRawText);
     this->replaceBreaks(m_pRawText);
     this->replaceHorLine(m_pRawText);
+    this->replaceDates(m_pRawText);
 
     sWikitags = this->generateTags(m_pRawText);
 
@@ -1277,4 +1278,45 @@ QString CParser::createTable(const QStringList &sListLines) {
     }
     sRet += "</tbody>\n</table>\n\n";
     return sRet;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CParser::replaceDates(QTextDocument *p_rawDoc) {
+    QString sDoc(p_rawDoc->toPlainText());
+    QString sRegExp("\\[\\[" + m_pTemplates->getTransDate() + "\\(.*\\)\\]\\]");
+    QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
+    findMacro.setMinimal(true);
+    QString sMacro;
+    QDateTime datetime;
+    bool bConversionOk;
+    int nPos = 0;
+
+    while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
+        sMacro = findMacro.cap(0);
+        sMacro.remove("[[" + m_pTemplates->getTransDate() + "(");
+        sMacro.remove(")]]");
+
+        // First assume ISO 8601 datetime
+        datetime = QDateTime::fromString(sMacro, Qt::ISODate);
+        bConversionOk = true;
+        // Otherwise handle input as unix timestamp
+        if (datetime.toString(Qt::SystemLocaleShortDate).isEmpty()) {
+            datetime.setTime_t(sMacro.toUInt(&bConversionOk));
+        }
+
+        if (bConversionOk) {
+            sMacro = datetime.toString(Qt::SystemLocaleShortDate);
+        } else {
+            sMacro = trUtf8("Ungültiges Datum");
+        }
+
+        sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+        // Go on with new start position
+        nPos += sMacro.length();
+    }
+
+    // Replace p_rawDoc with adapted document
+    p_rawDoc->setPlainText(sDoc);
 }

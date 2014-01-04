@@ -1,9 +1,14 @@
 ## Macro=[[Vorlage(Getestet, %%Ubuntuversion%%)]]
-{{|<title="Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:" class="box tested_for">
+{{|<title="Dieser Artikel wurde für die folgenden
+Ubuntu-Versionen getestet:" class="box tested_for">
 <@ if $arguments.0 @>
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
-<@ else @><@ if $arguments as lowercase contain 'quantal' @>
+<@ else @><@ if $arguments as lowercase contain 'saucy' @>
+  * [:Saucy_Salamander:Ubuntu 13.10] „Saucy Salamander“
+<@ endif @><@ if $arguments as lowercase contain 'raring' @>
+  * [:Raring_Ringtail:Ubuntu 13.04] „Raring Ringtail“
+<@ endif @><@ if $arguments as lowercase contain 'quantal' @>
   * [:Quantal_Quetzal:Ubuntu 12.10] „Quantal Quetzal“
 <@ endif @><@ if $arguments as lowercase contain 'precise' @>
   * [:Precise_Pangolin:Ubuntu 12.04] „Precise Pangolin“
@@ -30,3 +35,30 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #tag: ungetestet
 <@ endif @>
 |}}
+<@ if $arguments.0 @>
+<@ if $arguments as lowercase contain 'general' @>
+#getestet: general
+<@ else @>
+<@ if $arguments as lowercase contain 'precise' @>
+#getestet: precise
+<@ endif @><@ if $arguments as lowercase contain 'oneiric' @>
+#getestet: oneiric
+<@ endif @><@ if $arguments as lowercase contain 'natty' @>
+#getestet: natty
+<@ endif @><@ if $arguments as lowercase contain 'maverick' @>
+#getestet: maverick
+<@ endif @><@ if $arguments as lowercase contain 'lucid' @>
+#getestet: lucid
+<@ endif @><@ if $arguments as lowercase contain 'karmic' @>
+#getestet: karmic
+<@ endif @><@ if $arguments as lowercase contain 'jaunty' @>
+#getestet: jaunty
+<@ endif @><@ if $arguments as lowercase contain 'hardy' @>
+#getestet: hardy
+<@ endif @><@ if $arguments as lowercase contain 'dapper' @>
+#getestet: dapper
+<@ endif @>
+<@ endif @>
+<@ else @>
+#getestet: ungetestet
+<@ endif @>
