@@ -83,18 +83,18 @@ void CParseLinks::startParsing(QTextDocument *pRawDoc) {
 void CParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
     QRegExp findHyperlink("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
                           "|git|dict|nntp|irc|rsync|smb|apt)\\b://");
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength;
     QString sLink;
     int nSpace;
 
-    nIndex = findHyperlink.indexIn(sMyDoc);
+    nIndex = findHyperlink.indexIn(sDoc);
     while (nIndex >= 0) {
         // Found end of link
-        if (sMyDoc.indexOf("]", nIndex) != -1) {
-            nLength = sMyDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
-            sLink = sMyDoc.mid(nIndex, nLength);
+        if (sDoc.indexOf("]", nIndex) != -1) {
+            nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+            sLink = sDoc.mid(nIndex, nLength);
             // qDebug() << "FOUND: " << sLink;
 
             sLink.remove("[");
@@ -104,28 +104,27 @@ void CParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
             // Link with description
             if (nSpace != -1) {
                 QString sHref = sLink;
-                sMyDoc.replace(nIndex, nLength,
+                sDoc.replace(nIndex, nLength,
                                "<a href=\"" + sHref.remove(nSpace, nLength)
                                + "\" rel=\"nofollow\" class=\"external\">"
                                + sLink.remove(0, nSpace + 1) + "</a>");
             } else {
                 // Plain link
-                sMyDoc.replace(nIndex, nLength,
+                sDoc.replace(nIndex, nLength,
                                "<a href=\"" + sLink
                                + "\" rel=\"nofollow\" class=\"external\">"
                                + sLink + "</a>");
             }
 
             // Go on with next
-            nIndex = findHyperlink.indexIn(sMyDoc, nIndex + nLength);
+            nIndex = findHyperlink.indexIn(sDoc, nIndex + nLength);
         } else {
             // Skip not closed link and go on with next
-            nIndex = findHyperlink.indexIn(sMyDoc, nIndex + 1);
+            nIndex = findHyperlink.indexIn(sDoc, nIndex + 1);
         }
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -134,7 +133,7 @@ void CParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
 // Inyoka wiki links [:Wikipage:]
 void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
     QRegExp findInyokaWikiLink("\\[{1,1}\\:[0-9A-Za-z:.]");
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength = 0;
     QString sLink("");
@@ -146,12 +145,12 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
         m_bIsOnline = mgr.isOnline();
     #endif
 
-    nIndex = findInyokaWikiLink.indexIn(sMyDoc);
+    nIndex = findInyokaWikiLink.indexIn(sDoc);
     while (nIndex >= 0) {
         // Found end of link
-        if (sMyDoc.indexOf("]", nIndex) != -1) {
-            nLength = sMyDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
-            sLink = sMyDoc.mid(nIndex, nLength);
+        if (sDoc.indexOf("]", nIndex) != -1) {
+            nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+            sLink = sDoc.mid(nIndex, nLength);
             if (2 <= sLink.count(":")) {
                 // qDebug() << "FOUND: " << sLink;
                 sLink.remove("[:");
@@ -180,7 +179,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                             m_sLinkClassAddition = " missing";
                         }
                     }
-                    sMyDoc.replace(nIndex, nLength,
+                    sDoc.replace(nIndex, nLength,
                                    "<a href=\"" + sLinkURL
                                    + "\" class=\"internal"
                                    + m_sLinkClassAddition + "\">"
@@ -207,7 +206,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                             m_sLinkClassAddition = " missing";
                         }
                     }
-                    sMyDoc.replace(nIndex, nLength,
+                    sDoc.replace(nIndex, nLength,
                                    "<a href=\"" + sLinkURL
                                    + "\" class=\"internal"
                                    + m_sLinkClassAddition + "\">"
@@ -217,15 +216,14 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
             }
 
             // Go on with next
-            nIndex = findInyokaWikiLink.indexIn(sMyDoc, nIndex + nLength);
+            nIndex = findInyokaWikiLink.indexIn(sDoc, nIndex + nLength);
         } else {
             // Skip not closed link and go on with next
-            nIndex = findInyokaWikiLink.indexIn(sMyDoc, nIndex + 1);
+            nIndex = findInyokaWikiLink.indexIn(sDoc, nIndex + 1);
         }
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -233,7 +231,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
 
 // Interwiki links [wikipedia:Site:Text]
 void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength = 0;
     QString sLink;
@@ -252,12 +250,12 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
     QRegExp findInterwikiLink(sPattern);
     // qDebug() << sPattern;
 
-    nIndex = findInterwikiLink.indexIn(sMyDoc);
+    nIndex = findInterwikiLink.indexIn(sDoc);
     while (nIndex >= 0) {
         // Found end of link
-        if (sMyDoc.indexOf("]", nIndex) != -1) {
-            nLength = sMyDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
-            sLink = sMyDoc.mid(nIndex, nLength);
+        if (sDoc.indexOf("]", nIndex) != -1) {
+            nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+            sLink = sDoc.mid(nIndex, nLength);
             if (2 <= sLink.count(":")) {
                 sLink.remove("[");
                 sLink.remove("]");
@@ -295,7 +293,7 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
                         }
 
                         // Replace link
-                        sMyDoc.replace(nIndex, nLength,
+                        sDoc.replace(nIndex, nLength,
                                        "<a href=\"" + sTmpUrl + "\" class=\""
                                        + sClass + "\">" + sTmpDescr + "</a>");
                     }
@@ -303,15 +301,14 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
             }
 
             // Go on with next
-            nIndex = findInterwikiLink.indexIn(sMyDoc, nIndex + nLength);
+            nIndex = findInterwikiLink.indexIn(sDoc, nIndex + nLength);
         } else {
             // Skip not closed link and go on with next
-            nIndex = findInterwikiLink.indexIn(sMyDoc, nIndex + 1);
+            nIndex = findInterwikiLink.indexIn(sDoc, nIndex + 1);
         }
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -320,18 +317,18 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 // Anchor [#Headline Text]
 void CParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
     QRegExp findAnchorLink("\\[{1,1}\\#");
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength = 0;
     QString sLink;
     int nSplit;
 
-    nIndex = findAnchorLink.indexIn(sMyDoc);
+    nIndex = findAnchorLink.indexIn(sDoc);
     while (nIndex >= 0) {
         // Found end of link
-        if (sMyDoc.indexOf("]", nIndex) != -1) {
-            nLength = sMyDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
-            sLink = sMyDoc.mid(nIndex, nLength);
+        if (sDoc.indexOf("]", nIndex) != -1) {
+            nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+            sLink = sDoc.mid(nIndex, nLength);
 
             sLink.remove("[#");
             sLink.remove("]");
@@ -341,28 +338,27 @@ void CParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
 
             // With description
             if (nSplit != -1) {
-                sMyDoc.replace(nIndex, nLength,
+                sDoc.replace(nIndex, nLength,
                                "<a href=\"#" + sLink.mid(0, nSplit)
                                + "\" class=\"crosslink\">"
                                + sLink.mid(nSplit + 1 , nLength) + "</a>");
             } else {
                 // Without descrition
-                sMyDoc.replace(nIndex, nLength,
+                sDoc.replace(nIndex, nLength,
                                "<a href=\"#" + sLink.mid(0, nSplit)
                                + "\" class=\"crosslink\">#"
                                + sLink.mid(0, nSplit) + "</a>");
             }
 
             // Go on with next
-            nIndex = findAnchorLink.indexIn(sMyDoc, nIndex + nLength);
+            nIndex = findAnchorLink.indexIn(sDoc, nIndex + nLength);
         } else {
             // Skip not closed link and go on with next
-            nIndex = findAnchorLink.indexIn(sMyDoc, nIndex + 1);
+            nIndex = findAnchorLink.indexIn(sDoc, nIndex + 1);
         }
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -371,12 +367,12 @@ void CParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
 // Link to knowledge box entry
 void CParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
     QRegExp findKnowledgeBoxLink("\\[{1,1}[0-9]{1,}\\]{1,1}");
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength;
     QString sLink;
 
-    nIndex = findKnowledgeBoxLink.indexIn(sMyDoc);
+    nIndex = findKnowledgeBoxLink.indexIn(sDoc);
     while (nIndex >= 0) {
         nLength = findKnowledgeBoxLink.matchedLength();
         sLink = findKnowledgeBoxLink.cap();
@@ -386,17 +382,16 @@ void CParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
         sLink.remove("]");
 
         if (sLink.toUShort() != 0) {
-            sMyDoc.replace(nIndex, nLength,
+            sDoc.replace(nIndex, nLength,
                            "<sup><a href=\"#source-" + sLink + "\">&#091;"
                            + sLink + "&#093;</a></sup>");
         }
 
         // Go on with next
-        nIndex = findKnowledgeBoxLink.indexIn(sMyDoc, nIndex + nLength);
+        nIndex = findKnowledgeBoxLink.indexIn(sDoc, nIndex + nLength);
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -407,12 +402,12 @@ void CParseLinks::createAnchor(QTextDocument *pRawDoc) {
     QRegExp findAnchor("\\[{2,2}\\b("
                        + m_sTransAnchor
                        + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     int nIndex;
     int nLength;
     QString sAnchor;
 
-    nIndex = findAnchor.indexIn(sMyDoc);
+    nIndex = findAnchor.indexIn(sDoc);
     while (nIndex >= 0) {
         nLength = findAnchor.matchedLength();
         sAnchor = findAnchor.cap();
@@ -432,16 +427,15 @@ void CParseLinks::createAnchor(QTextDocument *pRawDoc) {
         sAnchor.replace(QString::fromUtf8("ö"), "oe");
 
         // Replace
-        sMyDoc.replace(nIndex, nLength,
+        sDoc.replace(nIndex, nLength,
                        "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
                        + "\" class=\"crosslink anchor\"> </a>");
 
         // Go on with RegExp-Search
-        nIndex = findAnchor.indexIn(sMyDoc, nIndex + nLength);
+        nIndex = findAnchor.indexIn(sDoc, nIndex + nLength);
     }
 
-    // Replace myRawDoc with document with HTML links
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -468,6 +462,5 @@ void CParseLinks::replaceAttachments(QTextDocument *p_RawDoc) {
         nPos += sMacro.length();
     }
 
-    // Replace p_rawDoc with adapted document
     p_RawDoc->setPlainText(sDoc);
 }

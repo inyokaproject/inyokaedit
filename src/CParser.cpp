@@ -78,6 +78,7 @@ void CParser::updateSettings(const QString &sInyokaUrl,
 
 QString CParser::genOutput(const QString &sActFile,
                            QTextDocument *pRawDocument) {
+    qDebug() << "Start PARSER";
     // Need a copy otherwise text in editor will be changed
     m_pRawText = pRawDocument->clone();
     m_sCurrentFile = sActFile;
@@ -89,8 +90,9 @@ QString CParser::genOutput(const QString &sActFile,
     this->removeComments(m_pRawText);
 
     m_sListNoTranslate.clear();
+    this->filterEscapedChars(m_pRawText);  // Before everything
+    this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
     this->replaceCodeblocks(m_pRawText);
-    this->filterNoTranslate(m_pRawText);
 
     m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);
 
@@ -152,6 +154,7 @@ QString CParser::genOutput(const QString &sActFile,
     sTemplateCopy = sTemplateCopy.replace("%content%",
                                           m_pRawText->toPlainText());
 
+    qDebug() << "Stop PARSER";
     return sTemplateCopy;
 }
 
@@ -164,9 +167,9 @@ void CParser::replaceTemplates(QTextDocument *p_rawDoc) {
     QStringList sListArguments;
     int nPos = 0;
     QStringList sListTplRegExp;
-    sListTplRegExp << "\\[\\[" +  m_pTemplates->getTransTemplate()
+    sListTplRegExp << "\\[\\[" + m_pTemplates->getTransTemplate()
                       + "\\(.+\\)\\]\\]";
-//                 << "\\{\\{\\{#!" +  m_pTemplates->getTransTemplate()
+//                 << "\\{\\{\\{#!" + m_pTemplates->getTransTemplate()
 //                    + " .+\\}\\}\\}";
 
     QRegExp findTemplate(sListTplRegExp[0], Qt::CaseInsensitive);
@@ -177,12 +180,12 @@ void CParser::replaceTemplates(QTextDocument *p_rawDoc) {
         // qDebug() << "CAPTURED:" << sMacro;
 
         for (int i = 0; i < m_pTemplates->getListTplNamesINY().size(); i++) {
-            if (sMacro.startsWith("[[" +  m_pTemplates->getTransTemplate()
+            if (sMacro.startsWith("[[" + m_pTemplates->getTransTemplate()
                                   + "(" + m_pTemplates->getListTplNamesINY()[i],
                                   Qt::CaseInsensitive)) {
                 qDebug() << "Found known macro:"
                          << m_pTemplates->getListTplNamesINY()[i];
-                sMacro.remove("[[" +  m_pTemplates->getTransTemplate() + "(");
+                sMacro.remove("[[" + m_pTemplates->getTransTemplate() + "(");
                 sMacro.remove(")]]");
 
                 // Split by ',' but DON'T split quoted strings containing commas
@@ -388,6 +391,32 @@ QString CParser::highlightCode(const QString &sLanguage, const QString &sCode) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CParser::filterEscapedChars(QTextDocument *p_rawDoc) {
+    QString sDoc(p_rawDoc->toPlainText());
+    QRegExp pattern("\\\\.", Qt::CaseInsensitive);
+    QString sEscChar("");
+    int nPos(0);
+    unsigned int nNoTranslate(0);
+
+    while ((nPos = pattern.indexIn(sDoc, nPos)) != -1) {
+        sEscChar = pattern.cap(0);
+        if ("\\\\" != sEscChar) {
+            sEscChar.remove(0, 1);  // Remove escape char
+            nNoTranslate = m_sListNoTranslate.size();
+            m_sListNoTranslate << sEscChar;
+
+            sDoc.replace(nPos, pattern.matchedLength(), "%%NO_TRANSLATE_" +
+                         QString::number(nNoTranslate) + "%%");
+        }
+        // Go on with search
+        nPos += sEscChar.length();
+    }
+    p_rawDoc->setPlainText(sDoc);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
     QStringList sListFormatStart;
     QStringList sListFormatEnd;
@@ -396,8 +425,7 @@ void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
     QString sDoc("");
     QRegExp patternFormat;
     QString sFormatedText;
-    int myindex;
-    int iLength;
+    int nIndex;
     unsigned int nNoTranslate;
 
     for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
@@ -416,18 +444,17 @@ void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
     patternFormat.setCaseSensitivity(Qt::CaseInsensitive);
     patternFormat.setMinimal(true);  // Search only for smallest match
 
-    sDoc = p_rawDoc->toPlainText();
+    sDoc = p_rawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
     // qDebug() << "\n\n" << sDoc << "\n\n";
     nNoTranslate = m_sListNoTranslate.size();
     for (int i = 0; i < sListHtmlStart.size(); i++) {
         patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
-        myindex = patternFormat.indexIn(sDoc);
+        nIndex = patternFormat.indexIn(sDoc);
 
-        while (myindex >= 0) {
+        while (nIndex >= 0) {
             sFormatedText = patternFormat.cap();
-            iLength = sFormatedText.length();
             m_sListNoTranslate << sFormatedText;
-            myindex = patternFormat.indexIn(sDoc, myindex + iLength);
+            nIndex = patternFormat.indexIn(sDoc, nIndex + sFormatedText.length());
             sDoc.replace(sFormatedText, "%%NO_TRANSLATE_" +
                          QString::number(nNoTranslate) + "%%");
             nNoTranslate++;
@@ -449,8 +476,8 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
     QString sFormatedText;
     QString sTmpRegExp;
     bool bFoundStart;
-    int myindex;
-    int iLength;
+    int nIndex;
+    int nLength;
 
     patternTextformat.setCaseSensitivity(Qt::CaseInsensitive);
     patternTextformat.setMinimal(true);  // Search only for smallest match
@@ -468,23 +495,23 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                 sTmpRegExp = sTmpRegExp.trimmed();
                 patternTextformat.setPattern(sTmpRegExp);
 
-                myindex = patternTextformat.indexIn(sDoc);
+                nIndex = patternTextformat.indexIn(sDoc);
 
-                while (myindex >= 0) {
+                while (nIndex >= 0) {
                     QString sCap("");
-                    iLength = patternTextformat.matchedLength();
+                    nLength = patternTextformat.matchedLength();
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
                     if (sCap.isEmpty()) {
-                        sDoc.replace(myindex, iLength, sListHtmlStart[i]);
+                        sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
                     } else {
-                        sDoc.replace(myindex, iLength,
+                        sDoc.replace(nIndex, nLength,
                                      sListHtmlStart[i].arg(sCap));
                     }
 
                     // Go on with RegExp-Search
-                    myindex = patternTextformat.indexIn(sDoc, myindex + iLength);
+                    nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
                 }
             }
             if (!sListFormatEnd[i].startsWith("RegExp=")) {
@@ -495,23 +522,23 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                 sTmpRegExp = sTmpRegExp.trimmed();
                 patternTextformat.setPattern(sTmpRegExp);
 
-                myindex = patternTextformat.indexIn(sDoc);
+                nIndex = patternTextformat.indexIn(sDoc);
 
-                while (myindex >= 0) {
+                while (nIndex >= 0) {
                     QString sCap("");
-                    iLength = patternTextformat.matchedLength();
+                    nLength = patternTextformat.matchedLength();
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
                     if (sCap.isEmpty()) {
-                        sDoc.replace(myindex, iLength, sListHtmlEnd[i]);
+                        sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
                     } else {
-                        sDoc.replace(myindex, iLength,
+                        sDoc.replace(nIndex, nLength,
                                      sListHtmlEnd[i].arg(sCap));
                     }
 
                     // Go on with RegExp-Search
-                    myindex = patternTextformat.indexIn(sDoc, myindex + iLength);
+                    nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
                 }
             }
         } else {  // Start and end is identical
@@ -534,32 +561,32 @@ void CParser::replaceTextformat(QTextDocument *p_rawDoc,
                 sTmpRegExp = sTmpRegExp.trimmed();
                 patternTextformat.setPattern(sTmpRegExp);
 
-                myindex = patternTextformat.indexIn(sDoc);
+                nIndex = patternTextformat.indexIn(sDoc);
 
-                while (myindex >= 0) {
+                while (nIndex >= 0) {
                     QString sCap("");
-                    iLength = patternTextformat.matchedLength();
+                    nLength = patternTextformat.matchedLength();
                     sFormatedText = patternTextformat.cap();
                     sCap = patternTextformat.cap(1);
 
                     if (sCap.isEmpty()) {
                         if (bFoundStart) {
-                            sDoc.replace(myindex, iLength, sListHtmlStart[i]);
+                            sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
                         } else {
-                            sDoc.replace(myindex, iLength, sListHtmlEnd[i]);
+                            sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
                         }
                     } else {
                         if (bFoundStart) {
-                            sDoc.replace(myindex, iLength,
+                            sDoc.replace(nIndex, nLength,
                                          sListHtmlStart[i].arg(sCap));
                         } else {
-                            sDoc.replace(myindex, iLength,
+                            sDoc.replace(nIndex, nLength,
                                          sListHtmlEnd[i].arg(sCap));
                         }
                     }
 
                     // Go on with RegExp-Search
-                    myindex = patternTextformat.indexIn(sDoc, myindex + iLength);
+                    nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
                 }
             }
         }
@@ -576,7 +603,8 @@ void CParser::reinstertNoTranslate(QTextDocument *p_rawDoc) {
     QString sDoc(p_rawDoc->toPlainText());
 
     // Reinsert filtered monotype codeblock
-    for (int i = 0; i < m_sListNoTranslate.size(); i++) {
+    // Has to be decremental, because of possible nested blocks
+    for (int i = m_sListNoTranslate.size() - 1; i >= 0; i--) {
         sDoc.replace("%%NO_TRANSLATE_" + QString::number(i) + "%%", m_sListNoTranslate[i]);
     }
 
@@ -850,7 +878,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     QString sDoc(p_rawDoc->toPlainText());
     QRegExp findImages("\\[\\[" + m_pTemplates->getTransImage()
                        + "\\(.+\\)\\]\\]");
-    int iLength;
+    int nLength;
     QString sTmpImage;
     QStringList sListTmpImageInfo;
 
@@ -868,9 +896,9 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     double tmpH, tmpW;
 
     findImages.setMinimal(true);
-    int myindex = findImages.indexIn(sDoc);
-    while (myindex >= 0) {
-        iLength = findImages.matchedLength();
+    int nIndex = findImages.indexIn(sDoc);
+    while (nIndex >= 0) {
+        nLength = findImages.matchedLength();
         sTmpImage = findImages.cap();
 
         sTmpImage.remove("[[" + m_pTemplates->getTransImage() + "(");
@@ -914,10 +942,10 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
                 // Found alignment
                 sImageAlign = "left";
             } else if (sListTmpImageInfo[i].trimmed() == "right"
-                       ||  sListTmpImageInfo[i].trimmed() == "align=right") {
+                       || sListTmpImageInfo[i].trimmed() == "align=right") {
                 sImageAlign = "right";
             } else if (sListTmpImageInfo[i].trimmed() == "center"
-                       ||  sListTmpImageInfo[i].trimmed() == "align=center") {
+                       || sListTmpImageInfo[i].trimmed() == "align=center") {
                 sImageAlign = "center";
             }
         }
@@ -946,10 +974,10 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
 
         // Replace
-        sDoc.replace(myindex, iLength, sTmpImage);
+        sDoc.replace(nIndex, nLength, sTmpImage);
 
         // Go on with RegExp-Search
-        myindex = findImages.indexIn(sDoc, myindex + iLength);
+        nIndex = findImages.indexIn(sDoc, nIndex + nLength);
     }
 
     // Replace p_rawDoc with adapted document

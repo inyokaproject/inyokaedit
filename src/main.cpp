@@ -214,14 +214,14 @@ void LoggingHandler(QtMsgType type, const char *sMsg) {
 
 QString getLanguage(const QString &sAppName) {
 #if defined _WIN32
-    QSettings mySet(QSettings::IniFormat, QSettings::UserScope,
-                    sAppName.toLower(), sAppName.toLower());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+                       sAppName.toLower(), sAppName.toLower());
 #else
-    QSettings mySet(QSettings::NativeFormat, QSettings::UserScope,
-                    sAppName.toLower(), sAppName.toLower());
+    QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
+                       sAppName.toLower(), sAppName.toLower());
 #endif
 
-    QString sLang = mySet.value("GuiLanguage", "auto").toString();
+    QString sLang = settings.value("GuiLanguage", "auto").toString();
     if ("auto" == sLang) {
         #ifdef Q_OS_UNIX
         QByteArray lang = qgetenv("LANG");

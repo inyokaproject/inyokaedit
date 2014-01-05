@@ -217,7 +217,7 @@ class CInyokaEdit : public QMainWindow {
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
 
-    // QTabWidget *myTabwidgetDocuments;
+    // QTabWidget *m_pTabwidgetDocuments;
     QTabWidget *m_pTabwidgetRawPreview;
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
@@ -252,7 +252,7 @@ class CInyokaEdit : public QMainWindow {
     QSignalMapper *m_pSigMapOpenTemplate;
 
     // Code block syntax highlighting
-    QSignalMapper *mySigMapCodeHighlight;
+    QSignalMapper *m_pSigMapCodeHighlight;
     QToolButton *m_pCodePopup;
     QMenu *m_pCodeStyles;
     QList<QAction *> m_CodeHighlightActions;

@@ -89,8 +89,8 @@ class CHandler;
     QList<QStringList> getElementIcons() const;
 
   private:
-    QXmlInputSource *m_myXmlSource;  /**< Pointer to xml input source file */
-    CHandler *m_myHandler;  /**< Handle to xml parser module */
+    QXmlInputSource *m_pXmlSource;  /**< Pointer to xml input source file */
+    CHandler *m_pHandler;  /**< Handle to xml parser module */
 
     QString m_sMenuName;
     QStringList m_sListGroups;        /**< Interwiki link groups list */

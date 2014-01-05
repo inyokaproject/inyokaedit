@@ -165,8 +165,7 @@ void CInyokaEdit::createObjects() {
     /**
      * \todo Add tabs for editing multiple documents.
      */
-    // myTabwidgetDocuments = new QTabWidget;
-    // qDebug() << "Created myTabwidgetDocuments";
+    // m_pTabwidgetDocuments = new QTabWidget;
     m_pTabwidgetRawPreview = new QTabWidget;
 
     m_pWebview = new QWebView(this);
@@ -218,13 +217,13 @@ void CInyokaEdit::setupEditor() {
             m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)));
 
     /*
-    setCentralWidget(myTabwidgetDocuments);
-    myTabwidgetDocuments->setTabPosition(QTabWidget::North);
-    myTabwidgetDocuments->setTabsClosable(true);
-    myTabwidgetDocuments->setMovable(true);
-    myTabwidgetDocuments->setDocumentMode(true);
+    setCentralWidget(m_pTabwidgetDocuments);
+    m_pTabwidgetDocuments->setTabPosition(QTabWidget::North);
+    m_pTabwidgetDocuments->setTabsClosable(true);
+    m_pTabwidgetDocuments->setMovable(true);
+    m_pTabwidgetDocuments->setDocumentMode(true);
 
-    myTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, trUtf8("Untitled"));
+    m_pTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, trUtf8("Untitled"));
     */
 
     m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
@@ -459,7 +458,7 @@ void CInyokaEdit::createActions() {
             this, SLOT(insertMainEditorButtons(QString)));
 
     // Code block + syntax highlighting
-    mySigMapCodeHighlight = new QSignalMapper(this);
+    m_pSigMapCodeHighlight = new QSignalMapper(this);
     QStringList sListHighlightText, sListHighlightLang;
     sListHighlightText << trUtf8("Raw text") << trUtf8("Code without highlighting")
                        << "Bash" << "C" << "C#" << "C++" << "CSS" << "D"
@@ -485,17 +484,17 @@ void CInyokaEdit::createActions() {
             sListHighlightLang[i] = sCodeTag + sListHighlightLang[i];
         }
         m_CodeHighlightActions << new QAction(sListHighlightText[i], this);
-        mySigMapCodeHighlight->setMapping(m_CodeHighlightActions[i],
+        m_pSigMapCodeHighlight->setMapping(m_CodeHighlightActions[i],
                                           sListHighlightLang[i]);
         connect(m_CodeHighlightActions[i], SIGNAL(triggered()),
-                mySigMapCodeHighlight, SLOT(map()));
+                m_pSigMapCodeHighlight, SLOT(map()));
     }
 
     m_pCodeStyles->addActions(m_CodeHighlightActions);
     m_pCodePopup->setMenu(m_pCodeStyles);
     m_pUi->inyokaeditorBar->addWidget(m_pCodePopup);
 
-    connect(mySigMapCodeHighlight, SIGNAL(mapped(QString)),
+    connect(m_pSigMapCodeHighlight, SIGNAL(mapped(QString)),
             this, SLOT(insertCodeblock(QString)));
 
     connect(m_pUi->insertTableAct, SIGNAL(triggered()),
@@ -897,10 +896,10 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
                                        + sHeadline + " "
                                        + sHeadTag);
 
-            QTextCursor myTextCursor(m_pEditor->textCursor());
-            myTextCursor.setPosition(m_pEditor->textCursor().position() - sHeadline.length() - nSelection);
-            myTextCursor.setPosition(m_pEditor->textCursor().position() - nSelection, QTextCursor::KeepAnchor);
-            m_pEditor->setTextCursor(myTextCursor);
+            QTextCursor textCursor(m_pEditor->textCursor());
+            textCursor.setPosition(m_pEditor->textCursor().position() - sHeadline.length() - nSelection);
+            textCursor.setPosition(m_pEditor->textCursor().position() - nSelection, QTextCursor::KeepAnchor);
+            m_pEditor->setTextCursor(textCursor);
         }
     }
 
@@ -1043,12 +1042,12 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
         m_pTextformatBox->setCurrentIndex(0);
 
         if (!bSelected) {
-            QTextCursor myTextCursor(m_pEditor->textCursor());
-            myTextCursor.setPosition(m_pEditor->textCursor().position() -
+            QTextCursor textCursor(m_pEditor->textCursor());
+            textCursor.setPosition(m_pEditor->textCursor().position() -
                                      sInsertedText.length() - nFormatLength);
-            myTextCursor.setPosition(m_pEditor->textCursor().position() -
+            textCursor.setPosition(m_pEditor->textCursor().position() -
                                      nFormatLength, QTextCursor::KeepAnchor);
-            m_pEditor->setTextCursor(myTextCursor);
+            m_pEditor->setTextCursor(textCursor);
         }
 
         m_pEditor->setFocus();
@@ -1149,12 +1148,12 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
     }
 
     if (!bSelected) {
-        QTextCursor myTextCursor(m_pEditor->textCursor());
-        myTextCursor.setPosition(m_pEditor->textCursor().position() -
+        QTextCursor textCursor(m_pEditor->textCursor());
+        textCursor.setPosition(m_pEditor->textCursor().position() -
                                  sInsertedText.length() - nFormatLength);
-        myTextCursor.setPosition(m_pEditor->textCursor().position() -
+        textCursor.setPosition(m_pEditor->textCursor().position() -
                                  nFormatLength, QTextCursor::KeepAnchor);
-        m_pEditor->setTextCursor(myTextCursor);
+        m_pEditor->setTextCursor(textCursor);
     }
 
     m_pEditor->setFocus();

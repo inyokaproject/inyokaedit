@@ -1462,7 +1462,7 @@ QString CProvisionalTplParser::parseTable(const QStringList &sListArgs) {
     QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-]+\\\"");
     QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-]+\\\"");
 
-    int iLength;
+    int nLength;
     QString sTmpCellStyle, sStyleInfo, sTmpTD;
 
     if (sArgs.length() >= 2) {
@@ -1484,7 +1484,7 @@ QString CProvisionalTplParser::parseTable(const QStringList &sListArgs) {
         if (sArgs[i] == "+++") {  // New line
             sOutput += "</tr>\n";
         } else {  // New cell
-            int myindex = tablePattern.indexIn(sArgs[i]);
+            int nIndex = tablePattern.indexIn(sArgs[i]);
 
             // Check if found style info is in reality a html text format
             bool bTextformat = false;
@@ -1496,10 +1496,10 @@ QString CProvisionalTplParser::parseTable(const QStringList &sListArgs) {
 
             // Found style info && pattern which was found is not
             // a <span class=...> element or html text format
-            if (myindex >= 0
+            if (nIndex >= 0
                     && !sArgs[i].trimmed().startsWith("<span")
                     && !bTextformat) {
-                iLength = tablePattern.matchedLength();
+                nLength = tablePattern.matchedLength();
                 sStyleInfo = tablePattern.cap();
 
                 // Start tr
@@ -1624,7 +1624,7 @@ QString CProvisionalTplParser::parseTable(const QStringList &sListArgs) {
                 // Remove style info (remove only, if line starts with
                 // "<" otherwise element)
                 if (sArgs[i].startsWith("<")) {
-                    sArgs[i].replace(myindex, iLength, "");
+                    sArgs[i].replace(nIndex, nLength, "");
                 }
 
                 sOutput += sTmpTD + ">" + sArgs[i] + "</td>\n";

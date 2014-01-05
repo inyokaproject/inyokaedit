@@ -74,8 +74,9 @@ class CParser : public QObject {
   private:
     // void replaceTemplates(QTextDocument *p_rawDoc);
 
-    void replaceCodeblocks(QTextDocument *p_rawDoc);
+    void filterEscapedChars(QTextDocument *p_rawDoc);
     void filterNoTranslate(QTextDocument *p_rawDoc);
+    void replaceCodeblocks(QTextDocument *p_rawDoc);
     void reinstertNoTranslate(QTextDocument *p_rawDoc);
 
     void removeComments(QTextDocument *p_rawDoc);

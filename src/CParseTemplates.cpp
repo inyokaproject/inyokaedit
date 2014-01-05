@@ -50,7 +50,7 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
     QStringList sListTplRegExp;
     sListTplRegExp << "\\{\\{\\{#!" + m_sTransTpl + " .+\\}\\}\\}"
                    << "\\[\\[" + m_sTransTpl + "\\s*\\(.+\\)\\]\\]";
-    QString sMyDoc = pRawDoc->toPlainText();
+    QString sDoc(pRawDoc->toPlainText());
     QString sMacro;
     QString sBackupMacro;
     QStringList sListArguments;
@@ -61,7 +61,7 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
         findTemplate.setMinimal(true);
         nPos = 0;
 
-        while ((nPos = findTemplate.indexIn(sMyDoc, nPos)) != -1) {
+        while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
             sMacro = findTemplate.cap(0);
             sBackupMacro = sMacro;
             if (sMacro.startsWith("[[" + m_sTransTpl, Qt::CaseInsensitive)) {
@@ -158,12 +158,12 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
             if (sMacro.isEmpty()) {
                 sMacro = sBackupMacro;
             }
-            sMyDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
+            sDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
 
             // Go on with new start position
             nPos += sMacro.length();
         }
     }
 
-    pRawDoc->setPlainText(sMyDoc);
+    pRawDoc->setPlainText(sDoc);
 }

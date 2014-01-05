@@ -54,15 +54,15 @@ CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
         exit(-5);
     }
 
-    QXmlSimpleReader myXmlReader;
+    QXmlSimpleReader xmlReader;
 
-    m_myXmlSource = new QXmlInputSource(&XmlFile);
-    m_myHandler = new CHandler;
+    m_pXmlSource = new QXmlInputSource(&XmlFile);
+    m_pHandler = new CHandler;
 
-    myXmlReader.setContentHandler(m_myHandler);
-    myXmlReader.setErrorHandler(m_myHandler);
+    xmlReader.setContentHandler(m_pHandler);
+    xmlReader.setErrorHandler(m_pHandler);
 
-    bool bOk = myXmlReader.parse(m_myXmlSource);
+    bool bOk = xmlReader.parse(m_pXmlSource);
     if (!bOk) {
         qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
         QMessageBox::critical(0, sAppName,
@@ -71,13 +71,13 @@ CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
         exit(-7);
     }
 
-    m_sMenuName = m_myHandler->m_sMenuName_2;
-    m_sListGroups = m_myHandler->m_sListGroups_2;
-    m_sListGroupIcons = m_myHandler->m_sListGroupIcons_2;
-    m_sListTypes = m_myHandler->m_sListTypes_2;
-    m_sListUrls = m_myHandler->m_sListUrls_2;
-    m_sListNames = m_myHandler->m_sListNames_2;
-    m_sListIcons = m_myHandler->m_sListIcons_2;
+    m_sMenuName = m_pHandler->m_sMenuName_2;
+    m_sListGroups = m_pHandler->m_sListGroups_2;
+    m_sListGroupIcons = m_pHandler->m_sListGroupIcons_2;
+    m_sListTypes = m_pHandler->m_sListTypes_2;
+    m_sListUrls = m_pHandler->m_sListUrls_2;
+    m_sListNames = m_pHandler->m_sListNames_2;
+    m_sListIcons = m_pHandler->m_sListIcons_2;
 
     /*
     for (int i = 0; i < sListGroups.size(); i++ ) {

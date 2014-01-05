@@ -261,17 +261,17 @@ bool CFileOperations::saveFile(const QString &sFileName) {
 void CFileOperations::printPreview() {
 #ifndef _WIN32
     QWebView previewWebView;
-    QPrinter myPrinter;
+    QPrinter printer;
     QFile previewFile(m_sPreviewFile);
     QString sHtml("");
 
     // Configure printer: format A4, PDF
-    myPrinter.setPaperSize(QPrinter::A4);
-    myPrinter.setFullPage(true);
-    myPrinter.setOrientation(QPrinter::Portrait);
-    myPrinter.setPrintRange(QPrinter::AllPages);
-    myPrinter.setOutputFormat(QPrinter::PdfFormat);
-    myPrinter.setOutputFileName(m_pSettings->getLastOpenedDir().absolutePath()
+    printer.setPaperSize(QPrinter::A4);
+    printer.setFullPage(true);
+    printer.setOrientation(QPrinter::Portrait);
+    printer.setPrintRange(QPrinter::AllPages);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(m_pSettings->getLastOpenedDir().absolutePath()
                                 + "/Preview.pdf");
 
     if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -320,9 +320,9 @@ void CFileOperations::printPreview() {
                                                     .absolutePath() + "/"));
     */
 
-    QPrintDialog myPrintDialog(&myPrinter);
-    if (QDialog::Accepted == myPrintDialog.exec()) {
-        previewWebView.print(&myPrinter);
+    QPrintDialog printDialog(&printer);
+    if (QDialog::Accepted == printDialog.exec()) {
+        previewWebView.print(&printer);
     }
 #else
     QMessageBox::information(m_pParent, m_sAppName,
