@@ -1,3 +1,15 @@
+inyokaedit (0.12.0-0ubuntu1) saucy; urgency=low
+
+  [ Thorsten Roth ]
+  * Fixed LP: #1202798 (escaping characters)
+  * Added macro support: Attachment, date.
+  * Many new IWLs and IWL menu reconstruction.
+  * Fixed preview/print problem, set default suffix for saving an article.
+  * Update check for Windows.
+  * Some code reconstructions.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 06 Jan 2014 16:41:00 +0200
+
 inyokaedit (0.11.0-0ubuntu1) raring; urgency=low
 
   [ Dominique Lasserre ]
