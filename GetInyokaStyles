@@ -111,6 +111,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freedesktop.
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freenode.png -O freenode.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/freshmeat.png -O freshmeat.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gameolith.png -O gameolith.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gnomeapps.png -O gnomeapps.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gnomeprojects.png -O gnomeprojects.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/getdeb.png -O getdeb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/github.png -O github.png

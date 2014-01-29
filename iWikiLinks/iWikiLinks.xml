@@ -59,7 +59,8 @@
     <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
     <element type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
     <element type="debian_de" url="http://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
-    <element type="gnomeprojects" url="http://projects.gnome.org/" name="GNOME projects" icon="gnomeprojects.png" />
+    <element type="gnomeapps" url="https://wiki.gnome.org/Apps/" name="GNOME apps" icon="gnomeapps.png" />
+    <element type="gnomeprojects" url="https://wiki.gnome.org/Projects/" name="GNOME projects" icon="gnomeprojects.png" />
     <element type="opensuse" url="http://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
   </group>
@@ -90,6 +91,7 @@
     <element type="sourceforge2" url="http://$PAGE.sourceforge.net" name="Sourceforge 2" icon="sourceforge2.png" />
   </group>
   <group name="Spiele" icon="holarse.png">
+    <element type="atomicgamer" url="http://www.atomicgamer.com/games/" name="AtomicGamer" icon="atomicgamer.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <element type="gameolith" url="http://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
     <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
