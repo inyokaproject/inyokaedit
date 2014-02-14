@@ -93,7 +93,7 @@
   <group name="Spiele" icon="holarse.png">
     <element type="atomicgamer" url="http://www.atomicgamer.com/games/" name="AtomicGamer" icon="atomicgamer.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
-    <element type="gameolith" url="http://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
+    <element type="gameolith" url="https://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
     <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
     <element type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
     <element type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
@@ -119,6 +119,8 @@
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
     <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <element type="pdf" url="http://" name="PDF Datei" icon="pdf.png" />
+    <element type="quakenet" url="http://webchat.quakenet.org/?channels=" name="QuakeNet IRC" icon="quakenet.png" />
     <element type="startpage" url="https://startpage.com/do/search?cat=web&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Startpage Suche" icon="startpage.png" />
     <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
     <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
