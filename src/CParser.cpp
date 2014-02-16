@@ -759,7 +759,7 @@ void CParser::replaceHeadlines(QTextDocument *p_rawDoc) {
     QString sTmp("");
     QString sLink("");
     quint16 nHeadlineLevel = 5;
-    m_sListHeadline_1.clear();
+    m_sListHeadlines.clear();
 
     // Go through each text block
     for (QTextBlock block = p_rawDoc->firstBlock();
@@ -786,9 +786,26 @@ void CParser::replaceHeadlines(QTextDocument *p_rawDoc) {
             sLine.remove(sLine.lastIndexOf(sTmp), sLine.length());
             sLine = sLine.trimmed();
 
-            if (1 == nHeadlineLevel) {
-                m_sListHeadline_1 << sLine;
+            switch (nHeadlineLevel) {
+            case 1:
+                sTmp = "##1##" + sLine;
+                break;
+            case 2:
+                sTmp = "##2##" + sLine;
+                break;
+            case 3:
+                sTmp = "##3##" + sLine;
+                break;
+            case 4:
+                sTmp = "##4##" + sLine;
+                break;
+            case 5:
+                sTmp = "##5##" + sLine;
+                break;
+            default:
+                qWarning() << "Found strange formated headline:" << sLine;
             }
+            m_sListHeadlines << sTmp;
 
             // Replace characters for valid link
             sLink = sLine;
@@ -809,6 +826,7 @@ void CParser::replaceHeadlines(QTextDocument *p_rawDoc) {
             break;
         }
     }
+    // qDebug() << "HEADLINES:" << m_sListHeadlines;
 
     p_rawDoc->setPlainText(sDoc);
 }
@@ -822,12 +840,16 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
     QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
     findMacro.setMinimal(true);
     QString sMacro;
+    QString sSpaces;
+    QString sTmp;
     int nPos = 0;
-    // quint16 nTOCLevel;
+    quint16 nTOCLevel;
+    quint16 nCurrentLevel;
+
 
     // Replace characters for valid links (ä, ü, ö, spaces)
-    QStringList sListHeadline_1_Links;
-    foreach (QString s, m_sListHeadline_1) {
+    QStringList sListHeadlines_Links;
+    foreach (QString s, m_sListHeadlines) {
         sMacro = s;
         sMacro.replace(" ", "-");
         sMacro.replace(QString::fromUtf8("Ä"), "Ae");
@@ -836,7 +858,7 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
         sMacro.replace(QString::fromUtf8("ä"), "ae");
         sMacro.replace(QString::fromUtf8("ü"), "ue");
         sMacro.replace(QString::fromUtf8("ö"), "oe");
-        sListHeadline_1_Links << sMacro;
+        sListHeadlines_Links << sMacro.remove(QRegExp("#{1,5}\\d#{1,5}"));
     }
 
     while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
@@ -844,21 +866,26 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
         sMacro.remove("[[" + m_pTemplates->getTransTOC() + "(");
         sMacro.remove(")]]");
 
-        /*
         nTOCLevel = sMacro.trimmed().toUShort();
-        qDebug() << "TOC level:" << nTOCLevel;
-        if (1 != nTOCLevel) {
-            QMessageBox::information(0, "Information",
-                                     "The preview of table of contents does "
-                                     "not supports sub headlines currently.");
-        }
-        */
+        // qDebug() << "TOC level:" << nTOCLevel;
 
         sMacro = "<div class=\"toc\">\n<div class=\"head\">"
                 + m_pTemplates->getTransTOC() + "</div>\n";
-        for (int i = 0; i < m_sListHeadline_1.size(); i++) {
-            sMacro += " 1. [#" + sListHeadline_1_Links[i] + " "
-                    + m_sListHeadline_1[i] + "]\n";
+        for (int i = 0; i < m_sListHeadlines.size(); i++) {
+            sTmp = m_sListHeadlines[i];
+            sTmp.remove(QRegExp("#{1,5}\\d#{1,5}"));
+            m_sListHeadlines[i].remove(m_sListHeadlines[i].length() - sTmp.length(),
+                                       sTmp.length()).remove("#");
+
+            nCurrentLevel = m_sListHeadlines[i].toUShort();
+            sSpaces.fill(' ', nCurrentLevel);
+
+            if (nCurrentLevel > 0 && nCurrentLevel <= nTOCLevel) {
+                sMacro += sSpaces + "1. [#" + sListHeadlines_Links[i] + " "
+                        + sTmp + "]\n";
+            } else if (0 == nCurrentLevel) {
+                 qWarning() << "Found strange formated headline:" << sTmp;
+            }
         }
         sMacro += "\n</div>\n";
 

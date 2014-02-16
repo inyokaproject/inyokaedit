@@ -106,7 +106,7 @@ class CParser : public QObject {
     QTextDocument *m_pRawText;
 
     QStringList m_sListNoTranslate;
-    QStringList m_sListHeadline_1;
+    QStringList m_sListHeadlines;
     QString m_sTags;
 
     CParseTemplates *m_pTemplateParser;

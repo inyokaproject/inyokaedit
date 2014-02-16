@@ -1360,7 +1360,7 @@ void CInyokaEdit::changedUrl() {
 }
 
 void CInyokaEdit::clickedLink(QUrl newUrl) {
-    if (!newUrl.toString().endsWith(m_sPreviewFile)
+    if (!newUrl.toString().contains(m_sPreviewFile)
             && newUrl.isLocalFile()) {
         qDebug() << "Trying to open file:" << newUrl;
         QDesktopServices::openUrl(newUrl);

@@ -153,7 +153,7 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                 sListArguments[j] = sListArguments[j].trimmed();
             }
 
-            qDebug() << "TPL:" << sListArguments;
+            // qDebug() << "TPL:" << sListArguments;
             sMacro = m_pProvTplTarser->parseTpl(sListArguments, m_sCurrentFile);
             if (sMacro.isEmpty()) {
                 sMacro = sBackupMacro;
