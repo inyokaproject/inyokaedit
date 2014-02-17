@@ -137,6 +137,7 @@ QString CParser::genOutput(const QString &sActFile,
     } else {
         QFileInfo fi(m_sCurrentFile);
         sFilename = fi.baseName();
+        sFilename.replace("_"," ");
     }
 
     // Replace template tags
@@ -866,8 +867,12 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
         sMacro.remove("[[" + m_pTemplates->getTransTOC() + "(");
         sMacro.remove(")]]");
 
-        nTOCLevel = sMacro.trimmed().toUShort();
-        // qDebug() << "TOC level:" << nTOCLevel;
+        if (sMacro.trimmed().length() > 0) {
+            nTOCLevel = sMacro.trimmed().toUShort();
+        } else {
+            nTOCLevel = 3;  // Default
+        }
+        qDebug() << "TOC level:" << nTOCLevel;
 
         sMacro = "<div class=\"toc\">\n<div class=\"head\">"
                 + m_pTemplates->getTransTOC() + "</div>\n";

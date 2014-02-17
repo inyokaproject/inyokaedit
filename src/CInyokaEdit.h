@@ -68,7 +68,7 @@ class CTabelTemplate;
 class CUtils;
 // class CUpload;
 
-#define sVERSION "0.12.0"
+#define sVERSION "0.13.0"
 
 namespace Ui {
     class CInyokaEdit;
