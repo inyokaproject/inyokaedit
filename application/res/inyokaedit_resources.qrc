@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/document-new.png</file>
+        <file>images/document-open.png</file>
+        <file>images/document-save.png</file>
+        <file>images/edit-copy.png</file>
+        <file>images/edit-cut.png</file>
+        <file>images/edit-paste.png</file>
+        <file>images/edit-redo.png</file>
+        <file>images/edit-undo.png</file>
+        <file>images/x-office-document.png</file>
+        <file>images/code.png</file>
+        <file>images/go-next.png</file>
+        <file>images/format-text-italic.png</file>
+        <file>images/format-text-bold.png</file>
+        <file>images/image-x-generic.png</file>
+        <file>images/internet-web-browser.png</file>
+        <file>images/monotype.png</file>
+        <file>images/edit-find-replace.png</file>
+        <file>images/edit-find.png</file>
+        <file>images/go-down.png</file>
+        <file>images/go-up.png</file>
+        <file>images/inyokaedit_64x64.png</file>
+        <file>images/question.png</file>
+        <file>images/bug.png</file>
+        <file>images/edit-delete.png</file>
+        <file>images/view-refresh.png</file>
+        <file>images/go-previous.png</file>
+        <file>images/document-print.png</file>
+        <file>images/preferences-system.png</file>
+        <file>images/upload.png</file>
+        <file>images/download.png</file>
+    </qresource>
+</RCC>
