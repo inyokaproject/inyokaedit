@@ -62,6 +62,7 @@
     <element type="gnomeapps" url="https://wiki.gnome.org/Apps/" name="GNOME apps" icon="gnomeapps.png" />
     <element type="gnomeprojects" url="https://wiki.gnome.org/Projects/" name="GNOME projects" icon="gnomeprojects.png" />
     <element type="opensuse" url="http://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
+    <element type="prolinux" url="http://www.pro-linux.de/" name="Pro-Linux" icon="prolinux.png" />
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
   </group>
   <group name="Wikimedia" icon="wikimedia.png">
@@ -114,6 +115,7 @@
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
     <element type="google" url="https://www.google.de/#q=" name="Google" icon="" />
     <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
+    <element type="heise" url="http://www.heise.de/" name="heise online" icon="heise.png" />
     <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
     <element type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
