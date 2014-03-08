@@ -95,7 +95,8 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="insertTableAct"/>
-    <addaction name="DownloadInyokaStylesAct"/>
+    <addaction name="updateIWLsAct"/>
+    <addaction name="downloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -493,7 +494,7 @@
     <string>Delete images which had been downloaded with an article.</string>
    </property>
   </action>
-  <action name="DownloadInyokaStylesAct">
+  <action name="downloadInyokaStylesAct">
    <property name="icon">
     <iconset resource="../res/inyokaedit_resources.qrc">
      <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
@@ -573,6 +574,15 @@
    </property>
    <property name="text">
     <string>Upload article</string>
+   </property>
+  </action>
+  <action name="updateIWLsAct">
+   <property name="icon">
+    <iconset resource="../res/inyokaedit_resources.qrc">
+     <normaloff>:/images/uu.ico</normaloff>:/images/uu.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Update InterWiki-Links</string>
    </property>
   </action>
  </widget>

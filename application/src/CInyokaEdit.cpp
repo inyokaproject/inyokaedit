@@ -375,11 +375,14 @@ void CInyokaEdit::createActions() {
     // ------------------------------------------------------------------------
     // TOOLS MENU
 
-    // Download styles
-    connect(m_pUi->DownloadInyokaStylesAct, SIGNAL(triggered()),
+    // Download styles and IWLs
+    connect(m_pUi->downloadInyokaStylesAct, SIGNAL(triggered()),
             m_pDownloadModule, SLOT(loadInyokaStyles()));
+    connect(m_pUi->updateIWLsAct, SIGNAL(triggered()),
+            m_pDownloadModule, SLOT(updateIWLs()));
 #if defined _WIN32
-    m_pUi->DownloadInyokaStylesAct->setDisabled(true);
+    m_pUi->downloadInyokaStylesAct->setDisabled(true);
+    m_pUi->updateIWLsAct->setDisabled(true);
 #endif
 
     // Clear temp. image download folder

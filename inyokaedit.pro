@@ -24,6 +24,7 @@ unix {
         application/iWikiLinks \
         application/templates \
         GetInyokaStyles \
+        GetIWLs \
         ExtendedDict.txt
     lang.path = /usr/share/inyokaedit/lang
     lang.files += application/lang/*.qm

@@ -30,5 +30,6 @@
         <file>images/preferences-system.png</file>
         <file>images/upload.png</file>
         <file>images/download.png</file>
+        <file>images/uu.ico</file>
     </qresource>
 </RCC>

@@ -62,10 +62,8 @@ void CDownload::updateSettings(const bool bCompleter,
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-// Call download script for Inyoka styles (ONLY working with Linux!)
 
-bool CDownload::loadInyokaStyles() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
+void CDownload::loadInyokaStyles() {
     int iRet = QMessageBox::question(m_pParent, trUtf8("Download styles"),
                                      trUtf8("In order to preview articles "
                                             "correctly, Inyoka resources have "
@@ -76,35 +74,62 @@ bool CDownload::loadInyokaStyles() {
                                      QMessageBox::No);
 
     if (iRet != QMessageBox::No) {
-        // Check for internet connection
-        if (!CUtils::getOnlineState()) {
-            QMessageBox::warning(m_pParent, qApp->applicationName(),
-                                 trUtf8("Download not possible, no active internet "
-                                        "connection found!"));
-            return false;
-        }
-
-        CProgressDialog *pDownloadProgress;
-
-        // Path from normal installation
-        if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
-                          + "/GetInyokaStyles") && !bDEBUG) {
-            pDownloadProgress =
-                    new CProgressDialog("/usr/share/"
-                                        + qApp->applicationName().toLower() +
-                                        "/GetInyokaStyles",
-                                        QStringList() << m_sStylesDir);
-        } else {
-            // No installation: Use app path
-            pDownloadProgress =
-                    new CProgressDialog(qApp->applicationDirPath() + "/GetInyokaStyles",
-                                        QStringList() << m_sStylesDir);
-        }
-
-        pDownloadProgress->show();
-        return true;
+        this->callDownloadScript("GetInyokaStyles");
     }
-    return false;
+}
+
+void CDownload::updateIWLs() {
+    int iRet = QMessageBox::question(m_pParent, trUtf8("Update IWLs"),
+                                     trUtf8("Do you want update the Inyoka "
+                                            "InterWiki-Links now?"),
+                                     QMessageBox::Yes | QMessageBox::No,
+                                     QMessageBox::No);
+
+    if (iRet != QMessageBox::No) {
+        this->callDownloadScript("GetIWLs");
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CDownload::callDownloadScript(const QString &sScript) {
+    qDebug() << "Calling" << Q_FUNC_INFO << sScript;
+
+    // Check for internet connection
+    if (!CUtils::getOnlineState()) {
+        QMessageBox::warning(m_pParent, qApp->applicationName(),
+                             trUtf8("Download not possible, no active internet "
+                                    "connection found!"));
+        return;
+    }
+
+    CProgressDialog *pDownloadProgress;
+
+    // Path from normal installation
+    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+                      + "/" + sScript) && !bDEBUG) {
+        pDownloadProgress =
+                new CProgressDialog("/usr/share/"
+                                    + qApp->applicationName().toLower() + "/"
+                                    + sScript,
+                                    QStringList() << m_sStylesDir);
+    } else if (QFile::exists(qApp->applicationDirPath() + "/" + sScript)) {
+        // No installation: Use app path
+        pDownloadProgress =
+                new CProgressDialog(qApp->applicationDirPath() + "/" + sScript,
+                                    QStringList() << m_sStylesDir);
+    } else {
+        qWarning() << "Download script could not be found:"
+                   << "\n\t/usr/share/" + qApp->applicationName().toLower()
+                      + "/" + sScript
+                   << "\n\t" + qApp->applicationDirPath() + "/" + sScript;
+        QMessageBox::warning(m_pParent, qApp->applicationName(),
+                             trUtf8("Download script could not be found."));
+        return;
+    }
+
+    pDownloadProgress->show();
 }
 
 // ----------------------------------------------------------------------------

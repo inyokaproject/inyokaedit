@@ -63,9 +63,10 @@ class CDownload : public QObject {
   public slots:
     /**
     * \brief Start download of Inyoka style elements
-    * \return True or false for successful / not successful download
     */
-    bool loadInyokaStyles();
+    void loadInyokaStyles();
+    void updateIWLs();
+    void callDownloadScript(const QString &sScript);
 
     void showArticle();
     void updateSettings(const bool bCompleter,
