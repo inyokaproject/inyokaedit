@@ -1493,6 +1493,7 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
 void CInyokaEdit::loadPlugins() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_PluginMenuEntries.clear();
+    m_PluginToolbarEntries.clear();
 
     QDir pluginsDir = QDir(qApp->applicationDirPath());
     pluginsDir.cd("plugins");
@@ -1510,17 +1511,29 @@ void CInyokaEdit::loadPlugins() {
                 qApp->installTranslator(piPlugin->getPluginTranslator(
                                             m_pSettings->getGuiLanguage()));
 
-                m_PluginMenuEntries << new QAction(piPlugin->getMenuIcon(),
-                                                   piPlugin->getMenuEntry(),
-                                                   this);
-                connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
-                        plugin, SLOT(executePlugin()));
+                QIcon icon(piPlugin->getMenuIcon());
+                QString sMenu(piPlugin->getMenuEntry());
+
+                if (!sMenu.isEmpty()) {  // Add to menue if entry available
+                    m_PluginMenuEntries << new QAction(piPlugin->getMenuIcon(),
+                                                       piPlugin->getMenuEntry(),
+                                                       this);
+                    connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
+                            plugin, SLOT(executePlugin()));
+                }
+                if (!icon.isNull()) {  // Add to toolbar if icon available
+                    m_PluginToolbarEntries << new QAction(piPlugin->getMenuIcon(),
+                                                          piPlugin->getMenuEntry(),
+                                                          this);
+                    connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
+                            plugin, SLOT(executePlugin()));
+                }
             }
         }
     }
 
     // Add plugins to plugin toolbar and tools menu
-    m_pUi->pluginsBar->addActions(m_PluginMenuEntries);
+    m_pUi->pluginsBar->addActions(m_PluginToolbarEntries);
     if (m_pUi->toolsMenu->actions().size() > 0) {
         QAction *separator = new QAction(this);
         separator->setSeparator(true);

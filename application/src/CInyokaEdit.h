@@ -246,6 +246,7 @@ class CInyokaEdit : public QMainWindow {
     QList<QAction *> m_CodeHighlightActions;
 
     QList<QAction *> m_PluginMenuEntries;
+    QList<QAction *> m_PluginToolbarEntries;
 
     QTimer *m_pPreviewTimer;
 
