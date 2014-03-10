@@ -81,6 +81,7 @@ class CSettingsDialog : public QDialog {
     quint16 m_nProxyPort;
     QString m_sProxyUserName;
     QString m_sProxyPassword;
+    QString m_sGuiLang;
     QString m_sStyleFile;
     QString m_sExt;
 

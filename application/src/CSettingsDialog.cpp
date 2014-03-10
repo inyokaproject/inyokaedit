@@ -77,6 +77,26 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
     m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
+    QStringList sListGuiLanguages;
+    sListGuiLanguages << "auto" << "en";
+    QDir appDir(qApp->applicationDirPath() + "/lang");
+    QFileInfoList fiListFiles = appDir.entryInfoList(
+                QDir::NoDotAndDotDot | QDir::Files);
+    foreach (QFileInfo fi, fiListFiles) {
+        if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName() + "_")) {
+            sListGuiLanguages << fi.baseName().remove(qAppName() + "_");
+        }
+    }
+    m_pUi->GuiLangCombo->addItems(sListGuiLanguages);
+    if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
+        m_pUi->GuiLangCombo->setCurrentIndex(
+                    m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
+    } else {
+        m_pUi->GuiLangCombo->setCurrentIndex(
+                    m_pUi->GuiLangCombo->findText("auto"));
+    }
+    m_sGuiLang = m_pUi->GuiLangCombo->currentText();
+
     // Enter Qt keycode automatically in text box
     m_pUi->reloadPreviewKeyEdit->installEventFilter(this);
 
@@ -89,7 +109,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
 
     // Style
     QFileInfo fiStylePath(m_pSettings->m_sStyleFile);
-    QFileInfoList fiListFiles = fiStylePath.absoluteDir().entryInfoList(
+    fiListFiles = fiStylePath.absoluteDir().entryInfoList(
                 QDir::NoDotAndDotDot | QDir::Files);
     foreach (QFileInfo fi, fiListFiles) {
         if (fi.fileName().endsWith("-style" + m_sExt)) {
@@ -172,6 +192,7 @@ void CSettingsDialog::accept() {
     m_pSettings->m_nTimedPreview = m_pUi->timedPreviewsEdit->value();
     m_pSettings->m_bSyncScrollbars = m_pUi->scrollbarSyncCheck->isChecked();
     m_pSettings->m_bWinCheckUpdate = m_pUi->WindowsUpdateCheck->isChecked();
+    m_pSettings->m_sGuiLanguage = m_pUi->GuiLangCombo->currentText();
 
     // Font
     m_pSettings->m_sFontFamily = m_pUi->fontComboBox->currentFont().family();
@@ -198,7 +219,8 @@ void CSettingsDialog::accept() {
             || m_pUi->proxyHostNameEdit->text() != m_sProxyHostName
             || m_pUi->proxyPortSpinBox->value() != m_nProxyPort
             || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
-            || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword) {
+            || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword
+            || m_pUi->GuiLangCombo->currentText() != m_sGuiLang) {
         QMessageBox::information(0, this->windowTitle(),
                                  trUtf8("The editor has to be restarted for "
                                         "applying the changes."));

@@ -97,7 +97,7 @@
     <element type="gameolith" url="https://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
     <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
     <element type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
-    <element type="humble" url="http://www.humblebundle.com/store/product/" name="Humble Bundle Store" icon="humble.png" />
+    <element type="humble" url="https://www.humblebundle.com/store/p/" name="Humble Bundle Store" icon="humble.png" />
     <element type="indiedb" url="http://www.indiedb.com/games/" name="Indie DB Video Games" icon="indiedb.png" />
     <element type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
     <element type="lgdb" url="http://www.lgdb.org/" name="Linux game database" icon="lgdb.png" />

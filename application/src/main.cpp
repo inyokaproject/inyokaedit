@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
         // If it fails, search in application directory
         if (!qtTranslator.load("qt_" + sLang, app.applicationDirPath()
                                + "/lang")) {
-            qWarning() << "Could not load any Qt translations.";
+            qWarning() << "Could not load Qt translations:" << "qt_" + sLang;
         }
     }
     app.installTranslator(&qtTranslator);
@@ -132,7 +132,8 @@ int main(int argc, char *argv[]) {
         // If it fails, search in application directory
         if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
                           app.applicationDirPath() + "/lang")) {
-            qWarning() << "Could not load application translation.";
+            qWarning() << "Could not load application translation:"
+                       << qAppName() + "_" + sLang;
         }
     }
     app.installTranslator(&AppTranslator);
@@ -230,7 +231,12 @@ QString getLanguage(const QString &sAppName) {
         }
         #endif
         return QLocale::system().name();
-    } else {
-        return sLang;
+    } else if (!QFile("/usr/share/" + sAppName.toLower()+ "/lang/"
+                   + qAppName() + "_" + sLang + ".qm").exists()
+                && !QFile(qApp->applicationDirPath() + "/lang/"
+                          + qAppName() + "_" + sLang + ".qm").exists()) {
+        settings.setValue("GuiLanguage", "en");
+        return "en";
     }
+    return sLang;
 }
