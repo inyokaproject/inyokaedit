@@ -16,7 +16,8 @@
 
 TEMPLATE       = subdirs
 SUBDIRS        = application \
-                 plugins/spellchecker
+                 plugins/spellchecker \
+                 plugins/tabletemplate
 
 unix {
     data.path = /usr/share/inyokaedit

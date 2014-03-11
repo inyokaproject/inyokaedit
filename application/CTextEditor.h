@@ -44,12 +44,9 @@
 #ifndef INYOKAEDIT_CTEXTEDITOR_H_
 #define INYOKAEDIT_CTEXTEDITOR_H_
 
+#include <QCompleter>
 #include <QTextEdit>
 #include <QTimer>
-
-#include "ui_CInyokaEdit.h"
-
-class QCompleter;
 
 /**
  * \class CTextEditor
@@ -59,8 +56,8 @@ class CTextEditor : public QTextEdit {
     Q_OBJECT
 
   public:
-    CTextEditor(Ui::CInyokaEdit *pGUI, QStringList sListTplMacros,
-                QString sUserAppDir, QWidget *pParent = 0);
+    CTextEditor(QStringList sListTplMacros, QString sUserAppDir,
+                QWidget *pParent = 0);
     ~CTextEditor();
 
     void setCompleter(QCompleter *c);

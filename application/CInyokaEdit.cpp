@@ -36,7 +36,6 @@
 #endif
 
 #include "./CInyokaEdit.h"
-#include "./IEditorPlugin.h"
 #include "ui_CInyokaEdit.h"
 
 extern bool bDEBUG;
@@ -131,8 +130,7 @@ void CInyokaEdit::createObjects() {
                                       m_UserDataDir.absolutePath(),
                                       m_tmpPreviewImgDir.absolutePath());
 
-    m_pEditor = new CTextEditor(m_pUi,
-                                m_pTemplates->getListTplMacrosALL(),
+    m_pEditor = new CTextEditor(m_pTemplates->getListTplMacrosALL(),
                                 m_UserDataDir.absolutePath(),
                                 this);
 
@@ -173,12 +171,6 @@ void CInyokaEdit::createObjects() {
             this, SLOT(syncScrollbarsEditor()));
     m_bEditorScrolling = false;
     m_bWebviewScrolling = false;
-
-    m_pTableTemplate = new CTableTemplate(m_pEditor,
-                                          m_pParser,
-                                          m_UserDataDir,
-                                          m_pTemplates->getTransTemplate(),
-                                          m_pTemplates->getTransTable());
 
     m_pUtils = new CUtils(this);
     connect(m_pUtils, SIGNAL(setWindowsUpdateCheck(bool)),
@@ -366,7 +358,36 @@ void CInyokaEdit::createActions() {
     connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
             m_findDialog, SLOT(findPrev()));
 */
-    // Initialize cut / copy / redo / undo
+
+    // Cut
+    m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
+    connect(m_pUi->cutAct, SIGNAL(triggered()),
+            m_pEditor, SLOT(cut()));
+    connect(m_pEditor, SIGNAL(copyAvailable(bool)),
+            m_pUi->cutAct, SLOT(setEnabled(bool)));
+    // Copy
+    m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
+    connect(m_pUi->copyAct, SIGNAL(triggered()),
+            m_pEditor, SLOT(copy()));
+    connect(m_pEditor, SIGNAL(copyAvailable(bool)),
+            m_pUi->copyAct, SLOT(setEnabled(bool)));
+    // Paste
+    m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
+    connect(m_pUi->pasteAct, SIGNAL(triggered()),
+            m_pEditor, SLOT(paste()));
+    // Undo
+    m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
+    connect(m_pUi->undoAct, SIGNAL(triggered()),
+            m_pEditor, SLOT(undo()));
+    connect(m_pEditor, SIGNAL(undoAvailable(bool)),
+            m_pUi->undoAct, SLOT(setEnabled(bool)));
+    // Redo
+    m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
+    connect(m_pUi->redoAct, SIGNAL(triggered()),
+            m_pEditor, SLOT(redo()));
+    connect(m_pEditor, SIGNAL(redoAvailable(bool)),
+            m_pUi->redoAct, SLOT(setEnabled(bool)));
+
     m_pUi->cutAct->setEnabled(false);
     m_pUi->copyAct->setEnabled(false);
     m_pUi->undoAct->setEnabled(false);
@@ -503,9 +524,6 @@ void CInyokaEdit::createActions() {
 
     connect(m_pSigMapCodeHighlight, SIGNAL(mapped(QString)),
             this, SLOT(insertCodeblock(QString)));
-
-    connect(m_pUi->insertTableAct, SIGNAL(triggered()),
-            m_pTableTemplate, SLOT(newTable()));
 
     // ------------------------------------------------------------------------
     // MARKUP TEMPLATES MENU

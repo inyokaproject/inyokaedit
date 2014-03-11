@@ -31,13 +31,14 @@
 #define INYOKAEDIT_CSPELLCHECKER_H_
 
 #include <QObject>
-#include <QTextEdit>
 #include <QTranslator>
 #include <QtPlugin>
 #include <QSettings>
 #include <QString>
+#include <QTextCursor>
 
-#include "../../../application/src/IEditorPlugin.h"
+#include "../../application/CTextEditor.h"
+#include "../../application/IEditorPlugin.h"
 #include "./CSpellCheckDialog.h"
 
 #if defined _WIN32
@@ -58,11 +59,10 @@ class CSpellChecker : public QObject, IEditorPlugin {
     Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 #endif
 
-
   public:
     ~CSpellChecker();
 
-    void initPlugin(QWidget *pParent, QTextEdit *pEditor,
+    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
                     const QDir userDataDir);
     QTranslator* getPluginTranslator(const QString &sLocale);
     QString getMenuEntry() const;
@@ -85,7 +85,7 @@ class CSpellChecker : public QObject, IEditorPlugin {
     void putWord(const QString &sWord);
 
     Hunspell *m_pHunspell;
-    QTextEdit *m_pEditor;
+    CTextEditor *m_pEditor;
     QAction *m_pExecuteAct;
     CSpellCheckDialog *m_pCheckDialog;
     QSettings *m_pSettings;

@@ -44,7 +44,7 @@ CSpellChecker::~CSpellChecker() {
     m_pHunspell = NULL;
 }
 
-void CSpellChecker::initPlugin(QWidget *pParent, QTextEdit *pEditor,
+void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                                const QDir userDataDir) {
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
     Q_UNUSED(pParent);
@@ -52,11 +52,11 @@ void CSpellChecker::initPlugin(QWidget *pParent, QTextEdit *pEditor,
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                "spellchecker");
+                                PLUGIN_NAME);
 #else
     m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                "spellchecker");
+                                PLUGIN_NAME);
 #endif
 
     m_pHunspell = NULL;

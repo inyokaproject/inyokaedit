@@ -33,6 +33,7 @@
 #include <QToolButton>
 #include <QWebHistory>
 
+#include "./IEditorPlugin.h"
 #include "./CTemplates.h"
 #include "./CXmlParser.h"
 #include "./CSettings.h"
@@ -43,7 +44,6 @@
 #include "./CUtils.h"
 // #include "./CUpload.h"
 #include "./CFileOperations.h"
-#include "./CTableTemplate.h"
 
 // Qt classes
 class QComboBox;
@@ -59,7 +59,6 @@ class CFindReplace;
 class CSettings;
 class CDownload;
 class CFileOperations;
-class CTabelTemplate;
 class CUtils;
 // class CUpload;
 
@@ -199,7 +198,6 @@ class CInyokaEdit : public QMainWindow {
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
     // CUpload *m_pUploadModule;
-    CTableTemplate *m_pTableTemplate;
     CFindReplace *m_pFindReplace;
     CUtils *m_pUtils;
     QSplitter *m_pWidgetSplitter;

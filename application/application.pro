@@ -17,8 +17,8 @@
 TEMPLATE       = app
 TARGET         = inyokaedit
 DESTDIR        = ../
-DEPENDPATH    += ./src
-INCLUDEPATH   += ./src
+DEPENDPATH    += .
+INCLUDEPATH   += .
 
 VERSION        = 0.13.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
@@ -37,55 +37,52 @@ QT           += core gui xml network
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport webkitwidgets
 
-HEADERS      += src/CInyokaEdit.h \
-                src/CDownload.h \
-                src/CDownloadImg.h \
-                src/CFileOperations.h \
-                src/CFindReplace.h \
-                src/CHighlighter.h \
-                src/CParser.h \
-                src/CParseImgMap.h \
-                src/CParseLinks.h \
-                src/CParseTemplates.h \
-                src/CProgressDialog.h \
-                src/CProvisionalTplParser.h \
-                src/CTableTemplate.h \
-                src/CTemplates.h \
-                src/CTextEditor.h \
-                src/CSettings.h \
-                src/CSettingsDialog.h \
-                # src/CUpload.h \
-                src/CUtils.h \
-                src/CXmlParser.h \
-                src/IEditorPlugin.h
+HEADERS      += CInyokaEdit.h \
+                CDownload.h \
+                CDownloadImg.h \
+                CFileOperations.h \
+                CFindReplace.h \
+                CHighlighter.h \
+                CParser.h \
+                CParseImgMap.h \
+                CParseLinks.h \
+                CParseTemplates.h \
+                CProgressDialog.h \
+                CProvisionalTplParser.h \
+                CTemplates.h \
+                CTextEditor.h \
+                CSettings.h \
+                CSettingsDialog.h \
+                # CUpload.h \
+                CUtils.h \
+                CXmlParser.h \
+                IEditorPlugin.h
 
-SOURCES      += src/main.cpp \
-                src/CInyokaEdit.cpp \
-                src/CDownload.cpp \
-                src/CDownloadImg.cpp \
-                src/CFileOperations.cpp \
-                src/CFindReplace.cpp  \
-                src/CHighlighter.cpp \
-                src/CParser.cpp \
-                src/CParseImgMap.cpp \
-                src/CParseLinks.cpp \
-                src/CParseTemplates.cpp \
-                src/CProgressDialog.cpp \
-                src/CProvisionalTplParser.cpp \
-                src/CTableTemplate.cpp \
-                src/CTemplates.cpp \
-                src/CTextEditor.cpp \
-                src/CSettings.cpp \
-                src/CSettingsDialog.cpp \
-                # src/CUpload.cpp \
-                src/CUtils.cpp \
-                src/CXmlParser.cpp
+SOURCES      += main.cpp \
+                CInyokaEdit.cpp \
+                CDownload.cpp \
+                CDownloadImg.cpp \
+                CFileOperations.cpp \
+                CFindReplace.cpp  \
+                CHighlighter.cpp \
+                CParser.cpp \
+                CParseImgMap.cpp \
+                CParseLinks.cpp \
+                CParseTemplates.cpp \
+                CProgressDialog.cpp \
+                CProvisionalTplParser.cpp \
+                CTemplates.cpp \
+                CTextEditor.cpp \
+                CSettings.cpp \
+                CSettingsDialog.cpp \
+                # CUpload.cpp \
+                CUtils.cpp \
+                CXmlParser.cpp
 
-FORMS        += src/CInyokaEdit.ui \
-                src/CFindReplace.ui \
-                src/CProgressDialog.ui \
-                src/CSettingsDialog.ui \
-                src/CTableTemplate.ui
+FORMS        += CInyokaEdit.ui \
+                CFindReplace.ui \
+                CProgressDialog.ui \
+                CSettingsDialog.ui
 
 RESOURCES     = res/inyokaedit_resources.qrc
 

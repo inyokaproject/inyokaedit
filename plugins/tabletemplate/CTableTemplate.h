@@ -27,20 +27,18 @@
 #ifndef INYOKAEDIT_CTABLETEMPLATE_H_
 #define INYOKAEDIT_CTABLETEMPLATE_H_
 
-#include <QDir>
 #include <QDialog>
+#include <QDir>
+#include <QtPlugin>
+#include <QSettings>
 #include <QString>
 
-#include "./CParser.h"
-#include "./CTextEditor.h"
-
+#include "../../application/CTextEditor.h"
+#include "../../application/IEditorPlugin.h"
 
 namespace Ui {
     class CTableTemplateClass;
 }
-
-class CParser;
-class CTextEditor;
 
 class QDir;
 class QTextDocument;
@@ -49,25 +47,23 @@ class QTextDocument;
  * \class CTableTemplate
  * \brief Dialog for table insertion
  */
-class CTableTemplate : public QDialog {
+class CTableTemplate : public QObject, IEditorPlugin {
     Q_OBJECT
+    Q_INTERFACES(IEditorPlugin)
+
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
+#endif
 
   public:
-    /**
-     * \brief Constructor
-     * \param pParent Pointer to parent windiw
-     * \param pEditor Pointer to editor module
-     */
-    CTableTemplate(CTextEditor *pEditor,
-                   CParser *pParser,
-                   const QDir &PreviewDir,
-                   const QString &sTransTemplate,
-                   const QString &sTransTable,
-                   QWidget *pParent = 0);
+    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                    const QDir userDataDir);
+    QTranslator* getPluginTranslator(const QString &sLocale);
+    QString getMenuEntry() const;
+    QIcon getMenuIcon() const;
 
   public slots:
-    /** \brief Open dialog */
-    void newTable();
+    void executePlugin();
 
   private slots:
     /** \brief Show preview */
@@ -82,16 +78,19 @@ class CTableTemplate : public QDialog {
 
     Ui::CTableTemplateClass *m_pUi;
 
+    QDialog *m_pDialog;
+    QSettings *m_pSettings;
     CTextEditor *m_pEditor;
-    CParser *m_pParser;
+//    CParser *m_pParser;
     QDir m_dirPreview;
-    QString m_sTransTemplate;
-    QString m_sTransTable;
     QTextDocument *m_pTextDocument;
 
     QString m_sTableString;
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;
+    QString m_sRowClassTitle;
+    QString m_sRowClassHead;
+    QString m_sRowClassHighlight;
 };
 
 #endif  // INYOKAEDIT_CTABLETEMPLATE_H_

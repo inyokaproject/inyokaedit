@@ -42,7 +42,7 @@
  * syntax elements.
  */
 
-#include <QCompleter>
+#include <QAbstractItemView>
 #include <QDebug>
 #include <QFile>
 #include <QKeyEvent>
@@ -50,9 +50,7 @@
 
 #include "./CTextEditor.h"
 
-
-CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
-                         QStringList sListTplMacros,
+CTextEditor::CTextEditor(QStringList sListTplMacros,
                          QString sUserAppDir,
                          QWidget *pParent)
     : QTextEdit(pParent),
@@ -79,36 +77,6 @@ CTextEditor::CTextEditor(Ui::CInyokaEdit *pGUI,
 
     this->setCompleter(m_pCompleter);
     this->setAcceptRichText(false);  // Paste plain text only
-
-    // Cut
-    pGUI->cutAct->setShortcuts(QKeySequence::Cut);
-    connect(pGUI->cutAct, SIGNAL(triggered()),
-            this, SLOT(cut()));
-    connect(this, SIGNAL(copyAvailable(bool)),
-            pGUI->cutAct, SLOT(setEnabled(bool)));
-    // Copy
-    pGUI->copyAct->setShortcuts(QKeySequence::Copy);
-    connect(pGUI->copyAct, SIGNAL(triggered()),
-            this, SLOT(copy()));
-    connect(this, SIGNAL(copyAvailable(bool)),
-            pGUI->copyAct, SLOT(setEnabled(bool)));
-    // Paste
-    pGUI->pasteAct->setShortcuts(QKeySequence::Paste);
-    connect(pGUI->pasteAct, SIGNAL(triggered()),
-            this, SLOT(paste()));
-    // Undo
-    pGUI->undoAct->setShortcuts(QKeySequence::Undo);
-    connect(pGUI->undoAct, SIGNAL(triggered()),
-            this, SLOT(undo()));
-    connect(this, SIGNAL(undoAvailable(bool)),
-            pGUI->undoAct, SLOT(setEnabled(bool)));
-    // Redo
-    pGUI->redoAct->setShortcuts(QKeySequence::Redo);
-    connect(pGUI->redoAct, SIGNAL(triggered()),
-            this, SLOT(redo()));
-    connect(this, SIGNAL(redoAvailable(bool)),
-            pGUI->redoAct, SLOT(setEnabled(bool)));
-
 
     // Text changed
     connect(this->document(), SIGNAL(contentsChanged()),

@@ -32,7 +32,7 @@
    <string>Load styles...</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../res/inyokaedit_resources.qrc">
+   <iconset resource="res/inyokaedit_resources.qrc">
     <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
   </property>
   <property name="autoFillBackground">
@@ -69,7 +69,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../res/inyokaedit_resources.qrc"/>
+  <include location="res/inyokaedit_resources.qrc"/>
  </resources>
  <connections/>
 </ui>

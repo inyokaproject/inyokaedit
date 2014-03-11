@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Table</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res/tabletemplate_resources.qrc">
+    <normaloff>:/tabletemplate.png</normaloff>:/tabletemplate.png</iconset>
+  </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
   </property>
@@ -150,10 +154,12 @@
   <customwidget>
    <class>QWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="res/tabletemplate_resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

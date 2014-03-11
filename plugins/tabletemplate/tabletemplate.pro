@@ -16,13 +16,13 @@
 
 TEMPLATE      = lib
 CONFIG       += plugin
-TARGET        = spellchecker
+TARGET        = tabletemplate
 DESTDIR       = ../
 DEPENDPATH   += .
 INCLUDEPATH  += .
 
 VERSION       = 1.0.0
-QMAKE_TARGET_DESCRIPTION = "Spell checker plugin for InyokaEdit"
+QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
@@ -33,24 +33,15 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
+QT           += xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-HEADERS      += CSpellCheckDialog.h \
-                CSpellChecker.h
+HEADERS      += CTableTemplate.h
 
-SOURCES      += CSpellCheckDialog.cpp \
-                CSpellChecker.cpp
+SOURCES      += CTableTemplate.cpp
 
-FORMS        += CSpellCheckDialog.ui
+FORMS        += CTableTemplate.ui
 
-RESOURCES     = res/spellchecker_resources.qrc
+RESOURCES     = res/tabletemplate_resources.qrc
 
-TRANSLATIONS += lang/spellchecker_de.ts
-
-unix {
-   LIBS      += -lhunspell
-}
-
-win32 {
-   LIBS      += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
-}
+TRANSLATIONS += lang/tabletemplate_de.ts

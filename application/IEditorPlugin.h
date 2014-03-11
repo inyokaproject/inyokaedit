@@ -29,22 +29,23 @@
 
 #include <QAction>
 #include <QDir>
-#include <QTextEdit>
 #include <QTranslator>
 #include <QtPlugin>
 
+class CTextEditor;
+
 class IEditorPlugin {
-public:
+  public:
     virtual ~IEditorPlugin() {}
 
     // ALL FUNCTIONS PURE VIRTUAL !!!
-    virtual void initPlugin(QWidget *pParent, QTextEdit *pEditor,
+    virtual void initPlugin(QWidget *pParent, CTextEditor *pEditor,
                             QDir userDataDir) = 0;
     virtual QTranslator* getPluginTranslator(const QString &sLocale) = 0;
     virtual QString getMenuEntry() const = 0;
     virtual QIcon getMenuIcon() const = 0;
 
-public slots:
+  public slots:
     virtual void executePlugin() = 0;
 };
 
