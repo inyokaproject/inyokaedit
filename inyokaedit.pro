@@ -15,9 +15,11 @@
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE       = subdirs
-SUBDIRS        = application \
+CONFIG        += ordered
+SUBDIRS        = libs/templates \
                  plugins/spellchecker \
-                 plugins/tabletemplate
+                 plugins/tabletemplate \
+                 application
 
 unix {
     data.path = /usr/share/inyokaedit

@@ -18,8 +18,6 @@ TEMPLATE      = lib
 CONFIG       += plugin
 TARGET        = spellchecker
 DESTDIR       = ../
-DEPENDPATH   += .
-INCLUDEPATH  += .
 
 VERSION       = 1.0.0
 QMAKE_TARGET_DESCRIPTION = "Spell checker plugin for InyokaEdit"

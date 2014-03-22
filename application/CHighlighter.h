@@ -31,7 +31,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-#include "./CTemplates.h"
+#include "../libs/templates/CTemplates.h"
 
 // Qt classes
 class QSettings;

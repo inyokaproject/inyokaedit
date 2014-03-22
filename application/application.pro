@@ -17,8 +17,8 @@
 TEMPLATE       = app
 TARGET         = inyokaedit
 DESTDIR        = ../
-DEPENDPATH    += .
-INCLUDEPATH   += .
+INCLUDEPATH   += ../libs/templates
+LIBS          += -L../libs/templates -ltemplates
 
 VERSION        = 0.13.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
@@ -49,13 +49,11 @@ HEADERS      += CInyokaEdit.h \
                 CParseTemplates.h \
                 CProgressDialog.h \
                 CProvisionalTplParser.h \
-                CTemplates.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
                 # CUpload.h \
                 CUtils.h \
-                CXmlParser.h \
                 IEditorPlugin.h
 
 SOURCES      += main.cpp \
@@ -71,13 +69,11 @@ SOURCES      += main.cpp \
                 CParseTemplates.cpp \
                 CProgressDialog.cpp \
                 CProvisionalTplParser.cpp \
-                CTemplates.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
                 # CUpload.cpp \
-                CUtils.cpp \
-                CXmlParser.cpp
+                CUtils.cpp
 
 FORMS        += CInyokaEdit.ui \
                 CFindReplace.ui \

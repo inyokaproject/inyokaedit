@@ -27,7 +27,6 @@
 #ifndef INYOKAEDIT_CTEMPLATES_H_
 #define INYOKAEDIT_CTEMPLATES_H_
 
-
 #include "./CXmlParser.h"
 
 class CTemplates : public QObject {

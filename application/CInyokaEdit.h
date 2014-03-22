@@ -34,8 +34,7 @@
 #include <QWebHistory>
 
 #include "./IEditorPlugin.h"
-#include "./CTemplates.h"
-#include "./CXmlParser.h"
+#include "../libs/templates/CTemplates.h"
 #include "./CSettings.h"
 #include "./CParser.h"
 #include "./CTextEditor.h"
@@ -53,13 +52,13 @@ class QFile;
 class QDir;
 
 // Own classes
-class CTemplates;
 class CParser;
 class CFindReplace;
 class CSettings;
 class CDownload;
 class CFileOperations;
 class CUtils;
+class CXmlParser;
 // class CUpload;
 
 namespace Ui {
