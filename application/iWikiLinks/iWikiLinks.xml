@@ -108,6 +108,7 @@
   </group>
   <group name="Misc" icon="youtube.png">
     <element type="blogspot" url="http://$PAGE.blogspot.de/" name="Blogspot" icon="blogspot.png" />
+    <element type="derstandard" url="http://derstandard.at/" name="derStandard" icon="derstandard.png" />
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
     <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
     <element type="ean" url="https://www.google.de/#q=" name="EAN" icon="ean.png" />

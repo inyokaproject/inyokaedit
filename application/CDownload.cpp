@@ -34,6 +34,10 @@
 
 extern bool bDEBUG;
 
+/**
+ * \todo Up-/download as plugin?
+ */
+
 CDownload::CDownload(QWidget *pParent, const QString &sStylesDir, const QString &sImgDir)
     : m_pParent(pParent),
       m_sStylesDir(sStylesDir),

@@ -26,6 +26,10 @@
 
 #include "./CParser.h"
 
+/**
+ * \todo Move to library
+ */
+
 // Constructor
 CParser::CParser(const QDir &tmpFileOutputDir,
                  const QDir &tmpImgDir,

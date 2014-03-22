@@ -136,6 +136,10 @@ void CTableTemplate::executePlugin() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+/**
+ * \todo Access to parser library
+ */
+
 void CTableTemplate::preview() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 /*
@@ -156,6 +160,10 @@ void CTableTemplate::preview() {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
+
+/**
+ * \todo TPL translations from template library
+ */
 
 void CTableTemplate::generateTable() {
     qDebug() << "Calling" << Q_FUNC_INFO;

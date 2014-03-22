@@ -32,6 +32,10 @@
 
 #include "./CTemplates.h"
 
+/**
+ * \todo Move to library
+ */
+
 extern bool bDEBUG;
 
 CTemplates::CTemplates(const QString &sTplLang)

@@ -30,6 +30,10 @@
 #include "./CFindReplace.h"
 #include "ui_CFindReplace.h"
 
+/**
+ * \todo Move to library
+ */
+
 CFindReplace::CFindReplace(CSettings *pSettings, QWidget *parent)
     : QDialog(parent),
       m_pSettings(pSettings),

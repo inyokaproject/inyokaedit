@@ -97,6 +97,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonicalvoi
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/debian.png -O debian.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/debianbug.png -O debianbug.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/debian_de.png -O debian_de.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/derstandard.png -O derstandard.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/desura.png -O desura.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/diaspora.png -O diaspora.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/dropbox.png -O dropbox.png
