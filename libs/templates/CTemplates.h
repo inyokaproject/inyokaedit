@@ -29,7 +29,13 @@
 
 #include "./CXmlParser.h"
 
-class CTemplates : public QObject {
+#if defined(TEMPLATES_LIBRARY)
+#  define TEMPLATES_EXPORT Q_DECL_EXPORT
+#else
+#  define TEMPLATES_EXPORT Q_DECL_IMPORT
+#endif
+
+class TEMPLATES_EXPORT CTemplates : public QObject {
     Q_OBJECT
 
   public:

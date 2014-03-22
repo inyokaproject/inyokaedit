@@ -27,23 +27,24 @@
 #include "./CParser.h"
 
 // Constructor
-CParser::CParser(const QDir &tmpFileOutputDir,
-                 const QDir &tmpImgDir,
+CParser::CParser(const QDir &tmpImgDir,
                  const QString &sInyokaUrl,
                  const bool bCheckLinks,
                  CTemplates *pTemplates)
     : m_pRawText(NULL),
-      m_tmpFileDir(tmpFileOutputDir),
       m_tmpImgDir(tmpImgDir),
       m_sInyokaUrl(sInyokaUrl),
       m_pTemplates(pTemplates) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
+    m_tmpFileDir = tmpImgDir;
+    m_tmpFileDir.cdUp();
+
     m_pTemplateParser = new CParseTemplates(m_pTemplates->getTransTemplate(),
                                             m_pTemplates->getListTplNamesINY(),
                                             m_pTemplates->getListFormatHtmlStart(),
-                                            tmpFileOutputDir,
-                                            tmpImgDir);
+                                            m_tmpFileDir,
+                                            m_tmpImgDir);
 
     m_pLinkParser = new CParseLinks(m_sInyokaUrl,
                                     m_pTemplates->getIWLs()->getElementTypes(),
@@ -82,7 +83,6 @@ QString CParser::genOutput(const QString &sActFile,
     // Need a copy otherwise text in editor will be changed
     m_pRawText = pRawDocument->clone();
     m_sCurrentFile = sActFile;
-    QString sWikitags("");
 
     // Replace macros with Inyoka markup templates
     // this->replaceTemplates(m_pRawText);
@@ -118,8 +118,6 @@ QString CParser::genOutput(const QString &sActFile,
     this->replaceHorLine(m_pRawText);
     this->replaceDates(m_pRawText);
 
-    sWikitags = this->generateTags(m_pRawText);
-
     this->replaceTextformat(m_pRawText,
                             m_pTemplates->getListFormatStart(),
                             m_pTemplates->getListFormatEnd(),
@@ -151,7 +149,7 @@ QString CParser::genOutput(const QString &sActFile,
     sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
     sTemplateCopy = sTemplateCopy.replace("%tagtext%",
                                           m_pTemplates->getTransTag() + " "
-                                          + sWikitags);
+                                          + this->generateTags(m_pRawText));
     sTemplateCopy = sTemplateCopy.replace("%content%",
                                           m_pRawText->toPlainText());
 

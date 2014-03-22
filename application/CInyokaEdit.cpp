@@ -150,8 +150,7 @@ void CInyokaEdit::createObjects() {
                                             m_pSettings,
                                             m_sPreviewFile);
 
-    m_pParser = new CParser(m_UserDataDir,
-                            m_tmpPreviewImgDir,
+    m_pParser = new CParser(m_tmpPreviewImgDir,
                             m_pSettings->getInyokaUrl(),
                             m_pSettings->getCheckLinks(),
                             m_pTemplates);

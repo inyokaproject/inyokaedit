@@ -17,10 +17,12 @@
 TEMPLATE       = app
 TARGET         = inyokaedit
 DESTDIR        = ../
+DEPENDPATH    += ../libs/templates \
+                 ../libs/parser
 INCLUDEPATH   += ../libs/templates \
                  ../libs/parser
-LIBS          += -L../libs/templates -ltemplates \
-                 -L../libs/parser -lparser
+LIBS          += -L../libs -ltemplates \
+                 -L../libs -lparser
 
 VERSION        = 0.13.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"

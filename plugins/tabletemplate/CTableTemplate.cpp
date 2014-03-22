@@ -48,6 +48,8 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pEditor = pEditor;
     m_dirPreview = userDataDir;
     m_pTextDocument = new QTextDocument(this);
+    m_pTemplates = new CTemplates("de");  // TODO: Get language from settings
+    m_pParser = new CParser(QDir(""), "", false, m_pTemplates);
 
     // Build UI
     m_pDialog = new QDialog(pParent);
@@ -119,15 +121,12 @@ QIcon CTableTemplate::getMenuIcon() const {
 
 void CTableTemplate::executePlugin() {
     qDebug() << "Calling" << Q_FUNC_INFO;
-
     m_pUi->tableStyleBox->setCurrentIndex(0);
     m_pUi->showHeadBox->setChecked(false);
     m_pUi->showTitleBox->setChecked(false);
     m_pUi->HighlightSecondBox->setChecked(false);
     m_pUi->colsNum->setValue(2);
     m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
-
-    m_sTableString.clear();
     m_pUi->previewBox->setHtml("");
     m_pDialog->show();
     m_pDialog->exec();
@@ -136,15 +135,8 @@ void CTableTemplate::executePlugin() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-/**
- * \todo Access to parser library
- */
-
 void CTableTemplate::preview() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-/*
-    this->generateTable();
-    m_pTextDocument->setPlainText(m_sTableString);
+    m_pTextDocument->setPlainText(this->generateTable());
 
     QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
     // Remove for preview useless elements
@@ -155,31 +147,22 @@ void CTableTemplate::preview() {
     m_pUi->previewBox->setHtml(sRetHtml,
                                QUrl::fromLocalFile(m_dirPreview.absolutePath()
                                                    + "/"));
-*/
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-/**
- * \todo TPL translations from template library
- */
-
-void CTableTemplate::generateTable() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-
+QString CTableTemplate::generateTable() {
+    QString sTableCode("");
     int colsNum = m_pUi->colsNum->value();
     int rowsNum = m_pUi->rowsNum->value();
-/*
-    m_sTableString = "{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
-                     + m_pTemplates->getTransTable() + "\n";
-*/
-    m_sTableString = "{{{#!vorlage Tabelle\n";
 
+    sTableCode = "{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
+                 + m_pTemplates->getTransTable() + "\n";
 
     // Create title if set
     if (m_pUi->showTitleBox->isChecked()) {
-         m_sTableString += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
+         sTableCode += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
                  .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                  .arg(m_sRowClassTitle)
                  .arg(colsNum)
@@ -188,43 +171,41 @@ void CTableTemplate::generateTable() {
 
     // Create head if set
     if (m_pUi->showHeadBox->isChecked()) {
-        m_sTableString += QString("<rowclass=\"%1%2\"> ")
+        sTableCode += QString("<rowclass=\"%1%2\"> ")
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                 .arg(m_sRowClassHead);
 
         for (int i = 0; i < colsNum; i++) {
-            m_sTableString += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
+            sTableCode += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
         }
 
-        m_sTableString += "+++\n";
+        sTableCode += "+++\n";
     }
 
     // Create body
     for (int i = 0; i < rowsNum; i++) {
         if (m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2) {
-            m_sTableString += QString("<rowclass=\"%1%2\">")
+            sTableCode += QString("<rowclass=\"%1%2\">")
                     .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                     .arg(m_sRowClassHighlight);
         }
         for (int j = 0; j < colsNum; j++) {
-            m_sTableString += "\n";
+            sTableCode += "\n";
         }
         if (i != rowsNum-1) {
-            m_sTableString += "+++\n";
+            sTableCode += "+++\n";
         }
     }
 
-    m_sTableString += "}}}\n";
+    sTableCode += "}}}\n";
+    return sTableCode;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTableTemplate::accept() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-
-    this->generateTable();
-    m_pEditor->insertPlainText(m_sTableString);
+    m_pEditor->insertPlainText(this->generateTable());
     m_pDialog->done(QDialog::Accepted);
 }
 

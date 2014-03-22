@@ -42,18 +42,22 @@ class QString;
 class QTextDocument;
 class QDir;
 
+#if defined(PARSER_LIBRARY)
+#  define PARSER_EXPORT Q_DECL_EXPORT
+#else
+#  define PARSER_EXPORT Q_DECL_IMPORT
+#endif
+
 /**
  * \class CParser
  * \brief Main parser module.
- * \todo Separate some parts in smaler modules.
  */
-class CParser : public QObject {
+class PARSER_EXPORT CParser : public QObject {
     Q_OBJECT
 
   public:
     // Constructor
-    CParser(const QDir &tmpFileOutputDir,
-            const QDir &tmpImgDir,
+    CParser(const QDir &tmpImgDir,
             const QString &sInyokaUrl,
             const bool bCheckLinks,
             CTemplates *pTemplates);
@@ -105,7 +109,6 @@ class CParser : public QObject {
 
     QStringList m_sListNoTranslate;
     QStringList m_sListHeadlines;
-    QString m_sTags;
 
     CParseTemplates *m_pTemplateParser;
     CParseLinks *m_pLinkParser;

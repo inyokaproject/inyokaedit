@@ -18,6 +18,10 @@ TEMPLATE      = lib
 CONFIG       += plugin
 TARGET        = tabletemplate
 DESTDIR       = ../
+DEPENDPATH   += ../../libs/templates \
+                ../../libs/parser
+INCLUDEPATH  += ../../libs/templates \
+                ../../libs/parser
 
 VERSION       = 1.0.0
 QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
@@ -26,12 +30,15 @@ QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
 
+LIBS          += -L../../libs -ltemplates \
+                 -L../../libs -lparser
+
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += xml
+QT           += xml network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS      += CTableTemplate.h

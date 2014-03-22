@@ -33,6 +33,8 @@
 #include <QSettings>
 #include <QString>
 
+#include "../../libs/templates/CTemplates.h"
+#include "../../libs/parser/CParser.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
@@ -73,19 +75,21 @@ class CTableTemplate : public QObject, IEditorPlugin {
     void accept();
 
   private:
-    /** \brief Generate specific table */
-    void generateTable();
+    /**
+    * \brief Generate specific table
+    * \return String including th generated table code
+    */
+    QString generateTable();
 
     Ui::CTableTemplateClass *m_pUi;
-
     QDialog *m_pDialog;
     QSettings *m_pSettings;
     CTextEditor *m_pEditor;
-//    CParser *m_pParser;
+    CTemplates *m_pTemplates;
+    CParser *m_pParser;
     QDir m_dirPreview;
     QTextDocument *m_pTextDocument;
 
-    QString m_sTableString;
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;
     QString m_sRowClassTitle;
