@@ -35,14 +35,12 @@
 #include "./CParseTemplates.h"
 #include "./CParseLinks.h"
 #include "./CParseImgMap.h"
-#include "./CSettings.h"
-#include "../libs/templates/CTemplates.h"
+#include "../templates/CTemplates.h"
 
 // Qt classes
 class QString;
 class QTextDocument;
 class QDir;
-
 
 /**
  * \class CParser

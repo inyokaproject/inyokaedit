@@ -32,10 +32,6 @@
 
 #include "./CTemplates.h"
 
-/**
- * \todo Move to library
- */
-
 extern bool bDEBUG;
 
 CTemplates::CTemplates(const QString &sTplLang)
@@ -183,8 +179,7 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
     }
 
     if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, trUtf8("Warning"),
-                             trUtf8("Could not open preview template file!"));
+        QMessageBox::warning(0, "Warning", "Could not open preview template file!");
         qWarning() << "Could not open preview template file:"
                    << HTMLTplFile.fileName();
         m_sPreviewTemplate = "ERROR";
@@ -220,8 +215,7 @@ void CTemplates::initImgMap(const QString &sFilename,
     }
 
     if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, trUtf8("Warning"),
-                             trUtf8("Could not open image map file!"));
+        QMessageBox::warning(0, "Warning", "Could not open image map file!");
         qWarning() << "Could not open flag config file:"
                    << ImgMapFile.fileName();
         sListElements << "ERROR";
@@ -262,8 +256,7 @@ void CTemplates::initTextformats(const QString &sFilename) {
     }
 
     if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, trUtf8("Warning"),
-                             trUtf8("Could not open text formats config file!"));
+        QMessageBox::warning(0, "Warning", "Could not open text formats config file!");
         qWarning() << "Could not open text formats config file:"
                    << formatsFile.fileName();
         // Initialize possible text formats
@@ -310,8 +303,7 @@ void CTemplates::initTranslations(const QString &sFilename) {
     }
 
     if (!translFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::critical(0, "Error",
-                              trUtf8("Could not open template translation file!"));
+        QMessageBox::critical(0, "Error", "Could not open template translation file!");
         qCritical() << "Could not open template translation file:"
                     << translFile.fileName();
         exit(-1);

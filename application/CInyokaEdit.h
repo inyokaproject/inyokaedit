@@ -33,10 +33,11 @@
 #include <QToolButton>
 #include <QWebHistory>
 
-#include "./IEditorPlugin.h"
 #include "../libs/templates/CTemplates.h"
+#include "../libs/parser/CParser.h"
+
+#include "./IEditorPlugin.h"
 #include "./CSettings.h"
-#include "./CParser.h"
 #include "./CTextEditor.h"
 #include "./CFindReplace.h"
 #include "./CDownload.h"
@@ -52,13 +53,11 @@ class QFile;
 class QDir;
 
 // Own classes
-class CParser;
 class CFindReplace;
 class CSettings;
 class CDownload;
 class CFileOperations;
 class CUtils;
-class CXmlParser;
 // class CUpload;
 
 namespace Ui {

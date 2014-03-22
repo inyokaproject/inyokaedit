@@ -26,10 +26,6 @@
 
 #include "./CParser.h"
 
-/**
- * \todo Move to library
- */
-
 // Constructor
 CParser::CParser(const QDir &tmpFileOutputDir,
                  const QDir &tmpImgDir,
@@ -137,7 +133,7 @@ QString CParser::genOutput(const QString &sActFile,
     // File name
     QString sFilename;
     if (m_sCurrentFile.isEmpty()) {
-        sFilename = trUtf8("Untitled", "No file name set");
+        sFilename = "Untitled";
     } else {
         QFileInfo fi(m_sCurrentFile);
         sFilename = fi.baseName();
@@ -1373,7 +1369,7 @@ void CParser::replaceDates(QTextDocument *p_rawDoc) {
         if (bConversionOk && datetime.isValid()) {
             sMacro = datetime.toString(Qt::SystemLocaleShortDate);
         } else {
-            sMacro = trUtf8("Invalid date");
+            sMacro = "Invalid date";
         }
 
         sDoc.replace(nPos, findMacro.matchedLength(), sMacro);

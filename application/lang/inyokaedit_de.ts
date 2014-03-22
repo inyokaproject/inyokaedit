@@ -5,12 +5,12 @@
 <context>
     <name>CDownload</name>
     <message>
-        <location filename="../CDownload.cpp" line="67"/>
+        <location filename="../CDownload.cpp" line="71"/>
         <source>Download styles</source>
         <translation>Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="68"/>
+        <location filename="../CDownload.cpp" line="72"/>
         <source>In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.
 
 Do you want to download these files now?</source>
@@ -19,48 +19,48 @@ Do you want to download these files now?</source>
 Möchten Sie die Ressourcen jetzt herunterladen?</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="82"/>
+        <location filename="../CDownload.cpp" line="86"/>
         <source>Update IWLs</source>
         <translation>Update IWLs</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="83"/>
+        <location filename="../CDownload.cpp" line="87"/>
         <source>Do you want update the Inyoka InterWiki-Links now?</source>
         <translation>Möchten Sie die Inyoka InterWiki-Links jetzt aktualisieren?</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="102"/>
-        <location filename="../CDownload.cpp" line="143"/>
+        <location filename="../CDownload.cpp" line="106"/>
+        <location filename="../CDownload.cpp" line="147"/>
         <source>Download not possible, no active internet connection found!</source>
         <translation>Herunterladen nicht möglich - keine Internetverbindung vorhanden!</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="128"/>
+        <location filename="../CDownload.cpp" line="132"/>
         <source>Download script could not be found.</source>
         <translation>Downloadskript konnte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="155"/>
+        <location filename="../CDownload.cpp" line="159"/>
         <source>Please insert name of the article which should be downloaded:</source>
         <translation>Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="158"/>
+        <location filename="../CDownload.cpp" line="162"/>
         <source>Category/Article</source>
         <translation>Baustelle/Artikel</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="233"/>
+        <location filename="../CDownload.cpp" line="237"/>
         <source>Could not download the article.</source>
         <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="248"/>
+        <location filename="../CDownload.cpp" line="252"/>
         <source>Could not find meta data.</source>
         <translation>Es konnten keine Metadaten gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="282"/>
+        <location filename="../CDownload.cpp" line="286"/>
         <source>Do you want to download the images which are attached to the article?</source>
         <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
     </message>
@@ -202,7 +202,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CFindReplace.ui" line="137"/>
-        <location filename="../CFindReplace.cpp" line="123"/>
+        <location filename="../CFindReplace.cpp" line="127"/>
         <source>Search</source>
         <translation>Suchen</translation>
     </message>
@@ -222,17 +222,17 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Alle ersetzen</translation>
     </message>
     <message>
-        <location filename="../CFindReplace.cpp" line="129"/>
+        <location filename="../CFindReplace.cpp" line="133"/>
         <source>Search / Replace</source>
         <translation>Suchen / Ersetzen</translation>
     </message>
     <message>
-        <location filename="../CFindReplace.cpp" line="214"/>
+        <location filename="../CFindReplace.cpp" line="218"/>
         <source>Could not find your expression</source>
         <translation>Kann den gesuchten Ausdruck nicht finden</translation>
     </message>
     <message>
-        <location filename="../CFindReplace.cpp" line="244"/>
+        <location filename="../CFindReplace.cpp" line="248"/>
         <source>Replaced expressions: %1</source>
         <translation>Ersetzte Ausdrücke: %1</translation>
     </message>
@@ -739,20 +739,6 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
 </context>
 <context>
-    <name>CParser</name>
-    <message>
-        <location filename="../CParser.cpp" line="136"/>
-        <source>Untitled</source>
-        <comment>No file name set</comment>
-        <translation>Unbenannt</translation>
-    </message>
-    <message>
-        <location filename="../CParser.cpp" line="1372"/>
-        <source>Invalid date</source>
-        <translation>Ungültiges Datum</translation>
-    </message>
-</context>
-<context>
     <name>CProgressDialog</name>
     <message>
         <location filename="../CProgressDialog.ui" line="32"/>
@@ -1007,36 +993,6 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <location filename="../CSettingsDialog.cpp" line="414"/>
         <source>Please insert name of new style file:</source>
         <translation>Bitte Namen für die neue Stildatei eingeben:</translation>
-    </message>
-</context>
-<context>
-    <name>CTemplates</name>
-    <message>
-        <location filename="../CTemplates.cpp" line="182"/>
-        <location filename="../CTemplates.cpp" line="219"/>
-        <location filename="../CTemplates.cpp" line="261"/>
-        <source>Warning</source>
-        <translation>Warnung</translation>
-    </message>
-    <message>
-        <location filename="../CTemplates.cpp" line="183"/>
-        <source>Could not open preview template file!</source>
-        <translation>Die Vorschau-Templatedatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CTemplates.cpp" line="220"/>
-        <source>Could not open image map file!</source>
-        <translation>Die Bild Map-Datei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CTemplates.cpp" line="262"/>
-        <source>Could not open text formats config file!</source>
-        <translation>Die Textformat-Konfigurationsdatei konnte nicht geöffnet werden!</translation>
-    </message>
-    <message>
-        <location filename="../CTemplates.cpp" line="310"/>
-        <source>Could not open template translation file!</source>
-        <translation>Die Template-Übersetzungsdatei konnte nicht geöffnet werden!</translation>
     </message>
 </context>
 <context>
