@@ -1,3 +1,15 @@
+inyokaedit (0.13.0-0ubuntu1) saucy; urgency=low
+
+  [ Thorsten Roth ]
+  * Fixed LP: #1276300 (TOC level selection)
+  * Added plugin interface (LP: #847244) and moved spellchecker and table
+    template generator to plugin.
+  * Code reconstructions: Moved parser and templates class to shared library.
+  * Choose gui language in settings dialog.
+  * New IWLs and moved IWL updates to separate script with menu entry.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Mar 2014 18:02:00 +0200
+
 inyokaedit (0.12.0-0ubuntu1) saucy; urgency=low
 
   [ Thorsten Roth ]
