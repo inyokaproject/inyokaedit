@@ -36,14 +36,14 @@
 #include "../libs/templates/CTemplates.h"
 #include "../libs/parser/CParser.h"
 
-#include "./IEditorPlugin.h"
+#include "./CDownload.h"
+#include "./CFileOperations.h"
+#include "./CFindReplace.h"
+#include "./CPlugins.h"
 #include "./CSettings.h"
 #include "./CTextEditor.h"
-#include "./CFindReplace.h"
-#include "./CDownload.h"
 #include "./CUtils.h"
 // #include "./CUpload.h"
-#include "./CFileOperations.h"
 
 // Qt classes
 class QComboBox;
@@ -93,6 +93,9 @@ class CInyokaEdit : public QMainWindow {
     */
     void displayArticleText(const QString &sArticleText,
                             const QString &sSitename);
+
+    void addPluginsButtons(QList<QAction *> ToolbarEntries,
+                           QList<QAction *> MenueEntries);
 
     void updateEditorSettings();
 
@@ -186,12 +189,11 @@ class CInyokaEdit : public QMainWindow {
     void readSettings();
     void writeSettings();
 
-    void loadPlugins();
-
     // Objects
     CTemplates *m_pTemplates;
     CTextEditor *m_pEditor;
     CFileOperations *m_pFileOperations;
+    CPlugins *m_pPlugins;
     CParser *m_pParser;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
@@ -240,9 +242,6 @@ class CInyokaEdit : public QMainWindow {
     QToolButton *m_pCodePopup;
     QMenu *m_pCodeStyles;
     QList<QAction *> m_CodeHighlightActions;
-
-    QList<QAction *> m_PluginMenuEntries;
-    QList<QAction *> m_PluginToolbarEntries;
 
     QTimer *m_pPreviewTimer;
 

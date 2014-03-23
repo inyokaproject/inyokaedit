@@ -35,7 +35,6 @@ CParseLinks::CParseLinks(const QString &sUrlToWiki,
                          const QString &sTransAttach,
                          const QString &sTmpFilePath)
     : m_sWikiUrl(sUrlToWiki),
-      m_bIsOnline(false),
       m_bCheckLinks(bCheckLinks),
       m_sTransAnchor(sTransAnchor),
       m_sTransAttach(sTransAttach),
@@ -138,11 +137,12 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
     int nLength = 0;
     QString sLink("");
     QString sLinkURL("");
+    bool bIsOnline = false;
 
     // Check for internet connection
     #if QT_VERSION >= 0x040700
         QNetworkConfigurationManager mgr;
-        m_bIsOnline = mgr.isOnline();
+        bIsOnline = mgr.isOnline();
     #endif
 
     nIndex = findInyokaWikiLink.indexIn(sDoc);
@@ -164,7 +164,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                     sLinkURL = m_sWikiUrl + "/" + sLink;
 
                     m_sLinkClassAddition = "";
-                    if (m_bIsOnline && m_bCheckLinks) {
+                    if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
                                     QNetworkRequest(QUrl(sLinkURL
                                                          + "?action=metaexport")));
@@ -191,7 +191,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                     //          << sLink.mid(sLink.indexOf(":") + 1, nLength);
                     sLinkURL = m_sWikiUrl + "/"
                                + sLink.mid(0, sLink.indexOf(":"));
-                    if (m_bIsOnline && m_bCheckLinks) {
+                    if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
                                     QNetworkRequest(QUrl(sLinkURL
                                                          + "?action=metaexport")));

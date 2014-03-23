@@ -124,6 +124,8 @@ class CSettings : public QObject {
     void updateEditorSettings();
 
   private:
+    void removeObsolete();
+
     QWidget *m_pParent;
     QSettings *m_pSettings;
     CSettingsDialog *m_pSettingsDialog;

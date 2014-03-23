@@ -45,10 +45,16 @@ RESOURCES     = res/spellchecker_resources.qrc
 
 TRANSLATIONS += lang/spellchecker_de.ts
 
-unix {
-   LIBS      += -lhunspell
+win32 {
+    LIBS      += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
 }
 
-win32 {
-   LIBS      += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
+unix {
+    LIBS      += -lhunspell
+
+    lang.path = /usr/share/inyokaedit/lang
+    lang.files += lang/*.qm
+    target.path = /usr/share/inyokaedit/plugins
+    INSTALLS += lang \
+        target
 }

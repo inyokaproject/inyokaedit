@@ -50,3 +50,11 @@ FORMS        += CTableTemplate.ui
 RESOURCES     = res/tabletemplate_resources.qrc
 
 TRANSLATIONS += lang/tabletemplate_de.ts
+
+unix {
+    lang.path = /usr/share/inyokaedit/lang
+    lang.files += lang/*.qm
+    target.path = /usr/share/inyokaedit/plugins
+    INSTALLS += lang \
+        target
+}

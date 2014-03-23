@@ -102,7 +102,7 @@ CInyokaEdit::CInyokaEdit(QDir userDataDir,
         m_pUtils->checkWindowsUpdate();
     }
 
-    this->loadPlugins();
+    m_pPlugins->loadPlugins();
 }
 
 CInyokaEdit::~CInyokaEdit() {
@@ -174,6 +174,11 @@ void CInyokaEdit::createObjects() {
     m_pUtils = new CUtils(this);
     connect(m_pUtils, SIGNAL(setWindowsUpdateCheck(bool)),
             m_pSettings, SLOT(setWindowsCheckUpdate(bool)));
+
+    m_pPlugins = new CPlugins(this, m_pEditor, m_pSettings->getGuiLanguage(),
+                              m_UserDataDir);
+    connect(m_pPlugins, SIGNAL(addMenuToolbarEntries(QList<QAction*>,QList<QAction*>)),
+            this, SLOT(addPluginsButtons(QList<QAction*>,QList<QAction*>)));
 
     m_pPreviewTimer = new QTimer(this);
 }
@@ -777,6 +782,26 @@ void CInyokaEdit::createToolBars() {
     m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
             this, SLOT(clickedLink(QUrl)));
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// Add plugins to plugin toolbar and tools menu
+void CInyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
+                                    QList<QAction *> MenueEntries) {
+    qDebug() << "Calling" << Q_FUNC_INFO;
+
+    m_pUi->pluginsBar->addActions(ToolbarEntries);
+    if (m_pUi->toolsMenu->actions().size() > 0) {
+        QAction *separator = new QAction(this);
+        separator->setSeparator(true);
+        MenueEntries << separator;
+        m_pUi->toolsMenu->insertActions(m_pUi->toolsMenu->actions().first(),
+                                        MenueEntries);
+    } else {
+        m_pUi->toolsMenu->addActions(MenueEntries);
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -1502,64 +1527,6 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
 
     // Else
     return QObject::eventFilter(obj, event);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CInyokaEdit::loadPlugins() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-    m_PluginMenuEntries.clear();
-    m_PluginToolbarEntries.clear();
-
-    QDir pluginsDir = QDir(qApp->applicationDirPath());
-    pluginsDir.cd("plugins");
-    qDebug() << "Plugins folder:" << pluginsDir.absolutePath();
-
-    foreach (QString sFile, pluginsDir.entryList(QDir::Files)) {
-        QPluginLoader loader(pluginsDir.absoluteFilePath(sFile));
-        QObject *plugin = loader.instance();
-        if (plugin) {
-            IEditorPlugin *piPlugin = qobject_cast<IEditorPlugin *>(plugin);
-
-            if (piPlugin) {
-                qDebug() << "Loaded plugin:" << sFile;
-                piPlugin->initPlugin(this, m_pEditor, m_UserDataDir);
-                qApp->installTranslator(piPlugin->getPluginTranslator(
-                                            m_pSettings->getGuiLanguage()));
-
-                QIcon icon(piPlugin->getMenuIcon());
-                QString sMenu(piPlugin->getMenuEntry());
-
-                if (!sMenu.isEmpty()) {  // Add to menue if entry available
-                    m_PluginMenuEntries << new QAction(piPlugin->getMenuIcon(),
-                                                       piPlugin->getMenuEntry(),
-                                                       this);
-                    connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
-                            plugin, SLOT(executePlugin()));
-                }
-                if (!icon.isNull()) {  // Add to toolbar if icon available
-                    m_PluginToolbarEntries << new QAction(piPlugin->getMenuIcon(),
-                                                          piPlugin->getMenuEntry(),
-                                                          this);
-                    connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
-                            plugin, SLOT(executePlugin()));
-                }
-            }
-        }
-    }
-
-    // Add plugins to plugin toolbar and tools menu
-    m_pUi->pluginsBar->addActions(m_PluginToolbarEntries);
-    if (m_pUi->toolsMenu->actions().size() > 0) {
-        QAction *separator = new QAction(this);
-        separator->setSeparator(true);
-        m_PluginMenuEntries << separator;
-        m_pUi->toolsMenu->insertActions(m_pUi->toolsMenu->actions().first(),
-                                        m_PluginMenuEntries);
-    } else {
-        m_pUi->toolsMenu->addActions(m_PluginMenuEntries);
-    }
 }
 
 // ----------------------------------------------------------------------------

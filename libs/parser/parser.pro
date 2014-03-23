@@ -37,3 +37,9 @@ SOURCES    += CParser.cpp \
               CParseLinks.cpp \
               CParseTemplates.cpp \
               CProvisionalTplParser.cpp
+
+unix {
+    target.path = /usr/lib/inyokaedit
+    INSTALLS += data \
+        target
+}

@@ -52,22 +52,36 @@ void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                PLUGIN_NAME);
+                                qApp->applicationName().toLower());
 #else
     m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                PLUGIN_NAME);
+                                qApp->applicationName().toLower());
 #endif
 
     m_pHunspell = NULL;
     m_UserDataDir = userDataDir;
     m_pEditor = pEditor;
 
+    m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_sDictPath = m_pSettings->value("DictionaryPath", "").toString();
     this->setDictPath();
     m_sDictLang = m_pSettings->value("SpellCheckerLanguage", "de_DE").toString();
+    m_pSettings->endGroup();
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CSpellChecker::getPluginName() const {
+    return PLUGIN_NAME;
+}
+
+QString CSpellChecker::getPluginVersion() const {
+    return PLUGIN_VERSION;
+}
+
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
@@ -84,6 +98,9 @@ QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
     }
     return pPluginTranslator;
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 QString CSpellChecker::getMenuEntry() const {
     return trUtf8("Spell checker");
@@ -114,7 +131,10 @@ void CSpellChecker::setDictPath() {
     if (!m_sDictPath.endsWith('/')) {
         m_sDictPath.append('/');
     }
+    // Group already set in costructor
+    // m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_pSettings->setValue("DictionaryPath", m_sDictPath);
+    // m_pSettings->endGroup();
 
     QFileInfoList fiListFiles = QDir(m_sDictPath).entryInfoList(
                 QDir::NoDotAndDotDot | QDir::Files);

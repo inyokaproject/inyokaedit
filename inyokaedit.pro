@@ -24,14 +24,9 @@ SUBDIRS        = libs/templates \
 
 unix {
     data.path = /usr/share/inyokaedit
-    data.files += plugins \
-        application/iWikiLinks \
-        application/templates \
-        GetInyokaStyles \
+    data.files += GetInyokaStyles \
         GetIWLs \
         ExtendedDict.txt
-    lang.path = /usr/share/inyokaedit/lang
-    lang.files += application/lang/*.qm
     desktop.path = /usr/share/applications
     desktop.files += inyokaedit.desktop
     pixmap.path = /usr/share/pixmaps
@@ -40,12 +35,9 @@ unix {
     man.files += man
     mime.path = /usr/share/mime/packages
     mime.files += inyokaedit.xml
-    target.path = /usr/bin
     INSTALLS += data \
-        lang \
         desktop \
         pixmap \
         man \
-        mime \
-        target
+        mime
 }

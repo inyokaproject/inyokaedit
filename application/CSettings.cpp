@@ -217,6 +217,8 @@ void CSettings::readSettings() {
 void CSettings::writeSettings(const QByteArray WinGeometry,
                               const QByteArray WinState,
                               const QByteArray SplitterState) {
+    this->removeObsolete();
+
     // General settings
     m_pSettings->setValue("GuiLanguage", m_sGuiLanguage);
     m_pSettings->setValue("CodeCompletion", m_bCodeCompletion);
@@ -237,17 +239,6 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
 
     QFileInfo fiStylePath(m_sStyleFile);
     m_pSettings->setValue("Style", fiStylePath.baseName());
-
-    // Remove obsolete entry
-    m_pSettings->remove("ConfVersion");
-    m_pSettings->remove("ShowStatusbar");
-    m_pSettings->remove("SpellCheckerLanguage");
-    m_pSettings->beginGroup("FindDialog");
-    m_pSettings->remove("");
-    m_pSettings->endGroup();
-    m_pSettings->beginGroup("FindReplaceDialog");
-    m_pSettings->remove("");
-    m_pSettings->endGroup();
 
     // Font settings
     m_pSettings->beginGroup("Font");
@@ -305,6 +296,23 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pHighlighter->saveStyle();
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// Remove obsolete entries
+
+void CSettings::removeObsolete() {
+    m_pSettings->remove("ConfVersion");
+    m_pSettings->remove("ShowStatusbar");
+    m_pSettings->remove("SpellCheckerLanguage");
+    m_pSettings->beginGroup("FindDialog");
+    m_pSettings->remove("");
+    m_pSettings->endGroup();
+    m_pSettings->beginGroup("FindReplaceDialog");
+    m_pSettings->remove("");
+    m_pSettings->endGroup();
+}
+
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 // Get / set methods
 

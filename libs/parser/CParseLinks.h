@@ -71,7 +71,6 @@ class CParseLinks : public QObject {
     QStringList m_sListInterwikiKey;   // Interwiki link keywords
     QStringList m_sListInterwikiLink;  // Interwiki link urls
 
-    bool m_bIsOnline;
     bool m_bCheckLinks;
     QString m_sTransAnchor;
     QString m_sTransAttach;

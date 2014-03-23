@@ -31,3 +31,11 @@ HEADERS    += CTemplates.h \
 
 SOURCES    += CTemplates.cpp \
               CXmlParser.cpp
+
+unix {
+    data.path = /usr/share/inyokaedit
+    data.files += templates
+    target.path = /usr/lib/inyokaedit
+    INSTALLS += data \
+        target
+}

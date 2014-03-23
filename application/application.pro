@@ -47,6 +47,7 @@ HEADERS      += CInyokaEdit.h \
                 CFileOperations.h \
                 CFindReplace.h \
                 CHighlighter.h \
+                CPlugins.h \
                 CProgressDialog.h \
                 CTextEditor.h \
                 CSettings.h \
@@ -62,6 +63,7 @@ SOURCES      += main.cpp \
                 CFileOperations.cpp \
                 CFindReplace.cpp  \
                 CHighlighter.cpp \
+                CPlugins.cpp \
                 CProgressDialog.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
@@ -80,4 +82,15 @@ TRANSLATIONS += lang/inyokaedit_de.ts
 
 win32 {
     RC_FILE = res/inyokaedit.rc
+}
+
+unix {
+    data.path = /usr/share/inyokaedit
+    data.files += application/iWikiLinks
+    lang.path = /usr/share/inyokaedit/lang
+    lang.files += application/lang/*.qm
+    target.path = /usr/bin
+    INSTALLS += data \
+        lang \
+        target
 }

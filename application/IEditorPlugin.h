@@ -41,6 +41,8 @@ class IEditorPlugin {
     // ALL FUNCTIONS PURE VIRTUAL !!!
     virtual void initPlugin(QWidget *pParent, CTextEditor *pEditor,
                             QDir userDataDir) = 0;
+    virtual QString getPluginName() const = 0;
+    virtual QString getPluginVersion() const = 0;
     virtual QTranslator* getPluginTranslator(const QString &sLocale) = 0;
     virtual QString getMenuEntry() const = 0;
     virtual QIcon getMenuIcon() const = 0;

@@ -38,11 +38,11 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                PLUGIN_NAME);
+                                qApp->applicationName().toLower());
 #else
     m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                                 qApp->applicationName().toLower(),
-                                PLUGIN_NAME);
+                                qApp->applicationName().toLower());
 #endif
 
     m_pEditor = pEditor;
@@ -60,6 +60,7 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pDialog->setModal(true);
 
     // Load table styles
+    m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
                        << "Ubuntu Studio" << "Lubuntu";
     m_sListTableStyles = m_pSettings->value("TableStyles",
@@ -77,6 +78,7 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pSettings->setValue("RowClassTitle", m_sRowClassTitle);
     m_pSettings->setValue("RowClassHead", m_sRowClassHead);
     m_pSettings->setValue("RowClassHighlight", m_sRowClassHighlight);
+    m_pSettings->endGroup();
 
     if (m_sListTableStyles.size() != m_sListTableStylesPrefix.size()) {
         qWarning() << "Different size: TableStyles size =" << m_sListTableStyles.size()
@@ -91,6 +93,18 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
             this, SLOT(accept()));
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CTableTemplate::getPluginName() const {
+    return PLUGIN_NAME;
+}
+
+QString CTableTemplate::getPluginVersion() const {
+    return PLUGIN_VERSION;
+}
+
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
@@ -107,6 +121,9 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
     }
     return pPluginTranslator;
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 QString CTableTemplate::getMenuEntry() const {
     return trUtf8("Table generator");

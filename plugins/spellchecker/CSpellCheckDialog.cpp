@@ -132,8 +132,10 @@ void CSpellCheckDialog::replaceAll() {
 
 void CSpellCheckDialog::closeDialog() {
     m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->currentText();
+    m_pSpellChecker->m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_pSpellChecker->m_pSettings->setValue("SpellCheckerLanguage",
                                            m_pSpellChecker->m_sDictLang);
+    m_pSpellChecker->m_pSettings->endGroup();
     this->reject();
 }
 
