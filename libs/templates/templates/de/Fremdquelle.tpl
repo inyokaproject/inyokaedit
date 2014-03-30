@@ -1,6 +1,7 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'saucy' or
+<@ if $arguments as lowercase contain 'trusty' or
+      $arguments as lowercase contain 'saucy' or
       $arguments as lowercase contain 'raring' or
       $arguments as lowercase contain 'quantal' or
       $arguments as lowercase contain 'precise' or
@@ -22,14 +23,16 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@if $arguments as lowercase contain 'quantal' @> thirdpartyrepo-version-quantal
 <@ endif @>
 <@if $arguments as lowercase contain 'raring' @> thirdpartyrepo-version-raring
-<@ endif @>"
-<@if $arguments as lowercase contain 'saucy' @> thirdpartyrepo-version-saucy
+<@ endif @>
+<@if $arguments as lowercase contain 'raring' @> thirdpartyrepo-version-saucy
+<@ endif @>
+<@if $arguments as lowercase contain 'saucy' @> thirdpartyrepo-version-trusty
 <@ endif @>">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['saucy','raring','quantal','precise','oneiric','lucid','hardy'] contains $arg @>
+<@ if ['trusty','saucy','raring','quantal','precise','oneiric','lucid','hardy'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>

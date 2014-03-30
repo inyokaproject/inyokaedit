@@ -1656,34 +1656,43 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
                 sOutput += "\n * ";
                 if (sListArgs[i].toLower() == "trusty") {
                     sOutput += "[:Trusty_Tahr:Ubuntu 14.04] "
-                               "\"Trusty Tahr\"";
+                               "Trusty Tahr";
                 } else if (sListArgs[i].toLower() == "saucy") {
                     sOutput += "[:Saucy_Salamander:Ubuntu 13.10] "
-                               "\"Saucy Salamander\"";
+                               "Saucy Salamander";
                 } else if (sListArgs[i].toLower() == "raring") {
                     sOutput += "[:Raring_Ringtail:Ubuntu 13.04] "
-                               "\"Raring Ringtail\"";
+                               "Raring Ringtail";
                 } else if (sListArgs[i].toLower() == "quantal") {
                     sOutput += "[:Quantal_Quetzal:Ubuntu 12.10] "
-                               "\"Quantal Quetzal\"";
+                               "Quantal Quetzal";
                 } else if (sListArgs[i].toLower() == "precise") {
                     sOutput += "[:Precise_Pangolin:Ubuntu 12.04] "
-                               "\"Precise Pangolin\"";
+                               "Precise Pangolin";
                 } else if (sListArgs[i].toLower() == "oneiric") {
                     sOutput += "[:Oneiric_Ocelot:Ubuntu 11.10] "
-                               "\"Oneiric Ocelot\"";
+                               "Oneiric Ocelot";
                 } else if (sListArgs[i].toLower() == "natty") {
                     sOutput += "[:Natty_Narwhal:Ubuntu 11.04] "
-                               "\"Natty Narwhal\"";
+                               "Natty Narwhal";
                 } else if (sListArgs[i].toLower() == "maverick") {
                     sOutput += "[:Maverick_Meerkat:Ubuntu 10.10] "
-                               "\"Maverick Meerkat\"";
+                               "Maverick Meerkat";
                 } else if (sListArgs[i].toLower() == "lucid") {
                     sOutput += "[:Lucid_Lynx:Ubuntu 10.04] "
-                               "\"Lucid Lynx\"";
+                               "Lucid Lynx";
+                } else if (sListArgs[i].toLower() == "karmic") {
+                    sOutput += "[:Karmic_Koala:Ubuntu 9.10] "
+                               "Karmic Koala";
+                } else if (sListArgs[i].toLower() == "jaunty") {
+                    sOutput += "[:Jaunty_Jackalope:Ubuntu 9.04] "
+                               "Jaunty Jackalope";
                 } else if (sListArgs[i].toLower() == "hardy") {
                     sOutput += "[:Hardy_Heron:Ubuntu 8.04] "
-                               "\"Hardy Heron\"";
+                               "Hardy Heron";
+                } else if (sListArgs[i].toLower() == "dapper") {
+                    sOutput += "[:Dapper_Drake:Ubuntu 6.06] "
+                               "Dapper Drake";
                 } else {
                     sOutput += sListArgs[i];
                 }

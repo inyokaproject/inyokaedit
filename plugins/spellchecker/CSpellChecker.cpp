@@ -277,7 +277,7 @@ void CSpellChecker::executePlugin() {
     // Create a new cursor to walk through the text
     QTextCursor cursor(m_pEditor->document());
 
-    CSpellCheckDialog::SpellCheckAction spellResult;
+    CSpellCheckDialog::SpellCheckAction spellResult = CSpellCheckDialog::None;
 
     // Don't call cursor.beginEditBlock(), as this prevents the redraw
     // after changes to the content

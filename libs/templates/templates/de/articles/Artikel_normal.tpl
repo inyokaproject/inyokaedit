@@ -2,7 +2,7 @@
 [[Vorlage(Baustelle, Datum, Bearbeiter)]]
 
 ##Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, quantal, precise, oneiric, lucid)]]
+[[Vorlage(Getestet, trusty, saucy, precise)]]
 
 ##Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird
 {{{#!vorlage Wissen
@@ -18,4 +18,4 @@
 ## Artikeltext
 
 ##nicht auf diesen Artikel zutreffenden Kategorien bitte löschen!
-#tag: Netzwerk, Grafik, GNOME, Hardware, Wiki, Ubuntu, Internet, Emulation und Virtualisierung, System, Sicherheit, Shell, Übersicht, Installation, Community, Einsteiger, Server, Multimedia, Audioplayer, Videoplayer, Xfce, LXDE, Editor, unfreie Software, Desktop, Bildung, Edubuntu, Programmierung, Büro, Kommunikation, Paketverwaltung, KDE, LXDE, GPS, DVD, Barrierefreiheit, Spiele, USK0, USK6, USK12, USK16, USK18, Linux-Spiel, Windows-Spiel
+#tag: Netzwerk, Grafik, GNOME 3, Hardware, Wiki, Ubuntu, Internet, Emulation und Virtualisierung, System, Sicherheit, Shell, Übersicht, Installation, Community, Einsteiger, Server, Multimedia, Audioplayer, Videoplayer, Xfce, LXDE, Editor, unfreie Software, Desktop, Bildung, Edubuntu, Programmierung, Büro, Kommunikation, Paketverwaltung, KDE, LXDE, GPS, DVD, Barrierefreiheit, Spiele, USK0, USK6, USK12, USK16, USK18, Linux-Spiel, Windows-Spiel

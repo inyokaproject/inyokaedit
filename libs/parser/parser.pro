@@ -40,6 +40,5 @@ SOURCES    += CParser.cpp \
 
 unix {
     target.path = /usr/lib/inyokaedit
-    INSTALLS += data \
-        target
+    INSTALLS += target
 }

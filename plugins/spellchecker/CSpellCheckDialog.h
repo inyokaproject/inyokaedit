@@ -47,7 +47,7 @@ class CSpellCheckDialog : public QDialog {
 
   public:
     enum SpellCheckAction {
-        AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict
+        None, AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict
     };
 
     explicit CSpellCheckDialog(CSpellChecker *pSpellChecker,

@@ -2,7 +2,7 @@
 [[Vorlage(Baustelle, Datum, Nutzername)]]
 Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "InArbeit"-Zeile herauslöschen.
 ##Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, quantal, precise, oneiric, lucid)]]
+[[Vorlage(Getestet, trusty, saucy, precise)]]
 
 
 ##Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird
@@ -89,4 +89,4 @@ echo -e "hello world"
  * [topic:welche-themen-gehoeren-hier-her-und-welche-ni-3:Welche Themen gehören in Rund ums Wiki] - ein Thema im Forum
 
 ##nicht auf diesen Artikel zutreffenden Kategorien bitte löschen!
-#tag: Netzwerk, Grafik, GNOME, Hardware, Wiki, Ubuntu, Internet, Emulation und Virtualisierung, System, Sicherheit, Shell, Übersicht, Installation, Community, Einsteiger, Server, Multimedia, Xfce, Editor, unfreie Software, Desktop, Spiele, Bildung, Edubuntu, Programmierung, Büro, Kommunikation, Paketverwaltung, KDE, LXDE, GPS, DVD, Barrierefreiheit 
+#tag: Netzwerk, Grafik, GNOME 3, Hardware, Wiki, Ubuntu, Internet, Emulation und Virtualisierung, System, Sicherheit, Shell, Übersicht, Installation, Community, Einsteiger, Server, Multimedia, Xfce, Editor, unfreie Software, Desktop, Spiele, Bildung, Edubuntu, Programmierung, Büro, Kommunikation, Paketverwaltung, KDE, LXDE, GPS, DVD, Barrierefreiheit 

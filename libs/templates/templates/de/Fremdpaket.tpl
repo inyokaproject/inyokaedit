@@ -2,12 +2,12 @@
 #############################################################
 ## Eingabemöglichkeiten:
 ##  mind. 2 Argumente
-##  [[Vorlage(Fremdpaket, sourceforge, projektname, karmic)]]
-##  [[Vorlage(Fremdpaket, launchpad, projektname, karmic, hardy)]]
-##  [[Vorlage(Fremdpaket, googlecode, projektname, karmic, hardy)]]
-##  [[Vorlage(Fremdpaket, "Anbieter", URLzurDL-Übersicht, karmic, jaunty)]]
+##  [[Vorlage(Fremdpaket, sourceforge, projektname, trusty)]]
+##  [[Vorlage(Fremdpaket, launchpad, projektname, trusty, precise)]]
+##  [[Vorlage(Fremdpaket, googlecode, projektname, trusty, precise)]]
+##  [[Vorlage(Fremdpaket, "Anbieter", URLzurDL-Übersicht, trusty, precise)]]
 ##  mind. 3 Argumente
-##  [[Vorlage(Fremdpaket, "Anbieter", dl, URLzumDL1, URLzumDL2, URLzumDL3, karmic, jaunty, intrepid)]]
+##  [[Vorlage(Fremdpaket, "Anbieter", dl, URLzumDL1, URLzumDL2, URLzumDL3, trusty, saucy, precise)]]
 #############################################################
 ## Der folgende Block unterscheidet obige Eingabemöglichkeiten.
 #############################################################
@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['saucy','raring','quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
+<@ if $loop.index < 3 or ['trusty','saucy','raring','quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -42,7 +42,8 @@ folgende DEB-Pakete angeboten:
 <@ if $arguments contain 'quantal' or $arguments contain 'precise' or $arguments contain 'oneiric' or $arguments contain 'natty' or $arguments contain 'lucid' or $arguments contain 'hardy' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['saucy','raring','quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
+<@ if ['trusty','saucy','raring','quantal','precise','oneiric','natty','lucid','hardy'] contains $arg @>
+<@ if $arg == 'trusty' @>[:Trusty_Tahr: Ubuntu 14.04]<@ endif @>
 <@ if $arg == 'saucy' @>[:Saucy_Salamander: Ubuntu 13.10]<@ endif @>
 <@ if $arg == 'raring' @>[:Raring_Ringtail: Ubuntu 13.04]<@ endif @>
 <@ if $arg == 'quantal' @>[:Quantal_Quetzal: Ubuntu 12.10]<@ endif @>
