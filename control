@@ -11,9 +11,7 @@ Build-Depends: debhelper (>= 7.0.50~),
          libqtwebkit-dev | libqt4-dev (<< 4:4.7.0),
          libqtgui4,
          pkg-config,
-         libhunspell-dev,
-         libtemplates,
-         libparser
+         libhunspell-dev
 Standards-Version: 3.9.4
 Homepage: https://launchpad.net/inyokaedit
 Vcs-Bzr: https://code.launchpad.net/~elthoro/inyokaedit/packaging
