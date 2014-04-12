@@ -28,8 +28,10 @@
 #define INYOKAEDIT_CSETTINGSDIALOG_H_
 
 #include <QDialog>
+
 #include "./CHighlighter.h"
 #include "./CSettings.h"
+#include "./IEditorPlugin.h"
 
 namespace Ui {
     class CSettingsDialog;
@@ -52,6 +54,7 @@ class CSettingsDialog : public QDialog {
 
   public slots:
     void accept();
+    void reject();
 
   signals:
     void updatedSettings();
@@ -64,6 +67,8 @@ class CSettingsDialog : public QDialog {
     void changedPreviewInEditor(bool bState);
     void changedStyle(int nIndex);
     void clickedStyleCell(int nRow, int nCol);
+    void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
+                             const QList<QObject *> PluginObjList);
 
   private:
     void loadHighlighting(const QString &sStyleFile);
@@ -86,6 +91,10 @@ class CSettingsDialog : public QDialog {
     QString m_sExt;
 
     QStringList m_sListStyleFiles;
+
+    QList<IEditorPlugin *> m_listPLugins;
+    QList<QPushButton *> m_listPluginSettingsButtons;
+    QList<QPushButton *> m_listPluginInfoButtons;
 };
 
 #endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

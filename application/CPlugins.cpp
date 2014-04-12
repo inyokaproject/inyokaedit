@@ -29,26 +29,17 @@
 #include <QPluginLoader>
 
 #include "./CPlugins.h"
-#include "./IEditorPlugin.h"
 
-CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
-                   const QString &sGuiLang, const QDir userDataDir)
+CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
+                   const QStringList &sListDisabledPlugins, const QDir userDataDir)
     : m_pParent(pParent),
       m_pEditor(pEditor),
       m_sGuiLanguage(sGuiLang),
+      m_sListDisabledPlugins(sListDisabledPlugins),
       m_userDataDir(userDataDir) {
     qDebug() << "Calling" << Q_FUNC_INFO;
-}
 
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CPlugins::loadPlugins() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-    m_sListPlugins.clear();
-    m_PluginMenuEntries.clear();
-    m_PluginToolbarEntries.clear();
-
+    QStringList sListAvailablePlugins;
     QList<QDir> listPluginsDir;
     QDir pluginsDir = m_userDataDir;
     if (pluginsDir.cd("plugins")) {
@@ -58,6 +49,7 @@ void CPlugins::loadPlugins() {
     pluginsDir.cd("plugins");
     listPluginsDir << pluginsDir;
 
+    // Look for available plugins
     foreach (QDir dir, listPluginsDir) {
         qDebug() << "Plugins folder:" << dir.absolutePath();
 
@@ -68,36 +60,58 @@ void CPlugins::loadPlugins() {
                 IEditorPlugin *piPlugin = qobject_cast<IEditorPlugin *>(pPlugin);
 
                 if (piPlugin) {
-                    if (m_sListPlugins.contains(piPlugin->getPluginName())) {
+                    if (sListAvailablePlugins.contains(piPlugin->getPluginName())) {
                         continue;
                     }
-                    qDebug() << "Loaded plugin:" << sFile;
-                    piPlugin->initPlugin(m_pParent, m_pEditor, m_userDataDir);
-                    qApp->installTranslator(piPlugin->getPluginTranslator(
-                                                m_sGuiLanguage));
-                    m_sListPlugins << piPlugin->getPluginName();
-
-                    QIcon icon(piPlugin->getMenuIcon());
-                    QString sMenu(piPlugin->getMenuEntry());
-
-                    if (!sMenu.isEmpty()) {  // Add to menue if entry available
-                        m_PluginMenuEntries << new QAction(piPlugin->getMenuIcon(),
-                                                           piPlugin->getMenuEntry(),
-                                                           m_pParent);
-                        connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
-                                pPlugin, SLOT(executePlugin()));
-                    }
-                    if (!icon.isNull()) {  // Add to toolbar if icon available
-                        m_PluginToolbarEntries << new QAction(piPlugin->getMenuIcon(),
-                                                              piPlugin->getMenuEntry(),
-                                                              m_pParent);
-                        connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
-                                pPlugin, SLOT(executePlugin()));
-                    }
+                    sListAvailablePlugins << piPlugin->getPluginName();
+                    m_listPlugins << piPlugin;
+                    m_listPluginObjects << pPlugin;
                 }
             }
         }
     }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CPlugins::loadPlugins() {
+    qDebug() << "Calling" << Q_FUNC_INFO;
+    m_PluginMenuEntries.clear();
+    m_PluginToolbarEntries.clear();
+
+    for (int i = 0; i < m_listPlugins.size(); i++) {
+        if (m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
+            continue;
+        }
+
+        qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+        m_listPlugins[i]->initPlugin(m_pParent, m_pEditor, m_userDataDir);
+
+        qApp->installTranslator(m_listPlugins[i]->getPluginTranslator(m_sGuiLanguage));
+
+        QIcon icon(m_listPlugins[i]->getIcon());
+        QString sMenu(m_listPlugins[i]->getCaption());
+
+        if (!sMenu.isEmpty()) {  // Add to menue if entry available
+            m_PluginMenuEntries << new QAction(m_listPlugins[i]->getIcon(),
+                                               m_listPlugins[i]->getCaption(),
+                                               m_pParent);
+            connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
+                    m_listPluginObjects[i], SLOT(executePlugin()));
+        }
+        if (!icon.isNull()) {  // Add to toolbar if icon available
+            m_PluginToolbarEntries << new QAction(m_listPlugins[i]->getIcon(),
+                                                  m_listPlugins[i]->getCaption(),
+                                                  m_pParent);
+            connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
+                    m_listPluginObjects[i], SLOT(executePlugin()));
+        }
+        if (i == m_listPlugins.size() - 1) {
+            qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+        }
+    }
 
     emit addMenuToolbarEntries(m_PluginToolbarEntries, m_PluginMenuEntries);
+    emit availablePlugins(m_listPlugins, m_listPluginObjects);
 }

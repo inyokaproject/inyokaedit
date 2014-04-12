@@ -30,6 +30,7 @@
 #include "./CSpellChecker.h"
 
 #include <QCoreApplication>
+#include <QDate>
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
@@ -102,11 +103,11 @@ QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CSpellChecker::getMenuEntry() const {
+QString CSpellChecker::getCaption() const {
     return trUtf8("Spell checker");
 }
 
-QIcon CSpellChecker::getMenuIcon() const {
+QIcon CSpellChecker::getIcon() const {
     return QIcon(":/spellchecker.png");
 }
 
@@ -416,6 +417,39 @@ void CSpellChecker::addToUserWordlist(const QString &sWord) {
         qDebug() << "User dictionary not set.";
     }
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CSpellChecker::hasSettings() const {
+    return false;
+}
+
+void CSpellChecker::showSettings() {
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CSpellChecker::showAbout() {
+    QDate nDate = QDate::currentDate();
+    QMessageBox aboutbox(NULL);
+
+    aboutbox.setWindowTitle(trUtf8("Info"));
+    aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
+    aboutbox.setText(trUtf8("<p><b>%1</b>"
+                            "<br />Version: %2</p>"
+                            "<p>&copy; %3 &ndash; %4<br />"
+                            "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>")
+                            .arg(this->getCaption())
+                            .arg(PLUGIN_VERSION)
+                            .arg("2011-" + QString::number(nDate.year()))
+                            .arg(QString::fromUtf8("Thorsten Roth")) +
+                     trUtf8("<p><i>Spell checker based on <a href=\"http://hunspell.sourceforge.net/\">Hunspell</a>.</i></p>"));
+    aboutbox.exec();
+}
+
+// ----------------------------------------------------------------------------
 
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(spellchecker, CSpellChecker)

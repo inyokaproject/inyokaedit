@@ -24,6 +24,7 @@
  * Shows a modal window with table template.
  */
 
+#include <QDate>
 #include <QDebug>
 #include <QTextDocument>
 
@@ -125,11 +126,11 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CTableTemplate::getMenuEntry() const {
+QString CTableTemplate::getCaption() const {
     return trUtf8("Table generator");
 }
 
-QIcon CTableTemplate::getMenuIcon() const {
+QIcon CTableTemplate::getIcon() const {
     return QIcon(":/tabletemplate.png");
 }
 
@@ -225,6 +226,39 @@ void CTableTemplate::accept() {
     m_pEditor->insertPlainText(this->generateTable());
     m_pDialog->done(QDialog::Accepted);
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CTableTemplate::hasSettings() const {
+    return false;
+}
+
+void CTableTemplate::showSettings() {
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CTableTemplate::showAbout() {
+    QDate nDate = QDate::currentDate();
+    QMessageBox aboutbox(NULL);
+
+    aboutbox.setWindowTitle(trUtf8("Info"));
+    aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
+    aboutbox.setText(trUtf8("<p><b>%1</b>"
+                            "<br />Version: %2</p>"
+                            "<p>&copy; %3 &ndash; %4<br />"
+                            "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>")
+                            .arg(this->getCaption())
+                            .arg(PLUGIN_VERSION)
+                            .arg("2012-" + QString::number(nDate.year()))
+                            .arg(QString::fromUtf8("Christian Schärf, Thorsten Roth")) +
+                     trUtf8("<p><i>Plugin for generating styled Inyoka tables.</i></p>"));
+    aboutbox.exec();
+}
+
+// ----------------------------------------------------------------------------
 
 #if QT_VERSION < 0x050000
     Q_EXPORT_PLUGIN2(tabletemplate, CTableTemplate)

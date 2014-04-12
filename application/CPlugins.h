@@ -32,24 +32,31 @@
 #include <QList>
 
 #include "./CTextEditor.h"
+#include "./IEditorPlugin.h"
 
 class CPlugins : public QObject {
     Q_OBJECT
 
   public:
-    CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang, const QDir userDataDir);
+    CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
+             const QStringList &sListDisabledPlugins, const QDir userDataDir);
     void loadPlugins();
 
   signals:
-    void addMenuToolbarEntries(QList<QAction *> ToolbarEntries,
-                               QList<QAction *> MenueEntries);
+    void availablePlugins(const QList<IEditorPlugin *> PluginList,
+                          const QList<QObject *> PluginObjList);
+    void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
+                               const QList<QAction *> MenueEntries);
 
   private:
     QWidget *m_pParent;
     CTextEditor *m_pEditor;
     QString m_sGuiLanguage;
+    QStringList m_sListDisabledPlugins;
     QDir m_userDataDir;
-    QStringList m_sListPlugins;
+
+    QList<IEditorPlugin *> m_listPlugins;
+    QList<QObject *> m_listPluginObjects;
     QList<QAction *> m_PluginMenuEntries;
     QList<QAction *> m_PluginToolbarEntries;
 };

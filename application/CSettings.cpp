@@ -76,6 +76,9 @@ void CSettings::init(CTemplates *pTemplates, QTextDocument *pDoc) {
 
     m_pSettingsDialog = new CSettingsDialog(this, m_pHighlighter, m_pParent);
 
+    connect(this, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)),
+            m_pSettingsDialog, SLOT(getAvailablePlugins(QList<IEditorPlugin*>,QList<QObject*>)));
+
     connect(this, SIGNAL(showSettingsDialog()),
             m_pSettingsDialog, SLOT(show()));
 
@@ -202,6 +205,11 @@ void CSettings::readSettings() {
     m_sProxyPassword = m_pSettings->value("Password", "").toString();
     m_pSettings->endGroup();
 
+    // Plugins
+    m_pSettings->beginGroup("Plugins");
+    m_sListDisabledPlugins = m_pSettings->value("Disabled", "").toStringList();
+    m_pSettings->endGroup();
+
     // Window state
     m_pSettings->beginGroup("Window");
     m_aWindowGeometry = m_pSettings->value("Geometry").toByteArray();
@@ -279,6 +287,15 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     }
     m_pSettings->setValue("UserName", m_sProxyUserName);
     m_pSettings->setValue("Password", m_sProxyPassword);
+    m_pSettings->endGroup();
+
+    // Plugins
+    m_pSettings->beginGroup("Plugins");
+    if (m_sListDisabledPlugins.isEmpty()) {
+        m_pSettings->setValue("Disabled", "");
+    } else {
+        m_pSettings->setValue("Disabled", m_sListDisabledPlugins);
+    }
     m_pSettings->endGroup();
 
     // Save toolbar position etc.
@@ -499,6 +516,12 @@ QString CSettings::getProxyUserName() const {
 }
 QString CSettings::getProxyPassword() const {
     return m_sProxyPassword;
+}
+
+// ----------------------------------------------------
+
+QStringList CSettings::getDisabledPlugins() const {
+    return m_sListDisabledPlugins;
 }
 
 // ----------------------------------------------------

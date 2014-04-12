@@ -33,6 +33,7 @@
 
 #include "./CSettingsDialog.h"
 #include "./CHighlighter.h"
+#include "./IEditorPlugin.h"
 
 class CSettingsDialog;
 class CHighlighter;
@@ -107,6 +108,9 @@ class CSettings : public QObject {
     QString getProxyUserName() const;
     QString getProxyPassword() const;
 
+    // Plugins
+    QStringList getDisabledPlugins() const;
+
     // Highlighting
     QString getHighlightBG() const;
     QString getHighlightFG() const;
@@ -122,6 +126,8 @@ class CSettings : public QObject {
   signals:
     void showSettingsDialog();
     void updateEditorSettings();
+    void availablePlugins(const QList<IEditorPlugin *> PluginList,
+                          const QList<QObject *> PluginObjList);
 
   private:
     void removeObsolete();
@@ -178,6 +184,9 @@ class CSettings : public QObject {
     quint16 m_nProxyPort;
     QString m_sProxyUserName;
     QString m_sProxyPassword;
+
+    // Plugins
+    QStringList m_sListDisabledPlugins;
 };
 
 #endif  // INYOKAEDIT_CSETTINGS_H_

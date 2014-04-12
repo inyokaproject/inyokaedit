@@ -44,11 +44,14 @@ class IEditorPlugin {
     virtual QString getPluginName() const = 0;
     virtual QString getPluginVersion() const = 0;
     virtual QTranslator* getPluginTranslator(const QString &sLocale) = 0;
-    virtual QString getMenuEntry() const = 0;
-    virtual QIcon getMenuIcon() const = 0;
+    virtual QString getCaption() const = 0;
+    virtual QIcon getIcon() const = 0;
+    virtual bool hasSettings() const = 0;
 
   public slots:
     virtual void executePlugin() = 0;
+    virtual void showSettings() = 0;
+    virtual void showAbout() = 0;
 };
 
 Q_DECLARE_INTERFACE(IEditorPlugin, "InyokaEdit.PluginInterface")

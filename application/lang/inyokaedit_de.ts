@@ -240,17 +240,17 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CInyokaEdit</name>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="259"/>
+        <location filename="../CInyokaEdit.cpp" line="265"/>
         <source>Raw format</source>
         <translation>Rohformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="261"/>
+        <location filename="../CInyokaEdit.cpp" line="267"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="311"/>
+        <location filename="../CInyokaEdit.cpp" line="317"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
@@ -491,7 +491,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="418"/>
-        <location filename="../CInyokaEdit.cpp" line="1098"/>
+        <location filename="../CInyokaEdit.cpp" line="1122"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
@@ -502,7 +502,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="430"/>
-        <location filename="../CInyokaEdit.cpp" line="1110"/>
+        <location filename="../CInyokaEdit.cpp" line="1134"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
@@ -513,7 +513,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="442"/>
-        <location filename="../CInyokaEdit.cpp" line="1122"/>
+        <location filename="../CInyokaEdit.cpp" line="1146"/>
         <source>Monotype</source>
         <translation>Monotype</translation>
     </message>
@@ -624,116 +624,116 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Inyoka-Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="735"/>
+        <location filename="../CInyokaEdit.cpp" line="741"/>
         <source>Step</source>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="760"/>
+        <location filename="../CInyokaEdit.cpp" line="766"/>
         <source>Text format</source>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="762"/>
-        <location filename="../CInyokaEdit.cpp" line="1015"/>
+        <location filename="../CInyokaEdit.cpp" line="768"/>
+        <location filename="../CInyokaEdit.cpp" line="1039"/>
         <source>Folders</source>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="763"/>
+        <location filename="../CInyokaEdit.cpp" line="769"/>
         <source>Menu entries</source>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="764"/>
-        <location filename="../CInyokaEdit.cpp" line="1041"/>
+        <location filename="../CInyokaEdit.cpp" line="770"/>
+        <location filename="../CInyokaEdit.cpp" line="1065"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="765"/>
-        <location filename="../CInyokaEdit.cpp" line="1054"/>
+        <location filename="../CInyokaEdit.cpp" line="771"/>
+        <location filename="../CInyokaEdit.cpp" line="1078"/>
         <source>Command</source>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="838"/>
+        <location filename="../CInyokaEdit.cpp" line="862"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="851"/>
+        <location filename="../CInyokaEdit.cpp" line="875"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1028"/>
+        <location filename="../CInyokaEdit.cpp" line="1052"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1134"/>
+        <location filename="../CInyokaEdit.cpp" line="1158"/>
         <source>Site name</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1158"/>
+        <location filename="../CInyokaEdit.cpp" line="1182"/>
         <source>Image.png</source>
         <translation>Bild.png</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1262"/>
+        <location filename="../CInyokaEdit.cpp" line="1286"/>
         <source>Sitename</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1263"/>
+        <location filename="../CInyokaEdit.cpp" line="1287"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1373"/>
+        <location filename="../CInyokaEdit.cpp" line="1397"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1572"/>
+        <location filename="../CInyokaEdit.cpp" line="1538"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1584"/>
+        <location filename="../CInyokaEdit.cpp" line="1550"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1592"/>
+        <location filename="../CInyokaEdit.cpp" line="1558"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1680"/>
+        <location filename="../CInyokaEdit.cpp" line="1646"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1697"/>
+        <location filename="../CInyokaEdit.cpp" line="1663"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="734"/>
-        <location filename="../CInyokaEdit.cpp" line="902"/>
+        <location filename="../CInyokaEdit.cpp" line="740"/>
+        <location filename="../CInyokaEdit.cpp" line="926"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="491"/>
+        <location filename="../CInyokaEdit.cpp" line="497"/>
         <source>Raw text</source>
         <translation>Rohtext</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="491"/>
+        <location filename="../CInyokaEdit.cpp" line="497"/>
         <source>Code without highlighting</source>
         <translation>Code ohne Highlighting</translation>
     </message>
@@ -884,113 +884,118 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Nach Aktualisierungen suchen (nur Windows)</translation>
     </message>
     <message>
+        <location filename="../CSettingsDialog.ui" line="808"/>
+        <source>Plugins</source>
+        <translation>Erweiterungen</translation>
+    </message>
+    <message>
         <location filename="../CSettingsDialog.ui" line="96"/>
         <source>Number of entries in recent files list</source>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="119"/>
+        <location filename="../CSettingsDialog.cpp" line="120"/>
         <source>Create new style...</source>
         <translation>Neuen Stil erstellen...</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="151"/>
+        <location filename="../CSettingsDialog.cpp" line="152"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="151"/>
+        <location filename="../CSettingsDialog.cpp" line="152"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="152"/>
+        <location filename="../CSettingsDialog.cpp" line="153"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="152"/>
-        <location filename="../CSettingsDialog.cpp" line="155"/>
+        <location filename="../CSettingsDialog.cpp" line="153"/>
+        <location filename="../CSettingsDialog.cpp" line="156"/>
         <source>Background</source>
         <translation>Hintergrund</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="156"/>
+        <location filename="../CSettingsDialog.cpp" line="157"/>
         <source>Text formating</source>
         <translation>Textformatierung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="155"/>
+        <location filename="../CSettingsDialog.cpp" line="156"/>
         <source>Text color</source>
         <translation>Textfarbe</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="156"/>
+        <location filename="../CSettingsDialog.cpp" line="157"/>
         <source>Heading</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="157"/>
+        <location filename="../CSettingsDialog.cpp" line="158"/>
         <source>Hyperlink</source>
         <translation>Hyperlink</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="157"/>
+        <location filename="../CSettingsDialog.cpp" line="158"/>
         <source>InterWiki</source>
         <translation>InterWiki</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="158"/>
+        <location filename="../CSettingsDialog.cpp" line="159"/>
         <source>Macro</source>
         <translation>Macro</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="158"/>
+        <location filename="../CSettingsDialog.cpp" line="159"/>
         <source>Parser</source>
         <translation>Parser</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="158"/>
+        <location filename="../CSettingsDialog.cpp" line="159"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="159"/>
+        <location filename="../CSettingsDialog.cpp" line="160"/>
         <source>Table line</source>
         <translation>Tabellenzeile</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="159"/>
+        <location filename="../CSettingsDialog.cpp" line="160"/>
         <source>Table cell format</source>
         <translation>Zellformatierung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="160"/>
+        <location filename="../CSettingsDialog.cpp" line="161"/>
         <source>ImgMap</source>
         <translation>ImgMap</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="160"/>
+        <location filename="../CSettingsDialog.cpp" line="161"/>
         <source>Misc</source>
         <translation>Sonstiges</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="160"/>
+        <location filename="../CSettingsDialog.cpp" line="161"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="225"/>
+        <location filename="../CSettingsDialog.cpp" line="237"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="413"/>
+        <location filename="../CSettingsDialog.cpp" line="433"/>
         <source>New style</source>
         <translation>Neuer Stil</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="414"/>
+        <location filename="../CSettingsDialog.cpp" line="434"/>
         <source>Please insert name of new style file:</source>
         <translation>Bitte Namen für die neue Stildatei eingeben:</translation>
     </message>

@@ -88,14 +88,6 @@ CInyokaEdit::CInyokaEdit(QDir userDataDir,
 #endif
     }
 
-    if (true == m_bOpenFileAfterStart) {
-        if (bDEBUG) {
-            m_pFileOperations->loadFile(qApp->arguments()[2], true);
-        } else {
-            m_pFileOperations->loadFile(qApp->arguments()[1], true);
-        }
-    }
-
     m_bReloadPreviewBlocked = false;
 
     if (CUtils::getOnlineState() && m_pSettings->getWindowsCheckUpdate()) {
@@ -103,6 +95,14 @@ CInyokaEdit::CInyokaEdit(QDir userDataDir,
     }
 
     m_pPlugins->loadPlugins();
+
+    if (true == m_bOpenFileAfterStart) {
+        if (bDEBUG) {
+            m_pFileOperations->loadFile(qApp->arguments()[2], true);
+        } else {
+            m_pFileOperations->loadFile(qApp->arguments()[1], true);
+        }
+    }
 }
 
 CInyokaEdit::~CInyokaEdit() {
@@ -176,9 +176,11 @@ void CInyokaEdit::createObjects() {
             m_pSettings, SLOT(setWindowsCheckUpdate(bool)));
 
     m_pPlugins = new CPlugins(this, m_pEditor, m_pSettings->getGuiLanguage(),
-                              m_UserDataDir);
+                              m_pSettings->getDisabledPlugins(), m_UserDataDir);
     connect(m_pPlugins, SIGNAL(addMenuToolbarEntries(QList<QAction*>,QList<QAction*>)),
             this, SLOT(addPluginsButtons(QList<QAction*>,QList<QAction*>)));
+    connect(m_pPlugins, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)),
+            m_pSettings, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)));
 
     m_pPreviewTimer = new QTimer(this);
 }
@@ -790,8 +792,6 @@ void CInyokaEdit::createToolBars() {
 // Add plugins to plugin toolbar and tools menu
 void CInyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
                                     QList<QAction *> MenueEntries) {
-    qDebug() << "Calling" << Q_FUNC_INFO;
-
     m_pUi->pluginsBar->addActions(ToolbarEntries);
     if (m_pUi->toolsMenu->actions().size() > 0) {
         QAction *separator = new QAction(this);

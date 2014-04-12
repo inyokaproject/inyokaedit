@@ -28,6 +28,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QKeyEvent>
+#include <QPushButton>
 
 #include "./CSettingsDialog.h"
 #include "ui_CSettingsDialog.h"
@@ -207,11 +208,21 @@ void CSettingsDialog::accept() {
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
 
-    //Proxy
+    // Proxy
     m_pSettings->m_sProxyHostName = m_pUi->proxyHostNameEdit->text();
     m_pSettings->m_nProxyPort = m_pUi->proxyPortSpinBox->value();
     m_pSettings->m_sProxyUserName = m_pUi->proxyUserNameEdit->text();
     m_pSettings->m_sProxyPassword = m_pUi->proxyPasswordEdit->text();
+
+    // Plugins
+    QStringList oldDisabledPlugins;
+    oldDisabledPlugins = m_pSettings->m_sListDisabledPlugins;
+    m_pSettings->m_sListDisabledPlugins.clear();
+    for (int i = 0; i < m_listPLugins.size(); i ++) {
+        if (m_pUi->pluginsTable->item(i, 0)->checkState() != Qt::Checked) {
+            m_pSettings->m_sListDisabledPlugins << m_listPLugins[i]->getPluginName();
+        }
+    }
 
     // If the following settings have been changed, a restart is needed
     if (m_pUi->previewAlongsideCheck->isChecked() != m_bTmpPreviewAlongside
@@ -220,14 +231,23 @@ void CSettingsDialog::accept() {
             || m_pUi->proxyPortSpinBox->value() != m_nProxyPort
             || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
             || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword
-            || m_pUi->GuiLangCombo->currentText() != m_sGuiLang) {
+            || m_pUi->GuiLangCombo->currentText() != m_sGuiLang
+            || oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
         QMessageBox::information(0, this->windowTitle(),
                                  trUtf8("The editor has to be restarted for "
                                         "applying the changes."));
     }
 
+    m_pUi->tabWidget->setCurrentIndex(0);  // Reset first tab after start
     QDialog::accept();
     emit updatedSettings();
+}
+
+// ----------------------------------------------------------------------------
+
+void CSettingsDialog::reject() {
+    m_pUi->tabWidget->setCurrentIndex(0);  // Reset first tab after start
+    QDialog::reject();
 }
 
 // ----------------------------------------------------------------------------
@@ -464,4 +484,76 @@ bool CSettingsDialog::eventFilter(QObject *obj, QEvent *event) {
         }
     }
     return QObject::eventFilter(obj, event);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
+                                          const QList<QObject *> PluginObjList) {
+    m_listPLugins = PluginList;
+    const quint8 nNUMCOLS = 5;
+
+    m_pUi->pluginsTable->setColumnCount(nNUMCOLS);
+    m_pUi->pluginsTable->setRowCount(m_listPLugins.size());
+
+    m_pUi->pluginsTable->setColumnWidth(0, 40);
+    m_pUi->pluginsTable->setColumnWidth(1, 40);
+#if QT_VERSION >= 0x050000
+    m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+#else
+    m_pUi->pluginsTable->horizontalHeader()->setResizeMode(2, QHeaderView::Stretch);
+#endif
+    m_pUi->pluginsTable->setColumnWidth(3, 40);
+    m_pUi->pluginsTable->setColumnWidth(4, 40);
+
+    for (int nRow = 0; nRow < m_listPLugins.size(); nRow++) {
+        for (int nCol = 0; nCol < nNUMCOLS; nCol++) {
+            m_pUi->pluginsTable->setItem(nRow, nCol, new QTableWidgetItem());
+
+            if (0 == nCol) {  // Checkbox
+                m_pUi->pluginsTable->item(nRow, nCol)->setFlags(
+                            Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+
+                if (m_pSettings->m_sListDisabledPlugins.contains(
+                            m_listPLugins[nRow]->getPluginName())) {
+                    m_pUi->pluginsTable->item(nRow, nCol)->setCheckState(Qt::Unchecked);
+                } else {
+                    m_pUi->pluginsTable->item(nRow, nCol)->setCheckState(Qt::Checked);
+                }
+
+            } else if (1 == nCol) {  // Icon
+                m_pUi->pluginsTable->item(nRow, nCol)->setIcon(
+                            m_listPLugins[nRow]->getIcon());
+
+            } else if ( 2 == nCol) {  // Caption
+                m_pUi->pluginsTable->item(nRow, nCol)->setText(
+                            m_listPLugins[nRow]->getCaption());
+
+            } else if (3 == nCol) {  // Settings
+                if (m_listPLugins[nRow]->hasSettings()) {
+                    m_listPluginInfoButtons << new QPushButton(
+                                                   QIcon(":/images/preferences-system.png"), "");
+                    connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                             PluginObjList[nRow], SLOT(showSettings()));
+
+                    m_pUi->pluginsTable->setCellWidget(nRow, nCol,
+                                                       m_listPluginInfoButtons.last());
+                }
+            } else if (4 == nCol) {  // Info
+                m_listPluginInfoButtons << new QPushButton(
+                                               QIcon(":/images/question.png"), "");
+                connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                         PluginObjList[nRow], SLOT(showAbout()));
+
+                m_pUi->pluginsTable->setCellWidget(nRow, nCol,
+                                                   m_listPluginInfoButtons.last());
+
+            } else {
+                qWarning() << "Invalid plugins settings dialog entry ["
+                           << nRow << "," << nCol << "]";
+                break;
+            }
+        }
+    }
 }

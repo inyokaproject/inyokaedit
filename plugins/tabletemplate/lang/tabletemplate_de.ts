@@ -4,19 +4,34 @@
 <context>
     <name>CTableTemplate</name>
     <message>
-        <location filename="../CTableTemplate.cpp" line="110"/>
+        <location filename="../CTableTemplate.cpp" line="130"/>
         <source>Table generator</source>
         <translation>Tabellengenerator</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="178"/>
+        <location filename="../CTableTemplate.cpp" line="187"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="188"/>
+        <location filename="../CTableTemplate.cpp" line="197"/>
         <source>Head</source>
         <translation>Kopf</translation>
+    </message>
+    <message>
+        <location filename="../CTableTemplate.cpp" line="247"/>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <location filename="../CTableTemplate.cpp" line="249"/>
+        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; %3 &amp;ndash; %4&lt;br /&gt;Licence: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; %3 &amp;ndash; %4&lt;br /&gt;Lizenz: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../CTableTemplate.cpp" line="257"/>
+        <source>&lt;p&gt;&lt;i&gt;Plugin for generating styled Inyoka tables.&lt;/i&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;i&gt;Erweiterung zur Erstellung von Inyoka-Tabellen.&lt;/i&gt;&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
