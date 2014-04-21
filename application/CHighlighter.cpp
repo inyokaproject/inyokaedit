@@ -29,10 +29,8 @@
 
 #include "./CHighlighter.h"
 
-/**
- * \todo Move highlighter to plugin -> TPL macros from template library?
- * Add snap-in for highlighter into settings dialog (additional tab)
- */
+// TODO: Move highlighter to plugin -> TPL macros from template library?
+// Add snap-in for highlighter into settings dialog (additional tab)
 
 CHighlighter::CHighlighter(CTemplates *pTemplates,
                            const QString &sStyleFile,

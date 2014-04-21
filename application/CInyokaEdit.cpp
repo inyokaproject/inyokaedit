@@ -155,9 +155,7 @@ void CInyokaEdit::createObjects() {
                             m_pSettings->getCheckLinks(),
                             m_pTemplates);
 
-    /**
-     * \todo Add tabs for editing multiple documents.
-     */
+    // TODO: Add tabs for editing multiple documents.
     // m_pTabwidgetDocuments = new QTabWidget;
     m_pTabwidgetRawPreview = new QTabWidget;
 
@@ -210,9 +208,7 @@ void CInyokaEdit::setupEditor() {
     connect(m_pFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
             m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)));
 
-    /**
-     * \todo Add tabs for editing multiple documents.
-     */
+    // TODO: Add tabs for editing multiple documents.
     /*
     m_pTabwidgetDocuments->setTabPosition(QTabWidget::North);
     m_pTabwidgetDocuments->setTabsClosable(true);
@@ -230,9 +226,7 @@ void CInyokaEdit::setupEditor() {
             && true == m_pSettings->getPreviewInEditor()) {
         m_pWidgetSplitter = new QSplitter;
 
-        /**
-         * \todo Add tabs for editing multiple documents.
-         */
+        // TODO: Add tabs for editing multiple documents.
         /*
         m_pWidgetSplitter->addWidget(m_pTabwidgetDocuments);
         m_pTabwidgetDocuments->addTab(m_pEditor, trUtf8("Untitled"));
@@ -252,9 +246,7 @@ void CInyokaEdit::setupEditor() {
             this->previewInyokaPage();
         }
     } else {
-        /**
-         * \todo Add tabs for editing multiple documents.
-         */
+        // TODO: Add tabs for editing multiple documents.
         /*
         setCentralWidget(m_pTabwidgetDocuments);
         m_pTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, trUtf8("Untitled"));

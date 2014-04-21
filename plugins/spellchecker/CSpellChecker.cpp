@@ -39,10 +39,6 @@
 #include <QStringList>
 
 CSpellChecker::~CSpellChecker() {
-    if (m_pHunspell != NULL) {
-        delete m_pHunspell;
-    }
-    m_pHunspell = NULL;
 }
 
 void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,

@@ -107,9 +107,7 @@ void CTextEditor::updateTextEditorSettings(const bool bCompleter,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-/**
- * \todo Move completer to plugin -> TPL macros from template library?
- */
+// TODO: Move completer to plugin -> TPL macros from template library?
 
 void CTextEditor::setCompleter(QCompleter *completer) {
     if (m_pCompleter) {
