@@ -349,10 +349,16 @@ void CTemplates::initTranslations(const QString &sFilename) {
         qCritical() << "Tag text translation not found.";
     }
 
-    // Translation needed for table template
+    // Translation needed for table template plugin
     m_sTransTable = configTransl.value("Table", "ERROR").toString();
     if ("ERROR" == m_sTransTable) {
         qCritical() << "Table translation not found.";
+    }
+
+    // Translation needed for knowledge box selector plugin
+    m_sTransKnowledge = configTransl.value("Knowledge", "ERROR").toString();
+    if ("ERROR" == m_sTransTable) {
+        qCritical() << "Knowledge box translation not found.";
     }
 }
 
@@ -430,6 +436,10 @@ QString CTemplates::getTransRev() const {
 
 QString CTemplates::getTransTag() const {
     return m_sTransTagText;
+}
+
+QString CTemplates::getTransKnowledge() const {
+    return m_sTransKnowledge;
 }
 
 QStringList CTemplates::getListFormatStart() const {

@@ -58,6 +58,7 @@ class TEMPLATES_EXPORT CTemplates : public QObject {
     QString getTransTable() const;
     QString getTransRev() const;
     QString getTransTag() const;
+    QString getTransKnowledge() const;
 
     QStringList getListFormatStart() const;
     QStringList getListFormatEnd() const;
@@ -119,6 +120,7 @@ class TEMPLATES_EXPORT CTemplates : public QObject {
     QString m_sTransRevText;
     QString m_sTransTagText;
     QString m_sTransTable;
+    QString m_sTransKnowledge;
 
     CXmlParser *m_pInterWikiLinks;
     CXmlParser *m_pMarkupTemplates;

@@ -510,50 +510,39 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
     for (int nRow = 0; nRow < m_listPLugins.size(); nRow++) {
         for (int nCol = 0; nCol < nNUMCOLS; nCol++) {
             m_pUi->pluginsTable->setItem(nRow, nCol, new QTableWidgetItem());
-
-            if (0 == nCol) {  // Checkbox
-                m_pUi->pluginsTable->item(nRow, nCol)->setFlags(
-                            Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-
-                if (m_pSettings->m_sListDisabledPlugins.contains(
-                            m_listPLugins[nRow]->getPluginName())) {
-                    m_pUi->pluginsTable->item(nRow, nCol)->setCheckState(Qt::Unchecked);
-                } else {
-                    m_pUi->pluginsTable->item(nRow, nCol)->setCheckState(Qt::Checked);
-                }
-
-            } else if (1 == nCol) {  // Icon
-                m_pUi->pluginsTable->item(nRow, nCol)->setIcon(
-                            m_listPLugins[nRow]->getIcon());
-
-            } else if ( 2 == nCol) {  // Caption
-                m_pUi->pluginsTable->item(nRow, nCol)->setText(
-                            m_listPLugins[nRow]->getCaption());
-
-            } else if (3 == nCol) {  // Settings
-                if (m_listPLugins[nRow]->hasSettings()) {
-                    m_listPluginInfoButtons << new QPushButton(
-                                                   QIcon(":/images/preferences-system.png"), "");
-                    connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-                             PluginObjList[nRow], SLOT(showSettings()));
-
-                    m_pUi->pluginsTable->setCellWidget(nRow, nCol,
-                                                       m_listPluginInfoButtons.last());
-                }
-            } else if (4 == nCol) {  // Info
-                m_listPluginInfoButtons << new QPushButton(
-                                               QIcon(":/images/question.png"), "");
-                connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-                         PluginObjList[nRow], SLOT(showAbout()));
-
-                m_pUi->pluginsTable->setCellWidget(nRow, nCol,
-                                                   m_listPluginInfoButtons.last());
-
-            } else {
-                qWarning() << "Invalid plugins settings dialog entry ["
-                           << nRow << "," << nCol << "]";
-                break;
-            }
         }
+
+        // Checkbox
+        m_pUi->pluginsTable->item(nRow, 0)->setFlags(
+                    Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        if (m_pSettings->m_sListDisabledPlugins.contains(
+                    m_listPLugins[nRow]->getPluginName())) {
+            m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Unchecked);
+        } else {
+            m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Checked);
+        }
+
+        // Icon
+        m_pUi->pluginsTable->item(nRow, 1)->setIcon(m_listPLugins[nRow]->getIcon());
+
+        // Caption
+        m_pUi->pluginsTable->item(nRow, 2)->setText(m_listPLugins[nRow]->getCaption());
+
+        // Settings
+        if (m_listPLugins[nRow]->hasSettings()) {
+            m_listPluginInfoButtons << new QPushButton(
+                                           QIcon(":/images/preferences-system.png"), "");
+            connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                     PluginObjList[nRow], SLOT(showSettings()));
+
+            m_pUi->pluginsTable->setCellWidget(nRow, 3,
+                                               m_listPluginInfoButtons.last());
+        }
+
+        // Info
+        m_listPluginInfoButtons << new QPushButton(QIcon(":/images/question.png"), "");
+        connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                 PluginObjList[nRow], SLOT(showAbout()));
+        m_pUi->pluginsTable->setCellWidget(nRow, 4, m_listPluginInfoButtons.last());
     }
 }
