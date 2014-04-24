@@ -58,6 +58,9 @@ Salamander
 trusty
 Trusty
 Tahr
+utopic
+Utopic
+Unicorn
 Ubuntu
 Kubuntu
 Xubuntu
