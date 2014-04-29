@@ -934,13 +934,21 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
                    || sListTmpKeys[i] == "auf"
                    || sListTmpKeys[i] == "up"
                    || sListTmpKeys[i] == "rauf"
-                   || sListTmpKeys[i] == "pfeil-hoch") {
+                   || sListTmpKeys[i] == "pfeil-hoch"
+                   || sListTmpKeys[i] == "pfeil hoch"
+                   || sListTmpKeys[i] == "oben"
+                   || sListTmpKeys[i] == "pfeil auf") {
             sTmpKeyCode = "&uarr;";
         } else if (sListTmpKeys[i] == "runter"
                    || sListTmpKeys[i] == "ab"
                    || sListTmpKeys[i] == "down"
                    || sListTmpKeys[i] == "pfeil-runter"
-                   || sListTmpKeys[i] == "pfeil-ab") {
+                   || sListTmpKeys[i] == "pfeil-ab"
+                   || sListTmpKeys[i] == "pfeil runter"
+                   || sListTmpKeys[i] == "pfeil ab"
+                   || sListTmpKeys[i] == "pfeil-unten"
+                   || sListTmpKeys[i] == "pfeil unten"
+                   || sListTmpKeys[i] == "unten") {
             sTmpKeyCode = "&darr;";
         } else if (sListTmpKeys[i] == "links"
                    || sListTmpKeys[i] == "left"

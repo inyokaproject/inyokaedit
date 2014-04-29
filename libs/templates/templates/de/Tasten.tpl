@@ -22,9 +22,9 @@
 <@ elseif ['return','enter','eingabe'] contains ($key as stripped) as lowercase @>⏎
 <@ elseif ['at','@'] contains ($key as stripped) as lowercase @>@
 <@ elseif ['space','leerschritt','leerzeichen','leer','leertaste'] contains ($key as stripped) as lowercase @>        
-<@ elseif ['up','hoch','rauf','pfeil hoch','pfeil-hoch','auf'] contains ($key as stripped) as lowercase @>↑
+<@ elseif ['up','hoch','rauf','oben','pfeil hoch','pfeil auf','pfeil-hoch','auf'] contains ($key as stripped) as lowercase @>↑
 <@ elseif ['backspace','löschen','rückschritt'] contains ($key as stripped) as lowercase @>⌫
-<@ elseif ['down','runter','pfeil-runter','pfeil runter','pfeil-ab','pfeil ab','ab'] contains ($key as stripped) as lowercase @>↓
+<@ elseif ['down','runter','unten','pfeil-runter','pfeil-unten','pfeil unten','pfeil runter','pfeil-ab','pfeil ab','ab'] contains ($key as stripped) as lowercase @>↓
 <@ elseif ['left','links','pfeil links','pfeil-links'] contains ($key as stripped) as lowercase @>←
 <@ elseif ['right','rechts','pfeil rechts','pfeil-rechts'] contains ($key as stripped) as lowercase @>→
 <@ elseif ['bild auf','bild-auf','bild-rauf','bild rauf'] contains ($key as stripped) as lowercase @>Bild ↑
