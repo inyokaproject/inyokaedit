@@ -96,6 +96,7 @@ class CKnowledgeBox : public QObject, IEditorPlugin {
     QStringList m_sListEntries;
     QSignalMapper *m_pSigMapDeleteRow;
     QList<QPushButton *> m_listDelRowButtons;
+    bool m_bCalledSettings;
 };
 
 #endif  // INYOKAEDIT_CKNOWLEDGEBOX_H_

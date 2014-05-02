@@ -223,6 +223,10 @@ void CSettingsDialog::accept() {
             m_pSettings->m_sListDisabledPlugins << m_listPLugins[i]->getPluginName();
         }
     }
+    oldDisabledPlugins.sort();  // Sort for comparison
+    m_pSettings->m_sListDisabledPlugins.sort();
+    oldDisabledPlugins.removeAll("");
+    m_pSettings->m_sListDisabledPlugins.removeAll("");
 
     // If the following settings have been changed, a restart is needed
     if (m_pUi->previewAlongsideCheck->isChecked() != m_bTmpPreviewAlongside
@@ -537,6 +541,11 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
 
             m_pUi->pluginsTable->setCellWidget(nRow, 3,
                                                m_listPluginInfoButtons.last());
+
+            if (m_pSettings->m_sListDisabledPlugins.contains(
+                        m_listPLugins[nRow]->getPluginName())) {
+                m_listPluginInfoButtons.last()->setEnabled(false);
+            }
         }
 
         // Info

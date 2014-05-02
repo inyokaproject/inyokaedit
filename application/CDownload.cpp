@@ -165,14 +165,7 @@ void CDownload::downloadArticle() {
     if (true != bOk || m_sSitename.isEmpty()) {
         return;
     }
-
-    // Replace non valid characters
-    m_sSitenameUtf = m_sSitename;
-    m_sSitename.replace(QString::fromUtf8("ä"), "a", Qt::CaseInsensitive);
-    m_sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
-    m_sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
     m_sSitename.replace(" ", "_");
-    m_sSitenameUtf.replace(" ", "_");
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -261,9 +254,7 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
             // Get only attachments article metadata
             for (int i = 0; i < sListTmp.size(); i++) {
                 if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
-                                           Qt::CaseInsensitive)
-                        || sListTmp[i].startsWith("X-Attach: " + m_sSitenameUtf + "/",
-                                                  Qt::CaseInsensitive)) {
+                                           Qt::CaseInsensitive)) {
                     // Remove "X-Attach: "
                     sListMetadata << sListTmp[i].remove("X-Attach: ");
                     // Remove windows specific newline \r

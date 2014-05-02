@@ -99,7 +99,6 @@ class CDownload : public QObject {
     QNetworkReply *m_pReply;
     QString m_sArticleText;
     QString m_sSitename;
-    QString m_sSitenameUtf;
     QString m_sSource;
     QString m_sInyokaUrl;
 

@@ -214,6 +214,7 @@ void CKnowledgeBox::loadTemplateDefaults() {
 
 void CKnowledgeBox::executePlugin() {
     qDebug() << "Calling" << Q_FUNC_INFO;
+    m_bCalledSettings = false;
     m_pDialog->show();
     m_pDialog->exec();
 }
@@ -236,21 +237,23 @@ void CKnowledgeBox::accept() {
         }
     }
 
-    QString sOutput = "{{{#!" + m_pTemplates->getTransTemplate().toLower() +
-              " " + m_pTemplates->getTransKnowledge() + "\n";
-    if (m_sListEntries.size() == m_bListEntryActive.size()) {
-        for (int i = 0; i < m_sListEntries.size(); i++) {
-            if (m_bListEntryActive[i]) {
-                sOutput += m_sListEntries[i] + "\n";
+    if (!m_bCalledSettings) {
+        QString sOutput = "{{{#!" + m_pTemplates->getTransTemplate().toLower() +
+                  " " + m_pTemplates->getTransKnowledge() + "\n";
+        if (m_sListEntries.size() == m_bListEntryActive.size()) {
+            for (int i = 0; i < m_sListEntries.size(); i++) {
+                if (m_bListEntryActive[i]) {
+                    sOutput += m_sListEntries[i] + "\n";
+                }
             }
+        } else {
+            sOutput += "ERROR";
+            qCritical() << "Error executing knowledge box template.";
         }
-    } else {
-        sOutput += "ERROR";
-        qCritical() << "Error executing knowledge box template.";
+        sOutput += "}}}\n";
+        m_pEditor->insertPlainText(sOutput);
     }
-    sOutput += "}}}\n";
 
-    m_pEditor->insertPlainText(sOutput);
     this->writeSettings();
     m_pDialog->done(QDialog::Accepted);
 }
@@ -337,10 +340,13 @@ void CKnowledgeBox::writeSettings() {
 // ----------------------------------------------------------------------------
 
 bool CKnowledgeBox::hasSettings() const {
-    return false;
+    return true;
 }
 
 void CKnowledgeBox::showSettings() {
+    m_bCalledSettings = true;
+    m_pDialog->show();
+    m_pDialog->exec();
 }
 
 // ----------------------------------------------------------------------------
