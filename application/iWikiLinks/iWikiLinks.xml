@@ -110,7 +110,7 @@
     <element type="blogspot" url="http://$PAGE.blogspot.de/" name="Blogspot" icon="blogspot.png" />
     <element type="derstandard" url="http://derstandard.at/" name="derStandard" icon="derstandard.png" />
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
-    <element type="dropbox" url="http://dl.dropbox.com/u/" name="Dropbox" icon="dropbox.png" />
+    <element type="dropbox" url="http://dl.dropbox.com/" name="Dropbox" icon="dropbox.png" />
     <element type="ean" url="https://www.google.de/#q=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
