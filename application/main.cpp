@@ -76,12 +76,13 @@ int main(int argc, char *argv[]) {
     app.setApplicationVersion(APP_VERSION);
 
     if (app.arguments().size() >= 2) {
-        QString sTmp = QString(app.arguments()[1]).toLower();
-        if ("-v" == sTmp || "--version" == sTmp) {
+        if (app.arguments().contains("-v")
+                || app.arguments().contains("--version")) {
             std::cout << app.arguments()[0].toStdString() << "\t v"
                       << app.applicationVersion().toStdString() << std::endl;
             exit(0);
-        } else if ("--debug" == sTmp) {
+        } else if (app.arguments().contains("--debug")) {
+            qWarning() << "Debugging enabled!";
             bDEBUG = true;
         }
     }
