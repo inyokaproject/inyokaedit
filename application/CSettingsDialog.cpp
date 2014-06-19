@@ -88,6 +88,19 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
             sListGuiLanguages << fi.baseName().remove(qAppName() + "_");
         }
     }
+    appDir = "/usr/share/" + qApp->applicationName().toLower() + "/lang";
+    fiListFiles = appDir.entryInfoList(
+                    QDir::NoDotAndDotDot | QDir::Files);
+    QString sTempLang("");
+    foreach (QFileInfo fi, fiListFiles) {
+        if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName() + "_")) {
+            sTempLang = fi.baseName().remove(qAppName() + "_");
+            if (!sListGuiLanguages.contains(sTempLang, Qt::CaseInsensitive)) {
+                sListGuiLanguages << sTempLang;
+            }
+        }
+    }
+
     m_pUi->GuiLangCombo->addItems(sListGuiLanguages);
     if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
         m_pUi->GuiLangCombo->setCurrentIndex(

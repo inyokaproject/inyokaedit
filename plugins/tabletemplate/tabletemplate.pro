@@ -52,7 +52,7 @@ RESOURCES     = res/tabletemplate_resources.qrc
 TRANSLATIONS += lang/tabletemplate_de.ts
 
 unix {
-    QMAKE_RPATHDIR += /usr/lib/inyokaedit
+    !debug: QMAKE_RPATHDIR += /usr/lib/inyokaedit
     lang.path = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
     target.path = /usr/lib/inyokaedit/plugins

@@ -357,7 +357,7 @@ void CTemplates::initTranslations(const QString &sFilename) {
 
     // Translation needed for knowledge box selector plugin
     m_sTransKnowledge = configTransl.value("Knowledge", "ERROR").toString();
-    if ("ERROR" == m_sTransTable) {
+    if ("ERROR" == m_sTransKnowledge) {
         qCritical() << "Knowledge box translation not found.";
     }
 }

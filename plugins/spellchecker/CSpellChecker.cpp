@@ -227,6 +227,8 @@ bool CSpellChecker::initDictionaries() {
                                dictFilePathBA.constData());
 
     this->loadAdditionalDict(m_sUserDict);
+    this->loadAdditionalDict("/usr/share/" + qApp->applicationName().toLower()
+                             + "/ExtendedDict.txt");
     this->loadAdditionalDict(qApp->applicationDirPath() + "/ExtendedDict.txt");
     return true;
 }
@@ -235,8 +237,8 @@ bool CSpellChecker::initDictionaries() {
 // ----------------------------------------------------------------------------
 
 void CSpellChecker::loadAdditionalDict(const QString &sFilename) {
-    if (!sFilename.isEmpty()) {
-        QFile DictonaryFile(sFilename);
+    QFile DictonaryFile(sFilename);
+    if (DictonaryFile.exists()) {
         if (DictonaryFile.open(QIODevice::ReadOnly)) {
             QTextStream stream(&DictonaryFile);
             for (QString sWord = stream.readLine();
@@ -246,7 +248,7 @@ void CSpellChecker::loadAdditionalDict(const QString &sFilename) {
             }
             DictonaryFile.close();
         } else {
-             qWarning() << "Dictionary" << sFilename << "could not be opened.";
+            qWarning() << "Dictionary" << sFilename << "could not be opened.";
         }
     }
 }
