@@ -85,10 +85,11 @@ win32 {
 }
 
 unix {
+    QMAKE_RPATHDIR += /usr/lib/inyokaedit
     data.path = /usr/share/inyokaedit
-    data.files += application/iWikiLinks
+    data.files += iWikiLinks
     lang.path = /usr/share/inyokaedit/lang
-    lang.files += application/lang/*.qm
+    lang.files += lang/*.qm
     target.path = /usr/bin
     INSTALLS += data \
         lang \

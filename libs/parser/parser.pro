@@ -39,6 +39,7 @@ SOURCES    += CParser.cpp \
               CProvisionalTplParser.cpp
 
 unix {
+    QMAKE_RPATHDIR += /usr/lib/inyokaedit
     target.path = /usr/lib/inyokaedit
     INSTALLS += target
 }

@@ -46,8 +46,13 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLa
         listPluginsDir << pluginsDir;
     }
     pluginsDir = qApp->applicationDirPath();
-    pluginsDir.cd("plugins");
-    listPluginsDir << pluginsDir;
+    if (pluginsDir.cd("plugins")) {
+        listPluginsDir << pluginsDir;
+    }
+    pluginsDir = "/usr/lib/" + qApp->applicationName().toLower() + "/plugins";
+    if (pluginsDir.exists()) {
+        listPluginsDir << pluginsDir;
+    }
 
     // Look for available plugins
     foreach (QDir dir, listPluginsDir) {

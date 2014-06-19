@@ -54,7 +54,7 @@ unix {
 
     lang.path = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
-    target.path = /usr/share/inyokaedit/plugins
+    target.path = /usr/lib/inyokaedit/plugins
     INSTALLS += lang \
         target
 }
