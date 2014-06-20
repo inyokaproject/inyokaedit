@@ -18,6 +18,10 @@ TEMPLATE    = lib
 DESTDIR     = ../
 DEFINES    += TEMPLATES_LIBRARY
 
+VERSION     = 1.0.1
+QMAKE_TARGET_DESCRIPTION = "Templates library for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
+
 MOC_DIR     = ./.moc
 OBJECTS_DIR = ./.objs
 UI_DIR      = ./.ui

@@ -40,7 +40,7 @@ class IEditorPlugin {
 
     // ALL FUNCTIONS PURE VIRTUAL !!!
     virtual void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                            QDir userDataDir) = 0;
+                            QDir userDataDir, bool bDebug) = 0;
     virtual QString getPluginName() const = 0;
     virtual QString getPluginVersion() const = 0;
     virtual QTranslator* getPluginTranslator(const QString &sLocale) = 0;

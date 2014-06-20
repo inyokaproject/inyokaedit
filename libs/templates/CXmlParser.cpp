@@ -29,17 +29,15 @@
 
 #include "./CXmlParser.h"
 
-extern bool bDEBUG;
-
 CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
-                       const QString &sFilePath) {
+                       const QString &sFilePath, const bool bDebug) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile XmlFile;
 
     // Path from normal installation
     if (QFile::exists("/usr/share/" + sAppName.toLower() + "/" + sFilePath)
-            && !bDEBUG) {
+            && !bDebug) {
         XmlFile.setFileName("/usr/share/" + sAppName.toLower()
                             + "/" + sFilePath);
     } else {  // No installation: Use app path

@@ -44,7 +44,7 @@ class CHandler;
     * \param sFilePath (Relative) path and filename to xml file
     */
     CXmlParser(const QString &sAppName, const QString &sAppPath,
-               const QString &sFilePath);
+               const QString &sFilePath, const bool bDebug);
 
     /**
     * \brief Get menu name

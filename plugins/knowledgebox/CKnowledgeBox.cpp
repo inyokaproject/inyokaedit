@@ -34,7 +34,7 @@
 
 
 void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                               const QDir userDataDir) {
+                               const QDir userDataDir, bool bDebug) {
     Q_UNUSED(userDataDir);
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -58,7 +58,7 @@ void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pSettings->setIniCodec("UTF-8");
     m_sTplLang = m_pSettingsApp->value("TemplateLanguage", "de").toString();
     m_pEditor = pEditor;
-    m_pTemplates = new CTemplates(m_sTplLang);
+    m_pTemplates = new CTemplates(m_sTplLang, bDebug);
 
     this->loadTemplateEntries();
     this->buildUi(pParent);  // After loading template entries

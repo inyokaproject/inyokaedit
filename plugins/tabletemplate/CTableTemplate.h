@@ -59,7 +59,7 @@ class CTableTemplate : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir);
+                    const QDir userDataDir, bool bDebug);
     QString getPluginName() const;
     QString getPluginVersion() const;
     QTranslator* getPluginTranslator(const QString &sLocale);

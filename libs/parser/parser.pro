@@ -14,29 +14,37 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE    = lib
-DESTDIR     = ../
-DEFINES    += PARSER_LIBRARY
+TEMPLATE     = lib
+DESTDIR      = ../
+DEFINES     += PARSER_LIBRARY
+DEPENDPATH  += ../templates
+INCLUDEPATH += ../templates
 
-MOC_DIR     = ./.moc
-OBJECTS_DIR = ./.objs
-UI_DIR      = ./.ui
-RCC_DIR     = ./.rcc
+VERSION      = 1.0.1
+QMAKE_TARGET_DESCRIPTION = "Parser library for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 
-QT         += core xml network
+LIBS        += -L../ -ltemplates
+
+MOC_DIR      = ./.moc
+OBJECTS_DIR  = ./.objs
+UI_DIR       = ./.ui
+RCC_DIR      = ./.rcc
+
+QT          += core xml network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-HEADERS    += CParser.h \
-              CParseImgMap.h \
-              CParseLinks.h \
-              CParseTemplates.h \
-              CProvisionalTplParser.h
+HEADERS     += CParser.h \
+               CParseImgMap.h \
+               CParseLinks.h \
+               CParseTemplates.h \
+               CProvisionalTplParser.h
 
-SOURCES    += CParser.cpp \
-              CParseImgMap.cpp \
-              CParseLinks.cpp \
-              CParseTemplates.cpp \
-              CProvisionalTplParser.cpp
+SOURCES     += CParser.cpp \
+               CParseImgMap.cpp \
+               CParseLinks.cpp \
+               CParseTemplates.cpp \
+               CProvisionalTplParser.cpp
 
 unix {
     QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging

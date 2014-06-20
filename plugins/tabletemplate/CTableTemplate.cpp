@@ -33,7 +33,7 @@
 
 
 void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                                const QDir userDataDir) {
+                                const QDir userDataDir, bool bDebug) {
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -50,7 +50,8 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_dirPreview = userDataDir;
     m_pTextDocument = new QTextDocument(this);
     m_pTemplates = new CTemplates(m_pSettings->value(
-                                      "TemplateLanguage", "de").toString());
+                                      "TemplateLanguage", "de").toString(),
+                                  bDebug);
     m_pParser = new CParser(QDir(""), "", false, m_pTemplates);
 
     // Build UI

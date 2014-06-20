@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = spellchecker
 DESTDIR       = ../
 
-VERSION       = 1.0.0
+VERSION       = 1.0.1
 QMAKE_TARGET_DESCRIPTION = "Spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 

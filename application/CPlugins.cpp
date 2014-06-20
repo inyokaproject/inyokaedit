@@ -30,6 +30,8 @@
 
 #include "./CPlugins.h"
 
+extern bool bDEBUG;
+
 CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
                    const QStringList &sListDisabledPlugins, const QDir userDataDir)
     : m_pParent(pParent),
@@ -91,7 +93,7 @@ void CPlugins::loadPlugins() {
         }
 
         qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-        m_listPlugins[i]->initPlugin(m_pParent, m_pEditor, m_userDataDir);
+        m_listPlugins[i]->initPlugin(m_pParent, m_pEditor, m_userDataDir, bDEBUG);
 
         qApp->installTranslator(m_listPlugins[i]->getPluginTranslator(m_sGuiLanguage));
 

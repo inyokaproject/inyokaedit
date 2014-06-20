@@ -42,9 +42,10 @@ CSpellChecker::~CSpellChecker() {
 }
 
 void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                               const QDir userDataDir) {
+                               const QDir userDataDir, bool bDebug) {
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
     Q_UNUSED(pParent);
+    Q_UNUSED(bDebug);
 
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
