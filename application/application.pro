@@ -85,7 +85,7 @@ win32 {
 }
 
 unix {
-    !debug: QMAKE_RPATHDIR += /usr/lib/inyokaedit
+    QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
     data.path = /usr/share/inyokaedit
     data.files += iWikiLinks
     lang.path = /usr/share/inyokaedit/lang

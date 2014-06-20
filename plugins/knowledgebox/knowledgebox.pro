@@ -47,7 +47,7 @@ RESOURCES     = res/knowledgebox_resources.qrc
 TRANSLATIONS += lang/knowledgebox_de.ts
 
 unix {
-    !debug: QMAKE_RPATHDIR += /usr/lib/inyokaedit
+    QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
     lang.path = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
     target.path = /usr/lib/inyokaedit/plugins
