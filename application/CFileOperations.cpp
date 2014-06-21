@@ -28,6 +28,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QPrinter>
+#include <QPrinterInfo>
 #include <QPrintDialog>
 
 #if QT_VERSION >= 0x050000
@@ -258,26 +259,41 @@ bool CFileOperations::saveFile(const QString &sFileName) {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::printPreview() {
-#ifndef _WIN32
     QWebView previewWebView;
     QPrinter printer;
     QFile previewFile(m_sPreviewFile);
     QString sHtml("");
+
+    QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
+    if (0 == listPrinters.size()) {
+        QMessageBox::warning(m_pParent, qApp->applicationName(),
+                             trUtf8("No supported printer found."));
+        return;
+    } else {
+        foreach (QPrinterInfo info, listPrinters) {
+            qDebug() << "Found printers" << info.printerName();
+        }
+    }
 
     // Configure printer: format A4, PDF
     printer.setPaperSize(QPrinter::A4);
     printer.setFullPage(true);
     printer.setOrientation(QPrinter::Portrait);
     printer.setPrintRange(QPrinter::AllPages);
+#ifndef _WIN32
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(m_pSettings->getLastOpenedDir().absolutePath()
                                 + "/Preview.pdf");
+#else
+    printer.setOutputFormat(QPrinter::NativeFormat);
+#endif
 
     if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, trUtf8("Warning"),
                              trUtf8("Could not open preview file for printing!"));
         qWarning() << "Could not open text html preview file for printing:"
                    << m_sPreviewFile;
+        return;
     } else {
         QTextStream in(&previewFile);
         QString sTmpLine1("");
@@ -323,12 +339,7 @@ void CFileOperations::printPreview() {
     if (QDialog::Accepted == printDialog.exec()) {
         previewWebView.print(&printer);
     }
-#else
-    QMessageBox::information(m_pParent, qApp->applicationName(),
-                             trUtf8("Printing not supported under Windows, yet."));
-#endif
 }
-
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

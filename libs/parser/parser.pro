@@ -24,8 +24,6 @@ VERSION      = 1.0.1
 QMAKE_TARGET_DESCRIPTION = "Parser library for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 
-LIBS        += -L../ -ltemplates
-
 MOC_DIR      = ./.moc
 OBJECTS_DIR  = ./.objs
 UI_DIR       = ./.ui
@@ -46,8 +44,15 @@ SOURCES     += CParser.cpp \
                CParseTemplates.cpp \
                CProvisionalTplParser.cpp
 
+win32 {
+    LIBS     += $$OUT_PWD/../templates1.dll
+}
+
 unix {
     QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+
+    LIBS           += -L../ -ltemplates
+
     target.path = /usr/lib/inyokaedit
     INSTALLS += target
 }

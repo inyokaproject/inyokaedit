@@ -30,16 +30,14 @@ QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
 
-LIBS          += -L../../libs -ltemplates \
-                 -L../../libs -lparser
-
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += xml network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+lessThan(QT_MAJOR_VERSION, 5): QT += webkit
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 HEADERS      += CTableTemplate.h
 
@@ -51,8 +49,17 @@ RESOURCES     = res/tabletemplate_resources.qrc
 
 TRANSLATIONS += lang/tabletemplate_de.ts
 
+win32 {
+    LIBS     += $$OUT_PWD/../../libs/templates1.dll \
+                $$OUT_PWD/../../libs/parser1.dll
+}
+
 unix {
     QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+
+    LIBS           += -L../../libs -ltemplates \
+                      -L../../libs -lparser
+
     lang.path = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
     target.path = /usr/lib/inyokaedit/plugins

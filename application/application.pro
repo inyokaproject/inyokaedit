@@ -21,10 +21,8 @@ DEPENDPATH    += ../libs/templates \
                  ../libs/parser
 INCLUDEPATH   += ../libs/templates \
                  ../libs/parser
-LIBS          += -L../libs -ltemplates \
-                 -L../libs -lparser
 
-VERSION        = 0.13.0
+VERSION        = 0.13.1
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
@@ -82,10 +80,17 @@ TRANSLATIONS += lang/inyokaedit_de.ts
 
 win32 {
     RC_FILE = res/inyokaedit.rc
+
+    LIBS     += $$OUT_PWD/../libs/templates1.dll \
+                $$OUT_PWD/../libs/parser1.dll
 }
 
 unix {
     QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+
+    LIBS           += -L../libs -ltemplates \
+                      -L../libs -lparser
+
     data.path = /usr/share/inyokaedit
     data.files += iWikiLinks
     lang.path = /usr/share/inyokaedit/lang

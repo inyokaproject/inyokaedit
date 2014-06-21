@@ -33,7 +33,7 @@
  * \class CXmlParser
  * \brief Delivering templates (groups, url, icon) from xml file.
  */
-class CXmlParser {
+class Q_DECL_EXPORT CXmlParser {
 class CHandler;
 
   public:

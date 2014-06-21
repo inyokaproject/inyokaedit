@@ -26,8 +26,6 @@ QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
 
-LIBS          += -L../../libs -ltemplates
-
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
@@ -46,8 +44,15 @@ RESOURCES     = res/knowledgebox_resources.qrc
 
 TRANSLATIONS += lang/knowledgebox_de.ts
 
+win32 {
+    LIBS     += $$OUT_PWD/../../libs/templates1.dll
+}
+
 unix {
     QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+
+    LIBS           += -L../../libs -ltemplates
+
     lang.path = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
     target.path = /usr/lib/inyokaedit/plugins
