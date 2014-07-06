@@ -2,7 +2,7 @@ inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Fixed LP: #1276300 (TOC level selection)
-  * Added plugin interface (LP: #847244) and moved spellchecker and table
+  * Added plugin interface (LP: #847246) and moved spellchecker and table
     template generator to plugin.
   * Plugin selection at settings dialog.
   * Knowledge box selector plugin.
