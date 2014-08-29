@@ -2,28 +2,30 @@ Source: inyokaedit
 Section: editors
 Priority: extra
 Maintainer: Thorsten Roth <elthoro@gmx.de>
-Uploaders: Dominique Lasserre <lasserre.d@gmail.com>,
-         Christian Schaerf <code.c.schaerf@t-online.de>
-Build-Depends: debhelper (>= 7.0.50~),
-         hardening-wrapper,
-         libqt4-dev,
-         qt4-qmake,
-         libqtwebkit-dev | libqt4-dev (<< 4:4.7.0),
-         libqtgui4,
-         pkg-config,
-         libhunspell-dev
-Standards-Version: 3.9.4
+Uploaders:
+   Dominique Lasserre <lasserre.d@gmail.com>,
+   Christian Schaerf <code.c.schaerf@t-online.de>,
+   djcj <djcj@gmx.de>
+Build-Depends:
+   debhelper (>= 9),
+   libqt4-dev,
+   qt4-qmake,
+   libqtwebkit-dev | libqt4-dev (<< 4:4.7.0),
+   libhunspell-dev,
+   pkg-config
+Standards-Version: 3.9.5
 Homepage: https://launchpad.net/inyokaedit
 Vcs-Bzr: https://code.launchpad.net/~elthoro/inyokaedit/packaging
 Vcs-Browser: http://bazaar.launchpad.net/~elthoro/inyokaedit/packaging
 
 Package: inyokaedit
 Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         wget
-Suggests: hunspell,
-         python-pygments
+Depends:
+   ${shlibs:Depends},
+   ${misc:Depends},
+   wget
+Suggests:
+   python-pygments
 Description: Editor for Inyoka based portals
  InyokaEdit provides offline support for Inyoka based portals like
  ubuntuusers.de.

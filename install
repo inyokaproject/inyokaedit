@@ -1,3 +1,2 @@
 apport/inyokaedit-crashdb.conf /etc/apport/crashdb.conf.d
 apport/source_inyokaedit.py /usr/share/apport/package-hooks
-debian/inyokaedit.xpm /usr/share/pixmaps

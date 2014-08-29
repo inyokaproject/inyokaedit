@@ -1,3 +1,12 @@
+inyokaedit (0.13.1-0ubuntu1) trusty; urgency=low
+
+  [ djcj ]
+  * Added hicolor icons.
+  * Packaging adaptions.
+  * Folder reconstructions.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 29 Aug 2014 14:43:00 +0200
+
 inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]

@@ -1,7 +1,14 @@
 #!/usr/bin/make -f
-export DH_VERBOSE=1
-
-export DEB_BUILD_HARDENING=1
+#export DH_VERBOSE=1
 
 %:
-	dh $@ --parallel
+	dh ${@} --parallel
+
+override_dh_auto_install:
+
+
+override_dh_shlibdeps:
+	dh_shlibdeps -Linyokaedit -l/usr/lib/inyokaedit
+
+override_dh_builddeb:
+	dh_builddeb -- -Zxz -z9
