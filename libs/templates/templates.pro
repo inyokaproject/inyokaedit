@@ -15,6 +15,7 @@
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE    = lib
+CONFIG     += plugin
 DESTDIR     = ../
 DEFINES    += TEMPLATES_LIBRARY
 
@@ -37,9 +38,9 @@ SOURCES    += CTemplates.cpp \
               CXmlParser.cpp
 
 unix {
-    data.path = /usr/share/inyokaedit
+    data.path   = /usr/share/inyokaedit
     data.files += templates
     target.path = /usr/lib/inyokaedit
-    INSTALLS += data \
-        target
+    INSTALLS   += data \
+                  target
 }

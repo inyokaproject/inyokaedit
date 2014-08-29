@@ -55,14 +55,12 @@ win32 {
 }
 
 unix {
-    QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+    LIBS       += -L../../libs -ltemplates \
+                  -L../../libs -lparser
 
-    LIBS           += -L../../libs -ltemplates \
-                      -L../../libs -lparser
-
-    lang.path = /usr/share/inyokaedit/lang
+    lang.path   = /usr/share/inyokaedit/lang
     lang.files += lang/*.qm
     target.path = /usr/lib/inyokaedit/plugins
-    INSTALLS += lang \
-        target
+    INSTALLS   += lang \
+                  target
 }

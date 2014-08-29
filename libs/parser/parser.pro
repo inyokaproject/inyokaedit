@@ -15,6 +15,7 @@
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE     = lib
+CONFIG      += plugin
 DESTDIR      = ../
 DEFINES     += PARSER_LIBRARY
 DEPENDPATH  += ../templates
@@ -49,10 +50,8 @@ win32 {
 }
 
 unix {
-    QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
-
-    LIBS           += -L../ -ltemplates
+    LIBS       += -L../ -ltemplates
 
     target.path = /usr/lib/inyokaedit
-    INSTALLS += target
+    INSTALLS   += target
 }

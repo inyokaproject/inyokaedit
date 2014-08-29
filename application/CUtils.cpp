@@ -201,7 +201,7 @@ void CUtils::showAbout() {
                        "<br />Version: %2</p>"
                        "<p>&copy; 2011-%3, The %4 developers<br />"
                        "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>"
-                       "<p>Special thanks to <img src=\"%5\" /> bubi97, <img src=\"%5\" /> Lasall, <img src=\"%5\" /> Shakesbier"
+                       "<p>Special thanks to <img src=\"%5\" /> djcj, <img src=\"%5\" /> bubi97, <img src=\"%5\" /> Lasall, <img src=\"%5\" /> Shakesbier"
                        " and all testers from <a href=\"http://ubuntuusers.de\">ubuntuusers.de</a>.</p>"
                        "<p>This application uses icons from <a href=\"http://tango.freedesktop.org\">Tango project</a>.</p>")
                        .arg(qApp->applicationName())

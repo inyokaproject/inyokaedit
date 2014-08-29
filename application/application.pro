@@ -86,17 +86,17 @@ win32 {
 }
 
 unix {
-    QMAKE_RPATHDIR += /usr/lib/inyokaedit   # Comment for debugging
+    LIBS          += -L../libs -ltemplates \
+                     -L../libs -lparser
 
-    LIBS           += -L../libs -ltemplates \
-                      -L../libs -lparser
-
-    data.path = /usr/share/inyokaedit
-    data.files += iWikiLinks
-    lang.path = /usr/share/inyokaedit/lang
-    lang.files += lang/*.qm
-    target.path = /usr/bin
-    INSTALLS += data \
-        lang \
-        target
+    data.path      = /usr/share/inyokaedit
+    data.files    += iWikiLinks
+    lang.path      = /usr/share/inyokaedit/lang
+    lang.files    += lang/*.qm
+    starter.path   = /usr/bin
+    starter.files += data/inyokaedit
+    target.path    = /usr/lib/inyokaedit
+    INSTALLS      += data \
+                     lang \
+                     target
 }

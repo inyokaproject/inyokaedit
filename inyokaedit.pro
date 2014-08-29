@@ -24,21 +24,24 @@ SUBDIRS        = libs/templates \
                  application
 
 unix {
-    data.path = /usr/share/inyokaedit
-    data.files += GetInyokaStyles \
-        GetIWLs \
-        ExtendedDict.txt
-    desktop.path = /usr/share/applications
-    desktop.files += inyokaedit.desktop
-    pixmap.path = /usr/share/pixmaps
-    pixmap.files += application/res/images/inyokaedit_64x64.png
-    man.path = /usr/share
-    man.files += man
-    mime.path = /usr/share/mime/packages
-    mime.files += inyokaedit.xml
-    INSTALLS += data \
-        desktop \
-        pixmap \
-        man \
-        mime
+    data.path      = /usr/share/inyokaedit
+    data.files    += data/GetInyokaStyles \
+                     data/GetIWLs \
+                     data/ExtendedDict.txt
+    desktop.path   = /usr/share/applications
+    desktop.files += data/inyokaedit.desktop
+    pixmap.path    = /usr/share/pixmaps
+    pixmap.files  += application/res/images/inyokaedit_64x64.png \
+                     application/res/images/inyokaedit.xpm
+    icons.path     = /usr/share/icons
+    icons.files   += application/res/images/hicolor
+    man.path       = /usr/share
+    man.files     += man
+    mime.path      = /usr/share/mime/packages
+    mime.files    += data/inyokaedit.xml
+    INSTALLS      += data \
+                     desktop \
+                     pixmap \
+                     man \
+                     mime
 }
