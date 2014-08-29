@@ -42,6 +42,7 @@ unix {
     INSTALLS      += data \
                      desktop \
                      pixmap \
+                     icons \
                      man \
                      mime
 }

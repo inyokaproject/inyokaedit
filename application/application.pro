@@ -98,5 +98,6 @@ unix {
     target.path    = /usr/lib/inyokaedit
     INSTALLS      += data \
                      lang \
+                     starter \
                      target
 }
