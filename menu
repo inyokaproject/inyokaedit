@@ -1,7 +1,0 @@
-?package(inyokaedit):\
-    needs="x11"\
-    section="Applications/Editors"\
-    title="InyokaEdit"\
-    longtitle="Inyoka Markup Editor"\
-    icon="/usr/share/pixmaps/inyokaedit.xpm"\
-    command="/usr/bin/inyokaedit"

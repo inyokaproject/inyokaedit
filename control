@@ -25,6 +25,7 @@ Depends:
    ${misc:Depends},
    wget
 Suggests:
+   inyokaedit-plugins,
    python-pygments
 Description: Editor for Inyoka based portals
  InyokaEdit provides offline support for Inyoka based portals like
@@ -34,3 +35,19 @@ Description: Editor for Inyoka based portals
   * code highlighting
   * code completion
   * offline article preview
+
+Package: inyokaedit-plugins
+Architecture: any
+Depends:
+   ${shlibs:Depends},
+   ${misc:Depends},
+   inyokaedit (= ${binary:Version})
+Suggests: hunspell
+Description: Plugins for Inyokaedit
+ InyokaEdit provides offline support for Inyoka based portals like
+ ubuntuusers.de.
+ .
+ This package will install the following plugins:
+  * knowledgebox
+  * spellchecker
+  * tabletemplate
