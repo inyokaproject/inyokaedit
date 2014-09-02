@@ -5,6 +5,9 @@ inyokaedit (0.13.1-0ubuntu1) trusty; urgency=low
   * Packaging improvements; separate plugins package.
   * Folder reconstructions.
 
+  [ Thorsten Roth ]
+  * Removed separate libraries (reverted back to build-in components).
+
  -- Thorsten Roth <elthoro@gmx.de>  Tue, 02 Sep 2014 14:43:00 +0200
 
 inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
