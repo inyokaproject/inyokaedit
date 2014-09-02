@@ -86,18 +86,6 @@ win32 {
 }
 
 unix {
-    LIBS          += -L../libs -ltemplates \
-                     -L../libs -lparser
-
-    data.path      = /usr/share/inyokaedit
-    data.files    += iWikiLinks
-    lang.path      = /usr/share/inyokaedit/lang
-    lang.files    += lang/*.qm
-    starter.path   = /usr/bin
-    starter.files += data/inyokaedit
-    target.path    = /usr/lib/inyokaedit
-    INSTALLS      += data \
-                     lang \
-                     starter \
-                     target
+    LIBS           += -L../libs -ltemplates \
+                      -L../libs -lparser
 }

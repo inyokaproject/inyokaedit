@@ -114,7 +114,8 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
     if (!pPluginTranslator->load(sLocaleFile,
-                                 "/usr/share/" +qAppName().toLower() + "/lang")) {
+                                 qApp->applicationDirPath()
+                                 + "/../../share/" + qAppName().toLower() + "/lang")) {
         // If it fails search in application dircetory
         if (!pPluginTranslator->load(sLocaleFile,
                                      qApp->applicationDirPath() + "/lang")) {

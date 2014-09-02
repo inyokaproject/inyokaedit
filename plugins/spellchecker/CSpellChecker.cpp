@@ -86,7 +86,8 @@ QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
     if (!pPluginTranslator->load(sLocaleFile,
-                                 "/usr/share/" +qAppName().toLower() + "/lang")) {
+                                 qApp->applicationDirPath()
+                                 + "/../../share/" + qAppName().toLower() + "/lang")) {
         // If it fails search in application dircetory
         if (!pPluginTranslator->load(sLocaleFile,
                                      qApp->applicationDirPath() + "/lang")) {
@@ -118,9 +119,13 @@ void CSpellChecker::setDictPath() {
         // Standard path for Hunspell
         if (QDir("/usr/share/hunspell").exists()) {
             m_sDictPath = "/usr/share/hunspell/";
+        } else if (QDir("/usr/local/share/hunspell").exists()) {
+            m_sDictPath = "/usr/local/share/hunspell/";
+        // Otherwise look for MySpell dictionary
         } else if (QDir("/usr/share/myspell/dicts").exists()) {
-            // Otherwise look for MySpell dictionary
             m_sDictPath = "/usr/share/myspell/dicts/";
+        } else if (QDir("/usr/local/share/myspell/dicts").exists()) {
+            m_sDictPath = "/usr/local/share/myspell/dicts/";
         } else {
             // Fallback and for Windows look in app dir
             m_sDictPath = qApp->applicationDirPath() + "/dicts/";
@@ -228,7 +233,7 @@ bool CSpellChecker::initDictionaries() {
                                dictFilePathBA.constData());
 
     this->loadAdditionalDict(m_sUserDict);
-    this->loadAdditionalDict("/usr/share/" + qApp->applicationName().toLower()
+    this->loadAdditionalDict(qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                              + "/ExtendedDict.txt");
     this->loadAdditionalDict(qApp->applicationDirPath() + "/ExtendedDict.txt");
     return true;

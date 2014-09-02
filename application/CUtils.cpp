@@ -156,7 +156,7 @@ void CUtils::reportBug() {
     // Ubuntu: Using Apport, if needed files exist
     if (QFile::exists("/usr/bin/ubuntu-bug")
             && QFile::exists("/etc/apport/crashdb.conf.d/inyokaedit-crashdb.conf")
-            && QFile::exists("/usr/share/apport/package-hooks/source_inyokaedit.py")) {
+            && QFile::exists(qApp->applicationDirPath() + "/../../share/apport/package-hooks/source_inyokaedit.py")) {
         // Start apport
         QProcess procApport;
         procApport.start("ubuntu-bug",
@@ -186,9 +186,9 @@ void CUtils::reportBug() {
 void CUtils::showAbout() {
     QDate nDate = QDate::currentDate();
     QString sUserIcon("");
-    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+    if (QFile::exists(qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                       + "/iWikiLinks/user.png") && !bDEBUG) {
-        sUserIcon = "/usr/share/" + qApp->applicationName().toLower()
+        sUserIcon = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                 + "/iWikiLinks/user.png";
     } else {
         // No installation: Use app path

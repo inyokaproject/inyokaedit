@@ -128,7 +128,8 @@ int main(int argc, char *argv[]) {
     // Setup gui translation (app)
     if (bDEBUG ||
             !AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
-                                "/usr/share/" + app.applicationName().toLower()
+                                qApp->applicationDirPath()
+                                + "/../../share/" + app.applicationName().toLower()
                                 + "/lang")) {
         // If it fails, search in application directory
         if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
@@ -232,7 +233,8 @@ QString getLanguage(const QString &sAppName) {
         }
         #endif
         return QLocale::system().name();
-    } else if (!QFile("/usr/share/" + sAppName.toLower()+ "/lang/"
+    } else if (!QFile(qApp->applicationDirPath() + "/../../share/"
+                   + sAppName.toLower()+ "/lang/"
                    + qAppName() + "_" + sLang + ".qm").exists()
                 && !QFile(qApp->applicationDirPath() + "/lang/"
                           + qAppName() + "_" + sLang + ".qm").exists()) {

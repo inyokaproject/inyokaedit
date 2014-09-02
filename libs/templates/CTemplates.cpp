@@ -47,9 +47,11 @@ CTemplates::CTemplates(const QString &sTplLang, const bool &bDebug)
     this->initTranslations("Translations.conf");
 
     m_pInterWikiLinks = new CXmlParser(m_sAppName, m_sAppPath,
-                                       "iWikiLinks/iWikiLinks.xml", m_bDebug);
+                                       "../../share/" + m_sAppName.toLower()
+                                       + "/iWikiLinks/iWikiLinks.xml", m_bDebug);
     m_pDropdownTemplates = new CXmlParser(m_sAppName, m_sAppPath,
-                                          "templates/" + m_sTplLang
+                                          "../../share/" + m_sAppName.toLower()
+                                          + "/templates/" + m_sTplLang
                                           + "/Templates_Dropdown.xml", m_bDebug);
 }
 
@@ -72,9 +74,9 @@ void CTemplates::initTemplates() {
     bool bFoundTpl;
 
     // Path from normal installation
-    if (TplDir.exists("/usr/share/" + m_sAppName.toLower()
+    if (TplDir.exists(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                       + "/templates/" + m_sTplLang) && !m_bDebug) {
-        TplDir.setPath("/usr/share/" +m_sAppName.toLower()
+        TplDir.setPath(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                        + "/templates/" + m_sTplLang);
     } else {  // No installation: Use app path
         TplDir.setPath(m_sAppPath + "/templates/" + m_sTplLang);
@@ -155,7 +157,8 @@ void CTemplates::initTemplates() {
     qDebug() << "Loaded templates:" << m_sListTplNamesINY;
 
     m_pMarkupTemplates = new CXmlParser(m_sAppName, m_sAppPath,
-                                        "templates/" + m_sTplLang
+                                        "../../share/" + m_sAppName.toLower()
+                                        + "/templates/" + m_sTplLang
                                         + "/Templates.xml", m_bDebug);
 }
 
@@ -168,9 +171,9 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
     QFile HTMLTplFile(sTplFile);
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/"
+    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
                       +  HTMLTplFile.fileName()) && !m_bDebug) {
-        HTMLTplFile.setFileName("/usr/share/" + m_sAppName.toLower()
+        HTMLTplFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                                 + "/templates/" + HTMLTplFile.fileName());
     } else {  // No installation: Use app path
         HTMLTplFile.setFileName(m_sAppPath + "/templates/"
@@ -204,9 +207,9 @@ void CTemplates::initImgMap(const QString &sFilename,
     sListImgSource.clear();
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/"
+    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
                       + ImgMapFile.fileName()) && !m_bDebug) {
-        ImgMapFile.setFileName("/usr/share/" + m_sAppName.toLower()
+        ImgMapFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                               + "/templates/" + ImgMapFile.fileName());
     } else {  // No installation: Use app path
         ImgMapFile.setFileName(m_sAppPath + "/templates/"
@@ -245,9 +248,9 @@ void CTemplates::initTextformats(const QString &sFilename) {
     QStringList sListInput;
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/"
+    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
                       + formatsFile.fileName()) && !m_bDebug) {
-        formatsFile.setFileName("/usr/share/" + m_sAppName.toLower()
+        formatsFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                                 + "/templates/" + formatsFile.fileName());
     } else {  // No installation: Use app path
         formatsFile.setFileName(m_sAppPath + "/templates/"
@@ -292,9 +295,9 @@ void CTemplates::initTranslations(const QString &sFilename) {
     QFile translFile;
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + m_sAppName.toLower() + "/templates/"
+    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
                       + m_sTplLang + "/" + sFilename) && !m_bDebug) {
-        translFile.setFileName("/usr/share/" + m_sAppName.toLower()
+        translFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
                                + "/templates/" + m_sTplLang + "/" + sFilename);
     } else {  // No installation: Use app path
         translFile.setFileName(m_sAppPath + "/templates/" + m_sTplLang + "/"

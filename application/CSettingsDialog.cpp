@@ -88,7 +88,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
             sListGuiLanguages << fi.baseName().remove(qAppName() + "_");
         }
     }
-    appDir = "/usr/share/" + qApp->applicationName().toLower() + "/lang";
+    appDir = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower() + "/lang";
     fiListFiles = appDir.entryInfoList(
                     QDir::NoDotAndDotDot | QDir::Files);
     QString sTempLang("");

@@ -51,10 +51,4 @@ win32 {
 
 unix {
     LIBS      += -lhunspell
-
-    lang.path   = /usr/share/inyokaedit/lang
-    lang.files += lang/*.qm
-    target.path = /usr/lib/inyokaedit/plugins
-    INSTALLS   += lang \
-                  target
 }

@@ -49,11 +49,5 @@ win32 {
 }
 
 unix {
-    LIBS       += -L../../libs -ltemplates
-
-    lang.path   = /usr/share/inyokaedit/lang
-    lang.files += lang/*.qm
-    target.path = /usr/lib/inyokaedit/plugins
-    INSTALLS   += lang \
-                  target
+    LIBS           += -L../../libs -ltemplates
 }

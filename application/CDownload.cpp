@@ -110,10 +110,10 @@ void CDownload::callDownloadScript(const QString &sScript) {
     CProgressDialog *pDownloadProgress;
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+    if (QFile::exists(qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                       + "/" + sScript) && !bDEBUG) {
         pDownloadProgress =
-                new CProgressDialog("/usr/share/"
+                new CProgressDialog(qApp->applicationDirPath() + "/../../share/"
                                     + qApp->applicationName().toLower() + "/"
                                     + sScript,
                                     QStringList() << m_sStylesDir);
@@ -124,7 +124,7 @@ void CDownload::callDownloadScript(const QString &sScript) {
                                     QStringList() << m_sStylesDir);
     } else {
         qWarning() << "Download script could not be found:"
-                   << "\n\t/usr/share/" + qApp->applicationName().toLower()
+                   << "\n\t"+ qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                       + "/" + sScript
                    << "\n\t" + qApp->applicationDirPath() + "/" + sScript;
         QMessageBox::warning(m_pParent, qApp->applicationName(),

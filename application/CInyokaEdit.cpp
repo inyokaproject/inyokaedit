@@ -577,9 +577,10 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
     // No installation: Use app path
     QString sTmpPath = qApp->applicationDirPath() + sIconPath;
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+    if (QFile::exists(qApp->applicationDirPath()
+                      + "/../../share/" + qApp->applicationName().toLower()
                       + sIconPath) && !bDEBUG) {
-        sTmpPath = "/usr/share/" + qApp->applicationName().toLower()
+        sTmpPath = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
                 + sIconPath;
     }
 
@@ -611,10 +612,12 @@ void CInyokaEdit::createMenus() {
                                 "/templates/articles");
 
     // File menu (new from template)
-    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+    if (QFile::exists(qApp->applicationDirPath()
+                      + "/../../share/" + qApp->applicationName().toLower()
                       + "/templates/" + m_pSettings->getTemplateLanguage()
                       + "/articles") && !bDEBUG) {
-        articleTemplateDir.setPath("/usr/share/"
+        articleTemplateDir.setPath(qApp->applicationDirPath()
+                                   + "/../../share/"
                                    + qApp->applicationName().toLower()
                                    + "/templates/"
                                    + m_pSettings->getTemplateLanguage()
@@ -704,9 +707,10 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
     // No installation: Use app path
     QString sTmpPath(qApp->applicationDirPath() + sIconPath);
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + qApp->applicationName().toLower()
+    if (QFile::exists(qApp->applicationDirPath()
+                      + "/../../share/" + qApp->applicationName().toLower()
                       + sIconPath) && !bDEBUG) {
-        sTmpPath = "/usr/share/" + qApp->applicationName().toLower() + sIconPath;
+        sTmpPath = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower() + sIconPath;
     }
 
     for (int i = 0; i < pXmlMenu->getGrouplist().size(); i++) {
@@ -1614,12 +1618,13 @@ void CInyokaEdit::showSyntaxOverview() {
 
     QFile OverviewFile("");
     // Path from normal installation
-    if (QFile::exists("/usr/share/"
+    if (QFile::exists(qApp->applicationDirPath()
+                      + "/../../share/"
                       + qApp->applicationName().toLower()
                       + "/templates/"
                       + m_pSettings->getTemplateLanguage()
                       + "/SyntaxOverview") && !bDEBUG) {
-        OverviewFile.setFileName("/usr/share/"
+        OverviewFile.setFileName(qApp->applicationDirPath() + "/../../share/"
                                  + qApp->applicationName().toLower()
                                  + "/templates/" +
                                  m_pSettings->getTemplateLanguage()

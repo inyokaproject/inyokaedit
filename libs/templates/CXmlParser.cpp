@@ -36,9 +36,9 @@ CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
     QFile XmlFile;
 
     // Path from normal installation
-    if (QFile::exists("/usr/share/" + sAppName.toLower() + "/" + sFilePath)
+    if (QFile::exists(sAppPath + "/../../share/" + sAppName.toLower() + "/" + sFilePath)
             && !bDebug) {
-        XmlFile.setFileName("/usr/share/" + sAppName.toLower()
+        XmlFile.setFileName(sAppPath + "/../../share/" + sAppName.toLower()
                             + "/" + sFilePath);
     } else {  // No installation: Use app path
         XmlFile.setFileName(sAppPath + "/" + sFilePath);

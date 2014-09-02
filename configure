@@ -1,0 +1,54 @@
+#!/bin/sh
+
+if test x"$1" = x"-h" -o x"$1" = x"--help" ; then
+cat << EOF
+Usage: ./configure [options]
+
+options:
+  -h, --help               print this message
+
+  --prefix=PREFIX          install architecture-independent files into PREFIX
+                           [/usr/local]
+  --docdir=DIR             install documents in DIR [DATAROOT/docs/inyokaedit]
+  --man1dir=DIR            install manpage in DIR [DATAROOT/man/man1]
+EOF
+exit 1
+fi
+
+for opt; do
+    optarg="${opt#*=}"
+    case "$opt" in
+        --prefix=*)
+            prefix="$optarg"
+            ;;
+        --docdir=*)
+            docdir="$optarg"
+            ;;
+        --man1dir=*)
+            man1dir="$optarg"
+            ;;
+        *)
+            ;;
+    esac
+done
+
+test -n "$prefix" || prefix="/usr/local"
+test -n "$docdir" || docdir='${dataroot}/docs/inyokaedit'
+test -n "$mandir" || mandir='${dataroot}/man'
+
+echo ""
+echo "generate config.mak ..."
+echo ""
+
+rm -f config.mak
+cat >> config.mak << EOF
+prefix = $prefix
+docdir = $docdir
+mandir = $mandir
+EOF
+
+cat config.mak
+echo ""
+echo "Now run 'make && make install'"
+
+exit 0

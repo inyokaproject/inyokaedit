@@ -50,8 +50,5 @@ win32 {
 }
 
 unix {
-    LIBS       += -L../ -ltemplates
-
-    target.path = /usr/lib/inyokaedit
-    INSTALLS   += target
+    LIBS     += -L../ -ltemplates
 }
