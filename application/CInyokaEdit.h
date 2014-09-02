@@ -33,14 +33,13 @@
 #include <QToolButton>
 #include <QWebHistory>
 
-#include "../libs/templates/CTemplates.h"
-#include "../libs/parser/CParser.h"
-
 #include "./CDownload.h"
 #include "./CFileOperations.h"
 #include "./CFindReplace.h"
+#include "./parser/CParser.h"
 #include "./CPlugins.h"
 #include "./CSettings.h"
+#include "./CTemplates.h"
 #include "./CTextEditor.h"
 #include "./CUtils.h"
 // #include "./CUpload.h"

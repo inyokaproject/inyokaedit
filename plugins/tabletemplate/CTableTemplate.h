@@ -33,8 +33,8 @@
 #include <QSettings>
 #include <QString>
 
-#include "../../libs/templates/CTemplates.h"
-#include "../../libs/parser/CParser.h"
+#include "../../application/parser/CParser.h"
+#include "../../application/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 

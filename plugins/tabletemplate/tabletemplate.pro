@@ -18,12 +18,8 @@ TEMPLATE      = lib
 CONFIG       += plugin
 TARGET        = tabletemplate
 DESTDIR       = ../
-DEPENDPATH   += ../../libs/templates \
-                ../../libs/parser
-INCLUDEPATH  += ../../libs/templates \
-                ../../libs/parser
 
-VERSION       = 1.0.1
+VERSION       = 1.0.2
 QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
 
@@ -48,13 +44,3 @@ FORMS        += CTableTemplate.ui
 RESOURCES     = res/tabletemplate_resources.qrc
 
 TRANSLATIONS += lang/tabletemplate_de.ts
-
-win32 {
-    LIBS     += $$OUT_PWD/../../libs/templates1.dll \
-                $$OUT_PWD/../../libs/parser1.dll
-}
-
-unix {
-    LIBS           += -L../../libs -ltemplates \
-                      -L../../libs -lparser
-}

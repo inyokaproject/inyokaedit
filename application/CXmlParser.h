@@ -33,7 +33,7 @@
  * \class CXmlParser
  * \brief Delivering templates (groups, url, icon) from xml file.
  */
-class Q_DECL_EXPORT CXmlParser {
+class CXmlParser {
 class CHandler;
 
   public:
@@ -44,7 +44,7 @@ class CHandler;
     * \param sFilePath (Relative) path and filename to xml file
     */
     CXmlParser(const QString &sAppName, const QString &sAppPath,
-               const QString &sFilePath, const bool bDebug);
+               const QString &sFilePath);
 
     /**
     * \brief Get menu name

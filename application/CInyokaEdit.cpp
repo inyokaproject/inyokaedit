@@ -124,7 +124,7 @@ void CInyokaEdit::createObjects() {
     m_pFindReplace = new CFindReplace(m_pSettings);
 
     // Has to be created before parser
-    m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage(), bDEBUG);
+    m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage());
 
     m_pDownloadModule = new CDownload(this,
                                       m_UserDataDir.absolutePath(),

@@ -29,17 +29,11 @@
 
 #include "./CXmlParser.h"
 
-#if defined(TEMPLATES_LIBRARY)
-#  define TEMPLATES_EXPORT Q_DECL_EXPORT
-#else
-#  define TEMPLATES_EXPORT Q_DECL_IMPORT
-#endif
-
-class TEMPLATES_EXPORT CTemplates : public QObject {
+class CTemplates : public QObject {
     Q_OBJECT
 
   public:
-    CTemplates(const QString &sTplLang, const bool &bDebug);
+    CTemplates(const QString &sTplLang);
     ~CTemplates();
 
     QString getPreviewTemplate() const;
@@ -85,7 +79,6 @@ class TEMPLATES_EXPORT CTemplates : public QObject {
     void initTranslations(const QString &sFileName);
 
     QString m_sTplLang;
-    bool m_bDebug;
     QString m_sAppName;
     QString m_sAppPath;
 

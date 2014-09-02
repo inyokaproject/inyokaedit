@@ -17,10 +17,6 @@
 TEMPLATE       = app
 TARGET         = inyokaedit
 DESTDIR        = ../
-DEPENDPATH    += ../libs/templates \
-                 ../libs/parser
-INCLUDEPATH   += ../libs/templates \
-                 ../libs/parser
 
 VERSION        = 0.13.1
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
@@ -45,13 +41,20 @@ HEADERS      += CInyokaEdit.h \
                 CFileOperations.h \
                 CFindReplace.h \
                 CHighlighter.h \
+                parser/CParser.h \
+                parser/CParseImgMap.h \
+                parser/CParseLinks.h \
+                parser/CParseTemplates.h \
+                parser/CProvisionalTplParser.h \
                 CPlugins.h \
                 CProgressDialog.h \
+                CTemplates.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
                 # CUpload.h \
                 CUtils.h \
+                CXmlParser.h \
                 IEditorPlugin.h
 
 SOURCES      += main.cpp \
@@ -61,13 +64,20 @@ SOURCES      += main.cpp \
                 CFileOperations.cpp \
                 CFindReplace.cpp  \
                 CHighlighter.cpp \
+                parser/CParser.cpp \
+                parser/CParseImgMap.cpp \
+                parser/CParseLinks.cpp \
+                parser/CParseTemplates.cpp \
+                parser/CProvisionalTplParser.cpp \
                 CPlugins.cpp \
                 CProgressDialog.cpp \
+                CTemplates.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
                 # CUpload.cpp \
-                CUtils.cpp
+                CUtils.cpp \
+                CXmlParser.cpp
 
 FORMS        += CInyokaEdit.ui \
                 CFindReplace.ui \
@@ -80,12 +90,4 @@ TRANSLATIONS += lang/inyokaedit_de.ts
 
 win32 {
     RC_FILE = res/inyokaedit.rc
-
-    LIBS     += $$OUT_PWD/../libs/templates1.dll \
-                $$OUT_PWD/../libs/parser1.dll
-}
-
-unix {
-    LIBS           += -L../libs -ltemplates \
-                      -L../libs -lparser
 }

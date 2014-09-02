@@ -35,24 +35,18 @@
 #include "./CParseTemplates.h"
 #include "./CParseLinks.h"
 #include "./CParseImgMap.h"
-#include "../templates/CTemplates.h"
+#include "../CTemplates.h"
 
 // Qt classes
 class QString;
 class QTextDocument;
 class QDir;
 
-#if defined(PARSER_LIBRARY)
-#  define PARSER_EXPORT Q_DECL_EXPORT
-#else
-#  define PARSER_EXPORT Q_DECL_IMPORT
-#endif
-
 /**
  * \class CParser
  * \brief Main parser module.
  */
-class PARSER_EXPORT CParser : public QObject {
+class CParser : public QObject {
     Q_OBJECT
 
   public:

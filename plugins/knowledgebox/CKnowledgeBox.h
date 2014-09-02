@@ -35,7 +35,7 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include "../../libs/templates/CTemplates.h"
+#include "../../application/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 

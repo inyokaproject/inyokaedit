@@ -66,13 +66,11 @@ install-inyokaedit: infiles
 	$(INSTALL_FILE) data/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_FILE) data/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_FILE) data/menu               $(DESTDIR)$(dataroot)/menu/inyokaedit
-	$(INSTALL_FILE) libs/libparser.so       $(DESTDIR)$(libdir)/inyokaedit
-	$(INSTALL_FILE) libs/libtemplates.so    $(DESTDIR)$(libdir)/inyokaedit
 	$(INSTALL_FILE) man/inyokaedit.1        $(DESTDIR)$(mandir)/man1
 	$(INSTALL_FILE) man/de/inyokaedit.1     $(DESTDIR)$(mandir)/de/man1
 	$(CP) application/res/images/hicolor    $(DESTDIR)$(dataroot)/icons
 	$(CP) application/iWikiLinks            $(DESTDIR)$(dataroot)/inyokaedit
-	$(CP) libs/templates/templates          $(DESTDIR)$(dataroot)/inyokaedit
+	$(CP) application/templates             $(DESTDIR)$(dataroot)/inyokaedit
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
@@ -107,7 +105,7 @@ uninstall:
 clean:
 	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) clean
 	$(RM) $(INFILES)
-	$(RM) libs/*.so plugins/*.so
+	$(RM) plugins/*.so
 	$(RM) application/lang/*.qm
 	$(RM) plugins/knowledgebox/lang/*.qm
 	$(RM) plugins/spellchecker/lang/*.qm

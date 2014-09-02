@@ -16,10 +16,7 @@
 
 TEMPLATE       = subdirs
 CONFIG        += ordered
-SUBDIRS        = libs/templates \
-                 libs/parser \
-                 plugins/spellchecker \
+SUBDIRS        = plugins/spellchecker \
                  plugins/tabletemplate \
                  plugins/knowledgebox \
                  application
-
