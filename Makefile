@@ -47,6 +47,7 @@ install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport/package-hooks
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/menu
