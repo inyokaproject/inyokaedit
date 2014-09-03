@@ -48,7 +48,7 @@ class CDownload : public QObject {
     * \param StylesDir Folder in which Inyoka style elements should be stored
     */
     CDownload(QWidget *pParent, const QString &sStylesDir,
-              const QString &sImgDir);
+              const QString &sImgDir, const QString &sSharePath);
 
     /**
     * \brief Start download of an existing article
@@ -101,9 +101,10 @@ class CDownload : public QObject {
     QString m_sSitename;
     QString m_sSource;
     QString m_sInyokaUrl;
+    bool m_bAutomaticImageDownload;
+    QString m_sSharePath;
 
     CDownloadImg *m_DlImages;
-    bool m_bAutomaticImageDownload;
     bool m_bDownloadArticle;
 };
 

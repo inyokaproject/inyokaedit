@@ -34,32 +34,37 @@
 
 
 void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                               const QDir userDataDir, bool bDebug) {
-    Q_UNUSED(bDebug);
+                               const QDir userDataDir,
+                               const QString sSharePath) {
     Q_UNUSED(userDataDir);
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
-    m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+    m_pSettings = new QSettings(QSettings::IniFormat,
+                                QSettings::UserScope,
                                 qApp->applicationName().toLower(),
                                 PLUGIN_NAME);
 
-    m_pSettingsApp = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+    m_pSettingsApp = new QSettings(QSettings::IniFormat,
+                                   QSettings::UserScope,
                                    qApp->applicationName().toLower(),
                                    qApp->applicationName().toLower());
 #else
-    m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+    m_pSettings = new QSettings(QSettings::NativeFormat,
+                                QSettings::UserScope,
                                 qApp->applicationName().toLower(),
                                 PLUGIN_NAME);
 
-    m_pSettingsApp = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+    m_pSettingsApp = new QSettings(QSettings::NativeFormat,
+                                   QSettings::UserScope,
                                    qApp->applicationName().toLower(),
                                    qApp->applicationName().toLower());
 #endif
     m_pSettings->setIniCodec("UTF-8");
     m_sTplLang = m_pSettingsApp->value("TemplateLanguage", "de").toString();
     m_pEditor = pEditor;
-    m_pTemplates = new CTemplates(m_sTplLang);
+    m_sSharePath = sSharePath;
+    m_pTemplates = new CTemplates(m_sTplLang, m_sSharePath);
 
     this->loadTemplateEntries();
     this->buildUi(pParent);  // After loading template entries
@@ -85,15 +90,9 @@ QString CKnowledgeBox::getPluginVersion() const {
 QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile,
-                                 qApp->applicationDirPath()
-                                 + "/../../share/" + qAppName().toLower() + "/lang")) {
-        // If it fails search in application dircetory
-        if (!pPluginTranslator->load(sLocaleFile,
-                                     qApp->applicationDirPath() + "/lang")) {
-            qWarning() << "Could not load plugin translation:" << sLocaleFile;
-            return NULL;
-        }
+    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+        qWarning() << "Could not load plugin translation:" << sLocaleFile;
+        return NULL;
     }
     return pPluginTranslator;
 }
@@ -107,7 +106,7 @@ QString CKnowledgeBox::getCaption() const {
 
 QIcon CKnowledgeBox::getIcon() const {
     return QIcon();
-    //return QIcon(":/knowledgebox.png");
+    // return QIcon(":/knowledgebox.png");
 }
 
 // ----------------------------------------------------------------------------
@@ -128,15 +127,18 @@ void CKnowledgeBox::buildUi(QWidget *pParent) {
 
     m_pUi->entriesTable->setColumnWidth(0, 40);
 #if QT_VERSION >= 0x050000
-    m_pUi->entriesTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    m_pUi->entriesTable->horizontalHeader()->setSectionResizeMode(
+                1, QHeaderView::Stretch);
 #else
-    m_pUi->entriesTable->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
+    m_pUi->entriesTable->horizontalHeader()->setResizeMode(
+                1, QHeaderView::Stretch);
 #endif
     m_pUi->entriesTable->setColumnWidth(2, 40);
 
     if (m_sListEntries.size() != m_bListEntryActive.size()) {
         qCritical() << "Error building knowledge box dialog. List sizes:"
-                    << m_sListEntries.size() << "!=" << m_bListEntryActive.size();
+                    << m_sListEntries.size() << "!="
+                    << m_bListEntryActive.size();
         return;
     }
     for (int nRow = 0; nRow < m_sListEntries.size(); nRow++) {
@@ -145,8 +147,8 @@ void CKnowledgeBox::buildUi(QWidget *pParent) {
 
     connect(m_pSigMapDeleteRow, SIGNAL(mapped(QWidget*)),
             this, SLOT(deleteRow(QWidget*)));
-    connect (m_pUi->addButton, SIGNAL(pressed()),
-             this, SLOT(addRow()));
+    connect(m_pUi->addButton, SIGNAL(pressed()),
+            this, SLOT(addRow()));
 }
 
 // ----------------------------------------------------------------------------
@@ -156,7 +158,8 @@ void CKnowledgeBox::loadTemplateEntries() {
     // Load entries from default template or config file
     m_bListEntryActive.clear();
     m_sListEntries.clear();
-    uint nNumOfEntries = m_pSettings->value(m_sTplLang + "/NumOfEntries", 0).toUInt();
+    uint nNumOfEntries = m_pSettings->value(m_sTplLang + "/NumOfEntries",
+                                            0).toUInt();
     if (0 == nNumOfEntries) {
         this->loadTemplateDefaults();
     } else {
@@ -169,7 +172,8 @@ void CKnowledgeBox::loadTemplateEntries() {
             if (!sTmpEntry.isEmpty()) {
                 m_sListEntries << sTmpEntry;
                 m_bListEntryActive << m_pSettings->value(
-                                          "Active_" + QString::number(i), false).toBool();
+                                          "Active_" + QString::number(i),
+                                          false).toBool();
             }
         }
         m_pSettings->endGroup();
@@ -309,7 +313,7 @@ void CKnowledgeBox::createRow(const bool &bActive, const QString &sText) {
 // ----------------------------------------------------------------------------
 
 void CKnowledgeBox::deleteRow(QWidget *widget) {
-    QPushButton *button = (QPushButton*) widget;
+    QPushButton *button = reinterpret_cast<QPushButton*>(widget);
     if (button != NULL) {
         int nIndex = m_listDelRowButtons.indexOf(button);
         // qDebug() << "DELETE ROW:" << nIndex;
@@ -332,8 +336,10 @@ void CKnowledgeBox::writeSettings() {
     m_pSettings->beginGroup(m_sTplLang);
     m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
     for (int i = 0; i < m_sListEntries.size(); i++) {
-        m_pSettings->setValue("Entry_" + QString::number(i), m_sListEntries[i]);
-        m_pSettings->setValue("Active_" + QString::number(i), m_bListEntryActive[i]);
+        m_pSettings->setValue("Entry_" + QString::number(i),
+                              m_sListEntries[i]);
+        m_pSettings->setValue("Active_" + QString::number(i),
+                              m_bListEntryActive[i]);
     }
     m_pSettings->endGroup();
 }
@@ -360,15 +366,16 @@ void CKnowledgeBox::showAbout() {
 
     aboutbox.setWindowTitle(trUtf8("Info"));
     // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
-    aboutbox.setText(trUtf8("<p><b>%1</b>"
-                            "<br />Version: %2</p>"
-                            "<p>&copy; %3 &ndash; %4<br />"
-                            "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>")
-                            .arg(this->getCaption())
-                            .arg(PLUGIN_VERSION)
-                            .arg("2013-" + QString::number(nDate.year()))
-                            .arg(QString::fromUtf8("Thorsten Roth")) +
-                     trUtf8("<p><i>Plugin for choosing knowledge box entries.</i></p>"));
+    aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
+                     + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
+                     + "<p>&copy; 2013-" + QString::number(nDate.year())
+                     + " &ndash; " + QString::fromUtf8("Thorsten Roth")
+                     + "<br />" + trUtf8("Licence") + ": "
+                     + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                       "GNU General Public License Version 3</a></p>"
+                     + "<p><i>"
+                     + trUtf8("Plugin for choosing knowledge box entries.")
+                     + "</i></p>");
     aboutbox.exec();
 }
 

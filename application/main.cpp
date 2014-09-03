@@ -42,20 +42,17 @@
 #include <QtGlobal>
 #include <QLibraryInfo>
 #include <QLocale>
-#include <QTranslator>
 #include <QSettings>
-
-#include <iostream>
-#include <fstream>
+#include <QTranslator>
+#include <QTextStream>
 
 #include "./CInyokaEdit.h"
 
-std::ofstream logfile;
+QFile logfile;
+QTextStream out(&logfile);
 
-QString getLanguage(const QString &sAppName);
-void setupLogger(const QString &sDebugFilePath,
-                 const QString &sAppName,
-                 const QString &sVersion);
+QString getLanguage(const QString &sSharePath);
+void setupLogger(const QString &sDebugFilePath);
 
 #if QT_VERSION >= 0x050000
     void LoggingHandler(QtMsgType type,
@@ -65,9 +62,6 @@ void setupLogger(const QString &sDebugFilePath,
     void LoggingHandler(QtMsgType type, const char *sMsg);
 #endif
 
-// Don't change this value! Use "--debug" command line option instead.
-bool bDEBUG = false;
-
 // ----------------------------------------------------------------------------
 
 int main(int argc, char *argv[]) {
@@ -75,21 +69,16 @@ int main(int argc, char *argv[]) {
     app.setApplicationName(APP_NAME);
     app.setApplicationVersion(APP_VERSION);
 
-    if (app.arguments().size() >= 2) {
-        if (app.arguments().contains("-v")
-                || app.arguments().contains("--version")) {
-            std::cout << app.arguments()[0].toStdString() << "\t v"
-                      << app.applicationVersion().toStdString() << std::endl;
-            exit(0);
-        } else if (app.arguments().contains("--debug")) {
-            qWarning() << "Debugging enabled!";
-            bDEBUG = true;
-        }
+    if (app.arguments().contains("-v")
+            || app.arguments().contains("--version")) {
+        qDebug() << app.arguments()[0] << "\t v"
+                 << app.applicationVersion() << "\n";
     }
 
     QTranslator qtTranslator;
     QTranslator AppTranslator;
 
+    // User data directory
 #if QT_VERSION >= 0x050000
     QStringList sListPaths = QStandardPaths::standardLocations(
                 QStandardPaths::DataLocation);
@@ -104,47 +93,49 @@ int main(int argc, char *argv[]) {
                     QDesktopServices::DataLocation).toLower());
 #endif
 
-    const QString sLang(getLanguage(app.applicationName()));
+    // Default share data path (scripts, iWikilinks, templates, ...)
+    QString sSharePath = app.applicationDirPath();
+    // Installation path
+    QDir tmpDir(app.applicationDirPath() + "/../../share/"
+                + app.applicationName().toLower());
+    if (!app.arguments().contains("--debug") && tmpDir.exists()) {
+        sSharePath = app.applicationDirPath() + "/../../share/"
+                       + app.applicationName().toLower();
+    }
+
+    const QString sLang(getLanguage(sSharePath));
     const QString sDebugFile("debug.log");
 
     // Resource file (images, icons)
     Q_INIT_RESOURCE(inyokaedit_resources);
 
-    setupLogger(userDataDir.absolutePath() + "/" + sDebugFile,
-                app.applicationName(), app.applicationVersion());
+    setupLogger(userDataDir.absolutePath() + "/" + sDebugFile);
 
     // Setup gui translation (Qt)
     if (!qtTranslator.load("qt_" + sLang,
                            QLibraryInfo::location(
                                QLibraryInfo::TranslationsPath))) {
         // If it fails, search in application directory
-        if (!qtTranslator.load("qt_" + sLang, app.applicationDirPath()
-                               + "/lang")) {
+        if (!qtTranslator.load("qt_" + sLang, sSharePath + "/lang")) {
             qWarning() << "Could not load Qt translations:" << "qt_" + sLang;
         }
     }
     app.installTranslator(&qtTranslator);
 
     // Setup gui translation (app)
-    if (bDEBUG ||
-            !AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
-                                qApp->applicationDirPath()
-                                + "/../../share/" + app.applicationName().toLower()
-                                + "/lang")) {
-        // If it fails, search in application directory
-        if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
-                          app.applicationDirPath() + "/lang")) {
-            qWarning() << "Could not load application translation:"
-                       << qAppName() + "_" + sLang;
-        }
+    if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
+                            sSharePath + "/lang")) {
+        qWarning() << "Could not load application translation:"
+                   << qAppName() + "_" + sLang;
     }
     app.installTranslator(&AppTranslator);
 
-    CInyokaEdit InyokaEdit(userDataDir);
+    CInyokaEdit InyokaEdit(userDataDir, sSharePath);
     InyokaEdit.show();
     int nRet = app.exec();
 
     qDebug() << "Closing" << app.applicationName();
+    out.flush();
     logfile.close();
     return nRet;
 }
@@ -152,22 +143,25 @@ int main(int argc, char *argv[]) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void setupLogger(const QString &sDebugFilePath, const QString &sAppName,
-                 const QString &sVersion) {
+void setupLogger(const QString &sDebugFilePath) {
     // Remove old debug file
     if (QFile(sDebugFilePath).exists()) {
         QFile(sDebugFilePath).remove();
     }
 
     // Create new file
-    logfile.open(sDebugFilePath.toStdString().c_str(), std::ios::app);
+    logfile.setFileName(sDebugFilePath);
+    if (!logfile.open(QIODevice::WriteOnly)) {
+        qWarning() << "Couldn't create logging file: " << sDebugFilePath;
+    } else {
 #if QT_VERSION >= 0x050000
-    qInstallMessageHandler(LoggingHandler);
-    // qInstallMessageHandler(0);
+        qInstallMessageHandler(LoggingHandler);
 #else
-    qInstallMsgHandler(LoggingHandler);
+        qInstallMsgHandler(LoggingHandler);
 #endif
-    qDebug() << sAppName << sVersion;
+    }
+
+    qDebug() << qApp->applicationName() << qApp->applicationVersion();
     qDebug() << "Compiled with Qt" << QT_VERSION_STR;
     qDebug() << "Qt runtime" << qVersion();
 }
@@ -180,33 +174,32 @@ void LoggingHandler(QtMsgType type,
                     const QMessageLogContext &context,
                     const QString &sMsg) {
     QString sMsg2(sMsg);
-    QString sContext = sMsg + " (" +
-            QString(context.file) + ":" +
-            QString::number(context.line) + ", " +
-            QString(context.function) + ")";
+    QString sContext = sMsg + " (" + QString(context.file) + ":"
+                       + QString::number(context.line) + ", "
+                       + QString(context.function) + ")";
 #else
 void LoggingHandler(QtMsgType type, const char *sMsg) {
     QString sMsg2(sMsg);
     QString sContext(sMsg);
 #endif
-    char* sTime(QTime::currentTime().toString().toLatin1().data());
+    QString sTime(QTime::currentTime().toString());
 
     switch (type) {
     case QtDebugMsg:
-        logfile << sTime << " Debug: " << sMsg2.toStdString().c_str() << "\n";
-        logfile.flush();
+        out << sTime << " Debug: " << sMsg2 << "\n";
+        out.flush();
         break;
     case QtWarningMsg:
-        logfile << sTime << " Warning: " << sContext.toStdString().c_str() << "\n";
-        logfile.flush();
+        out << sTime << " Warning: " << sContext << "\n";
+        out.flush();
         break;
     case QtCriticalMsg:
-        logfile << sTime << " Critical: " << sContext.toStdString().c_str() << "\n";
-        logfile.flush();
+        out << sTime << " Critical: " << sContext << "\n";
+        out.flush();
         break;
     case QtFatalMsg:
-        logfile << sTime << " Fatal: " << sContext.toStdString().c_str() << "\n";
-        logfile.flush();
+        out << sTime << " Fatal: " << sContext << "\n";
+        out.flush();
         logfile.close();
         abort();
     }
@@ -215,13 +208,14 @@ void LoggingHandler(QtMsgType type, const char *sMsg) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString getLanguage(const QString &sAppName) {
+QString getLanguage(const QString &sSharePath) {
 #if defined _WIN32
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,
-                       sAppName.toLower(), sAppName.toLower());
+                       qAppName().toLower(), qAppName().toLower());
 #else
     QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
-                       sAppName.toLower(), sAppName.toLower());
+                       qApp->applicationName().toLower(),
+                       qApp->applicationName().toLower());
 #endif
 
     QString sLang = settings.value("GuiLanguage", "auto").toString();
@@ -233,11 +227,8 @@ QString getLanguage(const QString &sAppName) {
         }
         #endif
         return QLocale::system().name();
-    } else if (!QFile(qApp->applicationDirPath() + "/../../share/"
-                   + sAppName.toLower()+ "/lang/"
-                   + qAppName() + "_" + sLang + ".qm").exists()
-                && !QFile(qApp->applicationDirPath() + "/lang/"
-                          + qAppName() + "_" + sLang + ".qm").exists()) {
+    } else if (!QFile(sSharePath + "/lang/"
+                      + qAppName() + "_" + sLang + ".qm").exists()) {
         settings.setValue("GuiLanguage", "en");
         return "en";
     }

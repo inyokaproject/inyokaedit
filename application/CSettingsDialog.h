@@ -49,7 +49,7 @@ class CSettingsDialog : public QDialog {
 
   public:
     CSettingsDialog(CSettings *pSettings, CHighlighter *pHighlighter,
-                    QWidget *pParent = 0);
+                    const QString &sSharePath, QWidget *pParent = 0);
     virtual ~CSettingsDialog();
 
   public slots:
@@ -79,6 +79,7 @@ class CSettingsDialog : public QDialog {
     Ui::CSettingsDialog *m_pUi;
     CSettings *m_pSettings;
     CHighlighter *m_pHighlighter;
+    QString m_sSharePath;
 
     bool m_bTmpPreviewInEditor;
     bool m_bTmpPreviewAlongside;

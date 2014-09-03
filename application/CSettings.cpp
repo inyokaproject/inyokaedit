@@ -35,8 +35,9 @@
 
 #include "./CSettings.h"
 
-CSettings::CSettings(QWidget *pParent)
-    : m_pParent(pParent) {
+CSettings::CSettings(QWidget *pParent, const QString &sSharePath)
+    : m_pParent(pParent),
+      m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
@@ -74,16 +75,19 @@ CSettings::~CSettings() {
 void CSettings::init(CTemplates *pTemplates, QTextDocument *pDoc) {
     m_pHighlighter = new CHighlighter(pTemplates, m_sStyleFile, pDoc);
 
-    m_pSettingsDialog = new CSettingsDialog(this, m_pHighlighter, m_pParent);
+    m_pSettingsDialog = new CSettingsDialog(this, m_pHighlighter,
+                                            m_sSharePath, m_pParent);
 
-    connect(this, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)),
-            m_pSettingsDialog, SLOT(getAvailablePlugins(QList<IEditorPlugin*>,QList<QObject*>)));
+    connect(this,
+            SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)),
+            m_pSettingsDialog,
+            SLOT(getAvailablePlugins(QList<IEditorPlugin*>, QList<QObject*>)));
 
     connect(this, SIGNAL(showSettingsDialog()),
             m_pSettingsDialog, SLOT(show()));
 
-    connect (m_pSettingsDialog, SIGNAL(updatedSettings()),
-             this, SIGNAL(updateEditorSettings()));
+    connect(m_pSettingsDialog, SIGNAL(updatedSettings()),
+            this, SIGNAL(updateEditorSettings()));
 }
 
 // ----------------------------------------------------------------------------
@@ -113,7 +117,8 @@ void CSettings::readSettings() {
         qCritical() << "Error while getting documents standard path.";
         sListPaths << "";
     }
-    m_LastOpenedDir = m_pSettings->value("LastOpenedDir", sListPaths[0]).toString();
+    m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
+                                         sListPaths[0]).toString();
 #else
     m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
                                          QDesktopServices::storageLocation(

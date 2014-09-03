@@ -89,8 +89,9 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                             sListArguments.append(s);
                         } else {
                             // If 's' is outside quotes, get the splitted string
-                            sListArguments.append(s.split(QRegExp(",+"),
-                                                          QString::SkipEmptyParts));
+                            sListArguments.append(
+                                        s.split(QRegExp(",+"),
+                                                QString::SkipEmptyParts));
                         }
                         bInside = !bInside;
                     }
@@ -124,18 +125,19 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                     sListArguments = sMacro.split(QRegExp("\\n"));
 
                     if (sListArguments.size() > 0) {
-                        // Split by ' ' but don't split quoted strings with space
+                        // Split by ' ' - don't split quoted strings with space
                         QStringList sList;
-                        QStringList sList2 = sListArguments[0].split(QRegExp("\""));
+                        QStringList sL = sListArguments[0].split(QRegExp("\""));
                         bool bInside = false;
-                        foreach (QString s, sList2) {
+                        foreach (QString s, sL) {
                             if (bInside) {
                                 // If 's' is inside quotes, get the whole string
                                 sList.append(s);
                             } else {
-                                // If 's' is outside quotes, get the splitted string
-                                sList.append(s.split(QRegExp("\\s+"),
-                                                              QString::SkipEmptyParts));
+                                // If 's' is outside quotes, get splitted string
+                                sList.append(s.split(
+                                                 QRegExp("\\s+"),
+                                                 QString::SkipEmptyParts));
                             }
                             bInside = !bInside;
                         }

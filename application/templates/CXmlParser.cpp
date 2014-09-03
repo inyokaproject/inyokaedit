@@ -29,29 +29,16 @@
 
 #include "./CXmlParser.h"
 
-extern bool bDEBUG;
-
-CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
-                       const QString &sFilePath) {
+CXmlParser::CXmlParser(const QString &sXmlFile) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QFile XmlFile;
-
-    // Path from normal installation
-    if (QFile::exists(sAppPath + "/../../share/" + sAppName.toLower() + "/" + sFilePath)
-            && !bDEBUG) {
-        XmlFile.setFileName(sAppPath + "/../../share/" + sAppName.toLower()
-                            + "/" + sFilePath);
-    } else {  // No installation: Use app path
-        XmlFile.setFileName(sAppPath + "/" + sFilePath);
-    }
-
+    QFile XmlFile(sXmlFile);
     // Check if file exist and it's readable
     if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
         qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
-        QMessageBox::critical(0, sAppName,
+        QMessageBox::critical(0, "Error",
                               "Can not open \"" + XmlFile.fileName() + "\".");
-        exit(-2);
+        exit(-3);
     }
 
     QXmlSimpleReader xmlReader;
@@ -65,10 +52,10 @@ CXmlParser::CXmlParser(const QString &sAppName, const QString &sAppPath,
     bool bOk = xmlReader.parse(m_pXmlSource);
     if (!bOk) {
         qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
-        QMessageBox::critical(0, sAppName,
+        QMessageBox::critical(0, "Error",
                               "Error while parsing \""
                               + XmlFile.fileName() + "\".");
-        exit(-3);
+        exit(-4);
     }
 
     m_sMenuName = m_pHandler->m_sMenuName_2;

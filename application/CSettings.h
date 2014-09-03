@@ -46,7 +46,7 @@ class CSettings : public QObject {
     Q_OBJECT
 
   public:
-    CSettings(QWidget *pParent);
+    CSettings(QWidget *pParent, const QString &sSharePath);
     ~CSettings();
     void init(CTemplates *pTemplates, QTextDocument *pDoc);
 
@@ -133,6 +133,7 @@ class CSettings : public QObject {
     void removeObsolete();
 
     QWidget *m_pParent;
+    QString m_sSharePath;
     QSettings *m_pSettings;
     CSettingsDialog *m_pSettingsDialog;
     CHighlighter *m_pHighlighter;

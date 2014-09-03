@@ -33,7 +33,7 @@ class CTemplates : public QObject {
     Q_OBJECT
 
   public:
-    CTemplates(const QString &sTplLang);
+    CTemplates(const QString &sTplLang, const QString &sSharePath);
     ~CTemplates();
 
     QString getPreviewTemplate() const;
@@ -79,8 +79,7 @@ class CTemplates : public QObject {
     void initTranslations(const QString &sFileName);
 
     QString m_sTplLang;
-    QString m_sAppName;
-    QString m_sAppPath;
+    QString m_sSharePath;
 
     QString m_sPreviewTemplate;
     QStringList m_sListTplNamesINY;

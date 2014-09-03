@@ -40,11 +40,11 @@ CParser::CParser(const QDir &tmpImgDir,
     m_tmpFileDir = tmpImgDir;
     m_tmpFileDir.cdUp();
 
-    m_pTemplateParser = new CParseTemplates(m_pTemplates->getTransTemplate(),
-                                            m_pTemplates->getListTplNamesINY(),
-                                            m_pTemplates->getListFormatHtmlStart(),
-                                            m_tmpFileDir,
-                                            m_tmpImgDir);
+    m_pTemplateParser = new CParseTemplates(
+                m_pTemplates->getTransTemplate(),
+                m_pTemplates->getListTplNamesINY(),
+                m_pTemplates->getListFormatHtmlStart(),
+                m_tmpFileDir, m_tmpImgDir);
 
     m_pLinkParser = new CParseLinks(m_sInyokaUrl,
                                     m_pTemplates->getIWLs()->getElementTypes(),
@@ -135,7 +135,7 @@ QString CParser::genOutput(const QString &sActFile,
     } else {
         QFileInfo fi(m_sCurrentFile);
         sFilename = fi.baseName();
-        sFilename.replace("_"," ");
+        sFilename.replace("_", " ");
     }
 
     // Replace template tags
@@ -143,8 +143,8 @@ QString CParser::genOutput(const QString &sActFile,
     QString sTemplateCopy(m_pTemplates->getPreviewTemplate());
     sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
     QString sRevTextCopy(m_pTemplates->getTransRev());  // Copy needed!
-    sRevTextCopy = sRevTextCopy.replace("%date%",
-                                        QDate::currentDate().toString("dd.MM.yyyy"))
+    sRevTextCopy = sRevTextCopy.replace(
+                "%date%", QDate::currentDate().toString("dd.MM.yyyy"))
             .replace("%time%", QTime::currentTime().toString("hh:mm"));
     sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
     sTemplateCopy = sTemplateCopy.replace("%tagtext%",
@@ -233,8 +233,12 @@ void CParser::replaceCodeblocks(QTextDocument *p_rawDoc) {
     QString sDoc(p_rawDoc->toPlainText());
     QStringList sListTplRegExp;
     // Search for {{{#!code ...}}} and {{{ ... [without #!vorlage] ...}}}
-    sListTplRegExp << "\\{\\{\\{#!" + m_pTemplates->getTransCodeBlock() + " .+\\}\\}\\}"
-                   << "\\{\\{\\{(?!#!" + m_pTemplates->getTransTemplate() + ").+\\}\\}\\}";
+    sListTplRegExp << "\\{\\{\\{#!"
+                      + m_pTemplates->getTransCodeBlock()
+                      + " .+\\}\\}\\}"
+                   << "\\{\\{\\{(?!#!"
+                      + m_pTemplates->getTransTemplate()
+                      + ").+\\}\\}\\}";
     QString sMacro;
     QStringList sListLines;
     int nPos;
@@ -250,8 +254,9 @@ void CParser::replaceCodeblocks(QTextDocument *p_rawDoc) {
             sMacro = findTemplate.cap(0);
             sMacro.remove("{{{\n");
             sMacro.remove("{{{");
-            if (sMacro.startsWith("#!" + m_pTemplates->getTransCodeBlock() + " ",
-                                  Qt::CaseInsensitive)) {
+            if (sMacro.startsWith(
+                        "#!" + m_pTemplates->getTransCodeBlock() + " ",
+                        Qt::CaseInsensitive)) {
                 bFormated = true;
                 sMacro.remove("#!" + m_pTemplates->getTransCodeBlock() + " ",
                               Qt::CaseInsensitive);
@@ -365,14 +370,14 @@ QString CParser::highlightCode(const QString &sLanguage, const QString &sCode) {
         if (!procPygmentize.waitForStarted()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Could not start pygmentize.");
-            qCritical() << "Error while starting pygmentize - waitForStarted()";
+            qCritical() << "Error while starting pygmentize - waitForStarted";
             procPygmentize.kill();
             return sCode;
         }
         if (!procPygmentize.waitForFinished()) {
             QMessageBox::critical(0, "Pygments error",
                                   "Error while using pygmentize.");
-            qCritical() << "Error while executing pygmentize - waitForFinished()";
+            qCritical() << "Error while executing pygmentize - waitForFinished";
             procPygmentize.kill();
             return sCode;
         }
@@ -453,7 +458,8 @@ void CParser::filterNoTranslate(QTextDocument *p_rawDoc) {
         while (nIndex >= 0) {
             sFormatedText = patternFormat.cap();
             m_sListNoTranslate << sFormatedText;
-            nIndex = patternFormat.indexIn(sDoc, nIndex + sFormatedText.length());
+            nIndex = patternFormat.indexIn(sDoc,
+                                           nIndex + sFormatedText.length());
             sDoc.replace(sFormatedText, "%%NO_TRANSLATE_" +
                          QString::number(nNoTranslate) + "%%");
             nNoTranslate++;
@@ -604,7 +610,8 @@ void CParser::reinstertNoTranslate(QTextDocument *p_rawDoc) {
     // Reinsert filtered monotype codeblock
     // Has to be decremental, because of possible nested blocks
     for (int i = m_sListNoTranslate.size() - 1; i >= 0; i--) {
-        sDoc.replace("%%NO_TRANSLATE_" + QString::number(i) + "%%", m_sListNoTranslate[i]);
+        sDoc.replace("%%NO_TRANSLATE_" + QString::number(i) + "%%",
+                     m_sListNoTranslate[i]);
     }
 
     p_rawDoc->setPlainText(sDoc);
@@ -877,8 +884,9 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
         for (int i = 0; i < m_sListHeadlines.size(); i++) {
             sTmp = m_sListHeadlines[i];
             sTmp.remove(QRegExp("#{1,5}\\d#{1,5}"));
-            m_sListHeadlines[i].remove(m_sListHeadlines[i].length() - sTmp.length(),
-                                       sTmp.length()).remove("#");
+            m_sListHeadlines[i].remove(
+                        m_sListHeadlines[i].length() - sTmp.length(),
+                        sTmp.length()).remove("#");
 
             nCurrentLevel = m_sListHeadlines[i].toUShort();
             sSpaces.fill(' ', nCurrentLevel);
@@ -990,10 +998,12 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 
         if (tmpH > tmpW) {
             iImgHeight = QImage(sImageUrl).height();
-            tmpW = static_cast<double>(QImage(sImageUrl).width()) / (iImgHeight / static_cast<double>(tmpH));
+            tmpW = static_cast<double>(QImage(sImageUrl).width()) /
+                    (iImgHeight / static_cast<double>(tmpH));
         } else if (tmpW > tmpH) {
             iImgWidth = QImage(sImageUrl).width();
-            tmpH = static_cast<double>(QImage(sImageUrl).height()) / (iImgWidth / static_cast<double>(tmpW));
+            tmpH = static_cast<double>(QImage(sImageUrl).height()) /
+                    (iImgWidth / static_cast<double>(tmpW));
         }
 
         // HTML code
@@ -1321,7 +1331,6 @@ QString CParser::createTable(const QStringList &sListLines) {
                     sRet += " style=\"vertical-align: bottom;";
                     bCellStyle = true;
                 }
-
             }
             // Closing style section
             if (bCellStyle) {

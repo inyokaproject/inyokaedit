@@ -39,7 +39,7 @@
 #include "./parser/CParser.h"
 #include "./CPlugins.h"
 #include "./CSettings.h"
-#include "./CTemplates.h"
+#include "./templates/CTemplates.h"
 #include "./CTextEditor.h"
 #include "./CUtils.h"
 // #include "./CUpload.h"
@@ -76,7 +76,8 @@ class CInyokaEdit : public QMainWindow {
     * \param ptrApp Pointer to main application
     * \param parent pointer to parent window
     */
-    explicit CInyokaEdit(QDir userDataDir, QWidget *parent = 0);
+    explicit CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
+                         QWidget *parent = 0);
 
     /** \brief Destructor */
     ~CInyokaEdit();
@@ -224,6 +225,7 @@ class CInyokaEdit : public QMainWindow {
     QDir m_UserDataDir;
     QDir m_tmpPreviewImgDir;
     QString m_sPreviewFile;
+    QString m_sSharePath;
 
     // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;

@@ -35,7 +35,7 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include "../../application/CTemplates.h"
+#include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
@@ -60,7 +60,8 @@ class CKnowledgeBox : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, bool bDebug);
+                    const QDir userDataDir,
+                    const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     QTranslator* getPluginTranslator(const QString &sLocale);
@@ -90,6 +91,7 @@ class CKnowledgeBox : public QObject, IEditorPlugin {
     QSettings *m_pSettings;
     QSettings *m_pSettingsApp;
     CTextEditor *m_pEditor;
+    QString m_sSharePath;
     CTemplates *m_pTemplates;
     QString m_sTplLang;
     QList<bool> m_bListEntryActive;

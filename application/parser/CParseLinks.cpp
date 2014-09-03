@@ -166,8 +166,8 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                     m_sLinkClassAddition = "";
                     if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
-                                    QNetworkRequest(QUrl(sLinkURL
-                                                         + "?action=metaexport")));
+                                    QNetworkRequest(
+                                        QUrl(sLinkURL + "?action=metaexport")));
                         QEventLoop loop;  // Workaround getting synchron reply
                         connect(m_NWreply, SIGNAL(finished()),
                                 &loop, SLOT(quit()));
@@ -193,8 +193,8 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                                + sLink.mid(0, sLink.indexOf(":"));
                     if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
-                                    QNetworkRequest(QUrl(sLinkURL
-                                                         + "?action=metaexport")));
+                                    QNetworkRequest(
+                                        QUrl(sLinkURL + "?action=metaexport")));
                         QEventLoop loop;
                         connect(m_NWreply, SIGNAL(finished()),
                                 &loop, SLOT(quit()));
@@ -207,11 +207,11 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                         }
                     }
                     sDoc.replace(nIndex, nLength,
-                                   "<a href=\"" + sLinkURL
-                                   + "\" class=\"internal"
-                                   + m_sLinkClassAddition + "\">"
-                                   + sLink.mid(sLink.indexOf(":")
-                                               + 1, nLength).trimmed() + "</a>");
+                                 "<a href=\"" + sLinkURL
+                                 + "\" class=\"internal"
+                                 + m_sLinkClassAddition + "\">"
+                                 + sLink.mid(sLink.indexOf(":")
+                                             + 1, nLength).trimmed() + "</a>");
                 }
             }
 

@@ -14,31 +14,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE      = lib
-CONFIG       += plugin
-TARGET        = knowledgebox
-DESTDIR       = ../
+INCLUDEPATH += $$PWD
+DEPENDPATH  += $$PWD
 
-VERSION       = 1.0.2
-QMAKE_TARGET_DESCRIPTION = "Knowledge box selection plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"
+HEADERS     += $$PWD/CParser.h \
+               $$PWD/CParseImgMap.h \
+               $$PWD/CParseLinks.h \
+               $$PWD/CParseTemplates.h \
+               $$PWD/CProvisionalTplParser.h
 
-DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
-                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
-
-MOC_DIR       = ./.moc
-OBJECTS_DIR   = ./.objs
-UI_DIR        = ./.ui
-RCC_DIR       = ./.rcc
-
-include(../../application/templates/templates.pri)
-
-HEADERS      += CKnowledgeBox.h
-
-SOURCES      += CKnowledgeBox.cpp
-
-FORMS        += CKnowledgeBox.ui
-
-RESOURCES     = res/knowledgebox_resources.qrc
-
-TRANSLATIONS += lang/knowledgebox_de.ts
+SOURCES     += $$PWD/CParser.cpp \
+               $$PWD/CParseImgMap.cpp \
+               $$PWD/CParseLinks.cpp \
+               $$PWD/CParseTemplates.cpp \
+               $$PWD/CProvisionalTplParser.cpp

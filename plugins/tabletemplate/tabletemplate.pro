@@ -31,9 +31,12 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += xml network
+QT           += network
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
+
+include(../../application/templates/templates.pri)
+include(../../application/parser/parser.pri)
 
 HEADERS      += CTableTemplate.h
 

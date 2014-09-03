@@ -32,26 +32,24 @@
 
 #include "./CTemplates.h"
 
-extern bool bDEBUG;
-
-CTemplates::CTemplates(const QString &sTplLang)
+CTemplates::CTemplates(const QString &sTplLang, const QString &sSharePath)
     : m_sTplLang(sTplLang),
-      m_sAppName(qApp->applicationName()),
-      m_sAppPath(qApp->applicationDirPath()) {
+      m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     this->initTemplates();
-    this->initHtmlTpl("Preview.tpl");
-    this->initImgMap("Flags.conf", m_sListFlags, m_sListFlagsImg);
-    this->initImgMap("Smilies.conf", m_sListSmilies, m_sListSmiliesImg);
-    this->initTextformats("Textformats.conf");
-    this->initTranslations("Translations.conf");
+    this->initHtmlTpl(m_sSharePath + "/templates/Preview.tpl");
+    this->initImgMap(m_sSharePath + "/templates/Flags.conf",
+                     m_sListFlags, m_sListFlagsImg);
+    this->initImgMap(m_sSharePath + "/templates/Smilies.conf",
+                     m_sListSmilies, m_sListSmiliesImg);
+    this->initTextformats(m_sSharePath + "/templates/Textformats.conf");
+    this->initTranslations(m_sSharePath + "/templates/" + m_sTplLang
+                           + "/Translations.conf");
 
-    m_pInterWikiLinks = new CXmlParser(m_sAppName, m_sAppPath,
-                                       "../../share/" + m_sAppName.toLower()
+    m_pInterWikiLinks = new CXmlParser(m_sSharePath
                                        + "/iWikiLinks/iWikiLinks.xml");
-    m_pDropdownTemplates = new CXmlParser(m_sAppName, m_sAppPath,
-                                          "../../share/" + m_sAppName.toLower()
+    m_pDropdownTemplates = new CXmlParser(m_sSharePath
                                           + "/templates/" + m_sTplLang
                                           + "/Templates_Dropdown.xml");
 }
@@ -67,21 +65,12 @@ void CTemplates::initTemplates() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile TplFile("");
-    QDir TplDir("");
+    QDir TplDir(m_sSharePath + "/templates/" + m_sTplLang);
     QString tmpLine("");
     QString sTempTplText("");
     QString sTempMacro("");
     bool bFoundMacro;
     bool bFoundTpl;
-
-    // Path from normal installation
-    if (TplDir.exists(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                      + "/templates/" + m_sTplLang) && !bDEBUG) {
-        TplDir.setPath(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                       + "/templates/" + m_sTplLang);
-    } else {  // No installation: Use app path
-        TplDir.setPath(m_sAppPath + "/templates/" + m_sTplLang);
-    }
 
     // Get template files
     QFileInfoList fiListTplFiles = TplDir.entryInfoList(QDir::NoDotAndDotDot
@@ -157,8 +146,7 @@ void CTemplates::initTemplates() {
 
     qDebug() << "Loaded templates:" << m_sListTplNamesINY;
 
-    m_pMarkupTemplates = new CXmlParser(m_sAppName, m_sAppPath,
-                                        "../../share/" + m_sAppName.toLower()
+    m_pMarkupTemplates = new CXmlParser(m_sSharePath
                                         + "/templates/" + m_sTplLang
                                         + "/Templates.xml");
 }
@@ -170,19 +158,9 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QFile HTMLTplFile(sTplFile);
-
-    // Path from normal installation
-    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
-                      +  HTMLTplFile.fileName()) && !bDEBUG) {
-        HTMLTplFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                                + "/templates/" + HTMLTplFile.fileName());
-    } else {  // No installation: Use app path
-        HTMLTplFile.setFileName(m_sAppPath + "/templates/"
-                                + HTMLTplFile.fileName());
-    }
-
     if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning", "Could not open preview template file!");
+        QMessageBox::warning(0, "Warning",
+                             "Could not open preview template file!");
         qWarning() << "Could not open preview template file:"
                    << HTMLTplFile.fileName();
         m_sPreviewTemplate = "ERROR";
@@ -206,16 +184,6 @@ void CTemplates::initImgMap(const QString &sFilename,
     QStringList sListTmpLine;
     sListElements.clear();
     sListImgSource.clear();
-
-    // Path from normal installation
-    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
-                      + ImgMapFile.fileName()) && !bDEBUG) {
-        ImgMapFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                              + "/templates/" + ImgMapFile.fileName());
-    } else {  // No installation: Use app path
-        ImgMapFile.setFileName(m_sAppPath + "/templates/"
-                              + ImgMapFile.fileName());
-    }
 
     if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, "Warning", "Could not open image map file!");
@@ -248,18 +216,8 @@ void CTemplates::initTextformats(const QString &sFilename) {
     QFile formatsFile(sFilename);
     QStringList sListInput;
 
-    // Path from normal installation
-    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
-                      + formatsFile.fileName()) && !bDEBUG) {
-        formatsFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                                + "/templates/" + formatsFile.fileName());
-    } else {  // No installation: Use app path
-        formatsFile.setFileName(m_sAppPath + "/templates/"
-                                + formatsFile.fileName());
-    }
-
     if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(0, "Warning", "Could not open text formats config file!");
+        QMessageBox::warning(0, "Warning", "Could not open text formats file!");
         qWarning() << "Could not open text formats config file:"
                    << formatsFile.fileName();
         // Initialize possible text formats
@@ -293,23 +251,13 @@ void CTemplates::initTextformats(const QString &sFilename) {
 void CTemplates::initTranslations(const QString &sFilename) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QFile translFile;
-
-    // Path from normal installation
-    if (QFile::exists(m_sAppPath + "/../../share/" + m_sAppName.toLower() + "/templates/"
-                      + m_sTplLang + "/" + sFilename) && !bDEBUG) {
-        translFile.setFileName(m_sAppPath + "/../../share/" + m_sAppName.toLower()
-                               + "/templates/" + m_sTplLang + "/" + sFilename);
-    } else {  // No installation: Use app path
-        translFile.setFileName(m_sAppPath + "/templates/" + m_sTplLang + "/"
-                               + sFilename);
-    }
-
+    QFile translFile(sFilename);
     if (!translFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::critical(0, "Error", "Could not open template translation file!");
+        QMessageBox::critical(0, "Error",
+                              "Could not open template translation file!");
         qCritical() << "Could not open template translation file:"
                     << translFile.fileName();
-        exit(-1);
+        exit(-2);
     }
 
     QSettings configTransl(translFile.fileName(), QSettings::IniFormat);
@@ -357,7 +305,6 @@ void CTemplates::initTranslations(const QString &sFilename) {
     if ("ERROR" == m_sTransTable) {
         qCritical() << "Table translation not found.";
     }
-
     // Translation needed for knowledge box selector plugin
     m_sTransKnowledge = configTransl.value("Knowledge", "ERROR").toString();
     if ("ERROR" == m_sTransKnowledge) {

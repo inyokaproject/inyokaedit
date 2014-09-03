@@ -69,7 +69,8 @@ CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *pSpellChecker,
 
     if (-1 != m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang)) {
         m_pUi->comboBoxLang->setCurrentIndex(
-                    m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang));
+                    m_pUi->comboBoxLang->findText(
+                        m_pSpellChecker->m_sDictLang));
     }
 }
 
@@ -83,7 +84,8 @@ CSpellCheckDialog::~CSpellCheckDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(const QString &sWord) {
+CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(
+        const QString &sWord) {
     m_sUnkownWord = sWord;
     m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(m_sUnkownWord));
 

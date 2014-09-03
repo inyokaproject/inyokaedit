@@ -35,7 +35,7 @@
 #include "./CParseTemplates.h"
 #include "./CParseLinks.h"
 #include "./CParseImgMap.h"
-#include "../CTemplates.h"
+#include "../templates/CTemplates.h"
 
 // Qt classes
 class QString;

@@ -63,7 +63,8 @@ class CSpellChecker : public QObject, IEditorPlugin {
     ~CSpellChecker();
 
     void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, bool bDebug);
+                    const QDir userDataDir,
+                    const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     QTranslator* getPluginTranslator(const QString &sLocale);
@@ -100,6 +101,7 @@ class CSpellChecker : public QObject, IEditorPlugin {
     QString m_sDictLang;
     QString m_sUserDict;
     QDir m_UserDataDir;
+    QString m_sSharePath;
     QString m_sEncoding;
     QTextCodec *m_pCodec;
 };

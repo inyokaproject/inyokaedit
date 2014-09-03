@@ -38,7 +38,8 @@ CFindReplace::CFindReplace(CSettings *pSettings, QWidget *parent)
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
-    this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowContextHelpButtonHint);
 
     m_pUi->lbl_Error->setStyleSheet("font-weight: bold; color: red;");
     m_pUi->lbl_Error->clear();
@@ -165,7 +166,8 @@ void CFindReplace::textSearchChanged() {
     if (m_pUi->check_Regexp->isChecked() &&
             m_pUi->text_Search->text().size() > 0) {
         QRegExp regexp(m_pUi->text_Search->text(),
-                       m_pUi->check_Case->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+                       m_pUi->check_Case->isChecked()
+                       ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
         if (!regexp.isValid()) {
             m_pUi->lbl_Error->setText(regexp.errorString());
@@ -197,8 +199,9 @@ void CFindReplace::find() {
     }
 
     if (bUseRegexp) {
-        QRegExp searchExp(sSearched,
-                          (bCaseSens ? Qt::CaseSensitive : Qt::CaseInsensitive));
+        QRegExp searchExp(
+                    sSearched,
+                    (bCaseSens ? Qt::CaseSensitive : Qt::CaseInsensitive));
 
         m_TextCursor = m_pEditor->document()->find(searchExp, m_TextCursor,
                                                    searchFlags);
@@ -241,5 +244,6 @@ void CFindReplace::replaceAll() {
         this->find();
         nReplaced++;
     }
-    m_pUi->lbl_Error->setText(trUtf8("Replaced expressions: %1").arg(nReplaced));
+    m_pUi->lbl_Error->setText(
+                trUtf8("Replaced expressions: %1").arg(nReplaced));
 }

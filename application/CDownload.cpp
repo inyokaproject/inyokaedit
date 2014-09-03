@@ -32,17 +32,16 @@
 #include "./CProgressDialog.h"
 #include "./CUtils.h"
 
-extern bool bDEBUG;
-
-
 // TODO: Up-/download as plugin?
 
-CDownload::CDownload(QWidget *pParent, const QString &sStylesDir, const QString &sImgDir)
+CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
+                     const QString &sImgDir, const QString &sSharePath)
     : m_pParent(pParent),
       m_sStylesDir(sStylesDir),
       m_sImgDir(sImgDir),
       m_sInyokaUrl("http://wiki.ubuntuusers.de"),
-      m_bAutomaticImageDownload(false) {
+      m_bAutomaticImageDownload(false),
+      m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pNwManager = new QNetworkAccessManager(m_pParent);
@@ -109,24 +108,13 @@ void CDownload::callDownloadScript(const QString &sScript) {
 
     CProgressDialog *pDownloadProgress;
 
-    // Path from normal installation
-    if (QFile::exists(qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
-                      + "/" + sScript) && !bDEBUG) {
+    if (QFile::exists(m_sSharePath + "/" + sScript)) {
         pDownloadProgress =
-                new CProgressDialog(qApp->applicationDirPath() + "/../../share/"
-                                    + qApp->applicationName().toLower() + "/"
-                                    + sScript,
+                new CProgressDialog(m_sSharePath + "/" + sScript,
                                     QStringList() << m_sStylesDir);
-    } else if (QFile::exists(qApp->applicationDirPath() + "/" + sScript)) {
-        // No installation: Use app path
-        pDownloadProgress =
-                new CProgressDialog(qApp->applicationDirPath() + "/" + sScript,
-                                    QStringList() << m_sStylesDir);
-    } else {
+     } else {
         qWarning() << "Download script could not be found:"
-                   << "\n\t"+ qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
-                      + "/" + sScript
-                   << "\n\t" + qApp->applicationDirPath() + "/" + sScript;
+                   << m_sSharePath + "/" + sScript;
         QMessageBox::warning(m_pParent, qApp->applicationName(),
                              trUtf8("Download script could not be found."));
         return;
@@ -211,7 +199,8 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
     QIODevice *pData(pReply);
 
     if (QNetworkReply::NoError != pReply->error()) {
-        QMessageBox::critical(m_pParent, qApp->applicationName(), pData->errorString());
+        QMessageBox::critical(m_pParent, qApp->applicationName(),
+                              pData->errorString());
         qCritical() << "Error while NW reply:" << pData->errorString();
         return;
     } else {
@@ -225,8 +214,9 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
 
             // Site does not exist etc.
             if (sTmpArticle.isEmpty()) {
-                QMessageBox::information(m_pParent, qApp->applicationName(),
-                                         trUtf8("Could not download the article."));
+                QMessageBox::information(
+                            m_pParent, qApp->applicationName(),
+                            trUtf8("Could not download the article."));
                 return;
             }
 
@@ -272,7 +262,8 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
                 // Ask if images should be downloaded,
                 // if not enabled by default in settings
                 if (true != m_bAutomaticImageDownload) {
-                    iRet = QMessageBox::question(m_pParent, qApp->applicationName(),
+                    iRet = QMessageBox::question(m_pParent,
+                                                 qApp->applicationName(),
                                                  trUtf8("Do you want to download "
                                                         "the images which are "
                                                         "attached to the article?"),

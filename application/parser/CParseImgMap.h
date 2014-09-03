@@ -38,4 +38,4 @@ class CParseImgMap {
                       QStringList sListImages);
 };
 
-#endif // INYOKAEDIT_CPARSEIMGMAP_H_
+#endif  // INYOKAEDIT_CPARSEIMGMAP_H_

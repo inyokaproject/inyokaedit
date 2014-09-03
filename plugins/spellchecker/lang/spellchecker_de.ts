@@ -62,29 +62,34 @@
 <context>
     <name>CSpellChecker</name>
     <message>
-        <location filename="../CSpellChecker.cpp" line="107"/>
+        <location filename="../CSpellChecker.cpp" line="101"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="353"/>
+        <location filename="../CSpellChecker.cpp" line="354"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="438"/>
+        <location filename="../CSpellChecker.cpp" line="439"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="448"/>
-        <source>&lt;p&gt;&lt;i&gt;Spell checker based on &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.&lt;/i&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;i&gt;Rechtschreibprüfung basierend auf &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.&lt;/i&gt;&lt;/p&gt;</translation>
+        <location filename="../CSpellChecker.cpp" line="442"/>
+        <source>Version</source>
+        <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="440"/>
-        <source>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; %3 &amp;ndash; %4&lt;br /&gt;Licence: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Version: %2&lt;/p&gt;&lt;p&gt;&amp;copy; %3 &amp;ndash; %4&lt;br /&gt;Lizenz: &lt;a href=&quot;http://www.gnu.org/licenses/gpl-3.0.html&quot;&gt;GNU General Public License Version 3&lt;/a&gt;&lt;/p&gt;</translation>
+        <location filename="../CSpellChecker.cpp" line="445"/>
+        <source>Licence</source>
+        <translation>Lizenz</translation>
+    </message>
+    <message>
+        <location filename="../CSpellChecker.cpp" line="449"/>
+        <source>Spell checker based on &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</source>
+        <translation>Rechtschreibprüfung basierend auf &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</translation>
     </message>
 </context>
 </TS>

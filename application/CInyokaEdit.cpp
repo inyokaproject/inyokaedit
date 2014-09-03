@@ -38,24 +38,25 @@
 #include "./CInyokaEdit.h"
 #include "ui_CInyokaEdit.h"
 
-extern bool bDEBUG;
-
-CInyokaEdit::CInyokaEdit(QDir userDataDir,
+CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
                          QWidget *parent)
     : QMainWindow(parent),
       m_pUi(new Ui::CInyokaEdit),
       m_UserDataDir(userDataDir),
-      m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html") {
+      m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
+      m_sSharePath(sharePath.absolutePath()),
+      m_bOpenFileAfterStart(false) {
     qDebug() << "Calling" << Q_FUNC_INFO;
-
-    m_bOpenFileAfterStart = false;
+    if (qApp->arguments().contains("--debug")) {
+        qWarning() << "DEBUG is enabled!";
+    }
 
     m_pUi->setupUi(this);
 
-    // Check for command line arguments (except version/debug)
-    if ((!bDEBUG && qApp->arguments().size() >= 2)
-            || (bDEBUG && qApp->arguments().size() >= 3)) {
-            m_bOpenFileAfterStart = true;
+    if (!sharePath.exists()) {
+        QMessageBox::warning(0, "Warning", "App share folder not found!");
+        qWarning() << "Share folder does not exist:" << m_sSharePath;
+        exit(-1);
     }
 
     // Create folder for downloaded article images
@@ -63,6 +64,15 @@ CInyokaEdit::CInyokaEdit(QDir userDataDir,
     if (!m_tmpPreviewImgDir.exists()) {
         // Create folder including possible parent directories (mkPATH)!
         m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());
+    }
+
+    if (qApp->arguments().size() > 1) {
+        for (int i = 1; i < qApp->arguments().size(); i++) {
+            if (!qApp->arguments()[i].startsWith('-')) {
+                m_bOpenFileAfterStart = true;
+                break;
+            }
+        }
     }
 
     // After definition of StylesAndImagesDir AND m_tmpPreviewImgDir!
@@ -96,11 +106,13 @@ CInyokaEdit::CInyokaEdit(QDir userDataDir,
 
     m_pPlugins->loadPlugins();
 
-    if (true == m_bOpenFileAfterStart) {
-        if (bDEBUG) {
-            m_pFileOperations->loadFile(qApp->arguments()[2], true);
-        } else {
-            m_pFileOperations->loadFile(qApp->arguments()[1], true);
+    // Load file via command line
+    if (qApp->arguments().size() > 1) {
+        for (int i = 1; i < qApp->arguments().size(); i++) {
+            if (!qApp->arguments()[i].startsWith('-')) {
+                m_pFileOperations->loadFile(qApp->arguments()[i], true);
+                break;
+            }
         }
     }
 }
@@ -110,7 +122,6 @@ CInyokaEdit::~CInyokaEdit() {
         delete m_pUi;
     }
     m_pUi = NULL;
-    qDebug() << "Closing " << qApp->applicationName();
 }
 
 // ----------------------------------------------------------------------------
@@ -119,16 +130,17 @@ CInyokaEdit::~CInyokaEdit() {
 void CInyokaEdit::createObjects() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    m_pSettings = new CSettings(this);
+    m_pSettings = new CSettings(this, m_sSharePath);
 
     m_pFindReplace = new CFindReplace(m_pSettings);
 
     // Has to be created before parser
-    m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage());
+    m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage(),
+                                  m_sSharePath);
 
-    m_pDownloadModule = new CDownload(this,
-                                      m_UserDataDir.absolutePath(),
-                                      m_tmpPreviewImgDir.absolutePath());
+    m_pDownloadModule = new CDownload(this, m_UserDataDir.absolutePath(),
+                                      m_tmpPreviewImgDir.absolutePath(),
+                                      m_sSharePath);
 
     m_pEditor = new CTextEditor(m_pTemplates->getListTplMacrosALL(),
                                 m_UserDataDir.absolutePath(),
@@ -174,11 +186,16 @@ void CInyokaEdit::createObjects() {
             m_pSettings, SLOT(setWindowsCheckUpdate(bool)));
 
     m_pPlugins = new CPlugins(this, m_pEditor, m_pSettings->getGuiLanguage(),
-                              m_pSettings->getDisabledPlugins(), m_UserDataDir);
-    connect(m_pPlugins, SIGNAL(addMenuToolbarEntries(QList<QAction*>,QList<QAction*>)),
-            this, SLOT(addPluginsButtons(QList<QAction*>,QList<QAction*>)));
-    connect(m_pPlugins, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)),
-            m_pSettings, SIGNAL(availablePlugins(QList<IEditorPlugin*>,QList<QObject*>)));
+                              m_pSettings->getDisabledPlugins(), m_UserDataDir,
+                              m_sSharePath);
+    connect(m_pPlugins,
+            SIGNAL(addMenuToolbarEntries(QList<QAction*>, QList<QAction*>)),
+            this,
+            SLOT(addPluginsButtons(QList<QAction*>, QList<QAction*>)));
+    connect(m_pPlugins,
+            SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)),
+            m_pSettings,
+            SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)));
 
     m_pPreviewTimer = new QTimer(this);
 }
@@ -241,8 +258,8 @@ void CInyokaEdit::setupEditor() {
         setCentralWidget(m_pWidgetSplitter);
         m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
+        // Show an empty website after start
         if (!m_bOpenFileAfterStart) {
-            // Show an empty website after start
             this->previewInyokaPage();
         }
     } else {
@@ -281,10 +298,13 @@ void CInyokaEdit::setupEditor() {
     }
 
     // Setting proxy if available
-    CUtils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
-                     m_pSettings->getProxyUserName(), m_pSettings->getProxyPassword());
+    CUtils::setProxy(m_pSettings->getProxyHostName(),
+                     m_pSettings->getProxyPort(),
+                     m_pSettings->getProxyUserName(),
+                     m_pSettings->getProxyPassword());
 
-    m_pUi->aboutAct->setText(m_pUi->aboutAct->text() + " " + qApp->applicationName());
+    m_pUi->aboutAct->setText(
+                m_pUi->aboutAct->text() + " " + qApp->applicationName());
 }
 
 // ----------------------------------------------------------------------------
@@ -486,7 +506,8 @@ void CInyokaEdit::createActions() {
     // Code block + syntax highlighting
     m_pSigMapCodeHighlight = new QSignalMapper(this);
     QStringList sListHighlightText, sListHighlightLang;
-    sListHighlightText << trUtf8("Raw text") << trUtf8("Code without highlighting")
+    sListHighlightText << trUtf8("Raw text")
+                       << trUtf8("Code without highlighting")
                        << "Bash" << "C" << "C#" << "C++" << "CSS" << "D"
                        << "Django / Jinja Templates" << "HTML" << "IRC Logs"
                        << "Java" << "JavaScript" << "Perl" << "PHP" << "Python"
@@ -562,7 +583,6 @@ void CInyokaEdit::createActions() {
     // Open about windwow
     connect(m_pUi->aboutAct, SIGNAL(triggered()),
             m_pUtils, SLOT(showAbout()));
-
 }
 
 // ----------------------------------------------------------------------------
@@ -574,21 +594,11 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
     QList <QAction *> emptyActionList;
     emptyActionList.clear();
 
-    // No installation: Use app path
-    QString sTmpPath = qApp->applicationDirPath() + sIconPath;
-    // Path from normal installation
-    if (QFile::exists(qApp->applicationDirPath()
-                      + "/../../share/" + qApp->applicationName().toLower()
-                      + sIconPath) && !bDEBUG) {
-        sTmpPath = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
-                + sIconPath;
-    }
-
     for (int i = 0; i < pXmlMenu->getGrouplist().size(); i++) {
         listActions.append(emptyActionList);
         for (int j = 0; j < pXmlMenu->getElementNames()[i].size(); j++) {
             listActions[i].append(
-                        new QAction(QIcon(sTmpPath +
+                        new QAction(QIcon(m_sSharePath + "/" + sIconPath +
                                           pXmlMenu->getElementIcons()[i][j]),
                                     pXmlMenu->getElementNames()[i][j], this));
 
@@ -607,29 +617,13 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
 void CInyokaEdit::createMenus() {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QDir articleTemplateDir("");
+    QDir articleTemplateDir(m_sSharePath + "/templates/"
+                            + m_pSettings->getTemplateLanguage()
+                            + "/articles");
     QDir userArticleTemplateDir(m_UserDataDir.absolutePath() +
                                 "/templates/articles");
 
     // File menu (new from template)
-    if (QFile::exists(qApp->applicationDirPath()
-                      + "/../../share/" + qApp->applicationName().toLower()
-                      + "/templates/" + m_pSettings->getTemplateLanguage()
-                      + "/articles") && !bDEBUG) {
-        articleTemplateDir.setPath(qApp->applicationDirPath()
-                                   + "/../../share/"
-                                   + qApp->applicationName().toLower()
-                                   + "/templates/"
-                                   + m_pSettings->getTemplateLanguage()
-                                   + "/articles");
-    } else {
-        // No installation: Use app path
-        articleTemplateDir.setPath(qApp->applicationDirPath()
-                                   + "/templates/"
-                                   + m_pSettings->getTemplateLanguage()
-                                   + "/articles");
-    }
-
     QList<QDir> listTplDirs;
     if (articleTemplateDir.exists()) {
         listTplDirs << articleTemplateDir;
@@ -704,17 +698,8 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
 
     m_pUi->menuBar->insertMenu(pPosition, pMenu);
 
-    // No installation: Use app path
-    QString sTmpPath(qApp->applicationDirPath() + sIconPath);
-    // Path from normal installation
-    if (QFile::exists(qApp->applicationDirPath()
-                      + "/../../share/" + qApp->applicationName().toLower()
-                      + sIconPath) && !bDEBUG) {
-        sTmpPath = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower() + sIconPath;
-    }
-
     for (int i = 0; i < pXmlMenu->getGrouplist().size(); i++) {
-        pMenuGroup.append(pMenu->addMenu(QIcon(sTmpPath
+        pMenuGroup.append(pMenu->addMenu(QIcon(m_sSharePath + "/" + sIconPath
                                                + pXmlMenu->getGroupIcons()[i]),
                                          pXmlMenu->getGrouplist()[i]));
 
@@ -890,8 +875,11 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
                             QFileInfo(tmphtmlfile).absoluteFilePath()) );
         } else {
             // Store scroll position
-            m_WebviewScrollPosition = m_pWebview->page()->mainFrame()->scrollPosition();
-            m_pWebview->load(QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
+            m_WebviewScrollPosition =
+                    m_pWebview->page()->mainFrame()->scrollPosition();
+            m_pWebview->load(
+                        QUrl::fromLocalFile(
+                            QFileInfo(tmphtmlfile).absoluteFilePath()));
         }
     } else {
         // Enable editor and insert samples/macros toolbars again
@@ -939,8 +927,11 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
                                        + sHeadTag);
 
             QTextCursor textCursor(m_pEditor->textCursor());
-            textCursor.setPosition(m_pEditor->textCursor().position() - sHeadline.length() - nSelection);
-            textCursor.setPosition(m_pEditor->textCursor().position() - nSelection, QTextCursor::KeepAnchor);
+            textCursor.setPosition(
+                        m_pEditor->textCursor().position() - sHeadline.length() - nSelection);
+            textCursor.setPosition(
+                        m_pEditor->textCursor().position() - nSelection,
+                        QTextCursor::KeepAnchor);
             m_pEditor->setTextCursor(textCursor);
         }
     }
@@ -957,7 +948,7 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
 void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
     if (nSelection != 0 && nSelection != 1) {
         QString sTmp("");
-        QString sName(m_pTemplates->getDropTPLs()->getElementUrls()[0][nSelection -2]);
+        QString sName(m_pTemplates->getDropTPLs()->getElementUrls()[0][nSelection - 2]);
         sName.remove(".tpl");
         sName.remove(".macro");
 
@@ -982,7 +973,8 @@ void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
                         && nPlaceholder2 >= 0) {
                     QTextCursor textCursor(m_pEditor->textCursor());
                     textCursor.setPosition(nCurrentPos + nPlaceholder1);
-                    textCursor.setPosition(nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor);
+                    textCursor.setPosition(nCurrentPos + nPlaceholder2 - 2,
+                                           QTextCursor::KeepAnchor);
                     m_pEditor->setTextCursor(textCursor);
                 }
             } else {
@@ -1028,9 +1020,10 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
             default:
             case 1:  // Folders
                 if (bSelected) {
-                    m_pEditor->insertPlainText("'''"
-                                               + m_pEditor->textCursor().selectedText()
-                                               + "'''");
+                    m_pEditor->insertPlainText(
+                                "'''"
+                                + m_pEditor->textCursor().selectedText()
+                                + "'''");
                 } else {
                     sInsertedText = trUtf8("Folders");
                     nFormatLength = 3;
@@ -1236,7 +1229,8 @@ void CInyokaEdit::insertMacro(const QString &sMenuEntry) {
                         && nPlaceholder2 >= 0) {
                     QTextCursor textCursor(m_pEditor->textCursor());
                     textCursor.setPosition(nCurrentPos + nPlaceholder1);
-                    textCursor.setPosition(nCurrentPos + nPlaceholder2 -2, QTextCursor::KeepAnchor);
+                    textCursor.setPosition(nCurrentPos + nPlaceholder2 - 2,
+                                           QTextCursor::KeepAnchor);
                     m_pEditor->setTextCursor(textCursor);
                 }
             } else {
@@ -1283,19 +1277,26 @@ void CInyokaEdit::insertInterwikiLink(const QString &sMenuEntry) {
             QString sText(trUtf8("Text"));
 
             // Insert InterWiki-Link
-            m_pEditor->insertPlainText("[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
-                                       + ":" + sSitename + ":" + sText + "]");
+            m_pEditor->insertPlainText(
+                        "["
+                        + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
+                        + ":" + sSitename + ":" + sText + "]");
 
             // Select site name in InterWiki-Link
             QTextCursor textCursor(m_pEditor->textCursor());
-            textCursor.setPosition(m_pEditor->textCursor().position() - sSitename.length() - sText.length() - 2);
-            textCursor.setPosition(m_pEditor->textCursor().position() - sText.length() - 2, QTextCursor::KeepAnchor);
+            textCursor.setPosition(
+                        m_pEditor->textCursor().position() - sSitename.length() - sText.length() - 2);
+            textCursor.setPosition(
+                        m_pEditor->textCursor().position() - sText.length() - 2,
+                        QTextCursor::KeepAnchor);
             m_pEditor->setTextCursor(textCursor);
         } else {
             // Some text is selected
             // Insert InterWiki-Link with selected text
-            m_pEditor->insertPlainText("[" + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
-                                       + ":" + m_pEditor->textCursor().selectedText() + ":]");
+            m_pEditor->insertPlainText(
+                        "["
+                        + m_pTemplates->getIWLs()->getElementTypes()[sTmp[0].toInt()][sTmp[1].toInt()]
+                        + ":" + m_pEditor->textCursor().selectedText() + ":]");
         }
     } else {
         // Problem with indices
@@ -1498,7 +1499,6 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
         }
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
-
         // Reload preview at F5 or defined button if preview alongside
         else if ((Qt::Key_F5 == keyEvent->key()
                   || m_pSettings->getReloadPreviewKey() == keyEvent->key())
@@ -1509,7 +1509,6 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
             previewInyokaPage();
         }
     }
-
     // Forward / backward mouse button
     else if (obj == m_pWebview && event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
@@ -1616,26 +1615,9 @@ void CInyokaEdit::showSyntaxOverview() {
     QWebView* webview = new QWebView();
     QTextDocument* pTextDocument = new QTextDocument(this);
 
-    QFile OverviewFile("");
-    // Path from normal installation
-    if (QFile::exists(qApp->applicationDirPath()
-                      + "/../../share/"
-                      + qApp->applicationName().toLower()
-                      + "/templates/"
-                      + m_pSettings->getTemplateLanguage()
-                      + "/SyntaxOverview") && !bDEBUG) {
-        OverviewFile.setFileName(qApp->applicationDirPath() + "/../../share/"
-                                 + qApp->applicationName().toLower()
-                                 + "/templates/" +
-                                 m_pSettings->getTemplateLanguage()
-                                 + "/SyntaxOverview");
-    } else {
-        // No installation: Use app path
-        OverviewFile.setFileName(qApp->applicationDirPath()
-                                 + "/templates/" +
-                                 m_pSettings->getTemplateLanguage()
-                                 + "/SyntaxOverview");
-    }
+    QFile OverviewFile(m_sSharePath + "/templates/"
+                       + m_pSettings->getTemplateLanguage()
+                       + "/SyntaxOverview");
 
     QTextStream in(&OverviewFile);
     if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {

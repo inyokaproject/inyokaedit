@@ -34,7 +34,7 @@
 #include <QString>
 
 #include "../../application/parser/CParser.h"
-#include "../../application/CTemplates.h"
+#include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
@@ -59,7 +59,8 @@ class CTableTemplate : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, bool bDebug);
+                    const QDir userDataDir,
+                    const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     QTranslator* getPluginTranslator(const QString &sLocale);
@@ -93,6 +94,7 @@ class CTableTemplate : public QObject, IEditorPlugin {
     CTemplates *m_pTemplates;
     CParser *m_pParser;
     QDir m_dirPreview;
+    QString m_sSharePath;
     QTextDocument *m_pTextDocument;
 
     QStringList m_sListTableStyles;

@@ -38,7 +38,8 @@ CProgressDialog::CProgressDialog(const QString &sScriptname,
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi->setupUi(this);
-    this->setWindowFlags((this->windowFlags() & ~Qt::WindowContextHelpButtonHint)
+    this->setWindowFlags((this->windowFlags()
+                          & ~Qt::WindowContextHelpButtonHint)
                          | Qt::WindowStaysOnTopHint);
 
     m_pProcess = new QProcess();

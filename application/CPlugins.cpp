@@ -30,15 +30,17 @@
 
 #include "./CPlugins.h"
 
-extern bool bDEBUG;
-
-CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
-                   const QStringList &sListDisabledPlugins, const QDir userDataDir)
+CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
+                   const QString &sGuiLang,
+                   const QStringList &sListDisabledPlugins,
+                   const QDir userDataDir,
+                   const QString &sSharePath)
     : m_pParent(pParent),
       m_pEditor(pEditor),
       m_sGuiLanguage(sGuiLang),
       m_sListDisabledPlugins(sListDisabledPlugins),
-      m_userDataDir(userDataDir) {
+      m_userDataDir(userDataDir),
+      m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QStringList sListAvailablePlugins;
@@ -89,7 +91,8 @@ void CPlugins::loadPlugins() {
         }
 
         qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-        m_listPlugins[i]->initPlugin(m_pParent, m_pEditor, m_userDataDir, bDEBUG);
+        m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
+                                     m_userDataDir, m_sSharePath);
 
         qApp->installTranslator(m_listPlugins[i]->getPluginTranslator(m_sGuiLanguage));
 

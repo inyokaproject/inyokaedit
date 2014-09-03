@@ -39,7 +39,8 @@ class CPlugins : public QObject {
 
   public:
     CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
-             const QStringList &sListDisabledPlugins, const QDir userDataDir);
+             const QStringList &sListDisabledPlugins, const QDir userDataDir,
+             const QString &sSharePath);
     void loadPlugins();
 
   signals:
@@ -54,6 +55,7 @@ class CPlugins : public QObject {
     QString m_sGuiLanguage;
     QStringList m_sListDisabledPlugins;
     QDir m_userDataDir;
+    QString m_sSharePath;
 
     QList<IEditorPlugin *> m_listPlugins;
     QList<QObject *> m_listPluginObjects;

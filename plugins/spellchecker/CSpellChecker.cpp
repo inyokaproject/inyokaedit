@@ -42,10 +42,10 @@ CSpellChecker::~CSpellChecker() {
 }
 
 void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                               const QDir userDataDir, bool bDebug) {
+                               const QDir userDataDir,
+                               const QString sSharePath) {
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
     Q_UNUSED(pParent);
-    Q_UNUSED(bDebug);
 
 #if defined _WIN32
     m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
@@ -58,13 +58,15 @@ void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 #endif
 
     m_pHunspell = NULL;
-    m_UserDataDir = userDataDir;
     m_pEditor = pEditor;
+    m_UserDataDir = userDataDir;
+    m_sSharePath = sSharePath;
 
     m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_sDictPath = m_pSettings->value("DictionaryPath", "").toString();
     this->setDictPath();
-    m_sDictLang = m_pSettings->value("SpellCheckerLanguage", "de_DE").toString();
+    m_sDictLang = m_pSettings->value("SpellCheckerLanguage",
+                                     "de_DE").toString();
     m_pSettings->endGroup();
 }
 
@@ -85,15 +87,9 @@ QString CSpellChecker::getPluginVersion() const {
 QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile,
-                                 qApp->applicationDirPath()
-                                 + "/../../share/" + qAppName().toLower() + "/lang")) {
-        // If it fails search in application dircetory
-        if (!pPluginTranslator->load(sLocaleFile,
-                                     qApp->applicationDirPath() + "/lang")) {
-            qWarning() << "Could not load plugin translation:" << sLocaleFile;
-            return NULL;
-        }
+    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+        qWarning() << "Could not load plugin translation:" << sLocaleFile;
+        return NULL;
     }
     return pPluginTranslator;
 }
@@ -173,21 +169,22 @@ bool CSpellChecker::initDictionaries() {
                            << m_sDictPath + m_sDictLang << "*.dic *.aff";
                 QMessageBox::warning(0, qApp->applicationName(),
                                      "Spell checker fallback "
-                                     + m_sDictLang + " does not exist as well.");
+                                     + m_sDictLang + " doesn't exist as well.");
                 return false;
             }
         }
     }
 
     // Init user dictionary
-    m_sUserDict = m_UserDataDir.absolutePath() + "/userDict_" + m_sDictLang + ".txt";
+    m_sUserDict = m_UserDataDir.absolutePath() + "/userDict_"
+                  + m_sDictLang + ".txt";
     if (!QFile::exists(m_sUserDict)) {
         QFile userDictFile(m_sUserDict);
         if (userDictFile.open(QIODevice::WriteOnly)) {
             userDictFile.close();
         } else {
             QMessageBox::warning(0, qApp->applicationName(),
-                                 "User dictionary file could not be opened/created.");
+                                 "User dictionary file couldn't be opened.");
             qWarning() << "User dictionary file could not be opened/created:"
                        << m_sUserDict;
         }
@@ -223,7 +220,8 @@ bool CSpellChecker::initDictionaries() {
         qWarning() << "Dictionary could not be opened:" << sAffixFile;
         return false;
     }
-    m_pCodec = QTextCodec::codecForName(this->m_sEncoding.toLatin1().constData());
+    m_pCodec = QTextCodec::codecForName(
+                this->m_sEncoding.toLatin1().constData());
 
     if (m_pHunspell != NULL) {
         delete m_pHunspell;
@@ -233,8 +231,7 @@ bool CSpellChecker::initDictionaries() {
                                dictFilePathBA.constData());
 
     this->loadAdditionalDict(m_sUserDict);
-    this->loadAdditionalDict(qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower()
-                             + "/ExtendedDict.txt");
+    this->loadAdditionalDict(m_sSharePath + "/ExtendedDict.txt");
     this->loadAdditionalDict(qApp->applicationDirPath() + "/ExtendedDict.txt");
     return true;
 }
@@ -441,15 +438,19 @@ void CSpellChecker::showAbout() {
 
     aboutbox.setWindowTitle(trUtf8("Info"));
     aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
-    aboutbox.setText(trUtf8("<p><b>%1</b>"
-                            "<br />Version: %2</p>"
-                            "<p>&copy; %3 &ndash; %4<br />"
-                            "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>")
-                            .arg(this->getCaption())
-                            .arg(PLUGIN_VERSION)
-                            .arg("2011-" + QString::number(nDate.year()))
-                            .arg(QString::fromUtf8("Thorsten Roth")) +
-                     trUtf8("<p><i>Spell checker based on <a href=\"http://hunspell.sourceforge.net/\">Hunspell</a>.</i></p>"));
+    aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
+                     + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
+                     + "<p>&copy; 2011-" + QString::number(nDate.year())
+                     + " &ndash; " + QString::fromUtf8("Thorsten Roth")
+                     + "<br />" + trUtf8("Licence") + ": "
+                     + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                       "GNU General Public License Version 3</a></p>"
+                     + "<p><i>"
+                     + trUtf8("Spell checker based on "
+                              "<a href=\"http://hunspell.sourceforge.net/\">"
+                              "Hunspell</a>.")
+                     + "</i></p>");
+
     aboutbox.exec();
 }
 

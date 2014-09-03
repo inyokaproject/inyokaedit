@@ -30,13 +30,11 @@
 #include <QApplication>
 #include <QNetworkAccessManager>
 
-extern bool bDEBUG;
-
 class CUtils : public QObject {
     Q_OBJECT
 
   public:
-    CUtils(QWidget *pParent);
+    explicit CUtils(QWidget *pParent);
 
     static bool getOnlineState();
     static void setProxy(const QString &sHostName, const quint16 nPort,

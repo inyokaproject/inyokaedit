@@ -33,8 +33,8 @@
 
 
 void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                                const QDir userDataDir, bool bDebug) {
-    Q_UNUSED(bDebug);
+                                const QDir userDataDir,
+                                const QString sSharePath) {
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -49,9 +49,11 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 
     m_pEditor = pEditor;
     m_dirPreview = userDataDir;
+    m_sSharePath = sSharePath;
     m_pTextDocument = new QTextDocument(this);
     m_pTemplates = new CTemplates(m_pSettings->value(
-                                      "TemplateLanguage", "de").toString());
+                                      "TemplateLanguage", "de").toString(),
+                                  m_sSharePath);
     m_pParser = new CParser(QDir(""), "", false, m_pTemplates);
 
     // Build UI
@@ -70,11 +72,12 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                                             m_sListTableStyles).toStringList();
     m_sListTableStylesPrefix << "" << "kde-" << "xfce-" << "edu-"
                              << "studio-" << "lxde-";
-    m_sListTableStylesPrefix = m_pSettings->value("TableStylesPrefix",
-                                                  m_sListTableStylesPrefix).toStringList();
+    m_sListTableStylesPrefix = m_pSettings->value(
+                "TableStylesPrefix", m_sListTableStylesPrefix).toStringList();
     m_sRowClassTitle = m_pSettings->value("RowClassTitle", "titel").toString();
     m_sRowClassHead = m_pSettings->value("RowClassHead", "kopf").toString();
-    m_sRowClassHighlight = m_pSettings->value("RowClassHighlight", "highlight").toString();
+    m_sRowClassHighlight = m_pSettings->value(
+                "RowClassHighlight", "highlight").toString();
 
     m_pSettings->setValue("TableStyles", m_sListTableStyles);
     m_pSettings->setValue("TableStylesPrefix", m_sListTableStylesPrefix);
@@ -84,8 +87,10 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pSettings->endGroup();
 
     if (m_sListTableStyles.size() != m_sListTableStylesPrefix.size()) {
-        qWarning() << "Different size: TableStyles size =" << m_sListTableStyles.size()
-                   << "  TableStylesPrefix size =" << m_sListTableStylesPrefix.size();
+        qWarning() << "Different size: TableStyles size ="
+                   << m_sListTableStyles.size()
+                   << "  TableStylesPrefix size ="
+                   << m_sListTableStylesPrefix.size();
     } else {
         m_pUi->tableStyleBox->addItems(m_sListTableStyles);
     }
@@ -113,15 +118,9 @@ QString CTableTemplate::getPluginVersion() const {
 QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile,
-                                 qApp->applicationDirPath()
-                                 + "/../../share/" + qAppName().toLower() + "/lang")) {
-        // If it fails search in application dircetory
-        if (!pPluginTranslator->load(sLocaleFile,
-                                     qApp->applicationDirPath() + "/lang")) {
-            qWarning() << "Could not load plugin translation:" << sLocaleFile;
-            return NULL;
-        }
+    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+        qWarning() << "Could not load plugin translation:" << sLocaleFile;
+        return NULL;
     }
     return pPluginTranslator;
 }
@@ -192,7 +191,7 @@ QString CTableTemplate::generateTable() {
 
     // Create head if set
     if (m_pUi->showHeadBox->isChecked()) {
-        sTableCode += QString("<rowclass=\"%1%2\"> ")
+        sTableCode +=QString("<rowclass=\"%1%2\"> ")
                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
                 .arg(m_sRowClassHead);
 
@@ -249,15 +248,18 @@ void CTableTemplate::showAbout() {
 
     aboutbox.setWindowTitle(trUtf8("Info"));
     aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
-    aboutbox.setText(trUtf8("<p><b>%1</b>"
-                            "<br />Version: %2</p>"
-                            "<p>&copy; %3 &ndash; %4<br />"
-                            "Licence: <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License Version 3</a></p>")
-                            .arg(this->getCaption())
-                            .arg(PLUGIN_VERSION)
-                            .arg("2012-" + QString::number(nDate.year()))
-                            .arg(QString::fromUtf8("Christian Schärf, Thorsten Roth")) +
-                     trUtf8("<p><i>Plugin for generating styled Inyoka tables.</i></p>"));
+    aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
+                     + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
+                     + "<p>&copy; 2012-" + QString::number(nDate.year())
+                     + " &ndash; " + QString::fromUtf8("Christian Schärf, ")
+                     + QString::fromUtf8("Thorsten Roth")
+                     + "<br />" + trUtf8("Licence") + ": "
+                     + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                       "GNU General Public License Version 3</a></p>"
+                     + "<p><i>"
+                     + trUtf8("Plugin for generating styled Inyoka tables.")
+                     + "</i></p>");
+
     aboutbox.exec();
 }
 

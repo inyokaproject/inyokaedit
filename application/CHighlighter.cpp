@@ -304,7 +304,8 @@ void CHighlighter::defineRules() {
 
     // InterWiki-Links
     sListRegExpPatterns.clear();
-    foreach (QStringList tmpStrList, m_pTemplates->getIWLs()->getElementTypes()) {
+    foreach (QStringList tmpStrList,
+             m_pTemplates->getIWLs()->getElementTypes()) {
         foreach (QString tmpStr, tmpStrList) {
             sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
         }

@@ -353,17 +353,13 @@ QString CProvisionalTplParser::parseForeignPackage(const QStringList &sListArgs)
                           "[googlecode:%2/downloads/:DEB-Pakete] angeboten. ")
                         .arg(sListArgs[1]).arg(sListArgs[1]);
             }
-        }
-
-        // Case 2: [[Vorlage(Fremdpaket, "Anbieter", dl, URL zu einem Download, Ubuntuversion(en))]]
-        else if (sListArgs[1].startsWith("dl")) {
+        } else if (sListArgs[1].startsWith("dl")) {
+            // Case 2: [[Vorlage(Fremdpaket, "Anbieter", dl, URL zu einem Download, Ubuntuversion(en))]]
             sOutput = QString::fromUtf8("<p>Von %1 werden folgende DEB-Pakete "
                                         "angeboten:</p>\n * [%2] {dl}\n")
                     .arg(sListArgs[0]).arg(sListArgs[2]);
-        }
-
-        // Case 3: [[Vorlage(Fremdpaket, "Anbieter", URL Downloadübersicht, Ubuntuversion(en))]]
-        else {
+        } else {
+            // Case 3: [[Vorlage(Fremdpaket, "Anbieter", URL Downloadübersicht, Ubuntuversion(en))]]
             sOutput = QString::fromUtf8("<p>Von %1 werden [%2 DEB-Pakete] {dl} "
                                         "angeboten. ")
                     .arg(sListArgs[0]).arg(sListArgs[1]);
@@ -511,9 +507,7 @@ QString CProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
                        "<td style=\"width: 25%\">Dateiname</td>\n"
                        "<td style=\"width: 24%\">Icon</td>\n"
                        "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
-        }
-        else
-        {
+        } else {
             if (1 == i % 2) {
                 sOutput += "<tr>\n";
             }

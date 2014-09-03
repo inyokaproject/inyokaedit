@@ -31,9 +31,12 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += core gui xml network
+QT           += core gui network
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport webkitwidgets
+
+include(templates/templates.pri)
+include(parser/parser.pri)
 
 HEADERS      += CInyokaEdit.h \
                 CDownload.h \
@@ -41,20 +44,13 @@ HEADERS      += CInyokaEdit.h \
                 CFileOperations.h \
                 CFindReplace.h \
                 CHighlighter.h \
-                parser/CParser.h \
-                parser/CParseImgMap.h \
-                parser/CParseLinks.h \
-                parser/CParseTemplates.h \
-                parser/CProvisionalTplParser.h \
                 CPlugins.h \
                 CProgressDialog.h \
-                CTemplates.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
                 # CUpload.h \
                 CUtils.h \
-                CXmlParser.h \
                 IEditorPlugin.h
 
 SOURCES      += main.cpp \
@@ -64,20 +60,13 @@ SOURCES      += main.cpp \
                 CFileOperations.cpp \
                 CFindReplace.cpp  \
                 CHighlighter.cpp \
-                parser/CParser.cpp \
-                parser/CParseImgMap.cpp \
-                parser/CParseLinks.cpp \
-                parser/CParseTemplates.cpp \
-                parser/CProvisionalTplParser.cpp \
                 CPlugins.cpp \
                 CProgressDialog.cpp \
-                CTemplates.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
                 # CUpload.cpp \
-                CUtils.cpp \
-                CXmlParser.cpp
+                CUtils.cpp
 
 FORMS        += CInyokaEdit.ui \
                 CFindReplace.ui \

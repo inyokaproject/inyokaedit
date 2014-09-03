@@ -34,10 +34,12 @@
 #include "ui_CSettingsDialog.h"
 
 CSettingsDialog::CSettingsDialog(CSettings *pSettings,
-                                 CHighlighter *pHighlighter, QWidget *pParent)
+                                 CHighlighter *pHighlighter,
+                                 const QString &sSharePath, QWidget *pParent)
     : QDialog(pParent),
       m_pSettings(pSettings),
-      m_pHighlighter(pHighlighter) {
+      m_pHighlighter(pHighlighter),
+      m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_pUi = new Ui::CSettingsDialog();
@@ -73,31 +75,20 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->articleImageDownloadCheck->setChecked(m_pSettings->m_bAutomaticImageDownload);
     m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
     m_pUi->autosaveEdit->setValue(m_pSettings->m_nAutosave);
-    m_pUi->reloadPreviewKeyEdit->setText("0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
+    m_pUi->reloadPreviewKeyEdit->setText(
+                "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
     m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
     QStringList sListGuiLanguages;
     sListGuiLanguages << "auto" << "en";
-    QDir appDir(qApp->applicationDirPath() + "/lang");
+    QDir appDir(m_sSharePath + "/lang");
     QFileInfoList fiListFiles = appDir.entryInfoList(
                 QDir::NoDotAndDotDot | QDir::Files);
     foreach (QFileInfo fi, fiListFiles) {
         if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName() + "_")) {
             sListGuiLanguages << fi.baseName().remove(qAppName() + "_");
-        }
-    }
-    appDir = qApp->applicationDirPath() + "/../../share/" + qApp->applicationName().toLower() + "/lang";
-    fiListFiles = appDir.entryInfoList(
-                    QDir::NoDotAndDotDot | QDir::Files);
-    QString sTempLang("");
-    foreach (QFileInfo fi, fiListFiles) {
-        if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName() + "_")) {
-            sTempLang = fi.baseName().remove(qAppName() + "_");
-            if (!sListGuiLanguages.contains(sTempLang, Qt::CaseInsensitive)) {
-                sListGuiLanguages << sTempLang;
-            }
         }
     }
 
@@ -517,9 +508,11 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
     m_pUi->pluginsTable->setColumnWidth(0, 40);
     m_pUi->pluginsTable->setColumnWidth(1, 40);
 #if QT_VERSION >= 0x050000
-    m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(
+                2, QHeaderView::Stretch);
 #else
-    m_pUi->pluginsTable->horizontalHeader()->setResizeMode(2, QHeaderView::Stretch);
+    m_pUi->pluginsTable->horizontalHeader()->setResizeMode(
+                2, QHeaderView::Stretch);
 #endif
     m_pUi->pluginsTable->setColumnWidth(3, 40);
     m_pUi->pluginsTable->setColumnWidth(4, 40);
@@ -540,17 +533,18 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
         }
 
         // Icon
-        m_pUi->pluginsTable->item(nRow, 1)->setIcon(m_listPLugins[nRow]->getIcon());
-
+        m_pUi->pluginsTable->item(nRow, 1)->setIcon(
+                    m_listPLugins[nRow]->getIcon());
         // Caption
-        m_pUi->pluginsTable->item(nRow, 2)->setText(m_listPLugins[nRow]->getCaption());
+        m_pUi->pluginsTable->item(nRow, 2)->setText(
+                    m_listPLugins[nRow]->getCaption());
 
         // Settings
         if (m_listPLugins[nRow]->hasSettings()) {
             m_listPluginInfoButtons << new QPushButton(
                                            QIcon(":/images/preferences-system.png"), "");
-            connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-                     PluginObjList[nRow], SLOT(showSettings()));
+            connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                    PluginObjList[nRow], SLOT(showSettings()));
 
             m_pUi->pluginsTable->setCellWidget(nRow, 3,
                                                m_listPluginInfoButtons.last());
@@ -562,9 +556,11 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
         }
 
         // Info
-        m_listPluginInfoButtons << new QPushButton(QIcon(":/images/question.png"), "");
-        connect (m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-                 PluginObjList[nRow], SLOT(showAbout()));
-        m_pUi->pluginsTable->setCellWidget(nRow, 4, m_listPluginInfoButtons.last());
+        m_listPluginInfoButtons << new QPushButton(
+                                       QIcon(":/images/question.png"), "");
+        connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
+                PluginObjList[nRow], SLOT(showAbout()));
+        m_pUi->pluginsTable->setCellWidget(nRow, 4,
+                                           m_listPluginInfoButtons.last());
     }
 }
