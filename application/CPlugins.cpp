@@ -45,11 +45,19 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
 
     QStringList sListAvailablePlugins;
     QList<QDir> listPluginsDir;
+    // Plugins in user folder
     QDir pluginsDir = m_userDataDir;
     if (pluginsDir.cd("plugins")) {
         listPluginsDir << pluginsDir;
     }
+    // Plugins in app folder (Windows and debugging)
     pluginsDir = qApp->applicationDirPath();
+    if (pluginsDir.cd("plugins")) {
+        listPluginsDir << pluginsDir;
+    }
+    // Plugins in standard installation folder (Linux)
+    pluginsDir = qApp->applicationDirPath() + "/../lib/"
+                 + qApp->applicationName().toLower();
     if (pluginsDir.cd("plugins")) {
         listPluginsDir << pluginsDir;
     }
@@ -65,6 +73,7 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
                 IEditorPlugin *piPlugin = qobject_cast<IEditorPlugin *>(pPlugin);
 
                 if (piPlugin) {
+                    // Check for duplicates
                     if (sListAvailablePlugins.contains(piPlugin->getPluginName())) {
                         continue;
                     }

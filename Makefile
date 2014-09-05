@@ -44,7 +44,6 @@ infiles:
 install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)/etc/apport
 	$(INSTALL_DIR) $(DESTDIR)$(bindir)
-	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport/package-hooks
@@ -55,8 +54,7 @@ install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/man1
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/de/man1
-	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(libdir)/inyokaedit
-	$(INSTALL_PROGRAM) data/inyokaedit      $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) data/GetInyokaStyles $(DESTDIR)$(dataroot)/inyokaedit
 	$(INSTALL_PROGRAM) data/GetIWLs         $(DESTDIR)$(dataroot)/inyokaedit
 	$(INSTALL_FILE) apport/inyokaedit-crashdb.conf        $(DESTDIR)/etc/apport

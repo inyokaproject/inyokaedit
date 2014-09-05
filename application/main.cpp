@@ -93,13 +93,13 @@ int main(int argc, char *argv[]) {
                     QDesktopServices::DataLocation).toLower());
 #endif
 
-    // Default share data path (scripts, iWikilinks, templates, ...)
+    // Default share data path (Windows and debugging)
     QString sSharePath = app.applicationDirPath();
-    // Installation path
-    QDir tmpDir(app.applicationDirPath() + "/../../share/"
+    // Standard installation path (Linux)
+    QDir tmpDir(app.applicationDirPath() + "/../share/"
                 + app.applicationName().toLower());
     if (!app.arguments().contains("--debug") && tmpDir.exists()) {
-        sSharePath = app.applicationDirPath() + "/../../share/"
+        sSharePath = app.applicationDirPath() + "/../share/"
                        + app.applicationName().toLower();
     }
 
