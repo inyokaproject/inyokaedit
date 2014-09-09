@@ -18,7 +18,7 @@ TEMPLATE       = app
 TARGET         = inyokaedit
 DESTDIR        = ../
 
-VERSION        = 0.13.1
+VERSION        = 0.14.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2014 The InyokaEdit developers"

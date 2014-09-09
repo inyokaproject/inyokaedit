@@ -147,6 +147,10 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                                 sListArguments.push_front(sList[i]);
                             }
                         }
+                        if (sListArguments[0].endsWith(",")) {
+                            sListArguments[0] = sListArguments[0].remove(
+                                        sListArguments[0].size() - 1, 1);
+                        }
                     }
                 }
             }

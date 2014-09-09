@@ -374,6 +374,32 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/xmpp.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/yahoo.png -O yahoo.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/zephyr.png -O zephyr.png
 
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/aim-24.png -O aim-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/bonjour-24.png -O bonjour-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/gadu-gadu-24.png -O gadu-gadu-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/icq-24.png -O icq-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/irc-24.png -O irc-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/meanwhile-24.png -O meanwhile-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/mrim-24.png -O mrim-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/msn-24.png -O msn-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/mxit-24.png -O mxit-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/myspace-24.png -O myspace-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/netsoul-24.png -O netsoul-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/novell-24.png -O novell-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/qq-24.png -O qq-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/rss-24.png -O rss-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/sametime-24.png -O sametime-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/silc-24.png -O silc-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/simple-24.png -O simple-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/skype-24.png -O skype-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/sms-24.png -O sms-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/twitter-24.png -O twitter-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/vkontakte-24.png -O vkontakte-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/winpopup-24.png -O winpopup-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/xmpp-24.png -O xmpp-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/yahoo-24.png -O yahoo-24.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Protokolle/zephyr-24.png -O zephyr-24.png
+
 cd ..
 
 if [ ! -d Tango ]
@@ -768,6 +794,34 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/userlink.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/wikilink.png -O wikilink.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/expand.png -O expand.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/ubuntu-community.png -O ubuntu-community.png
+
+cd ..
+cd ..
+
+if [ ! -d Vorlagen ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\"..."
+    mkdir Vorlagen
+fi
+
+cd Vorlagen
+
+if [ ! -d StatusIcon ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\StatusIcon\"..."
+    mkdir StatusIcon
+fi
+
+cd StatusIcon
+
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/ja.png -O ja.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/alpha.png -O alpha.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/bedingt.png -O bedingt.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/plugin.png -O plugin.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/buggy.png -O buggy.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/nein.png -O nein.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/unbekannt.png -O unbekannt.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/manuell.png -O manuell.png
 
 cd ${PROJECT}
 

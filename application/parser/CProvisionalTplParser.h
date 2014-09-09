@@ -56,6 +56,7 @@ class CProvisionalTplParser {
     QString parseIkhayaAward(const QStringList &sListArgs);
     QString parseIkhayaImage(const QStringList &sListArgs);
     QString parseIkhayaProjectPresentation();
+    QString parseIM(const QStringList &sListArgs);
     QString parseImageCollection(const QStringList &sListArgs);
     QString parseImageSubscrition(const QStringList &sListArgs);
     QString parseImprovable(const QStringList &sListArgs);
@@ -71,6 +72,7 @@ class CProvisionalTplParser {
     QString parsePPA(const QStringList &sListArgs);
     QString parseProjects(const QStringList &sListArgs);
     QString parseSidebar(const QStringList &sListArgs);
+    QString parseStatusIcon(const QStringList &sListArgs);
     QString parseTable(const QStringList &sListArgs);
     QString parseTested(const QStringList &sListArgs);
     QString parseUnderConstruction(const QStringList &sListArgs);

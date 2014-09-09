@@ -98,6 +98,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Ikhaya-Projektvorstellung").toLower()) {
             sArgs.removeFirst();
             return this->parseIkhayaProjectPresentation();
+        }  else if (sArgs[0].toLower() == QString::fromUtf8("IM").toLower()) {
+            sArgs.removeFirst();
+            return this->parseIM(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Bildersammlung").toLower()) {
             sArgs.removeFirst();
             return this->parseImageCollection(sArgs);
@@ -143,6 +146,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Seitenleiste").toLower()) {
             sArgs.removeFirst();
             return this->parseSidebar(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("StatusIcon").toLower()) {
+            sArgs.removeFirst();
+            return this->parseStatusIcon(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
             sArgs.removeFirst();
             return this->parseTable(sArgs);
@@ -602,6 +608,127 @@ QString CProvisionalTplParser::parseIkhayaProjectPresentation() {
                            "Alle Projektvorstellungen können im Wikiartikel "
                            "[:ubuntuusers/Ikhayateam/Projektvorstellungen:"
                            "Projektvorstellungen] eingesehen werden."));
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseIM(const QStringList &sListArgs) {
+    QString sOutput("");
+    QList<QStringList> sListEntries;
+    QStringList sListTmp;
+    QStringList sList2;
+
+    // Extract list entries (split by "+++")
+    foreach (QString s, sListArgs) {
+        if ("+++" == s) {
+            sListEntries << sListTmp;
+            sListTmp.clear();
+        } else {
+            sListTmp << s;
+        }
+    }
+    sListEntries << sListTmp;
+    sListTmp.clear();
+
+    if (sListEntries.size() >= 1) {
+        if (sListEntries[0].size() >= 1) {
+            sOutput = "||<tablestyle=\"width:96%; background-color:#f2f2f2;\" -2 "
+                      "rowclass=\"titel\">" + sListEntries[0][0] + "||\n"
+                      "||<rowclass=\"kopf\">Programm||Beschreibung||\n";
+        }
+        for (int i = 1; i < sListEntries.size(); i++) {
+            for (int j = 0; j < sListEntries[i].size(); j++) {
+                if (0 == j) {
+                    sOutput += "||<cellstyle=\"font-weight:bold;\" :>";
+                    if (!sListEntries[i][j].trimmed().isEmpty()) {
+                        sOutput += "[[Bild(" + sListEntries[i][j].trimmed() +
+                                   ".png)]][[BR]]";
+                    }
+                } else if (1 == j) {
+                    sOutput += "[:" + sListEntries[i][j].trimmed() + ":]";
+                } else if (2 == j) {
+                    sOutput += "||<cellstyle=\"padding-top:0.8em;\"> "
+                               + sListEntries[i][j].trimmed() + "[[BR]]";
+                } else if (3 == j) {
+                    sOutput += "~-(";
+                    sList2.clear();
+                    sList2 << sListEntries[i][j].split(", ");
+                    foreach (QString s, sList2) {
+                        if (s.toLower().contains("aim")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/aim-24.png)]] ";
+                        } else if (s.toLower().contains("bonjour")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/bonjour-24.png)]] ";
+                        } else if (s.toLower().contains("gadu-gadu")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/gadu-gadu-24.png)]] ";
+                        } else if (s.toLower().contains("icq")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/icq-24.png)]] ";
+                        } else if (s.toLower().contains("sametime")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/sametime-24.png)]] ";
+                        } else if (s.toLower().contains("irc")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/irc-24.png)]] ";
+                        } else if (s.toLower().contains("meanwhile")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/meanwhile-24.png)]] ";
+                        } else if (s.toLower().contains("mrim")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/mrim-24.png)]] ";
+                        } else if (s.toLower().contains("msn")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/msn-24.png)]] ";
+                        } else if (s.toLower().contains("mxit")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/mxit-24.png)]] ";
+                        } else if (s.toLower().contains("myspace")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/myspace-24.png)]] ";
+                        } else if (s.toLower().contains("netsoul")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/netsoul-24.png)]] ";
+                        } else if (s.toLower().contains("novell")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/novell-24.png)]] ";
+                        } else if (s.toLower().contains("qq")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/qq-24.png)]] ";
+                        } else if (s.toLower().contains("rss")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/rss-24.png)]] ";
+                        } else if (s.toLower().contains("silc")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/silc-24.png)]] ";
+                        } else if (s.toLower().contains("simple")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/simple-24.png)]] ";
+                        } else if (s.toLower().contains("skype")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/skype-24.png)]] ";
+                        } else if (s.toLower().contains("sms")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/sms-24.png)]] ";
+                        } else if (s.toLower().contains("twitter")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/twitter-24.png)]] ";
+                        } else if (s.toLower().contains("vkontakte")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/vkontakte-24.png)]] ";
+                        } else if (s.toLower().contains("winpopup")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/winpopup-24.png)]] ";
+                        } else if (s.toLower().contains("xmpp")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/xmpp-24.png)]] ";
+                        } else if (s.toLower().contains("yahoo")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/yahoo-24.png)]] ";
+                        } else if (s.toLower().contains("zephyr")) {
+                            sOutput += "[[Bild(Wiki/Icons/Protokolle/zephyr-24.png)]] ";
+                        }
+                    }
+                    sOutput += "[[BR]]";
+                } else if (4 == j) {
+
+                    sListTmp.clear();
+                    sListTmp << sListEntries[i][j].split(",");
+                    for (int k = 0; k < sListTmp.size(); k++) {
+                        sList2.clear();
+                        sList2 << sListTmp[k];
+                        sOutput += this->parseStatusIcon(sList2);
+                        if (k != sListTmp.size() - 1) {
+                            sOutput += "| ";
+                        }
+                    }
+                }
+                if (sListEntries[i].size() - 1 == j) {
+                    sOutput += ")-~||\n";
+                }
+            }
+        }
+    }
+
+    return sOutput;
 }
 
 // ----------------------------------------------------------------------------
@@ -1444,6 +1571,47 @@ QString CProvisionalTplParser::parseSidebar(const QStringList &sListArgs) {
     }
 
     return sOutput + "\n<tbody>\n</table>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseStatusIcon(const QStringList &sListArgs) {
+    QString sOutput("");
+    QString sTmp("");
+    for (int i = 0; i < sListArgs.size(); i++) {
+        if (sListArgs.size() - 1 == i) {
+            sTmp = sListArgs[i];
+            if (sListArgs[i].contains("ja")) {
+                sTmp.replace("ja", "[[Bild(Wiki/Vorlagen/StatusIcon/ja.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("nein")) {
+                sTmp.replace("nein", "[[Bild(Wiki/Vorlagen/StatusIcon/nein.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("bedingt")) {
+                sTmp.replace("bedingt", "[[Bild(Wiki/Vorlagen/StatusIcon/bedingt.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("alpha")) {
+                sTmp.replace("alpha", "[[Bild(Wiki/Vorlagen/StatusIcon/alpha.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("buggy")) {
+                sTmp.replace("buggy", "[[Bild(Wiki/Vorlagen/StatusIcon/buggy.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("manuell")) {
+                sTmp.replace("manuell", "[[Bild(Wiki/Vorlagen/StatusIcon/manuell.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("plugin")) {
+                sTmp.replace("plugin", "[[Bild(Wiki/Vorlagen/StatusIcon/plugin.png)]] ");
+                sOutput += sTmp + " ";
+            } else if (sListArgs[i].contains("unbekannt")) {
+                sTmp.replace("unbekannt", "[[Bild(Wiki/Vorlagen/StatusIcon/unbekannt.png)]] ");
+                sOutput += sTmp + " ";
+            }
+        } else {
+            sOutput += sListArgs[i] + " ";
+        }
+    }
+    return sOutput;
 }
 
 // ----------------------------------------------------------------------------

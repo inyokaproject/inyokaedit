@@ -179,7 +179,7 @@ void LoggingHandler(QtMsgType type,
                        + QString(context.function) + ")";
 #else
 void LoggingHandler(QtMsgType type, const char *sMsg) {
-    QString sMsg2(sMsg);
+    QString sMsg2(QString::fromUtf8(sMsg));
     QString sContext(sMsg);
 #endif
     QString sTime(QTime::currentTime().toString());
