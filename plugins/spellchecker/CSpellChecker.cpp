@@ -102,7 +102,8 @@ QString CSpellChecker::getCaption() const {
 }
 
 QIcon CSpellChecker::getIcon() const {
-    return QIcon(":/spellchecker.png");
+    return QIcon::fromTheme("tools-check-spelling",
+                            QIcon(":/spellchecker.png"));
 }
 
 // ----------------------------------------------------------------------------

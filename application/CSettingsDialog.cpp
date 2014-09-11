@@ -533,6 +533,7 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
         }
 
         // Icon
+        m_pUi->pluginsTable->setIconSize(QSize(22, 22));
         m_pUi->pluginsTable->item(nRow, 1)->setIcon(
                     m_listPLugins[nRow]->getIcon());
         // Caption
@@ -542,7 +543,8 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
         // Settings
         if (m_listPLugins[nRow]->hasSettings()) {
             m_listPluginInfoButtons << new QPushButton(
-                                           QIcon(":/images/preferences-system.png"), "");
+                                           QIcon::fromTheme("preferences-system",
+                                                            QIcon(":/images/preferences-system.png")), "");
             connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
                     PluginObjList[nRow], SLOT(showSettings()));
 
@@ -557,7 +559,8 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
 
         // Info
         m_listPluginInfoButtons << new QPushButton(
-                                       QIcon(":/images/question.png"), "");
+                                       QIcon::fromTheme("help-about",
+                                                        QIcon(":/images/help-browser.png")), "");
         connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
                 PluginObjList[nRow], SLOT(showAbout()));
         m_pUi->pluginsTable->setCellWidget(nRow, 4,

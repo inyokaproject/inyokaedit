@@ -147,6 +147,8 @@ void CKnowledgeBox::buildUi(QWidget *pParent) {
 
     connect(m_pSigMapDeleteRow, SIGNAL(mapped(QWidget*)),
             this, SLOT(deleteRow(QWidget*)));
+    m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
+                                               QIcon(":/list-add.png")));
     connect(m_pUi->addButton, SIGNAL(pressed()),
             this, SLOT(addRow()));
 }
@@ -300,7 +302,9 @@ void CKnowledgeBox::createRow(const bool &bActive, const QString &sText) {
     m_pUi->entriesTable->item(nRow, 1)->setText(sText);
 
     // Delete row button
-    m_listDelRowButtons << new QPushButton(QIcon(":/list-remove.png"), "");
+    m_listDelRowButtons << new QPushButton(
+                               QIcon::fromTheme("list-remove",
+                                                QIcon(":/list-remove.png")), "");
     m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
     m_pSigMapDeleteRow->setMapping(m_listDelRowButtons.last(),

@@ -21,7 +21,6 @@
         <file>images/go-down.png</file>
         <file>images/go-up.png</file>
         <file>images/inyokaedit_64x64.png</file>
-        <file>images/question.png</file>
         <file>images/bug.png</file>
         <file>images/edit-delete.png</file>
         <file>images/view-refresh.png</file>
@@ -31,5 +30,7 @@
         <file>images/upload.png</file>
         <file>images/download.png</file>
         <file>images/uu.ico</file>
+        <file>images/document-save-as.png</file>
+        <file>images/help-browser.png</file>
     </qresource>
 </RCC>

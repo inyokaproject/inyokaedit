@@ -214,10 +214,6 @@
    </property>
   </action>
   <action name="aboutAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/question.png</normaloff>:/images/question.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;About</string>
    </property>
@@ -226,10 +222,6 @@
    </property>
   </action>
   <action name="newAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/document-new.png</normaloff>:/images/document-new.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -238,10 +230,6 @@
    </property>
   </action>
   <action name="openAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/document-open.png</normaloff>:/images/document-open.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
@@ -250,10 +238,6 @@
    </property>
   </action>
   <action name="saveAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/document-save.png</normaloff>:/images/document-save.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -278,10 +262,6 @@
    </property>
   </action>
   <action name="undoAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-undo.png</normaloff>:/images/edit-undo.png</iconset>
-   </property>
    <property name="text">
     <string>Undo</string>
    </property>
@@ -290,10 +270,6 @@
    </property>
   </action>
   <action name="redoAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-redo.png</normaloff>:/images/edit-redo.png</iconset>
-   </property>
    <property name="text">
     <string>Redo</string>
    </property>
@@ -302,10 +278,6 @@
    </property>
   </action>
   <action name="cutAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-cut.png</normaloff>:/images/edit-cut.png</iconset>
-   </property>
    <property name="text">
     <string>Cut</string>
    </property>
@@ -314,10 +286,6 @@
    </property>
   </action>
   <action name="copyAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-copy.png</normaloff>:/images/edit-copy.png</iconset>
-   </property>
    <property name="text">
     <string>Copy</string>
    </property>
@@ -326,10 +294,6 @@
    </property>
   </action>
   <action name="pasteAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-paste.png</normaloff>:/images/edit-paste.png</iconset>
-   </property>
    <property name="text">
     <string>Paste</string>
    </property>
@@ -338,10 +302,6 @@
    </property>
   </action>
   <action name="searchAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-find.png</normaloff>:/images/edit-find.png</iconset>
-   </property>
    <property name="text">
     <string>Find...</string>
    </property>
@@ -350,10 +310,6 @@
    </property>
   </action>
   <action name="replaceAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-find-replace.png</normaloff>:/images/edit-find-replace.png</iconset>
-   </property>
    <property name="text">
     <string>Replace...</string>
    </property>
@@ -503,28 +459,16 @@
    </property>
   </action>
   <action name="goBackBrowserAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-previous.png</normaloff>:/images/go-previous.png</iconset>
-   </property>
    <property name="text">
     <string>Back</string>
    </property>
   </action>
   <action name="goForwardBrowserAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-next.png</normaloff>:/images/go-next.png</iconset>
-   </property>
    <property name="text">
     <string>Forward</string>
    </property>
   </action>
   <action name="reloadBrowserAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/view-refresh.png</normaloff>:/images/view-refresh.png</iconset>
-   </property>
    <property name="text">
     <string>Reload</string>
    </property>
@@ -533,10 +477,6 @@
    </property>
   </action>
   <action name="printPreviewAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/document-print.png</normaloff>:/images/document-print.png</iconset>
-   </property>
    <property name="text">
     <string>Print preview</string>
    </property>

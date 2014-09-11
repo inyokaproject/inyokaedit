@@ -68,10 +68,6 @@
      <property name="text">
       <string/>
      </property>
-     <property name="icon">
-      <iconset resource="res/knowledgebox_resources.qrc">
-       <normaloff>:/list-add.png</normaloff>:/list-add.png</iconset>
-     </property>
     </widget>
    </item>
    <item>
@@ -84,9 +80,7 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="res/knowledgebox_resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

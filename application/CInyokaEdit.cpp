@@ -317,11 +317,15 @@ void CInyokaEdit::createActions() {
     // File menu
     // New file
     m_pUi->newAct->setShortcuts(QKeySequence::New);
+    m_pUi->newAct->setIcon(QIcon::fromTheme("document-new",
+                                            QIcon(":/images/document-new.png")));
     connect(m_pUi->newAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(newFile()));
 
     // Open file
     m_pUi->openAct->setShortcuts(QKeySequence::Open);
+    m_pUi->openAct->setIcon(QIcon::fromTheme("document-open",
+                                            QIcon(":/images/document-open.png")));
     connect(m_pUi->openAct, SIGNAL(triggered()),
             this, SLOT(openFile()));
 
@@ -332,16 +336,22 @@ void CInyokaEdit::createActions() {
 
     // Save file
     m_pUi->saveAct->setShortcuts(QKeySequence::Save);
+    m_pUi->saveAct->setIcon(QIcon::fromTheme("document-save",
+                                            QIcon(":/images/document-save.png")));
     connect(m_pUi->saveAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(save()));
 
     // Save file as...
     m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
+    m_pUi->saveAsAct->setIcon(QIcon::fromTheme("document-save-as",
+                                            QIcon(":/images/document-save-as.png")));
     connect(m_pUi->saveAsAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(saveAs()));
 
     // Print preview
     m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
+    m_pUi->printPreviewAct->setIcon(QIcon::fromTheme("document-print",
+                                            QIcon(":/images/document-print.png")));
     connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(printPreview()));
     if (false == m_pSettings->getPreviewAlongside()) {
@@ -350,6 +360,7 @@ void CInyokaEdit::createActions() {
 
     // Exit application
     m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
+    m_pUi->exitAct->setIcon(QIcon::fromTheme("application-exit"));
     connect(m_pUi->exitAct, SIGNAL(triggered()),
             this, SLOT(close()));
 
@@ -358,49 +369,66 @@ void CInyokaEdit::createActions() {
 
     // Find
     m_pUi->searchAct->setShortcuts(QKeySequence::Find);
+    m_pUi->searchAct->setIcon(QIcon::fromTheme("edit-find",
+                                            QIcon(":/images/edit-find.png")));
     connect(m_pUi->searchAct, SIGNAL(triggered()),
             this, SLOT(callSearch()));
-
     // Replace
     m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
+    m_pUi->replaceAct->setIcon(QIcon::fromTheme("edit-find-replace",
+                                            QIcon(":/images/edit-find-replace.png")));
     connect(m_pUi->replaceAct, SIGNAL(triggered()),
             this, SLOT(callReplace()));
-/*
+
     // Find next
     m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-    connect(m_pUi->findNextAct, SIGNAL(triggered()),
-            m_findDialog, SLOT(findNext()));
-
+    m_pUi->findNextAct->setEnabled(false);
+    m_pUi->findNextAct->setIcon(QIcon::fromTheme("go-down",
+                                            QIcon(":/images/go-down.png")));
+    // connect(m_pUi->findNextAct, SIGNAL(triggered()),
+    //         m_findDialog, SLOT(findNext()));
     // Find previous
     m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-    connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
-            m_findDialog, SLOT(findPrev()));
-*/
+    m_pUi->findPreviousAct->setEnabled(false);
+    m_pUi->findPreviousAct->setIcon(QIcon::fromTheme("go-up",
+                                            QIcon(":/images/go-up.png")));
+    // connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
+    //         m_findDialog, SLOT(findPrev()));
 
     // Cut
     m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
+    m_pUi->cutAct->setIcon(QIcon::fromTheme("edit-cut",
+                                            QIcon(":/images/edit-cut.png")));
     connect(m_pUi->cutAct, SIGNAL(triggered()),
             m_pEditor, SLOT(cut()));
     connect(m_pEditor, SIGNAL(copyAvailable(bool)),
             m_pUi->cutAct, SLOT(setEnabled(bool)));
     // Copy
     m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
+    m_pUi->copyAct->setIcon(QIcon::fromTheme("edit-copy",
+                                            QIcon(":/images/edit-copy.png")));
     connect(m_pUi->copyAct, SIGNAL(triggered()),
             m_pEditor, SLOT(copy()));
     connect(m_pEditor, SIGNAL(copyAvailable(bool)),
             m_pUi->copyAct, SLOT(setEnabled(bool)));
     // Paste
     m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
+    m_pUi->pasteAct->setIcon(QIcon::fromTheme("edit-paste",
+                                            QIcon(":/images/edit-paste.png")));
     connect(m_pUi->pasteAct, SIGNAL(triggered()),
             m_pEditor, SLOT(paste()));
     // Undo
     m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
+    m_pUi->undoAct->setIcon(QIcon::fromTheme("edit-undo",
+                                            QIcon(":/images/edit-undo.png")));
     connect(m_pUi->undoAct, SIGNAL(triggered()),
             m_pEditor, SLOT(undo()));
     connect(m_pEditor, SIGNAL(undoAvailable(bool)),
             m_pUi->undoAct, SLOT(setEnabled(bool)));
     // Redo
     m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
+    m_pUi->redoAct->setIcon(QIcon::fromTheme("edit-redo",
+                                            QIcon(":/images/edit-redo.png")));
     connect(m_pUi->redoAct, SIGNAL(triggered()),
             m_pEditor, SLOT(redo()));
     connect(m_pEditor, SIGNAL(redoAvailable(bool)),
@@ -429,6 +457,9 @@ void CInyokaEdit::createActions() {
             this, SLOT(deleteTempImages()));
 
     // Show settings dialog
+    m_pUi->preferencesAct->setIcon(
+                QIcon::fromTheme("preferences-system",
+                                 QIcon(":/images/preferences-system.png")));
     connect(m_pUi->preferencesAct, SIGNAL(triggered()),
             m_pSettings, SIGNAL(showSettingsDialog()));
 
@@ -581,6 +612,8 @@ void CInyokaEdit::createActions() {
             m_pUtils, SLOT(reportBug()));
 
     // Open about windwow
+    m_pUi->aboutAct->setIcon(QIcon::fromTheme("help-about",
+                                            QIcon(":/images/help-browser.png")));
     connect(m_pUi->aboutAct, SIGNAL(triggered()),
             m_pUtils, SLOT(showAbout()));
 }
@@ -668,6 +701,7 @@ void CInyokaEdit::createMenus() {
     // File menu (recent opened files)
     m_pUi->fileMenuLastOpened->addActions(
                 m_pFileOperations->getLastOpenedFiles());
+    m_pUi->fileMenuLastOpened->setIcon(QIcon::fromTheme("document-open-recent"));
     m_pUi->fileMenuLastOpened->addSeparator();
     m_pUi->fileMenuLastOpened->addAction(m_pClearRecentFilesAct);
     if (0 == m_pSettings->getRecentFiles().size()) {
@@ -754,12 +788,22 @@ void CInyokaEdit::createToolBars() {
             this, SLOT(insertDropDownTextformat(int)));
 
     // Browser buttons
+    m_pUi->goBackBrowserAct->setIcon(
+                QIcon::fromTheme("go-previous",
+                                 QIcon(":/images/go-previous.png")));
     connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
             m_pWebview, SLOT(back()));
+    m_pUi->goForwardBrowserAct->setIcon(
+                QIcon::fromTheme("go-next",
+                                 QIcon(":/images/go-next.png")));
     connect(m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
             m_pWebview, SLOT(forward()));
+    m_pUi->reloadBrowserAct->setIcon(
+                QIcon::fromTheme("view-refresh",
+                                 QIcon(":/images/view-refresh.png")));
     connect(m_pUi->reloadBrowserAct, SIGNAL(triggered()),
             m_pWebview, SLOT(reload()));
+
     connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
             this, SLOT(changedUrl()));
     m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
