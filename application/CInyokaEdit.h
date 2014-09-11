@@ -108,10 +108,6 @@ class CInyokaEdit : public QMainWindow {
 
     bool eventFilter(QObject *obj, QEvent *event);
 
-  protected slots:
-    void callSearch();
-    void callReplace();
-
   private slots:
     void showSyntaxOverview();
 

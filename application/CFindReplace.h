@@ -49,7 +49,12 @@ class CFindReplace : public QDialog {
     ~CFindReplace();
 
     void setEditor(QTextEdit *pEditor);
-    void toggleSearchReplace(bool bReplace);
+
+  public slots:
+    void callFind();
+    void callReplace();
+    void findNext();
+    void findPrevious();
 
   protected:
     void showEvent(QShowEvent *event);
@@ -62,6 +67,9 @@ class CFindReplace : public QDialog {
     void replaceAll();
 
   private:
+    void find(const bool bForward);
+    void toggleSearchReplace(bool bReplace);
+
     CSettings *m_pSettings;
     Ui::CFindReplace *m_pUi;
     QTextEdit *m_pEditor;

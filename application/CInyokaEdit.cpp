@@ -372,28 +372,26 @@ void CInyokaEdit::createActions() {
     m_pUi->searchAct->setIcon(QIcon::fromTheme("edit-find",
                                             QIcon(":/images/edit-find.png")));
     connect(m_pUi->searchAct, SIGNAL(triggered()),
-            this, SLOT(callSearch()));
+            m_pFindReplace, SLOT(callFind()));
     // Replace
     m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
     m_pUi->replaceAct->setIcon(QIcon::fromTheme("edit-find-replace",
                                             QIcon(":/images/edit-find-replace.png")));
     connect(m_pUi->replaceAct, SIGNAL(triggered()),
-            this, SLOT(callReplace()));
+            m_pFindReplace, SLOT(callReplace()));
 
     // Find next
     m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-    m_pUi->findNextAct->setEnabled(false);
     m_pUi->findNextAct->setIcon(QIcon::fromTheme("go-down",
                                             QIcon(":/images/go-down.png")));
-    // connect(m_pUi->findNextAct, SIGNAL(triggered()),
-    //         m_findDialog, SLOT(findNext()));
+    connect(m_pUi->findNextAct, SIGNAL(triggered()),
+            m_pFindReplace, SLOT(findNext()));
     // Find previous
     m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-    m_pUi->findPreviousAct->setEnabled(false);
     m_pUi->findPreviousAct->setIcon(QIcon::fromTheme("go-up",
                                             QIcon(":/images/go-up.png")));
-    // connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
-    //         m_findDialog, SLOT(findPrev()));
+    connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
+            m_pFindReplace, SLOT(findPrevious()));
 
     // Cut
     m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
@@ -836,19 +834,6 @@ void CInyokaEdit::openFile() {
     // Reset scroll position
     m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
     m_pFileOperations->open();
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CInyokaEdit::callSearch() {
-    m_pFindReplace->toggleSearchReplace(false);
-    m_pFindReplace->show();
-}
-
-void CInyokaEdit::callReplace() {
-    m_pFindReplace->toggleSearchReplace(true);
-    m_pFindReplace->show();
 }
 
 // ----------------------------------------------------------------------------

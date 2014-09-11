@@ -104,20 +104,15 @@ void CFindReplace::showEvent(QShowEvent *event) {
 }
 
 // ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
-void CFindReplace::closeEvent(QCloseEvent *event) {
-    m_pSettings->setTextFind(m_pUi->text_Search->text());
-    m_pSettings->setTextReplace(m_pUi->text_Replace->text());
-    m_pSettings->setSearchForwardState(m_pUi->radio_Forward->isChecked());
-    m_pSettings->setCaseState(m_pUi->check_Case->isChecked());
-    m_pSettings->setWholeWordState(m_pUi->check_WholeWord->isChecked());
-    m_pSettings->setUseRegExpState(m_pUi->check_Regexp->isChecked());
-
-    event->accept();
+void CFindReplace::callFind() {
+    this->toggleSearchReplace(false);
 }
 
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
+void CFindReplace::callReplace() {
+    this->toggleSearchReplace(true);
+}
 
 void CFindReplace::toggleSearchReplace(bool bReplace) {
     if (!bReplace) {
@@ -133,6 +128,21 @@ void CFindReplace::toggleSearchReplace(bool bReplace) {
         m_pUi->button_Replace->setVisible(true);
         m_pUi->button_ReplaceAll->setVisible(true);
     }
+    this->show();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CFindReplace::closeEvent(QCloseEvent *event) {
+    m_pSettings->setTextFind(m_pUi->text_Search->text());
+    m_pSettings->setTextReplace(m_pUi->text_Replace->text());
+    m_pSettings->setSearchForwardState(m_pUi->radio_Forward->isChecked());
+    m_pSettings->setCaseState(m_pUi->check_Case->isChecked());
+    m_pSettings->setWholeWordState(m_pUi->check_WholeWord->isChecked());
+    m_pSettings->setUseRegExpState(m_pUi->check_Regexp->isChecked());
+
+    event->accept();
 }
 
 // ----------------------------------------------------------------------------
@@ -180,7 +190,20 @@ void CFindReplace::textSearchChanged() {
 // ----------------------------------------------------------------------------
 
 void CFindReplace::find() {
-    const bool bForward = m_pUi->radio_Forward->isChecked();
+    this->find(m_pUi->radio_Forward->isChecked());
+}
+
+void CFindReplace::findNext() {
+    this->find(true);
+}
+
+void CFindReplace::findPrevious() {
+    this->find(false);
+}
+
+// ----------------------------------------------------------------------------
+
+void CFindReplace::find(const bool bForward) {
     const bool bCaseSens = m_pUi->check_Case->isChecked();
     const bool bWholeWord = m_pUi->check_WholeWord->isChecked();
     const bool bUseRegexp = m_pUi->check_Regexp->isChecked();
