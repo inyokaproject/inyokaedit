@@ -132,7 +132,7 @@ void CInyokaEdit::createObjects() {
 
     m_pSettings = new CSettings(this, m_sSharePath);
 
-    m_pFindReplace = new CFindReplace(m_pSettings);
+    m_pFindReplace = new CFindReplace();
 
     // Has to be created before parser
     m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage(),

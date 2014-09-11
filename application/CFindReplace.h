@@ -33,10 +33,6 @@
 #include <QTextCursor>
 #include <QTextEdit>
 
-#include "./CSettings.h"
-
-class CSettings;
-
 namespace Ui {
     class CFindReplace;
 }
@@ -45,7 +41,7 @@ class CFindReplace : public QDialog {
     Q_OBJECT
 
   public:
-    explicit CFindReplace(CSettings *pSettings, QWidget *parent = 0);
+    explicit CFindReplace(QWidget *parent = 0);
     ~CFindReplace();
 
     void setEditor(QTextEdit *pEditor);
@@ -70,7 +66,6 @@ class CFindReplace : public QDialog {
     void find(const bool bForward);
     void toggleSearchReplace(bool bReplace);
 
-    CSettings *m_pSettings;
     Ui::CFindReplace *m_pUi;
     QTextEdit *m_pEditor;
     QTextCursor m_TextCursor;

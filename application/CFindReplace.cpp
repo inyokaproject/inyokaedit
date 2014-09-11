@@ -25,14 +25,14 @@
  */
 
 #include <QDebug>
+#include <QMessageBox>
 #include <QTextDocument>
 
 #include "./CFindReplace.h"
 #include "ui_CFindReplace.h"
 
-CFindReplace::CFindReplace(CSettings *pSettings, QWidget *parent)
+CFindReplace::CFindReplace(QWidget *parent)
     : QDialog(parent),
-      m_pSettings(pSettings),
       m_pUi(new Ui::CFindReplace),
       m_pEditor(NULL) {
     qDebug() << "Calling" << Q_FUNC_INFO;
@@ -75,13 +75,6 @@ void CFindReplace::showEvent(QShowEvent *event) {
     m_pUi->button_Replace->setEnabled(m_pUi->text_Search->text().size() > 0);
     m_pUi->button_ReplaceAll->setEnabled(m_pUi->text_Search->text().size() > 0);
 
-    m_pUi->text_Replace->setText(m_pSettings->getTextReplace());
-    m_pUi->radio_Forward->setChecked(m_pSettings->getSearchForwardState());
-    m_pUi->radio_Backward->setChecked(!m_pSettings->getSearchForwardState());
-    m_pUi->check_Case->setChecked(m_pSettings->getCaseState());
-    m_pUi->check_WholeWord->setChecked(m_pSettings->getWholeWordState());
-    m_pUi->check_Regexp->setChecked(m_pSettings->getUseRegExpState());
-
     // Check if editor was set before
     if (!m_pEditor) {
         QMessageBox::warning(0, "Warning", "Couldn't access editor object.");
@@ -92,9 +85,8 @@ void CFindReplace::showEvent(QShowEvent *event) {
         // If some text is selected in editor
         if (!m_pEditor->textCursor().selectedText().isEmpty()) {
             m_pUi->text_Search->setText(m_pEditor->textCursor().selectedText());
-        } else {  // If not use last used string
-            m_pUi->text_Search->setText(m_pSettings->getTextFind());
         }
+
         // Always select search input box
         m_pUi->text_Search->selectAll();
         m_pUi->text_Search->setFocus();
@@ -135,13 +127,6 @@ void CFindReplace::toggleSearchReplace(bool bReplace) {
 // ----------------------------------------------------------------------------
 
 void CFindReplace::closeEvent(QCloseEvent *event) {
-    m_pSettings->setTextFind(m_pUi->text_Search->text());
-    m_pSettings->setTextReplace(m_pUi->text_Replace->text());
-    m_pSettings->setSearchForwardState(m_pUi->radio_Forward->isChecked());
-    m_pSettings->setCaseState(m_pUi->check_Case->isChecked());
-    m_pSettings->setWholeWordState(m_pUi->check_WholeWord->isChecked());
-    m_pSettings->setUseRegExpState(m_pUi->check_Regexp->isChecked());
-
     event->accept();
 }
 

@@ -88,20 +88,6 @@ class CSettings : public QObject {
     QStringList getRecentFiles() const;
     void setRecentFiles(const QStringList &sListNewRecent);
 
-    // Find / replace
-    QString getTextFind() const;
-    QString getTextReplace() const;
-    void setTextFind(const QString sNewText);
-    void setTextReplace(const QString sNewText);
-    bool getSearchForwardState() const;
-    void setSearchForwardState(const bool bForward);
-    bool getCaseState() const;
-    void setCaseState(const bool bNewState);
-    bool getWholeWordState() const;
-    void setWholeWordState(const bool bNewState);
-    bool getUseRegExpState() const;
-    void setUseRegExpState(const bool bNewState);
-
     // Proxy
     QString getProxyHostName() const;
     quint16 getProxyPort() const;
@@ -171,14 +157,6 @@ class CSettings : public QObject {
     static const quint16 m_cMAXFILES = 10;
     qint32 m_nMaxLastOpenedFiles;
     QStringList m_sListRecentFiles;
-
-    // Find / replace
-    QString m_sTextFind;
-    QString m_sTextReplace;
-    bool m_bSearchForward;
-    bool m_bCheckCase;
-    bool m_bCheckWholeWord;
-    bool m_bUseRegExp;
 
     // Proxy
     QString m_sProxyHostName;
