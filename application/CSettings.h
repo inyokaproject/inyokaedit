@@ -32,11 +32,9 @@
 #include <QMessageBox>
 
 #include "./CSettingsDialog.h"
-#include "./CHighlighter.h"
 #include "./IEditorPlugin.h"
 
 class CSettingsDialog;
-class CHighlighter;
 
 /**
  * \class CSettings
@@ -48,7 +46,6 @@ class CSettings : public QObject {
   public:
     CSettings(QWidget *pParent, const QString &sSharePath);
     ~CSettings();
-    void init(CTemplates *pTemplates, QTextDocument *pDoc);
 
     // Load / save application settings
     void readSettings();
@@ -71,7 +68,6 @@ class CSettings : public QObject {
     qint32 getReloadPreviewKey() const;
     quint32 getTimedPreview() const;
     bool getSyncScrollbars() const;
-    QString getStyleFile() const;
     bool getWindowsCheckUpdate() const;
 
     // Font
@@ -97,12 +93,6 @@ class CSettings : public QObject {
     // Plugins
     QStringList getDisabledPlugins() const;
 
-    // Highlighting
-    QString getHighlightBG() const;
-    QString getHighlightFG() const;
-
-    QString getFileName() const;
-
     // Allow CSettingsDialog to access private members
     friend class CSettingsDialog;
 
@@ -118,11 +108,8 @@ class CSettings : public QObject {
   private:
     void removeObsolete();
 
-    QWidget *m_pParent;
-    QString m_sSharePath;
     QSettings *m_pSettings;
     CSettingsDialog *m_pSettingsDialog;
-    CHighlighter *m_pHighlighter;
 
     // General
     QString m_sGuiLanguage;
@@ -140,7 +127,6 @@ class CSettings : public QObject {
     QString m_sReloadPreviewKey;
     quint32 m_nTimedPreview;
     bool m_bSyncScrollbars;
-    QString m_sStyleFile;
     bool m_bWinCheckUpdate;
 
     // Font

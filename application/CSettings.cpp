@@ -35,9 +35,7 @@
 
 #include "./CSettings.h"
 
-CSettings::CSettings(QWidget *pParent, const QString &sSharePath)
-    : m_pParent(pParent),
-      m_sSharePath(sSharePath) {
+CSettings::CSettings(QWidget *pParent, const QString &sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
 #if defined _WIN32
@@ -51,32 +49,8 @@ CSettings::CSettings(QWidget *pParent, const QString &sSharePath)
 #endif
 
     this->readSettings();
-}
 
-CSettings::~CSettings() {
-    if (NULL != m_pSettingsDialog) {
-        delete m_pSettingsDialog;
-    }
-    m_pSettingsDialog = NULL;
-    if (NULL != m_pHighlighter) {
-        delete m_pHighlighter;
-    }
-    m_pHighlighter = NULL;
-
-    if (NULL != m_pSettings) {
-        delete m_pSettings;
-        m_pSettings = NULL;
-    }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CSettings::init(CTemplates *pTemplates, QTextDocument *pDoc) {
-    m_pHighlighter = new CHighlighter(pTemplates, m_sStyleFile, pDoc);
-
-    m_pSettingsDialog = new CSettingsDialog(this, m_pHighlighter,
-                                            m_sSharePath, m_pParent);
+    m_pSettingsDialog = new CSettingsDialog(this, sSharePath, pParent);
 
     connect(this,
             SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)),
@@ -88,6 +62,18 @@ void CSettings::init(CTemplates *pTemplates, QTextDocument *pDoc) {
 
     connect(m_pSettingsDialog, SIGNAL(updatedSettings()),
             this, SIGNAL(updateEditorSettings()));
+}
+
+CSettings::~CSettings() {
+    if (NULL != m_pSettingsDialog) {
+        delete m_pSettingsDialog;
+    }
+    m_pSettingsDialog = NULL;
+
+    if (NULL != m_pSettings) {
+        delete m_pSettings;
+        m_pSettings = NULL;
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -144,14 +130,6 @@ void CSettings::readSettings() {
     m_bWinCheckUpdate = m_pSettings->value("WindowsCheckForUpdate",
                                            false).toBool();
 
-    QString sStyle = m_pSettings->value("Style", "standard-style").toString();
-    QFileInfo fiStylePath(m_pSettings->fileName());
-#if defined _WIN32
-    m_sStyleFile = fiStylePath.absolutePath() + "/" + sStyle + ".ini";
-#else
-    m_sStyleFile = fiStylePath.absolutePath() + "/" + sStyle + ".conf";
-#endif
-
     // Font settings
     m_pSettings->beginGroup("Font");
     m_sFontFamily = m_pSettings->value("FontFamily",
@@ -162,13 +140,11 @@ void CSettings::readSettings() {
     if (m_nFontsize <= 0) {
         m_nFontsize = 10.5;
     }
-
     m_EditorFont.setFamily(m_sFontFamily);
     m_EditorFont.setFixedPitch(true);
     // Font matcher prefers fixed pitch fonts
     m_EditorFont.setStyleHint(QFont::TypeWriter);
     m_EditorFont.setPointSizeF(m_nFontsize);
-
     m_pSettings->endGroup();
 
     // Recent files
@@ -240,9 +216,6 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->setValue("WindowsCheckForUpdate", m_bWinCheckUpdate);
 #endif
 
-    QFileInfo fiStylePath(m_sStyleFile);
-    m_pSettings->setValue("Style", fiStylePath.baseName());
-
     // Font settings
     m_pSettings->beginGroup("Font");
     m_pSettings->setValue("FontFamily", m_sFontFamily);
@@ -293,9 +266,6 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
         m_pSettings->setValue("SplitterState", m_aSplitterState);
     }
     m_pSettings->endGroup();
-
-    // Save syntax highlighting
-    m_pHighlighter->saveStyle();
 }
 
 // ----------------------------------------------------------------------------
@@ -388,10 +358,6 @@ bool CSettings::getSyncScrollbars() const {
     return m_bSyncScrollbars;
 }
 
-QString CSettings::getStyleFile() const {
-    return m_sStyleFile;
-}
-
 // ----------------------------------------------------
 
 QFont CSettings::getEditorFont() const {
@@ -431,7 +397,6 @@ void CSettings::setRecentFiles(const QStringList &sListNewRecent) {
 bool CSettings::getWindowsCheckUpdate() const {
     return m_bWinCheckUpdate;
 }
-
 void CSettings::setWindowsCheckUpdate(const bool bValue) {
     m_bWinCheckUpdate = bValue;
 }
@@ -467,19 +432,4 @@ QString CSettings::getProxyPassword() const {
 
 QStringList CSettings::getDisabledPlugins() const {
     return m_sListDisabledPlugins;
-}
-
-// ----------------------------------------------------
-
-QString CSettings::getFileName() const {
-    return m_pSettings->fileName();
-}
-
-// ----------------------------------------------------
-
-QString CSettings::getHighlightBG() const {
-    return m_pHighlighter->getHighlightBG();
-}
-QString CSettings::getHighlightFG() const {
-    return m_pHighlighter->getHighlightFG();
 }

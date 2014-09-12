@@ -32,6 +32,7 @@ all:
 	$(QMAKE) -o $(MAKEFILE)
 	$(MAKE) -f $(MAKEFILE)
 	$(LRELEASE) application/lang/*.ts
+	$(LRELEASE) plugins/highlighter/lang/*.ts
 	$(LRELEASE) plugins/knowledgebox/lang/*.ts
 	$(LRELEASE) plugins/spellchecker/lang/*.ts
 	$(LRELEASE) plugins/tabletemplate/lang/*.ts
@@ -74,9 +75,11 @@ install-inyokaedit: infiles
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
+	$(INSTALL_FILE) plugins/libhighlighter.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libknowledgebox.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libspellchecker.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libtabletemplate.so $(DESTDIR)$(libdir)/inyokaedit/plugins
+	$(INSTALL_FILE) plugins/highlighter/lang/highlighter_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) plugins/knowledgebox/lang/knowledgebox_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) plugins/spellchecker/lang/spellchecker_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) plugins/tabletemplate/lang/tabletemplate_de.qm $(DESTDIR)$(dataroot)/inyokaedit/lang
@@ -106,6 +109,7 @@ clean:
 	$(RM) $(INFILES)
 	$(RM) plugins/*.so
 	$(RM) application/lang/*.qm
+	$(RM) plugins/highlighter/lang/*.qm
 	$(RM) plugins/knowledgebox/lang/*.qm
 	$(RM) plugins/spellchecker/lang/*.qm
 	$(RM) plugins/tabletemplate/lang/*.qm

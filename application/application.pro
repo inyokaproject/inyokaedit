@@ -43,7 +43,6 @@ HEADERS      += CInyokaEdit.h \
                 CDownloadImg.h \
                 CFileOperations.h \
                 CFindReplace.h \
-                CHighlighter.h \
                 CPlugins.h \
                 CProgressDialog.h \
                 CTextEditor.h \
@@ -59,7 +58,6 @@ SOURCES      += main.cpp \
                 CDownloadImg.cpp \
                 CFileOperations.cpp \
                 CFindReplace.cpp  \
-                CHighlighter.cpp \
                 CPlugins.cpp \
                 CProgressDialog.cpp \
                 CTextEditor.cpp \

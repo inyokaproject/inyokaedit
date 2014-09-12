@@ -115,10 +115,11 @@ QString CTableTemplate::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
+QTranslator* CTableTemplate::getPluginTranslator(const QString &sSharePath,
+                                                 const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+    if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
         qWarning() << "Could not load plugin translation:" << sLocaleFile;
         return NULL;
     }
@@ -131,15 +132,21 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sLocale) {
 QString CTableTemplate::getCaption() const {
     return trUtf8("Table generator");
 }
-
 QIcon CTableTemplate::getIcon() const {
     return QIcon(":/tabletemplate.png");
+}
+
+bool CTableTemplate::includeMenu() const {
+    return true;
+}
+bool CTableTemplate::includeToolbar() const {
+    return true;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::executePlugin() {
+void CTableTemplate::callPlugin() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_pUi->tableStyleBox->setCurrentIndex(0);
     m_pUi->showHeadBox->setChecked(false);
@@ -151,6 +158,8 @@ void CTableTemplate::executePlugin() {
     m_pDialog->show();
     m_pDialog->exec();
 }
+
+void CTableTemplate::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

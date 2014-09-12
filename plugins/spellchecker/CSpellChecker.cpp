@@ -84,10 +84,11 @@ QString CSpellChecker::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
+QTranslator* CSpellChecker::getPluginTranslator(const QString &sSharePath,
+                                                const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+    if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
         qWarning() << "Could not load plugin translation:" << sLocaleFile;
         return NULL;
     }
@@ -100,10 +101,16 @@ QTranslator* CSpellChecker::getPluginTranslator(const QString &sLocale) {
 QString CSpellChecker::getCaption() const {
     return trUtf8("Spell checker");
 }
-
 QIcon CSpellChecker::getIcon() const {
     return QIcon::fromTheme("tools-check-spelling",
                             QIcon(":/spellchecker.png"));
+}
+
+bool CSpellChecker::includeMenu() const {
+    return true;
+}
+bool CSpellChecker::includeToolbar() const {
+    return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -260,7 +267,7 @@ void CSpellChecker::loadAdditionalDict(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSpellChecker::executePlugin() {
+void CSpellChecker::callPlugin() {
     if (!this->initDictionaries()) {
         return;
     }
@@ -355,6 +362,8 @@ void CSpellChecker::executePlugin() {
                                  trUtf8("Spell check has finished."));
     }
 }
+
+void CSpellChecker::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

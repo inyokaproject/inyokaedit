@@ -104,8 +104,6 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
         m_pUtils->checkWindowsUpdate();
     }
 
-    m_pPlugins->loadPlugins();
-
     // Load file via command line
     if (qApp->arguments().size() > 1) {
         for (int i = 1; i < qApp->arguments().size(); i++) {
@@ -115,6 +113,8 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
             }
         }
     }
+
+    m_pPlugins->loadPlugins();
 }
 
 CInyokaEdit::~CInyokaEdit() {
@@ -149,8 +149,6 @@ void CInyokaEdit::createObjects() {
 //  if (true == m_pSettings->getPreviewAlongside()) {
     m_pEditor->installEventFilter(this);
 //  }
-
-    m_pSettings->init(m_pTemplates, m_pEditor->document());
 
     /*
     m_pUploadModule = new CUpload(this, m_pSettings->getInyokaUrl(),
@@ -1445,10 +1443,6 @@ void CInyokaEdit::clickedLink(QUrl newUrl) {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::updateEditorSettings() {
-    QPalette pal;
-    pal.setColor(QPalette::Base, m_pSettings->getHighlightBG());
-    pal.setColor(QPalette::Text, m_pSettings->getHighlightFG());
-    m_pEditor->setPalette(pal);
     m_pEditor->setFont(m_pSettings->getEditorFont());
 
     m_pParser->updateSettings(m_pSettings->getInyokaUrl(),

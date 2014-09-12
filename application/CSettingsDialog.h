@@ -29,7 +29,6 @@
 
 #include <QDialog>
 
-#include "./CHighlighter.h"
 #include "./CSettings.h"
 #include "./IEditorPlugin.h"
 
@@ -38,7 +37,6 @@ namespace Ui {
 }
 
 class CSettings;
-class CHighlighter;
 
 /**
  * \class CSettingsDialog
@@ -48,8 +46,8 @@ class CSettingsDialog : public QDialog {
     Q_OBJECT
 
   public:
-    CSettingsDialog(CSettings *pSettings, CHighlighter *pHighlighter,
-                    const QString &sSharePath, QWidget *pParent = 0);
+    CSettingsDialog(CSettings *pSettings, const QString &sSharePath,
+                    QWidget *pParent = 0);
     virtual ~CSettingsDialog();
 
   public slots:
@@ -65,20 +63,12 @@ class CSettingsDialog : public QDialog {
   private slots:
     void changedPreviewAlongside(bool bState);
     void changedPreviewInEditor(bool bState);
-    void changedStyle(int nIndex);
-    void clickedStyleCell(int nRow, int nCol);
     void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
                              const QList<QObject *> PluginObjList);
 
   private:
-    void loadHighlighting(const QString &sStyleFile);
-    void readValue(const quint16 nRow,
-                   const QTextCharFormat &charFormat);
-    void saveHighlighting();
-    QString createValues(const quint16 nRow);
     Ui::CSettingsDialog *m_pUi;
     CSettings *m_pSettings;
-    CHighlighter *m_pHighlighter;
     QString m_sSharePath;
 
     bool m_bTmpPreviewInEditor;
@@ -88,10 +78,6 @@ class CSettingsDialog : public QDialog {
     QString m_sProxyUserName;
     QString m_sProxyPassword;
     QString m_sGuiLang;
-    QString m_sStyleFile;
-    QString m_sExt;
-
-    QStringList m_sListStyleFiles;
 
     QList<IEditorPlugin *> m_listPLugins;
     QList<QPushButton *> m_listPluginSettingsButtons;

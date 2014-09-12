@@ -44,13 +44,17 @@ class IEditorPlugin {
                             const QString sSharePath) = 0;
     virtual QString getPluginName() const = 0;
     virtual QString getPluginVersion() const = 0;
-    virtual QTranslator* getPluginTranslator(const QString &sLocale) = 0;
+    virtual QTranslator* getPluginTranslator(const QString &sSharePath,
+                                             const QString &sLocale) = 0;
     virtual QString getCaption() const = 0;
     virtual QIcon getIcon() const = 0;
+    virtual bool includeMenu() const = 0;
+    virtual bool includeToolbar() const = 0;
     virtual bool hasSettings() const = 0;
 
   public slots:
-    virtual void executePlugin() = 0;
+    virtual void callPlugin() = 0;     // Execute manually / call dialog
+    virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
     virtual void showSettings() = 0;
     virtual void showAbout() = 0;
 };

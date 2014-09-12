@@ -19,4 +19,5 @@ CONFIG        += ordered
 SUBDIRS        = plugins/spellchecker \
                  plugins/tabletemplate \
                  plugins/knowledgebox \
+                 plugins/highlighter \
                  application

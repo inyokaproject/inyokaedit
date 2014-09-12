@@ -28,60 +28,91 @@
 #define INYOKAEDIT_CHIGHLIGHTER_H_
 
 #include <QHash>
+#include <QtPlugin>
+#include <QSettings>
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-#include "./CTemplates.h"
+#include "CSyntaxHighlighter.h"
+#include "../../application/templates/CTemplates.h"
+#include "../../application/CTextEditor.h"
+#include "../../application/IEditorPlugin.h"
 
-// Qt classes
+namespace Ui {
+    class CHighlighterDialog;
+}
+
 class QSettings;
-class QTextDocument;
 
 /**
  * \class CHighlighter
  * \brief Syntax highlighting
  */
-class CHighlighter : public QSyntaxHighlighter {
+class CHighlighter : public QObject, IEditorPlugin {
     Q_OBJECT
+    Q_INTERFACES(IEditorPlugin)
+
+#if QT_VERSION >= 0x050000
+    Q_PLUGIN_METADATA(IID "InyokaEdit.highlighter")
+#endif
 
   public:
-    // Constructor
-    CHighlighter(CTemplates *pTemplates, const QString &sStyleFile,
-                 QTextDocument *pParent = 0);
-    // Destrcutor
-    ~CHighlighter();
+    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                    const QDir userDataDir,
+                    const QString sSharePath);
+    QString getPluginName() const;
+    QString getPluginVersion() const;
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
+    QString getCaption() const;
+    QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
+    bool hasSettings() const;
 
-    QString getHighlightBG() const;
-    QString getHighlightFG() const;
-    void saveStyle();
+  public slots:
+    void callPlugin();
+    void executePlugin();
+    void showSettings();
+    void showAbout();
 
-    // Allow CSettingsDialog to access private members
-    friend class CSettingsDialog;
-
-  protected:
-    // Apply highlighting rules
-    void highlightBlock(const QString &sText);
+  private slots:
+    void changedStyle(int nIndex);
+    void clickedStyleCell(int nRow, int nCol);
+    void accept();
 
   private:
+    void copyDefaultStyles();
+    void buildUi(QWidget *pParent);
+    void loadHighlighting(const QString &sStyleFile);
+    void readValue(const quint16 nRow,
+                   const QTextCharFormat &charFormat);
+    void saveHighlighting();
+    QString createValues(const quint16 nRow);
+    void saveStyle();
     void readStyle(const QString &sStyle);
     void getTranslations();
     void defineRules();
     void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
-
     void evalKey(const QString &sKey, QTextCharFormat &charFormat);
 
-    QSettings *m_pStyleSet;
+    Ui::CHighlighterDialog *m_pUi;
+    QDialog *m_pDialog;
+    QSettings *m_pSettings;
+    CSyntaxHighlighter *m_pHighlighter;
+    CTextEditor *m_pEditor;
     CTemplates *m_pTemplates;
+
+    QString m_sTplLang;
+    QString m_sSharePath;
+    QString m_sStyleFile;
+    QString m_sExt;
+
+    QSettings *m_pStyleSet;
     QStringList m_sListMacroKeywords;
     QStringList m_sListParserKeywords;
 
-    struct HighlightingRule {
-        QRegExp pattern;
-        QTextCharFormat format;
-    };
-    // Collects highlighting rules
     QVector<HighlightingRule> m_highlightingRules;
-
     QTextCharFormat m_headingsFormat;
     QTextCharFormat m_interwikiLinksFormat;
     QTextCharFormat m_linksFormat;
@@ -94,13 +125,10 @@ class CHighlighter : public QSyntaxHighlighter {
     QTextCharFormat m_imgMapFormat;
     QTextCharFormat m_listFormat;
     QTextCharFormat m_miscFormat;
-
     bool m_bSystemForeground;
     bool m_bSystemBackground;
     QColor m_colorForeground;
     QColor m_colorBackground;
-
-    const QString m_sSEPARATOR;
 };
 
 #endif  // INYOKAEDIT_CHIGHLIGHTER_H_

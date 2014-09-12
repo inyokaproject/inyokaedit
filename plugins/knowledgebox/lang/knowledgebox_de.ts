@@ -4,32 +4,32 @@
 <context>
     <name>CKnowledgeBox</name>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="104"/>
+        <location filename="../CKnowledgeBox.cpp" line="105"/>
         <source>Knowledge box selector</source>
         <translation>Wissensblock Auswahl</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="271"/>
+        <location filename="../CKnowledgeBox.cpp" line="282"/>
         <source>[:Article:New entry]</source>
         <translation>[:Artikel:Neuer Eintrag]</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="367"/>
+        <location filename="../CKnowledgeBox.cpp" line="380"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="370"/>
+        <location filename="../CKnowledgeBox.cpp" line="383"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="373"/>
+        <location filename="../CKnowledgeBox.cpp" line="386"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="377"/>
+        <location filename="../CKnowledgeBox.cpp" line="390"/>
         <source>Plugin for choosing knowledge box entries.</source>
         <translation>Plugin zur Auswahl von Wissensblockeinträgen.</translation>
     </message>

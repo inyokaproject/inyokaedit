@@ -87,10 +87,11 @@ QString CKnowledgeBox::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sLocale) {
+QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sSharePath,
+                                                const QString &sLocale) {
     QTranslator* pPluginTranslator = new QTranslator(this);
     QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-    if (!pPluginTranslator->load(sLocaleFile, m_sSharePath + "/lang")) {
+    if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
         qWarning() << "Could not load plugin translation:" << sLocaleFile;
         return NULL;
     }
@@ -103,10 +104,16 @@ QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sLocale) {
 QString CKnowledgeBox::getCaption() const {
     return trUtf8("Knowledge box selector");
 }
-
 QIcon CKnowledgeBox::getIcon() const {
     return QIcon();
     // return QIcon(":/knowledgebox.png");
+}
+
+bool CKnowledgeBox::includeMenu() const {
+    return true;
+}
+bool CKnowledgeBox::includeToolbar() const {
+    return false;
 }
 
 // ----------------------------------------------------------------------------
@@ -220,12 +227,14 @@ void CKnowledgeBox::loadTemplateDefaults() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::executePlugin() {
+void CKnowledgeBox::callPlugin() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_bCalledSettings = false;
     m_pDialog->show();
     m_pDialog->exec();
 }
+
+void CKnowledgeBox::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

@@ -67,12 +67,16 @@ class CSpellChecker : public QObject, IEditorPlugin {
                     const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sLocale);
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
     QString getCaption() const;
     QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
     bool hasSettings() const;
 
   public slots:
+    void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();

@@ -24,9 +24,7 @@
  * Settings gui.
  */
 
-#include <QColorDialog>
 #include <QDebug>
-#include <QInputDialog>
 #include <QKeyEvent>
 #include <QPushButton>
 
@@ -34,11 +32,10 @@
 #include "ui_CSettingsDialog.h"
 
 CSettingsDialog::CSettingsDialog(CSettings *pSettings,
-                                 CHighlighter *pHighlighter,
-                                 const QString &sSharePath, QWidget *pParent)
+                                 const QString &sSharePath,
+                                 QWidget *pParent)
     : QDialog(pParent),
       m_pSettings(pSettings),
-      m_pHighlighter(pHighlighter),
       m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
@@ -49,24 +46,12 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     this->setModal(true);
     m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
 
-#if QT_VERSION >= 0x050000
-    m_pUi->styleTable->horizontalHeader()->setSectionResizeMode(
-                QHeaderView::Stretch);
-#else
-    m_pUi->styleTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#endif
-
 #if defined _WIN32
-    m_sExt = ".ini";
 #else
-    m_sExt = ".conf";
     m_pUi->WindowsUpdateCheck->setEnabled(false);
 #endif
 
-    ///////////////////
-    // Load Settings //
-    ///////////////////
-
+    // Load Settings
     // General
     m_pUi->codeCompletionCheck->setChecked(m_pSettings->m_bCodeCompletion);
     m_pUi->previewInEditorCheck->setChecked(m_pSettings->m_bTmpPreviewInEditor);
@@ -112,23 +97,6 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->fontComboBox->setCurrentFont(QFont(m_pSettings->m_sFontFamily));
     m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
 
-    // Style
-    QFileInfo fiStylePath(m_pSettings->m_sStyleFile);
-    fiListFiles = fiStylePath.absoluteDir().entryInfoList(
-                QDir::NoDotAndDotDot | QDir::Files);
-    foreach (QFileInfo fi, fiListFiles) {
-        if (fi.fileName().endsWith("-style" + m_sExt)) {
-            m_sListStyleFiles << fi.fileName().remove(m_sExt);
-        }
-    }
-    m_sListStyleFiles.push_front(trUtf8("Create new style..."));
-    m_pUi->styleFilesBox->addItems(m_sListStyleFiles);
-    m_pUi->styleFilesBox->insertSeparator(1);
-    QFileInfo fiStyle(m_pSettings->m_sStyleFile);
-    m_pUi->styleFilesBox->setCurrentIndex(
-                m_pUi->styleFilesBox->findText(fiStyle.baseName()));
-    this->loadHighlighting(fiStyle.baseName());
-
     // Recent files
     m_pUi->numberRecentFilesEdit->setValue((quint16)m_pSettings->m_nMaxLastOpenedFiles);
     m_pUi->numberRecentFilesEdit->setMaximum((quint16)m_pSettings->m_cMAXFILES);
@@ -149,24 +117,10 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     connect(m_pUi->previewInEditorCheck, SIGNAL(clicked(bool)),
             this, SLOT(changedPreviewInEditor(bool)));
 
-    connect(m_pUi->styleFilesBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(changedStyle(int)));
-
-    QStringList sListHeader;
-    sListHeader << trUtf8("Color") << trUtf8("Bold")
-                << trUtf8("Italic") << trUtf8("Background");
-    m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
-    sListHeader.clear();
-    sListHeader << trUtf8("Background") << trUtf8("Text color")
-                << trUtf8("Text formating") << trUtf8("Heading")
-                << trUtf8("Hyperlink") << trUtf8("InterWiki")
-                << trUtf8("Macro") << trUtf8("Parser") << trUtf8("List")
-                << trUtf8("Table line") << trUtf8("Table cell format")
-                << trUtf8("ImgMap") << trUtf8("Misc") << trUtf8("Comment");
-    m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
-
-    connect(m_pUi->styleTable, SIGNAL(cellDoubleClicked(int, int)),
-            this, SLOT(clickedStyleCell(int, int)));
+    connect(m_pUi->buttonBox, SIGNAL(accepted()),
+            this, SLOT(accept()));
+    connect(m_pUi->buttonBox, SIGNAL(rejected()),
+            this, SLOT(reject()));
 }
 
 CSettingsDialog::~CSettingsDialog() {
@@ -204,10 +158,6 @@ void CSettingsDialog::accept() {
     m_pSettings->m_nFontsize = m_pUi->fontSizeEdit->value();
     m_pSettings->m_EditorFont.setFamily(m_pSettings->m_sFontFamily);
     m_pSettings->m_EditorFont.setPointSizeF(m_pSettings->m_nFontsize);
-
-    // Style
-    this->saveHighlighting();
-    m_pHighlighter->rehighlight();
 
     // Recent files
     m_pSettings->m_nMaxLastOpenedFiles = m_pUi->numberRecentFilesEdit->value();
@@ -274,203 +224,6 @@ void CSettingsDialog::changedPreviewInEditor(bool bState) {
     if (!bState) {
         m_pUi->previewAlongsideCheck->setChecked(false);
     }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::loadHighlighting(const QString &sStyleFile) {
-    m_pHighlighter->readStyle(sStyleFile);
-
-    // Background
-    if (m_pHighlighter->m_bSystemBackground) {
-        m_pUi->styleTable->item(0, 0)->setText("System");
-    } else {
-        m_pUi->styleTable->item(0, 0)->setText(
-                    m_pHighlighter->m_colorBackground.name());
-    }
-    // Foreground
-    if (m_pHighlighter->m_bSystemForeground) {
-        m_pUi->styleTable->item(1, 0)->setText("System");
-    } else {
-        m_pUi->styleTable->item(1, 0)->setText(
-                    m_pHighlighter->m_colorForeground.name());
-    }
-
-    readValue(2, m_pHighlighter->m_textformatFormat);      // Text format
-    readValue(3, m_pHighlighter->m_headingsFormat);        // Heading
-    readValue(4, m_pHighlighter->m_linksFormat);           // Hyperlink
-    readValue(5, m_pHighlighter->m_interwikiLinksFormat);  // InterWiki
-    readValue(6, m_pHighlighter->m_macrosFormat);          // Macro
-    readValue(7, m_pHighlighter->m_parserFormat);          // Parser
-    readValue(8, m_pHighlighter->m_listFormat);            // List
-    readValue(9, m_pHighlighter->m_newTableLineFormat);    // Table line
-    readValue(10, m_pHighlighter->m_tablecellsFormat);     // Table cell
-    readValue(11, m_pHighlighter->m_imgMapFormat);         // Image map
-    readValue(12, m_pHighlighter->m_miscFormat);           // Misc
-    readValue(13, m_pHighlighter->m_commentFormat);        // Comment
-}
-
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::readValue(const quint16 nRow,
-                                const QTextCharFormat &charFormat) {
-    // Foreground
-    m_pUi->styleTable->item(nRow, 0)->setText(
-                charFormat.foreground().color().name());
-    // Bold
-    if (charFormat.font().bold()) {
-        m_pUi->styleTable->item(nRow, 1)->setCheckState(Qt::Checked);
-    } else {
-        m_pUi->styleTable->item(nRow, 1)->setCheckState(Qt::Unchecked);
-    }
-    // Italic
-    if (charFormat.font().italic()) {
-        m_pUi->styleTable->item(nRow, 2)->setCheckState(Qt::Checked);
-    } else {
-        m_pUi->styleTable->item(nRow, 2)->setCheckState(Qt::Unchecked);
-    }
-    // Background
-    if (charFormat.background().color() != Qt::transparent) {
-        m_pUi->styleTable->item(nRow, 3)->setText(
-                    charFormat.background().color().name());
-    } else {
-        m_pUi->styleTable->item(nRow, 3)->setText("");
-    }
-}
-
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::clickedStyleCell(int nRow, int nCol) {
-    if (0 == nCol || 3 == nCol) {
-        QColorDialog colorDialog;
-        QColor initialColor(m_pUi->styleTable->item(nRow, nCol)->text());
-        QColor newColor = colorDialog.getColor(initialColor);
-        if (newColor.isValid()) {
-            m_pUi->styleTable->item(nRow, nCol)->setText(newColor.name());
-        } else if (newColor.name().isEmpty()) {
-            m_pUi->styleTable->item(nRow, nCol)->setText("");
-        }
-    }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::saveHighlighting() {
-    m_pSettings->m_sStyleFile = m_pUi->styleFilesBox->currentText();
-    m_pHighlighter->readStyle(m_pUi->styleFilesBox->currentText());
-
-    // Background
-    if ("system" == m_pUi->styleTable->item(0, 0)->text().toLower()) {
-        m_pHighlighter->m_bSystemBackground = true;
-    } else {
-        m_pHighlighter->m_bSystemBackground = false;
-        m_pHighlighter->m_colorBackground.setNamedColor(
-                    m_pUi->styleTable->item(0, 0)->text());
-    }
-    // Foreground
-    if ("system" == m_pUi->styleTable->item(1, 0)->text().toLower()) {
-        m_pHighlighter->m_bSystemForeground = true;
-    } else {
-        m_pHighlighter->m_bSystemForeground = false;
-        m_pHighlighter->m_colorForeground.setNamedColor(
-                    m_pUi->styleTable->item(1, 0)->text());
-    }
-
-    m_pHighlighter->evalKey(this->createValues(2),
-                            m_pHighlighter->m_textformatFormat);
-    m_pHighlighter->evalKey(this->createValues(3),
-                            m_pHighlighter->m_headingsFormat);
-    m_pHighlighter->evalKey(this->createValues(4),
-                            m_pHighlighter->m_linksFormat);
-    m_pHighlighter->evalKey(this->createValues(5),
-                            m_pHighlighter->m_interwikiLinksFormat);
-    m_pHighlighter->evalKey(this->createValues(6),
-                            m_pHighlighter->m_macrosFormat);
-    m_pHighlighter->evalKey(this->createValues(7),
-                            m_pHighlighter->m_parserFormat);
-    m_pHighlighter->evalKey(this->createValues(8),
-                            m_pHighlighter->m_listFormat);
-    m_pHighlighter->evalKey(this->createValues(9),
-                            m_pHighlighter->m_newTableLineFormat);
-    m_pHighlighter->evalKey(this->createValues(10),
-                            m_pHighlighter->m_tablecellsFormat);
-    m_pHighlighter->evalKey(this->createValues(11),
-                            m_pHighlighter->m_imgMapFormat);
-    m_pHighlighter->evalKey(this->createValues(12),
-                            m_pHighlighter->m_miscFormat);
-    m_pHighlighter->evalKey(this->createValues(13),
-                            m_pHighlighter->m_commentFormat);
-
-    m_pHighlighter->saveStyle();
-    m_pHighlighter->readStyle(m_pUi->styleFilesBox->currentText());
-}
-
-// ----------------------------------------------------------------------------
-
-QString CSettingsDialog::createValues(const quint16 nRow) {
-    QString sReturn("");
-    QString sTmp("");
-    sTmp = m_pUi->styleTable->item(nRow, 0)->text();
-    sTmp.remove(0, 1).push_front("0x");
-    sTmp.append("|");
-    sReturn += sTmp;
-    if (m_pUi->styleTable->item(nRow, 1)->checkState() == Qt::Checked) {
-        sReturn += "true|";
-    } else { sReturn += "false|"; }
-    if (m_pUi->styleTable->item(nRow, 2)->checkState() == Qt::Checked) {
-        sReturn += "true|";
-    } else { sReturn += "false|"; }
-    sTmp = m_pUi->styleTable->item(nRow, 3)->text();
-    sTmp.remove(0, 1).push_front("0x");
-    sReturn += sTmp;
-    return sReturn;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::changedStyle(int nIndex) {
-    QString sFileName("");
-
-    if (0 == nIndex) {  // Create new style
-        bool bOk;
-        QFileInfo fiStyle(m_pSettings->getStyleFile());
-
-        sFileName = QInputDialog::getText(0, trUtf8("New style"),
-                                              trUtf8("Please insert name of "
-                                                     "new style file:"),
-                                              QLineEdit::Normal,
-                                              "",
-                                              &bOk);
-        // Click on "cancel" or string is empty
-        if (true != bOk || sFileName.isEmpty()) {
-            // Reset selection
-            m_pUi->styleFilesBox->setCurrentIndex(
-                        m_pUi->styleFilesBox->findText(fiStyle.baseName()));
-            return;
-        } else {
-            QFile fileStyle;
-            sFileName = sFileName + "-style";
-            bOk = fileStyle.copy(fiStyle.absoluteFilePath(),
-                                 fiStyle.absolutePath() + "/"
-                                 + sFileName + m_sExt);
-            if (true != bOk) {
-                QMessageBox::warning(0, "Error", "Could not create new style.");
-                qWarning() << "Could not create new style file:"
-                           << fiStyle.absolutePath() + "/" + sFileName + m_sExt;
-                return;
-            }
-            m_pUi->styleFilesBox->addItem(sFileName);
-            m_pUi->styleFilesBox->setCurrentIndex(
-                        m_pUi->styleFilesBox->findText(sFileName));
-        }
-    } else {  // Load existing style file
-        sFileName = m_pUi->styleFilesBox->currentText();
-    }
-
-    loadHighlighting(sFileName);
 }
 
 // ----------------------------------------------------------------------------

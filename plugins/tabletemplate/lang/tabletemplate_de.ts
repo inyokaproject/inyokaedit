@@ -4,37 +4,37 @@
 <context>
     <name>CTableTemplate</name>
     <message>
-        <location filename="../CTableTemplate.cpp" line="132"/>
+        <location filename="../CTableTemplate.cpp" line="133"/>
         <source>Table generator</source>
         <translation>Tabellengenerator</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="189"/>
+        <location filename="../CTableTemplate.cpp" line="198"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="199"/>
+        <location filename="../CTableTemplate.cpp" line="208"/>
         <source>Head</source>
         <translation>Kopf</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="249"/>
+        <location filename="../CTableTemplate.cpp" line="258"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="252"/>
+        <location filename="../CTableTemplate.cpp" line="261"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="256"/>
+        <location filename="../CTableTemplate.cpp" line="265"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="260"/>
+        <location filename="../CTableTemplate.cpp" line="269"/>
         <source>Plugin for generating styled Inyoka tables.</source>
         <translation>Erweiterung zur Erstellung von Inyoka-Tabellen.</translation>
     </message>

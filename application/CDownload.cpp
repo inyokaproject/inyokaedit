@@ -32,8 +32,6 @@
 #include "./CProgressDialog.h"
 #include "./CUtils.h"
 
-// TODO: Up-/download as plugin?
-
 CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
                      const QString &sImgDir, const QString &sSharePath)
     : m_pParent(pParent),

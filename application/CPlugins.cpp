@@ -95,33 +95,38 @@ void CPlugins::loadPlugins() {
     m_PluginToolbarEntries.clear();
 
     for (int i = 0; i < m_listPlugins.size(); i++) {
+        qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+        // Install translator, even if plugin is disabled
+        // Translated caption shall be visible in settings dialog
+        qApp->installTranslator(
+                    m_listPlugins[i]->getPluginTranslator(m_sSharePath,
+                                                          m_sGuiLanguage));
         if (m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
+            qDebug() << "Disabled plugin:" << m_listPlugins[i]->getPluginName();
             continue;
         }
 
-        qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
         m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
                                      m_userDataDir, m_sSharePath);
 
-        qApp->installTranslator(m_listPlugins[i]->getPluginTranslator(m_sGuiLanguage));
-
-        QIcon icon(m_listPlugins[i]->getIcon());
         QString sMenu(m_listPlugins[i]->getCaption());
-
-        if (!sMenu.isEmpty()) {  // Add to menue if entry available
+        if (!sMenu.isEmpty() && m_listPlugins[i]->includeMenu()) {
             m_PluginMenuEntries << new QAction(m_listPlugins[i]->getIcon(),
                                                m_listPlugins[i]->getCaption(),
                                                m_pParent);
             connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
-                    m_listPluginObjects[i], SLOT(executePlugin()));
+                    m_listPluginObjects[i], SLOT(callPlugin()));
         }
-        if (!icon.isNull()) {  // Add to toolbar if icon available
+        if (m_listPlugins[i]->includeToolbar()) {
             m_PluginToolbarEntries << new QAction(m_listPlugins[i]->getIcon(),
                                                   m_listPlugins[i]->getCaption(),
                                                   m_pParent);
             connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
-                    m_listPluginObjects[i], SLOT(executePlugin()));
+                    m_listPluginObjects[i], SLOT(callPlugin()));
         }
+
+        m_listPlugins[i]->executePlugin();
+
         if (i == m_listPlugins.size() - 1) {
             qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
         }
