@@ -157,7 +157,7 @@ void CUtils::reportBug() {
     if (QFile::exists("/usr/bin/ubuntu-bug")
             && QFile::exists("/etc/apport/crashdb.conf.d/inyokaedit-crashdb.conf")
             && QFile::exists(qApp->applicationDirPath()
-                             + "/../../share/apport/package-hooks/source_inyokaedit.py")) {
+                             + "/../share/apport/package-hooks/source_inyokaedit.py")) {
         // Start apport
         QProcess procApport;
         procApport.start("ubuntu-bug",

@@ -96,6 +96,14 @@ QString CParser::genOutput(const QString &sActFile,
 
     m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);
 
+    this->replaceHeadlines(m_pRawText);        // And generate list for TOC
+    this->replaceTableOfContents(m_pRawText);  // Use before link parser!
+    this->replaceLists(m_pRawText);
+    this->replaceTables(m_pRawText);
+    this->replaceImages(m_pRawText);
+
+    m_pLinkParser->startParsing(m_pRawText);
+
     // Replace flags
     m_pMapParser->startParsing(m_pRawText,
                                m_pTemplates->getListFlags(),
@@ -104,14 +112,6 @@ QString CParser::genOutput(const QString &sActFile,
     m_pMapParser->startParsing(m_pRawText,
                                m_pTemplates->getListSmilies(),
                                m_pTemplates->getListSmiliesImg());
-
-    this->replaceHeadlines(m_pRawText);        // And generate list for TOC
-    this->replaceTableOfContents(m_pRawText);  // Use before link parser!
-    this->replaceLists(m_pRawText);
-    this->replaceTables(m_pRawText);
-    this->replaceImages(m_pRawText);
-
-    m_pLinkParser->startParsing(m_pRawText);
 
     this->replaceQuotes(m_pRawText);
     this->replaceBreaks(m_pRawText);

@@ -71,8 +71,9 @@ int main(int argc, char *argv[]) {
 
     if (app.arguments().contains("-v")
             || app.arguments().contains("--version")) {
-        qDebug() << app.arguments()[0] << "\t v"
+        qDebug() << app.arguments()[0] << "\t"
                  << app.applicationVersion() << "\n";
+        exit(0);
     }
 
     QTranslator qtTranslator;

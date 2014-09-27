@@ -216,6 +216,8 @@ cd Icons
 # Linux
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu.png -O ubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu64.png -O ubuntu64.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntugnome.png -O ubuntugnome.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntumate.png -O ubuntumate.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/kubuntu.png -O kubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/lubuntu.png -O lubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/xubuntu.png -O xubuntu.png
@@ -237,6 +239,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/arch.png -O arch.pn
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/slackware.png -O slackware.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gentoo.png -O gentoo.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/suse.png -O suse.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Icons/python.png -O python.png
 
 
 # Programme
