@@ -1,4 +1,4 @@
-inyokaedit (0.13.1-0ubuntu1) trusty; urgency=low
+inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
 
   [ djcj ]
   * Added hicolor icons.
@@ -7,8 +7,14 @@ inyokaedit (0.13.1-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Removed separate libraries (reverted back to build-in components).
+  * Added StatusIcon and IM templates.
+  * Added additional list styles; added Vivid Vervet.
+  * Use of system theme icons for standard actions.
+  * Fixed find next/previous.
+  * Moved syntax highlighting into plugin.
+  * Minor plugin interface changes.
 
- -- Thorsten Roth <elthoro@gmx.de>  Tue, 02 Sep 2014 14:43:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Nov 2014 17:40:00 +0200
 
 inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
 
