@@ -61,6 +61,9 @@ Tahr
 utopic
 Utopic
 Unicorn
+vivid
+Vivid
+Vervet
 Ubuntu
 Kubuntu
 Xubuntu

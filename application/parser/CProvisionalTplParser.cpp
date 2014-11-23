@@ -1824,7 +1824,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "utopic") {
+                if (sListArgs[i].toLower() == "vivid") {
+                    sOutput += "[:Vivid_Vervet:Ubuntu 15.04] "
+                               "Vivid Vervet";
+                } else if (sListArgs[i].toLower() == "utopic") {
                     sOutput += "[:Utopic_Unicorn:Ubuntu 14.10] "
                                "Utopic Unicorn";
                 } else if (sListArgs[i].toLower() == "trusty") {

@@ -1030,6 +1030,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 void CParser::replaceLists(QTextDocument *p_rawDoc) {
     QString sDoc("");
     QString sLine("");
+    QString sClass("arabic");
     int nPreviousIndex = -1;
     int nCurrentIndex = -1;
     QList<bool> bArrayListType;  // Unsorted = false, sorted = true
@@ -1039,7 +1040,11 @@ void CParser::replaceLists(QTextDocument *p_rawDoc) {
          block.isValid() && !(p_rawDoc->lastBlock() < block);
          block = block.next()) {
         if (block.text().trimmed().startsWith("*")
-                || block.text().trimmed().startsWith("1.")) {
+                || block.text().trimmed().startsWith("1.")
+                || block.text().trimmed().startsWith("a.")
+                || block.text().trimmed().startsWith("A.")
+                || block.text().trimmed().startsWith("i.")
+                || block.text().trimmed().startsWith("I.")) {
             sLine = block.text();
 
             if (sLine.indexOf(" * ") >= 0) {  // Unsorted list
@@ -1073,15 +1078,44 @@ void CParser::replaceLists(QTextDocument *p_rawDoc) {
                 }
                 sDoc += "<li>" + sLine + "</li>\n";
 
-            } else if (sLine.indexOf(" 1. ") >= 0) {  // Sorted list
+            } else if (sLine.indexOf(" 1. ") >= 0
+                       || sLine.indexOf(" a. ") >= 0
+                       || sLine.indexOf(" A. ") >= 0
+                       || sLine.indexOf(" i. ") >= 0
+                       || sLine.indexOf(" I. ") >= 0) {  // Sorted list
                 nPreviousIndex = nCurrentIndex;
+
                 nCurrentIndex = sLine.indexOf(" 1. ");
-                sLine.remove(0, sLine.indexOf(" 1. ") + 4);
+                if (nCurrentIndex >= 0) {
+                    sClass = "arabic";
+                } else {
+                    nCurrentIndex = sLine.indexOf(" a. ");
+                    if (nCurrentIndex >= 0) {
+                        sClass = "alphalower";
+                    } else {
+                        nCurrentIndex = sLine.indexOf(" A. ");
+                        if (nCurrentIndex >= 0) {
+                            sClass = "alphaupper";
+                        } else {
+                            nCurrentIndex = sLine.indexOf(" i. ");
+                            if (nCurrentIndex >= 0) {
+                                sClass = "romanlower";
+                            } else {
+                                nCurrentIndex = sLine.indexOf(" I. ");
+                                if (nCurrentIndex >= 0) {
+                                    sClass = "romanupper";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                sLine.remove(0, nCurrentIndex + 4);
                 // qDebug() << "LIST:" << sLine << nCurrentIndex << true;
 
                 if (nCurrentIndex != nPreviousIndex) {
                     if (nCurrentIndex > nPreviousIndex) {  // New tag
-                        sDoc += "<ol class=\"arabic\">\n";
+                        sDoc += "<ol class=\"" + sClass + "\">\n";
                         bArrayListType << true;
                     } else {  // Close previous tag and maybe create new
                         if (!bArrayListType.isEmpty()) {
@@ -1095,7 +1129,7 @@ void CParser::replaceLists(QTextDocument *p_rawDoc) {
 
                         if (!bArrayListType.isEmpty()) {
                             if (false == bArrayListType.last()) {
-                                sDoc += "</ul>\n<ol class=\"arabic\">\n";
+                                sDoc += "</ul>\n<ol class=\"" + sClass + "\">\n";
                                 bArrayListType.removeLast();
                                 bArrayListType << true;
                             }
