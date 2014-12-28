@@ -11,7 +11,7 @@
     <element type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
     <element type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
     <element type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
-    <element type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ihaya" icon="internet-news-reader.png" />
+    <element type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ikhaya" icon="ikhaya.png" />
     <element type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
     <element type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
     <element type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
@@ -62,6 +62,7 @@
     <element type="gnomeapps" url="https://wiki.gnome.org/Apps/" name="GNOME apps" icon="gnomeapps.png" />
     <element type="gnomeprojects" url="https://wiki.gnome.org/Projects/" name="GNOME projects" icon="gnomeprojects.png" />
     <element type="opensuse" url="http://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
+    <element type="freedesktop-software" url="http://freedesktop.org/wiki/Software/" name="Freedesktop Software" icon="freedesktop.png" />
     <element type="prolinux" url="http://www.pro-linux.de/" name="Pro-Linux" icon="prolinux.png" />
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
   </group>

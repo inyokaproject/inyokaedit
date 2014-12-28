@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2014 The InyokaEdit developers
+ * Copyright (C) 2011-2015 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *

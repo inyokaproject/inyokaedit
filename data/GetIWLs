@@ -121,6 +121,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/heise.png -O
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/holarse.png -O holarse.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/humble.png -O humble.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/iawm.png -O iawm.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ikhaya.png -O ikhaya.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/indiedb.png -O indiedb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/identica.png -O identica.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/isbn.png -O isbn.png

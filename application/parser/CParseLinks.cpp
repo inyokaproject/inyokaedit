@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2014 The InyokaEdit developers
+ * Copyright (C) 2011-2015 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -265,6 +265,8 @@ void CParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
                 if (sListLink.size() > 1) {
                     if (sListLink[0] == "user") {
                         sClass = "crosslink user";
+                    } else if (sListLink[0] == "ikhaya") {
+                        sClass = "crosslink ikhaya";
                     } else {
                         sClass = "interwiki interwiki-" + sListLink[0];
                     }
