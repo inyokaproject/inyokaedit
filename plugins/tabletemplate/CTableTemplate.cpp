@@ -63,6 +63,7 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                               & ~Qt::WindowContextHelpButtonHint);
     m_pDialog->setModal(true);
+    m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
 
     // Load table styles
     m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
@@ -95,6 +96,11 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
         m_pUi->tableStyleBox->addItems(m_sListTableStyles);
     }
 
+    m_bBaseToNew = false;
+    connect(m_pUi->BaseToNewButton, SIGNAL(pressed()),
+            this, SLOT(convertToNewTemplate()));
+    connect(m_pUi->NewToBaseButton, SIGNAL(pressed()),
+            this, SLOT(convertToBaseTemplate()));
     connect(m_pUi->previewButton, SIGNAL(pressed()),
             this, SLOT(preview()));
     connect(m_pUi->buttonBox, SIGNAL(accepted()),
@@ -130,7 +136,7 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 
 QString CTableTemplate::getCaption() const {
-    return trUtf8("Table generator");
+    return trUtf8("Table generator / converter");
 }
 QIcon CTableTemplate::getIcon() const {
     return QIcon(":/tabletemplate.png");
@@ -155,6 +161,10 @@ void CTableTemplate::callPlugin() {
     m_pUi->colsNum->setValue(2);
     m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
     m_pUi->previewBox->setHtml("");
+    m_pUi->baseTextEdit->clear();
+    m_pUi->newTextEdit->clear();
+    m_pUi->baseTextEdit->insertPlainText(
+                m_pEditor->textCursor().selectedText());
     m_pDialog->show();
     m_pDialog->exec();
 }
@@ -233,8 +243,88 @@ QString CTableTemplate::generateTable() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CTableTemplate::convertToBaseTemplate() {
+    m_bBaseToNew = false;
+    QString sTableCode("");
+    QString sInput(m_pUi->newTextEdit->toPlainText());
+    QStringList sListInput;
+    QStringList sListRow;
+
+    sInput.remove("{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
+                  + m_pTemplates->getTransTable());
+    sInput = sInput.trimmed();
+    if (sInput.endsWith("}}}")) {
+        sInput.remove(sInput.length() - 3, 3);
+    }
+
+    sListInput << sInput.split("+++");
+    for (int i = 0; i < sListInput.size(); i++) {
+        sListInput[i] = sListInput[i].trimmed() + " ";
+
+        sListRow.clear();
+        sListRow << sListInput[i].split("\n");
+        for (int j = 0; j < sListRow.size(); j++) {
+                sTableCode += "|| " + sListRow[j].trimmed() + " ";
+        }
+
+        if (i < sListInput.size()) {
+            sTableCode += "||\n";
+        }
+    }
+
+    m_pUi->baseTextEdit->setPlainText(sTableCode);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CTableTemplate::convertToNewTemplate() {
+    m_bBaseToNew = true;
+    QString sTableCode("");
+    QStringList sListInput;
+    QStringList sListRow;
+
+    sTableCode = "{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
+                 + m_pTemplates->getTransTable();
+
+    sListInput << m_pUi->baseTextEdit->toPlainText().split(
+                      QRegExp("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
+
+    for (int i = 0; i < sListInput.size(); i++) {
+        sListInput[i] = sListInput[i].trimmed();
+        if (sListInput[i].startsWith("||")) {
+            sListInput[i].remove(0, 2);
+        }
+        if (sListInput[i].endsWith("||")) {
+            sListInput[i].remove(sListInput[i].length() - 2, 2);
+        }
+
+        sListRow.clear();
+        sListRow << sListInput[i].split("||");
+        for (int j = 0; j < sListRow.size(); j++) {
+                sTableCode += "\n" + sListRow[j].trimmed();
+        }
+
+        if (i < sListInput.size() - 1) {
+            sTableCode += "\n+++";
+        }
+    }
+    sTableCode += "\n}}}\n";
+
+    m_pUi->newTextEdit->setPlainText(sTableCode);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CTableTemplate::accept() {
-    m_pEditor->insertPlainText(this->generateTable());
+    if (0 == m_pUi->tabWidget->currentIndex()) {
+        m_pEditor->insertPlainText(this->generateTable());
+    } else if (1 == m_pUi->tabWidget->currentIndex() && m_bBaseToNew) {
+        m_pEditor->insertPlainText(m_pUi->newTextEdit->toPlainText());
+    } else if (1 == m_pUi->tabWidget->currentIndex() && !m_bBaseToNew) {
+        m_pEditor->insertPlainText(m_pUi->baseTextEdit->toPlainText());
+    }
     m_pDialog->done(QDialog::Accepted);
 }
 

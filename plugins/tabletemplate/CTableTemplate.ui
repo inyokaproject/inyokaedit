@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>350</height>
+    <width>450</width>
+    <height>415</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -40,104 +40,171 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <property name="labelAlignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="tableStyleBox">
-       <property name="currentIndex">
-        <number>-1</number>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Table style:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="showHeadBox">
-       <property name="text">
-        <string>Insert head</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="showTitleBox">
-       <property name="text">
-        <string>Insert title</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QCheckBox" name="HighlightSecondBox">
-       <property name="text">
-        <string>Highlight every second row</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="colsNum">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="colsNumLabel">
-       <property name="text">
-        <string>Number of columns</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="rowsNumLabel">
-       <property name="text">
-        <string>Number of rows</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QSpinBox" name="rowsNum">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QWebView" name="previewBox">
-     <property name="contextMenuPolicy">
-      <enum>Qt::NoContextMenu</enum>
-     </property>
-     <property name="acceptDrops">
-      <bool>false</bool>
-     </property>
-     <property name="locale">
-      <locale language="English" country="UnitedKingdom"/>
-     </property>
-     <property name="url">
-      <url>
-       <string>about:blank</string>
-      </url>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="previewButton">
-     <property name="text">
-      <string>Show preview</string>
-     </property>
+     <widget class="QWidget" name="generatorTab">
+      <attribute name="title">
+       <string>Generator</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::ExpandingFieldsGrow</enum>
+         </property>
+         <property name="labelAlignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="tableStyleBox">
+           <property name="currentIndex">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Table style:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="showHeadBox">
+           <property name="text">
+            <string>Insert head</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="showTitleBox">
+           <property name="text">
+            <string>Insert title</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="HighlightSecondBox">
+           <property name="text">
+            <string>Highlight every second row</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QSpinBox" name="colsNum">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="colsNumLabel">
+           <property name="text">
+            <string>Number of columns</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="rowsNumLabel">
+           <property name="text">
+            <string>Number of rows</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QSpinBox" name="rowsNum">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QWebView" name="previewBox" native="true">
+         <property name="contextMenuPolicy">
+          <enum>Qt::NoContextMenu</enum>
+         </property>
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="locale">
+          <locale language="English" country="UnitedKingdom"/>
+         </property>
+         <property name="url" stdset="0">
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="previewButton">
+         <property name="text">
+          <string>Show preview</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="converterTab">
+      <attribute name="title">
+       <string>Converter</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="baseformatLabel">
+           <property name="text">
+            <string>Inyoka base template:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QPlainTextEdit" name="baseTextEdit"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="BaseToNewButton">
+           <property name="text">
+            <string>Base to new</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../application/res/inyokaedit_resources.qrc">
+             <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="NewToBaseButton">
+           <property name="text">
+            <string>New to base</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../application/res/inyokaedit_resources.qrc">
+             <normaloff>:/images/go-up.png</normaloff>:/images/go-up.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="QLabel" name="NewformatLabel">
+           <property name="text">
+            <string>New table template:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QPlainTextEdit" name="newTextEdit"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
@@ -158,6 +225,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../application/res/inyokaedit_resources.qrc"/>
   <include location="res/tabletemplate_resources.qrc"/>
  </resources>
  <connections>

@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.0.2
+VERSION       = 1.1.0
 QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2015 The InyokaEdit developers"
 

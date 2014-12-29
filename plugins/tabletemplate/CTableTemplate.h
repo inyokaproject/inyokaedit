@@ -81,13 +81,19 @@ class CTableTemplate : public QObject, IEditorPlugin {
     /** \brief Show preview */
     void preview();
 
+    /** \brief Convert base template to new table template */
+    void convertToBaseTemplate();
+
+    /** \brief Convert new table template to base template */
+    void convertToNewTemplate();
+
     /** \brief Dialog finished */
     void accept();
 
   private:
     /**
     * \brief Generate specific table
-    * \return String including th generated table code
+    * \return String including the generated table code
     */
     QString generateTable();
 
@@ -106,6 +112,8 @@ class CTableTemplate : public QObject, IEditorPlugin {
     QString m_sRowClassTitle;
     QString m_sRowClassHead;
     QString m_sRowClassHighlight;
+
+    bool m_bBaseToNew;
 };
 
 #endif  // INYOKAEDIT_CTABLETEMPLATE_H_

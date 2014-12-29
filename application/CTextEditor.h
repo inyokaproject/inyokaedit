@@ -76,13 +76,13 @@ class CTextEditor : public QTextEdit {
     void saveArticleAuto();
 
   private:
+    QString textUnderCursor() const;
+
     QTimer *m_pTimerAutosave;
     QString m_UserAppDir;
-    QString textUnderCursor() const;
     QCompleter *m_pCompleter;
     bool m_bCodeCompState;
     QStringList m_sListCompleter;
-
     const quint16 nTimeMultiplier;
 };
 
