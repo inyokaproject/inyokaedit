@@ -477,7 +477,7 @@ void CInyokaEdit::createActions() {
     /*
     // Upload Inyoka article
     connect(m_pUi->uploadArticleAct, SIGNAL(triggered()),
-            m_pUploadModule, SLOT(uploadArticle()));
+            m_pUploadModule, SLOT(clickUploadArticle()));
     */
 
     // ------------------------------------------------------------------------

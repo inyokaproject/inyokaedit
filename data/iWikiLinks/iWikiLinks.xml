@@ -52,6 +52,7 @@
     <element type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
     <element type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
     <element type="ubuntugnome" url="http://ubuntugnome.org/" name="Ubuntu GNOME" icon="ubuntugnome.png" />
+    <element type="ubuntumate" url="http://ubuntu-mate.org/" name="Ubuntu MATE" icon="ubuntumate.png" />
     <element type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
     <element type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
   </group>

@@ -185,6 +185,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/smile.png -O smil
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/exclaim.png -O exclaim.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/question.png -O question.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/arrow.png -O arrow.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/backarrow.png -O backarrow.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ente.png -O ente.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/idea.png -O idea.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/lol.png -O lol.png
@@ -199,6 +200,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntugnome.png -
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/kubuntu.png -O kubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/lubuntu.png -O lubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/mythbuntu.png -O mythbuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/SmiliesMap/ubuntumate.png -O ubuntumate.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/xubuntu.png -O xubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/overview.png -O overview.png
 
