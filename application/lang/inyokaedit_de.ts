@@ -68,14 +68,19 @@ Möchten Sie die Ressourcen jetzt herunterladen?</translation>
 <context>
     <name>CDownloadImg</name>
     <message>
-        <location filename="../CDownloadImg.cpp" line="53"/>
+        <location filename="../CDownloadImg.cpp" line="55"/>
         <source>Downloading images...</source>
         <translation>Bilder werden geladen...</translation>
     </message>
     <message>
-        <location filename="../CDownloadImg.cpp" line="54"/>
+        <location filename="../CDownloadImg.cpp" line="56"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../CDownloadImg.cpp" line="174"/>
+        <source>Download error</source>
+        <translation>Downloadfehler</translation>
     </message>
 </context>
 <context>
