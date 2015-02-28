@@ -20,7 +20,7 @@
     <element type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
-    <element type="canonical" url="http://www.canonical.com/content/" name="Canonical" icon="canonical.png" />
+    <element type="canonical" url="http://www.canonical.com/" name="Canonical" icon="canonical.png" />
     <element type="canonicalblog" url="http://blog.canonical.com/" name="Canonical Blog" icon="canonicalblog.png" />
     <element type="canonicalvoices" url="http://voises.canonical.com/" name="Canonical Voises" icon="canonicalvoices.png" />
     <element type="packages" url="http://packages.ubuntu.com/" name="Ubuntu Packages" icon="packages.png" />
@@ -112,6 +112,7 @@
     <element type="blogspot" url="http://$PAGE.blogspot.de/" name="Blogspot" icon="blogspot.png" />
     <element type="derstandard" url="http://derstandard.at/" name="derStandard" icon="derstandard.png" />
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
+    <element type="duckduckgo" url="https://duckduckgo.com/?q=$PAGE&amp;kl=de-de" name="DuckDuckGo" icon="duckduckgo.png" />
     <element type="dropbox" url="http://dl.dropbox.com/" name="Dropbox" icon="dropbox.png" />
     <element type="ean" url="https://www.google.de/#q=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
@@ -122,6 +123,7 @@
     <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
     <element type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
+    <element type="ixquick" url="https://ixquick.com/do/search?cat=web&amp;cmd=process_search&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Ixquick" icon="ixquick.png" />
     <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
     <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
     <element type="pdf" url="http://" name="PDF Datei" icon="pdf.png" />
