@@ -60,6 +60,7 @@ class CProvisionalTplParser {
     QString parseImageCollection(const QStringList &sListArgs);
     QString parseImageSubscrition(const QStringList &sListArgs);
     QString parseImprovable(const QStringList &sListArgs);
+    QString parseInfobox(const QStringList &sListArgs);
     QString parseKeys(const QStringList &sListArgs);
     QString parseKnowledge(const QStringList &sListArgs);
     QString parseLeft(const QStringList &sListArgs);

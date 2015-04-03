@@ -110,6 +110,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Ausbaufähig").toLower()) {
             sArgs.removeFirst();
             return this->parseImprovable(sArgs);
+        } else if (sArgs[0].toLower() == QString::fromUtf8("Infobox").toLower()) {
+            sArgs.removeFirst();
+            return this->parseInfobox(sArgs);
         } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Tasten").toLower()) {
             sArgs.removeFirst();
             return this->parseKeys(sArgs);
@@ -964,6 +967,46 @@ QString CProvisionalTplParser::parseImprovable(const QStringList &sListArgs) {
                            "kannst, dann editiere den Beitrag, um die Qualität "
                            "des Wikis noch weiter zu verbessern."),
                            sRemark);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseInfobox(const QStringList &sListArgs) {
+    QString sOutput("");
+
+    QStringList sList;
+    foreach (QString s, sListArgs) {
+        if ("+++" != s) {
+            sList << s;
+        }
+    }
+
+    if (sList.size() >= 3) {
+        sOutput = "||<-2 tablestyle=\"table-layout:fixed; float:right; "
+                  "clear:right; margin-top: 1em; margin-left: 1.5em;\""
+                  " rowclass=\"verlauf\">" + sList[0] + "||\n";
+        sOutput += "||<-2 cellstyle=\"text-align: center; line-height: 2.2em;\">"
+                   " " + sList[1];
+        if (sList[2].endsWith("png") || sList[2].endsWith("jpg")) {
+            sOutput += "[[BR]][[Bild(" + sList[2] + ", 260, )]]";
+        }
+        sOutput += "||\n";
+
+        for (int i = 4; i < sList.size(); i++) {
+            if (0 == i % 2) {
+                sOutput += "||<cellstyle=\"width: 120px\">" + sList[i] +
+                           ": ||<cellstyle=\"width: 140px\">";
+            } else {
+                sOutput += sList[i] + "||\n";
+            }
+        }
+
+        sOutput += "||<-3 rowstyle=\"background-color: #F9EAAF;\">||\n"
+                   "||Installation: ||" + sList[3] + "||";
+    }
+
+    return sOutput;
 }
 
 // ----------------------------------------------------------------------------

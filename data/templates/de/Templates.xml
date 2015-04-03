@@ -11,6 +11,7 @@
     <element type="" url="Wissen.tpl" name="Wissensblock" icon="" />
     <element type="" url="Inhaltsverzeichnis.macro" name="Inhaltsverzeichnis" icon="" />
     <element type="" url="Fortgeschritten.tpl" name="Experten-Markierung" icon="" />
+    <element type="" url="Infobox.tpl" name="Infobox" icon="" />
   </group>
   <group name="B&amp;ilder">
     <element type="" url="Bild.macro" name="Bild" icon="" />

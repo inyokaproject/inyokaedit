@@ -5,9 +5,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>InyokaEdit - %filename%</title>
-    <link rel="stylesheet" type="text/css" href="styles/main-sprite.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
     <link rel="stylesheet" type="text/css" href="styles/markup2.css" />
     <link rel="stylesheet" type="text/css" href="styles/wiki.css" />
+    <link rel="stylesheet" type="text/css" href="styles/highlight.css" />
     <link rel="stylesheet" type="text/css" href="styles/markup.css" />
     <style type="text/css">
       div.wrap{min-width:0px;}

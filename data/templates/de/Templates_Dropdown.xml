@@ -17,5 +17,6 @@
     <element type="" url="Tasten.tpl" name="Tasten" icon="" />
     <element type="" url="Tabelle.tpl" name="Tabelle" icon="" />
     <element type="" url="Spiel-Infobox.macro" name="Spiel Infobox" icon="" />
+    <element type="" url="Infobox.tpl" name="Infobox" icon="" />
   </group>
 </menu>

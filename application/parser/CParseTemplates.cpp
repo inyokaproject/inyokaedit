@@ -144,7 +144,9 @@ void CParseTemplates::startParsing(QTextDocument *pRawDoc,
                         if (sList.size() > 1) {
                             sListArguments.removeFirst();
                             for (int i = sList.size() - 1; i >= 0; i--) {
-                                sListArguments.push_front(sList[i]);
+                                if ("," != sList[i]) {
+                                    sListArguments.push_front(sList[i]);
+                                }
                             }
                         }
                         if (sListArguments[0].endsWith(",")) {

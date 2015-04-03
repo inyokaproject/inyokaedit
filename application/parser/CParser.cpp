@@ -921,7 +921,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
     QStringList sListTmpImageInfo;
 
     QString sImageUrl("");
-    QString sImageAlign("");
+    QString sImageAlign("default");
     // QString sImageAlt("");
 
     QString sImagePath("");
@@ -942,7 +942,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         sTmpImage.remove("[[" + m_pTemplates->getTransImage() + "(");
         sTmpImage.remove(")]]");
 
-        sImageAlign.clear();
+        sImageAlign = "default";
         iImgHeight = 0;
         iImgWidth = 0;
         tmpH = 0;
@@ -1224,11 +1224,11 @@ QString CParser::createTable(const QStringList &sListLines) {
     QString sTmpStyle("");
 
     QRegExp formatPattern("\\<{1,1}.+\\>{1,1}");
-    QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-]+\\\"");
+    QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-=]+\\\"");
     QRegExp rowClassPattern("rowclass=\\\"[\\w.%-]+\\\"");
-    QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-]+\\\"");
+    QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-=]+\\\"");
     QRegExp cellClassPattern("cellclass=\\\"[\\w.%-]+\\\"");
-    QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-]+\\\"");
+    QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-=]+\\\"");
     bool bCellStyle = false;
 
     QRegExp connectCells("-\\d{1,2}");
