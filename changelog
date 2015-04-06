@@ -1,3 +1,15 @@
+inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
+
+  [ Thorsten Roth ]
+  * Added Infobox template.
+  * Minor parser fixes; added missing keys.
+  * Fix for image download, if image doesn't exist.
+  * Minor adaption for new Inyoka CSS.
+  * Added table converter (base - new syntax) to table generator plugin.
+  * New IWLs.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 06 Apr 2015 17:43:00 +0200
+
 inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
 
   [ djcj ]
