@@ -18,6 +18,7 @@
     <element type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
     <element type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
     <element type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
+    <!--<element type="find-link" url="https://startpage.com/do/search?query=host:wiki.ubuntuusers.de+link:" name="Find-Link uuWiki" icon="" />-->
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
     <element type="canonical" url="http://www.canonical.com/" name="Canonical" icon="canonical.png" />
@@ -36,6 +37,7 @@
     <element type="ubuntudiscourse" url="http://discourse.ubuntu.com/" name="Ubuntu Discourse" icon="ubuntudiscourse.png" />
     <element type="ubunturesources" url="http://resources.ubuntu.com/" name="Ubuntu Resources" icon="ubunturesources.png" />
     <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
+    <element type="scope" url="scope://com.canonical.scopes.clickstore?q=" name="Ubuntu Scopes" icon="scope.png" />
     <element type="ubuntuone" url="https://one.ubuntu.com/" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" /> 
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />

@@ -39,6 +39,9 @@
 <@ elseif ['ubuntu'] contains ($key as stripped) as lowercase @>Ubuntu
 <@ elseif ['super'] contains ($key as stripped) as lowercase @>Super
 <@ elseif ['tux'] contains ($key as stripped) as lowercase @>Tux
+<@ elseif ['power','an'] contains ($key as stripped) as lowercase @>Φ
+<@ elseif ['vol','lauter'] contains ($key as stripped) as lowercase @>Vol+
+<@ elseif ['vol-','leiser'] contains ($key as stripped) as lowercase @>Vol-
 <@ elseif ['any', 'anykey'] contains ($key as stripped) as lowercase @>ANY
 <@ elseif ['panic'] contains ($key as stripped) as lowercase @>PANIC
 <@ elseif ['koelsch','kölsch'] contains ($key as stripped) as lowercase @>Kölsch

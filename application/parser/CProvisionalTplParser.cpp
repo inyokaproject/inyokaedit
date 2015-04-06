@@ -125,6 +125,11 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
             sArgs.removeFirst();
             return this->parseNotice(sArgs);
+        /*
+        } else if (sArgs[0].toLower() == QString::fromUtf8("OBS").toLower()) {
+            sArgs.removeFirst();
+            return this->parseOBS(sArgs);
+        */
         } else if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht").toLower()) {
             sArgs.removeFirst();
             return this->parseOverview(sArgs);
@@ -1031,11 +1036,15 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
         sListTmpKeys[i] = sListTmpKeys[i].trimmed();
         sListTmpKeys[i][0] = sListTmpKeys[i][0].toLower();
 
-        if (sListTmpKeys[i] == "backspace"
-                || sListTmpKeys[i] == QString::fromUtf8("löschen")
-                || sListTmpKeys[i] == QString::fromUtf8("rückschritt")) {
+        if (sListTmpKeys[i] == "altgr"
+                || sListTmpKeys[i] == "alt gr") {
+            sTmpKeyCode = "Alt Gr";
+        } else if (sListTmpKeys[i] == "backspace"
+                   || sListTmpKeys[i] == QString::fromUtf8("löschen")
+                   || sListTmpKeys[i] == QString::fromUtf8("rückschritt")) {
             sTmpKeyCode = "&#9003;";
-        } else if (sListTmpKeys[i] == "ctrl") {
+        } else if (sListTmpKeys[i] == "ctrl"
+                   || sListTmpKeys[i] == "steuerung") {
             sTmpKeyCode = "Strg";
         } else if (sListTmpKeys[i] == "del"
                    || sListTmpKeys[i] == "delete"
@@ -1047,46 +1056,75 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
             sTmpKeyCode = "&#9166;";
         } else if (sListTmpKeys[i] == "escape") {
             sTmpKeyCode = "Esc";
-        } else if (sListTmpKeys[i] == "eckig_auf") {
-            sTmpKeyCode = "[";
-        } else if (sListTmpKeys[i] == "eckig_zu") {
-            sTmpKeyCode = "]";
+        } else if (sListTmpKeys[i] == "eckig_auf"
+                   || sListTmpKeys[i] == "eckig auf"
+                   || sListTmpKeys[i] == "squared open"
+                   || sListTmpKeys[i] == "squared-open") {
+            sTmpKeyCode = "&#91;";
+        } else if (sListTmpKeys[i] == "geschweift_auf"
+                   || sListTmpKeys[i] == "curly open"
+                   || sListTmpKeys[i] == "curly-open") {
+            sTmpKeyCode = "&#123;";
         } else if (sListTmpKeys[i] == "bild auf"
                    || sListTmpKeys[i] == "bild-auf"
+                   || sListTmpKeys[i] == "bild rauf"
                    || sListTmpKeys[i] == "bild-rauf") {
             sTmpKeyCode = "Bild &uarr;";
         } else if (sListTmpKeys[i] == "bild ab"
                    || sListTmpKeys[i] == "bild-ab"
+                   || sListTmpKeys[i] == "bild runter"
                    || sListTmpKeys[i] == "bild-runter") {
             sTmpKeyCode = "Bild &darr;";
         } else if (sListTmpKeys[i] == "print"
                    || sListTmpKeys[i] == "prtsc"
                    || sListTmpKeys[i] == "sysrq") {
             sTmpKeyCode = "Druck";
+        } else if (sListTmpKeys[i] == "shift"
+                   || sListTmpKeys[i] == "umschalt"
+                   || sListTmpKeys[i] == "umsch") {
+            sTmpKeyCode = "&uArr;";
+        } else if (sListTmpKeys[i] == "shift2"
+                   || sListTmpKeys[i] == "umschalt2"
+                   || sListTmpKeys[i] == "umsch2") {
+            sTmpKeyCode = "&uArr;&nbsp;&nbsp;&nbsp;";
+        } else if (sListTmpKeys[i] == "home"
+                   || sListTmpKeys[i] == "pos 1") {
+            sTmpKeyCode = "Pos1";
         } else if (sListTmpKeys[i] == "mac"
-                   || sListTmpKeys[i] == "appel"
+                   || sListTmpKeys[i] == "apple"
                    || sListTmpKeys[i] == "apfel"
                    || sListTmpKeys[i] == "cmd") {
             sTmpKeyCode = "&#8984;";
+        } else if (sListTmpKeys[i] == "wahl"
+                   || sListTmpKeys[i] == "alternate"
+                   || sListTmpKeys[i] == "optionen") {
+            sTmpKeyCode = "&#8997;";
+        } else if (sListTmpKeys[i] == "gleich"
+                   || sListTmpKeys[i] == "equal") {
+            sTmpKeyCode = "=";
+        } else if (sListTmpKeys[i] == QString::fromUtf8("schrägstrich")
+                   || sListTmpKeys[i] == "slash") {
+            sTmpKeyCode = "/";
         } else if (sListTmpKeys[i] == "caps"
                    || sListTmpKeys[i] == "feststell"
                    || sListTmpKeys[i] == "feststelltaste"
                    || sListTmpKeys[i] == QString::fromUtf8("groß")) {
             sTmpKeyCode = "&dArr;";
-        } else if (sListTmpKeys[i] == "shift"
-                   || sListTmpKeys[i] == "umschalt"
-                   || sListTmpKeys[i] == "umsch") {
-            sTmpKeyCode = "&uArr;";
-        } else if (sListTmpKeys[i] == "at") {
-            sTmpKeyCode = "&#64;";
-        } else if (sListTmpKeys[i] == "cherry"
-                   || sListTmpKeys[i] == "keyman") {
-            sTmpKeyCode = "Keym&#64;n";
+        } else if (sListTmpKeys[i] == "doppelpunkt") {
+            sTmpKeyCode = ":";
+        } else if (sListTmpKeys[i] == "ausrufezeichen") {
+            sTmpKeyCode = "!";
+        } else if (sListTmpKeys[i] == "und") {
+            sTmpKeyCode = "&#38";
+        } else if (sListTmpKeys[i] == QString::fromUtf8("rückstrich")
+                   || sListTmpKeys[i] == "backslash"
+                   || sListTmpKeys[i] == "\\") {
+            sTmpKeyCode = "&#92";
         } else if (sListTmpKeys[i] == "space"
-                   || sListTmpKeys[i] == "leer"
-                   || sListTmpKeys[i] == "leertaste"
-                   || sListTmpKeys[i] == "leerzeichen"
-                   || sListTmpKeys[i] == "leerschritt") {
+                || sListTmpKeys[i] == "leer"
+                || sListTmpKeys[i] == "leertaste"
+                || sListTmpKeys[i] == "leerzeichen"
+                || sListTmpKeys[i] == "leerschritt") {
             sTmpKeyCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                     "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         } else if (sListTmpKeys[i] == "tab"
@@ -1116,71 +1154,118 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
             sTmpKeyCode = "&darr;";
         } else if (sListTmpKeys[i] == "links"
                    || sListTmpKeys[i] == "left"
-                   || sListTmpKeys[i] == "pfeil-links") {
+                   || sListTmpKeys[i] == "pfeil-links"
+                   || sListTmpKeys[i] == "pfeil links") {
             sTmpKeyCode = "&larr;";
         } else if (sListTmpKeys[i] == "rechts"
                    || sListTmpKeys[i] == "right"
-                   || sListTmpKeys[i] == "pfeil-rechts") {
+                   || sListTmpKeys[i] == "pfeil-rechts"
+                   || sListTmpKeys[i] == "pfeil rechts") {
             sTmpKeyCode = "&rarr;";
         } else if (sListTmpKeys[i] == "\",\""
                    || sListTmpKeys[i] == "\',\'") {
             sTmpKeyCode = ",";
         } else if (sListTmpKeys[i] == "minus") {
             sTmpKeyCode = "-";
+        } else if (sListTmpKeys[i] == "raute"
+                   || sListTmpKeys[i] == "rautenzeichen"
+                   || sListTmpKeys[i] == "hash") {
+            sTmpKeyCode = "#";
+        } else if (sListTmpKeys[i] == "eckig_zu"
+                   || sListTmpKeys[i] == "eckig zu"
+                   || sListTmpKeys[i] == "squared close"
+                   || sListTmpKeys[i] == "squared-close") {
+            sTmpKeyCode = "&#93;";
+        } else if (sListTmpKeys[i] == "geschweift_zu"
+                   || sListTmpKeys[i] == "curly close"
+                   || sListTmpKeys[i] == "curly-close") {
+            sTmpKeyCode = "&#125;";
         } else if (sListTmpKeys[i] == "plus") {
             sTmpKeyCode = "+";
-        } else if (sListTmpKeys[i] == "\"`\"") {
-            sTmpKeyCode = "`";
+        } else if (sListTmpKeys[i] == "gravis"
+                   || sListTmpKeys[i] == "grave"
+                   || sListTmpKeys[i] == "'") {
+            sTmpKeyCode = "&#96;";
         } else if (sListTmpKeys[i] == "sz") {
             sTmpKeyCode = "&szlig;";
-        } else if (sListTmpKeys[i] == "gleich") {
-            sTmpKeyCode = "=";
+        } else if (sListTmpKeys[i] == "end") {
+            sTmpKeyCode = "Ende";
+        } else if (sListTmpKeys[i] == "ins"
+                   || sListTmpKeys[i] == QString::fromUtf8("einfügen")
+                   || sListTmpKeys[i] == "insert") {
+            sTmpKeyCode = "Einfg";
         } else if (sListTmpKeys[i] == "num"
                    || sListTmpKeys[i] == "num-taste"
-                   || sListTmpKeys[i] == "num-Taste"
-                   || sListTmpKeys[i] == "num-lock-taste"
-                   || sListTmpKeys[i] == "num-Lock-Taste") {
+                   || sListTmpKeys[i] == "num-lock-taste") {
             sTmpKeyCode = "num &dArr;";
-        } else if (sListTmpKeys[i] == "fragezeichen") {
+        } else if (sListTmpKeys[i] == "fragezeichen"
+                   || sListTmpKeys[i] == "question mark"
+                   || sListTmpKeys[i] == "question-mark") {
             sTmpKeyCode = "?";
         } else if (sListTmpKeys[i] == "break") {
             sTmpKeyCode = "Pause";
         } else if (sListTmpKeys[i] == "rollen"
                    || sListTmpKeys[i] == "bildlauf") {
             sTmpKeyCode = "&dArr; Rollen";
-        } else if (sListTmpKeys[i] == "slash") {
-            sTmpKeyCode = "/";
-        } else if (sListTmpKeys[i] == "any") {
-            sTmpKeyCode = "ANY KEY";
+        } else if (sListTmpKeys[i] == "akut"
+                   || sListTmpKeys[i] == "acute") {
+            sTmpKeyCode = "&#146;";
+        } else if (sListTmpKeys[i] == "anfuehrungsstriche"
+                   || sListTmpKeys[i] == "doublequote") {
+            sTmpKeyCode = "&#34;";
+        } else if (sListTmpKeys[i] == "prozent") {
+            sTmpKeyCode = "%";
+        } else if (sListTmpKeys[i] == "compose") {
+            sTmpKeyCode = "&#9092;";
+        } else if (sListTmpKeys[i] == "rstrg"
+                   || sListTmpKeys[i] == "rctrl"
+                   || sListTmpKeys[i] == "rsteuerung") {
+            sTmpKeyCode = "RStrg";
+        } else if (sListTmpKeys[i] == "lmt"
+                   || sListTmpKeys[i] == "lmb") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/mouse_left.png, alt=\"linke Maustaste\")]]";
+        } else if (sListTmpKeys[i] == "rmt"
+                   || sListTmpKeys[i] == "rmb") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/mouse_right.png, alt=\"rechte Maustaste\")]]";
+        } else if (sListTmpKeys[i] == "mmt"
+                   || sListTmpKeys[i] == "mmb") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/mouse_midd.png, alt=\"mittlere Maustaste\")]]";
+        } else if (sListTmpKeys[i] == "pfeiltasten") {
+            bImage = true;
+            sTmpKey += "[[Bild(Wiki/Icons/pfeiltasten.png, 66, alt=\"Pfeiltasten\")]]";
+        } else if (sListTmpKeys[i] == "wasd") {
+            bImage = true;
+            sTmpKey += "[[Bild(Wiki/Icons/tasten_wasd.png, 66, alt=\"W A S D Tasten\")]]";
+        } else if (sListTmpKeys[i] == "at") {
+            sTmpKeyCode = "&#64;";
+        } else if (sListTmpKeys[i] == "cherry"
+                   || sListTmpKeys[i] == "keyman") {
+            sTmpKeyCode = "Keym&#64;n";
+        } else if (sListTmpKeys[i] == "power"
+                   || sListTmpKeys[i] == "an") {
+            sTmpKeyCode = "&#934;";
+        } else if (sListTmpKeys[i] == "vol"
+                   || sListTmpKeys[i] == "lauter") {
+            sTmpKeyCode = "Vol+";
+        } else if (sListTmpKeys[i] == "vol-"
+                   || sListTmpKeys[i] == "leiser") {
+            sTmpKeyCode = "Vol-";
+        } else if (sListTmpKeys[i] == "anykey"
+                   || sListTmpKeys[i] == "any") {
+            sTmpKeyCode = "ANY";
         } else if (sListTmpKeys[i] == "panic") {
             sTmpKeyCode = "PANIC";
-        } else if (sListTmpKeys[i] == "koelsch") {
+        } else if (sListTmpKeys[i] == "koelsch"
+                   || sListTmpKeys[i] == QString::fromUtf8("kölsch")) {
             sTmpKeyCode = "K&ouml;lsch";
         } else {
-            if (sListTmpKeys[i] == "lmt"
-                    || sListTmpKeys[i] == "lmb") {
-                bImage = true;
-                sTmpKey += "[[Bild(img/wiki/mouse_left.png, alt=\"linke Maustaste\")]]";
-            } else if (sListTmpKeys[i] == "rmt"
-                       || sListTmpKeys[i] == "rmb") {
-                bImage = true;
-                sTmpKey += "[[Bild(img/wiki/mouse_right.png, alt=\"rechte Maustaste\")]]";
-            } else if (sListTmpKeys[i] == "mmt"
-                       || sListTmpKeys[i] == "mmb") {
-                bImage = true;
-                sTmpKey += "[[Bild(img/wiki/mouse_midd.png, alt=\"mittlere Maustaste\")]]";
-            } else if (sListTmpKeys[i] == "pfeiltasten") {
-                bImage = true;
-                sTmpKey += "[[Bild(Wiki/Icons/pfeiltasten.png, 66, alt=\"Pfeiltasten\")]]";
-            } else if (sListTmpKeys[i] == "wasd") {
-                bImage = true;
-                sTmpKey += "[[Bild(Wiki/Icons/tasten_wasd.png, 66, alt=\"W A S D Tasten\")]]";
-            } else {
-                // Everything else: First character to Upper
-                // first characters had been changed to lower at beginning
-                sListTmpKeys[i][0] = sListTmpKeys[i][0].toUpper();
-                sTmpKeyCode = sListTmpKeys[i];
-            }
+            // Everything else: First character to Upper
+            // first characters had been changed to lower at beginning
+            sListTmpKeys[i][0] = sListTmpKeys[i][0].toUpper();
+            sTmpKeyCode = sListTmpKeys[i];
         }
 
         if (!bImage) {
@@ -1250,6 +1335,53 @@ QString CProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
     return insertBox("box notice", QString::fromUtf8("Hinweis:"), sOutput);
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// CURRENTLY NOT USED
+/*
+QString CProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
+    QString sOutput("");
+    sOutput = QString::fromUtf8("<p>Um das Paket aus einer vom "
+                                "[:Open_Build_Service:Open Build Service] "
+                                "generierten Paketquelle zu installieren, muss "
+                                "man zuerst die [:Paketquellen_freischalten:"
+                                "Paketquelle freischalten], indem man folgenden"
+                                " Befehl mit [:sudo:root-Rechten] im "
+                                "[:Terminal:] ausführt: </p>\n");
+
+    sOutput += insertBox("box warning",
+                         QString::fromUtf8("Hinweis!"),
+                         QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
+                                           " das System gefährden."));
+
+    if (sListArgs.size() >= 1) {
+        sOutput += "<div class=\"thirdpartyrepo-outer "
+                   "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
+                   "</p><div class=\"bash\"><div class=\"contents\"><pre "
+                   "class=\"notranslate\">sudo sh -c \"echo 'deb http://"
+                   "download.opensuse.org/repositories/" + sListArgs[0] +
+                   "/xUbuntu_VERSION/ /' &gt;&gt; /etc/apt/sources.list.d"
+                   "/OBS.list\" </pre></div></div><p></p></div></div>";
+    }
+    sOutput += QString::fromUtf8("<p>Anschließend sollte die [:Fremdquelle:] "
+                                 "authentifiziert werden. Dazu lädt man sich "
+                                 "mit dem folgenden Befehlen den benötigten "
+                                 "Schlüssel herunter und fügt diesen dem "
+                                 "Schlüsselbund hinzu:</p>");
+
+    if (sListArgs.size() >= 1) {
+        sOutput += "<div class=\"thirdpartyrepo-outer "
+                   "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
+                   "</p><div class=\"bash\"><div class=\"contents\"><pre "
+                   "class=\"notranslate\">wget http://download.opensuse.org"
+                   "/repositories/" + sListArgs[0] + "/xUbuntu_VERSION/"
+                   "Release.key<br />sudo apt-key add - &lt; Release.key "
+                   "</pre></div></div><p></p></div></div>";
+    }
+
+    return sOutput;
+}
+*/
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 

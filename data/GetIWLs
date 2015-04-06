@@ -156,6 +156,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/pdf.png -O p
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/playdeb.png -O playdeb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/prolinux.png -O prolinux.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/quakenet.png -O quakenet.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/scope.png -O scope.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/sourceforge.png -O sourceforge.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/sourceforge2.png -O sourceforge2.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/startpage.png -O startpage.png

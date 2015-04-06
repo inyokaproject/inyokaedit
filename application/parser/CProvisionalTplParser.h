@@ -65,6 +65,7 @@ class CProvisionalTplParser {
     QString parseKnowledge(const QStringList &sListArgs);
     QString parseLeft(const QStringList &sListArgs);
     QString parseNotice(const QStringList &sListArgs);
+    // QString parseOBS(const QStringList &sListArgs);
     QString parseOverview(const QStringList &sListArgs);
     QString parseOverview2(const QStringList &sListArgs);
     QString parsePackage(const QStringList &sListArgs);
