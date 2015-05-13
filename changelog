@@ -6,6 +6,7 @@ inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
   * Fix for image download, if image doesn't exist.
   * Minor adaption for new Inyoka CSS.
   * Added table converter (base - new syntax) to table generator plugin.
+  * Fixed LP: #1451573 (possibility to disable Apport installation)
   * New IWLs.
 
  -- Thorsten Roth <elthoro@gmx.de>  Wed, 13 May 2015 17:31:00 +0200
