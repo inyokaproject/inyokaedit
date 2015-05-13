@@ -43,11 +43,8 @@ infiles:
 	$(foreach FILE,$(INFILES),sed -e 's@___PREFIX___@$(prefix)@g' $(FILE).in > $(FILE) ; )
 
 install-inyokaedit: infiles
-	$(INSTALL_DIR) $(DESTDIR)/etc/apport
 	$(INSTALL_DIR) $(DESTDIR)$(bindir)
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport/package-hooks
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/menu
@@ -58,8 +55,6 @@ install-inyokaedit: infiles
 	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) data/GetInyokaStyles $(DESTDIR)$(dataroot)/inyokaedit
 	$(INSTALL_PROGRAM) data/GetIWLs         $(DESTDIR)$(dataroot)/inyokaedit
-	$(INSTALL_FILE) apport/inyokaedit-crashdb.conf        $(DESTDIR)/etc/apport
-	$(INSTALL_FILE) apport/source_inyokaedit.py           $(DESTDIR)$(dataroot)/apport/package-hooks
 	$(INSTALL_FILE) application/lang/inyokaedit_de.qm     $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) application/res/images/inyokaedit.xpm $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_FILE) data/ExtendedDict.txt   $(DESTDIR)$(dataroot)/inyokaedit
@@ -71,6 +66,13 @@ install-inyokaedit: infiles
 	$(CP) application/res/images/hicolor    $(DESTDIR)$(dataroot)/icons
 	$(CP) data/iWikiLinks            $(DESTDIR)$(dataroot)/inyokaedit
 	$(CP) data/templates             $(DESTDIR)$(dataroot)/inyokaedit
+ifneq "$(enableapport)" "no"
+	$(INSTALL_DIR) $(DESTDIR)/etc/apport
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport/package-hooks
+	$(INSTALL_FILE) apport/inyokaedit-crashdb.conf        $(DESTDIR)/etc/apport
+	$(INSTALL_FILE) apport/source_inyokaedit.py           $(DESTDIR)$(dataroot)/apport/package-hooks
+endif
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins

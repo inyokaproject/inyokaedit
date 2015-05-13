@@ -10,7 +10,8 @@ options:
   --prefix=PREFIX          install architecture-independent files into PREFIX
                            [/usr/local]
   --docdir=DIR             install documents in DIR [DATAROOT/docs/inyokaedit]
-  --man1dir=DIR            install manpage in DIR [DATAROOT/man/man1]
+  --mandir=DIR             install manpage in DIR [DATAROOT/man]
+  --enable-apport=yes/no   enable/disable install Ubuntu Apport files  [yes]
 EOF
 exit 1
 fi
@@ -24,8 +25,11 @@ for opt; do
         --docdir=*)
             docdir="$optarg"
             ;;
-        --man1dir=*)
-            man1dir="$optarg"
+        --mandir=*)
+            mandir="$optarg"
+            ;;
+        --enable-apport=*)
+            enableapport="$optarg"
             ;;
         *)
             ;;
@@ -35,6 +39,7 @@ done
 test -n "$prefix" || prefix="/usr/local"
 test -n "$docdir" || docdir='${dataroot}/docs/inyokaedit'
 test -n "$mandir" || mandir='${dataroot}/man'
+test -n "$enableapport" || enableapport='yes'
 
 echo ""
 echo "generate config.mak ..."
@@ -45,6 +50,7 @@ cat >> config.mak << EOF
 prefix = $prefix
 docdir = $docdir
 mandir = $mandir
+enableapport = $enableapport
 EOF
 
 cat config.mak
