@@ -115,7 +115,7 @@ QString CParser::genOutput(const QString &sActFile,
 
     this->replaceQuotes(m_pRawText);
     this->replaceBreaks(m_pRawText);
-    this->replaceHorLine(m_pRawText);
+    this->replaceHorLines(m_pRawText);
     this->replaceDates(m_pRawText);
 
     this->replaceTextformat(m_pRawText,
@@ -125,6 +125,7 @@ QString CParser::genOutput(const QString &sActFile,
                             m_pTemplates->getListFormatHtmlEnd());
 
     this->generateParagraphs(m_pRawText);
+    this->replaceFootnotes(m_pRawText);
 
     this->reinstertNoTranslate(m_pRawText);
 
@@ -633,7 +634,7 @@ void CParser::replaceBreaks(QTextDocument *p_rawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CParser::replaceHorLine(QTextDocument *p_rawDoc) {
+void CParser::replaceHorLines(QTextDocument *p_rawDoc) {
     QString sDoc("");
 
     for (QTextBlock block = p_rawDoc->firstBlock();
@@ -1420,4 +1421,46 @@ void CParser::replaceDates(QTextDocument *p_rawDoc) {
 
     // Replace p_rawDoc with adapted document
     p_rawDoc->setPlainText(sDoc);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CParser::replaceFootnotes(QTextDocument *p_rawDoc) {
+    QString sDoc(p_rawDoc->toPlainText());
+    QString sRegExp("\\(\\(.*\\)\\)");
+    QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
+    findMacro.setMinimal(true);
+    QString sNote("");
+    QString sIndex("");
+    int nPos = 0;
+    quint16 nIndex = 0;
+    QString sFootnotes("");
+
+    while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
+        nIndex++;
+
+        sNote = findMacro.cap(0);
+        sNote.remove("((");
+        sNote.remove("))");
+        sFootnotes += "<li><a id=\"fn-" + QString::number(nIndex) + "\" class="
+                      "\"crosslink\" href=\"#bfn-" + QString::number(nIndex) +
+                      "\">" + QString::number(nIndex) + "</a>: " + sNote +
+                      "</li>\n";
+
+        sIndex = "<a id=\"bfn-" + QString::number(nIndex) + "\" class=\""
+                 "footnote\" href=\"#fn-" + QString::number(nIndex) + "\">"
+                 "&#091;" + QString::number(nIndex) + "&#093;</a>";
+
+        sDoc.replace(nPos, findMacro.matchedLength(), sIndex);
+        // Go on with new start position
+        nPos += sIndex.length();
+    }
+
+    if (!sFootnotes.isEmpty()) {
+        sFootnotes = "<ul class=\"footnotes\">\n" + sFootnotes + "</ul>\n";
+    }
+
+    // Replace p_rawDoc with adapted document
+    p_rawDoc->setPlainText(sDoc + sFootnotes);
 }

@@ -77,6 +77,7 @@ class CProvisionalTplParser {
     QString parseStatusIcon(const QStringList &sListArgs);
     QString parseTable(const QStringList &sListArgs);
     QString parseTested(const QStringList &sListArgs);
+    QString parseTestedUT(const QStringList &sListArgs);
     QString parseUnderConstruction(const QStringList &sListArgs);
     QString parseWarning(const QStringList &sListArgs);
     QString parseWorkInProgress(const QStringList &sListArgs);

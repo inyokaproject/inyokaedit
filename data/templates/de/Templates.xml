@@ -12,6 +12,7 @@
     <element type="" url="Inhaltsverzeichnis.macro" name="Inhaltsverzeichnis" icon="" />
     <element type="" url="Fortgeschritten.tpl" name="Experten-Markierung" icon="" />
     <element type="" url="Infobox.tpl" name="Infobox" icon="" />
+    <element type="" url="UT.tpl" name="Getestet Ubuntu Touch" icon="" />
   </group>
   <group name="B&amp;ilder">
     <element type="" url="Bild.macro" name="Bild" icon="" />

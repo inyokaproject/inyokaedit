@@ -163,8 +163,10 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Getestet").toLower()) {
             sArgs.removeFirst();
             return this->parseTested(sArgs);
-        } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Baustelle").toLower()
-                || sArgs[0].trimmed().toLower() == QString::fromUtf8("InArbeit").toLower()) {
+        } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8("UT").toLower()) {
+            sArgs.removeFirst();
+            return this->parseTestedUT(sArgs);
+        } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Baustelle").toLower()) {
             sArgs.removeFirst();
             return this->parseUnderConstruction(sArgs);
         } else if (sArgs[0].toLower() == QString::fromUtf8("Warnung").toLower()) {
@@ -1999,7 +2001,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "vivid") {
+                if (sListArgs[i].toLower() == "wily") {
+                    sOutput += "[:Wily_Werewolf:Ubuntu 15.10] "
+                               "Wily Werewolf";
+                } else if (sListArgs[i].toLower() == "vivid") {
                     sOutput += "[:Vivid_Vervet:Ubuntu 15.04] "
                                "Vivid Vervet";
                 } else if (sListArgs[i].toLower() == "utopic") {
@@ -2061,6 +2066,42 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
                            QString::fromUtf8("Dieser Artikel wurde für die "
                                              "folgenden Ubuntu-Versionen "
                                              "getestet:"),
+                           sOutput);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
+    QString sOutput("");
+    if (sListArgs.size() >= 1) {
+        if (sListArgs[0].toLower() == QString("general").toLower()) {
+            sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
+                                        "Ubuntu Touch Versionen.");
+        } else {  // Article tested with ubuntu versions
+            for (int i = 0; i < sListArgs.size(); i++) {
+                sOutput += "\n * ";
+                if (sListArgs[i].toLower() == "vivid") {
+                    sOutput += "[:Vivid_Vervet:Ubuntu Touch 15.04] "
+                               "Vivid Vervet";
+                } else if (sListArgs[i].toLower() == "utopic") {
+                    sOutput += "[:Utopic_Unicorn:Ubuntu Touch 14.10] "
+                               "Utopic Unicorn";
+                } else {
+                    sOutput += sListArgs[i];
+                }
+            }
+            sOutput += "\n";
+        }
+    } else {
+        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
+                                    "unterstützten Ubuntu Touch Version "
+                                    "getestet! Bitte diesen Artikel testen!");
+    }
+
+    return this->insertBox("box ut_box",
+                           QString::fromUtf8("Getestet wurde der Artikel für "
+                                             "folgende Version(en):"),
                            sOutput);
 }
 

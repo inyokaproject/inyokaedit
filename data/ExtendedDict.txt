@@ -64,6 +64,9 @@ Unicorn
 vivid
 Vivid
 Vervet
+wily
+Wily
+Werewolf
 Ubuntu
 Kubuntu
 Xubuntu

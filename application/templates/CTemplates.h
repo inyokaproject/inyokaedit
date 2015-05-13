@@ -42,17 +42,18 @@ class CTemplates : public QObject {
     QStringList getListTplMacrosINY() const;
     QStringList getListTplNamesALL() const;
     QStringList getListTplMacrosALL() const;
+
+    QString getTransAnchor() const;
+    QString getTransAttachment() const;
+    QString getTransCodeBlock() const;
+    QString getTransDate() const;
+    QString getTransImage() const;
+    QString getTransKnowledge() const;
+    QString getTransRev() const;
+    QString getTransTable() const;
+    QString getTransTag() const;
     QString getTransTemplate() const;
     QString getTransTOC() const;
-    QString getTransImage() const;
-    QString getTransCodeBlock() const;
-    QString getTransAttachment() const;
-    QString getTransAnchor() const;
-    QString getTransDate() const;
-    QString getTransTable() const;
-    QString getTransRev() const;
-    QString getTransTag() const;
-    QString getTransKnowledge() const;
 
     QStringList getListFormatStart() const;
     QStringList getListFormatEnd() const;
@@ -103,17 +104,17 @@ class CTemplates : public QObject {
     QStringList m_sListSmiliesImg;
 
     // Translations
+    QString m_sTransAnchor;
+    QString m_sTransAttachment;
+    QString m_sTransCodeBlock;
+    QString m_sTransDate;
+    QString m_sTransKnowledge;
+    QString m_sTransImage;
+    QString m_sTransRevText;
+    QString m_sTransTable;
+    QString m_sTransTagText;
     QString m_sTransTemplate;
     QString m_sTransTOC;
-    QString m_sTransImage;
-    QString m_sTransCodeBlock;
-    QString m_sTransAttachment;
-    QString m_sTransAnchor;
-    QString m_sTransDate;
-    QString m_sTransRevText;
-    QString m_sTransTagText;
-    QString m_sTransTable;
-    QString m_sTransKnowledge;
 
     CXmlParser *m_pInterWikiLinks;
     CXmlParser *m_pMarkupTemplates;

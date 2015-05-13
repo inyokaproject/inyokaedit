@@ -91,10 +91,11 @@ class CParser : public QObject {
     void replaceImages(QTextDocument *p_rawDoc);
     void replaceQuotes(QTextDocument *p_rawDoc);
     void replaceBreaks(QTextDocument *p_rawDoc);
-    void replaceHorLine(QTextDocument *p_rawDoc);
+    void replaceHorLines(QTextDocument *p_rawDoc);
     void replaceHeadlines(QTextDocument *p_rawDoc);
     void replaceTableOfContents(QTextDocument *p_rawDoc);
     void replaceDates(QTextDocument *p_rawDoc);
+    void replaceFootnotes(QTextDocument *p_rawDoc);
     QString generateTags(QTextDocument *p_rawDoc);
     QString highlightCode(const QString &sLanguage, const QString &sCode);
 

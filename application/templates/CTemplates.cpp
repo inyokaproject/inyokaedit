@@ -263,41 +263,41 @@ void CTemplates::initTranslations(const QString &sFilename) {
     QSettings configTransl(translFile.fileName(), QSettings::IniFormat);
     configTransl.setIniCodec("UTF-8");
 
-    m_sTransTemplate = configTransl.value("Template", "ERROR").toString();
-    if ("ERROR" == m_sTransTemplate) {
-        qCritical() << "Template translation not found.";
-    }
-    m_sTransTOC = configTransl.value("TableOfContents", "ERROR").toString();
-    if ("ERROR" == m_sTransTOC) {
-        qCritical() << "TOC translation not found.";
-    }
-    m_sTransImage = configTransl.value("Image", "ERROR").toString();
-    if ("ERROR" == m_sTransImage) {
-        qCritical() << "Image translation not found.";
-    }
-    m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
-    if ("ERROR" == m_sTransCodeBlock) {
-        qCritical() << "Code block translation not found.";
+    m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
+    if ("ERROR" == m_sTransAnchor) {
+        qCritical() << "Anchor translation not found.";
     }
     m_sTransAttachment = configTransl.value("Attachment", "ERROR").toString();
     if ("ERROR" == m_sTransAttachment) {
         qCritical() << "Attachment translation not found.";
     }
-    m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
-    if ("ERROR" == m_sTransAnchor) {
-        qCritical() << "Anchor translation not found.";
+    m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
+    if ("ERROR" == m_sTransCodeBlock) {
+        qCritical() << "Code block translation not found.";
     }
     m_sTransDate = configTransl.value("Date", "ERROR").toString();
     if ("ERROR" == m_sTransDate) {
         qCritical() << "Date translation not found.";
     }
+    m_sTransImage = configTransl.value("Image", "ERROR").toString();
+    if ("ERROR" == m_sTransImage) {
+        qCritical() << "Image translation not found.";
+    }
     m_sTransRevText = configTransl.value("RevText", "ERROR").toString();
     if ("ERROR" == m_sTransRevText) {
         qCritical() << "Revision text translation not found.";
     }
+    m_sTransTOC = configTransl.value("TableOfContents", "ERROR").toString();
+    if ("ERROR" == m_sTransTOC) {
+        qCritical() << "TOC translation not found.";
+    }
     m_sTransTagText = configTransl.value("TagText", "ERROR").toString();
     if ("ERROR" == m_sTransTagText) {
         qCritical() << "Tag text translation not found.";
+    }
+    m_sTransTemplate = configTransl.value("Template", "ERROR").toString();
+    if ("ERROR" == m_sTransTemplate) {
+        qCritical() << "Template translation not found.";
     }
 
     // Translation needed for table template plugin
@@ -318,15 +318,12 @@ void CTemplates::initTranslations(const QString &sFilename) {
 CXmlParser* CTemplates::getTPLs() const {
     return m_pMarkupTemplates;
 }
-
 CXmlParser* CTemplates::getIWLs() const {
     return m_pInterWikiLinks;
 }
-
 CXmlParser* CTemplates::getDropTPLs() const {
     return m_pDropdownTemplates;
 }
-
 QString CTemplates::getPreviewTemplate() const {
     return m_sPreviewTemplate;
 }
@@ -340,7 +337,6 @@ QStringList CTemplates::getListTemplatesINY() const {
 QStringList CTemplates::getListTplMacrosINY() const {
     return m_sListTplMacrosINY;
 }
-
 QStringList CTemplates::getListTplNamesALL() const {
     return m_sListTplNamesALL;
 }
@@ -348,62 +344,49 @@ QStringList CTemplates::getListTplMacrosALL() const {
     return m_sListTplMacrosALL;
 }
 
-QString CTemplates::getTransTemplate() const {
-    return m_sTransTemplate;
-}
-
-QString CTemplates::getTransTOC() const {
-    return m_sTransTOC;
-}
-
-QString CTemplates::getTransImage() const {
-    return m_sTransImage;
-}
-
-QString CTemplates::getTransCodeBlock() const {
-    return m_sTransCodeBlock;
-}
-
-QString CTemplates::getTransAttachment() const {
-    return m_sTransAttachment;
-}
-
 QString CTemplates::getTransAnchor() const {
     return m_sTransAnchor;
 }
-
+QString CTemplates::getTransAttachment() const {
+    return m_sTransAttachment;
+}
+QString CTemplates::getTransCodeBlock() const {
+    return m_sTransCodeBlock;
+}
 QString CTemplates::getTransDate() const {
     return m_sTransDate;
 }
-
-QString CTemplates::getTransTable() const {
-    return m_sTransTable;
+QString CTemplates::getTransImage() const {
+    return m_sTransImage;
 }
-
+QString CTemplates::getTransKnowledge() const {
+    return m_sTransKnowledge;
+}
 QString CTemplates::getTransRev() const {
     return m_sTransRevText;
 }
-
+QString CTemplates::getTransTable() const {
+    return m_sTransTable;
+}
 QString CTemplates::getTransTag() const {
     return m_sTransTagText;
 }
-
-QString CTemplates::getTransKnowledge() const {
-    return m_sTransKnowledge;
+QString CTemplates::getTransTemplate() const {
+    return m_sTransTemplate;
+}
+QString CTemplates::getTransTOC() const {
+    return m_sTransTOC;
 }
 
 QStringList CTemplates::getListFormatStart() const {
     return m_sListFormatStart;
 }
-
 QStringList CTemplates::getListFormatEnd() const {
     return m_sListFormatEnd;
 }
-
 QStringList CTemplates::getListFormatHtmlStart() const {
     return m_sListFormatHtmlStart;
 }
-
 QStringList CTemplates::getListFormatHtmlEnd() const {
     return m_sListFormatHtmlEnd;
 }

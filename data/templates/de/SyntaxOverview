@@ -111,7 +111,7 @@ stellt Datum und Uhrzeit dar.
 unnummerierte Liste, die Anzahl der Leerzeichen vor * bestimmen die Ebene.
 +++
 ` 1. Punkt 1`[[BR]]` 1. Punkt 2`
-nummerierte Liste, die Anzahl der Leerzeichen vor 1. bestimmen die Ebene.
+nummerierte Liste, die Anzahl der Leerzeichen vor 1. bestimmen die Ebene. Kann auch mit Buchstaben genutzt werden (a.).
 +++
 `= Überschrift =`
 fügt eine Überschrift ein, die Anzahl der Gleichheitszeichen bestimmt die Überschriftenebene (max. 5)

@@ -38,7 +38,7 @@
     <element type="ubunturesources" url="http://resources.ubuntu.com/" name="Ubuntu Resources" icon="ubunturesources.png" />
     <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
     <element type="scope" url="scope://com.canonical.scopes.clickstore?q=" name="Ubuntu Scopes" icon="scope.png" />
-    <element type="ubuntuone" url="https://one.ubuntu.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <element type="ubuntuone" url="https://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" /> 
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
