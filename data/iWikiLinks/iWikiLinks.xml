@@ -88,6 +88,7 @@
     <element type="googlecode" url="http://code.google.com/p/" name="Google Code" icon="googlecode.png" />
     <element type="kdebugs" url="https://bugs.kde.org/show_bug.cgi?id=" name="KDE Bugs" icon="kdebugs.png" />
     <element type="launchpad" url="https://launchpad.net/" name="Launchpad" icon="launchpad.png" />
+    <element type="launchpad2" url="https://$PAGE.launchpad.net/" name="Launchpad 2" icon="launchpad2.png" />
     <element type="lpcode" url="https://code.launchpad.net/" name="Launchpad Code" icon="lpcode.png" />
     <element type="bug" url="https://launchpad.net/bugs/" name="Bug (Launchpad)" icon="bug.png" />
     <element type="lpuser" url="https://launchpad.net/~" name="Launchpad User" icon="lpuser.png" />

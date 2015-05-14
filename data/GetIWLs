@@ -136,6 +136,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/kubuntu-de.p
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/kubuntu_doc.png -O kubuntu_doc.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lastfm.png -O lastfm.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/launchpad.png -O launchpad.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/launchpad2.png -O launchpad2.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/lgdb.png -O lgdb.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/liflg.jpg -O liflg.jpg
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/linuxgaming.png -O linuxgaming.png
