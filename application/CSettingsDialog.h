@@ -68,11 +68,6 @@ class CSettingsDialog : public QDialog {
     Ui::CSettingsDialog *m_pUi;
     CSettings *m_pSettings;
     QString m_sSharePath;
-
-    QString m_sProxyHostName;
-    quint16 m_nProxyPort;
-    QString m_sProxyUserName;
-    QString m_sProxyPassword;
     QString m_sGuiLang;
 
     QList<IEditorPlugin *> m_listPLugins;

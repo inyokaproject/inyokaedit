@@ -74,6 +74,8 @@ void CUtils::setProxy(const QString &sHostName, const quint16 nPort,
             proxy.setPassword(sPassword);
         }
         QNetworkProxy::setApplicationProxy(proxy);
+    } else {
+        QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
     }
 }
 

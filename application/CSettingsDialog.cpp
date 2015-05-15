@@ -104,11 +104,6 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_pUi->proxyUserNameEdit->setText(m_pSettings->m_sProxyUserName);
     m_pUi->proxyPasswordEdit->setText(m_pSettings->m_sProxyPassword);
 
-    m_sProxyHostName = m_pSettings->m_sProxyHostName;
-    m_nProxyPort = m_pSettings->m_nProxyPort;
-    m_sProxyUserName = m_pSettings->m_sProxyUserName;
-    m_sProxyPassword = m_pSettings->m_sProxyPassword;
-
     connect(m_pUi->buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
     connect(m_pUi->buttonBox, SIGNAL(rejected()),
@@ -174,11 +169,7 @@ void CSettingsDialog::accept() {
     m_pSettings->m_sListDisabledPlugins.removeAll("");
 
     // If the following settings have been changed, a restart is needed
-    if (m_pUi->proxyHostNameEdit->text() != m_sProxyHostName
-            || m_pUi->proxyPortSpinBox->value() != m_nProxyPort
-            || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
-            || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword
-            || m_pUi->GuiLangCombo->currentText() != m_sGuiLang
+    if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang
             || oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
         QMessageBox::information(0, this->windowTitle(),
                                  trUtf8("The editor has to be restarted for "

@@ -266,12 +266,6 @@ void CInyokaEdit::setupEditor() {
     // Restore toolbar position etc.
     this->restoreState(m_pSettings->getWindowState());
 
-    // Setting proxy if available
-    CUtils::setProxy(m_pSettings->getProxyHostName(),
-                     m_pSettings->getProxyPort(),
-                     m_pSettings->getProxyUserName(),
-                     m_pSettings->getProxyPassword());
-
     m_pUi->aboutAct->setText(
                 m_pUi->aboutAct->text() + " " + qApp->applicationName());
 }
@@ -1381,6 +1375,12 @@ void CInyokaEdit::updateEditorSettings() {
 
     m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
                                       m_pSettings->getInyokaUrl());
+
+    // Setting proxy if available
+    CUtils::setProxy(m_pSettings->getProxyHostName(),
+                     m_pSettings->getProxyPort(),
+                     m_pSettings->getProxyUserName(),
+                     m_pSettings->getProxyPassword());
 }
 
 // ----------------------------------------------------------------------------
