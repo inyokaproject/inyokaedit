@@ -54,8 +54,8 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     // Load Settings
     // General
     m_pUi->codeCompletionCheck->setChecked(m_pSettings->m_bCodeCompletion);
-    m_pUi->previewInEditorCheck->setChecked(m_pSettings->m_bTmpPreviewInEditor);
-    m_pUi->previewAlongsideCheck->setChecked(m_pSettings->m_bTmpPreviewAlongside);
+    m_pUi->splitHorizontalRadio->setChecked(m_pSettings->m_bPreviewSplitHorizontal);
+    m_pUi->splitVerticalRadio->setChecked(!m_pSettings->m_bPreviewSplitHorizontal);
     m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
     m_pUi->articleImageDownloadCheck->setChecked(m_pSettings->m_bAutomaticImageDownload);
     m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
@@ -90,9 +90,6 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     // Enter Qt keycode automatically in text box
     m_pUi->reloadPreviewKeyEdit->installEventFilter(this);
 
-    m_bTmpPreviewInEditor = m_pSettings->m_bPreviewInEditor;
-    m_bTmpPreviewAlongside = m_pSettings->m_bPreviewAlongside;
-
     // Font
     m_pUi->fontComboBox->setCurrentFont(QFont(m_pSettings->m_sFontFamily));
     m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
@@ -111,11 +108,6 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     m_nProxyPort = m_pSettings->m_nProxyPort;
     m_sProxyUserName = m_pSettings->m_sProxyUserName;
     m_sProxyPassword = m_pSettings->m_sProxyPassword;
-
-    connect(m_pUi->previewAlongsideCheck, SIGNAL(clicked(bool)),
-            this, SLOT(changedPreviewAlongside(bool)));
-    connect(m_pUi->previewInEditorCheck, SIGNAL(clicked(bool)),
-            this, SLOT(changedPreviewInEditor(bool)));
 
     connect(m_pUi->buttonBox, SIGNAL(accepted()),
             this, SLOT(accept()));
@@ -141,8 +133,7 @@ void CSettingsDialog::accept() {
 
     // General
     m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
-    m_pSettings->m_bTmpPreviewInEditor = m_pUi->previewInEditorCheck->isChecked();
-    m_pSettings->m_bTmpPreviewAlongside = m_pUi->previewAlongsideCheck->isChecked();
+    m_pSettings->m_bPreviewSplitHorizontal = m_pUi->splitHorizontalRadio->isChecked();
     m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
     m_pSettings->m_bAutomaticImageDownload = m_pUi->articleImageDownloadCheck->isChecked();
     m_pSettings->m_bCheckLinks = m_pUi->linkCheckingCheck->isChecked();
@@ -183,9 +174,7 @@ void CSettingsDialog::accept() {
     m_pSettings->m_sListDisabledPlugins.removeAll("");
 
     // If the following settings have been changed, a restart is needed
-    if (m_pUi->previewAlongsideCheck->isChecked() != m_bTmpPreviewAlongside
-            || m_pUi->previewInEditorCheck->isChecked() != m_bTmpPreviewInEditor
-            || m_pUi->proxyHostNameEdit->text() != m_sProxyHostName
+    if (m_pUi->proxyHostNameEdit->text() != m_sProxyHostName
             || m_pUi->proxyPortSpinBox->value() != m_nProxyPort
             || m_pUi->proxyUserNameEdit->text() != m_sProxyUserName
             || m_pUi->proxyPasswordEdit->text() != m_sProxyPassword
@@ -206,24 +195,6 @@ void CSettingsDialog::accept() {
 void CSettingsDialog::reject() {
     m_pUi->tabWidget->setCurrentIndex(0);  // Reset first tab after start
     QDialog::reject();
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CSettingsDialog::changedPreviewAlongside(bool bState) {
-    if (bState) {
-        m_pUi->previewInEditorCheck->setChecked(true);
-        m_pUi->scrollbarSyncCheck->setEnabled(true);
-    } else {
-        m_pUi->scrollbarSyncCheck->setEnabled(false);
-    }
-}
-
-void CSettingsDialog::changedPreviewInEditor(bool bState) {
-    if (!bState) {
-        m_pUi->previewAlongsideCheck->setChecked(false);
-    }
 }
 
 // ----------------------------------------------------------------------------

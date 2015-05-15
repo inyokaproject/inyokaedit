@@ -245,17 +245,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>CInyokaEdit</name>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="272"/>
-        <source>Raw format</source>
-        <translation>Rohformat</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="274"/>
-        <source>Preview</source>
-        <translation>Vorschau</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="331"/>
+        <location filename="../CInyokaEdit.cpp" line="302"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
@@ -496,7 +486,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="374"/>
-        <location filename="../CInyokaEdit.cpp" line="1138"/>
+        <location filename="../CInyokaEdit.cpp" line="1057"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
@@ -507,7 +497,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="386"/>
-        <location filename="../CInyokaEdit.cpp" line="1150"/>
+        <location filename="../CInyokaEdit.cpp" line="1069"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
@@ -518,7 +508,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="398"/>
-        <location filename="../CInyokaEdit.cpp" line="1162"/>
+        <location filename="../CInyokaEdit.cpp" line="1081"/>
         <source>Monotype</source>
         <translation>Monotype</translation>
     </message>
@@ -629,116 +619,116 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Inyoka-Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="752"/>
+        <location filename="../CInyokaEdit.cpp" line="716"/>
         <source>Step</source>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="777"/>
+        <location filename="../CInyokaEdit.cpp" line="741"/>
         <source>Text format</source>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="779"/>
-        <location filename="../CInyokaEdit.cpp" line="1055"/>
+        <location filename="../CInyokaEdit.cpp" line="743"/>
+        <location filename="../CInyokaEdit.cpp" line="974"/>
         <source>Folders</source>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="780"/>
+        <location filename="../CInyokaEdit.cpp" line="744"/>
         <source>Menu entries</source>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="781"/>
-        <location filename="../CInyokaEdit.cpp" line="1081"/>
+        <location filename="../CInyokaEdit.cpp" line="745"/>
+        <location filename="../CInyokaEdit.cpp" line="1000"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="782"/>
-        <location filename="../CInyokaEdit.cpp" line="1094"/>
+        <location filename="../CInyokaEdit.cpp" line="746"/>
+        <location filename="../CInyokaEdit.cpp" line="1013"/>
         <source>Command</source>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="870"/>
+        <location filename="../CInyokaEdit.cpp" line="811"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="883"/>
+        <location filename="../CInyokaEdit.cpp" line="824"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1068"/>
+        <location filename="../CInyokaEdit.cpp" line="987"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1174"/>
+        <location filename="../CInyokaEdit.cpp" line="1093"/>
         <source>Site name</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1198"/>
+        <location filename="../CInyokaEdit.cpp" line="1117"/>
         <source>Image.png</source>
         <translation>Bild.png</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1303"/>
+        <location filename="../CInyokaEdit.cpp" line="1222"/>
         <source>Sitename</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1304"/>
+        <location filename="../CInyokaEdit.cpp" line="1223"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1421"/>
+        <location filename="../CInyokaEdit.cpp" line="1338"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1556"/>
+        <location filename="../CInyokaEdit.cpp" line="1475"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1568"/>
+        <location filename="../CInyokaEdit.cpp" line="1487"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1576"/>
+        <location filename="../CInyokaEdit.cpp" line="1495"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1648"/>
+        <location filename="../CInyokaEdit.cpp" line="1563"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1665"/>
+        <location filename="../CInyokaEdit.cpp" line="1580"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="751"/>
-        <location filename="../CInyokaEdit.cpp" line="937"/>
+        <location filename="../CInyokaEdit.cpp" line="715"/>
+        <location filename="../CInyokaEdit.cpp" line="856"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="536"/>
+        <location filename="../CInyokaEdit.cpp" line="500"/>
         <source>Raw text</source>
         <translation>Rohtext</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="537"/>
+        <location filename="../CInyokaEdit.cpp" line="501"/>
         <source>Code without highlighting</source>
         <translation>Code ohne Highlighting</translation>
     </message>
@@ -769,127 +759,132 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="68"/>
-        <source>Preview in editor</source>
-        <translation>Vorschau im Editor</translation>
-    </message>
-    <message>
         <location filename="../CSettingsDialog.ui" line="40"/>
         <source>Code completion</source>
         <translation>Codevervollständigung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="61"/>
-        <source>Preview alongside</source>
-        <translation>Vorschau neben Editor</translation>
-    </message>
-    <message>
-        <location filename="../CSettingsDialog.ui" line="130"/>
+        <location filename="../CSettingsDialog.ui" line="137"/>
         <source>Gui language</source>
         <translation>Gui Sprache</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="172"/>
+        <location filename="../CSettingsDialog.ui" line="179"/>
         <source>Connection</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="181"/>
+        <location filename="../CSettingsDialog.ui" line="188"/>
         <source>URL to Inyoka wiki</source>
         <translation>URL zum Inyoka Wiki</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="191"/>
+        <location filename="../CSettingsDialog.ui" line="198"/>
         <source>Download article images automatically</source>
         <translation>Artikelbilder autom. herunterladen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="47"/>
+        <location filename="../CSettingsDialog.ui" line="54"/>
         <source>Enable link checking</source>
         <translation>Inyoka-Links überprüfen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="103"/>
+        <location filename="../CSettingsDialog.ui" line="89"/>
         <source>Time which to autosave an article after (sec, 0 means disabled)</source>
         <translation>Zeit nach der ein Artikel automatisch gespeichert wird (sek, 0 = deaktiviert)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="75"/>
+        <location filename="../CSettingsDialog.ui" line="82"/>
         <source>Autosave time (in sec)</source>
         <translation>Autospeicherzeit (in sek)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="82"/>
+        <location filename="../CSettingsDialog.ui" line="99"/>
         <source>Reload preview key</source>
         <translation>Taste Vorschau neu laden</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="113"/>
+        <location filename="../CSettingsDialog.ui" line="106"/>
         <source>Select input box and press the desired reload key. Press DEL to remove the key.</source>
         <translation>Eingabefeld markieren und gewünschte Reload-Taste drücken. Drücke &quot;Entf&quot; zum löschen der eingestellten Taste.</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="89"/>
+        <location filename="../CSettingsDialog.ui" line="113"/>
         <source>Auto reload preview (in sec)</source>
         <translation>Auto-Vorschau (in sek)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="54"/>
+        <location filename="../CSettingsDialog.ui" line="47"/>
         <source>Scrollbar synchronization</source>
         <translation>Scrollbalken synchronisieren</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="147"/>
+        <location filename="../CSettingsDialog.ui" line="75"/>
+        <source>Horizontal</source>
+        <translation>Horizontal</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="68"/>
+        <source>Vertical</source>
+        <translation>Vertikal</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="61"/>
+        <source>Preview window</source>
+        <translation>Vorschaufenster</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="154"/>
         <source>Font</source>
         <translation>Schriftart</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="157"/>
+        <location filename="../CSettingsDialog.ui" line="171"/>
         <source>Font size</source>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="205"/>
+        <location filename="../CSettingsDialog.ui" line="212"/>
         <source>Proxy host name</source>
         <translation>Proxy Hostname</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="215"/>
+        <location filename="../CSettingsDialog.ui" line="222"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="229"/>
+        <location filename="../CSettingsDialog.ui" line="236"/>
         <source>User name</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="239"/>
+        <location filename="../CSettingsDialog.ui" line="246"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="253"/>
+        <location filename="../CSettingsDialog.ui" line="260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Attention: Password not encrypted!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Achtung: Passwort wird nicht verschlüsselt!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="267"/>
+        <location filename="../CSettingsDialog.ui" line="274"/>
         <source>Check for updates (Windows only)</source>
         <translation>Nach Aktualisierungen suchen (nur Windows)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="275"/>
+        <location filename="../CSettingsDialog.ui" line="282"/>
         <source>Plugins</source>
         <translation>Erweiterungen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="96"/>
+        <location filename="../CSettingsDialog.ui" line="123"/>
         <source>Number of entries in recent files list</source>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="195"/>
+        <location filename="../CSettingsDialog.cpp" line="184"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>

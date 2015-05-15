@@ -41,31 +41,38 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="1" column="1">
         <widget class="QCheckBox" name="linkCheckingCheck">
          <property name="text">
           <string>Enable link checking</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="2" column="1">
         <widget class="QCheckBox" name="scrollbarSyncCheck">
          <property name="text">
           <string>Scrollbar synchronization</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QCheckBox" name="previewAlongsideCheck">
+       <item row="3" column="0">
+        <widget class="QLabel" name="previewsplitlabel">
          <property name="text">
-          <string>Preview alongside</string>
+          <string>Preview window</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="previewInEditorCheck">
+       <item row="3" column="1">
+        <widget class="QRadioButton" name="splitVerticalRadio">
          <property name="text">
-          <string>Preview in editor</string>
+          <string>Vertical</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QRadioButton" name="splitHorizontalRadio">
+         <property name="text">
+          <string>Horizontal</string>
          </property>
         </widget>
        </item>
@@ -73,27 +80,6 @@
         <widget class="QLabel" name="autosaveLabel">
          <property name="text">
           <string>Autosave time (in sec)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="reloadPreviewKeyLabel">
-         <property name="text">
-          <string>Reload preview key</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="timedPreviewLabel">
-         <property name="text">
-          <string>Auto reload preview (in sec)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="numberRecentFilesLabel">
-         <property name="text">
-          <string>Number of entries in recent files list</string>
          </property>
         </widget>
        </item>
@@ -107,6 +93,13 @@
          </property>
         </widget>
        </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="reloadPreviewKeyLabel">
+         <property name="text">
+          <string>Reload preview key</string>
+         </property>
+        </widget>
+       </item>
        <item row="6" column="1">
         <widget class="QLineEdit" name="reloadPreviewKeyEdit">
          <property name="toolTip">
@@ -114,8 +107,22 @@
          </property>
         </widget>
        </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="timedPreviewLabel">
+         <property name="text">
+          <string>Auto reload preview (in sec)</string>
+         </property>
+        </widget>
+       </item>
        <item row="7" column="1">
         <widget class="QSpinBox" name="timedPreviewsEdit"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="numberRecentFilesLabel">
+         <property name="text">
+          <string>Number of entries in recent files list</string>
+         </property>
+        </widget>
        </item>
        <item row="8" column="1">
         <widget class="QSpinBox" name="numberRecentFilesEdit">
@@ -151,17 +158,17 @@
        <item row="10" column="1">
         <widget class="QFontComboBox" name="fontComboBox"/>
        </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="fontSizeLabel">
-         <property name="text">
-          <string>Font size</string>
-         </property>
-        </widget>
-       </item>
        <item row="11" column="1">
         <widget class="QDoubleSpinBox" name="fontSizeEdit">
          <property name="decimals">
           <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="fontSizeLabel">
+         <property name="text">
+          <string>Font size</string>
          </property>
         </widget>
        </item>

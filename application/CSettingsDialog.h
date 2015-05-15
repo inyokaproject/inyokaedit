@@ -61,8 +61,6 @@ class CSettingsDialog : public QDialog {
     bool eventFilter(QObject *obj, QEvent *event);
 
   private slots:
-    void changedPreviewAlongside(bool bState);
-    void changedPreviewInEditor(bool bState);
     void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
                              const QList<QObject *> PluginObjList);
 
@@ -71,8 +69,6 @@ class CSettingsDialog : public QDialog {
     CSettings *m_pSettings;
     QString m_sSharePath;
 
-    bool m_bTmpPreviewInEditor;
-    bool m_bTmpPreviewAlongside;
     QString m_sProxyHostName;
     quint16 m_nProxyPort;
     QString m_sProxyUserName;

@@ -136,7 +136,7 @@ class CInyokaEdit : public QMainWindow {
     void deleteTempImages();
 
     // Preview / download toolbar
-    void previewInyokaPage(const int nIndex = 999);
+    void previewInyokaPage();
     void loadPreviewFinished(const bool bSuccess);
 
     void changedUrl();
@@ -200,7 +200,6 @@ class CInyokaEdit : public QMainWindow {
     QBoxLayout *m_pFrameLayout;
 
     // QTabWidget *m_pTabwidgetDocuments;
-    QTabWidget *m_pTabwidgetRawPreview;
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
 

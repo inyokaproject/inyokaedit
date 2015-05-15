@@ -145,10 +145,7 @@ void CInyokaEdit::createObjects() {
     m_pEditor = new CTextEditor(m_pTemplates->getListTplMacrosALL(),
                                 m_UserDataDir.absolutePath(),
                                 this);
-
-//  if (true == m_pSettings->getPreviewAlongside()) {
     m_pEditor->installEventFilter(this);
-//  }
 
     /*
     m_pUploadModule = new CUpload(this, m_pSettings->getInyokaUrl(),
@@ -167,7 +164,6 @@ void CInyokaEdit::createObjects() {
 
     // TODO: Add tabs for editing multiple documents.
     // m_pTabwidgetDocuments = new QTabWidget;
-    m_pTabwidgetRawPreview = new QTabWidget;
 
     m_pWebview = new QWebView(this);
     m_pWebview->installEventFilter(this);
@@ -213,10 +209,6 @@ void CInyokaEdit::setupEditor() {
     connect(m_pPreviewTimer, SIGNAL(timeout()),
             this, SLOT(previewInyokaPage()));
 
-    this->updateEditorSettings();
-    connect(m_pSettings, SIGNAL(updateEditorSettings()),
-            this, SLOT(updateEditorSettings()));
-
     // Find/replace dialogs
     m_pFindReplace->setEditor(m_pEditor);
 
@@ -237,48 +229,31 @@ void CInyokaEdit::setupEditor() {
     connect(m_pWebview, SIGNAL(loadFinished(bool)),
             this, SLOT(loadPreviewFinished(bool)));
 
-    if (true == m_pSettings->getPreviewAlongside()
-            && true == m_pSettings->getPreviewInEditor()) {
-        m_pWidgetSplitter = new QSplitter;
+    m_pWidgetSplitter = new QSplitter;
 
-        // TODO: Add tabs for editing multiple documents.
-        /*
-        m_pWidgetSplitter->addWidget(m_pTabwidgetDocuments);
-        m_pTabwidgetDocuments->addTab(m_pEditor, trUtf8("Untitled"));
-        */
+    // TODO: Add tabs for editing multiple documents.
+    /*
+    m_pWidgetSplitter->addWidget(m_pTabwidgetDocuments);
+    m_pTabwidgetDocuments->addTab(m_pEditor, trUtf8("Untitled"));
+    */
 
-        m_pWidgetSplitter->addWidget(m_pEditor);
-        m_pWidgetSplitter->addWidget(m_pWebview);
+    m_pWidgetSplitter->addWidget(m_pEditor);
+    m_pWidgetSplitter->addWidget(m_pWebview);
+    setCentralWidget(m_pWidgetSplitter);
 
-        connect(m_pFileOperations, SIGNAL(loadedFile()),
-                this, SLOT(previewInyokaPage()));
+    m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
-        setCentralWidget(m_pWidgetSplitter);
-        m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
+    this->updateEditorSettings();
+    connect(m_pSettings, SIGNAL(updateEditorSettings()),
+            this, SLOT(updateEditorSettings()));
 
-        // Show an empty website after start
-        if (!m_bOpenFileAfterStart) {
-            this->previewInyokaPage();
-        }
-    } else {
-        // TODO: Add tabs for editing multiple documents.
-        /*
-        setCentralWidget(m_pTabwidgetDocuments);
-        m_pTabwidgetDocuments->addTab(m_pTabwidgetRawPreview, trUtf8("Untitled"));
-        */
-
-        setCentralWidget(m_pTabwidgetRawPreview);
-        m_pTabwidgetRawPreview->setTabPosition(QTabWidget::West);
-        m_pTabwidgetRawPreview->addTab(m_pEditor, trUtf8("Raw format"));
-
-        m_pTabwidgetRawPreview->addTab(m_pWebview, trUtf8("Preview"));
-        if (false == m_pSettings->getPreviewInEditor()) {
-            m_pTabwidgetRawPreview->setTabEnabled(
-                        m_pTabwidgetRawPreview->indexOf(
-                            m_pWebview), false);
-        }
+    // Show an empty website after start
+    if (!m_bOpenFileAfterStart) {
+        this->previewInyokaPage();
     }
 
+    connect(m_pFileOperations, SIGNAL(loadedFile()),
+            this, SLOT(previewInyokaPage()));
     m_pFileOperations->setCurrentFile("");
     this->setUnifiedTitleAndToolBarOnMac(true);
 
@@ -290,10 +265,6 @@ void CInyokaEdit::setupEditor() {
     this->restoreGeometry(m_pSettings->getWindowGeometry());
     // Restore toolbar position etc.
     this->restoreState(m_pSettings->getWindowState());
-
-    if (false == m_pSettings->getPreviewAlongside()) {
-        this->removeToolBar(m_pUi->browserBar);
-    }
 
     // Setting proxy if available
     CUtils::setProxy(m_pSettings->getProxyHostName(),
@@ -352,9 +323,6 @@ void CInyokaEdit::createActions() {
                                             QIcon(":/images/document-print.png")));
     connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(printPreview()));
-    if (false == m_pSettings->getPreviewAlongside()) {
-        m_pUi->printPreviewAct->setEnabled(false);
-    }
 
     // Exit application
     m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
@@ -465,10 +433,6 @@ void CInyokaEdit::createActions() {
     m_pUi->previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
     connect(m_pUi->previewAct, SIGNAL(triggered()),
             this, SLOT(previewInyokaPage()));
-
-    // Click on tabs of widget - int = index of tab
-    connect(m_pTabwidgetRawPreview, SIGNAL(currentChanged(int)),
-            this, SLOT(previewInyokaPage(int)));
 
     // Download Inyoka article
     connect(m_pUi->downloadArticleAct, SIGNAL(triggered()),
@@ -838,30 +802,7 @@ void CInyokaEdit::openFile() {
 // ----------------------------------------------------------------------------
 
 // Call parser
-void CInyokaEdit::previewInyokaPage(const int nIndex) {
-    // Call parser if iIndex == index of m_pWebview -> Click on tab preview
-    // or if iIndex == 999 -> Default parameter value when calling the function
-    // e.g. by clicking on button preview
-    if (m_pTabwidgetRawPreview->indexOf(m_pWebview) == nIndex
-            || 999 == nIndex) {
-        // Only disable buttons if preview is not shown alongside editor
-        if (false == m_pSettings->getPreviewAlongside()
-                && true == m_pSettings->getPreviewInEditor()) {
-            // Disable editor and insert samples/macros toolbars
-            m_pUi->editMenu->setDisabled(true);
-            m_pTplMenu->setDisabled(true);
-            m_piWikiMenu->setDisabled(true);
-            m_pUi->editToolBar->setDisabled(true);
-            m_pUi->inyokaeditorBar->setDisabled(true);
-            // this->removeToolBar(m_pUi->inyokaeditorBar);
-            m_pUi->samplesmacrosBar->setDisabled(true);
-            // this->removeToolBar(m_pUi->samplesmacrosBar);
-            m_pUi->previewAct->setDisabled(true);
-            this->addToolBar(m_pUi->browserBar);
-            m_pUi->browserBar->show();
-
-            m_pUi->printPreviewAct->setEnabled(true);
-        }
+void CInyokaEdit::previewInyokaPage() {
 
         m_pWebview->history()->clear();  // Clear history (clicked links)
 
@@ -895,36 +836,14 @@ void CInyokaEdit::previewInyokaPage(const int nIndex) {
         tmpoutputstream << sRetHTML;
         tmphtmlfile.close();
 
-        if (false == m_pSettings->getPreviewInEditor()) {
-            // Open html-file in system web browser
-            QDesktopServices::openUrl(
-                        QUrl::fromLocalFile(
-                            QFileInfo(tmphtmlfile).absoluteFilePath()) );
-        } else {
+
             // Store scroll position
             m_WebviewScrollPosition =
                     m_pWebview->page()->mainFrame()->scrollPosition();
             m_pWebview->load(
                         QUrl::fromLocalFile(
                             QFileInfo(tmphtmlfile).absoluteFilePath()));
-        }
-    } else {
-        // Enable editor and insert samples/macros toolbars again
-        m_pUi->editMenu->setEnabled(true);
-        m_pTplMenu->setEnabled(true);
-        m_piWikiMenu->setEnabled(true);
-        m_pUi->editToolBar->setEnabled(true);
-        m_pUi->inyokaeditorBar->setEnabled(true);
-        // this->addToolBar(m_pUi->inyokaeditorBar);
-        // m_pUi->inyokaeditorBar->show();
-        m_pUi->samplesmacrosBar->setEnabled(true);
-        // this->addToolBar(m_pUi->samplesmacrosBar);
-        // m_pUi->samplesmacrosBar->show();
-        m_pUi->previewAct->setEnabled(true);
-        this->removeToolBar(m_pUi->browserBar);
 
-        m_pUi->printPreviewAct->setEnabled(false);
-    }
 }
 
 // ----------------------------------------------------------------------------
@@ -1397,8 +1316,6 @@ void CInyokaEdit::displayArticleText(const QString &sArticleText,
 // Wait until loading has finished
 void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
     if (bSuccess) {
-        m_pTabwidgetRawPreview->setCurrentIndex(
-                    m_pTabwidgetRawPreview->indexOf(m_pWebview));
         // Enable / disbale back button
         if (m_pWebview->history()->canGoBack()) {
             m_pUi->goBackBrowserAct->setEnabled(true);
@@ -1448,10 +1365,14 @@ void CInyokaEdit::updateEditorSettings() {
     m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
                               m_pSettings->getCheckLinks());
 
+    if (m_pSettings->getPreviewHorizontal()) {
+        m_pWidgetSplitter->setOrientation(Qt::Vertical);
+    } else {
+        m_pWidgetSplitter->setOrientation(Qt::Horizontal);
+    }
+
     m_pPreviewTimer->stop();
-    if (m_pSettings->getPreviewInEditor()
-            && m_pSettings->getPreviewAlongside()
-            && m_pSettings->getTimedPreview() != 0) {
+    if (m_pSettings->getTimedPreview() != 0) {
         m_pPreviewTimer->start(m_pSettings->getTimedPreview() * 1000);
     }
 
@@ -1522,11 +1443,9 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
         }
         // --------------------------------------------------------------------
         // --------------------------------------------------------------------
-        // Reload preview at F5 or defined button if preview alongside
+        // Reload preview at F5 or defined button
         else if ((Qt::Key_F5 == keyEvent->key()
                   || m_pSettings->getReloadPreviewKey() == keyEvent->key())
-                 && (true == m_pSettings->getPreviewAlongside()
-                     && true == m_pSettings->getPreviewInEditor())
                  && !m_bReloadPreviewBlocked) {
             m_bReloadPreviewBlocked = true;
             previewInyokaPage();
@@ -1584,8 +1503,10 @@ void CInyokaEdit::deleteTempImages() {
 
 // Set modified flag for window
 void CInyokaEdit::documentWasModified() {
+    /*
     m_pTabwidgetRawPreview->setCurrentIndex(
                 m_pTabwidgetRawPreview->indexOf(m_pEditor));
+    */
     this->setWindowModified(m_pEditor->document()->isModified());
 }
 
@@ -1593,10 +1514,7 @@ void CInyokaEdit::documentWasModified() {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsEditor() {
-    if (!m_bWebviewScrolling
-            && true == m_pSettings->getSyncScrollbars()
-            &&true == m_pSettings->getPreviewAlongside()
-            && true == m_pSettings->getPreviewInEditor()) {
+    if (!m_bWebviewScrolling && true == m_pSettings->getSyncScrollbars()) {
         int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                     Qt::Vertical);
@@ -1612,10 +1530,7 @@ void CInyokaEdit::syncScrollbarsEditor() {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsWebview() {
-    if (!m_bEditorScrolling
-            && true == m_pSettings->getSyncScrollbars()
-            && true == m_pSettings->getPreviewAlongside()
-            && true == m_pSettings->getPreviewInEditor()) {
+    if (!m_bEditorScrolling && true == m_pSettings->getSyncScrollbars()) {
         int nSizeEditorBar = m_pEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                     Qt::Vertical);
@@ -1674,13 +1589,8 @@ void CInyokaEdit::showSyntaxOverview() {
 // Close event (File -> Close or X)
 void CInyokaEdit::closeEvent(QCloseEvent *event) {
     if (m_pFileOperations->maybeSave()) {
-        if (true == m_pSettings->getPreviewAlongside()
-                && true == m_pSettings->getPreviewInEditor()) {
-            m_pSettings->writeSettings(saveGeometry(), saveState(),
-                                       m_pWidgetSplitter->saveState());
-        } else {
-            m_pSettings->writeSettings(saveGeometry(), saveState());
-        }
+        m_pSettings->writeSettings(saveGeometry(), saveState(),
+                                   m_pWidgetSplitter->saveState());
         event->accept();
     } else {
         event->ignore();

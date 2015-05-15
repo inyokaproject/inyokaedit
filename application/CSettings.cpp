@@ -84,12 +84,8 @@ void CSettings::readSettings() {
     m_sGuiLanguage = m_pSettings->value("GuiLanguage", "auto").toString();
     m_bCodeCompletion = m_pSettings->value("CodeCompletion",
                                            true).toBool();
-    m_bPreviewInEditor = m_pSettings->value("PreviewInEditor",
+    m_bPreviewSplitHorizontal = m_pSettings->value("PreviewSplitHorizontal",
                                             true).toBool();
-    m_bPreviewAlongside = m_pSettings->value("PreviewAlongside",
-                                             false).toBool();
-    m_bTmpPreviewInEditor = m_bPreviewInEditor;
-    m_bTmpPreviewAlongside = m_bPreviewAlongside;
     m_sInyokaUrl = m_pSettings->value("InyokaUrl",
                                       "http://wiki.ubuntuusers.de").toString();
     if (m_sInyokaUrl.endsWith("/")) {
@@ -201,8 +197,7 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     // General settings
     m_pSettings->setValue("GuiLanguage", m_sGuiLanguage);
     m_pSettings->setValue("CodeCompletion", m_bCodeCompletion);
-    m_pSettings->setValue("PreviewInEditor", m_bTmpPreviewInEditor);
-    m_pSettings->setValue("PreviewAlongside", m_bTmpPreviewAlongside);
+    m_pSettings->setValue("PreviewSplitHorizontal", m_bPreviewSplitHorizontal);
     m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
     m_pSettings->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
     m_pSettings->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
@@ -260,11 +255,7 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
     m_pSettings->beginGroup("Window");
     m_pSettings->setValue("Geometry", WinGeometry);
     m_pSettings->setValue("WindowState", WinState);
-    if (true == m_bPreviewAlongside && true == m_bPreviewInEditor) {
-        m_pSettings->setValue("SplitterState", SplitterState);
-    } else {
-        m_pSettings->setValue("SplitterState", m_aSplitterState);
-    }
+    m_pSettings->setValue("SplitterState", SplitterState);
     m_pSettings->endGroup();
 }
 
@@ -276,6 +267,8 @@ void CSettings::removeObsolete() {
     m_pSettings->remove("ConfVersion");
     m_pSettings->remove("ShowStatusbar");
     m_pSettings->remove("SpellCheckerLanguage");
+    m_pSettings->remove("PreviewAlongside");
+    m_pSettings->remove("PreviewInEditor");
     m_pSettings->beginGroup("FindDialog");
     m_pSettings->remove("");
     m_pSettings->endGroup();
@@ -317,12 +310,8 @@ bool CSettings::getAutomaticImageDownload() const {
     return m_bAutomaticImageDownload;
 }
 
-bool CSettings::getPreviewInEditor() const {
-    return m_bPreviewInEditor;
-}
-
-bool CSettings::getPreviewAlongside() const {
-    return m_bPreviewAlongside;
+bool CSettings::getPreviewHorizontal() const {
+    return m_bPreviewSplitHorizontal;
 }
 
 QDir CSettings::getLastOpenedDir() const {
