@@ -58,8 +58,7 @@ class CHighlighter : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir,
-                    const QString sSharePath);
+                    const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     QTranslator* getPluginTranslator(const QString &sSharePath,
@@ -69,6 +68,7 @@ class CHighlighter : public QObject, IEditorPlugin {
     bool includeMenu() const;
     bool includeToolbar() const;
     bool hasSettings() const;
+    void setCurrentEditor(CTextEditor *pEditor);
 
   public slots:
     void callPlugin();

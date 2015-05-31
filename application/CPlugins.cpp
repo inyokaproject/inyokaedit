@@ -135,3 +135,14 @@ void CPlugins::loadPlugins() {
     emit addMenuToolbarEntries(m_PluginToolbarEntries, m_PluginMenuEntries);
     emit availablePlugins(m_listPlugins, m_listPluginObjects);
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CPlugins::setCurrentEditor(CTextEditor *pEditor) {
+    for (int i = 0; i < m_listPlugins.size(); i++) {
+        if (!m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
+            m_listPlugins[i]->setCurrentEditor(pEditor);
+        }
+    }
+}

@@ -42,6 +42,7 @@ class CPlugins : public QObject {
              const QStringList &sListDisabledPlugins, const QDir userDataDir,
              const QString &sSharePath);
     void loadPlugins();
+    void setCurrentEditor(CTextEditor *pEditor);
 
   signals:
     void availablePlugins(const QList<IEditorPlugin *> PluginList,

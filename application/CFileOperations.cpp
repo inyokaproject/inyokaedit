@@ -30,6 +30,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>
+#include <QScrollBar>
 
 #if QT_VERSION >= 0x050000
     #include <QtWebKitWidgets/QWebView>
@@ -39,16 +40,42 @@
 
 #include "./CFileOperations.h"
 
-CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
-                                 CSettings *pSettings,
-                                 const QString &sPreviewFile)
+CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
+                                 CSettings *pSettings, const QString &sPreviewFile,
+                                 QString sUserDataDir, QStringList sListTplMacros)
     : m_pParent(pParent),
-      m_pEditor(pEditor),
+      m_pDocumentTabs(pTabWidget),
+      m_pCurrentEditor(NULL),
       m_pSettings(pSettings),
       m_sPreviewFile(sPreviewFile),
       m_sFileFilter(trUtf8("Inyoka document") + " (*.iny *.inyoka);;"
-                    + trUtf8("All files") + " (*)") {
+                    + trUtf8("All files") + " (*)"),
+      m_bLoadPreview(false),
+      m_sUserDataDir(sUserDataDir),
+      m_sListTplMacros(sListTplMacros) {
     qDebug() << "Calling" << Q_FUNC_INFO;
+
+    m_pFindReplace = new CFindReplace();
+    connect(this, SIGNAL(triggeredFind()),
+            m_pFindReplace, SLOT(callFind()));
+    connect(this, SIGNAL(triggeredReplace()),
+            m_pFindReplace, SLOT(callReplace()));
+    connect(this, SIGNAL(triggeredFindNext()),
+            m_pFindReplace, SLOT(findNext()));
+    connect(this, SIGNAL(triggeredFindPrevious()),
+            m_pFindReplace, SLOT(findPrevious()));
+
+    // Install auto save timer
+    m_pTimerAutosave = new QTimer(this);
+    connect(m_pTimerAutosave, SIGNAL(timeout()),
+            this, SLOT(saveDocumentAuto()));
+
+    this->newFile();
+
+    connect(m_pDocumentTabs, SIGNAL(currentChanged(int)),
+            this, SLOT(changedDocTab(int)));
+    connect(m_pDocumentTabs, SIGNAL(tabCloseRequested(int)),
+            this, SLOT(closeDocument(int)));
 
     // Generate recent files list
     m_pSigMapLastOpenedFiles = new QSignalMapper(this);
@@ -66,34 +93,88 @@ CFileOperations::CFileOperations(QWidget *pParent, CTextEditor *pEditor,
     }
     connect(m_pSigMapLastOpenedFiles, SIGNAL(mapped(int)),
             this, SLOT(openRecentFile(int)));
+
+    // Clear recent files list
+    m_LastOpenedFilesAct.append(new QAction(this));
+    m_LastOpenedFilesAct.last()->setSeparator(true);
+    m_pClearRecentFilesAct = new QAction(trUtf8("Clear list"), this);
+    m_LastOpenedFilesAct << m_pClearRecentFilesAct;
+
+    connect(m_pClearRecentFilesAct, SIGNAL(triggered()),
+            this, SLOT(clearRecentFiles()));
+
+    m_pSigMapOpenTemplate = new QSignalMapper(this);
+    connect(m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
+            this, SLOT(loadFile(QString)));
+    connect(m_pSettings, SIGNAL(updateEditorSettings()),
+            this, SLOT(updateEditorSettings()));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CFileOperations::newFile() {
-    if (this->maybeSave()) {
-        m_pEditor->clear();
-        this->setCurrentFile("");
-        emit this->loadedFile();
+    this->newFile("");
+}
+
+void CFileOperations::newFile(QString sFileName) {
+    static quint8 nCntDocs = 0;
+
+    m_pCurrentEditor = new CTextEditor(m_sListTplMacros, m_pParent);
+    m_pListEditors << m_pCurrentEditor;
+    m_pCurrentEditor->installEventFilter(m_pParent);
+
+    if (sFileName.isEmpty() || "!_TPL_!" == sFileName) {
+        if ("!_TPL_!" == sFileName) {
+            m_bLoadPreview = false;
+        } else {
+            m_bLoadPreview = true;
+        }
+        nCntDocs++;
+        sFileName = trUtf8("Untitled");
+        if (nCntDocs > 1 && nCntDocs < 254) {
+            sFileName += " (" + QString::number(nCntDocs) + ")";
+        }
+    } else {
+        m_bLoadPreview = false;
     }
+
+    QFileInfo file(sFileName);
+    m_pCurrentEditor->setFileName(sFileName);
+    this->setCurrentEditor();
+    m_pDocumentTabs->addTab(m_pCurrentEditor, file.fileName());
+    m_pDocumentTabs->setTabToolTip(m_pDocumentTabs->count() - 1,
+                                   m_pCurrentEditor->getFileName());
+
+    connect(m_pCurrentEditor, SIGNAL(documentChanged(bool)),
+            this, SIGNAL(modifiedDoc(bool)));
+    connect(m_pCurrentEditor, SIGNAL(copyAvailable(bool)),
+            this, SIGNAL(copyAvailable(bool)));
+    connect(m_pCurrentEditor, SIGNAL(undoAvailable(bool)),
+            this, SIGNAL(undoAvailable(bool)));
+    connect(m_pCurrentEditor, SIGNAL(redoAvailable(bool)),
+            this, SIGNAL(redoAvailable(bool)));
+    connect(m_pCurrentEditor->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            this, SIGNAL(movedEditorScrollbar()));
+
+    m_pDocumentTabs->setCurrentIndex(m_pDocumentTabs->count() - 1);
+    this->updateEditorSettings();
+    emit this->newEditor();
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CFileOperations::open() {
-    if (this->maybeSave()) {
-        // File dialog opens last used folder
-        QString sFileName = QFileDialog::getOpenFileName(
-                    m_pParent, trUtf8("Open file"),
-                    m_pSettings->getLastOpenedDir().absolutePath(),
-                    m_sFileFilter);
-        if (!sFileName.isEmpty()) {
-            QFileInfo tmpFI(sFileName);
-            m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
-            this->loadFile(sFileName, true, false);
-        }
+    // File dialog opens last used folder
+    QString sFileName = QFileDialog::getOpenFileName(
+                m_pParent, trUtf8("Open file"),
+                m_pSettings->getLastOpenedDir().absolutePath(),
+                m_sFileFilter);
+    if (!sFileName.isEmpty()) {
+        QFileInfo tmpFI(sFileName);
+        m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
+        this->loadFile(sFileName, true);
     }
 }
 
@@ -101,17 +182,18 @@ void CFileOperations::open() {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::openRecentFile(const int nEntry) {
-    this->loadFile(m_pSettings->getRecentFiles()[nEntry], true, true);
+    this->loadFile(m_pSettings->getRecentFiles()[nEntry], true);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 bool CFileOperations::save() {
-    if (m_sCurFile.isEmpty()) {
+    if (m_pCurrentEditor->getFileName().isEmpty() ||
+            m_pCurrentEditor->getFileName().contains(trUtf8("Untitled"))) {
         return this->saveAs();
     } else {
-        return this->saveFile(m_sCurFile);
+        return this->saveFile(m_pCurrentEditor->getFileName());
     }
 }
 
@@ -119,9 +201,10 @@ bool CFileOperations::save() {
 // ----------------------------------------------------------------------------
 
 bool CFileOperations::saveAs() {
-    QString sCurFileName("");
-    if (!m_sCurFile.isEmpty()) {
-        sCurFileName = m_sCurFile;
+    QString sCurFileName(trUtf8("Untitled"));
+    if (!m_pCurrentEditor->getFileName().isEmpty() &&
+            !m_pCurrentEditor->getFileName().contains(sCurFileName)) {
+        sCurFileName = m_pCurrentEditor->getFileName();
     } else {
         sCurFileName = m_pSettings->getLastOpenedDir().absolutePath();
     }
@@ -147,13 +230,13 @@ bool CFileOperations::saveAs() {
 
 // Handle unsaved files
 bool CFileOperations::maybeSave() {
-    if (m_pEditor->document()->isModified()) {
+    if (m_pCurrentEditor->document()->isModified()) {
         QMessageBox::StandardButton ret;
         QString sTempCurFileName;
-        if (m_sCurFile.isEmpty()) {
-            sTempCurFileName = trUtf8("Untitled", "No file name set");
+        if (m_pCurrentEditor->getFileName().isEmpty()) {
+            sTempCurFileName = trUtf8("Untitled");
         } else {
-            QFileInfo tempCurFile(m_sCurFile);
+            QFileInfo tempCurFile(m_pCurrentEditor->getFileName());
             sTempCurFileName = tempCurFile.fileName();
         }
 
@@ -177,22 +260,16 @@ bool CFileOperations::maybeSave() {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::loadFile(const QString &sFileName,
-                               const bool bUpdateRecent,
-                               const bool bCheckSave) {
-    if (bCheckSave) {
-        if (!this->maybeSave()) {
-            return;
-        }
-    }
-
-    QFile file(sFileName);
+                               const bool bUpdateRecent) {
+    QString sTmpName(sFileName);
+    QFile file(sTmpName);
     // No permission to read
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(m_pParent, qApp->applicationName(),
                              trUtf8("The file \"%1\" could not be opened:\n%2.")
-                             .arg(sFileName)
+                             .arg(sTmpName)
                              .arg(file.errorString()));
-        qWarning() << "File" << sFileName << "could not be opened:"
+        qWarning() << "File" << sTmpName << "could not be opened:"
                    << file.errorString();
         return;
     }
@@ -204,20 +281,22 @@ void CFileOperations::loadFile(const QString &sFileName,
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-    m_pEditor->setPlainText(in.readAll());
+    m_bLoadPreview = false;
+    if (sTmpName.endsWith(".tpl")) {
+        sTmpName = "!_TPL_!";
+    }
+    this->newFile(sTmpName);
+    m_pCurrentEditor->setPlainText(in.readAll());
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
 
     // Do not update recent files if template is loaded
     if (bUpdateRecent) {
-        this->updateRecentFiles(sFileName);
-        this->setCurrentFile(sFileName);
-    } else {
-        this->setCurrentFile("");
+        this->updateRecentFiles(sTmpName);
     }
 
-    emit this->loadedFile();
+    emit this->callPreview();
 }
 
 // ----------------------------------------------------------------------------
@@ -243,16 +322,58 @@ bool CFileOperations::saveFile(const QString &sFileName) {
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
-    out << m_pEditor->toPlainText();
+    out << m_pCurrentEditor->toPlainText();
     file.close();
+
+    m_pCurrentEditor->setFileName(sFileName);
+    QFileInfo fi(m_pCurrentEditor->getFileName());
+    m_pDocumentTabs->setTabText(m_pDocumentTabs->indexOf(m_pCurrentEditor),
+                               fi.fileName());
+    m_pDocumentTabs->setTabToolTip(m_pDocumentTabs->indexOf(m_pCurrentEditor),
+                                   m_pCurrentEditor->getFileName());
+    m_pCurrentEditor->document()->setModified(false);
+    this->setCurrentEditor();
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
 
     this->updateRecentFiles(sFileName);
-    this->setCurrentFile(sFileName);
-
     return true;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CFileOperations::saveDocumentAuto() {
+    if (!m_bCloseApp) {
+        qDebug() << "Calling" << Q_FUNC_INFO;
+        QFile fAutoSave;
+        for (int i = 0; i < m_pListEditors.count(); i++) {
+            if (NULL != m_pListEditors[i]) {
+                if (m_pListEditors[i]->getFileName().contains(
+                            trUtf8("Untitled"))) {
+                    fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
+                                          QString::number(i) + ".bak~");
+                } else {
+                    fAutoSave.setFileName(
+                                m_pListEditors[i]->getFileName() + ".bak~");
+                }
+                QTextStream outStream(&fAutoSave);
+                outStream.setCodec("UTF-8");
+                outStream.setAutoDetectUnicode(true);
+
+                // No write permission
+                if (!fAutoSave.open(QFile::WriteOnly | QFile::Text)) {
+                    qWarning() << "Could not open auto backup"
+                               << fAutoSave.fileName() << "file!";
+                    return;
+                }
+
+                outStream << m_pListEditors[i]->toPlainText();
+                fAutoSave.close();
+            }
+        }
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -344,27 +465,6 @@ void CFileOperations::printPreview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CFileOperations::getCurrentFile() const {
-    return m_sCurFile;
-}
-
-// ----------------------------------------------------------------------------
-
-void CFileOperations::setCurrentFile(const QString &sFileName) {
-    m_sCurFile = sFileName;
-    m_pEditor->document()->setModified(false);
-    m_pParent->setWindowModified(false);
-
-    QString sShownName = m_sCurFile;
-    if (m_sCurFile.isEmpty()) {
-        sShownName = trUtf8("Untitled");
-    }
-    m_pParent->setWindowFilePath(sShownName);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
 QList<QAction *> CFileOperations::getLastOpenedFiles() const {
     return m_LastOpenedFilesAct;
 }
@@ -416,3 +516,125 @@ void CFileOperations::updateRecentFiles(const QString &sFileName) {
 void CFileOperations::clearRecentFiles() {
     this->updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CFileOperations::changedDocTab(int nIndex) {
+    if (nIndex < m_pListEditors.size() && nIndex >= 0) {
+        m_pCurrentEditor = m_pListEditors[nIndex];
+        this->setCurrentEditor();
+
+        if (!m_bCloseApp && m_bLoadPreview) {
+            emit this->callPreview();
+        }
+        m_bLoadPreview = true;
+        emit this->modifiedDoc(m_pCurrentEditor->document()->isModified());
+        emit this->undoAvailable2(m_pCurrentEditor->document()->isUndoAvailable());
+        emit this->redoAvailable2(m_pCurrentEditor->document()->isRedoAvailable());
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CFileOperations::copy() {
+    m_pCurrentEditor->copy();
+}
+void CFileOperations::cut() {
+    m_pCurrentEditor->cut();
+}
+void CFileOperations::paste() {
+    m_pCurrentEditor->paste();
+}
+void CFileOperations::undo() {
+    m_pCurrentEditor->undo();
+}
+void CFileOperations::redo() {
+    m_pCurrentEditor->redo();
+}
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CFileOperations::updateEditorSettings() {
+    foreach (CTextEditor *pEditor, m_pListEditors) {
+        pEditor->setFont(m_pSettings->getEditorFont());
+        pEditor->updateTextEditorSettings(m_pSettings->getCodeCompletion());
+    }
+
+    m_pTimerAutosave->stop();
+    if (0 != m_pSettings->getAutoSave()) {
+        m_pTimerAutosave->setInterval(m_pSettings->getAutoSave() * 1000);
+        m_pTimerAutosave->start();
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CFileOperations::closeDocument(int nIndex) {
+    m_pDocumentTabs->setCurrentIndex(nIndex);
+    m_pCurrentEditor = m_pListEditors[nIndex];
+    m_bLoadPreview = false;
+    this->setCurrentEditor();
+
+    if (this->maybeSave()) {
+        m_pDocumentTabs->removeTab(nIndex);
+        m_pListEditors[nIndex]->deleteLater();
+        m_pListEditors[nIndex] = NULL;
+        m_pListEditors.removeAt(nIndex);
+
+        if (m_pDocumentTabs->count() > 0) {
+            m_pCurrentEditor = m_pListEditors.last();
+            this->setCurrentEditor();
+            m_pDocumentTabs->setCurrentIndex(m_pDocumentTabs->count() - 1);
+            if (nIndex == m_pDocumentTabs->count() && !m_bCloseApp) {
+                emit this->callPreview();
+            }
+        } else if (!m_bCloseApp) {
+            this->newFile();
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CFileOperations::closeAllmaybeSave() {
+    m_bCloseApp = true;
+    for (int i = m_pDocumentTabs->count() - 1; i >= 0; i--) {
+        if (!this->closeDocument(i)) {
+            m_bCloseApp = false;
+            return false;
+        }
+    }
+    m_bCloseApp = false;
+    return true;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString CFileOperations::getCurrentFile() const {
+    QFileInfo file(m_pCurrentEditor->getFileName());
+    return file.baseName();
+}
+
+void CFileOperations::setCurrentEditor() {
+    QFileInfo file(m_pCurrentEditor->getFileName());
+    m_pParent->setWindowFilePath(file.fileName());
+    emit this->changedCurrentEditor();
+    m_pFindReplace->setEditor(m_pCurrentEditor);
+}
+
+CTextEditor* CFileOperations::getCurrentEditor() {
+    return m_pCurrentEditor;
+}
+/*
+QList<CTextEditor *> CFileOperations::getEditors() const {
+    return m_pListEditors;
+}
+*/

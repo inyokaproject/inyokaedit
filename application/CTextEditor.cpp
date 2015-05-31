@@ -50,14 +50,13 @@
 
 #include "./CTextEditor.h"
 
+
 CTextEditor::CTextEditor(QStringList sListTplMacros,
-                         QString sUserAppDir,
                          QWidget *pParent)
     : QTextEdit(pParent),
-      m_UserAppDir(sUserAppDir),
-      m_bCodeCompState(false),
-      m_sListCompleter(sListTplMacros),
-      nTimeMultiplier(1000) {
+      m_sFileName(""),
+      m_bCodeCompletion(false),
+      m_sListCompleter(sListTplMacros) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     QStringList sListTemp = m_sListCompleter;
@@ -68,24 +67,18 @@ CTextEditor::CTextEditor(QStringList sListTplMacros,
             m_sListCompleter << sListTemp[i].remove("[[");
             // Remove markers for description
             m_sListCompleter.last() = sListTemp[i].remove("%%");
-            m_sListCompleter.last() = m_sListCompleter.last().replace("\\n",
-                                                                      "\n");
+            m_sListCompleter.last() = m_sListCompleter.last().replace(
+                        "\\n", "\n");
         }
     }
-
     m_pCompleter = new QCompleter(m_sListCompleter, this);
-
     this->setCompleter(m_pCompleter);
+
     this->setAcceptRichText(false);  // Paste plain text only
 
     // Text changed
-    connect(this->document(), SIGNAL(contentsChanged()),
-            pParent, SLOT(documentWasModified()));
-
-    // Install auto save timer
-    m_pTimerAutosave = new QTimer(this);
-    connect(m_pTimerAutosave, SIGNAL(timeout()),
-            this, SLOT(saveArticleAuto()));
+    connect(this->document(), SIGNAL(modificationChanged(bool)),
+            this, SIGNAL(documentChanged(bool)));
 }
 
 CTextEditor::~CTextEditor() {
@@ -94,14 +87,8 @@ CTextEditor::~CTextEditor() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTextEditor::updateTextEditorSettings(const bool bCompleter,
-                                           const quint16 nAutosave) {
-    m_bCodeCompState = bCompleter;
-
-    m_pTimerAutosave->stop();
-    if (0 != nAutosave) {
-        m_pTimerAutosave->start(nAutosave * nTimeMultiplier);
-    }
+void CTextEditor::updateTextEditorSettings(const bool bCompleter) {
+    m_bCodeCompletion = bCompleter;
 }
 
 // ----------------------------------------------------------------------------
@@ -113,9 +100,7 @@ void CTextEditor::setCompleter(QCompleter *completer) {
     if (m_pCompleter) {
         QObject::disconnect(m_pCompleter, 0, this, 0);
     }
-
     m_pCompleter = completer;
-
     if (!m_pCompleter) {
         return;
     }
@@ -126,13 +111,6 @@ void CTextEditor::setCompleter(QCompleter *completer) {
     m_pCompleter->setWrapAround(false);
     QObject::connect(m_pCompleter, SIGNAL(activated(QString)),
                      this, SLOT(insertCompletion(QString)));
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-QCompleter *CTextEditor::completer() const {
-    return m_pCompleter;
 }
 
 // ----------------------------------------------------------------------------
@@ -205,16 +183,14 @@ void CTextEditor::keyPressEvent(QKeyEvent *e) {
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
-    /*
-    if (!isShortcut && (hasModifier || e->text().isEmpty()
-                        || completionPrefix.length() < 3
-                        || eow.contains(e->text().right(1)))) {
-        c->popup()->hide();
-        return;
-    }
-    */
+//    if (!isShortcut && (hasModifier || e->text().isEmpty()
+//                        || completionPrefix.length() < 3
+//                        || eow.contains(e->text().right(1)))) {
+//        c->popup()->hide();
+//        return;
+//    }
 
-    if (false == m_bCodeCompState) {
+    if (false == m_bCodeCompletion) {
         m_pCompleter->popup()->hide();
         return;
     } else if (!isShortcut && (hasModifier
@@ -239,19 +215,16 @@ void CTextEditor::keyPressEvent(QKeyEvent *e) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTextEditor::saveArticleAuto() {
-    QFile fAutoSave(m_UserAppDir + "/AutoSave.bak~");
-    QTextStream outStream(&fAutoSave);
+void CTextEditor::setFileName(const QString sFileName) {
+    m_sFileName = sFileName;
+}
+QString CTextEditor::getFileName() {
+    return m_sFileName;
+}
 
-    outStream.setCodec("UTF-8");
-    outStream.setAutoDetectUnicode(true);
-
-    // No write permission
-    if (!fAutoSave.open(QFile::WriteOnly | QFile::Text)) {
-        qWarning() << "Could not open AutoSave.bak file!";
-        return;
-    }
-
-    outStream << this->toPlainText();
-    fAutoSave.close();
+bool CTextEditor::isUndoAvailable() {
+    return this->document()->isUndoAvailable();
+}
+bool CTextEditor::isRedoAvailable() {
+    return this->document()->isRedoAvailable();
 }

@@ -849,6 +849,13 @@ void CHighlighter::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CHighlighter::setCurrentEditor(CTextEditor *pEditor) {
+    m_pEditor = pEditor;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CHighlighter::showAbout() {
     QDate nDate = QDate::currentDate();
     QMessageBox aboutbox(NULL);

@@ -35,7 +35,6 @@
 
 #include "./CDownload.h"
 #include "./CFileOperations.h"
-#include "./CFindReplace.h"
 #include "./parser/CParser.h"
 #include "./CPlugins.h"
 #include "./CSettings.h"
@@ -51,13 +50,7 @@ class QWebView;
 class QFile;
 class QDir;
 
-// Own classes
-class CFindReplace;
-class CSettings;
 class CDownload;
-class CFileOperations;
-class CUtils;
-// class CUpload;
 
 namespace Ui {
     class CInyokaEdit;
@@ -83,9 +76,6 @@ class CInyokaEdit : public QMainWindow {
     ~CInyokaEdit();
 
   public slots:
-    /** \brief Called when text in editor was changed */
-    void documentWasModified();
-
     /**
     * \brief Update text in editor with downloaded article
     * \param sArticleText Raw text
@@ -110,6 +100,8 @@ class CInyokaEdit : public QMainWindow {
 
   private slots:
     void showSyntaxOverview();
+    void openFile();
+    void setCurrentEditor();
 
     /**
     * \brief Insert headline from drop down box
@@ -129,9 +121,6 @@ class CInyokaEdit : public QMainWindow {
     */
     void insertDropDownTextformat(const int nSelection);
 
-    /** \brief Download an existing article */
-    void downloadArticle();
-
     /** \brief Delete downloaded images which had been attached to an article */
     void deleteTempImages();
 
@@ -141,8 +130,6 @@ class CInyokaEdit : public QMainWindow {
 
     void changedUrl();
     void clickedLink(QUrl newUrl);
-
-    void openFile();
 
     void insertMainEditorButtons(const QString &sAction);
 
@@ -180,6 +167,7 @@ class CInyokaEdit : public QMainWindow {
                        QList<QList<QAction *> > listActions,
                        CXmlParser* pXmlMenu, QAction* pPosition);
     void createToolBars();
+    void deleteAutoSaveBackups();
 
     // Load / save application settings
     void readSettings();
@@ -187,19 +175,18 @@ class CInyokaEdit : public QMainWindow {
 
     // Objects
     CTemplates *m_pTemplates;
-    CTextEditor *m_pEditor;
     CFileOperations *m_pFileOperations;
+    CTextEditor *m_pCurrentEditor;
     CPlugins *m_pPlugins;
     CParser *m_pParser;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
     // CUpload *m_pUploadModule;
-    CFindReplace *m_pFindReplace;
     CUtils *m_pUtils;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;
 
-    // QTabWidget *m_pTabwidgetDocuments;
+    QTabWidget *m_pDocumentTabs;
     QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
 
@@ -221,9 +208,6 @@ class CInyokaEdit : public QMainWindow {
     QDir m_tmpPreviewImgDir;
     QString m_sPreviewFile;
     QString m_sSharePath;
-
-    // File menu: Clear recent opened files list
-    QAction *m_pClearRecentFilesAct;
 
     // Comboboxes for samplesmacrosBar toolbar
     QComboBox *m_pHeadlineBox;

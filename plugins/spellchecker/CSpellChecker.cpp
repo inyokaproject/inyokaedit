@@ -442,6 +442,13 @@ void CSpellChecker::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CSpellChecker::setCurrentEditor(CTextEditor *pEditor) {
+    m_pEditor = pEditor;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CSpellChecker::showAbout() {
     QDate nDate = QDate::currentDate();
     QMessageBox aboutbox(NULL);

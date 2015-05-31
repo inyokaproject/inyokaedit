@@ -46,7 +46,6 @@
 
 #include <QCompleter>
 #include <QTextEdit>
-#include <QTimer>
 
 /**
  * \class CTextEditor
@@ -56,34 +55,36 @@ class CTextEditor : public QTextEdit {
     Q_OBJECT
 
   public:
-    CTextEditor(QStringList sListTplMacros, QString sUserAppDir,
-                QWidget *pParent = 0);
+    CTextEditor(QStringList sListTplMacros, QWidget *pParent = 0);
     ~CTextEditor();
 
-    void setCompleter(QCompleter *c);
-    QCompleter *completer() const;
+    void setFileName(const QString sFileName);
+    QString getFileName();
+
+    bool isUndoAvailable();
+    bool isRedoAvailable();
+
+  signals:
+    void documentChanged(bool);
 
   protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
 
   public slots:
-    void updateTextEditorSettings(const bool bCompleter,
-                                  const quint16 nAutosave);
+    void updateTextEditorSettings(const bool bCompleter);
 
   private slots:
     void insertCompletion(const QString &sCompletion);
-    void saveArticleAuto();
 
   private:
     QString textUnderCursor() const;
+    void setCompleter(QCompleter *c);
 
-    QTimer *m_pTimerAutosave;
-    QString m_UserAppDir;
+    QString m_sFileName;
     QCompleter *m_pCompleter;
-    bool m_bCodeCompState;
+    bool m_bCodeCompletion;
     QStringList m_sListCompleter;
-    const quint16 nTimeMultiplier;
 };
 
 #endif  // INYOKAEDIT_CTEXTEDITOR_H_

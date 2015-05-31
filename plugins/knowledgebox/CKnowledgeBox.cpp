@@ -373,6 +373,13 @@ void CKnowledgeBox::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CKnowledgeBox::setCurrentEditor(CTextEditor *pEditor) {
+    m_pEditor = pEditor;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CKnowledgeBox::showAbout() {
     QDate nDate = QDate::currentDate();
     QMessageBox aboutbox(NULL);

@@ -341,6 +341,13 @@ void CTableTemplate::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CTableTemplate::setCurrentEditor(CTextEditor *pEditor) {
+    m_pEditor = pEditor;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void CTableTemplate::showAbout() {
     QDate nDate = QDate::currentDate();
     QMessageBox aboutbox(NULL);

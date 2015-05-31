@@ -50,17 +50,12 @@ class CDownload : public QObject {
     CDownload(QWidget *pParent, const QString &sStylesDir,
               const QString &sImgDir, const QString &sSharePath);
 
+  public slots:
     /**
     * \brief Start download of an existing article
-    * \param ImgDir Folder in which attached images should be downloaded
-    * \param sInyokaUrl Full url to the Inyoka wiki
-    * \param bAutomaticImageDownload True or false if attached article images
-    *        should be downloaded without any question
-    * \return True or false for successful / not successful download
     */
     void downloadArticle();
 
-  public slots:
     /**
     * \brief Start download of Inyoka style elements
     */
