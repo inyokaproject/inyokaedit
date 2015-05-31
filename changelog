@@ -1,6 +1,8 @@
 inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
+  * Document tabs for editing multiple files in one session (LP: #847263)
+  * Improved auto-save function
   * Added Infobox and UT template.
   * Minor parser fixes; added missing keys; added footnote support.
   * Fix for image download, if image doesn't exist.
@@ -9,7 +11,7 @@ inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
   * Fixed LP: #1451573 (possibility to disable Apport installation)
   * New IWLs.
 
- -- Thorsten Roth <elthoro@gmx.de>  Wed, 13 May 2015 17:31:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 31 May 2015 17:23:00 +0200
 
 inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
 
