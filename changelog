@@ -6,12 +6,12 @@ inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
   * Added Infobox and UT template.
   * Minor parser fixes; added missing keys; added footnote support.
   * Fix for image download, if image doesn't exist.
-  * Minor adaption for new Inyoka CSS.
+  * Adaption for new Inyoka CSS.
   * Added table converter (base - new syntax) to table generator plugin.
   * Fixed LP: #1451573 (possibility to disable Apport installation)
-  * New IWLs.
+  * New IWLs and smilies.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 31 May 2015 17:23:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 21 Jun 2015 19:54:00 +0200
 
 inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
 
