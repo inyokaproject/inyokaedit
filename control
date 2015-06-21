@@ -24,8 +24,8 @@ Depends:
    ${shlibs:Depends},
    ${misc:Depends},
    wget
-Recommends: inyokaedit-plugins
 Suggests:
+   inyokaedit-plugins,
    fonts-liberation,
    python-pygments
 Description: Editor for Inyoka based portals
@@ -43,7 +43,7 @@ Depends:
    ${shlibs:Depends},
    ${misc:Depends},
    inyokaedit (= ${binary:Version})
-Recommends: hunspell
+Suggests: hunspell
 Description: Plugins for Inyokaedit
  InyokaEdit provides offline support for Inyoka based portals like
  ubuntuusers.de.
