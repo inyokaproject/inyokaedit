@@ -60,7 +60,7 @@ class CFileOperations : public QObject {
     QSignalMapper *m_pSigMapOpenTemplate;
 
     CTextEditor* getCurrentEditor();
-    // QList<CTextEditor *> getEditors() const;
+    QList<CTextEditor *> getEditors() const;
 
     /**
     * \brief Get current file name

@@ -115,6 +115,7 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     }
 
     m_pPlugins->loadPlugins();
+    this->updateEditorSettings();
     this->deleteAutoSaveBackups();
     m_pCurrentEditor->setFocus();
 }
@@ -1344,6 +1345,8 @@ void CInyokaEdit::updateEditorSettings() {
 
     m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
                                       m_pSettings->getInyokaUrl());
+
+    m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 
     // Setting proxy if available
     CUtils::setProxy(m_pSettings->getProxyHostName(),

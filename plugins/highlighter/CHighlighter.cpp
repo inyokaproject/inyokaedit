@@ -38,6 +38,7 @@ const QString sSEPARATOR("|");
 void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                               const QDir userDataDir,
                               const QString sSharePath) {
+    Q_UNUSED(pEditor);
     Q_UNUSED(userDataDir);
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -70,16 +71,13 @@ void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pSettings->endGroup();
 
     m_pStyleSet = NULL;
-    m_pEditor = pEditor;
     m_sSharePath = sSharePath;
-    m_pHighlighter = new CSyntaxHighlighter(m_pEditor->document());
     m_pTemplates = new CTemplates(m_pSettings->value(
                                       "TemplateLanguage", "de").toString(),
                                   m_sSharePath);
     this->getTranslations();
     this->readStyle(m_sStyleFile);
     this->defineRules();
-    m_pHighlighter->setRules(m_highlightingRules);
 
     this->buildUi(pParent);  // After loading template entries
 }
@@ -816,11 +814,6 @@ void CHighlighter::defineRules() {
     m_highlightingRules.append(rule);
     rule.pattern = QRegExp("^>+");
     m_highlightingRules.append(rule);
-
-    QPalette pal;
-    pal.setColor(QPalette::Base, m_colorBackground);
-    pal.setColor(QPalette::Text, m_colorForeground);
-    m_pEditor->setPalette(pal);
 }
 
 // ----------------------------------------------------------------------------
@@ -829,8 +822,8 @@ void CHighlighter::defineRules() {
 void CHighlighter::accept() {
     this->saveHighlighting();
     this->defineRules();
-    m_pHighlighter->setRules(m_highlightingRules);
-    m_pHighlighter->rehighlight();
+    this->rehighlightAll();
+
     m_pDialog->done(QDialog::Accepted);
 }
 
@@ -850,7 +843,43 @@ void CHighlighter::showSettings() {
 // ----------------------------------------------------------------------------
 
 void CHighlighter::setCurrentEditor(CTextEditor *pEditor) {
-    m_pEditor = pEditor;
+    Q_UNUSED(pEditor);
+}
+
+void CHighlighter::setEditorlist(QList<CTextEditor *> listEditors) {
+    m_ListHighlighters.clear();
+
+    foreach (CTextEditor *pEd, listEditors) {
+        if (!m_listEditors.contains(pEd)) {
+            m_listEditors << pEd;
+        }
+    }
+    foreach (CTextEditor *pEd, m_listEditors) {
+        if (!listEditors.contains(pEd)) {
+            m_listEditors.removeOne(pEd);
+        } else {
+            m_ListHighlighters << new CSyntaxHighlighter(pEd->document());
+        }
+    }
+
+    this->rehighlightAll();
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CHighlighter::rehighlightAll() {
+    foreach (CSyntaxHighlighter *hlight, m_ListHighlighters) {
+        hlight->setRules(m_highlightingRules);
+        hlight->rehighlight();
+    }
+
+    QPalette pal;
+    pal.setColor(QPalette::Base, m_colorBackground);
+    pal.setColor(QPalette::Text, m_colorForeground);
+    foreach (CTextEditor *editor, m_listEditors) {
+        editor->setPalette(pal);
+    }
 }
 
 // ----------------------------------------------------------------------------

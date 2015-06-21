@@ -70,6 +70,7 @@ class CTableTemplate : public QObject, IEditorPlugin {
     bool includeToolbar() const;
     bool hasSettings() const;
     void setCurrentEditor(CTextEditor *pEditor);
+    void setEditorlist(QList<CTextEditor *> listEditors);
 
   public slots:
     void callPlugin();

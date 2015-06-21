@@ -633,8 +633,7 @@ void CFileOperations::setCurrentEditor() {
 CTextEditor* CFileOperations::getCurrentEditor() {
     return m_pCurrentEditor;
 }
-/*
+
 QList<CTextEditor *> CFileOperations::getEditors() const {
     return m_pListEditors;
 }
-*/

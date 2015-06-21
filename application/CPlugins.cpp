@@ -146,3 +146,15 @@ void CPlugins::setCurrentEditor(CTextEditor *pEditor) {
         }
     }
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CPlugins::setEditorlist(QList<CTextEditor *> listEditors) {
+    for (int i = 0; i < m_listPlugins.size(); i++) {
+        if (!m_sListDisabledPlugins.contains(
+                    m_listPlugins[i]->getPluginName())) {
+            m_listPlugins[i]->setEditorlist(listEditors);
+        }
+    }
+}

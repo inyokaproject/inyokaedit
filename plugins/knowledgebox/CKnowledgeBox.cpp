@@ -377,6 +377,10 @@ void CKnowledgeBox::setCurrentEditor(CTextEditor *pEditor) {
     m_pEditor = pEditor;
 }
 
+void CKnowledgeBox::setEditorlist(QList<CTextEditor *> listEditors) {
+    Q_UNUSED(listEditors);
+}
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 

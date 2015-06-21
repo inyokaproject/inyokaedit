@@ -52,6 +52,7 @@ class IEditorPlugin {
     virtual bool includeToolbar() const = 0;
     virtual bool hasSettings() const = 0;
     virtual void setCurrentEditor(CTextEditor *pEditor) = 0;
+    virtual void setEditorlist(QList<CTextEditor *> listEditors) = 0;
 
   public slots:
     virtual void callPlugin() = 0;     // Execute manually / call dialog

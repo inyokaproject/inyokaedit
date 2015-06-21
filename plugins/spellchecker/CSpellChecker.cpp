@@ -446,6 +446,10 @@ void CSpellChecker::setCurrentEditor(CTextEditor *pEditor) {
     m_pEditor = pEditor;
 }
 
+void CSpellChecker::setEditorlist(QList<CTextEditor *> listEditors) {
+    Q_UNUSED(listEditors);
+}
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 

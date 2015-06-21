@@ -69,6 +69,7 @@ class CHighlighter : public QObject, IEditorPlugin {
     bool includeToolbar() const;
     bool hasSettings() const;
     void setCurrentEditor(CTextEditor *pEditor);
+    void setEditorlist(QList<CTextEditor *> listEditors);
 
   public slots:
     void callPlugin();
@@ -95,12 +96,13 @@ class CHighlighter : public QObject, IEditorPlugin {
     void defineRules();
     void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
     void evalKey(const QString &sKey, QTextCharFormat &charFormat);
+    void rehighlightAll();
 
     Ui::CHighlighterDialog *m_pUi;
     QDialog *m_pDialog;
     QSettings *m_pSettings;
-    CSyntaxHighlighter *m_pHighlighter;
-    CTextEditor *m_pEditor;
+    QList<CSyntaxHighlighter *> m_ListHighlighters;
+    QList<CTextEditor *> m_listEditors;
     CTemplates *m_pTemplates;
 
     QString m_sTplLang;

@@ -79,7 +79,7 @@ void CParser::updateSettings(const QString &sInyokaUrl,
 
 QString CParser::genOutput(const QString &sActFile,
                            QTextDocument *pRawDocument) {
-    qDebug() << "Start PARSER";
+    qDebug() << "Parse...";
     // Need a copy otherwise text in editor will be changed
     m_pRawText = pRawDocument->clone();
     m_sCurrentFile = sActFile;
@@ -153,8 +153,6 @@ QString CParser::genOutput(const QString &sActFile,
                                           + this->generateTags(m_pRawText));
     sTemplateCopy = sTemplateCopy.replace("%content%",
                                           m_pRawText->toPlainText());
-
-    qDebug() << "Stop PARSER";
     return sTemplateCopy;
 }
 

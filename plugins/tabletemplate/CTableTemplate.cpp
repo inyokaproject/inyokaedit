@@ -345,6 +345,10 @@ void CTableTemplate::setCurrentEditor(CTextEditor *pEditor) {
     m_pEditor = pEditor;
 }
 
+void CTableTemplate::setEditorlist(QList<CTextEditor *> listEditors) {
+    Q_UNUSED(listEditors);
+}
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
