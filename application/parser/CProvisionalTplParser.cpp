@@ -2100,8 +2100,10 @@ QString CProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
     }
 
     return this->insertBox("box ut_box",
-                           QString::fromUtf8("Getestet wurde der Artikel für "
-                                             "folgende Version(en):"),
+                           QString::fromUtf8("Dieser Artikel bezieht sich auf "
+                                             "Ubuntu Touch, der Variante von "
+                                             "Ubuntu für mobile Geräte mit "
+                                             "Touchscreen."),
                            sOutput);
 }
 

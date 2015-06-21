@@ -200,8 +200,9 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntu.png -O ubu
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntugnome.png -O ubuntugnome.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/kubuntu.png -O kubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/lubuntu.png -O lubuntu.png
-wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/ubuntumate.png -O ubuntumate.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smiliesmap/ubuntumate.png -O ubuntumate.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/mythbuntu.png -O mythbuntu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smiliesmap/ubuntutouch.png -O ubuntutouch.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/xubuntu.png -O xubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Smilies/overview.png -O overview.png
 

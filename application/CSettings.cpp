@@ -87,7 +87,7 @@ void CSettings::readSettings() {
     m_bPreviewSplitHorizontal = m_pSettings->value("PreviewSplitHorizontal",
                                             true).toBool();
     m_sInyokaUrl = m_pSettings->value("InyokaUrl",
-                                      "http://wiki.ubuntuusers.de").toString();
+                                      "https://wiki.ubuntuusers.de").toString();
     if (m_sInyokaUrl.endsWith("/")) {
         m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
     }

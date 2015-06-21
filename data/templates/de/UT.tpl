@@ -13,4 +13,6 @@ Getestet wurde der Artikel für folgende Version(en):
 <@ endif @>
 <@ else @>
 Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu Touch Version getestet! Bitte diesen Artikel testen!
-<@ end
+<@ endif @>
+|}}
+

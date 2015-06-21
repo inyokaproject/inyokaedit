@@ -37,8 +37,9 @@
     <element type="ubuntudiscourse" url="http://discourse.ubuntu.com/" name="Ubuntu Discourse" icon="ubuntudiscourse.png" />
     <element type="ubunturesources" url="http://resources.ubuntu.com/" name="Ubuntu Resources" icon="ubunturesources.png" />
     <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
+    <element type="uappexplorer" url="https://uappexplorer.com/app/" name="uApp Explorer (unofficial)" icon="uappexplorer.png" />
     <element type="scope" url="scope://com.canonical.scopes.clickstore?q=" name="Ubuntu Scopes" icon="scope.png" />
-    <element type="ubuntuone" url="https://ubuntuone.com/" name="Ubuntu One" icon="ubuntuone.png" />
+    <element type="ubuntuone" url="https://login.ubuntu.com/+login" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" /> 
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
     <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
@@ -120,7 +121,7 @@
     <element type="ean" url="https://www.google.de/#q=" name="EAN" icon="ean.png" />
     <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
     <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
-    <element type="google" url="https://www.google.de/#q=" name="Google" icon="" />
+    <element type="google" url="https://www.google.de/search?q=" name="Google" icon="" />
     <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
     <element type="heise" url="http://www.heise.de/" name="heise online" icon="heise.png" />
     <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />

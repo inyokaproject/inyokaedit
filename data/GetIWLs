@@ -54,12 +54,12 @@ wget -nv http://static.cdn.ubuntu-de.org/style/markup.css
 mv markup.css markup2.css
 wget -nv http://static.cdn.ubuntu-de.org/style/wiki.css
 wget -nv http://static.cdn.ubuntu-de.org/style/highlight.css
-wget -nv http://ubuntuusers.de/markup.css
+wget -nv https://ubuntuusers.de/markup.css
 
 echo "Replace static paths..."
 ## Paths
-_r1="http://static.cdn.ubuntu-de.org"
-_r2="http://media.cdn.ubuntu-de.org/wiki/attachments/[0-9][0-9]/[0-9][0-9]"
+_r1="//static.cdn.ubuntu-de.org"
+_r2="//media.cdn.ubuntu-de.org/wiki/attachments/[0-9][0-9]/[0-9][0-9]"
 _r3="../img/interwiki"
 ## Escape path for sed using bash find and replace
 _r1="${_r1//\//\\/}"
@@ -165,6 +165,7 @@ wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/steam.png -O
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/team.png -O team.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ticket.png -O ticket.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/twitter.png -O twitter.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uappexplorer.png -O uappexplorer.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntu.png -O ubuntu.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ubuntuapps.png -O ubuntuapps.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/uf_forum.png -O uf_forum.png
