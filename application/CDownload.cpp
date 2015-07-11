@@ -37,7 +37,7 @@ CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
     : m_pParent(pParent),
       m_sStylesDir(sStylesDir),
       m_sImgDir(sImgDir),
-      m_sInyokaUrl("http://wiki.ubuntuusers.de"),
+      m_sInyokaUrl("https://wiki.ubuntuusers.de"),
       m_bAutomaticImageDownload(false),
       m_sSharePath(sSharePath) {
     qDebug() << "Calling" << Q_FUNC_INFO;

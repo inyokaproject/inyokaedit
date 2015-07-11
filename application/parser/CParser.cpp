@@ -912,6 +912,11 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
 // ----------------------------------------------------------------------------
 
 void CParser::replaceImages(QTextDocument *p_rawDoc) {
+#if defined _WIN32
+    QString sExt("file:///");
+#else
+    QString sExt("");
+#endif
     QString sDoc(p_rawDoc->toPlainText());
     QRegExp findImages("\\[\\[" + m_pTemplates->getTransImage()
                        + "\\(.+\\)\\]\\]");
@@ -1006,8 +1011,8 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
         }
 
         // HTML code
-        sTmpImage = "<a href=\"" + sImageUrl + "\" class=\"crosslink\">";
-        sTmpImage += "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl
+        sTmpImage = "<a href=\"" + sExt + sImageUrl + "\" class=\"crosslink\">";
+        sTmpImage += "<img src=\"" + sExt + sImageUrl + "\" alt=\"" + sImageUrl
                 + "\" height=\"" + QString::number(tmpH) + "\" width=\""
                 + QString::number(tmpW) + "\" ";
         sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";

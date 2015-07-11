@@ -85,6 +85,7 @@ void CTemplates::initTemplates() {
                 sTempTplText.clear();
                 sTempMacro.clear();
                 QTextStream in(&TplFile);
+                in.setCodec("UTF-8");
 
                 while (!in.atEnd()) {
                     tmpLine = in.readLine().trimmed();
@@ -117,6 +118,7 @@ void CTemplates::initTemplates() {
             TplFile.setFileName(fi.absoluteFilePath());
             if (TplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
                 QTextStream in(&TplFile);
+                in.setCodec("UTF-8");
                 tmpLine = in.readLine().trimmed();
                 if (tmpLine.startsWith("## Macro=")) {
                     tmpLine = tmpLine.remove("## Macro=");
@@ -166,6 +168,7 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
         m_sPreviewTemplate = "ERROR";
     } else {
         QTextStream in(& HTMLTplFile);
+        in.setCodec("UTF-8");
         m_sPreviewTemplate = in.readAll();
 
         HTMLTplFile.close();
@@ -192,6 +195,7 @@ void CTemplates::initImgMap(const QString &sFilename,
         sListElements << "ERROR";
     } else {
         QTextStream in(&ImgMapFile);
+        in.setCodec("UTF-8");
         QString tmpLine;
         while (!in.atEnd()) {
             tmpLine = in.readLine().trimmed();
@@ -227,6 +231,7 @@ void CTemplates::initTextformats(const QString &sFilename) {
         m_sListFormatHtmlEnd << "ERROR";
     } else {
         QTextStream in(&formatsFile);
+        in.setCodec("UTF-8");
         QString tmpLine;
         while (!in.atEnd()) {
             tmpLine = in.readLine().trimmed();

@@ -51,6 +51,7 @@ CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
       m_sFileFilter(trUtf8("Inyoka document") + " (*.iny *.inyoka);;"
                     + trUtf8("All files") + " (*)"),
       m_bLoadPreview(false),
+      m_bCloseApp(false),
       m_sUserDataDir(sUserDataDir),
       m_sListTplMacros(sListTplMacros) {
     qDebug() << "Calling" << Q_FUNC_INFO;

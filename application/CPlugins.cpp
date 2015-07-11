@@ -67,6 +67,7 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
         qDebug() << "Plugins folder:" << dir.absolutePath();
 
         foreach (QString sFile, dir.entryList(QDir::Files)) {
+            qDebug() << "Plugin file:" << sFile;
             QPluginLoader loader(dir.absoluteFilePath(sFile));
             QObject *pPlugin = loader.instance();
             if (pPlugin) {
