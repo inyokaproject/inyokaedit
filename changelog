@@ -1,3 +1,11 @@
+inyokaedit (0.15.1-0ubuntu1) trusty; urgency=low
+
+  [ Thorsten Roth ]
+  * Bug fixed, which prevented loading preview at switching tabs.
+  * Bug fixes for Windows.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 11 Jul 2015 18:21:00 +0200
+
 inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
