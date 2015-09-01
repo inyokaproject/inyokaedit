@@ -161,6 +161,8 @@
    <addaction name="boldAct"/>
    <addaction name="italicAct"/>
    <addaction name="monotypeAct"/>
+   <addaction name="listAct"/>
+   <addaction name="numberedListAct"/>
    <addaction name="wikilinkAct"/>
    <addaction name="externalLinkAct"/>
    <addaction name="imageAct"/>
@@ -517,6 +519,30 @@
    </property>
    <property name="text">
     <string>Update InterWiki-Links</string>
+   </property>
+  </action>
+  <action name="listAct">
+   <property name="icon">
+    <iconset resource="res/inyokaedit_resources.qrc">
+     <normaloff>:/images/list-unsorted.png</normaloff>:/images/list-unsorted.png</iconset>
+   </property>
+   <property name="text">
+    <string>List</string>
+   </property>
+   <property name="toolTip">
+    <string>Unsorted list</string>
+   </property>
+  </action>
+  <action name="numberedListAct">
+   <property name="icon">
+    <iconset resource="res/inyokaedit_resources.qrc">
+     <normaloff>:/images/list-sorted.png</normaloff>:/images/list-sorted.png</iconset>
+   </property>
+   <property name="text">
+    <string>Numbered list</string>
+   </property>
+   <property name="toolTip">
+    <string>Numbered list</string>
    </property>
   </action>
  </widget>

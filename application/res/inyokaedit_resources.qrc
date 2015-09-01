@@ -32,5 +32,7 @@
         <file>images/uu.ico</file>
         <file>images/document-save-as.png</file>
         <file>images/help-browser.png</file>
+        <file>images/list-sorted.png</file>
+        <file>images/list-unsorted.png</file>
     </qresource>
 </RCC>

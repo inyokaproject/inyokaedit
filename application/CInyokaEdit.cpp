@@ -459,6 +459,16 @@ void CInyokaEdit::createActions() {
     connect(m_pUi->monotypeAct, SIGNAL(triggered()),
             m_pSigMapMainEditorToolbar, SLOT(map()));
 
+    // Insert unsorted list
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->listAct, "listAct");
+    connect(m_pUi->listAct, SIGNAL(triggered()),
+            m_pSigMapMainEditorToolbar, SLOT(map()));
+
+    // Insert sorted list
+    m_pSigMapMainEditorToolbar->setMapping(m_pUi->numberedListAct, "numberedListAct");
+    connect(m_pUi->numberedListAct, SIGNAL(triggered()),
+            m_pSigMapMainEditorToolbar, SLOT(map()));
+
     // Insert wiki link
     m_pSigMapMainEditorToolbar->setMapping(m_pUi->wikilinkAct, "wikilinkAct");
     connect(m_pUi->wikilinkAct, SIGNAL(triggered()),
@@ -1032,9 +1042,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         } else {
             sInsertedText = trUtf8("Bold");
             nFormatLength = 3;
-            m_pCurrentEditor->insertPlainText("'''"
-                                       + sInsertedText
-                                       + "'''");
+            m_pCurrentEditor->insertPlainText("'''" + sInsertedText + "'''");
         }
     } else if ("italicAct" == sAction) {
         if (bSelected) {
@@ -1044,9 +1052,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         } else {
             sInsertedText = trUtf8("Italic");
             nFormatLength = 2;
-            m_pCurrentEditor->insertPlainText("''"
-                                       + sInsertedText
-                                       + "''");
+            m_pCurrentEditor->insertPlainText("''" + sInsertedText + "''");
         }
     } else if ("monotypeAct" == sAction) {
         if (bSelected) {
@@ -1056,9 +1062,25 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         } else {
             sInsertedText = trUtf8("Monotype");
             nFormatLength = 1;
-            m_pCurrentEditor->insertPlainText("`"
-                                       + sInsertedText
-                                       + "`");
+            m_pCurrentEditor->insertPlainText("`" + sInsertedText + "`");
+        }
+    } else if ("listAct" == sAction) {
+        if (bSelected) {
+            m_pCurrentEditor->insertPlainText(" * "
+                                       + m_pCurrentEditor->textCursor().selectedText());
+        } else {
+            sInsertedText = trUtf8("List");
+            nFormatLength = 0;
+            m_pCurrentEditor->insertPlainText(" * " + sInsertedText);
+        }
+    } else if ("numberedListAct" == sAction) {
+        if (bSelected) {
+            m_pCurrentEditor->insertPlainText(" 1. "
+                                       + m_pCurrentEditor->textCursor().selectedText());
+        } else {
+            sInsertedText = trUtf8("Numbered list");
+            nFormatLength = 0;
+            m_pCurrentEditor->insertPlainText(" 1. " + sInsertedText);
         }
     } else if ("wikilinkAct" == sAction) {
         if (bSelected) {
@@ -1068,9 +1090,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         } else {
             sInsertedText = trUtf8("Site name");
             nFormatLength = 2;
-            m_pCurrentEditor->insertPlainText("[:"
-                                       + sInsertedText
-                                       + ":]");
+            m_pCurrentEditor->insertPlainText("[:" + sInsertedText + ":]");
         }
     } else if ("externalLinkAct" == sAction) {
         if (bSelected) {
@@ -1080,9 +1100,7 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
         } else {
             sInsertedText = "http://www.example.org/";
             nFormatLength = 1;
-            m_pCurrentEditor->insertPlainText("["
-                                       + sInsertedText
-                                       + "]");
+            m_pCurrentEditor->insertPlainText("[" + sInsertedText + "]");
         }
     } else if ("imageAct" == sAction) {
         if (bSelected) {
