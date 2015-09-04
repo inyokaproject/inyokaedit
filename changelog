@@ -1,3 +1,11 @@
+inyokaedit (0.16.0-0ubuntu1) trusty; urgency=low
+
+  [ Thorsten Roth ]
+  * Added article upload (LP: #847264)
+  * Added un-/sorted list button to toolbar
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 04 Sep 2015 16:06:00 +0200
+
 inyokaedit (0.15.1-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
