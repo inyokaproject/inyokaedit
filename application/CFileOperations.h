@@ -35,6 +35,7 @@
 #include "./CFindReplace.h"
 #include "./CSettings.h"
 #include "./CTextEditor.h"
+#include "./CUpload.h"
 
 /**
  * \class CFileOperations
@@ -142,6 +143,7 @@ class CFileOperations : public QObject {
     void triggeredReplace();
     void triggeredFindNext();
     void triggeredFindPrevious();
+    void triggeredUpload();
     void copyAvailable(bool);
     void undoAvailable(bool);
     void redoAvailable(bool);
@@ -185,6 +187,7 @@ class CFileOperations : public QObject {
     QString m_sUserDataDir;
 
     CFindReplace *m_pFindReplace;
+    CUpload *m_pUploadModule;
 
     QList<CTextEditor *> m_pListEditors;
 

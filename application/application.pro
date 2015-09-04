@@ -48,7 +48,7 @@ HEADERS      += CInyokaEdit.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
-                # CUpload.h \
+                CUpload.h \
                 CUtils.h \
                 IEditorPlugin.h
 
@@ -63,7 +63,7 @@ SOURCES      += main.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
-                # CUpload.cpp \
+                CUpload.cpp \
                 CUtils.cpp
 
 FORMS        += CInyokaEdit.ui \

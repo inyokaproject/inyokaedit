@@ -143,11 +143,6 @@ void CInyokaEdit::createObjects() {
                                       m_tmpPreviewImgDir.absolutePath(),
                                       m_sSharePath);
 
-    /*
-    m_pUploadModule = new CUpload(this, m_pSettings->getInyokaUrl(),
-                                  m_pCurrentEditor->document());
-    */
-
     m_pParser = new CParser(m_tmpPreviewImgDir,
                             m_pSettings->getInyokaUrl(),
                             m_pSettings->getCheckLinks(),
@@ -166,6 +161,7 @@ void CInyokaEdit::createObjects() {
                                             m_UserDataDir.absolutePath(),
                                             m_pTemplates->getListTplMacrosALL());
     m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
+
     connect(m_pFileOperations, SIGNAL(callPreview()),
             this, SLOT(previewInyokaPage()));
     connect(m_pFileOperations, SIGNAL(modifiedDoc(bool)),
@@ -422,11 +418,9 @@ void CInyokaEdit::createActions() {
     connect(m_pUi->downloadArticleAct, SIGNAL(triggered()),
             m_pDownloadModule, SLOT(downloadArticle()));
 
-    /*
     // Upload Inyoka article
     connect(m_pUi->uploadArticleAct, SIGNAL(triggered()),
-            m_pUploadModule, SLOT(clickUploadArticle()));
-    */
+            m_pFileOperations, SIGNAL(triggeredUpload()));
 
     // ------------------------------------------------------------------------
 

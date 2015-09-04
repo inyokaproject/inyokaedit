@@ -41,7 +41,6 @@
 #include "./templates/CTemplates.h"
 #include "./CTextEditor.h"
 #include "./CUtils.h"
-// #include "./CUpload.h"
 
 // Qt classes
 class QComboBox;
@@ -181,7 +180,6 @@ class CInyokaEdit : public QMainWindow {
     CParser *m_pParser;
     CSettings *m_pSettings;
     CDownload *m_pDownloadModule;
-    // CUpload *m_pUploadModule;
     CUtils *m_pUtils;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;

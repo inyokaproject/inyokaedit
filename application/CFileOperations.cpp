@@ -66,6 +66,10 @@ CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     connect(this, SIGNAL(triggeredFindPrevious()),
             m_pFindReplace, SLOT(findPrevious()));
 
+    m_pUploadModule = new CUpload(m_pParent, m_pSettings->getInyokaUrl());
+    connect(this, SIGNAL(triggeredUpload()),
+            m_pUploadModule, SLOT(clickUploadArticle()));
+
     // Install auto save timer
     m_pTimerAutosave = new QTimer(this);
     connect(m_pTimerAutosave, SIGNAL(timeout()),
@@ -629,6 +633,7 @@ void CFileOperations::setCurrentEditor() {
     m_pParent->setWindowFilePath(file.fileName());
     emit this->changedCurrentEditor();
     m_pFindReplace->setEditor(m_pCurrentEditor);
+    m_pUploadModule->setEditor(m_pCurrentEditor, m_pCurrentEditor->getFileName());
 }
 
 CTextEditor* CFileOperations::getCurrentEditor() {
