@@ -4,144 +4,144 @@
 <context>
     <name>CHighlighter</name>
     <message>
-        <location filename="../CHighlighter.cpp" line="116"/>
+        <location filename="../CHighlighter.cpp" line="114"/>
         <source>Syntax highlighter</source>
         <translation>Syntaxhervorhebung</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="227"/>
+        <location filename="../CHighlighter.cpp" line="225"/>
         <source>Create new style...</source>
         <translation>Neuen Stil erstellen...</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="236"/>
+        <location filename="../CHighlighter.cpp" line="234"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="236"/>
+        <location filename="../CHighlighter.cpp" line="234"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="237"/>
+        <location filename="../CHighlighter.cpp" line="235"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="237"/>
-        <location filename="../CHighlighter.cpp" line="240"/>
+        <location filename="../CHighlighter.cpp" line="235"/>
+        <location filename="../CHighlighter.cpp" line="238"/>
         <source>Background</source>
         <translation>Hintergrund</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="240"/>
+        <location filename="../CHighlighter.cpp" line="238"/>
         <source>Text color</source>
         <translation>Textfarbe</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="241"/>
+        <location filename="../CHighlighter.cpp" line="239"/>
         <source>Text formating</source>
         <translation>Textformatierung</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="241"/>
+        <location filename="../CHighlighter.cpp" line="239"/>
         <source>Heading</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="242"/>
+        <location filename="../CHighlighter.cpp" line="240"/>
         <source>Hyperlink</source>
         <translation>Hyperlink</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="242"/>
+        <location filename="../CHighlighter.cpp" line="240"/>
         <source>InterWiki</source>
         <translation>InterWiki</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="243"/>
+        <location filename="../CHighlighter.cpp" line="241"/>
         <source>Macro</source>
         <translation>Macro</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="243"/>
+        <location filename="../CHighlighter.cpp" line="241"/>
         <source>Parser</source>
         <translation>Parser</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="243"/>
+        <location filename="../CHighlighter.cpp" line="241"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="244"/>
+        <location filename="../CHighlighter.cpp" line="242"/>
         <source>Table line</source>
         <translation>Tabellenzeile</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="244"/>
+        <location filename="../CHighlighter.cpp" line="242"/>
         <source>Table cell format</source>
         <translation>Zellformatierung</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="245"/>
+        <location filename="../CHighlighter.cpp" line="243"/>
         <source>ImgMap</source>
         <translation>ImgMap</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="245"/>
+        <location filename="../CHighlighter.cpp" line="243"/>
         <source>Misc</source>
         <translation>Sonstiges</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="245"/>
+        <location filename="../CHighlighter.cpp" line="243"/>
         <source>Comment</source>
         <translation>Kommentar</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="622"/>
+        <location filename="../CHighlighter.cpp" line="620"/>
         <source>New style</source>
         <translation>Neuer Stil</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="623"/>
+        <location filename="../CHighlighter.cpp" line="621"/>
         <source>Please insert name of new style file:</source>
         <translation>Bitte Namen für die neue Stildatei eingeben:</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="643"/>
-        <location filename="../CHighlighter.cpp" line="655"/>
+        <location filename="../CHighlighter.cpp" line="641"/>
+        <location filename="../CHighlighter.cpp" line="653"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="644"/>
+        <location filename="../CHighlighter.cpp" line="642"/>
         <source>File already exists.</source>
         <translation>Datei existiert bereits.</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="656"/>
+        <location filename="../CHighlighter.cpp" line="654"/>
         <source>Could not create new style.</source>
         <translation>Die neue Stildatei konnte nicht erstellt werden.</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="848"/>
+        <location filename="../CHighlighter.cpp" line="892"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="851"/>
+        <location filename="../CHighlighter.cpp" line="895"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="854"/>
+        <location filename="../CHighlighter.cpp" line="898"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CHighlighter.cpp" line="858"/>
+        <location filename="../CHighlighter.cpp" line="902"/>
         <source>Inyoka markup syntax highlighter plugin.</source>
         <translation>Inyoka Markup Syntaxhervorhebung.</translation>
     </message>

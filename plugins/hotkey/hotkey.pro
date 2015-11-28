@@ -14,11 +14,29 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE       = subdirs
-CONFIG        += ordered
-SUBDIRS        = plugins/spellchecker \
-                 plugins/tabletemplate \
-                 plugins/knowledgebox \
-                 plugins/highlighter \
-                 plugins/hotkey \
-                 application
+TEMPLATE      = lib
+CONFIG       += plugin
+TARGET        = hotkey
+DESTDIR       = ../
+
+VERSION       = 1.0.0
+QMAKE_TARGET_DESCRIPTION = "Hotkey plugin for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2015 The InyokaEdit developers"
+
+DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
+                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
+
+MOC_DIR       = ./.moc
+OBJECTS_DIR   = ./.objs
+UI_DIR        = ./.ui
+RCC_DIR       = ./.rcc
+
+HEADERS      += CHotkey.h
+
+SOURCES      += CHotkey.cpp
+
+FORMS        += CHotkey.ui
+
+RESOURCES     = res/hotkey_resources.qrc
+
+TRANSLATIONS += lang/hotkey_de.ts

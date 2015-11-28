@@ -437,13 +437,11 @@ void CInyokaEdit::createActions() {
     m_pSigMapMainEditorToolbar = new QSignalMapper(this);
 
     // Insert bold element
-    m_pUi->boldAct->setShortcut(Qt::CTRL + Qt::Key_B);
     m_pSigMapMainEditorToolbar->setMapping(m_pUi->boldAct, "boldAct");
     connect(m_pUi->boldAct, SIGNAL(triggered()),
             m_pSigMapMainEditorToolbar, SLOT(map()));
 
     // Insert italic element
-    m_pUi->italicAct->setShortcut(Qt::CTRL + Qt::Key_I);
     m_pSigMapMainEditorToolbar->setMapping(m_pUi->italicAct, "italicAct");
     connect(m_pUi->italicAct, SIGNAL(triggered()),
             m_pSigMapMainEditorToolbar, SLOT(map()));

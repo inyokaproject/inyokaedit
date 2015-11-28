@@ -14,22 +14,22 @@
         <translation>[:Artikel:Neuer Eintrag]</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="380"/>
+        <location filename="../CKnowledgeBox.cpp" line="391"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="383"/>
+        <location filename="../CKnowledgeBox.cpp" line="394"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="386"/>
+        <location filename="../CKnowledgeBox.cpp" line="397"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="390"/>
+        <location filename="../CKnowledgeBox.cpp" line="401"/>
         <source>Plugin for choosing knowledge box entries.</source>
         <translation>Plugin zur Auswahl von Wissensblockeinträgen.</translation>
     </message>
