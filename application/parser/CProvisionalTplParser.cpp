@@ -2001,7 +2001,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "wily") {
+                if (sListArgs[i].toLower() == "xenial") {
+                    sOutput += "[:Xenial_Xerus:Ubuntu 16.04] "
+                               "Xenial Xerus";
+                } else if (sListArgs[i].toLower() == "wily") {
                     sOutput += "[:Wily_Werewolf:Ubuntu 15.10] "
                                "Wily Werewolf";
                 } else if (sListArgs[i].toLower() == "vivid") {
@@ -2240,8 +2243,8 @@ QString CProvisionalTplParser::parseWorkInProgress(const QStringList &sListArgs)
         sOutput += QString::fromUtf8("<p>Solltest du dir nicht sicher sein, ob "
                                      "an dieser Anleitung noch gearbeitet wird, "
                                      "kontrolliere das Datum der [:Baustelle/%1"
-                                     ":letzten Änderung] und entscheide, wie du "
-                                     "weiter vorgehst.</p>\n").arg(sArgs[1]);
+                                     "/a/log:letzten Änderung] und entscheide, "
+                                     "wie du weiter vorgehst.</p>\n").arg(sArgs[1]);
     }
 
     return insertBox("box workinprogress",

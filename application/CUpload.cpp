@@ -42,7 +42,6 @@
 CUpload::CUpload(QWidget *pParent, const QString &sInyokaUrl)
     : m_pParent(pParent),
       m_sInyokaUrl(sInyokaUrl),
-      // m_sInyokaUrl("http://wiki.ubuntuusers.de"),
       m_State(REQUTOKEN),
       m_sToken(""),
       m_sSitename(""),
@@ -319,7 +318,7 @@ void CUpload::requestRevision() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_State = REQUREVISION;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "?action=log");
+    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/log");
     QNetworkRequest request(sUrl);
     m_pReply = m_pNwManager->get(request);
 }
@@ -329,7 +328,10 @@ void CUpload::requestRevision() {
 void CUpload::getRevisionReply(QString sNWReply) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QRegExp findRevision(m_sInyokaUrl + "/" + m_sSitename + "\\?rev=\\d+");
+    QString sURL(m_sInyokaUrl);
+    sURL.remove("https://");
+    sURL.remove("http://");
+    QRegExp findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+");
     // qDebug() << "Search revision in reply:" << sNWReply;
     // qDebug() << "Pattern:" << findRevision.pattern();
 
@@ -357,7 +359,7 @@ void CUpload::requestUpload() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_State = REQUPLOAD;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "?action=edit");
+    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit");
     qDebug() << "UPLOADING article:" << sUrl;
     QNetworkRequest request;
     request.setUrl(QUrl(sUrl));
@@ -431,7 +433,7 @@ void CUpload::requestUpload() {
 
     QHttpPart revPart;
     revPart.setHeader(QNetworkRequest::ContentDispositionHeader,
-                        QVariant("form-data; name=\"rev\""));
+                        QVariant("form-data; name=\"revision\""));
     revPart.setBody(m_sRevision.toLatin1());
 
     pMultiPart->append(tokenPart);

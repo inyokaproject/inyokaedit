@@ -12,7 +12,7 @@
 <@ endfor @>
 Solltest du dir nicht sicher sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das Datum der
 <@ if $arguments.1 == "" @>letzten Änderung
-<@ else @>[http://wiki.ubuntuusers.de/Baustelle/<@ $arguments.1 @>?action=log letzten Änderung]
+<@ else @>[http://wiki.ubuntuusers.de/Baustelle/<@ $arguments.1 @>/a/log letzten Änderung]
 <@ endif @> und entscheide, wie du weiter vorgehst.
 ----
 '''Achtung''': Insbesondere heißt das, dass dieser Artikel noch nicht fertig ist und dass wichtige Teile fehlen oder sogar falsch sein können. Bitte diesen Artikel nicht als Anleitung für Problemlösungen benutzen!|}}

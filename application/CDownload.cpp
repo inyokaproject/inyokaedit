@@ -157,15 +157,15 @@ void CDownload::downloadArticle() {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
 
-    sUrl = m_sInyokaUrl + "/" + m_sSitename + "?action=export&format=raw";
-
+    QString sRevision("");
     // Download specific revision
     if (m_sSitename.contains("@rev=")) {
-        QString sRevision = m_sSitename.mid(m_sSitename.indexOf("@rev="));
+        sRevision = m_sSitename.mid(m_sSitename.indexOf("@rev="));
         sRevision.remove("@rev=");
         m_sSitename.remove(m_sSitename.indexOf("@rev="), m_sSitename.length());
-        sUrl += "&rev=" + sRevision;
+        sRevision = "/" + sRevision;
     }
+    sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw" + sRevision;
 
     m_bDownloadArticle = true;
     qDebug() << "DOWNLOADING article:" << sUrl;
@@ -180,7 +180,7 @@ void CDownload::downloadArticle() {
 void CDownload::downloadImages() {
     m_bDownloadArticle = false;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"?action=metaexport");
+    QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta");
     qDebug() << "DOWNLOADING meta data:" << sUrl;
     QNetworkRequest request(sUrl);
     m_pReply = m_pNwManager->get(request);
@@ -195,6 +195,7 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
 #endif
 
     QIODevice *pData(pReply);
+    // TODO: Handle redirect (e.g. kmail -> KMail)
 
     if (QNetworkReply::NoError != pReply->error()) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),

@@ -67,6 +67,9 @@ Vervet
 wily
 Wily
 Werewolf
+xenial
+Xenial
+Xerus
 Ubuntu
 Kubuntu
 Xubuntu
