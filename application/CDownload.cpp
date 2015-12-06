@@ -125,7 +125,7 @@ void CDownload::callDownloadScript(const QString &sScript) {
 // ----------------------------------------------------------------------------
 // DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
-void CDownload::downloadArticle() {
+void CDownload::downloadArticle(QString sUrl) {
     // Check for internet connection
     if (!CUtils::getOnlineState()) {
         QMessageBox::warning(m_pParent, qApp->applicationName(),
@@ -134,43 +134,47 @@ void CDownload::downloadArticle() {
         return;
     }
 
-    QString sUrl("");
-    // Buttons of input dialog (click on "OK" -> ok = true,
-    // click on "Cancel" -> ok = false)
-    bool bOk;
+    if (sUrl.isEmpty()) {
+        m_sRevision = "";
+        // Buttons of input dialog (click on "OK" -> ok = true,
+        // click on "Cancel" -> ok = false)
+        bool bOk;
 
-    // Show input dialog
-    m_sSitename = QInputDialog::getText(m_pParent, qApp->applicationName(),
-                                        trUtf8("Please insert name of the article "
-                                               "which should be downloaded:"),
-                                        QLineEdit::Normal,
-                                        trUtf8("Category/Article"),
-                                        &bOk);
+        // Show input dialog
+        m_sSitename = QInputDialog::getText(m_pParent, qApp->applicationName(),
+                                            trUtf8("Please insert name of the "
+                                                   "article which should be "
+                                                   "downloaded:"),
+                                            QLineEdit::Normal,
+                                            trUtf8("Category/Article"),
+                                            &bOk);
 
-    // Click on "cancel" or string is empty
-    if (true != bOk || m_sSitename.isEmpty()) {
-        return;
+        // Click on "cancel" or string is empty
+        if (true != bOk || m_sSitename.isEmpty()) {
+            return;
+        }
+        m_sSitename.replace(" ", "_");
+
+        // Download specific revision
+        if (m_sSitename.contains("@rev=")) {
+            m_sRevision = m_sSitename.mid(m_sSitename.indexOf("@rev="));
+            m_sRevision.remove("@rev=");
+            m_sSitename.remove(m_sSitename.indexOf("@rev="),
+                               m_sSitename.length());
+            m_sRevision = "/" + m_sRevision;
+        }
+        sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw" + m_sRevision;
     }
-    m_sSitename.replace(" ", "_");
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
 
-    QString sRevision("");
-    // Download specific revision
-    if (m_sSitename.contains("@rev=")) {
-        sRevision = m_sSitename.mid(m_sSitename.indexOf("@rev="));
-        sRevision.remove("@rev=");
-        m_sSitename.remove(m_sSitename.indexOf("@rev="), m_sSitename.length());
-        sRevision = "/" + sRevision;
-    }
-    sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw" + sRevision;
-
     m_bDownloadArticle = true;
     qDebug() << "DOWNLOADING article:" << sUrl;
     QNetworkRequest request(sUrl);
-    m_pReply = m_pNwManager->get(request);
+    QNetworkReply *reply = m_pNwManager->get(request);
+    m_listDownloadReplies.append(reply);
 }
 
 // ----------------------------------------------------------------------------
@@ -183,7 +187,8 @@ void CDownload::downloadImages() {
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta");
     qDebug() << "DOWNLOADING meta data:" << sUrl;
     QNetworkRequest request(sUrl);
-    m_pReply = m_pNwManager->get(request);
+    QNetworkReply *reply = m_pNwManager->get(request);
+    m_listDownloadReplies.append(reply);
 }
 
 // ----------------------------------------------------------------------------
@@ -195,7 +200,11 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
 #endif
 
     QIODevice *pData(pReply);
-    // TODO: Handle redirect (e.g. kmail -> KMail)
+    // Check for redirection
+    QVariant possibleRedirectUrl = pReply->attribute(
+                QNetworkRequest::RedirectionTargetAttribute);
+    m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
+                                          m_urlRedirectedTo);
 
     if (QNetworkReply::NoError != pReply->error()) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),
@@ -203,88 +212,112 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
         qCritical() << "Error while NW reply:" << pData->errorString();
         return;
     } else {
-        QString sTmpArticle = QString::fromUtf8(pData->readAll());
+        // No error
+        QUrl url = pReply->url();
+        // qDebug() << "Downloading URL: " << url.toString();
 
-        if (m_bDownloadArticle) {
-            // Replace windows specific newlines
-            sTmpArticle.replace("\r\r\n", "\n");
-
-            m_pReply->deleteLater();
-
-            // Site does not exist etc.
-            if (sTmpArticle.isEmpty()) {
-                QMessageBox::information(
-                            m_pParent, qApp->applicationName(),
-                            trUtf8("Could not download the article."));
-                return;
-            }
-
-            m_sArticleText = sTmpArticle;
-            downloadImages();
-        // --------------------------------------------------------------------
+        // If the URL is not empty, we're being redirected
+        if (!m_urlRedirectedTo.isEmpty()) {
+            url = m_urlRedirectedTo;
+            qDebug() << "Redirected to: " + url.toString();
+            this->downloadArticle(url.toString() + "/a/export/raw" + m_sRevision);
         } else {
-            // Download article images metadata
-            int iRet = 0;
-            QStringList sListTmp, sListMetadata, sListSaveFolder;
+            m_urlRedirectedTo.clear();
+            QString sTmpArticle = QString::fromUtf8(pData->readAll());
 
-            // Site does not exist etc.
-            if (sTmpArticle.isEmpty()) {
-                QMessageBox::information(m_pParent, qApp->applicationName(),
-                                         trUtf8("Could not find meta data."));
-                return;
-            }
+            if (m_bDownloadArticle) {
+                // Replace windows specific newlines
+                sTmpArticle.replace("\r\r\n", "\n");
 
-            // Copy metadata line by line in list
-            sListTmp << sTmpArticle.split("\n");
-            // qDebug() << "META files:" << sListTmp;
-
-            m_pReply->deleteLater();
-
-            // Get only attachments article metadata
-            for (int i = 0; i < sListTmp.size(); i++) {
-                if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
-                                           Qt::CaseInsensitive)) {
-                    // Remove "X-Attach: "
-                    sListMetadata << sListTmp[i].remove("X-Attach: ");
-                    // Remove windows specific newline \r
-                    sListMetadata.last().remove("\r");
-                    sListMetadata.last() = m_sInyokaUrl + "/_image?target="
-                            + sListMetadata.last();
-                    sListSaveFolder << m_sImgDir;
-
-                    // qDebug() << sListMetadata.last();
-                }
-            }
-
-            // If attachments exist
-            if (sListMetadata.size() > 0) {
-                // Ask if images should be downloaded,
-                // if not enabled by default in settings
-                if (true != m_bAutomaticImageDownload) {
-                    iRet = QMessageBox::question(m_pParent,
-                                                 qApp->applicationName(),
-                                                 trUtf8("Do you want to download "
-                                                        "the images which are "
-                                                        "attached to the article?"),
-                                                 QMessageBox::Yes
-                                                 | QMessageBox::No,
-                                                 QMessageBox::No);
-                } else {
-                    iRet = QMessageBox::Yes;
+                // Site does not exist etc.
+                if (sTmpArticle.isEmpty()) {
+                    QMessageBox::information(
+                                m_pParent, qApp->applicationName(),
+                                trUtf8("Could not download the article."));
+                    return;
                 }
 
-                if (iRet != QMessageBox::No) {
-                    qDebug() << "Starting image download...";
-                    m_DlImages->setDLs(sListMetadata, sListSaveFolder);
-                    QTimer::singleShot(0, m_DlImages, SLOT(startDownloads()));
+                m_sArticleText = sTmpArticle;
+                downloadImages();
+                // --------------------------------------------------------------------
+            } else {
+                // Download article images metadata
+                int iRet = 0;
+                QStringList sListTmp, sListMetadata, sListSaveFolder;
+
+                // Site does not exist etc.
+                if (sTmpArticle.isEmpty()) {
+                    QMessageBox::information(m_pParent, qApp->applicationName(),
+                                             trUtf8("Could not find meta data."));
+                    return;
+                }
+
+                // Copy metadata line by line in list
+                sListTmp << sTmpArticle.split("\n");
+                // qDebug() << "META files:" << sListTmp;
+
+                // Get only attachments article metadata
+                for (int i = 0; i < sListTmp.size(); i++) {
+                    if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
+                                               Qt::CaseInsensitive)) {
+                        // Remove "X-Attach: "
+                        sListMetadata << sListTmp[i].remove("X-Attach: ");
+                        // Remove windows specific newline \r
+                        sListMetadata.last().remove("\r");
+                        sListMetadata.last() = m_sInyokaUrl + "/_image?target="
+                                + sListMetadata.last();
+                        sListSaveFolder << m_sImgDir;
+
+                        // qDebug() << sListMetadata.last();
+                    }
+                }
+
+                // If attachments exist
+                if (sListMetadata.size() > 0) {
+                    // Ask if images should be downloaded,
+                    // if not enabled by default in settings
+                    if (true != m_bAutomaticImageDownload) {
+                        iRet = QMessageBox::question(m_pParent,
+                                                     qApp->applicationName(),
+                                                     trUtf8("Do you want to download "
+                                                            "the images which are "
+                                                            "attached to the article?"),
+                                                     QMessageBox::Yes
+                                                     | QMessageBox::No,
+                                                     QMessageBox::No);
+                    } else {
+                        iRet = QMessageBox::Yes;
+                    }
+
+                    if (iRet != QMessageBox::No) {
+                        qDebug() << "Starting image download...";
+                        m_DlImages->setDLs(sListMetadata, sListSaveFolder);
+                        QTimer::singleShot(0, m_DlImages, SLOT(startDownloads()));
+                    } else {
+                        this->showArticle();
+                    }
                 } else {
                     this->showArticle();
                 }
-            } else {
-                this->showArticle();
             }
         }
     }
+    m_listDownloadReplies.removeAll(pReply);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QUrl CDownload::redirectUrl(const QUrl &possibleRedirectUrl,
+                            const QUrl &oldRedirectUrl) {
+    QUrl redirectUrl;
+    if (!possibleRedirectUrl.isEmpty()
+            && possibleRedirectUrl != oldRedirectUrl) {
+        redirectUrl = possibleRedirectUrl;
+        m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
+        qDebug() << "Set new sitename:" << m_sSitename;
+    }
+    return redirectUrl;
 }
 
 // ----------------------------------------------------------------------------

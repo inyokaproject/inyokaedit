@@ -155,7 +155,6 @@ void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
 
     m_listDownloadReplies.removeAll(pReply);
     m_sListRepliesPath.removeAt(nIndex);
-    m_sListRedirect.removeAt(nIndex);
     m_sListBasename.removeAt(nIndex);
     pReply->deleteLater();
 
@@ -166,7 +165,6 @@ void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
 
         m_sListRepliesPath.clear();
         m_sListBasename.clear();
-        m_sListRedirect.clear();
         qDebug() << "All downloads finished...";
 
         // Show error messages
@@ -202,7 +200,6 @@ void CDownloadImg::cancelDownloads() {
     m_listDownloadReplies.clear();
     m_sListRepliesPath.clear();
     m_sListBasename.clear();
-    m_sListRedirect.clear();
 
     qDebug() << "Canceled downloads...";
     emit finsihedImageDownload();

@@ -54,7 +54,7 @@ class CDownload : public QObject {
     /**
     * \brief Start download of an existing article
     */
-    void downloadArticle();
+    void downloadArticle(QString sUrl = "");
 
     /**
     * \brief Start download of Inyoka style elements
@@ -75,6 +75,9 @@ class CDownload : public QObject {
     void sendArticleText(const QString &, const QString &);
 
   private:
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl);
+
     /**
     * \brief Start download of images which are attached to an article
     * \param sArticlename Name of the article
@@ -91,9 +94,11 @@ class CDownload : public QObject {
     QString m_sImgDir;
 
     QNetworkAccessManager *m_pNwManager;
-    QNetworkReply *m_pReply;
+    QList<QNetworkReply *> m_listDownloadReplies;
+    QUrl m_urlRedirectedTo;
     QString m_sArticleText;
     QString m_sSitename;
+    QString m_sRevision;
     QString m_sSource;
     QString m_sInyokaUrl;
     bool m_bAutomaticImageDownload;

@@ -70,7 +70,6 @@ class CDownloadImg : public QObject {
 
     QStringList m_sListRepliesPath;
     QStringList m_sListBasename;
-    QStringList m_sListRedirect;
 };
 
 #endif  // INYOKAEDIT_CDOWNLOADIMG_H_
