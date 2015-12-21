@@ -314,7 +314,8 @@ QUrl CDownload::redirectUrl(const QUrl &possibleRedirectUrl,
     if (!possibleRedirectUrl.isEmpty()
             && possibleRedirectUrl != oldRedirectUrl) {
         redirectUrl = possibleRedirectUrl;
-        m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
+        QString sUrl(redirectUrl.toString());
+        m_sSitename = redirectUrl.toString().mid(sUrl.lastIndexOf('/') + 1);
         qDebug() << "Set new sitename:" << m_sSitename;
     }
     return redirectUrl;

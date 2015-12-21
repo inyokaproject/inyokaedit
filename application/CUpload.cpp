@@ -162,6 +162,9 @@ void CUpload::requestToken() {
     QString sLoginUrl(m_sInyokaUrl);
     sLoginUrl = sLoginUrl.remove("wiki.") + "/login/";
     QNetworkRequest request(sLoginUrl);
+    request.setRawHeader("User-Agent",
+                         QString(qApp->applicationName() + "/"
+                                 + qApp->applicationVersion()).toLatin1());
 
     m_State = REQUTOKEN;
     m_pReply = m_pNwManager->get(request);
@@ -320,6 +323,9 @@ void CUpload::requestRevision() {
 
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/log");
     QNetworkRequest request(sUrl);
+    request.setRawHeader("User-Agent",
+                         QString(qApp->applicationName() + "/"
+                                 + qApp->applicationVersion()).toLatin1());
     m_pReply = m_pNwManager->get(request);
 }
 
@@ -362,6 +368,9 @@ void CUpload::requestUpload() {
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit");
     qDebug() << "UPLOADING article:" << sUrl;
     QNetworkRequest request;
+    request.setRawHeader("User-Agent",
+                         QString(qApp->applicationName() + "/"
+                                 + qApp->applicationVersion()).toLatin1());
     request.setUrl(QUrl(sUrl));
 
     QList<QNetworkCookie> listCookies;
