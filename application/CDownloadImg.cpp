@@ -107,7 +107,8 @@ void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
         if (QNetworkReply::OperationCanceledError != pReply->error()) {
             m_sDownloadError += pData->errorString() + "\n\n";
         }
-        qWarning() << "Image download error: " + pData->errorString();
+        qWarning() << "Image download error (#" << pReply->error() <<
+                      "): " + pData->errorString();
 
         m_pProgessDialog->setValue(m_nProgress);
         m_nProgress++;

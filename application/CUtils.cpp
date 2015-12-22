@@ -94,7 +94,8 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
     QIODevice *pData(pReply);
 
     if (QNetworkReply::NoError != pReply->error()) {
-        qWarning() << "Error while update check:" << pData->errorString();
+        qWarning() << "Error (#" << pReply->error() << ")while update check:"
+                   << pData->errorString();
     } else {
         QRegExp regExp("\\b(Latest InyokaEdit version: )\\b\\d+.\\d+.\\d+");
         QString sReply = QString::fromUtf8(pData->readAll());

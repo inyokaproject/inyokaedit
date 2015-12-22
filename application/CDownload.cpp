@@ -209,7 +209,9 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
     if (QNetworkReply::NoError != pReply->error()) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),
                               pData->errorString());
-        qCritical() << "Error while NW reply:" << pData->errorString();
+        qCritical() << "Error (#" << pReply->error() <<
+                       ") while NW reply:" << pData->errorString();
+        // qDebug() << "Reply content:" << pReply->readAll();
         return;
     } else {
         // No error

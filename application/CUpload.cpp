@@ -337,20 +337,20 @@ void CUpload::getRevisionReply(QString sNWReply) {
     QString sURL(m_sInyokaUrl);
     sURL.remove("https://");
     sURL.remove("http://");
-    QRegExp findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+");
-    // qDebug() << "Search revision in reply:" << sNWReply;
-    // qDebug() << "Pattern:" << findRevision.pattern();
+    QRegExp findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+",
+                         Qt::CaseInsensitive);
 
     int nPos = findRevision.indexIn(sNWReply);
     if (nPos > -1) {
         m_sRevision = findRevision.cap();
-        m_sRevision.remove(0, m_sRevision.indexOf('=') + 1);
-        qDebug() << "Found last revision:" << m_sRevision;
+        m_sRevision.remove(0, m_sRevision.lastIndexOf('/') + 1);
+        qDebug() << "Last revision of" << m_sSitename << "=" << m_sRevision;
     } else {
         m_sRevision = "";
         QMessageBox::warning(m_pParent, trUtf8("Error"),
-                             trUtf8("No existing article revision found!"));
-        qWarning() << "No existing article revision found!";
+                             trUtf8("Last article revision not found!"));
+        qWarning() << "Article revision not found!";
+        qDebug() << "Reply:" << sNWReply;
         return;
     }
 
@@ -437,8 +437,8 @@ void CUpload::requestUpload() {
     QHttpPart timePart;
     timePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                        QVariant("form-data; name=\"edit_time\""));
-    timePart.setBody(QString::number(  // Unix timestamp
-                         QDateTime::currentDateTime().toTime_t()).toLatin1());
+    timePart.setBody(QDateTime::currentDateTimeUtc().toString(
+                         "yyyy-MM-dd hh:mm:ss.zzzzzz").toLatin1());
 
     QHttpPart revPart;
     revPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -485,7 +485,9 @@ void CUpload::replyFinished(QNetworkReply *pReply) {
 
     if (QNetworkReply::NoError != pReply->error()) {
         QMessageBox::critical(m_pParent, "Error", pData->errorString());
-        qCritical() << "Error while NW reply:" << pData->errorString();
+        qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
+                    << pData->errorString();
+        qDebug() << "Reply content:" << pReply->readAll();
         return;
     } else {
         m_ListCookies = this->allCookies();
