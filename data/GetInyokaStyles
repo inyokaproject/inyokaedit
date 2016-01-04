@@ -63,6 +63,10 @@ wget -nv http://media.cdn.ubuntu-de.org/wiki/attachments/42/17/button.png -O but
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_left.png -O mouse_left.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_midd.png -O mouse_midd.png
 wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/mouse_right.png -O mouse_right.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/menu.png -O menu.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/power.png -O power.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/tux.png -O tux.png
+wget -nv http://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/Tasten/ubuntu.png -O ubuntu.png
 wget -nv http://static.cdn.ubuntu-de.org/img/wiki/heading.png -O heading.png
 cd ..
 

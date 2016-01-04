@@ -30,6 +30,8 @@
 #include <QHttpMultiPart>
 #include <QInputDialog>
 #include <QMessageBox>
+// #include <QSsl>
+// #include <QSslConfiguration>
 #include <QUrl>
 
 #if QT_VERSION >= 0x050000
@@ -178,7 +180,7 @@ void CUpload::getTokenReply(QString sNWReply) {
     QString sSessionCookie("");
 
     if (m_ListCookies.size() > 0) {
-        // qDebug() << "COOKIES:" << sListCookies;
+        // qDebug() << "COOKIES:" << m_ListCookies;
 
         QString sCookie("");
         foreach (QNetworkCookie cookie, m_ListCookies) {
@@ -258,6 +260,15 @@ void CUpload::requestLogin() {
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
+
+    /*
+    if (m_sInyokaUrl.contains("https://")) {
+        qDebug() << "HTTPS";
+        QSslConfiguration config(QSslConfiguration::defaultConfiguration());
+        config.setProtocol(QSsl::SslV3);
+        request.setSslConfiguration(config);
+    }
+    */
 
 #if QT_VERSION < 0x050000
     QUrl params;

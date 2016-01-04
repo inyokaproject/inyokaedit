@@ -1241,14 +1241,25 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
         } else if (sListTmpKeys[i] == "wasd") {
             bImage = true;
             sTmpKey += "[[Bild(Wiki/Icons/tasten_wasd.png, 66, alt=\"W A S D Tasten\")]]";
+        } else if (sListTmpKeys[i] == "menue"
+                   || sListTmpKeys[i] == "menue-taste") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/menu.png, alt=\"Menü\")]]";
+        } else if (sListTmpKeys[i] == "power"
+                   || sListTmpKeys[i] == "an") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/power.png, alt=\"Power\")]]";
+        } else if (sListTmpKeys[i] == "tux") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/tux.png, alt=\"Tux\")]]";
+        } else if (sListTmpKeys[i] == "ubuntu") {
+            bImage = true;
+            sTmpKey += "[[Bild(img/wiki/ubuntu.png, alt=\"Ubuntu\")]]";
         } else if (sListTmpKeys[i] == "at") {
             sTmpKeyCode = "&#64;";
         } else if (sListTmpKeys[i] == "cherry"
                    || sListTmpKeys[i] == "keyman") {
             sTmpKeyCode = "Keym&#64;n";
-        } else if (sListTmpKeys[i] == "power"
-                   || sListTmpKeys[i] == "an") {
-            sTmpKeyCode = "&#934;";
         } else if (sListTmpKeys[i] == "vol"
                    || sListTmpKeys[i] == "lauter") {
             sTmpKeyCode = "Vol+";

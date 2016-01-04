@@ -6,6 +6,10 @@
 <@ elseif ['rmb','rmt','rechte Maustaste'] contains ($key as stripped) @>[[Bild(Wiki/Vorlagen/Tasten/mouse_right.png, alt="rechte Maustaste")]]
 <@ elseif ['pfeiltasten'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Icons/pfeiltasten.png, 66, alt="Pfeiltasten")]]
 <@ elseif ['wasd'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Icons/tasten_wasd.png, 66, alt="W A S D Tasten")]]
+<@ elseif ['menue','menue-taste'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Vorlagen/Tasten/menu.png, alt="Menü")]]
+<@ elseif ['power','an'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Vorlagen/Tasten/power.png, alt="Power")]]
+<@ elseif ['tux'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Vorlagen/Tasten/tux.png, alt="Tux")]]
+<@ elseif ['ubuntu'] contains ($key as stripped) as lowercase @>[[Bild(Wiki/Vorlagen/Tasten/ubuntu.png, alt="cof")]]
 <@ elseif true @>
 [[SPAN("<@ if ($key as stripped) matches_regex '^[a-zA-Z0-9äüö]{1}$' @><@ ($key as stripped) as uppercase @>
 <@ elseif ($key as stripped) as lowercase matches_regex '^f([1-9]|1[0-6])$' @><@ ($key as stripped) as uppercase @>
@@ -17,7 +21,6 @@
 <@ elseif ['ende','end'] contains ($key as stripped) as lowercase @>Ende
 <@ elseif ['num','num-taste','num-lock-taste'] contains ($key as stripped) as lowercase @>⇩ num
 <@ elseif ['rollen','bildlauf'] contains ($key as stripped) as lowercase @>⇩ Rollen
-<@ elseif ['menue','menue-taste'] contains ($key as stripped) as lowercase @>Menue
 <@ elseif ['pos1','pos 1','home'] contains ($key as stripped) as lowercase @>Pos1
 <@ elseif ['return','enter','eingabe'] contains ($key as stripped) as lowercase @>⏎
 <@ elseif ['at','@'] contains ($key as stripped) as lowercase @>@
@@ -36,10 +39,7 @@
 <@ elseif ['feststell','feststelltaste','groß','caps'] contains ($key as stripped) as lowercase @>⇩
 <@ elseif ['entf','delete','entfernen','del'] contains ($key as stripped) as lowercase @>Entf
 <@ elseif ['win','windows'] contains ($key as stripped) as lowercase @>Windows
-<@ elseif ['ubuntu'] contains ($key as stripped) as lowercase @>Ubuntu
 <@ elseif ['super'] contains ($key as stripped) as lowercase @>Super
-<@ elseif ['tux'] contains ($key as stripped) as lowercase @>Tux
-<@ elseif ['power','an'] contains ($key as stripped) as lowercase @>Φ
 <@ elseif ['vol','lauter'] contains ($key as stripped) as lowercase @>Vol+
 <@ elseif ['vol-','leiser'] contains ($key as stripped) as lowercase @>Vol-
 <@ elseif ['any', 'anykey'] contains ($key as stripped) as lowercase @>ANY
