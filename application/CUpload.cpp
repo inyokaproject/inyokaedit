@@ -121,6 +121,7 @@ void CUpload::clickUploadArticle() {
     m_sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
     m_sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
     m_sSitename.replace(" ", "_");
+    qDebug() << "Upload site name:" << m_sSitename;
 
     switch (m_State) {
     case REQUTOKEN:
@@ -328,12 +329,16 @@ void CUpload::getLoginReply(QString sNWReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CUpload::requestRevision() {
+void CUpload::requestRevision(QString sUrl) {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_State = REQUREVISION;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/log");
+    if (sUrl.isEmpty()) {
+        sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/log/";
+    }
+
     QNetworkRequest request(sUrl);
+    m_urlRedirectedTo = sUrl;
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -376,7 +381,7 @@ void CUpload::requestUpload() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     m_State = REQUPLOAD;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit");
+    QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit/");
     qDebug() << "UPLOADING article:" << sUrl;
     QNetworkRequest request;
     request.setRawHeader("User-Agent",
@@ -501,31 +506,66 @@ void CUpload::replyFinished(QNetworkReply *pReply) {
         qDebug() << "Reply content:" << pReply->readAll();
         return;
     } else {
-        m_ListCookies = this->allCookies();
-        QString sReply = QString::fromUtf8(pData->readAll());
-        sReply.replace("\r\r\n", "\n");
-        m_pReply->deleteLater();
-
-        if (sReply.isEmpty()) {
-            qDebug() << "Upload NW reply is empty.";
+        if (m_State == REQUREVISION) {
+            // Check for redirection
+            QVariant possibleRedirectUrl = pReply->attribute(
+                        QNetworkRequest::RedirectionTargetAttribute);
+            m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
+                                                  m_urlRedirectedTo);
         }
+        if (!m_urlRedirectedTo.isEmpty() && m_State == REQUREVISION) {
+            qDebug() << "Redirected to: " + m_urlRedirectedTo.toString();
+            this->requestRevision(m_urlRedirectedTo.toString() + "a/log/");
+        } else {
+            m_ListCookies = this->allCookies();
+            QString sReply = QString::fromUtf8(pData->readAll());
+            sReply.replace("\r\r\n", "\n");
+            m_pReply->deleteLater();
 
-        switch (m_State) {
-        case REQUTOKEN:
-            this->getTokenReply(sReply);
-            break;
-        case REQULOGIN:
-            this->getLoginReply(sReply);
-            break;
-        case REQUREVISION:
-            this->getRevisionReply(sReply);
-            break;
-        case REQUPLOAD:
-            this->getUploadReply(sReply);
-            break;
-        default:
-            qWarning() << "Ran into unexpected state:" << m_State;
-            qWarning() << "REPLY:" << sReply;
+            if (sReply.isEmpty()) {
+                qDebug() << "Upload NW reply is empty.";
+            }
+
+            switch (m_State) {
+            case REQUTOKEN:
+                this->getTokenReply(sReply);
+                break;
+            case REQULOGIN:
+                this->getLoginReply(sReply);
+                break;
+            case REQUREVISION:
+                this->getRevisionReply(sReply);
+                break;
+            case REQUPLOAD:
+                this->getUploadReply(sReply);
+                break;
+            default:
+                qWarning() << "Ran into unexpected state:" << m_State;
+                qWarning() << "REPLY:" << sReply;
+            }
         }
     }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QUrl CUpload::redirectUrl(const QUrl &possibleRedirectUrl,
+                          const QUrl &oldRedirectUrl) {
+    QUrl redirectUrl;
+    if (!possibleRedirectUrl.isEmpty()
+            && possibleRedirectUrl != oldRedirectUrl) {
+        redirectUrl = possibleRedirectUrl;
+        m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
+        if (m_sSitename.startsWith('/')) {
+            m_sSitename.remove(0, 1);
+        }
+        if (m_sSitename.endsWith('/')) {
+            m_sSitename.remove(m_sSitename.length() - 1, 1);
+        }
+        qDebug() << "Set new sitename:" << m_sSitename;
+    } else {
+        m_urlRedirectedTo.clear();
+    }
+    return redirectUrl;
 }

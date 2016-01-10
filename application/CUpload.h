@@ -56,8 +56,10 @@ class CUpload : public QNetworkCookieJar {
     void getTokenReply(QString sNWReply);
     void requestLogin();
     void getLoginReply(QString sNWReply);
-    void requestRevision();
+    void requestRevision(QString sUrl = "");
     void getRevisionReply(QString sNWReply);
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl);
     void requestUpload();
     void getUploadReply(QString sNWReply);
 
@@ -74,6 +76,7 @@ class CUpload : public QNetworkCookieJar {
     QNetworkCookie m_SessionCookie;
     QList<QNetworkCookie> m_ListCookies;
     QString m_sSitename;
+    QUrl m_urlRedirectedTo;
     QString m_sRevision;
     QString m_sConstructionArea;
     QTextEdit *m_pEditor;

@@ -167,7 +167,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                     if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
                                     QNetworkRequest(
-                                        QUrl(sLinkURL + "/a/export/meta")));
+                                        QUrl(sLinkURL + "/a/export/meta/")));
                         QEventLoop loop;  // Workaround getting synchron reply
                         connect(m_NWreply, SIGNAL(finished()),
                                 &loop, SLOT(quit()));
@@ -194,7 +194,7 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                     if (bIsOnline && m_bCheckLinks) {
                         m_NWreply = m_NWAManager->get(
                                     QNetworkRequest(
-                                        QUrl(sLinkURL + "/a/export/meta")));
+                                        QUrl(sLinkURL + "/a/export/meta/")));
                         QEventLoop loop;
                         connect(m_NWreply, SIGNAL(finished()),
                                 &loop, SLOT(quit()));

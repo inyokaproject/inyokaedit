@@ -2254,7 +2254,7 @@ QString CProvisionalTplParser::parseWorkInProgress(const QStringList &sListArgs)
         sOutput += QString::fromUtf8("<p>Solltest du dir nicht sicher sein, ob "
                                      "an dieser Anleitung noch gearbeitet wird, "
                                      "kontrolliere das Datum der [:Baustelle/%1"
-                                     "/a/log:letzten Änderung] und entscheide, "
+                                     "/a/log/:letzten Änderung] und entscheide, "
                                      "wie du weiter vorgehst.</p>\n").arg(sArgs[1]);
     }
 
