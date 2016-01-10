@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2015 The InyokaEdit developers
+#  Copyright (C) 2011-2016 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ DESTDIR       = ../
 
 VERSION       = 1.0.0
 QMAKE_TARGET_DESCRIPTION = "Hotkey plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2015 The InyokaEdit developers"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2016 The InyokaEdit developers"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
