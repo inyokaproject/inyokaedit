@@ -154,6 +154,9 @@ void CDownload::downloadArticle(QString sUrl) {
             return;
         }
         m_sSitename.replace(" ", "_");
+        if (m_sSitename.endsWith('/')) {
+            m_sSitename.remove(m_sSitename.length() - 1, 1);
+        }
 
         // Download specific revision
         if (m_sSitename.contains("@rev=")) {
@@ -161,9 +164,9 @@ void CDownload::downloadArticle(QString sUrl) {
             m_sRevision.remove("@rev=");
             m_sSitename.remove(m_sSitename.indexOf("@rev="),
                                m_sSitename.length());
-            m_sRevision = "/" + m_sRevision;
+            m_sRevision = m_sRevision;
         }
-        sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw" + m_sRevision;
+        sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw/" + m_sRevision;
     }
 
 #ifndef QT_NO_CURSOR
@@ -173,6 +176,7 @@ void CDownload::downloadArticle(QString sUrl) {
     m_bDownloadArticle = true;
     qDebug() << "DOWNLOADING article:" << sUrl;
     QNetworkRequest request(sUrl);
+    m_urlRedirectedTo = sUrl;
     QNetworkReply *reply = m_pNwManager->get(request);
     m_listDownloadReplies.append(reply);
 }
@@ -184,9 +188,10 @@ void CDownload::downloadArticle(QString sUrl) {
 void CDownload::downloadImages() {
     m_bDownloadArticle = false;
 
-    QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta");
+    QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta/");
     qDebug() << "DOWNLOADING meta data:" << sUrl;
     QNetworkRequest request(sUrl);
+    m_urlRedirectedTo = sUrl;
     QNetworkReply *reply = m_pNwManager->get(request);
     m_listDownloadReplies.append(reply);
 }
@@ -222,7 +227,7 @@ void CDownload::replyFinished(QNetworkReply *pReply) {
         if (!m_urlRedirectedTo.isEmpty()) {
             url = m_urlRedirectedTo;
             qDebug() << "Redirected to: " + url.toString();
-            this->downloadArticle(url.toString() + "/a/export/raw" + m_sRevision);
+            this->downloadArticle(url.toString() + "a/export/raw/" + m_sRevision);
         } else {
             m_urlRedirectedTo.clear();
             QString sTmpArticle = QString::fromUtf8(pData->readAll());
@@ -316,9 +321,16 @@ QUrl CDownload::redirectUrl(const QUrl &possibleRedirectUrl,
     if (!possibleRedirectUrl.isEmpty()
             && possibleRedirectUrl != oldRedirectUrl) {
         redirectUrl = possibleRedirectUrl;
-        QString sUrl(redirectUrl.toString());
-        m_sSitename = redirectUrl.toString().mid(sUrl.lastIndexOf('/') + 1);
+        m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
+        if (m_sSitename.startsWith('/')) {
+            m_sSitename.remove(0, 1);
+        }
+        if (m_sSitename.endsWith('/')) {
+            m_sSitename.remove(m_sSitename.length() - 1, 1);
+        }
         qDebug() << "Set new sitename:" << m_sSitename;
+    } else {
+        m_urlRedirectedTo.clear();
     }
     return redirectUrl;
 }
