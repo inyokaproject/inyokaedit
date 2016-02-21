@@ -13,7 +13,7 @@
     <element type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
     <element type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ikhaya" icon="ikhaya.png" />
     <element type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
-    <element type="ticket" url="http://trac.inyokaproject.org/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
+    <element type="ticket" url="https://trac.ubuntuusers.de/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
     <element type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
     <element type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
     <element type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
@@ -38,6 +38,8 @@
     <element type="ubunturesources" url="http://resources.ubuntu.com/" name="Ubuntu Resources" icon="ubunturesources.png" />
     <element type="ubuntuapps" url="https://apps.ubuntu.com/cat/applications/" name="Ubuntu Apps Directory" icon="ubuntuapps.png" />
     <element type="uappexplorer" url="https://uappexplorer.com/app/" name="uApp Explorer (unofficial)" icon="uappexplorer.png" />
+    <element type="openstore" url="https://open.uappexplorer.com/app/" name="OpenStore (unofficial)" icon="openstore.png" />
+    <element type="openstore2" url="openstore://" name="OpenStore 2 (unofficial)" icon="openstore2.png" />
     <element type="scope" url="scope://com.canonical.scopes.clickstore?q=" name="Ubuntu Scopes" icon="scope.png" />
     <element type="ubuntuone" url="https://login.ubuntu.com/+login" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" /> 

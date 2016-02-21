@@ -31,6 +31,8 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 HEADERS      += CHotkey.h
 
 SOURCES      += CHotkey.cpp

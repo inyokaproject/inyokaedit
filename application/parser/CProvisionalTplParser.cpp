@@ -1114,6 +1114,8 @@ QString CProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
             sTmpKeyCode = "&dArr;";
         } else if (sListTmpKeys[i] == "doppelpunkt") {
             sTmpKeyCode = ":";
+        } else if (sListTmpKeys[i] == "semikolon") {
+            sTmpKeyCode = ";";
         } else if (sListTmpKeys[i] == "ausrufezeichen") {
             sTmpKeyCode = "!";
         } else if (sListTmpKeys[i] == "und") {
@@ -2204,7 +2206,7 @@ QString CProvisionalTplParser::parseUnderConstruction(const QStringList &sListAr
                            sOutput,
                            QString::fromUtf8("Insbesondere heißt das, dass "
                                              "dieser Artikel noch nicht fertig "
-                                             "ist und dass wichtige Teile fehlen "
+                                             "ist und dass wichtige Teile fehlen, "
                                              "oder sogar falsch sein können. "
                                              "Bitte diesen Artikel nicht als "
                                              "Anleitung für Problemlösungen "

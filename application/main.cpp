@@ -110,6 +110,10 @@ int main(int argc, char *argv[]) {
     // Resource file (images, icons)
     Q_INIT_RESOURCE(inyokaedit_resources);
 
+    if (!userDataDir.exists()) {
+        // Create folder including possible parent directories (mkPATH)!
+        userDataDir.mkpath(userDataDir.absolutePath());
+    }
     setupLogger(userDataDir.absolutePath() + "/" + sDebugFile);
 
     // Setup gui translation (Qt)

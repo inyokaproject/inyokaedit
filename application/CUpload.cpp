@@ -165,6 +165,7 @@ void CUpload::requestToken() {
     QString sLoginUrl(m_sInyokaUrl);
     sLoginUrl = sLoginUrl.remove("wiki.") + "/login/";
     QNetworkRequest request(sLoginUrl);
+    // request.setRawHeader("Referer", m_sInyokaUrl.toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -258,6 +259,7 @@ void CUpload::requestLogin() {
     QNetworkRequest request(sUrl);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
+    // request.setRawHeader("Referer", sUrl.toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -339,6 +341,8 @@ void CUpload::requestRevision(QString sUrl) {
 
     QNetworkRequest request(sUrl);
     m_urlRedirectedTo = sUrl;
+    // request.setRawHeader("Referer",
+    //                     QString(m_sInyokaUrl + "/" + m_sSitename).toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -384,6 +388,8 @@ void CUpload::requestUpload() {
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit/");
     qDebug() << "UPLOADING article:" << sUrl;
     QNetworkRequest request;
+    // request.setRawHeader("Referer",
+    //                     QString(m_sInyokaUrl + "/" + m_sSitename).toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
