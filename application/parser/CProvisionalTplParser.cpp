@@ -125,11 +125,9 @@ QString CProvisionalTplParser::parseTpl(const QStringList &sListArgs,
         } else if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
             sArgs.removeFirst();
             return this->parseNotice(sArgs);
-        /*
         } else if (sArgs[0].toLower() == QString::fromUtf8("OBS").toLower()) {
             sArgs.removeFirst();
             return this->parseOBS(sArgs);
-        */
         } else if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht").toLower()) {
             sArgs.removeFirst();
             return this->parseOverview(sArgs);
@@ -1352,8 +1350,7 @@ QString CProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-// CURRENTLY NOT USED
-/*
+
 QString CProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
     QString sOutput("");
     sOutput = QString::fromUtf8("<p>Um das Paket aus einer vom "
@@ -1364,20 +1361,20 @@ QString CProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
                                 " Befehl mit [:sudo:root-Rechten] im "
                                 "[:Terminal:] ausführt: </p>\n");
 
+    if (sListArgs.size() >= 1) {
+        sOutput += "<div class=\"thirdpartyrepo-outer "
+                   "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
+                   "</p><div class=\"bash\"><div class=\"contents\"><pre "
+                   "class=\"notranslate\">sudo add-apt-repository 'deb http://"
+                   "download.opensuse.org/repositories/" + sListArgs[0] +
+                   "/xUbuntu_VERSION/ /'</pre></div></div><p></p></div></div>";
+    }
+
     sOutput += insertBox("box warning",
                          QString::fromUtf8("Hinweis!"),
                          QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
                                            " das System gefährden."));
 
-    if (sListArgs.size() >= 1) {
-        sOutput += "<div class=\"thirdpartyrepo-outer "
-                   "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
-                   "</p><div class=\"bash\"><div class=\"contents\"><pre "
-                   "class=\"notranslate\">sudo sh -c \"echo 'deb http://"
-                   "download.opensuse.org/repositories/" + sListArgs[0] +
-                   "/xUbuntu_VERSION/ /' &gt;&gt; /etc/apt/sources.list.d"
-                   "/OBS.list\" </pre></div></div><p></p></div></div>";
-    }
     sOutput += QString::fromUtf8("<p>Anschließend sollte die [:Fremdquelle:] "
                                  "authentifiziert werden. Dazu lädt man sich "
                                  "mit dem folgenden Befehlen den benötigten "
@@ -1396,7 +1393,7 @@ QString CProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
 
     return sOutput;
 }
-*/
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
