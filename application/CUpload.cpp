@@ -165,7 +165,6 @@ void CUpload::requestToken() {
     QString sLoginUrl(m_sInyokaUrl);
     sLoginUrl = sLoginUrl.remove("wiki.") + "/login/";
     QNetworkRequest request(sLoginUrl);
-    // request.setRawHeader("Referer", m_sInyokaUrl.toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -259,26 +258,19 @@ void CUpload::requestLogin() {
     QNetworkRequest request(sUrl);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
-    // request.setRawHeader("Referer", sUrl.toLatin1());
+    // Referer needed with POST request + https in Django
+    QString sReferer(m_sInyokaUrl);
+    sReferer = sReferer.remove("wiki.");
+    request.setRawHeader("Referer", sReferer.toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
-
-    /*
-    if (m_sInyokaUrl.contains("https://")) {
-        qDebug() << "HTTPS";
-        QSslConfiguration config(QSslConfiguration::defaultConfiguration());
-        config.setProtocol(QSsl::SslV3);
-        request.setSslConfiguration(config);
-    }
-    */
 
 #if QT_VERSION < 0x050000
     QUrl params;
 #else
     QUrlQuery params;
 #endif
-
     params.addQueryItem("csrfmiddlewaretoken", m_sToken);
     params.addQueryItem("username", sUsername);
     params.addQueryItem("password", sPassword);
@@ -341,8 +333,6 @@ void CUpload::requestRevision(QString sUrl) {
 
     QNetworkRequest request(sUrl);
     m_urlRedirectedTo = sUrl;
-    // request.setRawHeader("Referer",
-    //                     QString(m_sInyokaUrl + "/" + m_sSitename).toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -388,8 +378,8 @@ void CUpload::requestUpload() {
     QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit/");
     qDebug() << "UPLOADING article:" << sUrl;
     QNetworkRequest request;
-    // request.setRawHeader("Referer",
-    //                     QString(m_sInyokaUrl + "/" + m_sSitename).toLatin1());
+    // Referer needed with POST request + https in Django
+    request.setRawHeader("Referer", m_sInyokaUrl.toLatin1());
     request.setRawHeader("User-Agent",
                          QString(qApp->applicationName() + "/"
                                  + qApp->applicationVersion()).toLatin1());
@@ -498,7 +488,7 @@ void CUpload::getUploadReply(QString sNWReply) {
 // ----------------------------------------------------------------------------
 
 void CUpload::replyFinished(QNetworkReply *pReply) {
-        qDebug() << "Calling" << Q_FUNC_INFO;
+    qDebug() << "Calling" << Q_FUNC_INFO;
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
