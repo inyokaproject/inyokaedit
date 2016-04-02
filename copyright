@@ -4,13 +4,13 @@ Upstream-Contact: Thorsten Roth <elthoro@gmx.de>
 Source: https://code.launchpad.net/inyokaedit
 
 Files: *
-Copyright: 2011-2015 The InyokaEdit developers
-           2011-2015 Thorsten Roth <elthoro@gmx.de>
+Copyright: 2011-2016 The InyokaEdit developers
+           2011-2016 Thorsten Roth <elthoro@gmx.de>
            2014-2015 djcj <djcj@gmx.de>
 License: GPL-3+
 
 Files: debian/*
-Copyright: 2011-2015 Thorsten Roth <elthoro@gmx.de>
+Copyright: 2011-2016 Thorsten Roth <elthoro@gmx.de>
            2012-2015 Dominique Lasserre <lasserre.d@gmail.com>
            2014-2015 djcj <djcj@gmx.de>
 License: GPL-3+
@@ -22,7 +22,7 @@ Files: plugins/tabletemplate/CTableTemplate.cpp
        application/CSettingsDialog.h
        application/CSettingsDialog.ui
 Copyright: 2012-2015 Christian Schaerf <code.c.schaerf@t-online.de>
-           2012-2015 Thorsten Roth <elthoro@gmx.de>
+           2012-2016 Thorsten Roth <elthoro@gmx.de>
 License: GPL-3+
 
 License: GPL-3+

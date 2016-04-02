@@ -1,3 +1,15 @@
+inyokaedit (0.17.0-0ubuntu1) wily; urgency=low
+
+  [ Thorsten Roth ]
+  * Added hotkey plugin (LP: #847272)
+  * Changes for new Inyoka API for article download and upload
+    (LP: #1527886, LP: #1527911)
+  * Changes for https support.
+  * Added Breeze icons and new IWLs.
+  * Added OBS template, added new keys.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 02 Apr 2016 17:11:00 +0200
+
 inyokaedit (0.16.0-0ubuntu1) trusty; urgency=low
 
   [ Thorsten Roth ]
