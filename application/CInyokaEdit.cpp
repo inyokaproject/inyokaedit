@@ -1489,7 +1489,7 @@ void CInyokaEdit::deleteAutoSaveBackups() {
                 QDir::NoDotAndDotDot | QDir::Files);
     foreach (QFileInfo fi, fiListFiles) {
         if ("bak~" == fi.suffix() && fi.baseName().startsWith("AutoSave")) {
-            if(!dir.remove(fi.fileName())) {
+            if (!dir.remove(fi.fileName())) {
                 qWarning() << "Could not delete auto save backup file:" <<
                               fi.fileName();
             }

@@ -233,7 +233,7 @@ void CHotkey::reject() {
 
 void CHotkey::addRow() {
     m_sListEntries << trUtf8("'''Bold'''");
-    m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_B);;
+    m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_B);
     this->createRow(m_listEntryKey.last(), m_sListEntries.last());
     m_pUi->entriesTable->scrollToBottom();
     m_pUi->entriesTable->editItem(m_pUi->entriesTable->item(

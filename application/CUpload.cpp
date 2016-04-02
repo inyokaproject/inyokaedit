@@ -30,8 +30,6 @@
 #include <QHttpMultiPart>
 #include <QInputDialog>
 #include <QMessageBox>
-// #include <QSsl>
-// #include <QSslConfiguration>
 #include <QUrl>
 
 #if QT_VERSION >= 0x050000

@@ -27,7 +27,6 @@
 #ifndef INYOKAEDIT_CUPLOAD_H_
 #define INYOKAEDIT_CUPLOAD_H_
 
-#include <QAuthenticator>
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
