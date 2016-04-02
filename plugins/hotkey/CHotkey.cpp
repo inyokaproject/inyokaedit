@@ -167,7 +167,7 @@ void CHotkey::loadHotkeyEntries() {
         m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_B);
         m_sListEntries << "'''Bold'''";
         m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_I);
-        m_sListEntries << "'''Italic'''";
+        m_sListEntries << "''Italic''";
         m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_L);
         m_sListEntries << "Text %%Selected%%";
         this->writeSettings();
