@@ -625,7 +625,7 @@ bool CFileOperations::closeAllmaybeSave() {
 
 QString CFileOperations::getCurrentFile() const {
     QFileInfo file(m_pCurrentEditor->getFileName());
-    return file.baseName();
+    return file.absoluteFilePath();
 }
 
 void CFileOperations::setCurrentEditor() {

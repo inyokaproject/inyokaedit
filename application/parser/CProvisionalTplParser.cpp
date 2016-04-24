@@ -2011,7 +2011,10 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         } else {  // Article tested with ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "xenial") {
+                if (sListArgs[i].toLower() == "yakkety") {
+                    sOutput += "[:Yakkety_Yak:Ubuntu 16.10] "
+                               "Yakkety Yak";
+                } else if (sListArgs[i].toLower() == "xenial") {
                     sOutput += "[:Xenial_Xerus:Ubuntu 16.04] "
                                "Xenial Xerus";
                 } else if (sListArgs[i].toLower() == "wily") {
