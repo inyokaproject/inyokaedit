@@ -91,6 +91,7 @@ class CHotkey : public QObject, IEditorPlugin {
     void registerHotkeys();
     void writeSettings();
     void createRow(const QKeySequence &sequence, const QString &sText);
+    bool eventFilter(QObject *pObject, QEvent *pEvent);
 
     QWidget *m_pParent;
     Ui::CHotkeyClass *m_pUi;

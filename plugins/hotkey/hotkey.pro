@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = hotkey
 DESTDIR       = ../
 
-VERSION       = 1.0.0
+VERSION       = 1.1.0
 QMAKE_TARGET_DESCRIPTION = "Hotkey plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2016 The InyokaEdit developers"
 

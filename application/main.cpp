@@ -207,6 +207,11 @@ void LoggingHandler(QtMsgType type, const char *sMsg) {
         out.flush();
         logfile.close();
         abort();
+        break;
+    default:
+        out << sTime << " OTHER INFO: " << sContext << "\n";
+        out.flush();
+        break;
     }
 }
 

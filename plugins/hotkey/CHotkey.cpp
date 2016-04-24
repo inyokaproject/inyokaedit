@@ -27,6 +27,7 @@
 #include <QCoreApplication>
 #include <QDate>
 #include <QDebug>
+#include <QKeyEvent>
 #include <QMessageBox>
 
 #include "./CHotkey.h"
@@ -133,6 +134,7 @@ void CHotkey::buildUi(QWidget *pParent) {
                 1, QHeaderView::Stretch);
 #endif
     m_pUi->entriesTable->setColumnWidth(2, 40);
+    m_pUi->entriesTable->viewport()->installEventFilter(this);
 
     if (m_sListEntries.size() != m_listEntryKey.size()) {
         qCritical() << "Error building hotkey dialog. List sizes:"
@@ -349,6 +351,50 @@ void CHotkey::writeSettings() {
                               m_listEntryKey[i].toString());
     }
     m_pSettings->endGroup();
+}
+
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CHotkey::eventFilter(QObject *pObject, QEvent *pEvent) {
+    if (pEvent->type() == QEvent::ShortcutOverride) {
+        if (pObject == m_pUi->entriesTable->viewport()) {
+            QTableWidgetItem *pItem = m_pUi->entriesTable->currentItem();
+
+            if (0 == pItem->column()) {  // Check only key column
+                QKeyEvent *pKeyEvent = static_cast<QKeyEvent*>(pEvent);
+
+                int nKeyInt = pKeyEvent->key();
+                Qt::Key key = static_cast<Qt::Key>(nKeyInt);
+                if(key == Qt::Key_unknown){
+                    qWarning() << "Unknown key:" << pKeyEvent->key();
+                    return QObject::eventFilter(pObject, pEvent);
+                } else if (key == Qt::Key_Return || key == Qt::Key_Enter) {
+                    return QObject::eventFilter(pObject, pEvent);
+                }
+
+                // Check key sequence and modifiers
+                Qt::KeyboardModifiers modifiers = pKeyEvent->modifiers();
+                if (modifiers & Qt::ShiftModifier) {
+                    nKeyInt += Qt::SHIFT;
+                }
+                if (modifiers & Qt::ControlModifier) {
+                    nKeyInt += Qt::CTRL;
+                }
+                if (modifiers & Qt::AltModifier) {
+                    nKeyInt += Qt::ALT;
+                }
+                if (modifiers & Qt::MetaModifier) {
+                    nKeyInt += Qt::META;
+                }
+
+                pItem->setText(QKeySequence(nKeyInt).toString(QKeySequence::NativeText));
+            }
+        }
+    }
+
+    return QObject::eventFilter(pObject, pEvent);
 }
 
 // ----------------------------------------------------------------------------

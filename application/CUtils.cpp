@@ -41,8 +41,8 @@
 CUtils::CUtils(QWidget *pParent)
     : m_pParent(pParent) {
     qDebug() << "Calling" << Q_FUNC_INFO;
-    NwManager = new QNetworkAccessManager(this);
-    connect(NwManager, SIGNAL(finished(QNetworkReply*)),
+    m_NwManager = new QNetworkAccessManager(this);
+    connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(replyFinished(QNetworkReply*)));
 }
 
@@ -85,7 +85,7 @@ void CUtils::setProxy(const QString &sHostName, const quint16 nPort,
 void CUtils::checkWindowsUpdate() {
     QString sDownloadUrl("http://bazaar.launchpad.net/~elthoro/inyokaedit/windows_files/view/head:/LatestVersion.txt");
     qDebug() << "Looking for updates...";
-    NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
+    m_NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
 }
 
 // ----------------------------------------------------------------------------

@@ -53,7 +53,7 @@ class CUtils : public QObject {
 
   private:
     QWidget *m_pParent;
-    QNetworkAccessManager *NwManager;
+    QNetworkAccessManager *m_NwManager;
 };
 
 #endif  // INYOKAEDIT_CUTILS_H_
