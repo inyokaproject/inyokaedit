@@ -164,7 +164,7 @@ void CDownload::downloadArticle(QString sUrl) {
             m_sRevision.remove("@rev=");
             m_sSitename.remove(m_sSitename.indexOf("@rev="),
                                m_sSitename.length());
-            m_sRevision = m_sRevision;
+            m_sRevision = m_sRevision + "/";
         }
         sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw/" + m_sRevision;
     }
