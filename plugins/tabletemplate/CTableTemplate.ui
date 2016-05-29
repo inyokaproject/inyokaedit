@@ -126,24 +126,6 @@
         </layout>
        </item>
        <item>
-        <widget class="QWebView" name="previewBox" native="true">
-         <property name="contextMenuPolicy">
-          <enum>Qt::NoContextMenu</enum>
-         </property>
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="locale">
-          <locale language="English" country="UnitedKingdom"/>
-         </property>
-         <property name="url" stdset="0">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="previewButton">
          <property name="text">
           <string>Show preview</string>
@@ -217,16 +199,9 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources>
-  <include location="../../application/res/inyokaedit_resources.qrc"/>
   <include location="res/tabletemplate_resources.qrc"/>
+  <include location="../../application/res/inyokaedit_resources.qrc"/>
  </resources>
  <connections>
   <connection>

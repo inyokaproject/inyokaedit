@@ -31,7 +31,6 @@
 #include <QMainWindow>
 #include <QSplitter>
 #include <QToolButton>
-#include <QWebHistory>
 
 #include "./CDownload.h"
 #include "./CFileOperations.h"
@@ -45,9 +44,13 @@
 // Qt classes
 class QComboBox;
 class QSignalMapper;
-class QWebView;
 class QFile;
 class QDir;
+#if QT_VERSION >= 0x050600
+class QWebEngineView;
+#else
+class QWebView;
+#endif
 
 class CDownload;
 
@@ -185,8 +188,12 @@ class CInyokaEdit : public QMainWindow {
     QBoxLayout *m_pFrameLayout;
 
     QTabWidget *m_pDocumentTabs;
-    QWebView *m_pWebview;
     QPoint m_WebviewScrollPosition;
+#if QT_VERSION >= 0x050600
+    QWebEngineView *m_pWebview;
+#else
+    QWebView *m_pWebview;
+#endif
 
     // Inter-Wiki Links
     QMenu *m_piWikiMenu;

@@ -33,6 +33,17 @@
 #include <QSettings>
 #include <QString>
 
+#if QT_VERSION >= 0x050000
+    #if QT_VERSION >= 0x050600
+        #include <QWebEngineView>
+    #else
+        #include <QtWebKitWidgets/QWebView>
+    #endif
+#else
+    // Qt 4
+    #include <QWebView>
+#endif
+
 #include "../../application/parser/CParser.h"
 #include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
@@ -107,6 +118,11 @@ class CTableTemplate : public QObject, IEditorPlugin {
     QDir m_dirPreview;
     QString m_sSharePath;
     QTextDocument *m_pTextDocument;
+#if QT_VERSION >= 0x050600
+    QWebEngineView *m_pPreviewWebview;
+#else
+    QWebView *m_pPreviewWebview;
+#endif
 
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;

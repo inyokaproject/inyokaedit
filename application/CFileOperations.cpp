@@ -33,8 +33,13 @@
 #include <QScrollBar>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWebKitWidgets/QWebView>
+    #if QT_VERSION >= 0x050600
+        #include <QWebEngineView>
+    #else
+        #include <QtWebKitWidgets/QWebView>
+    #endif
 #else
+    // Qt 4
     #include <QWebView>
 #endif
 
@@ -385,7 +390,11 @@ void CFileOperations::saveDocumentAuto() {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::printPreview() {
+#if QT_VERSION >= 0x050600
+    QWebEngineView previewWebView;
+#else
     QWebView previewWebView;
+#endif
     QPrinter printer;
     QFile previewFile(m_sPreviewFile);
     QString sHtml("");
@@ -456,14 +465,20 @@ void CFileOperations::printPreview() {
 
     /*
     previewWebView.setContent(sHtml.toLocal8Bit(), "application/xhtml+xml",
-                                QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
-                                                    .absoluteDir()
-                                                    .absolutePath() + "/"));
+                              QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
+                                                  .absoluteDir()
+                                                  .absolutePath() + "/"));
     */
 
     QPrintDialog printDialog(&printer);
     if (QDialog::Accepted == printDialog.exec()) {
+#if QT_VERSION < 0x050600
         previewWebView.print(&printer);
+#else
+        QMessageBox::warning(0, trUtf8("Warning"), "Printing currently not supported with Qt >= 5.6.0");
+        qWarning() << "Printing currently not supported with Qt >= 5.6.0";
+        // TODO: Check print functionality again with Qt 5.7
+#endif
     }
 }
 

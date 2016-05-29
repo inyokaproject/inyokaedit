@@ -121,8 +121,13 @@ void CSettings::readSettings() {
                                              "0x01000004").toString();
     m_nTimedPreview = m_pSettings->value("TimedPreview",
                                          15).toUInt();
+#if QT_VERSION < 0x050600
     m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
                                            true).toBool();
+#else
+    m_bSyncScrollbars = false;
+    // TODO: To be checked again as soon as scrolling is working with QWebEngine
+#endif
     m_bWinCheckUpdate = m_pSettings->value("WindowsCheckForUpdate",
                                            false).toBool();
 

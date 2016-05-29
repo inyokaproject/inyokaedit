@@ -27,12 +27,21 @@
 #include <QComboBox>
 #include <QtGui>
 #include <QScrollBar>
-#include <QWebFrame>
 
 #if QT_VERSION >= 0x050000
-    #include <QtWebKitWidgets/QWebView>
+    #if QT_VERSION >= 0x050600
+        #include <QWebEngineView>
+        #include <QWebEngineHistory>
+    #else
+        #include <QtWebKitWidgets/QWebView>
+        #include <QWebFrame>
+        #include <QWebHistory>
+    #endif
 #else
+    // Qt 4
     #include <QWebView>
+    #include <QWebFrame>
+    #include <QWebHistory>
 #endif
 
 #include "./CInyokaEdit.h"
@@ -183,13 +192,18 @@ void CInyokaEdit::createObjects() {
 
     this->setCurrentEditor();
 
+#if QT_VERSION >= 0x050600
+    m_pWebview = new QWebEngineView(this);
+#else
     m_pWebview = new QWebView(this);
-    m_pWebview->installEventFilter(this);
-
     connect(m_pWebview->page(), SIGNAL(scrollRequested(int, int, QRect)),
             this, SLOT(syncScrollbarsWebview()));
     connect(m_pFileOperations, SIGNAL(movedEditorScrollbar()),
             this, SLOT(syncScrollbarsEditor()));
+    // TODO: Find alternative for QWebEngine
+#endif
+    m_pWebview->installEventFilter(this);
+
     m_bEditorScrolling = false;
     m_bWebviewScrolling = false;
 
@@ -299,6 +313,11 @@ void CInyokaEdit::createActions() {
                                             QIcon(":/images/document-print.png")));
     connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
             m_pFileOperations, SLOT(printPreview()));
+#if QT_VERSION >= 0x050600
+    m_pUi->printPreviewAct->setEnabled(false);
+    // TODO: Check print functionality again with Qt 5.7
+#endif
+
     // Exit application
     m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
     m_pUi->exitAct->setIcon(QIcon::fromTheme("application-exit"));
@@ -752,9 +771,12 @@ void CInyokaEdit::createToolBars() {
 
     connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
             this, SLOT(changedUrl()));
+#if QT_VERSION < 0x050600
     m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
             this, SLOT(clickedLink(QUrl)));
+    // TODO: Find alternative for QWebEngine. QWebEngineUrlRequestInterceptor ?
+#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -780,7 +802,11 @@ void CInyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
 
 void CInyokaEdit::openFile() {
     // Reset scroll position
+#if QT_VERSION < 0x050600
     m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
+#else
+    m_pWebview->scroll(0, 0);
+#endif
     m_pFileOperations->open();
 }
 
@@ -817,8 +843,14 @@ void CInyokaEdit::previewInyokaPage() {
     tmphtmlfile.close();
 
     // Store scroll position
+#if QT_VERSION < 0x050600
     m_WebviewScrollPosition =
             m_pWebview->page()->mainFrame()->scrollPosition();
+#else
+    m_WebviewScrollPosition = QPoint(0, 0);
+    // TODO: Find alternative for WebEngine
+#endif
+
     m_pWebview->load(
                 QUrl::fromLocalFile(
                     QFileInfo(tmphtmlfile).absoluteFilePath()));
@@ -1286,7 +1318,11 @@ void CInyokaEdit::displayArticleText(const QString &sArticleText,
 
     // Reset scroll position
     m_WebviewScrollPosition = QPoint(0, 0);
+#if QT_VERSION < 0x050600
     m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
+#else
+    m_pWebview->scroll(0, 0);
+#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -1310,7 +1346,12 @@ void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
         }
 
         // Restore scroll position
+#if QT_VERSION < 0x050600
         m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
+#else
+        m_pWebview->scroll(0, 0);
+        // TODO: Find alternative for WebEngine
+#endif
         m_bReloadPreviewBlocked = false;
     } else {
         QMessageBox::warning(this, qApp->applicationName(),
@@ -1501,6 +1542,8 @@ void CInyokaEdit::deleteAutoSaveBackups() {
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsEditor() {
+    // TODO: Find alternative for WebEngine
+#if QT_VERSION < 0x050600
     if (!m_bWebviewScrolling && true == m_pSettings->getSyncScrollbars()) {
         int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
@@ -1512,11 +1555,14 @@ void CInyokaEdit::syncScrollbarsEditor() {
                     QPoint(0, m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nRatio));
         m_bEditorScrolling = false;
     }
+#endif
 }
 
 // ----------------------------------------------------------------------------
 
 void CInyokaEdit::syncScrollbarsWebview() {
+    // TODO: Find alternative for WebEngine
+#if QT_VERSION < 0x050600
     if (!m_bEditorScrolling && true == m_pSettings->getSyncScrollbars()) {
         int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
         int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
@@ -1528,6 +1574,7 @@ void CInyokaEdit::syncScrollbarsWebview() {
                     m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio);
         m_bWebviewScrolling = false;
     }
+#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -1537,7 +1584,11 @@ void CInyokaEdit::showSyntaxOverview() {
     QDialog* dialog = new QDialog(this, this->windowFlags()
                                   & ~Qt::WindowContextHelpButtonHint);
     QGridLayout* layout = new QGridLayout(dialog);
+#if QT_VERSION < 0x050600
     QWebView* webview = new QWebView();
+#else
+    QWebEngineView* webview = new QWebEngineView();
+#endif
     QTextDocument* pTextDocument = new QTextDocument(this);
 
     QFile OverviewFile(m_sSharePath + "/templates/"

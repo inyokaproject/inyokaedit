@@ -64,6 +64,9 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
                 "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
     m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
     m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
+#if QT_VERSION >= 0x050600
+    m_pUi->scrollbarSyncCheck->setEnabled(false);
+#endif
     m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
     QStringList sListGuiLanguages;

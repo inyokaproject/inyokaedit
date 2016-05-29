@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.1.1
+VERSION       = 1.2.0
 QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2016 The InyokaEdit developers"
 
@@ -32,8 +32,14 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += network
-lessThan(QT_MAJOR_VERSION, 5): QT += webkit
-greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
+equals(QT_MAJOR_VERSION, 4) {  # Qt < 5
+    QT += webkit
+} else {  # Qt >= 5
+    # Qt < 5.6
+    lessThan(QT_MINOR_VERSION, 6): QT += webkitwidgets
+    # Qt >= 5.6
+    greaterThan(QT_MINOR_VERSION, 5): QT += webenginewidgets
+}
 
 include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)

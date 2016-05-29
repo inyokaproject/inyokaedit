@@ -65,6 +65,16 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pDialog->setModal(true);
     m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
 
+#if QT_VERSION >= 0x050600
+    m_pPreviewWebview = new QWebEngineView();
+#else
+    m_pPreviewWebview = new QWebView();
+#endif
+    m_pUi->generatorTab->layout()->addWidget(m_pPreviewWebview);
+    m_pPreviewWebview->setContextMenuPolicy(Qt::NoContextMenu);
+    m_pPreviewWebview->setAcceptDrops(false);
+    m_pPreviewWebview->setUrl(QUrl("about:blank"));
+
     // Load table styles
     m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
     m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
@@ -160,11 +170,16 @@ void CTableTemplate::callPlugin() {
     m_pUi->HighlightSecondBox->setChecked(false);
     m_pUi->colsNum->setValue(2);
     m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
-    m_pUi->previewBox->setHtml("");
+    m_pPreviewWebview->setHtml("");
     m_pUi->baseTextEdit->clear();
     m_pUi->newTextEdit->clear();
-    m_pUi->baseTextEdit->insertPlainText(
-                m_pEditor->textCursor().selectedText());
+    if (m_pEditor->textCursor().selectedText().startsWith("{{{#!")) {
+        m_pUi->newTextEdit->insertPlainText(
+                    m_pEditor->textCursor().selectedText());
+    } else {
+        m_pUi->baseTextEdit->insertPlainText(
+                    m_pEditor->textCursor().selectedText());
+    }
     m_pDialog->show();
     m_pDialog->exec();
 }
@@ -183,7 +198,7 @@ void CTableTemplate::preview() {
     sRetHtml.remove(QRegExp("<p class=\"meta\">.*</p>"));
     sRetHtml.replace("</style>", "#page table{margin:0px;}</style>");
 
-    m_pUi->previewBox->setHtml(sRetHtml,
+    m_pPreviewWebview->setHtml(sRetHtml,
                                QUrl::fromLocalFile(m_dirPreview.absolutePath()
                                                    + "/"));
 }
