@@ -73,8 +73,8 @@
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
   </group>
   <group name="Wikimedia" icon="wikimedia.png">
-    <element type="wikipedia" url="http://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
-    <element type="wikipedia_en" url="http://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
+    <element type="wikipedia" url="https://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
+    <element type="wikipedia_en" url="https://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
     <element type="wikibooks" url="http://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
     <element type="wikibooks_en" url="http://en.wikibooks.org/wiki/" name="Engl. Wikibooks" icon="wikibooks_en.png" />
     <element type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />

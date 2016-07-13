@@ -15,7 +15,13 @@
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE       = app
-TARGET         = inyokaedit
+
+unix: !macx {
+       TARGET = inyokaedit
+} else {
+       TARGET = InyokaEdit
+}
+
 DESTDIR        = ../
 
 VERSION        = 0.18.0
@@ -80,9 +86,6 @@ FORMS        += CInyokaEdit.ui \
                 CSettingsDialog.ui
 
 RESOURCES     = res/inyokaedit_resources.qrc
+win32:RC_FILE = res/inyokaedit.rc
 
 TRANSLATIONS += lang/inyokaedit_de.ts
-
-win32 {
-    RC_FILE = res/inyokaedit.rc
-}
