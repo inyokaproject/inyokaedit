@@ -33,7 +33,8 @@ class CTemplates : public QObject {
     Q_OBJECT
 
   public:
-    CTemplates(const QString &sTplLang, const QString &sSharePath);
+    CTemplates(const QString &sTplLang, const QString &sSharePath,
+               const QString &sUserDataDir);
     ~CTemplates();
 
     QString getPreviewTemplate() const;
@@ -66,6 +67,12 @@ class CTemplates : public QObject {
     QStringList getListSmilies() const;
     QStringList getListSmiliesImg() const;
 
+    // Tested With
+    QStringList getListTestedWith() const;
+    QStringList getListTestedWithStrings() const;
+    QStringList getListTestedWithTouch() const;
+    QStringList getListTestedWithTouchStrings() const;
+
     CXmlParser *getTPLs() const;
     CXmlParser *getIWLs() const;
     CXmlParser *getDropTPLs() const;
@@ -78,9 +85,14 @@ class CTemplates : public QObject {
                     QStringList &sListImgSource);
     void initTextformats(const QString &sFileName);
     void initTranslations(const QString &sFileName);
+    void initTestedWith(const QString &sFilename,
+                        const QString &sUserDataFilename,
+                        QStringList &sListElements,
+                        QStringList &sListStrings);
 
     QString m_sTplLang;
     QString m_sSharePath;
+    QString m_sUserDataDir;
 
     QString m_sPreviewTemplate;
     QStringList m_sListTplNamesINY;
@@ -115,6 +127,12 @@ class CTemplates : public QObject {
     QString m_sTransTagText;
     QString m_sTransTemplate;
     QString m_sTransTOC;
+
+    // TestedWith versions
+    QStringList m_sListTestedWith;
+    QStringList m_sListTestedWithStrings;
+    QStringList m_sListTestedWithTouch;
+    QStringList m_sListTestedWithTouchStrings;
 
     CXmlParser *m_pInterWikiLinks;
     CXmlParser *m_pMarkupTemplates;

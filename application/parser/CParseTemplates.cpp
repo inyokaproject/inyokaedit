@@ -32,12 +32,20 @@ CParseTemplates::CParseTemplates(QString sTransTpl,
                                  QStringList sListTplNames,
                                  const QStringList &sListHtmlStart,
                                  const QDir &tmpFileOutputDir,
-                                 const QDir &tmpImgDir)
+                                 const QDir &tmpImgDir,
+                                 const QStringList &sListTestedWith,
+                                 const QStringList &sListTestedWithStrings,
+                                 const QStringList &sListTestedWithTouch,
+                                 const QStringList &sListTestedWithTouchStrings)
     : m_sTransTpl(sTransTpl),
       m_sListTplNames(sListTplNames) {
     m_pProvTplTarser = new CProvisionalTplParser(sListHtmlStart,
                                                  tmpFileOutputDir,
-                                                 tmpImgDir);
+                                                 tmpImgDir,
+                                                 sListTestedWith,
+                                                 sListTestedWithStrings,
+                                                 sListTestedWithTouch,
+                                                 sListTestedWithTouchStrings);
 }
 
 // ----------------------------------------------------------------------------

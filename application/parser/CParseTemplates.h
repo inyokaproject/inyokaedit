@@ -39,7 +39,12 @@ class CParseTemplates {
                     QStringList sListTplNames,
                     const QStringList &sListHtmlStart,
                     const QDir &tmpFileOutputDir,
-                    const QDir &tmpImgDir);
+                    const QDir &tmpImgDir,
+                    const QStringList &sListTestedWith,
+                    const QStringList &sListTestedWithStrings,
+                    const QStringList &sListTestedWithTouch,
+                    const QStringList &sListTestedWithTouchStrings);
+
     void startParsing(QTextDocument *pRawDoc,
                       const QString &sCurrentFile);
 

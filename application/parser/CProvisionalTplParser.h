@@ -35,7 +35,12 @@ class CProvisionalTplParser {
   public:
     CProvisionalTplParser(const QStringList &sListHtmlStart,
                           const QDir &tmpFileOutputDir,
-                          const QDir &tmpImgDir);
+                          const QDir &tmpImgDir,
+                          const QStringList &sListTestedWith,
+                          const QStringList &sListTestedWithStrings,
+                          const QStringList &sListTestedWithTouch,
+                          const QStringList &sListTestedWithTouchStrings);
+
     QString parseTpl(const QStringList &sListArgs, const QString sCurrentFile);
 
   private:
@@ -89,6 +94,10 @@ class CProvisionalTplParser {
     QString m_sCurrentFile;
     QDir m_tmpFileDir;
     QDir m_tmpImgDir;
+    QStringList m_sListTestedWith;
+    QStringList m_sListTestedWithStrings;
+    QStringList m_sListTestedWithTouch;
+    QStringList m_sListTestedWithTouchStrings;
 };
 
 #endif  // INYOKAEDIT_CPROVISIONALTPLPARSER_H_

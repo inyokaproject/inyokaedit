@@ -39,7 +39,6 @@ void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                               const QDir userDataDir,
                               const QString sSharePath) {
     Q_UNUSED(pEditor);
-    Q_UNUSED(userDataDir);
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -74,7 +73,7 @@ void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_sSharePath = sSharePath;
     m_pTemplates = new CTemplates(m_pSettings->value(
                                       "TemplateLanguage", "de").toString(),
-                                  m_sSharePath);
+                                  m_sSharePath, userDataDir.absolutePath());
     this->getTranslations();
     this->readStyle(m_sStyleFile);
     this->defineRules();

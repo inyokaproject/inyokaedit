@@ -33,10 +33,18 @@
 
 CProvisionalTplParser::CProvisionalTplParser(const QStringList &sListHtmlStart,
                                              const QDir &tmpFileOutputDir,
-                                             const QDir &tmpImgDir)
+                                             const QDir &tmpImgDir,
+                                             const QStringList &sListTestedWith,
+                                             const QStringList &sListTestedWithStrings,
+                                             const QStringList &sListTestedWithTouch,
+                                             const QStringList &sListTestedWithTouchStrings)
     : m_sListHtmlStart(sListHtmlStart),
       m_tmpFileDir(tmpFileOutputDir),
-      m_tmpImgDir(tmpImgDir) {
+      m_tmpImgDir(tmpImgDir),
+      m_sListTestedWith(sListTestedWith),
+      m_sListTestedWithStrings(sListTestedWithStrings),
+      m_sListTestedWithTouch(sListTestedWithTouch),
+      m_sListTestedWithTouchStrings(sListTestedWithTouchStrings){
 }
 
 // ----------------------------------------------------------------------------
@@ -2004,67 +2012,17 @@ QString CProvisionalTplParser::parseTable(const QStringList &sListArgs) {
 
 QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
     QString sOutput("");
+    qint32 nIndex(-1);
     if (sListArgs.size() >= 1) {
         if (sListArgs[0].toLower() == QString("general").toLower()) {
             sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
                                         "alle Ubuntu-Versionen gültig.");
-        } else {  // Article tested with ubuntu versions
+        } else {  // Article tested with Ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "yakkety") {
-                    sOutput += "[:Yakkety_Yak:Ubuntu 16.10] "
-                               "Yakkety Yak";
-                } else if (sListArgs[i].toLower() == "xenial") {
-                    sOutput += "[:Xenial_Xerus:Ubuntu 16.04] "
-                               "Xenial Xerus";
-                } else if (sListArgs[i].toLower() == "wily") {
-                    sOutput += "[:Wily_Werewolf:Ubuntu 15.10] "
-                               "Wily Werewolf";
-                } else if (sListArgs[i].toLower() == "vivid") {
-                    sOutput += "[:Vivid_Vervet:Ubuntu 15.04] "
-                               "Vivid Vervet";
-                } else if (sListArgs[i].toLower() == "utopic") {
-                    sOutput += "[:Utopic_Unicorn:Ubuntu 14.10] "
-                               "Utopic Unicorn";
-                } else if (sListArgs[i].toLower() == "trusty") {
-                    sOutput += "[:Trusty_Tahr:Ubuntu 14.04] "
-                               "Trusty Tahr";
-                } else if (sListArgs[i].toLower() == "saucy") {
-                    sOutput += "[:Saucy_Salamander:Ubuntu 13.10] "
-                               "Saucy Salamander";
-                } else if (sListArgs[i].toLower() == "raring") {
-                    sOutput += "[:Raring_Ringtail:Ubuntu 13.04] "
-                               "Raring Ringtail";
-                } else if (sListArgs[i].toLower() == "quantal") {
-                    sOutput += "[:Quantal_Quetzal:Ubuntu 12.10] "
-                               "Quantal Quetzal";
-                } else if (sListArgs[i].toLower() == "precise") {
-                    sOutput += "[:Precise_Pangolin:Ubuntu 12.04] "
-                               "Precise Pangolin";
-                } else if (sListArgs[i].toLower() == "oneiric") {
-                    sOutput += "[:Oneiric_Ocelot:Ubuntu 11.10] "
-                               "Oneiric Ocelot";
-                } else if (sListArgs[i].toLower() == "natty") {
-                    sOutput += "[:Natty_Narwhal:Ubuntu 11.04] "
-                               "Natty Narwhal";
-                } else if (sListArgs[i].toLower() == "maverick") {
-                    sOutput += "[:Maverick_Meerkat:Ubuntu 10.10] "
-                               "Maverick Meerkat";
-                } else if (sListArgs[i].toLower() == "lucid") {
-                    sOutput += "[:Lucid_Lynx:Ubuntu 10.04] "
-                               "Lucid Lynx";
-                } else if (sListArgs[i].toLower() == "karmic") {
-                    sOutput += "[:Karmic_Koala:Ubuntu 9.10] "
-                               "Karmic Koala";
-                } else if (sListArgs[i].toLower() == "jaunty") {
-                    sOutput += "[:Jaunty_Jackalope:Ubuntu 9.04] "
-                               "Jaunty Jackalope";
-                } else if (sListArgs[i].toLower() == "hardy") {
-                    sOutput += "[:Hardy_Heron:Ubuntu 8.04] "
-                               "Hardy Heron";
-                } else if (sListArgs[i].toLower() == "dapper") {
-                    sOutput += "[:Dapper_Drake:Ubuntu 6.06] "
-                               "Dapper Drake";
+                nIndex = m_sListTestedWith.indexOf(sListArgs[i].toLower());
+                if (-1 != nIndex && nIndex < m_sListTestedWithStrings.size()) {
+                    sOutput += m_sListTestedWithStrings[nIndex];
                 } else {
                     sOutput += sListArgs[i];
                 }
@@ -2090,19 +2048,17 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
 
 QString CProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
     QString sOutput("");
+    qint32 nIndex(-1);
     if (sListArgs.size() >= 1) {
         if (sListArgs[0].toLower() == QString("general").toLower()) {
             sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
                                         "Ubuntu Touch Versionen.");
-        } else {  // Article tested with ubuntu versions
+        } else {  // Article tested with Ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
-                if (sListArgs[i].toLower() == "vivid") {
-                    sOutput += "[:Vivid_Vervet:Ubuntu Touch 15.04] "
-                               "Vivid Vervet";
-                } else if (sListArgs[i].toLower() == "utopic") {
-                    sOutput += "[:Utopic_Unicorn:Ubuntu Touch 14.10] "
-                               "Utopic Unicorn";
+                nIndex = m_sListTestedWithTouch.indexOf(sListArgs[i].toLower());
+                if (-1 != nIndex && nIndex < m_sListTestedWithTouchStrings.size()) {
+                    sOutput += m_sListTestedWithTouchStrings[nIndex];
                 } else {
                     sOutput += sListArgs[i];
                 }

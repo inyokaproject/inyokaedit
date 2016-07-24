@@ -44,7 +44,11 @@ CParser::CParser(const QDir &tmpImgDir,
                 m_pTemplates->getTransTemplate(),
                 m_pTemplates->getListTplNamesINY(),
                 m_pTemplates->getListFormatHtmlStart(),
-                m_tmpFileDir, m_tmpImgDir);
+                m_tmpFileDir, m_tmpImgDir,
+                m_pTemplates->getListTestedWith(),
+                m_pTemplates->getListTestedWithStrings(),
+                m_pTemplates->getListTestedWithTouch(),
+                m_pTemplates->getListTestedWithTouchStrings());
 
     m_pLinkParser = new CParseLinks(m_sInyokaUrl,
                                     m_pTemplates->getIWLs()->getElementTypes(),

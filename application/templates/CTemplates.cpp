@@ -32,9 +32,11 @@
 
 #include "./CTemplates.h"
 
-CTemplates::CTemplates(const QString &sTplLang, const QString &sSharePath)
+CTemplates::CTemplates(const QString &sTplLang, const QString &sSharePath,
+                       const QString &sUserDataDir)
     : m_sTplLang(sTplLang),
-      m_sSharePath(sSharePath) {
+      m_sSharePath(sSharePath),
+      m_sUserDataDir(sUserDataDir) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     this->initTemplates();
@@ -46,6 +48,12 @@ CTemplates::CTemplates(const QString &sTplLang, const QString &sSharePath)
     this->initTextformats(m_sSharePath + "/templates/Textformats.conf");
     this->initTranslations(m_sSharePath + "/templates/" + m_sTplLang
                            + "/Translations.conf");
+    this->initTestedWith(m_sSharePath + "/templates/TestedWith.conf",
+                         m_sUserDataDir + "/templates/TestedWith.conf",
+                         m_sListTestedWith, m_sListTestedWithStrings);
+    this->initTestedWith(m_sSharePath + "/templates/TestedWithTouch.conf",
+                         m_sUserDataDir + "/templates/TestedWithTouch.conf",
+                         m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
 
     m_pInterWikiLinks = new CXmlParser(m_sSharePath
                                        + "/iWikiLinks/iWikiLinks.xml");
@@ -190,7 +198,7 @@ void CTemplates::initImgMap(const QString &sFilename,
 
     if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(0, "Warning", "Could not open image map file!");
-        qWarning() << "Could not open flag config file:"
+        qWarning() << "Could not open image map config file:"
                    << ImgMapFile.fileName();
         sListElements << "ERROR";
     } else {
@@ -320,6 +328,53 @@ void CTemplates::initTranslations(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void CTemplates::initTestedWith(const QString &sFilename,
+                                const QString &sUserDataFilename,
+                                QStringList &sListElements,
+                                QStringList &sListStrings) {
+    qDebug() << "Calling" << Q_FUNC_INFO;
+
+    QStringList listFiles;
+    listFiles << sFilename << sUserDataFilename;
+    QStringList sListTmpLine;
+    QFile MapFile;
+    sListElements.clear();
+    sListStrings.clear();
+
+    foreach (QString sFile, listFiles) {
+        MapFile.setFileName(sFile);
+        if (!MapFile.exists()) {
+            continue;
+        }
+        if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(0, "Warning", "Could not open Tested map file!");
+            qWarning() << "Could not open TestedWith config file:"
+                       << MapFile.fileName();
+            sListElements << "ERROR";
+        } else {
+            QTextStream in(&MapFile);
+            in.setCodec("UTF-8");
+            QString tmpLine;
+            while (!in.atEnd()) {
+                tmpLine = in.readLine().trimmed();
+                if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
+                    sListTmpLine = tmpLine.split("=");
+                    if (2 == sListTmpLine.size()) {
+                        if (!sListElements.contains(sListTmpLine[0].trimmed())) {
+                            sListElements << sListTmpLine[0].trimmed();
+                            sListStrings << sListTmpLine[1].trimmed();
+                        }
+                    }
+                }
+            }
+            MapFile.close();
+        }
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 CXmlParser* CTemplates::getTPLs() const {
     return m_pMarkupTemplates;
 }
@@ -411,4 +466,21 @@ QStringList CTemplates::getListSmilies() const {
 }
 QStringList CTemplates::getListSmiliesImg() const {
     return m_sListSmiliesImg;
+}
+
+// ----------------------------------------------------------------------------
+// TestedWith versions
+
+QStringList CTemplates::getListTestedWith() const {
+    return m_sListTestedWith;
+}
+QStringList CTemplates::getListTestedWithStrings() const {
+    return m_sListTestedWithStrings;
+}
+
+QStringList CTemplates::getListTestedWithTouch() const {
+    return m_sListTestedWithTouch;
+}
+QStringList CTemplates::getListTestedWithTouchStrings() const {
+    return m_sListTestedWithTouchStrings;
 }

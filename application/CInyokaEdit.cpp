@@ -146,7 +146,7 @@ void CInyokaEdit::createObjects() {
 
     // Has to be created before parser
     m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage(),
-                                  m_sSharePath);
+                                  m_sSharePath, m_UserDataDir.absolutePath());
 
     m_pDownloadModule = new CDownload(this, m_UserDataDir.absolutePath(),
                                       m_tmpPreviewImgDir.absolutePath(),

@@ -36,7 +36,6 @@
 void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                                const QDir userDataDir,
                                const QString sSharePath) {
-    Q_UNUSED(userDataDir);
     qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -64,7 +63,8 @@ void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_sTplLang = m_pSettingsApp->value("TemplateLanguage", "de").toString();
     m_pEditor = pEditor;
     m_sSharePath = sSharePath;
-    m_pTemplates = new CTemplates(m_sTplLang, m_sSharePath);
+    m_pTemplates = new CTemplates(m_sTplLang, m_sSharePath,
+                                  userDataDir.absolutePath());
 
     this->loadTemplateEntries();
     this->buildUi(pParent);  // After loading template entries

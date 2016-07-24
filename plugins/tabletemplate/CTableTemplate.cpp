@@ -53,7 +53,7 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
     m_pTextDocument = new QTextDocument(this);
     m_pTemplates = new CTemplates(m_pSettings->value(
                                       "TemplateLanguage", "de").toString(),
-                                  m_sSharePath);
+                                  m_sSharePath, m_dirPreview.absolutePath());
     m_pParser = new CParser(QDir(""), "", false, m_pTemplates);
 
     // Build UI
