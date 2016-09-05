@@ -295,6 +295,8 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/networksettings.pn
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/removable.png -O removable.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/removable-1394.png -O removable-1394.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/SSD.png -O SSD.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Tango_Phone.png -O Tango_Phone.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Radio.png -O Radio.png
 
 # System
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/access.png -O access.png
