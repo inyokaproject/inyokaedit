@@ -73,6 +73,9 @@ Xerus
 yakkety
 Yakkety
 Yak
+zesty
+Zesty
+Zapus
 Ubuntu
 Kubuntu
 Xubuntu

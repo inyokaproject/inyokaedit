@@ -48,6 +48,7 @@
     <element type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
     <element type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
     <element type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
+    <element type="ubuntu_it" url="http://wiki.ubuntu-it.org/" name="Ital. Ubuntuwiki" icon="" />
   </group>
   <group name="Ubuntu Derivate" icon="kubuntu.png">
     <element type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />

@@ -161,8 +161,7 @@ void CInyokaEdit::createObjects() {
     m_pDocumentTabs->setTabPosition(QTabWidget::North);
     m_pDocumentTabs->setTabsClosable(true);
     m_pDocumentTabs->setDocumentMode(true);
-    // TODO: Movable tabs
-    // Attention: Currently tab order is same as m_pListEditors !!
+    // Attention: Currently tab order is fixed (same as m_pListEditors)
     m_pDocumentTabs->setMovable(false);
 
     m_pFileOperations = new CFileOperations(this, m_pDocumentTabs, m_pSettings,

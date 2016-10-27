@@ -2052,7 +2052,7 @@ QString CProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
     if (sListArgs.size() >= 1) {
         if (sListArgs[0].toLower() == QString("general").toLower()) {
             sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
-                                        "Ubuntu Touch Versionen.");
+                                        "Versionen von Ubuntu Touch.");
         } else {  // Article tested with Ubuntu versions
             for (int i = 0; i < sListArgs.size(); i++) {
                 sOutput += "\n * ";
@@ -2066,14 +2066,14 @@ QString CProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
             sOutput += "\n";
         }
     } else {
-        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
-                                    "unterstützten Ubuntu Touch Version "
+        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner derzeit "
+                                    "unterstützten Ubuntu-Touch-Version "
                                     "getestet! Bitte diesen Artikel testen!");
     }
 
     return this->insertBox("box ut_box",
                            QString::fromUtf8("Dieser Artikel bezieht sich auf "
-                                             "Ubuntu Touch, der Variante von "
+                                             "Ubuntu Touch, die Variante von "
                                              "Ubuntu für mobile Geräte mit "
                                              "Touchscreen."),
                            sOutput);
