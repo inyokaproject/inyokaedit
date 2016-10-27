@@ -1,3 +1,15 @@
+inyokaedit (0.18.0-0ubuntu1) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Moved TestedWith version definitions to external config file.
+  * Fixed not working path resolution (images in article folder)
+  * Hotkey plugin: Insert key sequence automatically by key press
+  * Fixed infinity loop while downloading article revision.
+  * Initial hack for QWebEngine support.
+  * Updated IWLs and templates
+
+ -- Thorsten Roth <elthoro@gmx.de>  Thu, 27 Oct 2016 15:10:00 +0200
+
 inyokaedit (0.17.0-0ubuntu1) wily; urgency=low
 
   [ Thorsten Roth ]
