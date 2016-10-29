@@ -75,8 +75,8 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
     QFileInfoList fiListFiles = appDir.entryInfoList(
                 QDir::NoDotAndDotDot | QDir::Files);
     foreach (QFileInfo fi, fiListFiles) {
-        if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName() + "_")) {
-            sListGuiLanguages << fi.baseName().remove(qAppName() + "_");
+        if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName().toLower() + "_")) {
+            sListGuiLanguages << fi.baseName().remove(qAppName().toLower() + "_");
         }
     }
 

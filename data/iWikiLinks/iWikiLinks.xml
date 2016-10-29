@@ -7,16 +7,16 @@
 -->
 <menu name="InterWiki-Links">
   <group name="Inyoka" icon="user.png">
-    <element type="forum" url="http://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
-    <element type="topic" url="http://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
-    <element type="post" url="http://forum.ubuntuusers.de/post/" name="Post" icon="" />
-    <element type="user" url="http://ubuntuusers.de/user/" name="User" icon="user.png" />
-    <element type="ikhaya" url="http://ikhaya.ubuntuusers.de/" name="Ikhaya" icon="ikhaya.png" />
-    <element type="calendar" url="http://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
+    <element type="forum" url="https://forum.ubuntuusers.de/forum/" name="Forum" icon="" />
+    <element type="topic" url="https://forum.ubuntuusers.de/topic/" name="Topic" icon="" />
+    <element type="post" url="https://forum.ubuntuusers.de/post/" name="Post" icon="" />
+    <element type="user" url="https://ubuntuusers.de/user/" name="User" icon="user.png" />
+    <element type="ikhaya" url="https://ikhaya.ubuntuusers.de/" name="Ikhaya" icon="ikhaya.png" />
+    <element type="calendar" url="https://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
     <element type="ticket" url="https://trac.ubuntuusers.de/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
-    <element type="tag" url="http://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
+    <element type="tag" url="https://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
     <element type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
-    <element type="paste" url="http://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
+    <element type="paste" url="https://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
     <element type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
     <!--<element type="find-link" url="https://startpage.com/do/search?query=host:wiki.ubuntuusers.de+link:" name="Find-Link uuWiki" icon="" />-->
   </group>
@@ -44,41 +44,41 @@
     <element type="ubuntuone" url="https://login.ubuntu.com/+login" name="Ubuntu One" icon="ubuntuone.png" />
     <element type="askubuntu" url="http://askubuntu.com/questions/" name="Ask Ubuntu" icon="askubuntu.png" /> 
     <element type="omgubuntu" url="http://www.omgubuntu.co.uk/" name="OMG! Ubuntu!" icon="omgubuntu.png" />
-    <element type="uf_forum" url="http://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
-    <element type="uf_thread" url="http://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
-    <element type="uf_member" url="http://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
+    <element type="uf_forum" url="https://ubuntuforums.org/forumdisplay.php?f=" name="Ubuntuforums.org Forum" icon="uf_forum.png" />
+    <element type="uf_thread" url="https://ubuntuforums.org/showthread.php?t=" name="Ubuntuforums.org Thread" icon="uf_thread.png" />
+    <element type="uf_member" url="https://ubuntuforums.org/member.php?u=" name="Ubuntuforums.org Member" icon="uf_member.png" />
     <element type="ubuntu_fr" url="http://doc.ubuntu-fr.org/" name="Franz. Ubuntuwiki" icon="ubuntu_fr.png" />
     <element type="ubuntu_it" url="http://wiki.ubuntu-it.org/" name="Ital. Ubuntuwiki" icon="" />
   </group>
   <group name="Ubuntu Derivate" icon="kubuntu.png">
-    <element type="edubuntu" url="http://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
-    <element type="kubuntu" url="http://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
+    <element type="edubuntu" url="https://www.edubuntu.org/" name="Edubuntu" icon="edubuntu.png" />
+    <element type="kubuntu" url="https://kubuntu.org/" name="Kubuntu" icon="kubuntu.png" />
     <element type="kubuntu_doc" url="https://wiki.kubuntu.org/" name="Kubuntuwiki" icon="kubuntu_doc.png" />
     <element type="kubuntu-de" url="http://wiki.kubuntu-de.org/" name="Dt. Kubuntuwiki" icon="kubuntu-de.png" />
     <element type="lubuntu" url="http://www.lubuntu.net/" name="Lubuntu" icon="lubuntu.png" />
     <element type="Mythbuntu" url="http://www.mythbuntu.org/" name="Mythbuntu" icon="mythbuntu.png" />
     <element type="ubuntugnome" url="http://ubuntugnome.org/" name="Ubuntu GNOME" icon="ubuntugnome.png" />
     <element type="ubuntumate" url="http://ubuntu-mate.org/" name="Ubuntu MATE" icon="ubuntumate.png" />
-    <element type="ubuntustudio" url="http://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
-    <element type="xubuntu" url="http://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
+    <element type="ubuntustudio" url="https://ubuntustudio.org/" name="Ubuntu Studio" icon="ubuntustudio.png" />
+    <element type="xubuntu" url="https://www.xubuntu.org/" name="Xubuntu" icon="xubuntu.png" />
   </group>
   <group name="Andere Distributionen, OSS Projekte" icon="debian.png">
     <element type="archwiki" url="https://wiki.archlinux.org/index.php/" name="ArchWiki" icon="archwiki.png" />
-    <element type="debian" url="http://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
-    <element type="debian_de" url="http://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
+    <element type="debian" url="https://wiki.debian.org/" name="Debianwiki" icon="debian.png" />
+    <element type="debian_de" url="https://wiki.debian.org/de/" name="Dt. Debianwiki" icon="debian_de.png" />
     <element type="gnomeapps" url="https://wiki.gnome.org/Apps/" name="GNOME apps" icon="gnomeapps.png" />
     <element type="gnomeprojects" url="https://wiki.gnome.org/Projects/" name="GNOME projects" icon="gnomeprojects.png" />
-    <element type="opensuse" url="http://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
-    <element type="freedesktop-software" url="http://freedesktop.org/wiki/Software/" name="Freedesktop Software" icon="freedesktop.png" />
-    <element type="prolinux" url="http://www.pro-linux.de/" name="Pro-Linux" icon="prolinux.png" />
+    <element type="opensuse" url="https://de.opensuse.org/" name="openSUSE" icon="opensuse.jpg" />
+    <element type="freedesktop-software" url="https://freedesktop.org/wiki/Software/" name="Freedesktop Software" icon="freedesktop.png" />
+    <element type="prolinux" url="https://www.pro-linux.de/" name="Pro-Linux" icon="prolinux.png" />
     <element type="xfcedocs" url="http://docs.xfce.org/" name="Xfce Docs" icon="xfcedocs.png" />
   </group>
   <group name="Wikimedia" icon="wikimedia.png">
     <element type="wikipedia" url="https://de.wikipedia.org/wiki/" name="Dt. Wikipedia" icon="wikipedia.png" />
     <element type="wikipedia_en" url="https://en.wikipedia.org/wiki/" name="Engl. Wikipedia" icon="wikipedia_en.png" />
-    <element type="wikibooks" url="http://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
-    <element type="wikibooks_en" url="http://en.wikibooks.org/wiki/" name="Engl. Wikibooks" icon="wikibooks_en.png" />
-    <element type="wikimedia" url="http://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
+    <element type="wikibooks" url="https://de.wikibooks.org/wiki/" name="Dt. Wikibooks" icon="wikibooks.png" />
+    <element type="wikibooks_en" url="https://en.wikibooks.org/wiki/" name="Engl. Wikibooks" icon="wikibooks_en.png" />
+    <element type="wikimedia" url="https://commons.wikimedia.org/wiki/" name="Wikimedia" icon="wikimedia.png" />
   </group>
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
     <element type="bitbucket" url="https://bitbucket.org/" name="Bitbucket" icon="bitbucket.png" />
@@ -105,14 +105,14 @@
     <element type="atomicgamer" url="http://www.atomicgamer.com/games/" name="AtomicGamer" icon="atomicgamer.png" />
     <element type="desura" url="http://www.desura.com/games/" name="Desura" icon="desura.png" />
     <element type="gameolith" url="https://www.gameolith.com/game/" name="Gameolith" icon="gameolith.png" />
-    <element type="gog" url="http://www.gog.com/gamecard/" name="GOG.com Games catalogue" icon="gog.png" />
-    <element type="holarse" url="http://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
+    <element type="gog" url="https://www.gog.com/game/" name="GOG.com Games catalogue" icon="gog.png" />
+    <element type="holarse" url="https://www.holarse-linuxgaming.de/wiki/" name="Holarse" icon="holarse.png" />
     <element type="humble" url="https://www.humblebundle.com/store/p/" name="Humble Bundle Store" icon="humble.png" />
     <element type="indiedb" url="http://www.indiedb.com/games/" name="Indie DB Video Games" icon="indiedb.png" />
     <element type="liflg" url="http://liflg.org/?catid=" name="Linux Installers" icon="liflg.png" />
-    <element type="lgdb" url="http://www.lgdb.org/" name="Linux game database" icon="lgdb.png" />
+    <element type="lgdb" url="https://www.lgdb.org/" name="Linux game database" icon="lgdb.png" />
     <element type="linuxgaming" url="http://wiki.linuxgaming.de/index.php/" name="Linux Gaming" icon="linuxgaming.png" />
-    <element type="moby" url="http://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
+    <element type="moby" url="https://www.mobygames.com/game/" name="Moby Games" icon="moby.png" />
     <element type="moddb" url="http://www.moddb.com/" name="Mod DB" icon="moddb.png" />
     <element type="steam" url="http://store.steampowered.com/$PAGE?l=german" name="Steam" icon="steam.png" />
   </group>
@@ -121,25 +121,25 @@
     <element type="derstandard" url="http://derstandard.at/" name="derStandard" icon="derstandard.png" />
     <element type="diaspora" url="https://joindiaspora.com/tags/" name="Diaspora" icon="diaspora.png" />
     <element type="duckduckgo" url="https://duckduckgo.com/?q=$PAGE&amp;kl=de-de" name="DuckDuckGo" icon="duckduckgo.png" />
-    <element type="dropbox" url="http://dl.dropbox.com/" name="Dropbox" icon="dropbox.png" />
+    <element type="dropbox" url="https://dl.dropbox.com/" name="Dropbox" icon="dropbox.png" />
     <element type="ean" url="https://www.google.de/#q=" name="EAN" icon="ean.png" />
-    <element type="fb" url="http://www.facebook.com/" name="Facebook" icon="fb.png" />
-    <element type="freenode" url="http://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
+    <element type="fb" url="https://www.facebook.com/" name="Facebook" icon="fb.png" />
+    <element type="freenode" url="https://webchat.freenode.net/?channels=#" name="Freenode Web IRC" icon="freenode.png" />
     <element type="google" url="https://www.google.de/search?q=" name="Google" icon="" />
     <element type="gplus" url="https://plus.google.com/" name="Google+" icon="gplus.png" />
-    <element type="heise" url="http://www.heise.de/" name="heise online" icon="heise.png" />
-    <element type="identica" url="http://identi.ca/" name="Identica" icon="identica.png" />
-    <element type="iawm" url="http://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
+    <element type="heise" url="https://www.heise.de/" name="heise online" icon="heise.png" />
+    <element type="identica" url="https://identi.ca/" name="Identica" icon="identica.png" />
+    <element type="iawm" url="https://wayback.archive.org/web/*/http://" name="Internet Wayback Machine" icon="iawm.png" />
     <element type="isbn" url="http://bookzilla.org/shop/action/advancedSearch?action=search&amp;numbers=" name="ISBN" icon="isbn.png" />
     <element type="ixquick" url="https://ixquick.com/do/search?cat=web&amp;cmd=process_search&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Ixquick" icon="ixquick.png" />
     <element type="lastfm" url="http://www.lastfm.de/group/" name="Last.fm" icon="lastfm.png" />
-    <element type="osm" url="http://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
+    <element type="osm" url="https://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
     <element type="pdf" url="http://" name="PDF Datei" icon="pdf.png" />
-    <element type="quakenet" url="http://webchat.quakenet.org/?channels=" name="QuakeNet IRC" icon="quakenet.png" />
+    <element type="quakenet" url="https://webchat.quakenet.org/?channels=" name="QuakeNet IRC" icon="quakenet.png" />
     <element type="startpage" url="https://startpage.com/do/search?cat=web&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Startpage Suche" icon="startpage.png" />
-    <element type="twitter" url="http://twitter.com/" name="Twitter" icon="twitter.png" />
-    <element type="vimeo" url="http://vimeo.com/" name="Vimeo" icon="vimeo.png" />
+    <element type="twitter" url="https://twitter.com/" name="Twitter" icon="twitter.png" />
+    <element type="vimeo" url="https://vimeo.com/" name="Vimeo" icon="vimeo.png" />
     <element type="wordpress" url="http://$PAGE.wordpress.com/" name="Wordpress" icon="wordpress.png" />
-    <element type="youtube" url="http://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
+    <element type="youtube" url="https://www.youtube.com/watch?v=" name="Youtube" icon="youtube.png" />
   </group>
 </menu>
