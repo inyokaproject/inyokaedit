@@ -240,6 +240,8 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/brainstorm.png -O 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntu-community.png -O ubuntu-community.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/canonical.png -O canonical.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/ubuntutouch.png -O ubuntutouch.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/budgie.png -O budgie.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/UbuntuNetbookEdition.png -O UbuntuNetbookEdition.png
 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnome.png -O gnome.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/gnu.png -O gnu.png

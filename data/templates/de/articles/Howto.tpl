@@ -1,5 +1,5 @@
 ## Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen.
-[[Vorlage(Baustelle, 31.05.2015, Verfasser)]]
+[[Vorlage(Baustelle, 31.12.2017, Verfasser)]]
 
 ## Diese Warnung ist Bestandteil jedes Howtos und darf nicht entfernt werden.
 {{{#!vorlage Warnung
@@ -8,7 +8,7 @@ Die Verwendung dieses Howto geschieht auf eigene Gefahr. Bei Problemen mit der A
 
 ## Bitte die Angaben zu dem letzten erfolgreichen Test dieser Anleitung eintragen:
 {{{#!vorlage Hinweis
-Diese Howto-Anleitung wurde zuletzt von [user:Bearbeiter:] am XX.YYYY.ZZZZ unter '''Ubuntu XX.YY''' erfolgreich getestet.
+Diese Howto-Anleitung wurde zuletzt von [user:Bearbeiter:] am TT.MM.JJJJ unter '''Ubuntu XX.YY''' erfolgreich getestet.
 }}}
 
 = Problembeschreibung =
