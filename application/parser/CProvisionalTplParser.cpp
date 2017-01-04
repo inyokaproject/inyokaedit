@@ -599,7 +599,7 @@ QString CProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
         if (sImage.contains("right") || sText.contains("right")) {
             sImage.remove("right").trimmed();
             sText.remove("right").trimmed();
-            sStyle = "width: auto; float: right; margin-left: 1em";
+            sStyle = "width: auto; clear:right; float: right; margin-left: 1em";
         }
     }
 

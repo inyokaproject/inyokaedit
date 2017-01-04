@@ -14,7 +14,7 @@
     <element type="ikhaya" url="https://ikhaya.ubuntuusers.de/" name="Ikhaya" icon="ikhaya.png" />
     <element type="calendar" url="https://ubuntuusers.de/calendar/" name="Calendar" icon="office-calendar.png" />
     <element type="ticket" url="https://trac.ubuntuusers.de/ticket/" name="Inyoka-Ticket" icon="ticket.png" />
-    <element type="tag" url="https://wiki.ubuntuusers.de/Wiki/Tags?tag=" name="Wiki Tag" icon="" />
+    <element type="tag" url="https://wiki.ubuntuusers.de/wiki/tags/" name="Wiki Tag" icon="" />
     <element type="behind" url="http://behind.ubuntuusers.de/" name="Behind Ubuntuusers" icon="favicon.ico" />
     <element type="paste" url="https://paste.ubuntuusers.de/" name="Paste Service" icon="edit-select-all.png" />
     <element type="planet" url="http://planet.ubuntuusers.de/#article_" name="Planet" icon="internet.png" />
