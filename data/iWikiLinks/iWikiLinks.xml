@@ -136,6 +136,7 @@
     <element type="osm" url="https://wiki.openstreetmap.org/wiki/" name="OpenStreetMap" icon="osm.png" />
     <element type="pdf" url="http://" name="PDF Datei" icon="pdf.png" />
     <element type="quakenet" url="https://webchat.quakenet.org/?channels=" name="QuakeNet IRC" icon="quakenet.png" />
+    <element type="stackoverflow" url="https://stackoverflow.com/questions/" name="Stack Overflow" icon="stackoverflow.png" />
     <element type="startpage" url="https://startpage.com/do/search?cat=web&amp;language=deutsch&amp;query=$PAGE&amp;ff=" name="Startpage Suche" icon="startpage.png" />
     <element type="twitter" url="https://twitter.com/" name="Twitter" icon="twitter.png" />
     <element type="vimeo" url="https://vimeo.com/" name="Vimeo" icon="vimeo.png" />

@@ -162,6 +162,7 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/quakenet.pn
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/scope.png -O scope.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/sourceforge.png -O sourceforge.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/sourceforge2.png -O sourceforge2.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/stackoverflow.png -O stackoverflow.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/startpage.png -O startpage.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/steam.png -O steam.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/team.png -O team.png
