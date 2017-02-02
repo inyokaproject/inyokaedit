@@ -437,12 +437,12 @@ void CUpload::requestUpload() {
     QHttpPart textPart;
     textPart.setHeader(QNetworkRequest::ContentDispositionHeader,
                        QVariant("form-data; name=\"text\""));
-    textPart.setBody(QString(m_pEditor->toPlainText()).toLatin1());
+    textPart.setBody(QString(m_pEditor->toPlainText()).toUtf8());
 
     QHttpPart notePart;
     notePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                        QVariant("form-data; name=\"note\""));
-    notePart.setBody(sNote.toLatin1());
+    notePart.setBody(sNote.toUtf8());
 
     QHttpPart timePart;
     timePart.setHeader(QNetworkRequest::ContentDispositionHeader,
