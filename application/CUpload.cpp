@@ -476,9 +476,15 @@ void CUpload::getUploadReply(QString sNWReply) {
         QMessageBox::information(m_pParent, "Upload",
                                  trUtf8("Upload successful!"));
     } else {
-        qDebug() << "UPLOAD REPLY:" << sNWReply;
-        QMessageBox::warning(m_pParent, trUtf8("Error"),
-                             trUtf8("Upload failed!"));
+        if (sNWReply.contains("Du hast die Seite nicht verändert.")) {
+          qDebug() << "UPLOAD REPLY: Page was not changed.";
+          QMessageBox::warning(m_pParent, trUtf8("Upload failed"),
+                               trUtf8("The page content was not changed!"));
+        } else {
+          qDebug() << "UPLOAD REPLY:" << sNWReply;
+          QMessageBox::warning(m_pParent, trUtf8("Error"),
+                               trUtf8("Upload failed!"));
+        }
     }
 }
 
