@@ -918,12 +918,12 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <location filename="../CUpload.cpp" line="201"/>
         <location filename="../CUpload.cpp" line="208"/>
         <location filename="../CUpload.cpp" line="221"/>
-        <location filename="../CUpload.cpp" line="294"/>
-        <location filename="../CUpload.cpp" line="312"/>
-        <location filename="../CUpload.cpp" line="358"/>
-        <location filename="../CUpload.cpp" line="405"/>
-        <location filename="../CUpload.cpp" line="420"/>
-        <location filename="../CUpload.cpp" line="484"/>
+        <location filename="../CUpload.cpp" line="296"/>
+        <location filename="../CUpload.cpp" line="314"/>
+        <location filename="../CUpload.cpp" line="360"/>
+        <location filename="../CUpload.cpp" line="407"/>
+        <location filename="../CUpload.cpp" line="422"/>
+        <location filename="../CUpload.cpp" line="487"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -951,7 +951,7 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     </message>
     <message>
         <location filename="../CUpload.cpp" line="202"/>
-        <location filename="../CUpload.cpp" line="406"/>
+        <location filename="../CUpload.cpp" line="408"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
@@ -966,62 +966,72 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
         <translation>Upload fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="239"/>
-        <source>Login</source>
-        <translation>Login</translation>
-    </message>
-    <message>
-        <location filename="../CUpload.cpp" line="240"/>
-        <source>Please insert USERNAME:PASSWORD</source>
-        <translation>Bitte BENUTZERNAME:PASSWORT eintragen</translation>
-    </message>
-    <message>
-        <location filename="../CUpload.cpp" line="295"/>
+        <location filename="../CUpload.cpp" line="297"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Login fehlgeschlagen. Falsche Zugangsdaten?</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="313"/>
+        <location filename="../CUpload.cpp" line="315"/>
         <source>Login at Inyoka failed.</source>
         <translation>Login fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="481"/>
+        <location filename="../CUpload.cpp" line="483"/>
         <source>Upload failed</source>
         <translation>Upload fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="482"/>
+        <location filename="../CUpload.cpp" line="484"/>
         <source>The page content was not changed!</source>
         <translation>Die Seite wurde nicht verändert!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="485"/>
+        <location filename="../CUpload.cpp" line="488"/>
         <source>Upload failed!</source>
         <translation>Upload fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="413"/>
+        <location filename="../CUpload.cpp" line="415"/>
         <source>Change note</source>
         <translation>Änderungskommentar</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="359"/>
+        <location filename="../CUpload.cpp" line="239"/>
+        <source>Login user</source>
+        <translation>Login Benutzer</translation>
+    </message>
+    <message>
+        <location filename="../CUpload.cpp" line="240"/>
+        <source>Please insert your Inyoka user name:</source>
+        <translation>Bitte Deinen Inyoka Benutzernamen eingeben:</translation>
+    </message>
+    <message>
+        <location filename="../CUpload.cpp" line="246"/>
+        <source>Login password</source>
+        <translation>Login Passwort</translation>
+    </message>
+    <message>
+        <location filename="../CUpload.cpp" line="247"/>
+        <source>Please insert your Inyoka password:</source>
+        <translation>Bitte Dein Inyoka Passwort eingeben:</translation>
+    </message>
+    <message>
+        <location filename="../CUpload.cpp" line="361"/>
         <source>Last article revision not found!</source>
         <translation>Die letzte Artikelversion wurde nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="414"/>
+        <location filename="../CUpload.cpp" line="416"/>
         <source>Please insert a change message:</source>
         <translation>Bitte einen Änderungskommentar eintragen:</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="421"/>
+        <location filename="../CUpload.cpp" line="423"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Es ist nicht erlaubt einen Artikel ohne Änderungskommentar hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="477"/>
+        <location filename="../CUpload.cpp" line="479"/>
         <source>Upload successful!</source>
         <translation>Upload erfolgreich!</translation>
     </message>

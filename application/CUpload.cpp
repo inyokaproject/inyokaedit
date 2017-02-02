@@ -236,17 +236,19 @@ void CUpload::requestLogin() {
     QString sUsername("");
     QString sPassword("");
 
-    sPassword = QInputDialog::getText(m_pParent, trUtf8("Login"),
-                                      trUtf8("Please insert USERNAME:PASSWORD"),
-                                      QLineEdit::Normal, "", &bOk);
-
-    // Click on "cancel" or string is empty
-    if (true != bOk || sPassword.isEmpty()) {
+    sUsername = QInputDialog::getText(m_pParent, trUtf8("Login user"),
+                                      trUtf8("Please insert your Inyoka user name:"),
+                                      QLineEdit::Normal, "", &bOk).trimmed();
+    if (true != bOk || sUsername.isEmpty()) {
         return;
     }
 
-    sUsername = sPassword.mid(0, sPassword.indexOf(":"));
-    sPassword.remove(sUsername + ":");
+    sPassword = QInputDialog::getText(m_pParent, trUtf8("Login password"),
+                                      trUtf8("Please insert your Inyoka password:"),
+                                      QLineEdit::Password, "", &bOk).trimmed();
+    if (true != bOk || sPassword.isEmpty()) {
+        return;
+    }
 
     sUrl = sUrl.remove("wiki.") + "/login/?next=" + m_sInyokaUrl + "/" + m_sSitename;
 
