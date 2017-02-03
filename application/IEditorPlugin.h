@@ -35,30 +35,30 @@
 class CTextEditor;
 
 class IEditorPlugin {
-  public:
-    virtual ~IEditorPlugin() {}
+ public:
+  virtual ~IEditorPlugin() {}
 
-    // ALL FUNCTIONS PURE VIRTUAL !!!
-    virtual void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                            const QDir userDataDir,
-                            const QString sSharePath) = 0;
-    virtual QString getPluginName() const = 0;
-    virtual QString getPluginVersion() const = 0;
-    virtual QTranslator* getPluginTranslator(const QString &sSharePath,
-                                             const QString &sLocale) = 0;
-    virtual QString getCaption() const = 0;
-    virtual QIcon getIcon() const = 0;
-    virtual bool includeMenu() const = 0;
-    virtual bool includeToolbar() const = 0;
-    virtual bool hasSettings() const = 0;
-    virtual void setCurrentEditor(CTextEditor *pEditor) = 0;
-    virtual void setEditorlist(QList<CTextEditor *> listEditors) = 0;
+  // ALL FUNCTIONS PURE VIRTUAL !!!
+  virtual void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                          const QDir userDataDir,
+                          const QString sSharePath) = 0;
+  virtual QString getPluginName() const = 0;
+  virtual QString getPluginVersion() const = 0;
+  virtual QTranslator* getPluginTranslator(const QString &sSharePath,
+                                           const QString &sLocale) = 0;
+  virtual QString getCaption() const = 0;
+  virtual QIcon getIcon() const = 0;
+  virtual bool includeMenu() const = 0;
+  virtual bool includeToolbar() const = 0;
+  virtual bool hasSettings() const = 0;
+  virtual void setCurrentEditor(CTextEditor *pEditor) = 0;
+  virtual void setEditorlist(QList<CTextEditor *> listEditors) = 0;
 
-  public slots:
-    virtual void callPlugin() = 0;     // Execute manually / call dialog
-    virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
-    virtual void showSettings() = 0;
-    virtual void showAbout() = 0;
+ public slots:
+  virtual void callPlugin() = 0;     // Execute manually / call dialog
+  virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
+  virtual void showSettings() = 0;
+  virtual void showAbout() = 0;
 };
 
 Q_DECLARE_INTERFACE(IEditorPlugin, "InyokaEdit.PluginInterface")

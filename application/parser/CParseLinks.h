@@ -42,42 +42,42 @@
  * \brief Part of parser module responsible for any kind of links.
  */
 class CParseLinks : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CParseLinks(const QString &sUrlToWiki,
-                const QList<QStringList> sListIWiki,
-                const QList<QStringList> sListIWikiUrl,
-                const bool bCheckLinks,
-                const QString &sTransAnchor,
-                const QString &sTransAttach,
-                const QString &sTmpFilePath);
+ public:
+  CParseLinks(const QString &sUrlToWiki,
+              const QList<QStringList> sListIWiki,
+              const QList<QStringList> sListIWikiUrl,
+              const bool bCheckLinks,
+              const QString &sTransAnchor,
+              const QString &sTransAttach,
+              const QString &sTmpFilePath);
 
-    void startParsing(QTextDocument *pRawDoc);
+  void startParsing(QTextDocument *pRawDoc);
 
-  public slots:
-    void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
+ public slots:
+  void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
 
-  private:
-    void replaceHyperlinks(QTextDocument *pRawDoc);
-    void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
-    void replaceInterwikiLinks(QTextDocument *pRawDoc);
-    void replaceAnchorLinks(QTextDocument *pRawDoc);
-    void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
-    void createAnchor(QTextDocument *pRawDoc);
-    void replaceAttachments(QTextDocument *p_RawDoc);
+ private:
+  void replaceHyperlinks(QTextDocument *pRawDoc);
+  void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
+  void replaceInterwikiLinks(QTextDocument *pRawDoc);
+  void replaceAnchorLinks(QTextDocument *pRawDoc);
+  void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
+  void createAnchor(QTextDocument *pRawDoc);
+  void replaceAttachments(QTextDocument *p_RawDoc);
 
-    QString m_sWikiUrl;   // Inyoka wiki url
-    QStringList m_sListInterwikiKey;   // Interwiki link keywords
-    QStringList m_sListInterwikiLink;  // Interwiki link urls
+  QString m_sWikiUrl;   // Inyoka wiki url
+  QStringList m_sListInterwikiKey;   // Interwiki link keywords
+  QStringList m_sListInterwikiLink;  // Interwiki link urls
 
-    bool m_bCheckLinks;
-    QString m_sTransAnchor;
-    QString m_sTransAttach;
-    QString m_sTmpFilePath;
-    QString m_sLinkClassAddition;
-    QNetworkAccessManager *m_NWAManager;
-    QNetworkReply *m_NWreply;
+  bool m_bCheckLinks;
+  QString m_sTransAnchor;
+  QString m_sTransAttach;
+  QString m_sTmpFilePath;
+  QString m_sLinkClassAddition;
+  QNetworkAccessManager *m_NWAManager;
+  QNetworkReply *m_NWreply;
 };
 
 #endif  // INYOKAEDIT_CPARSELINKS_H_

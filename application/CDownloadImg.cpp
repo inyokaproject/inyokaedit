@@ -32,46 +32,46 @@
 #include "./CDownloadImg.h"
 
 CDownloadImg::CDownloadImg() {
-    qDebug() << "Calling" << Q_FUNC_INFO;
+  qDebug() << "Calling" << Q_FUNC_INFO;
 
-    connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(downloadFinished(QNetworkReply*)));
+  connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),
+          this, SLOT(downloadFinished(QNetworkReply*)));
 }
 
 void CDownloadImg::setDLs(const QStringList &sListUrls,
                           const QStringList &sListSavePath) {
-    m_sListUrls = sListUrls;
-    m_sListSavePath = sListSavePath;
+  m_sListUrls = sListUrls;
+  m_sListSavePath = sListSavePath;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CDownloadImg::startDownloads() {
-    m_nProgress = 0;
-    m_sDownloadError.clear();
+  m_nProgress = 0;
+  m_sDownloadError.clear();
 
-    // Create progress dialog
-    m_pProgessDialog = new QProgressDialog(trUtf8("Downloading images..."),
-                                           trUtf8("Cancel"), m_nProgress,
-                                           m_sListUrls.size(), 0,
-                                           Qt::WindowTitleHint
-                                           | Qt::WindowSystemMenuHint);
-    m_pProgessDialog->setWindowTitle(qApp->applicationName());
-    m_pProgessDialog->setMinimumDuration(100);
-    m_pProgessDialog->setModal(true);
-    m_pProgessDialog->setMaximumSize(m_pProgessDialog->size());
-    m_pProgessDialog->setMinimumSize(m_pProgessDialog->size());
-    connect(m_pProgessDialog, SIGNAL(canceled()),
-            this, SLOT(cancelDownloads()));
+  // Create progress dialog
+  m_pProgessDialog = new QProgressDialog(trUtf8("Downloading images..."),
+                                         trUtf8("Cancel"), m_nProgress,
+                                         m_sListUrls.size(), 0,
+                                         Qt::WindowTitleHint
+                                         | Qt::WindowSystemMenuHint);
+  m_pProgessDialog->setWindowTitle(qApp->applicationName());
+  m_pProgessDialog->setMinimumDuration(100);
+  m_pProgessDialog->setModal(true);
+  m_pProgessDialog->setMaximumSize(m_pProgessDialog->size());
+  m_pProgessDialog->setMinimumSize(m_pProgessDialog->size());
+  connect(m_pProgessDialog, SIGNAL(canceled()),
+          this, SLOT(cancelDownloads()));
 
-    if (m_sListUrls.size() == m_sListSavePath.size()
-            && m_sListUrls.size() > 0) {
-        for (int i = 0; i < m_sListUrls.size(); i++) {
-            QUrl url = QUrl::fromEncoded(m_sListUrls[i].toLocal8Bit());
-            this->doDownload(url, m_sListSavePath[i]);
-        }
+  if (m_sListUrls.size() == m_sListSavePath.size()
+      && m_sListUrls.size() > 0) {
+    for (int i = 0; i < m_sListUrls.size(); i++) {
+      QUrl url = QUrl::fromEncoded(m_sListUrls[i].toLocal8Bit());
+      this->doDownload(url, m_sListSavePath[i]);
     }
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -80,101 +80,101 @@ void CDownloadImg::startDownloads() {
 void CDownloadImg::doDownload(const QUrl &url,
                               const QString &sSavePath,
                               const QString sBase) {
-    QNetworkRequest request(url);
-    QNetworkReply *reply = m_NwManager.get(request);
+  QNetworkRequest request(url);
+  QNetworkReply *reply = m_NwManager.get(request);
 
-    m_listDownloadReplies.append(reply);
-    m_sListRepliesPath.append(sSavePath);
-    m_sListBasename.append(sBase);
+  m_listDownloadReplies.append(reply);
+  m_sListRepliesPath.append(sSavePath);
+  m_sListBasename.append(sBase);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
-    QIODevice *pData(pReply);
-    int nIndex = m_listDownloadReplies.indexOf(pReply);
+  QIODevice *pData(pReply);
+  int nIndex = m_listDownloadReplies.indexOf(pReply);
+  m_pProgessDialog->setValue(m_nProgress);
+
+  // Check for redirection
+  QVariant possibleRedirectUrl = pReply->attribute(
+                                   QNetworkRequest::RedirectionTargetAttribute);
+  m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
+                                        m_urlRedirectedTo);
+
+  // Error
+  if (QNetworkReply::NoError != pReply->error()) {
+    if (QNetworkReply::OperationCanceledError != pReply->error()) {
+      m_sDownloadError += pData->errorString() + "\n\n";
+    }
+    qWarning() << "Image download error (#" << pReply->error() <<
+                  "): " + pData->errorString();
+
     m_pProgessDialog->setValue(m_nProgress);
+    m_nProgress++;
+  } else {
+    // No error
+    QUrl url = pReply->url();
+    qDebug() << "Downloading URL: " << url.toString();
 
-    // Check for redirection
-    QVariant possibleRedirectUrl = pReply->attribute(
-                QNetworkRequest::RedirectionTargetAttribute);
-    m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
-                                          m_urlRedirectedTo);
+    // Basename has to be set before possible redirection
+    // (redirected file could have other basename)
+    if (m_sListBasename[nIndex].isEmpty()) {
+      m_sListBasename[nIndex] = url.toString().mid(
+                                  url.toString().lastIndexOf("/") + 1);
+    }
 
-    // Error
-    if (QNetworkReply::NoError != pReply->error()) {
-        if (QNetworkReply::OperationCanceledError != pReply->error()) {
-            m_sDownloadError += pData->errorString() + "\n\n";
-        }
-        qWarning() << "Image download error (#" << pReply->error() <<
-                      "): " + pData->errorString();
+    // If the URL is not empty, we're being redirected
+    if (!m_urlRedirectedTo.isEmpty()) {
+      url = m_urlRedirectedTo;
+      qDebug() << "Redirected to: " + url.toString();
 
-        m_pProgessDialog->setValue(m_nProgress);
-        m_nProgress++;
+      // New request with redirected url
+      this->doDownload(url, m_sListRepliesPath[nIndex],
+                       m_sListBasename[nIndex]);
     } else {
-        // No error
-        QUrl url = pReply->url();
-        qDebug() << "Downloading URL: " << url.toString();
+      m_urlRedirectedTo.clear();
+      m_pProgessDialog->setValue(m_nProgress);
+      m_nProgress++;
 
-        // Basename has to be set before possible redirection
-        // (redirected file could have other basename)
-        if (m_sListBasename[nIndex].isEmpty()) {
-            m_sListBasename[nIndex] = url.toString().mid(
-                        url.toString().lastIndexOf("/") + 1);
-        }
+      // Save file
+      QFile file(m_sListRepliesPath[nIndex]
+                 + "/" + m_sListBasename[nIndex]);
+      if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Could not open " + file.fileName()
+                      + " for writing: " + file.errorString();
+      } else {
+        file.write(pData->readAll());
+        file.close();
 
-        // If the URL is not empty, we're being redirected
-        if (!m_urlRedirectedTo.isEmpty()) {
-            url = m_urlRedirectedTo;
-            qDebug() << "Redirected to: " + url.toString();
+        qDebug() << "Download of " + m_sListBasename[nIndex]
+                    + " succeeded - saved to "
+                    +  m_sListRepliesPath[nIndex];
+      }
+    }
+  }
 
-            // New request with redirected url
-            this->doDownload(url, m_sListRepliesPath[nIndex],
-                             m_sListBasename[nIndex]);
-        } else {
-            m_urlRedirectedTo.clear();
-            m_pProgessDialog->setValue(m_nProgress);
-            m_nProgress++;
+  m_listDownloadReplies.removeAll(pReply);
+  m_sListRepliesPath.removeAt(nIndex);
+  m_sListBasename.removeAt(nIndex);
+  pReply->deleteLater();
 
-            // Save file
-            QFile file(m_sListRepliesPath[nIndex]
-                       + "/" + m_sListBasename[nIndex]);
-            if (!file.open(QIODevice::WriteOnly)) {
-                qWarning() << "Could not open " + file.fileName()
-                              + " for writing: " + file.errorString();
-            } else {
-                file.write(pData->readAll());
-                file.close();
+  // All downloads finished
+  if (m_listDownloadReplies.isEmpty()) {
+    m_pProgessDialog->setValue(m_pProgessDialog->maximum());
+    m_pProgessDialog->deleteLater();
 
-                qDebug() << "Download of " + m_sListBasename[nIndex]
-                            + " succeeded - saved to "
-                            +  m_sListRepliesPath[nIndex];
-            }
-        }
+    m_sListRepliesPath.clear();
+    m_sListBasename.clear();
+    qDebug() << "All downloads finished...";
+
+    // Show error messages
+    if (!m_sDownloadError.isEmpty()) {
+      QMessageBox::warning(0, trUtf8("Download error"), m_sDownloadError);
     }
 
-    m_listDownloadReplies.removeAll(pReply);
-    m_sListRepliesPath.removeAt(nIndex);
-    m_sListBasename.removeAt(nIndex);
-    pReply->deleteLater();
-
-    // All downloads finished
-    if (m_listDownloadReplies.isEmpty()) {
-        m_pProgessDialog->setValue(m_pProgessDialog->maximum());
-        m_pProgessDialog->deleteLater();
-
-        m_sListRepliesPath.clear();
-        m_sListBasename.clear();
-        qDebug() << "All downloads finished...";
-
-        // Show error messages
-        if (!m_sDownloadError.isEmpty()) {
-            QMessageBox::warning(0, trUtf8("Download error"), m_sDownloadError);
-        }
-
-        emit finsihedImageDownload();
-    }
+    emit finsihedImageDownload();
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -182,26 +182,26 @@ void CDownloadImg::downloadFinished(QNetworkReply *pReply) {
 
 QUrl CDownloadImg::redirectUrl(const QUrl &possibleRedirectUrl,
                                const QUrl &oldRedirectUrl) const {
-    QUrl redirectUrl;
-    if (!possibleRedirectUrl.isEmpty()
-            && possibleRedirectUrl != oldRedirectUrl) {
-        redirectUrl = possibleRedirectUrl;
-    }
-    return redirectUrl;
+  QUrl redirectUrl;
+  if (!possibleRedirectUrl.isEmpty()
+      && possibleRedirectUrl != oldRedirectUrl) {
+    redirectUrl = possibleRedirectUrl;
+  }
+  return redirectUrl;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CDownloadImg::cancelDownloads() {
-    foreach (QNetworkReply *pReply, m_listDownloadReplies) {
-        pReply->abort();
-    }
+  foreach (QNetworkReply *pReply, m_listDownloadReplies) {
+    pReply->abort();
+  }
 
-    m_listDownloadReplies.clear();
-    m_sListRepliesPath.clear();
-    m_sListBasename.clear();
+  m_listDownloadReplies.clear();
+  m_sListRepliesPath.clear();
+  m_sListBasename.clear();
 
-    qDebug() << "Canceled downloads...";
-    emit finsihedImageDownload();
+  qDebug() << "Canceled downloads...";
+  emit finsihedImageDownload();
 }

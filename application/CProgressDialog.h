@@ -31,11 +31,9 @@
 #include <QProcess>
 #include <QtGui/QCloseEvent>
 
-
 namespace Ui {
-    class CProgressDialog;
+  class CProgressDialog;
 }
-
 class QCloseEvent;
 
 /**
@@ -43,26 +41,26 @@ class QCloseEvent;
  * \brief Showing a progress dialog while downloading styles.
  */
 class CProgressDialog : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit CProgressDialog(const QString &sScriptname,
-                             QStringList sListArguments);
-    ~CProgressDialog();
+ public:
+  explicit CProgressDialog(const QString &sScriptname,
+                           QStringList sListArguments);
+  ~CProgressDialog();
 
-  private slots:
-    void showMessage();
-    void showErrorMessage();
+ private slots:
+  void showMessage();
+  void showErrorMessage();
 
-    void downloadScriptFinished();
-    void on_pushButtonClosProc_clicked();
+  void downloadScriptFinished();
+  void on_pushButtonClosProc_clicked();
 
-  protected:
-    void closeEvent(QCloseEvent *pEvent);
+ protected:
+  void closeEvent(QCloseEvent *pEvent);
 
-  private:
-    Ui::CProgressDialog *m_pUi;
-    QProcess *m_pProcess;
+ private:
+  Ui::CProgressDialog *m_pUi;
+  QProcess *m_pProcess;
 };
 
 #endif  // INYOKAEDIT_CPROGRESSDIALOG_H_

@@ -42,9 +42,9 @@
 #include "./CSpellCheckDialog.h"
 
 #if defined _WIN32
-    #include "../windows_files/hunspell-mingw/include/hunspell.hxx"
+#include "../windows_files/hunspell-mingw/include/hunspell.hxx"
 #else
-    #include <hunspell/hunspell.hxx>
+#include <hunspell/hunspell.hxx>
 #endif
 
 /**
@@ -52,63 +52,63 @@
  * \brief Spell checker using hunspell.
  */
 class CSpellChecker : public QObject, IEditorPlugin {
-    Q_OBJECT
-    Q_INTERFACES(IEditorPlugin)
+  Q_OBJECT
+  Q_INTERFACES(IEditorPlugin)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 #endif
 
-  public:
-    ~CSpellChecker();
+ public:
+  ~CSpellChecker();
 
-    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
-    QString getPluginName() const;
-    QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
-    QString getCaption() const;
-    QIcon getIcon() const;
-    bool includeMenu() const;
-    bool includeToolbar() const;
-    bool hasSettings() const;
-    void setCurrentEditor(CTextEditor *pEditor);
-    void setEditorlist(QList<CTextEditor *> listEditors);
+  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                  const QDir userDataDir, const QString sSharePath);
+  QString getPluginName() const;
+  QString getPluginVersion() const;
+  QTranslator* getPluginTranslator(const QString &sSharePath,
+                                   const QString &sLocale);
+  QString getCaption() const;
+  QIcon getIcon() const;
+  bool includeMenu() const;
+  bool includeToolbar() const;
+  bool hasSettings() const;
+  void setCurrentEditor(CTextEditor *pEditor);
+  void setEditorlist(QList<CTextEditor *> listEditors);
 
-  public slots:
-    void callPlugin();
-    void executePlugin();
-    void showSettings();
-    void showAbout();
+ public slots:
+  void callPlugin();
+  void executePlugin();
+  void showSettings();
+  void showAbout();
 
-  private:
-    friend class CSpellCheckDialog;
+ private:
+  friend class CSpellCheckDialog;
 
-    void setDictPath();
-    bool initDictionaries();
-    void loadAdditionalDict(const QString &sFilename);
+  void setDictPath();
+  bool initDictionaries();
+  void loadAdditionalDict(const QString &sFilename);
 
-    bool spell(const QString &sWord);
-    QStringList suggest(const QString &sWord);
-    void ignoreWord(const QString &sWord);
-    void addToUserWordlist(const QString &sWord);
-    void putWord(const QString &sWord);
+  bool spell(const QString &sWord);
+  QStringList suggest(const QString &sWord);
+  void ignoreWord(const QString &sWord);
+  void addToUserWordlist(const QString &sWord);
+  void putWord(const QString &sWord);
 
-    Hunspell *m_pHunspell;
-    CTextEditor *m_pEditor;
-    QAction *m_pExecuteAct;
-    CSpellCheckDialog *m_pCheckDialog;
-    QSettings *m_pSettings;
-    QTextCursor m_oldCursor;
-    QString m_sDictPath;
-    QStringList m_sListDicts;
-    QString m_sDictLang;
-    QString m_sUserDict;
-    QDir m_UserDataDir;
-    QString m_sSharePath;
-    QString m_sEncoding;
-    QTextCodec *m_pCodec;
+  Hunspell *m_pHunspell;
+  CTextEditor *m_pEditor;
+  QAction *m_pExecuteAct;
+  CSpellCheckDialog *m_pCheckDialog;
+  QSettings *m_pSettings;
+  QTextCursor m_oldCursor;
+  QString m_sDictPath;
+  QStringList m_sListDicts;
+  QString m_sDictLang;
+  QString m_sUserDict;
+  QDir m_UserDataDir;
+  QString m_sSharePath;
+  QString m_sEncoding;
+  QTextCodec *m_pCodec;
 };
 
 #endif  // INYOKAEDIT_CSPELLCHECKER_H_

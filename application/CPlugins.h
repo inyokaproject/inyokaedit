@@ -35,34 +35,34 @@
 #include "./IEditorPlugin.h"
 
 class CPlugins : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
-             const QStringList &sListDisabledPlugins, const QDir userDataDir,
-             const QString &sSharePath);
-    void loadPlugins();
-    void setCurrentEditor(CTextEditor *pEditor);
-    void setEditorlist(QList<CTextEditor *> listEditors);
+ public:
+  CPlugins(QWidget *pParent, CTextEditor *pEditor, const QString &sGuiLang,
+           const QStringList &sListDisabledPlugins, const QDir userDataDir,
+           const QString &sSharePath);
+  void loadPlugins();
+  void setCurrentEditor(CTextEditor *pEditor);
+  void setEditorlist(QList<CTextEditor *> listEditors);
 
-  signals:
-    void availablePlugins(const QList<IEditorPlugin *> PluginList,
-                          const QList<QObject *> PluginObjList);
-    void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
-                               const QList<QAction *> MenueEntries);
+ signals:
+  void availablePlugins(const QList<IEditorPlugin *> PluginList,
+                        const QList<QObject *> PluginObjList);
+  void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
+                             const QList<QAction *> MenueEntries);
 
-  private:
-    QWidget *m_pParent;
-    CTextEditor *m_pEditor;
-    QString m_sGuiLanguage;
-    QStringList m_sListDisabledPlugins;
-    QDir m_userDataDir;
-    QString m_sSharePath;
+ private:
+  QWidget *m_pParent;
+  CTextEditor *m_pEditor;
+  QString m_sGuiLanguage;
+  QStringList m_sListDisabledPlugins;
+  QDir m_userDataDir;
+  QString m_sSharePath;
 
-    QList<IEditorPlugin *> m_listPlugins;
-    QList<QObject *> m_listPluginObjects;
-    QList<QAction *> m_PluginMenuEntries;
-    QList<QAction *> m_PluginToolbarEntries;
+  QList<IEditorPlugin *> m_listPlugins;
+  QList<QObject *> m_listPluginObjects;
+  QList<QAction *> m_PluginMenuEntries;
+  QList<QAction *> m_PluginToolbarEntries;
 };
 
 #endif  // INYOKAEDIT_CPLUGINS_H_

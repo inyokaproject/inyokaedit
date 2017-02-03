@@ -42,159 +42,159 @@
  * \brief File handling (open, load, save, etc.)
  */
 class CFileOperations : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    /**
+ public:
+  /**
     * \brief Constructor
     * \param pParent Pointer to parent window
     * \param pEditor Pointer to editor module
     * \param pSettings Pointer to settings module
     * \param sAppName Application name
     */
-    CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
-                    CSettings *pSettings, const QString &sPreviewFile,
-                    QString sUserDataDir, QStringList sListTplMacros);
+  CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
+                  CSettings *pSettings, const QString &sPreviewFile,
+                  QString sUserDataDir, QStringList sListTplMacros);
 
-    void newFile(QString sFileName);
+  void newFile(QString sFileName);
 
-    QSignalMapper *m_pSigMapOpenTemplate;
+  QSignalMapper *m_pSigMapOpenTemplate;
 
-    CTextEditor* getCurrentEditor();
-    QList<CTextEditor *> getEditors() const;
+  CTextEditor* getCurrentEditor();
+  QList<CTextEditor *> getEditors() const;
 
-    /**
+  /**
     * \brief Get current file name
     * \return File name of currently opened file
     */
-    QString getCurrentFile() const;
+  QString getCurrentFile() const;
 
-    /**
+  /**
     * \brief Check if current file is saved or not
     * \return True or false if current file is saved or not
     */
-    bool maybeSave();
+  bool maybeSave();
 
-    /**
+  /**
     * \brief Get list of recent opened files
     * \return List of last opened files
     */
-    QList<QAction *> getLastOpenedFiles() const;
+  QList<QAction *> getLastOpenedFiles() const;
 
-    bool closeAllmaybeSave();
+  bool closeAllmaybeSave();
 
-  public slots:
-    /** \brief Open an existing file */
-    void open();
-    void newFile();
+ public slots:
+  /** \brief Open an existing file */
+  void open();
+  void newFile();
 
-    /**
+  /**
     * \brief Open recent opened file
     * \param nEntry Number of file which should be opened
     */
-    void openRecentFile(const int nEntry);
+  void openRecentFile(const int nEntry);
 
-    /**
+  /**
     * \brief Save current file
     * \return True or false if saving was successful / not successful
     */
-    bool save();
+  bool save();
 
-    /**
+  /**
     * \brief Save current file under new name
     * \return True or false if saving was successful / not successful
     */
-    bool saveAs();
+  bool saveAs();
 
-    /**
+  /**
     * \brief Load existing file
     * \param sFileName Path and name of file which should be loaded
     */
-    void loadFile(const QString &sFileName, const bool bUpdateRecent = false);
+  void loadFile(const QString &sFileName, const bool bUpdateRecent = false);
 
-    /**
+  /**
     * \brief Save current file
     * \param sFileName Path and name of file which should be saved
     * \return True or false if saving was successful / not successful
     */
-    bool saveFile(const QString &sFileName);
+  bool saveFile(const QString &sFileName);
 
-    /** \brief Print preview (printer / PDF) */
-    void printPreview();
+  /** \brief Print preview (printer / PDF) */
+  void printPreview();
 
-    void copy();
-    void cut();
-    void paste();
-    void undo();
-    void redo();
+  void copy();
+  void cut();
+  void paste();
+  void undo();
+  void redo();
 
-  signals:
-    /**
+ signals:
+  /**
     * \brief Signal for sending state of recent files menu entry
     */
-    void setMenuLastOpenedEnabled(const bool);
-    void changedCurrentEditor();
-    void newEditor();
-    void callPreview();
-    void modifiedDoc(bool bModified);
-    void movedEditorScrollbar();
+  void setMenuLastOpenedEnabled(const bool);
+  void changedCurrentEditor();
+  void newEditor();
+  void callPreview();
+  void modifiedDoc(bool bModified);
+  void movedEditorScrollbar();
 
-    void triggeredFind();
-    void triggeredReplace();
-    void triggeredFindNext();
-    void triggeredFindPrevious();
-    void triggeredUpload();
-    void copyAvailable(bool);
-    void undoAvailable(bool);
-    void redoAvailable(bool);
-    void undoAvailable2(bool);
-    void redoAvailable2(bool);
+  void triggeredFind();
+  void triggeredReplace();
+  void triggeredFindNext();
+  void triggeredFindPrevious();
+  void triggeredUpload();
+  void copyAvailable(bool);
+  void undoAvailable(bool);
+  void redoAvailable(bool);
+  void undoAvailable2(bool);
+  void redoAvailable2(bool);
 
-  private slots:
-    /** \brief Clear recent files list in file menu */
-    void clearRecentFiles();
+ private slots:
+  /** \brief Clear recent files list in file menu */
+  void clearRecentFiles();
 
-    void changedDocTab(int nIndex);
-    bool closeDocument(int nIndex);
+  void changedDocTab(int nIndex);
+  bool closeDocument(int nIndex);
 
-    void updateEditorSettings();
-    void saveDocumentAuto();
+  void updateEditorSettings();
+  void saveDocumentAuto();
 
-  private:
-    /**
+ private:
+  /**
     * \brief Update list of recent opened files
     * \param sFileName Path and name of a newly opened file
     */
-    void updateRecentFiles(const QString &sFileName);
+  void updateRecentFiles(const QString &sFileName);
 
-    void setCurrentEditor();
+  void setCurrentEditor();
 
-    QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Actions open recent files */
+  QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Actions open recent files */
 
-    QWidget *m_pParent;      /**< Pointer to parent window */
-    QTabWidget *m_pDocumentTabs;
-    CTextEditor *m_pCurrentEditor;  /**< Pointer to editor module */
-    CSettings *m_pSettings;  /**< Pointer to settings module */
+  QWidget *m_pParent;      /**< Pointer to parent window */
+  QTabWidget *m_pDocumentTabs;
+  CTextEditor *m_pCurrentEditor;  /**< Pointer to editor module */
+  CSettings *m_pSettings;  /**< Pointer to settings module */
 
-    QList<QAction *> m_LastOpenedFilesAct;  /**< Actions open recent files */
+  QList<QAction *> m_LastOpenedFilesAct;  /**< Actions open recent files */
 
-    QString m_sPreviewFile;
-    const QString m_sFileFilter;
+  QString m_sPreviewFile;
+  const QString m_sFileFilter;
 
-    bool m_bLoadPreview;
-    bool m_bCloseApp;
-    QTimer *m_pTimerAutosave;
-    QString m_sUserDataDir;
+  bool m_bLoadPreview;
+  bool m_bCloseApp;
+  QTimer *m_pTimerAutosave;
+  QString m_sUserDataDir;
 
-    CFindReplace *m_pFindReplace;
-    CUpload *m_pUploadModule;
+  CFindReplace *m_pFindReplace;
+  CUpload *m_pUploadModule;
 
-    QList<CTextEditor *> m_pListEditors;
+  QList<CTextEditor *> m_pListEditors;
 
-    // File menu: Clear recent opened files list
-    QAction *m_pClearRecentFilesAct;
+  // File menu: Clear recent opened files list
+  QAction *m_pClearRecentFilesAct;
 
-    QStringList m_sListTplMacros;
+  QStringList m_sListTplMacros;
 };
 
 #endif  // INYOKAEDIT_CFILEOPERATIONS_H_

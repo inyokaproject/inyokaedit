@@ -32,10 +32,9 @@
 #include <QTextCharFormat>
 
 struct HighlightingRule {
-    QRegExp pattern;
-    QTextCharFormat format;
+  QRegExp pattern;
+  QTextCharFormat format;
 };
-
 class QTextDocument;
 
 /**
@@ -43,19 +42,19 @@ class QTextDocument;
  * \brief Syntax highlighting
  */
 class CSyntaxHighlighter : public QSyntaxHighlighter {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CSyntaxHighlighter(QTextDocument *pDoc = 0);
-    ~CSyntaxHighlighter();
-    void setRules(QVector<HighlightingRule> rules);
+ public:
+  CSyntaxHighlighter(QTextDocument *pDoc = 0);
+  ~CSyntaxHighlighter();
+  void setRules(QVector<HighlightingRule> rules);
 
-  protected:
-    // Apply highlighting rules
-    void highlightBlock(const QString &sText);
+ protected:
+  // Apply highlighting rules
+  void highlightBlock(const QString &sText);
 
-  private:
-    QVector<HighlightingRule> m_highlightingRules;
+ private:
+  QVector<HighlightingRule> m_highlightingRules;
 };
 
 #endif  // INYOKAEDIT_CSYNTAXHIGHLIGHTER_H_

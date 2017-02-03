@@ -39,9 +39,8 @@
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-    class CHotkeyClass;
+  class CHotkeyClass;
 }
-
 class QDir;
 class QTextDocument;
 
@@ -50,63 +49,63 @@ class QTextDocument;
  * \brief Dialog for hotkey definition
  */
 class CHotkey : public QObject, IEditorPlugin {
-    Q_OBJECT
-    Q_INTERFACES(IEditorPlugin)
+  Q_OBJECT
+  Q_INTERFACES(IEditorPlugin)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
 #endif
 
-  public:
-    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
-    QString getPluginName() const;
-    QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
-    QString getCaption() const;
-    QIcon getIcon() const;
-    bool includeMenu() const;
-    bool includeToolbar() const;
-    bool hasSettings() const;
-    void setCurrentEditor(CTextEditor *pEditor);
-    void setEditorlist(QList<CTextEditor *> listEditors);
+ public:
+  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                  const QDir userDataDir, const QString sSharePath);
+  QString getPluginName() const;
+  QString getPluginVersion() const;
+  QTranslator* getPluginTranslator(const QString &sSharePath,
+                                   const QString &sLocale);
+  QString getCaption() const;
+  QIcon getIcon() const;
+  bool includeMenu() const;
+  bool includeToolbar() const;
+  bool hasSettings() const;
+  void setCurrentEditor(CTextEditor *pEditor);
+  void setEditorlist(QList<CTextEditor *> listEditors);
 
-  public slots:
-    void callPlugin();
-    void executePlugin();
-    void showSettings();
-    void showAbout();
+ public slots:
+  void callPlugin();
+  void executePlugin();
+  void showSettings();
+  void showAbout();
 
-  private slots:
-    void accept();
-    void reject();
-    void addRow();
-    void deleteRow(QWidget *widget);
-    void insertElement(QString sId);
+ private slots:
+  void accept();
+  void reject();
+  void addRow();
+  void deleteRow(QWidget *widget);
+  void insertElement(QString sId);
 
-  private:
-    void loadHotkeyEntries();
-    void buildUi(QWidget *pParent);
-    void registerHotkeys();
-    void writeSettings();
-    void createRow(const QKeySequence &sequence, const QString &sText);
-    bool eventFilter(QObject *pObject, QEvent *pEvent);
+ private:
+  void loadHotkeyEntries();
+  void buildUi(QWidget *pParent);
+  void registerHotkeys();
+  void writeSettings();
+  void createRow(const QKeySequence &sequence, const QString &sText);
+  bool eventFilter(QObject *pObject, QEvent *pEvent);
 
-    QWidget *m_pParent;
-    Ui::CHotkeyClass *m_pUi;
-    QDialog *m_pDialog;
-    QSettings *m_pSettings;
-    QSettings *m_pSettingsApp;
-    CTextEditor *m_pEditor;
-    QString m_sSharePath;
-    QStringList m_sListEntries;
-    QList<QKeySequence> m_listEntryKey;
-    QList<QAction *> m_listActions;
-    QList<QAction *> m_listActionsOld;
-    QSignalMapper *m_pSigMapHotkey;
-    QSignalMapper *m_pSigMapDeleteRow;
-    QList<QPushButton *> m_listDelRowButtons;
+  QWidget *m_pParent;
+  Ui::CHotkeyClass *m_pUi;
+  QDialog *m_pDialog;
+  QSettings *m_pSettings;
+  QSettings *m_pSettingsApp;
+  CTextEditor *m_pEditor;
+  QString m_sSharePath;
+  QStringList m_sListEntries;
+  QList<QKeySequence> m_listEntryKey;
+  QList<QAction *> m_listActions;
+  QList<QAction *> m_listActionsOld;
+  QSignalMapper *m_pSigMapHotkey;
+  QSignalMapper *m_pSigMapDeleteRow;
+  QList<QPushButton *> m_listDelRowButtons;
 };
 
 #endif  // INYOKAEDIT_CHOTKEY_H_

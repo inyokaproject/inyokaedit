@@ -29,47 +29,46 @@
 
 #include <QNetworkReply>
 #include <QProgressDialog>
-
 #include <QStringList>
 
 class CDownloadImg : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit CDownloadImg();
-    void setDLs(const QStringList &sListUrls,
-                const QStringList &sListSavePath);
+ public:
+  explicit CDownloadImg();
+  void setDLs(const QStringList &sListUrls,
+              const QStringList &sListSavePath);
 
-  public slots:
-    void startDownloads();
+ public slots:
+  void startDownloads();
 
-  private slots:
-    void downloadFinished(QNetworkReply *reply);
-    void cancelDownloads();
+ private slots:
+  void downloadFinished(QNetworkReply *reply);
+  void cancelDownloads();
 
-  signals:
-    void finsihedImageDownload();
+ signals:
+  void finsihedImageDownload();
 
-  private:
-    void doDownload(const QUrl &url,
-                    const QString &sSavePath,
-                    const QString sBase = "");
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl) const;
+ private:
+  void doDownload(const QUrl &url,
+                  const QString &sSavePath,
+                  const QString sBase = "");
+  QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                   const QUrl& oldRedirectUrl) const;
 
-    QNetworkAccessManager m_NwManager;
-    QList<QNetworkReply *> m_listDownloadReplies;
+  QNetworkAccessManager m_NwManager;
+  QList<QNetworkReply *> m_listDownloadReplies;
 
-    QProgressDialog *m_pProgessDialog;
-    quint16 m_nProgress;
-    QString m_sDownloadError;
+  QProgressDialog *m_pProgessDialog;
+  quint16 m_nProgress;
+  QString m_sDownloadError;
 
-    QUrl m_urlRedirectedTo;
-    QStringList m_sListUrls;
-    QStringList m_sListSavePath;
+  QUrl m_urlRedirectedTo;
+  QStringList m_sListUrls;
+  QStringList m_sListSavePath;
 
-    QStringList m_sListRepliesPath;
-    QStringList m_sListBasename;
+  QStringList m_sListRepliesPath;
+  QStringList m_sListBasename;
 };
 
 #endif  // INYOKAEDIT_CDOWNLOADIMG_H_

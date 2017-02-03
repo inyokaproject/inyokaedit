@@ -33,9 +33,8 @@
 #include "./IEditorPlugin.h"
 
 namespace Ui {
-    class CSettingsDialog;
+  class CSettingsDialog;
 }
-
 class CSettings;
 
 /**
@@ -43,36 +42,36 @@ class CSettings;
  * \brief Graphcal interface to settings
  */
 class CSettingsDialog : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CSettingsDialog(CSettings *pSettings, const QString &sSharePath,
-                    QWidget *pParent = 0);
-    virtual ~CSettingsDialog();
+ public:
+  CSettingsDialog(CSettings *pSettings, const QString &sSharePath,
+                  QWidget *pParent = 0);
+  virtual ~CSettingsDialog();
 
-  public slots:
-    void accept();
-    void reject();
+ public slots:
+  void accept();
+  void reject();
 
-  signals:
-    void updatedSettings();
+ signals:
+  void updatedSettings();
 
-  protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+ protected:
+  bool eventFilter(QObject *obj, QEvent *event);
 
-  private slots:
-    void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
-                             const QList<QObject *> PluginObjList);
+ private slots:
+  void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
+                           const QList<QObject *> PluginObjList);
 
-  private:
-    Ui::CSettingsDialog *m_pUi;
-    CSettings *m_pSettings;
-    QString m_sSharePath;
-    QString m_sGuiLang;
+ private:
+  Ui::CSettingsDialog *m_pUi;
+  CSettings *m_pSettings;
+  QString m_sSharePath;
+  QString m_sGuiLang;
 
-    QList<IEditorPlugin *> m_listPLugins;
-    QList<QPushButton *> m_listPluginSettingsButtons;
-    QList<QPushButton *> m_listPluginInfoButtons;
+  QList<IEditorPlugin *> m_listPLugins;
+  QList<QPushButton *> m_listPluginSettingsButtons;
+  QList<QPushButton *> m_listPluginInfoButtons;
 };
 
 #endif  // INYOKAEDIT_CSETTINGSDIALOG_H_

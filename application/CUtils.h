@@ -31,29 +31,29 @@
 #include <QNetworkAccessManager>
 
 class CUtils : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit CUtils(QWidget *pParent);
+ public:
+  explicit CUtils(QWidget *pParent);
 
-    static bool getOnlineState();
-    static void setProxy(const QString &sHostName, const quint16 nPort,
-                         const QString &sUser, const QString &sPassword);
-    void checkWindowsUpdate();
+  static bool getOnlineState();
+  static void setProxy(const QString &sHostName, const quint16 nPort,
+                       const QString &sUser, const QString &sPassword);
+  void checkWindowsUpdate();
 
-  public slots:
-    void reportBug();
-    void showAbout();
+ public slots:
+  void reportBug();
+  void showAbout();
 
-  private slots:
-    void replyFinished(QNetworkReply *pReply);
+ private slots:
+  void replyFinished(QNetworkReply *pReply);
 
-  signals:
-    void setWindowsUpdateCheck(const bool);
+ signals:
+  void setWindowsUpdateCheck(const bool);
 
-  private:
-    QWidget *m_pParent;
-    QNetworkAccessManager *m_NwManager;
+ private:
+  QWidget *m_pParent;
+  QNetworkAccessManager *m_NwManager;
 };
 
 #endif  // INYOKAEDIT_CUTILS_H_

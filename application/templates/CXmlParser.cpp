@@ -30,43 +30,43 @@
 #include "./CXmlParser.h"
 
 CXmlParser::CXmlParser(const QString &sXmlFile) {
-    qDebug() << "Calling" << Q_FUNC_INFO;
+  qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QFile XmlFile(sXmlFile);
-    // Check if file exist and it's readable
-    if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
-        qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
-        QMessageBox::critical(0, "Error",
-                              "Can not open \"" + XmlFile.fileName() + "\".");
-        exit(-3);
-    }
+  QFile XmlFile(sXmlFile);
+  // Check if file exist and it's readable
+  if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
+    qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
+    QMessageBox::critical(0, "Error",
+                          "Can not open \"" + XmlFile.fileName() + "\".");
+    exit(-3);
+  }
 
-    QXmlSimpleReader xmlReader;
+  QXmlSimpleReader xmlReader;
 
-    m_pXmlSource = new QXmlInputSource(&XmlFile);
-    m_pHandler = new CHandler;
+  m_pXmlSource = new QXmlInputSource(&XmlFile);
+  m_pHandler = new CHandler;
 
-    xmlReader.setContentHandler(m_pHandler);
-    xmlReader.setErrorHandler(m_pHandler);
+  xmlReader.setContentHandler(m_pHandler);
+  xmlReader.setErrorHandler(m_pHandler);
 
-    bool bOk = xmlReader.parse(m_pXmlSource);
-    if (!bOk) {
-        qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
-        QMessageBox::critical(0, "Error",
-                              "Error while parsing \""
-                              + XmlFile.fileName() + "\".");
-        exit(-4);
-    }
+  bool bOk = xmlReader.parse(m_pXmlSource);
+  if (!bOk) {
+    qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
+    QMessageBox::critical(0, "Error",
+                          "Error while parsing \""
+                          + XmlFile.fileName() + "\".");
+    exit(-4);
+  }
 
-    m_sMenuName = m_pHandler->m_sMenuName_2;
-    m_sListGroups = m_pHandler->m_sListGroups_2;
-    m_sListGroupIcons = m_pHandler->m_sListGroupIcons_2;
-    m_sListTypes = m_pHandler->m_sListTypes_2;
-    m_sListUrls = m_pHandler->m_sListUrls_2;
-    m_sListNames = m_pHandler->m_sListNames_2;
-    m_sListIcons = m_pHandler->m_sListIcons_2;
+  m_sMenuName = m_pHandler->m_sMenuName_2;
+  m_sListGroups = m_pHandler->m_sListGroups_2;
+  m_sListGroupIcons = m_pHandler->m_sListGroupIcons_2;
+  m_sListTypes = m_pHandler->m_sListTypes_2;
+  m_sListUrls = m_pHandler->m_sListUrls_2;
+  m_sListNames = m_pHandler->m_sListNames_2;
+  m_sListIcons = m_pHandler->m_sListIcons_2;
 
-    /*
+  /*
     for (int i = 0; i < sListGroups.size(); i++ ) {
         qDebug() << "\n" << sListGroups[i].toUpper()
                  << " (" << sListGroupIcons[i] << "): ";
@@ -83,56 +83,56 @@ CXmlParser::CXmlParser(const QString &sXmlFile) {
 // ----------------------------------------------------------------------------
 
 QString CXmlParser::getMenuName() const {
-    return m_sMenuName;
+  return m_sMenuName;
 }
 
 QStringList CXmlParser::getGrouplist() const {
-    return m_sListGroups;
+  return m_sListGroups;
 }
 
 QStringList CXmlParser::getGroupIcons() const {
-    return m_sListGroupIcons;
+  return m_sListGroupIcons;
 }
 
 QList<QStringList> CXmlParser::getElementTypes() const {
-    return m_sListTypes;
+  return m_sListTypes;
 }
 
 QList<QStringList> CXmlParser::getElementUrls() const {
-    return m_sListUrls;
+  return m_sListUrls;
 }
 
 QList<QStringList> CXmlParser::getElementNames() const {
-    return m_sListNames;
+  return m_sListNames;
 }
 
 QList<QStringList> CXmlParser::getElementIcons() const {
-    return m_sListIcons;
+  return m_sListIcons;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 bool CXmlParser::CHandler::startDocument() {
-    m_bInElement = false;
-    return true;
+  m_bInElement = false;
+  return true;
 }
 
 // ----------------------------------------------------------------------------
 
 bool CXmlParser::CHandler::endElement(const QString&, const QString&,
                                       const QString &sName) {
-    if ("menu" == sName) {
-        m_bInElement = false;
-        m_sMenuName_2 = m_tmpMenuName;
-    } else if ("group" == sName) {
-        m_sListTypes_2 << m_tmpListTypes;
-        m_sListUrls_2 << m_tmpListUrls;
-        m_sListNames_2 << m_tmpListNames;
-        m_sListIcons_2 << m_tmpListIcons;
-    }
+  if ("menu" == sName) {
+    m_bInElement = false;
+    m_sMenuName_2 = m_tmpMenuName;
+  } else if ("group" == sName) {
+    m_sListTypes_2 << m_tmpListTypes;
+    m_sListUrls_2 << m_tmpListUrls;
+    m_sListNames_2 << m_tmpListNames;
+    m_sListIcons_2 << m_tmpListIcons;
+  }
 
-    return true;
+  return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -140,66 +140,66 @@ bool CXmlParser::CHandler::endElement(const QString&, const QString&,
 bool CXmlParser::CHandler::startElement(const QString&, const QString&,
                                         const QString &sElement,
                                         const QXmlAttributes &attrs) {
-    QString sMenuName("");
-    QString sGroupName("");
-    QString sGroupIcon("");
-    QString sType("");
-    QString sUrl("");
-    QString sName("");
-    QString sIcon("");
+  QString sMenuName("");
+  QString sGroupName("");
+  QString sGroupIcon("");
+  QString sType("");
+  QString sUrl("");
+  QString sName("");
+  QString sIcon("");
 
-    // Found group
-    if (m_bInElement && "group" == sElement) {
-        m_tmpListTypes.clear();
-        m_tmpListUrls.clear();
-        m_tmpListNames.clear();
-        m_tmpListIcons.clear();
+  // Found group
+  if (m_bInElement && "group" == sElement) {
+    m_tmpListTypes.clear();
+    m_tmpListUrls.clear();
+    m_tmpListNames.clear();
+    m_tmpListIcons.clear();
 
-        sGroupName = "GROUPNAME NOT FOUND";
-        sGroupIcon = "NO ICON";
+    sGroupName = "GROUPNAME NOT FOUND";
+    sGroupIcon = "NO ICON";
 
-        for (int i = 0; i < attrs.count(); i++) {
-            if ("name" == attrs.localName(i)) {
-                sGroupName = attrs.value(i);
-            } else if ("icon"== attrs.localName(i)) {
-                sGroupIcon = attrs.value(i);
-            }
-        }
-        m_sListGroups_2 << sGroupName;
-        m_sListGroupIcons_2 << sGroupIcon;
-    } else if (m_bInElement && "element" == sElement) {  // Found interwikilink
-        sType = "TYPE NOT FOUND";
-        sUrl = "URL NOT FOUND";
-        sName = "NAME NOT FOUND";
-        sIcon = "ICON NOT FOUND";
+    for (int i = 0; i < attrs.count(); i++) {
+      if ("name" == attrs.localName(i)) {
+        sGroupName = attrs.value(i);
+      } else if ("icon"== attrs.localName(i)) {
+        sGroupIcon = attrs.value(i);
+      }
+    }
+    m_sListGroups_2 << sGroupName;
+    m_sListGroupIcons_2 << sGroupIcon;
+  } else if (m_bInElement && "element" == sElement) {  // Found interwikilink
+    sType = "TYPE NOT FOUND";
+    sUrl = "URL NOT FOUND";
+    sName = "NAME NOT FOUND";
+    sIcon = "ICON NOT FOUND";
 
-        for (int i = 0; i < attrs.count(); i++) {
-            if ("type" == attrs.localName(i)) {
-                sType = attrs.value(i);
-            } else if ("url" == attrs.localName(i)) {
-                sUrl = attrs.value(i);
-            } else if ("name" == attrs.localName(i)) {
-                sName = attrs.value(i);
-            } else if ("icon" == attrs.localName(i)) {
-                sIcon = attrs.value(i);
-            }
-        }
-
-        m_tmpListTypes << sType;
-        m_tmpListUrls << sUrl;
-        m_tmpListNames << sName;
-        m_tmpListIcons << sIcon;
-    } else if ("menu" == sElement) {  // Found start of document
-        m_bInElement = true;
-
-        sMenuName = "Unnamed";
-        for (int i = 0; i < attrs.count(); i++) {
-            if ("name" == attrs.localName(i)) {
-                sMenuName = attrs.value(i);
-            }
-        }
-        m_tmpMenuName = sMenuName;
+    for (int i = 0; i < attrs.count(); i++) {
+      if ("type" == attrs.localName(i)) {
+        sType = attrs.value(i);
+      } else if ("url" == attrs.localName(i)) {
+        sUrl = attrs.value(i);
+      } else if ("name" == attrs.localName(i)) {
+        sName = attrs.value(i);
+      } else if ("icon" == attrs.localName(i)) {
+        sIcon = attrs.value(i);
+      }
     }
 
-    return true;
+    m_tmpListTypes << sType;
+    m_tmpListUrls << sUrl;
+    m_tmpListNames << sName;
+    m_tmpListIcons << sIcon;
+  } else if ("menu" == sElement) {  // Found start of document
+    m_bInElement = true;
+
+    sMenuName = "Unnamed";
+    for (int i = 0; i < attrs.count(); i++) {
+      if ("name" == attrs.localName(i)) {
+        sMenuName = attrs.value(i);
+      }
+    }
+    m_tmpMenuName = sMenuName;
+  }
+
+  return true;
 }

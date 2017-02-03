@@ -35,7 +35,7 @@
 class CSpellChecker;
 
 namespace Ui {
-    class CSpellCheckDialog;
+  class CSpellCheckDialog;
 }
 
 /**
@@ -43,39 +43,39 @@ namespace Ui {
  * \brief Spell checker dialog.
  */
 class CSpellCheckDialog : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    enum SpellCheckAction {
-        None, AbortCheck, IgnoreOnce, IgnoreAll,
-        ReplaceOnce, ReplaceAll, AddToDict
-    };
+ public:
+  enum SpellCheckAction {
+    None, AbortCheck, IgnoreOnce, IgnoreAll,
+    ReplaceOnce, ReplaceAll, AddToDict
+  };
 
-    explicit CSpellCheckDialog(CSpellChecker *pSpellChecker,
-                               QWidget *pParent = 0);
-    ~CSpellCheckDialog();
+  explicit CSpellCheckDialog(CSpellChecker *pSpellChecker,
+                             QWidget *pParent = 0);
+  ~CSpellCheckDialog();
 
-    QString replacement() const;
+  QString replacement() const;
 
-  public slots:
-    SpellCheckAction checkWord(const QString &sWord);
+ public slots:
+  SpellCheckAction checkWord(const QString &sWord);
 
-  protected slots:
-    void ignoreOnce();
-    void ignoreAll();
-    void replaceOnce();
-    void replaceAll();
-    void addToDict();
+ protected slots:
+  void ignoreOnce();
+  void ignoreAll();
+  void replaceOnce();
+  void replaceAll();
+  void addToDict();
 
-  private slots:
-    void changeLanguage(const QString &sLanguage);
-    void closeDialog();
+ private slots:
+  void changeLanguage(const QString &sLanguage);
+  void closeDialog();
 
-  private:
-    Ui::CSpellCheckDialog *m_pUi;
-    CSpellChecker *m_pSpellChecker;
-    QString m_sUnkownWord;
-    SpellCheckAction m_returnCode;
+ private:
+  Ui::CSpellCheckDialog *m_pUi;
+  CSpellChecker *m_pSpellChecker;
+  QString m_sUnkownWord;
+  SpellCheckAction m_returnCode;
 };
 
 #endif  // INYOKAEDIT_CSPELLCHECKDIALOG_H_

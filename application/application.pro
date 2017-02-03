@@ -14,17 +14,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE       = app
+TEMPLATE      = app
 
 unix: !macx {
-       TARGET = inyokaedit
+    TARGET    = inyokaedit
 } else {
-       TARGET = InyokaEdit
+    TARGET    = InyokaEdit
 }
 
-DESTDIR        = ../
+DESTDIR       = ../
 
-VERSION        = 0.19.0
+VERSION       = 0.18.1
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"

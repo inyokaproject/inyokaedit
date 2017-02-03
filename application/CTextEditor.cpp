@@ -53,32 +53,32 @@
 
 CTextEditor::CTextEditor(QStringList sListTplMacros,
                          QWidget *pParent)
-    : QTextEdit(pParent),
-      m_sFileName(""),
-      m_bCodeCompletion(false),
-      m_sListCompleter(sListTplMacros) {
-    qDebug() << "Calling" << Q_FUNC_INFO;
+  : QTextEdit(pParent),
+    m_sFileName(""),
+    m_bCodeCompletion(false),
+    m_sListCompleter(sListTplMacros) {
+  qDebug() << "Calling" << Q_FUNC_INFO;
 
-    QStringList sListTemp = m_sListCompleter;
-    m_sListCompleter.clear();
-    for (int i = 0; i < sListTemp.size(); i++) {
-        if (sListTemp[i].startsWith("[[")) {
-            // "[[" can not be handled by completer
-            m_sListCompleter << sListTemp[i].remove("[[");
-            // Remove markers for description
-            m_sListCompleter.last() = sListTemp[i].remove("%%");
-            m_sListCompleter.last() = m_sListCompleter.last().replace(
-                        "\\n", "\n");
-        }
+  QStringList sListTemp = m_sListCompleter;
+  m_sListCompleter.clear();
+  for (int i = 0; i < sListTemp.size(); i++) {
+    if (sListTemp[i].startsWith("[[")) {
+      // "[[" can not be handled by completer
+      m_sListCompleter << sListTemp[i].remove("[[");
+      // Remove markers for description
+      m_sListCompleter.last() = sListTemp[i].remove("%%");
+      m_sListCompleter.last() = m_sListCompleter.last().replace(
+                                  "\\n", "\n");
     }
-    m_pCompleter = new QCompleter(m_sListCompleter, this);
-    this->setCompleter(m_pCompleter);
+  }
+  m_pCompleter = new QCompleter(m_sListCompleter, this);
+  this->setCompleter(m_pCompleter);
 
-    this->setAcceptRichText(false);  // Paste plain text only
+  this->setAcceptRichText(false);  // Paste plain text only
 
-    // Text changed
-    connect(this->document(), SIGNAL(modificationChanged(bool)),
-            this, SIGNAL(documentChanged(bool)));
+  // Text changed
+  connect(this->document(), SIGNAL(modificationChanged(bool)),
+          this, SIGNAL(documentChanged(bool)));
 }
 
 CTextEditor::~CTextEditor() {
@@ -88,7 +88,7 @@ CTextEditor::~CTextEditor() {
 // ----------------------------------------------------------------------------
 
 void CTextEditor::updateTextEditorSettings(const bool bCompleter) {
-    m_bCodeCompletion = bCompleter;
+  m_bCodeCompletion = bCompleter;
 }
 
 // ----------------------------------------------------------------------------
@@ -97,134 +97,134 @@ void CTextEditor::updateTextEditorSettings(const bool bCompleter) {
 // TODO: Move completer to plugin?
 
 void CTextEditor::setCompleter(QCompleter *completer) {
-    if (m_pCompleter) {
-        QObject::disconnect(m_pCompleter, 0, this, 0);
-    }
-    m_pCompleter = completer;
-    if (!m_pCompleter) {
-        return;
-    }
+  if (m_pCompleter) {
+    QObject::disconnect(m_pCompleter, 0, this, 0);
+  }
+  m_pCompleter = completer;
+  if (!m_pCompleter) {
+    return;
+  }
 
-    m_pCompleter->setWidget(this);
-    m_pCompleter->setCompletionMode(QCompleter::PopupCompletion);
-    m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
-    m_pCompleter->setWrapAround(false);
-    QObject::connect(m_pCompleter, SIGNAL(activated(QString)),
-                     this, SLOT(insertCompletion(QString)));
+  m_pCompleter->setWidget(this);
+  m_pCompleter->setCompletionMode(QCompleter::PopupCompletion);
+  m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+  m_pCompleter->setWrapAround(false);
+  QObject::connect(m_pCompleter, SIGNAL(activated(QString)),
+                   this, SLOT(insertCompletion(QString)));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTextEditor::insertCompletion(const QString &sCompletion) {
-    if ( m_pCompleter->widget() != this ) {
-        return;
-    }
-    QTextCursor tc = textCursor();
-    int extra = sCompletion.length()-m_pCompleter->completionPrefix().length();
-    tc.movePosition(QTextCursor::Left);
-    tc.movePosition(QTextCursor::EndOfWord);
-    tc.insertText(sCompletion.right(extra));
-    setTextCursor(tc);
+  if ( m_pCompleter->widget() != this ) {
+    return;
+  }
+  QTextCursor tc = textCursor();
+  int extra = sCompletion.length()-m_pCompleter->completionPrefix().length();
+  tc.movePosition(QTextCursor::Left);
+  tc.movePosition(QTextCursor::EndOfWord);
+  tc.insertText(sCompletion.right(extra));
+  setTextCursor(tc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 QString CTextEditor::textUnderCursor() const {
-    QTextCursor tc = textCursor();
-    tc.select(QTextCursor::WordUnderCursor);
-    return tc.selectedText();
+  QTextCursor tc = textCursor();
+  tc.select(QTextCursor::WordUnderCursor);
+  return tc.selectedText();
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTextEditor::focusInEvent(QFocusEvent *e) {
-    if (m_pCompleter) {
-        m_pCompleter->setWidget(this);
-    }
-    QTextEdit::focusInEvent(e);
+  if (m_pCompleter) {
+    m_pCompleter->setWidget(this);
+  }
+  QTextEdit::focusInEvent(e);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTextEditor::keyPressEvent(QKeyEvent *e) {
-    if (m_pCompleter && m_pCompleter->popup()->isVisible()) {
-        // The following keys are forwarded by the completer to the widget
-        switch (e->key()) {
-            case Qt::Key_Enter:
-            case Qt::Key_Return:
-            case Qt::Key_Escape:
-            case Qt::Key_Tab:
-            case Qt::Key_Backtab:
-                e->ignore();
-                return;  // Let the completer do default behavior
-            default:
-                break;
-        }
+  if (m_pCompleter && m_pCompleter->popup()->isVisible()) {
+    // The following keys are forwarded by the completer to the widget
+    switch (e->key()) {
+      case Qt::Key_Enter:
+      case Qt::Key_Return:
+      case Qt::Key_Escape:
+      case Qt::Key_Tab:
+      case Qt::Key_Backtab:
+        e->ignore();
+        return;  // Let the completer do default behavior
+      default:
+        break;
     }
+  }
 
-    bool isShortcut = ((e->modifiers() & Qt::ControlModifier)
-                       && e->key() == Qt::Key_E);  // CTRL+E
-    // Do not process the shortcut when we have a completer
-    if (!m_pCompleter || !isShortcut) {
-        QTextEdit::keyPressEvent(e);
-    }
+  bool isShortcut = ((e->modifiers() & Qt::ControlModifier)
+                     && e->key() == Qt::Key_E);  // CTRL+E
+  // Do not process the shortcut when we have a completer
+  if (!m_pCompleter || !isShortcut) {
+    QTextEdit::keyPressEvent(e);
+  }
 
-    const bool ctrlOrShift = e->modifiers()
-            & (Qt::ControlModifier | Qt::ShiftModifier);
-    if (!m_pCompleter || (ctrlOrShift && e->text().isEmpty())) {
-        return;
-    }
+  const bool ctrlOrShift = e->modifiers()
+                           & (Qt::ControlModifier | Qt::ShiftModifier);
+  if (!m_pCompleter || (ctrlOrShift && e->text().isEmpty())) {
+    return;
+  }
 
-    static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-=");  // End of word
-    bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
-    QString completionPrefix = textUnderCursor();
+  static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-=");  // End of word
+  bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
+  QString completionPrefix = textUnderCursor();
 
-//    if (!isShortcut && (hasModifier || e->text().isEmpty()
-//                        || completionPrefix.length() < 3
-//                        || eow.contains(e->text().right(1)))) {
-//        c->popup()->hide();
-//        return;
-//    }
+  //    if (!isShortcut && (hasModifier || e->text().isEmpty()
+  //                        || completionPrefix.length() < 3
+  //                        || eow.contains(e->text().right(1)))) {
+  //        c->popup()->hide();
+  //        return;
+  //    }
 
-    if (false == m_bCodeCompletion) {
-        m_pCompleter->popup()->hide();
-        return;
-    } else if (!isShortcut && (hasModifier
-                               || e->text().isEmpty()
-                               || completionPrefix.length() < 3
-                               || eow.contains(e->text().right(1)))) {
-        m_pCompleter->popup()->hide();
-        return;
-    }
+  if (false == m_bCodeCompletion) {
+    m_pCompleter->popup()->hide();
+    return;
+  } else if (!isShortcut && (hasModifier
+                             || e->text().isEmpty()
+                             || completionPrefix.length() < 3
+                             || eow.contains(e->text().right(1)))) {
+    m_pCompleter->popup()->hide();
+    return;
+  }
 
-    if (completionPrefix != m_pCompleter->completionPrefix()) {
-        m_pCompleter->setCompletionPrefix(completionPrefix);
-        m_pCompleter->popup()->setCurrentIndex(
-                    m_pCompleter->completionModel()->index(0, 0));
-    }
-    QRect cr = cursorRect();
-    cr.setWidth(m_pCompleter->popup()->sizeHintForColumn(0)
-                + m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
-    m_pCompleter->complete(cr);  // Show popup
+  if (completionPrefix != m_pCompleter->completionPrefix()) {
+    m_pCompleter->setCompletionPrefix(completionPrefix);
+    m_pCompleter->popup()->setCurrentIndex(
+          m_pCompleter->completionModel()->index(0, 0));
+  }
+  QRect cr = cursorRect();
+  cr.setWidth(m_pCompleter->popup()->sizeHintForColumn(0)
+              + m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
+  m_pCompleter->complete(cr);  // Show popup
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTextEditor::setFileName(const QString sFileName) {
-    m_sFileName = sFileName;
+  m_sFileName = sFileName;
 }
 QString CTextEditor::getFileName() {
-    return m_sFileName;
+  return m_sFileName;
 }
 
 bool CTextEditor::isUndoAvailable() {
-    return this->document()->isUndoAvailable();
+  return this->document()->isUndoAvailable();
 }
 bool CTextEditor::isRedoAvailable() {
-    return this->document()->isRedoAvailable();
+  return this->document()->isRedoAvailable();
 }

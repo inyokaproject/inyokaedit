@@ -37,48 +37,48 @@
  * \brief Download functions (Inyoka styles, articles, article images)
  */
 class CDownload : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    /**
+ public:
+  /**
     * \brief Constructor
     * \param pParent Pointer to parent window
     * \param sAppName Application name
     * \param sAppDir Application directory
     * \param StylesDir Folder in which Inyoka style elements should be stored
     */
-    CDownload(QWidget *pParent, const QString &sStylesDir,
-              const QString &sImgDir, const QString &sSharePath);
+  CDownload(QWidget *pParent, const QString &sStylesDir,
+            const QString &sImgDir, const QString &sSharePath);
 
-  public slots:
-    /**
+ public slots:
+  /**
     * \brief Start download of an existing article
     */
-    void downloadArticle(QString sUrl = "");
+  void downloadArticle(QString sUrl = "");
 
-    /**
+  /**
     * \brief Start download of Inyoka style elements
     */
-    void loadInyokaStyles();
-    void updateIWLs();
-    void callDownloadScript(const QString &sScript);
+  void loadInyokaStyles();
+  void updateIWLs();
+  void callDownloadScript(const QString &sScript);
 
-    void showArticle();
-    void updateSettings(const bool bCompleter,
-                        const QString &sInyokaUrl);
+  void showArticle();
+  void updateSettings(const bool bCompleter,
+                      const QString &sInyokaUrl);
 
-  private slots:
-    void replyFinished(QNetworkReply *pReply);
+ private slots:
+  void replyFinished(QNetworkReply *pReply);
 
-  signals:
-    /** Signal for sending downloaded article text to editor */
-    void sendArticleText(const QString &, const QString &);
+ signals:
+  /** Signal for sending downloaded article text to editor */
+  void sendArticleText(const QString &, const QString &);
 
-  private:
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl);
+ private:
+  QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                   const QUrl& oldRedirectUrl);
 
-    /**
+  /**
     * \brief Start download of images which are attached to an article
     * \param sArticlename Name of the article
     * \param ImgDir Folder in which attached images should be downloaded
@@ -87,25 +87,25 @@ class CDownload : public QObject {
     *        should be downloaded without any question
     * \return True or false for successful / not successful download
     */
-    void downloadImages();
+  void downloadImages();
 
-    QWidget *m_pParent;    /**< Pointer to parent window */
-    QString m_sStylesDir;  /**< Folder in which style elements are stored */
-    QString m_sImgDir;
+  QWidget *m_pParent;    /**< Pointer to parent window */
+  QString m_sStylesDir;  /**< Folder in which style elements are stored */
+  QString m_sImgDir;
 
-    QNetworkAccessManager *m_pNwManager;
-    QList<QNetworkReply *> m_listDownloadReplies;
-    QUrl m_urlRedirectedTo;
-    QString m_sArticleText;
-    QString m_sSitename;
-    QString m_sRevision;
-    QString m_sSource;
-    QString m_sInyokaUrl;
-    bool m_bAutomaticImageDownload;
-    QString m_sSharePath;
+  QNetworkAccessManager *m_pNwManager;
+  QList<QNetworkReply *> m_listDownloadReplies;
+  QUrl m_urlRedirectedTo;
+  QString m_sArticleText;
+  QString m_sSitename;
+  QString m_sRevision;
+  QString m_sSource;
+  QString m_sInyokaUrl;
+  bool m_bAutomaticImageDownload;
+  QString m_sSharePath;
 
-    CDownloadImg *m_DlImages;
-    bool m_bDownloadArticle;
+  CDownloadImg *m_DlImages;
+  bool m_bDownloadArticle;
 };
 
 #endif  // INYOKAEDIT_CDOWNLOAD_H_

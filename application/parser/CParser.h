@@ -47,73 +47,71 @@ class QDir;
  * \brief Main parser module.
  */
 class CParser : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    // Constructor
-    CParser(const QDir &tmpImgDir,
-            const QString &sInyokaUrl,
-            const bool bCheckLinks,
-            CTemplates *pTemplates);
-    // Destructor
-    ~CParser();
+ public:
+  CParser(const QDir &tmpImgDir,
+          const QString &sInyokaUrl,
+          const bool bCheckLinks,
+          CTemplates *pTemplates);
+  ~CParser();
 
-    // PUBLIC FOR DEBUGGING
-    void replaceTemplates(QTextDocument *p_rawDoc);
+  // PUBLIC FOR DEBUGGING
+  void replaceTemplates(QTextDocument *p_rawDoc);
 
-    // Starts generating HTML-code
-    QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument);
+  // Starts generating HTML-code
+  QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument);
 
-  public slots:
-    void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
+ public slots:
+  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
 
-  private:
-    // void replaceTemplates(QTextDocument *p_rawDoc);
+ private:
+  // void replaceTemplates(QTextDocument *p_rawDoc);
 
-    void filterEscapedChars(QTextDocument *p_rawDoc);
-    void filterNoTranslate(QTextDocument *p_rawDoc);
-    void replaceCodeblocks(QTextDocument *p_rawDoc);
-    void reinstertNoTranslate(QTextDocument *p_rawDoc);
+  void filterEscapedChars(QTextDocument *p_rawDoc);
+  void filterNoTranslate(QTextDocument *p_rawDoc);
+  void replaceCodeblocks(QTextDocument *p_rawDoc);
+  void reinstertNoTranslate(QTextDocument *p_rawDoc);
 
-    void removeComments(QTextDocument *p_rawDoc);
-    void generateParagraphs(QTextDocument *p_rawDoc);
+  void removeComments(QTextDocument *p_rawDoc);
+  void generateParagraphs(QTextDocument *p_rawDoc);
 
-    void replaceTextformat(QTextDocument *p_rawDoc,
-                           const QStringList &sListFormatStart,
-                           const QStringList &sListFormatEnd,
-                           const QStringList &sListHtmlStart,
-                           const QStringList &sListHtmlEnd);
+  void replaceTextformat(QTextDocument *p_rawDoc,
+                         const QStringList &sListFormatStart,
+                         const QStringList &sListFormatEnd,
+                         const QStringList &sListHtmlStart,
+                         const QStringList &sListHtmlEnd);
 
-    void replaceTables(QTextDocument *p_rawDoc);
-    QString createTable(const QStringList &sListLines);
-    void replaceLists(QTextDocument *p_rawDoc);
-    void replaceFlags(QTextDocument *p_rawDoc);
-    void replaceImages(QTextDocument *p_rawDoc);
-    void replaceQuotes(QTextDocument *p_rawDoc);
-    void replaceBreaks(QTextDocument *p_rawDoc);
-    void replaceHorLines(QTextDocument *p_rawDoc);
-    void replaceHeadlines(QTextDocument *p_rawDoc);
-    void replaceTableOfContents(QTextDocument *p_rawDoc);
-    void replaceDates(QTextDocument *p_rawDoc);
-    void replaceFootnotes(QTextDocument *p_rawDoc);
-    QString generateTags(QTextDocument *p_rawDoc);
-    QString highlightCode(const QString &sLanguage, const QString &sCode);
+  void replaceTables(QTextDocument *p_rawDoc);
+  QString createTable(const QStringList &sListLines);
+  void replaceLists(QTextDocument *p_rawDoc);
+  void replaceFlags(QTextDocument *p_rawDoc);
+  void replaceImages(QTextDocument *p_rawDoc);
+  void replaceQuotes(QTextDocument *p_rawDoc);
+  void replaceBreaks(QTextDocument *p_rawDoc);
+  void replaceHorLines(QTextDocument *p_rawDoc);
+  void replaceHeadlines(QTextDocument *p_rawDoc);
+  void replaceTableOfContents(QTextDocument *p_rawDoc);
+  void replaceDates(QTextDocument *p_rawDoc);
+  void replaceFootnotes(QTextDocument *p_rawDoc);
+  QString generateTags(QTextDocument *p_rawDoc);
+  QString highlightCode(const QString &sLanguage, const QString &sCode);
 
-    // Text from editor
-    QTextDocument *m_pRawText;
+  // Text from editor
+  QTextDocument *m_pRawText;
 
-    QStringList m_sListNoTranslate;
-    QStringList m_sListHeadlines;
+  QStringList m_sListNoTranslate;
+  QStringList m_sListHeadlines;
 
-    CParseTemplates *m_pTemplateParser;
-    CParseLinks *m_pLinkParser;
-    CParseImgMap *m_pMapParser;
+  CParseTemplates *m_pTemplateParser;
+  CParseLinks *m_pLinkParser;
+  CParseImgMap *m_pMapParser;
 
-    QDir m_tmpFileDir;
-    QDir m_tmpImgDir;
-    QString m_sInyokaUrl;
-    QString m_sCurrentFile;
-    CTemplates *m_pTemplates;
+  QDir m_tmpFileDir;
+  QDir m_tmpImgDir;
+  QString m_sInyokaUrl;
+  QString m_sCurrentFile;
+  CTemplates *m_pTemplates;
 };
 
 #endif  // INYOKAEDIT_CPARSER_H_

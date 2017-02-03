@@ -27,7 +27,7 @@
 #include "./CSyntaxHighlighter.h"
 
 CSyntaxHighlighter::CSyntaxHighlighter(QTextDocument *pDoc)
-    : QSyntaxHighlighter(pDoc) {
+  : QSyntaxHighlighter(pDoc) {
 }
 
 CSyntaxHighlighter::~CSyntaxHighlighter() {
@@ -37,7 +37,7 @@ CSyntaxHighlighter::~CSyntaxHighlighter() {
 // ----------------------------------------------------------------------------
 
 void CSyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
-    m_highlightingRules = rules;
+  m_highlightingRules = rules;
 }
 
 /****************************************************************************
@@ -83,17 +83,17 @@ void CSyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
 
 // Apply collected highlighting rules
 void CSyntaxHighlighter::highlightBlock(const QString &sText) {
-    // Go through each highlighting rule
-    // rules for every syntax element had been appended in constructor
-    foreach (const HighlightingRule &rule, m_highlightingRules) {
-        QRegExp express(rule.pattern);
-        express.setMinimal(true);
-        int nIndex = express.indexIn(sText);
-        while (nIndex >= 0) {
-            int nLength = express.matchedLength();
-            this->setFormat(nIndex, nLength, rule.format);
-            nIndex = express.indexIn(sText, nIndex + nLength);
-        }
+  // Go through each highlighting rule
+  // rules for every syntax element had been appended in constructor
+  foreach (const HighlightingRule &rule, m_highlightingRules) {
+    QRegExp express(rule.pattern);
+    express.setMinimal(true);
+    int nIndex = express.indexIn(sText);
+    while (nIndex >= 0) {
+      int nLength = express.matchedLength();
+      this->setFormat(nIndex, nLength, rule.format);
+      nIndex = express.indexIn(sText, nIndex + nLength);
     }
-    setCurrentBlockState(0);
+  }
+  setCurrentBlockState(0);
 }

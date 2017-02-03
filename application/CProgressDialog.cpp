@@ -33,75 +33,75 @@
 
 CProgressDialog::CProgressDialog(const QString &sScriptname,
                                  QStringList sListArguments)
-    : QDialog(),
-      m_pUi(new Ui::CProgressDialog) {
-    qDebug() << "Calling" << Q_FUNC_INFO;
+  : QDialog(),
+    m_pUi(new Ui::CProgressDialog) {
+  qDebug() << "Calling" << Q_FUNC_INFO;
 
-    m_pUi->setupUi(this);
-    this->setWindowFlags((this->windowFlags()
-                          & ~Qt::WindowContextHelpButtonHint)
-                         | Qt::WindowStaysOnTopHint);
+  m_pUi->setupUi(this);
+  this->setWindowFlags((this->windowFlags()
+                        & ~Qt::WindowContextHelpButtonHint)
+                       | Qt::WindowStaysOnTopHint);
 
-    m_pProcess = new QProcess();
-    m_pProcess->start(sScriptname, sListArguments);
+  m_pProcess = new QProcess();
+  m_pProcess->start(sScriptname, sListArguments);
 
-    // Show output
-    connect(m_pProcess, SIGNAL(readyReadStandardOutput()),
-            this, SLOT(showMessage()));
-    connect(m_pProcess, SIGNAL(readyReadStandardError()),
-            this, SLOT(showErrorMessage()));
+  // Show output
+  connect(m_pProcess, SIGNAL(readyReadStandardOutput()),
+          this, SLOT(showMessage()));
+  connect(m_pProcess, SIGNAL(readyReadStandardError()),
+          this, SLOT(showErrorMessage()));
 
-    connect(m_pProcess, SIGNAL(finished(int)),
-            this, SLOT(downloadScriptFinished()));
+  connect(m_pProcess, SIGNAL(finished(int)),
+          this, SLOT(downloadScriptFinished()));
 }
 
 CProgressDialog::~CProgressDialog() {
-    m_pProcess->kill();
+  m_pProcess->kill();
 
-    if (NULL != m_pProcess) {
-        delete  m_pProcess;
-    }
-    m_pProcess = NULL;
+  if (NULL != m_pProcess) {
+    delete  m_pProcess;
+  }
+  m_pProcess = NULL;
 
-    if (NULL != m_pUi) {
-        delete m_pUi;
-    }
-    m_pUi = NULL;
+  if (NULL != m_pUi) {
+    delete m_pUi;
+  }
+  m_pUi = NULL;
 }
 
 // ----------------------------------------------------------------------------
 
 void CProgressDialog::closeEvent(QCloseEvent *pEvent) {
-    m_pProcess->kill();  // Kill download process
-    pEvent->accept();    // Close window
+  m_pProcess->kill();  // Kill download process
+  pEvent->accept();    // Close window
 }
 
 // ----------------------------------------------------------------------------
 
 // Show message
 void CProgressDialog::showMessage() {
-    QByteArray strdata = m_pProcess->readAllStandardOutput();
-    m_pUi->textEditProcessOut->setTextColor(Qt::black);
-    m_pUi->textEditProcessOut->append(strdata);
+  QByteArray strdata = m_pProcess->readAllStandardOutput();
+  m_pUi->textEditProcessOut->setTextColor(Qt::black);
+  m_pUi->textEditProcessOut->append(strdata);
 }
 
 // Show error message
 void CProgressDialog::showErrorMessage() {
-    QByteArray strdata = m_pProcess->readAllStandardError();
-    m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
-    m_pUi->textEditProcessOut->append(strdata);
+  QByteArray strdata = m_pProcess->readAllStandardError();
+  m_pUi->textEditProcessOut->setTextColor(Qt::darkGray);
+  m_pUi->textEditProcessOut->append(strdata);
 }
 
 // ----------------------------------------------------------------------------
 
 void CProgressDialog::downloadScriptFinished() {
-    QMessageBox::information(0, qApp->applicationName(), "Download finished.");
-    this->close();
+  QMessageBox::information(0, qApp->applicationName(), "Download finished.");
+  this->close();
 }
 
 // ----------------------------------------------------------------------------
 
 // Click on cancel button
 void CProgressDialog::on_pushButtonClosProc_clicked() {
-    this->close();  // Send close event
+  this->close();  // Send close event
 }

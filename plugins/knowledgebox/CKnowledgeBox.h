@@ -40,9 +40,8 @@
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-    class CKnowledgeBoxClass;
+  class CKnowledgeBoxClass;
 }
-
 class QDir;
 class QTextDocument;
 
@@ -51,59 +50,59 @@ class QTextDocument;
  * \brief Dialog for table insertion
  */
 class CKnowledgeBox : public QObject, IEditorPlugin {
-    Q_OBJECT
-    Q_INTERFACES(IEditorPlugin)
+  Q_OBJECT
+  Q_INTERFACES(IEditorPlugin)
 
 #if QT_VERSION >= 0x050000
-    Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
 #endif
 
-  public:
-    void initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
-    QString getPluginName() const;
-    QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
-    QString getCaption() const;
-    QIcon getIcon() const;
-    bool includeMenu() const;
-    bool includeToolbar() const;
-    bool hasSettings() const;
-    void setCurrentEditor(CTextEditor *pEditor);
-    void setEditorlist(QList<CTextEditor *> listEditors);
+ public:
+  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                  const QDir userDataDir, const QString sSharePath);
+  QString getPluginName() const;
+  QString getPluginVersion() const;
+  QTranslator* getPluginTranslator(const QString &sSharePath,
+                                   const QString &sLocale);
+  QString getCaption() const;
+  QIcon getIcon() const;
+  bool includeMenu() const;
+  bool includeToolbar() const;
+  bool hasSettings() const;
+  void setCurrentEditor(CTextEditor *pEditor);
+  void setEditorlist(QList<CTextEditor *> listEditors);
 
-  public slots:
-    void callPlugin();
-    void executePlugin();
-    void showSettings();
-    void showAbout();
+ public slots:
+  void callPlugin();
+  void executePlugin();
+  void showSettings();
+  void showAbout();
 
-  private slots:
-    void accept();
-    void addRow();
-    void deleteRow(QWidget *widget);
+ private slots:
+  void accept();
+  void addRow();
+  void deleteRow(QWidget *widget);
 
-  private:
-    void loadTemplateDefaults();
-    void loadTemplateEntries();
-    void buildUi(QWidget *pParent);
-    void writeSettings();
-    void createRow(const bool &bActive, const QString &sText);
+ private:
+  void loadTemplateDefaults();
+  void loadTemplateEntries();
+  void buildUi(QWidget *pParent);
+  void writeSettings();
+  void createRow(const bool &bActive, const QString &sText);
 
-    Ui::CKnowledgeBoxClass *m_pUi;
-    QDialog *m_pDialog;
-    QSettings *m_pSettings;
-    QSettings *m_pSettingsApp;
-    CTextEditor *m_pEditor;
-    QString m_sSharePath;
-    CTemplates *m_pTemplates;
-    QString m_sTplLang;
-    QList<bool> m_bListEntryActive;
-    QStringList m_sListEntries;
-    QSignalMapper *m_pSigMapDeleteRow;
-    QList<QPushButton *> m_listDelRowButtons;
-    bool m_bCalledSettings;
+  Ui::CKnowledgeBoxClass *m_pUi;
+  QDialog *m_pDialog;
+  QSettings *m_pSettings;
+  QSettings *m_pSettingsApp;
+  CTextEditor *m_pEditor;
+  QString m_sSharePath;
+  CTemplates *m_pTemplates;
+  QString m_sTplLang;
+  QList<bool> m_bListEntryActive;
+  QStringList m_sListEntries;
+  QSignalMapper *m_pSigMapDeleteRow;
+  QList<QPushButton *> m_listDelRowButtons;
+  bool m_bCalledSettings;
 };
 
 #endif  // INYOKAEDIT_CKNOWLEDGEBOX_H_

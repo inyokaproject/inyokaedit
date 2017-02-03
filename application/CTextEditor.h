@@ -52,39 +52,39 @@
  * \brief Extended QTextEdit (editor widget) with simple code completition.
  */
 class CTextEditor : public QTextEdit {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CTextEditor(QStringList sListTplMacros, QWidget *pParent = 0);
-    ~CTextEditor();
+ public:
+  CTextEditor(QStringList sListTplMacros, QWidget *pParent = 0);
+  ~CTextEditor();
 
-    void setFileName(const QString sFileName);
-    QString getFileName();
+  void setFileName(const QString sFileName);
+  QString getFileName();
 
-    bool isUndoAvailable();
-    bool isRedoAvailable();
+  bool isUndoAvailable();
+  bool isRedoAvailable();
 
-  signals:
-    void documentChanged(bool);
+ signals:
+  void documentChanged(bool);
 
-  protected:
-    void keyPressEvent(QKeyEvent *e);
-    void focusInEvent(QFocusEvent *e);
+ protected:
+  void keyPressEvent(QKeyEvent *e);
+  void focusInEvent(QFocusEvent *e);
 
-  public slots:
-    void updateTextEditorSettings(const bool bCompleter);
+ public slots:
+  void updateTextEditorSettings(const bool bCompleter);
 
-  private slots:
-    void insertCompletion(const QString &sCompletion);
+ private slots:
+  void insertCompletion(const QString &sCompletion);
 
-  private:
-    QString textUnderCursor() const;
-    void setCompleter(QCompleter *c);
+ private:
+  QString textUnderCursor() const;
+  void setCompleter(QCompleter *c);
 
-    QString m_sFileName;
-    QCompleter *m_pCompleter;
-    bool m_bCodeCompletion;
-    QStringList m_sListCompleter;
+  QString m_sFileName;
+  QCompleter *m_pCompleter;
+  bool m_bCodeCompletion;
+  QStringList m_sListCompleter;
 };
 
 #endif  // INYOKAEDIT_CTEXTEDITOR_H_

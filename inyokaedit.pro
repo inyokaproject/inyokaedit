@@ -14,11 +14,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE       = subdirs
-CONFIG        += ordered
-SUBDIRS        = plugins/spellchecker \
-                 plugins/tabletemplate \
-                 plugins/knowledgebox \
-                 plugins/highlighter \
-                 plugins/hotkey \
-                 application
+TEMPLATE = subdirs
+CONFIG  += ordered
+SUBDIRS  = plugins/spellchecker \
+           plugins/tabletemplate \
+           plugins/knowledgebox \
+           plugins/highlighter \
+           plugins/hotkey \
+           application

@@ -34,25 +34,24 @@
 #include "./CProvisionalTplParser.h"
 
 class CParseTemplates {
-  public:
-    CParseTemplates(QString sTransTpl,
-                    QStringList sListTplNames,
-                    const QStringList &sListHtmlStart,
-                    const QDir &tmpFileOutputDir,
-                    const QDir &tmpImgDir,
-                    const QStringList &sListTestedWith,
-                    const QStringList &sListTestedWithStrings,
-                    const QStringList &sListTestedWithTouch,
-                    const QStringList &sListTestedWithTouchStrings);
+ public:
+  CParseTemplates(QString sTransTpl,
+                  QStringList sListTplNames,
+                  const QStringList &sListHtmlStart,
+                  const QDir &tmpFileOutputDir,
+                  const QDir &tmpImgDir,
+                  const QStringList &sListTestedWith,
+                  const QStringList &sListTestedWithStrings,
+                  const QStringList &sListTestedWithTouch,
+                  const QStringList &sListTestedWithTouchStrings);
 
-    void startParsing(QTextDocument *pRawDoc,
-                      const QString &sCurrentFile);
+  void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
 
-  private:
-    CProvisionalTplParser *m_pProvTplTarser;
-    QString m_sTransTpl;
-    QStringList m_sListTplNames;
-    QString m_sCurrentFile;
+ private:
+  CProvisionalTplParser *m_pProvTplTarser;
+  QString m_sTransTpl;
+  QStringList m_sListTplNames;
+  QString m_sCurrentFile;
 };
 
 #endif  // INYOKAEDIT_CPARSETEMPLATES_H_

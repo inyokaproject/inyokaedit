@@ -41,113 +41,113 @@ class CSettingsDialog;
  * \brief Load and save settings.
  */
 class CSettings : public QObject {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    CSettings(QWidget *pParent, const QString &sSharePath);
-    ~CSettings();
+ public:
+  CSettings(QWidget *pParent, const QString &sSharePath);
+  ~CSettings();
 
-    // Load / save application settings
-    void readSettings();
-    void writeSettings(const QByteArray WinGeometry, const QByteArray WinState,
-                       const QByteArray SplitterState = 0);
+  // Load / save application settings
+  void readSettings();
+  void writeSettings(const QByteArray WinGeometry, const QByteArray WinState,
+                     const QByteArray SplitterState = 0);
 
-    void setLastOpenedDir(const QDir &LastDir);
+  void setLastOpenedDir(const QDir &LastDir);
 
-    // General
-    QString getGuiLanguage() const;
-    bool getCodeCompletion() const;
-    QString getInyokaUrl() const;
-    bool getAutomaticImageDownload() const;
-    bool getPreviewHorizontal() const;
-    QDir getLastOpenedDir() const;
-    bool getCheckLinks() const;
-    QString getTemplateLanguage() const;
-    quint32 getAutoSave() const;
-    qint32 getReloadPreviewKey() const;
-    quint32 getTimedPreview() const;
-    bool getSyncScrollbars() const;
-    bool getWindowsCheckUpdate() const;
+  // General
+  QString getGuiLanguage() const;
+  bool getCodeCompletion() const;
+  QString getInyokaUrl() const;
+  bool getAutomaticImageDownload() const;
+  bool getPreviewHorizontal() const;
+  QDir getLastOpenedDir() const;
+  bool getCheckLinks() const;
+  QString getTemplateLanguage() const;
+  quint32 getAutoSave() const;
+  qint32 getReloadPreviewKey() const;
+  quint32 getTimedPreview() const;
+  bool getSyncScrollbars() const;
+  bool getWindowsCheckUpdate() const;
 
-    // Font
-    QFont getEditorFont() const;
+  // Font
+  QFont getEditorFont() const;
 
-    // Window state
-    QByteArray getWindowState() const;
-    QByteArray getWindowGeometry() const;
-    QByteArray getSplitterState() const;
+  // Window state
+  QByteArray getWindowState() const;
+  QByteArray getWindowGeometry() const;
+  QByteArray getSplitterState() const;
 
-    // Recent files
-    quint16 getNumOfRecentFiles() const;
-    quint16 getMaxNumOfRecentFiles() const;
-    QStringList getRecentFiles() const;
-    void setRecentFiles(const QStringList &sListNewRecent);
+  // Recent files
+  quint16 getNumOfRecentFiles() const;
+  quint16 getMaxNumOfRecentFiles() const;
+  QStringList getRecentFiles() const;
+  void setRecentFiles(const QStringList &sListNewRecent);
 
-    // Proxy
-    QString getProxyHostName() const;
-    quint16 getProxyPort() const;
-    QString getProxyUserName() const;
-    QString getProxyPassword() const;
+  // Proxy
+  QString getProxyHostName() const;
+  quint16 getProxyPort() const;
+  QString getProxyUserName() const;
+  QString getProxyPassword() const;
 
-    // Plugins
-    QStringList getDisabledPlugins() const;
+  // Plugins
+  QStringList getDisabledPlugins() const;
 
-    // Allow CSettingsDialog to access private members
-    friend class CSettingsDialog;
+  // Allow CSettingsDialog to access private members
+  friend class CSettingsDialog;
 
-  public slots:
-    void setWindowsCheckUpdate(const bool bValue);
+ public slots:
+  void setWindowsCheckUpdate(const bool bValue);
 
-  signals:
-    void showSettingsDialog();
-    void updateEditorSettings();
-    void availablePlugins(const QList<IEditorPlugin *> PluginList,
-                          const QList<QObject *> PluginObjList);
+ signals:
+  void showSettingsDialog();
+  void updateEditorSettings();
+  void availablePlugins(const QList<IEditorPlugin *> PluginList,
+                        const QList<QObject *> PluginObjList);
 
-  private:
-    void removeObsolete();
+ private:
+  void removeObsolete();
 
-    QSettings *m_pSettings;
-    CSettingsDialog *m_pSettingsDialog;
+  QSettings *m_pSettings;
+  CSettingsDialog *m_pSettingsDialog;
 
-    // General
-    QString m_sGuiLanguage;
-    bool m_bCodeCompletion;   // Enable / disable code completion
-    bool m_bPreviewSplitHorizontal;
-    QString m_sInyokaUrl;     // Url to inyoka
-    QDir m_LastOpenedDir;
-    bool m_bAutomaticImageDownload;  // Enable/disable download article images
-    bool m_bCheckLinks;
-    QString m_sTemplateLang;
-    quint32 m_nAutosave;
-    QString m_sReloadPreviewKey;
-    quint32 m_nTimedPreview;
-    bool m_bSyncScrollbars;
-    bool m_bWinCheckUpdate;
+  // General
+  QString m_sGuiLanguage;
+  bool m_bCodeCompletion;   // Enable / disable code completion
+  bool m_bPreviewSplitHorizontal;
+  QString m_sInyokaUrl;     // Url to inyoka
+  QDir m_LastOpenedDir;
+  bool m_bAutomaticImageDownload;  // Enable/disable download article images
+  bool m_bCheckLinks;
+  QString m_sTemplateLang;
+  quint32 m_nAutosave;
+  QString m_sReloadPreviewKey;
+  quint32 m_nTimedPreview;
+  bool m_bSyncScrollbars;
+  bool m_bWinCheckUpdate;
 
-    // Font
-    QFont m_EditorFont;
-    QString m_sFontFamily;
-    qreal m_nFontsize;
+  // Font
+  QFont m_EditorFont;
+  QString m_sFontFamily;
+  qreal m_nFontsize;
 
-    // Window state
-    QByteArray m_aWindowState;
-    QByteArray m_aWindowGeometry;
-    QByteArray m_aSplitterState;
+  // Window state
+  QByteArray m_aWindowState;
+  QByteArray m_aWindowGeometry;
+  QByteArray m_aSplitterState;
 
-    // Last opened
-    static const quint16 m_cMAXFILES = 10;
-    qint32 m_nMaxLastOpenedFiles;
-    QStringList m_sListRecentFiles;
+  // Last opened
+  static const quint16 m_cMAXFILES = 10;
+  qint32 m_nMaxLastOpenedFiles;
+  QStringList m_sListRecentFiles;
 
-    // Proxy
-    QString m_sProxyHostName;
-    quint16 m_nProxyPort;
-    QString m_sProxyUserName;
-    QString m_sProxyPassword;
+  // Proxy
+  QString m_sProxyHostName;
+  quint16 m_nProxyPort;
+  QString m_sProxyUserName;
+  QString m_sProxyPassword;
 
-    // Plugins
-    QStringList m_sListDisabledPlugins;
+  // Plugins
+  QStringList m_sListDisabledPlugins;
 };
 
 #endif  // INYOKAEDIT_CSETTINGS_H_

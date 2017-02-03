@@ -34,41 +34,41 @@
 #include <QTextEdit>
 
 namespace Ui {
-    class CFindReplace;
+  class CFindReplace;
 }
 
 class CFindReplace : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
   public:
-    explicit CFindReplace(QWidget *parent = 0);
-    ~CFindReplace();
+  explicit CFindReplace(QWidget *parent = 0);
+  ~CFindReplace();
 
-    void setEditor(QTextEdit *pEditor);
+  void setEditor(QTextEdit *pEditor);
 
-  public slots:
-    void callFind();
-    void callReplace();
-    void findNext();
-    void findPrevious();
+ public slots:
+  void callFind();
+  void callReplace();
+  void findNext();
+  void findPrevious();
 
-  protected:
-    void showEvent(QShowEvent *event);
-    void closeEvent(QCloseEvent *event);
+ protected:
+  void showEvent(QShowEvent *event);
+  void closeEvent(QCloseEvent *event);
 
-  private slots:
-    void textSearchChanged();
-    void find();
-    void replace();
-    void replaceAll();
+ private slots:
+  void textSearchChanged();
+  void find();
+  void replace();
+  void replaceAll();
 
-  private:
-    void find(const bool bForward);
-    void toggleSearchReplace(bool bReplace);
+ private:
+  void find(const bool bForward);
+  void toggleSearchReplace(bool bReplace);
 
-    Ui::CFindReplace *m_pUi;
-    QTextEdit *m_pEditor;
-    QTextCursor m_TextCursor;
+  Ui::CFindReplace *m_pUi;
+  QTextEdit *m_pEditor;
+  QTextCursor m_TextCursor;
 };
 
 #endif  // INYOKAEDIT_CFINDREPLACE_H_

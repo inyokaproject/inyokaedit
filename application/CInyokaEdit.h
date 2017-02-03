@@ -55,7 +55,7 @@ class QWebView;
 class CDownload;
 
 namespace Ui {
-    class CInyokaEdit;
+  class CInyokaEdit;
 }
 
 /**
@@ -63,177 +63,175 @@ namespace Ui {
  * \brief Main application definition (gui, objects, etc.)
  */
 class CInyokaEdit : public QMainWindow {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    /**
+ public:
+  /**
     * \brief Constructor
     * \param ptrApp Pointer to main application
     * \param parent pointer to parent window
     */
-    explicit CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
-                         QWidget *parent = 0);
+  explicit CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
+                       QWidget *parent = 0);
+  ~CInyokaEdit();
 
-    /** \brief Destructor */
-    ~CInyokaEdit();
-
-  public slots:
-    /**
+ public slots:
+  /**
     * \brief Update text in editor with downloaded article
     * \param sArticleText Raw text
     * \param sSitename Name of downloaded site
     */
-    void displayArticleText(const QString &sArticleText,
-                            const QString &sSitename);
+  void displayArticleText(const QString &sArticleText,
+                          const QString &sSitename);
 
-    void addPluginsButtons(QList<QAction *> ToolbarEntries,
-                           QList<QAction *> MenueEntries);
+  void addPluginsButtons(QList<QAction *> ToolbarEntries,
+                         QList<QAction *> MenueEntries);
 
-    void updateEditorSettings();
+  void updateEditorSettings();
 
-  protected:
-    /**
+ protected:
+  /**
     * \brief Close event handler
     * \param event Close event
     */
-    void closeEvent(QCloseEvent *event);
+  void closeEvent(QCloseEvent *event);
 
-    bool eventFilter(QObject *obj, QEvent *event);
+  bool eventFilter(QObject *obj, QEvent *event);
 
-  private slots:
-    void showSyntaxOverview();
-    void openFile();
-    void setCurrentEditor();
+ private slots:
+  void showSyntaxOverview();
+  void openFile();
+  void setCurrentEditor();
 
-    /**
+  /**
     * \brief Insert headline from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownHeadline(const int nSelection);
+  void insertDropDownHeadline(const int nSelection);
 
-    /**
+  /**
     * \brief Insert text macro from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownTextmacro(const int nSelection);
+  void insertDropDownTextmacro(const int nSelection);
 
-    /**
+  /**
     * \brief Insert text format from drop down box
     * \param nSelection Selected entry
     */
-    void insertDropDownTextformat(const int nSelection);
+  void insertDropDownTextformat(const int nSelection);
 
-    /** \brief Delete downloaded images which had been attached to an article */
-    void deleteTempImages();
+  /** \brief Delete downloaded images which had been attached to an article */
+  void deleteTempImages();
 
-    // Preview / download toolbar
-    void previewInyokaPage();
-    void loadPreviewFinished(const bool bSuccess);
+  // Preview / download toolbar
+  void previewInyokaPage();
+  void loadPreviewFinished(const bool bSuccess);
 
-    void changedUrl();
-    void clickedLink(QUrl newUrl);
+  void changedUrl();
+  void clickedLink(QUrl newUrl);
 
-    void insertMainEditorButtons(const QString &sAction);
+  void insertMainEditorButtons(const QString &sAction);
 
-    void insertMacro(const QString &sMenuEntry);
+  void insertMacro(const QString &sMenuEntry);
 
-    /**
+  /**
     * \brief Insert interwiki link from menu
     * \param sMenuEntry Selected entry
     */
-    void insertInterwikiLink(const QString &sMenuEntry);
+  void insertInterwikiLink(const QString &sMenuEntry);
 
-    /**
+  /**
     * \brief Insert code block from toolbar
     * \param sCodeStyle Selected highlighting style
     */
-    void insertCodeblock(const QString &sCodeStyle);
+  void insertCodeblock(const QString &sCodeStyle);
 
-    void syncScrollbarsEditor();
-    void syncScrollbarsWebview();
+  void syncScrollbarsEditor();
+  void syncScrollbarsWebview();
 
-  private:
-    Ui::CInyokaEdit *m_pUi;
+ private:
+  Ui::CInyokaEdit *m_pUi;
 
-    void createObjects();
+  void createObjects();
 
-    // Build gui
-    void setupEditor();
-    void createActions();
-    void createXmlActions(QSignalMapper *SigMap, const QString &sIconPath,
-                          QList<QList<QAction *> > &listActions,
-                          CXmlParser* pXmlMenu);
-    void createMenus();
-    void insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
-                       const QString &sIconPath,
-                       QList<QList<QAction *> > listActions,
-                       CXmlParser* pXmlMenu, QAction* pPosition);
-    void createToolBars();
-    void deleteAutoSaveBackups();
+  // Build gui
+  void setupEditor();
+  void createActions();
+  void createXmlActions(QSignalMapper *SigMap, const QString &sIconPath,
+                        QList<QList<QAction *> > &listActions,
+                        CXmlParser* pXmlMenu);
+  void createMenus();
+  void insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
+                     const QString &sIconPath,
+                     QList<QList<QAction *> > listActions,
+                     CXmlParser* pXmlMenu, QAction* pPosition);
+  void createToolBars();
+  void deleteAutoSaveBackups();
 
-    // Load / save application settings
-    void readSettings();
-    void writeSettings();
+  // Load / save application settings
+  void readSettings();
+  void writeSettings();
 
-    // Objects
-    CTemplates *m_pTemplates;
-    CFileOperations *m_pFileOperations;
-    CTextEditor *m_pCurrentEditor;
-    CPlugins *m_pPlugins;
-    CParser *m_pParser;
-    CSettings *m_pSettings;
-    CDownload *m_pDownloadModule;
-    CUtils *m_pUtils;
-    QSplitter *m_pWidgetSplitter;
-    QBoxLayout *m_pFrameLayout;
+  // Objects
+  CTemplates *m_pTemplates;
+  CFileOperations *m_pFileOperations;
+  CTextEditor *m_pCurrentEditor;
+  CPlugins *m_pPlugins;
+  CParser *m_pParser;
+  CSettings *m_pSettings;
+  CDownload *m_pDownloadModule;
+  CUtils *m_pUtils;
+  QSplitter *m_pWidgetSplitter;
+  QBoxLayout *m_pFrameLayout;
 
-    QTabWidget *m_pDocumentTabs;
-    QPoint m_WebviewScrollPosition;
+  QTabWidget *m_pDocumentTabs;
+  QPoint m_WebviewScrollPosition;
 #if QT_VERSION >= 0x050600
-    QWebEngineView *m_pWebview;
+  QWebEngineView *m_pWebview;
 #else
-    QWebView *m_pWebview;
+  QWebView *m_pWebview;
 #endif
 
-    // Inter-Wiki Links
-    QMenu *m_piWikiMenu;
-    QList<QMenu *> m_iWikiGroups;
-    QList<QList<QAction *> > m_iWikiLinksActions;
-    QSignalMapper *m_pSigMapInterWikiLinks;
+  // Inter-Wiki Links
+  QMenu *m_piWikiMenu;
+  QList<QMenu *> m_iWikiGroups;
+  QList<QList<QAction *> > m_iWikiLinksActions;
+  QSignalMapper *m_pSigMapInterWikiLinks;
 
-    // Markup templates
-    QMenu *m_pTplMenu;
-    QList<QMenu *> m_TplGroups;
-    QList<QList<QAction *> > m_TplActions;
-    QSignalMapper *m_pSigMapTemplates;
+  // Markup templates
+  QMenu *m_pTplMenu;
+  QList<QMenu *> m_TplGroups;
+  QList<QList<QAction *> > m_TplActions;
+  QSignalMapper *m_pSigMapTemplates;
 
-    QSignalMapper *m_pSigMapMainEditorToolbar;
+  QSignalMapper *m_pSigMapMainEditorToolbar;
 
-    QDir m_UserDataDir;
-    QDir m_tmpPreviewImgDir;
-    QString m_sPreviewFile;
-    QString m_sSharePath;
+  QDir m_UserDataDir;
+  QDir m_tmpPreviewImgDir;
+  QString m_sPreviewFile;
+  QString m_sSharePath;
 
-    // Comboboxes for samplesmacrosBar toolbar
-    QComboBox *m_pHeadlineBox;
-    QComboBox *m_pTextmacrosBox;
-    QComboBox *m_pTextformatBox;
+  // Comboboxes for samplesmacrosBar toolbar
+  QComboBox *m_pHeadlineBox;
+  QComboBox *m_pTextmacrosBox;
+  QComboBox *m_pTextformatBox;
 
-    QList<QAction *> m_OpenTemplateFilesActions;
-    QSignalMapper *m_pSigMapOpenTemplate;
+  QList<QAction *> m_OpenTemplateFilesActions;
+  QSignalMapper *m_pSigMapOpenTemplate;
 
-    // Code block syntax highlighting
-    QSignalMapper *m_pSigMapCodeHighlight;
-    QToolButton *m_pCodePopup;
-    QMenu *m_pCodeStyles;
-    QList<QAction *> m_CodeHighlightActions;
+  // Code block syntax highlighting
+  QSignalMapper *m_pSigMapCodeHighlight;
+  QToolButton *m_pCodePopup;
+  QMenu *m_pCodeStyles;
+  QList<QAction *> m_CodeHighlightActions;
 
-    QTimer *m_pPreviewTimer;
+  QTimer *m_pPreviewTimer;
 
-    bool m_bOpenFileAfterStart;
-    bool m_bEditorScrolling;
-    bool m_bWebviewScrolling;
-    bool m_bReloadPreviewBlocked;
+  bool m_bOpenFileAfterStart;
+  bool m_bEditorScrolling;
+  bool m_bWebviewScrolling;
+  bool m_bReloadPreviewBlocked;
 };
 
 #endif  // INYOKAEDIT_CINYOKAEDIT_H_
