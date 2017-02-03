@@ -1,3 +1,14 @@
+inyokaedit (0.18.1-0ubuntu1) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Fixed uploading an article, which is including special characters.
+  * Separate input dialogs for username/password during article upload.
+  * Added warning during upload, if page content was not changed.
+  * Stripped all PNGs (libpng 1.6+ warning of incorrect sRGB profile).
+  * Updated IWLs
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 03 Feb 2017 16:57:00 +0200
+
 inyokaedit (0.18.0-0ubuntu1) xenial; urgency=low
 
   [ Thorsten Roth ]
