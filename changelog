@@ -1,3 +1,10 @@
+inyokaedit (0.18.2-0ubuntu1) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Fix for special characters in login password.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 04 Feb 2017 17:34:00 +0200
+
 inyokaedit (0.18.1-0ubuntu1) xenial; urgency=low
 
   [ Thorsten Roth ]
