@@ -265,22 +265,24 @@ void CUpload::requestLogin() {
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
                                + qApp->applicationVersion()).toLatin1());
+  m_State = REQULOGIN;
 
 #if QT_VERSION < 0x050000
   QUrl params;
-#else
-  QUrlQuery params;
-#endif
   params.addQueryItem("csrfmiddlewaretoken", m_sToken);
   params.addQueryItem("username", sUsername);
-  params.addQueryItem("password", sPassword);
+  params.addEncodedQueryItem("password", QUrl::toPercentEncoding(sPassword));
   params.addQueryItem("redirect", "");
-
-  m_State = REQULOGIN;
-#if QT_VERSION < 0x050000
   m_pReply = m_pNwManager->post(request, params.encodedQuery());
 #else
-  m_pReply = m_pNwManager->post(request, params.toString().toUtf8());
+  QUrlQuery params;
+  params.addQueryItem("csrfmiddlewaretoken", m_sToken);
+  params.addQueryItem("username", sUsername);
+  sPassword.replace(QChar('+'),QString("%2B"));
+  params.addQueryItem("password", sPassword);
+  params.addQueryItem("redirect", "");
+  m_pReply = m_pNwManager->post(request, params.query(
+                                  QUrl::FullyEncoded).toUtf8());
 #endif
 }
 
