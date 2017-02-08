@@ -2018,14 +2018,21 @@ QString CProvisionalTplParser::parseTested(const QStringList &sListArgs) {
       sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
                                   "alle Ubuntu-Versionen gültig.");
     } else {  // Article tested with Ubuntu versions
-      for (int i = 0; i < sListArgs.size(); i++) {
-        sOutput += "\n * ";
-        nIndex = m_sListTestedWith.indexOf(sListArgs[i].toLower());
+      QStringList sListTmp;
+      sListTmp = sListArgs;
+      sListTmp.sort();
+      for (int i = sListArgs.size()-1; i >= 0; i--) {
+        nIndex = m_sListTestedWith.indexOf(sListTmp[i].toLower());
         if (-1 != nIndex && nIndex < m_sListTestedWithStrings.size()) {
+          sOutput += "\n * ";
           sOutput += m_sListTestedWithStrings[nIndex];
-        } else {
-          sOutput += sListArgs[i];
         }
+      }
+      if (sOutput.isEmpty()) {
+        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
+                                    "unterstützten Ubuntu-Version getestet! "
+                                    "Bitte diesen Artikel testen und das "
+                                    "getestet-Tag entsprechend anpassen.");
       }
       sOutput += "\n";
     }
