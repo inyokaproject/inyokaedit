@@ -1,38 +1,30 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'trusty' or
-      $arguments as lowercase contain 'saucy' or
-      $arguments as lowercase contain 'raring' or
-      $arguments as lowercase contain 'quantal' or
-      $arguments as lowercase contain 'precise' or
-      $arguments as lowercase contain 'oneiric' or
-      $arguments as lowercase contain 'lucid' or
-      $arguments as lowercase contain 'hardy' @> die folgenden [:Paketquellen freischalten:]:
+<@ if $arguments as lowercase contain 'zesty' or
+      $arguments as lowercase contain 'yakkety' or
+      $arguments as lowercase contain 'xenial' or
+      $arguments as lowercase contain 'trusty' or
+      $arguments as lowercase contain 'precise' @> die folgenden [:Paketquellen freischalten:]:
 [[Vorlage(Fremd, Quelle)]] 
 
 
 {{|<class="thirdpartyrepo-outer
-<@ if $arguments as lowercase contain 'hardy' @> thirdpartyrepo-version-hardy
-<@ endif @>
-<@ if $arguments as lowercase contain 'lucid' @> thirdpartyrepo-version-lucid
-<@ endif @>
-<@ if $arguments as lowercase contain 'oneiric' @> thirdpartyrepo-version-oneiric
-<@ endif @>
 <@ if $arguments as lowercase contain 'precise' @> thirdpartyrepo-version-precise
 <@ endif @>
-<@if $arguments as lowercase contain 'quantal' @> thirdpartyrepo-version-quantal
+<@if $arguments as lowercase contain 'trusty' @> thirdpartyrepo-version-trusty
 <@ endif @>
-<@if $arguments as lowercase contain 'raring' @> thirdpartyrepo-version-raring
+<@if $arguments as lowercase contain 'xenial' @> thirdpartyrepo-version-xenial
 <@ endif @>
-<@if $arguments as lowercase contain 'raring' @> thirdpartyrepo-version-saucy
+<@if $arguments as lowercase contain 'yakkety' @> thirdpartyrepo-version-yakkety
 <@ endif @>
-<@if $arguments as lowercase contain 'saucy' @> thirdpartyrepo-version-trusty
-<@ endif @>">
+<@if $arguments as lowercase contain 'zesty' @> thirdpartyrepo-version-zesty
+<@ endif @>
+">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['trusty','saucy','raring','quantal','precise','oneiric','lucid','hardy'] contains $arg @>
+<@ if ['zesty', 'yakkety', 'xenial', 'trusty', 'precise'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>

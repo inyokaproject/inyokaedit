@@ -284,32 +284,32 @@ void CInyokaEdit::createActions() {
   // File menu
   // New file
   m_pUi->newAct->setShortcuts(QKeySequence::New);
-  m_pUi->newAct->setIcon(QIcon::fromTheme("document-new",
-                                          QIcon(":/images/document-new.png")));
+  m_pUi->newAct->setIcon(QIcon::fromTheme(
+                           "document-new", QIcon(":/images/document-new.png")));
   connect(m_pUi->newAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(newFile()));
   // Open file
   m_pUi->openAct->setShortcuts(QKeySequence::Open);
-  m_pUi->openAct->setIcon(QIcon::fromTheme("document-open",
-                                           QIcon(":/images/document-open.png")));
+  m_pUi->openAct->setIcon(QIcon::fromTheme(
+                            "document-open", QIcon(":/images/document-open.png")));
   connect(m_pUi->openAct, SIGNAL(triggered()),
           this, SLOT(openFile()));
   // Save file
   m_pUi->saveAct->setShortcuts(QKeySequence::Save);
-  m_pUi->saveAct->setIcon(QIcon::fromTheme("document-save",
-                                           QIcon(":/images/document-save.png")));
+  m_pUi->saveAct->setIcon(QIcon::fromTheme(
+                            "document-save", QIcon(":/images/document-save.png")));
   connect(m_pUi->saveAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(save()));
   // Save file as...
   m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
-  m_pUi->saveAsAct->setIcon(QIcon::fromTheme("document-save-as",
-                                             QIcon(":/images/document-save-as.png")));
+  m_pUi->saveAsAct->setIcon(QIcon::fromTheme(
+                              "document-save-as", QIcon(":/images/document-save-as.png")));
   connect(m_pUi->saveAsAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(saveAs()));
   // Print preview
   m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
-  m_pUi->printPreviewAct->setIcon(QIcon::fromTheme("document-print",
-                                                   QIcon(":/images/document-print.png")));
+  m_pUi->printPreviewAct->setIcon(QIcon::fromTheme(
+                                    "document-print", QIcon(":/images/document-print.png")));
   connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(printPreview()));
 #if QT_VERSION >= 0x050600
@@ -328,45 +328,45 @@ void CInyokaEdit::createActions() {
 
   // Find
   m_pUi->searchAct->setShortcuts(QKeySequence::Find);
-  m_pUi->searchAct->setIcon(QIcon::fromTheme("edit-find",
-                                             QIcon(":/images/edit-find.png")));
+  m_pUi->searchAct->setIcon(QIcon::fromTheme(
+                              "edit-find", QIcon(":/images/edit-find.png")));
   connect(m_pUi->searchAct, SIGNAL(triggered()),
           m_pFileOperations, SIGNAL(triggeredFind()));
   // Replace
   m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
-  m_pUi->replaceAct->setIcon(QIcon::fromTheme("edit-find-replace",
-                                              QIcon(":/images/edit-find-replace.png")));
+  m_pUi->replaceAct->setIcon(QIcon::fromTheme(
+                               "edit-find-replace", QIcon(":/images/edit-find-replace.png")));
   connect(m_pUi->replaceAct, SIGNAL(triggered()),
           m_pFileOperations, SIGNAL(triggeredReplace()));
   // Find next
   m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-  m_pUi->findNextAct->setIcon(QIcon::fromTheme("go-down",
-                                               QIcon(":/images/go-down.png")));
+  m_pUi->findNextAct->setIcon(QIcon::fromTheme(
+                                "go-down", QIcon(":/images/go-down.png")));
   connect(m_pUi->findNextAct, SIGNAL(triggered()),
           m_pFileOperations, SIGNAL(triggeredFindNext()));
   // Find previous
   m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-  m_pUi->findPreviousAct->setIcon(QIcon::fromTheme("go-up",
-                                                   QIcon(":/images/go-up.png")));
+  m_pUi->findPreviousAct->setIcon(QIcon::fromTheme(
+                                    "go-up", QIcon(":/images/go-up.png")));
   connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
           m_pFileOperations, SIGNAL(triggeredFindPrevious()));
 
   // Cut
   m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-  m_pUi->cutAct->setIcon(QIcon::fromTheme("edit-cut",
-                                          QIcon(":/images/edit-cut.png")));
+  m_pUi->cutAct->setIcon(QIcon::fromTheme(
+                           "edit-cut", QIcon(":/images/edit-cut.png")));
   connect(m_pUi->cutAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(cut()));
   // Copy
   m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-  m_pUi->copyAct->setIcon(QIcon::fromTheme("edit-copy",
-                                           QIcon(":/images/edit-copy.png")));
+  m_pUi->copyAct->setIcon(QIcon::fromTheme(
+                            "edit-copy", QIcon(":/images/edit-copy.png")));
   connect(m_pUi->copyAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(copy()));
   // Paste
   m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-  m_pUi->pasteAct->setIcon(QIcon::fromTheme("edit-paste",
-                                            QIcon(":/images/edit-paste.png")));
+  m_pUi->pasteAct->setIcon(QIcon::fromTheme(
+                             "edit-paste", QIcon(":/images/edit-paste.png")));
   connect(m_pUi->pasteAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(paste()));
 
@@ -379,14 +379,14 @@ void CInyokaEdit::createActions() {
 
   // Undo
   m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-  m_pUi->undoAct->setIcon(QIcon::fromTheme("edit-undo",
-                                           QIcon(":/images/edit-undo.png")));
+  m_pUi->undoAct->setIcon(QIcon::fromTheme(
+                            "edit-undo", QIcon(":/images/edit-undo.png")));
   connect(m_pUi->undoAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(undo()));
   // Redo
   m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
-  m_pUi->redoAct->setIcon(QIcon::fromTheme("edit-redo",
-                                           QIcon(":/images/edit-redo.png")));
+  m_pUi->redoAct->setIcon(QIcon::fromTheme(
+                            "edit-redo", QIcon(":/images/edit-redo.png")));
   connect(m_pUi->redoAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(redo()));
 
@@ -485,8 +485,7 @@ void CInyokaEdit::createActions() {
           m_pSigMapMainEditorToolbar, SLOT(map()));
 
   // Insert extern link
-  m_pSigMapMainEditorToolbar->setMapping(m_pUi->externalLinkAct,
-                                         "externalLinkAct");
+  m_pSigMapMainEditorToolbar->setMapping(m_pUi->externalLinkAct, "externalLinkAct");
   connect(m_pUi->externalLinkAct, SIGNAL(triggered()),
           m_pSigMapMainEditorToolbar, SLOT(map()));
 
@@ -576,8 +575,8 @@ void CInyokaEdit::createActions() {
           m_pUtils, SLOT(reportBug()));
 
   // Open about windwow
-  m_pUi->aboutAct->setIcon(QIcon::fromTheme("help-about",
-                                            QIcon(":/images/help-browser.png")));
+  m_pUi->aboutAct->setIcon(QIcon::fromTheme(
+                             "help-about", QIcon(":/images/help-browser.png")));
   connect(m_pUi->aboutAct, SIGNAL(triggered()),
           m_pUtils, SLOT(showAbout()));
 }
@@ -872,14 +871,12 @@ void CInyokaEdit::insertDropDownHeadline(const int nSelection) {
 
     // Some text was selected
     if (!m_pCurrentEditor->textCursor().selectedText().isEmpty()) {
-      m_pCurrentEditor->insertPlainText(sHeadTag + " "
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + " " + sHeadTag);
+      m_pCurrentEditor->insertPlainText(
+            sHeadTag + " " + m_pCurrentEditor->textCursor().selectedText() + " " + sHeadTag);
     } else {
       // Select text sHeadline if no text was selected
-      m_pCurrentEditor->insertPlainText(sHeadTag + " "
-                                        + sHeadline + " "
-                                        + sHeadTag);
+      m_pCurrentEditor->insertPlainText(
+            sHeadTag + " " + sHeadline + " " + sHeadTag);
 
       QTextCursor textCursor(m_pCurrentEditor->textCursor());
       textCursor.setPosition(
@@ -959,13 +956,7 @@ void CInyokaEdit::insertDropDownTextmacro(const int nSelection) {
 
 // Text format (combobox in toolbar)
 void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
-  bool bSelected(false);
-  QString sInsertedText("");
-
-  // Some text was selected
-  if (!m_pCurrentEditor->textCursor().selectedText().isEmpty()) {
-    bSelected = true;
-  }
+  QString sInsert(m_pCurrentEditor->textCursor().selectedText());
 
   if (nSelection != 0 && nSelection != 1) {
     quint16 nFormatLength(0);
@@ -974,67 +965,42 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
     switch (nSelection-1) {
       default:
       case 1:  // Folders
-        if (bSelected) {
-          m_pCurrentEditor->insertPlainText(
-                "'''"
-                + m_pCurrentEditor->textCursor().selectedText()
-                + "'''");
-        } else {
-          sInsertedText = trUtf8("Folders");
+        if (sInsert.isEmpty()) {
+          sInsert = trUtf8("Folders");
           nFormatLength = 3;
-          m_pCurrentEditor->insertPlainText("'''"
-                                            + sInsertedText
-                                            + "'''");
         }
+        m_pCurrentEditor->insertPlainText("'''" + sInsert + "'''");
         break;
       case 2:  // Menus
-        if (bSelected) {
-          m_pCurrentEditor->insertPlainText("''\""
-                                            + m_pCurrentEditor->textCursor().selectedText()
-                                            + "\"''");
-        } else {
-          sInsertedText = trUtf8("Menu -> sub menu -> menu entry");
+        if (sInsert.isEmpty()) {
+          sInsert = trUtf8("Menu -> sub menu -> menu entry");
           nFormatLength = 3;
-          m_pCurrentEditor->insertPlainText("''\""
-                                            + sInsertedText
-                                            + "\"''");
         }
+        m_pCurrentEditor->insertPlainText("''\"" + sInsert + "\"''");
         break;
       case 3:  // Files
-        if (bSelected) {
-          m_pCurrentEditor->insertPlainText("'''"
-                                            + m_pCurrentEditor->textCursor().selectedText()
-                                            + "'''");
-        } else {
-          sInsertedText = trUtf8("Files");
+        if (sInsert.isEmpty()) {
+          sInsert = trUtf8("Files");
           nFormatLength = 3;
-          m_pCurrentEditor->insertPlainText("'''"
-                                            + sInsertedText
-                                            + "'''");
         }
+        m_pCurrentEditor->insertPlainText("'''" + sInsert + "'''");
         break;
       case 4:  // Commands
-        if (bSelected) {
-          m_pCurrentEditor->insertPlainText("`"
-                                            + m_pCurrentEditor->textCursor().selectedText()
-                                            + "`");
-        } else {
-          sInsertedText = trUtf8("Command");
+        if (sInsert.isEmpty()) {
+          sInsert = trUtf8("Command");
           nFormatLength = 1;
-          m_pCurrentEditor->insertPlainText("`"
-                                            + sInsertedText
-                                            + "`");
         }
+        m_pCurrentEditor->insertPlainText("`" + sInsert + "`");
         break;
     }
 
     // Reset selection
     m_pTextformatBox->setCurrentIndex(0);
 
-    if (!bSelected) {
+    if (nFormatLength > 0) {
       QTextCursor textCursor(m_pCurrentEditor->textCursor());
       textCursor.setPosition(m_pCurrentEditor->textCursor().position() -
-                             sInsertedText.length() - nFormatLength);
+                             sInsert.length() - nFormatLength);
       textCursor.setPosition(m_pCurrentEditor->textCursor().position() -
                              nFormatLength, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(textCursor);
@@ -1048,95 +1014,58 @@ void CInyokaEdit::insertDropDownTextformat(const int nSelection) {
 
 // Insert main syntax element from toolbar (bold, italic, ...)
 void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
-  bool bSelected(false);
-  QString sInsertedText("");
-  quint16 nFormatLength(0);
-
-  // Some text was selected
-  if (!m_pCurrentEditor->textCursor().selectedText().isEmpty()) {
-    bSelected = true;
-  }
+  QString sInsert(m_pCurrentEditor->textCursor().selectedText());
+  quint16 nFormatLength(65530);
 
   if ("boldAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("'''"
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + "'''");
-    } else {
-      sInsertedText = trUtf8("Bold");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Bold");
       nFormatLength = 3;
-      m_pCurrentEditor->insertPlainText("'''" + sInsertedText + "'''");
     }
+    m_pCurrentEditor->insertPlainText("'''" + sInsert + "'''");
   } else if ("italicAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("''"
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + "''");
-    } else {
-      sInsertedText = trUtf8("Italic");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Italic");
       nFormatLength = 2;
-      m_pCurrentEditor->insertPlainText("''" + sInsertedText + "''");
     }
+    m_pCurrentEditor->insertPlainText("''" + sInsert + "''");
   } else if ("monotypeAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("`"
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + "`");
-    } else {
-      sInsertedText = trUtf8("Monotype");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Monotype");
       nFormatLength = 1;
-      m_pCurrentEditor->insertPlainText("`" + sInsertedText + "`");
     }
+    m_pCurrentEditor->insertPlainText("`" + sInsert + "`");
   } else if ("listAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText(" * "
-                                        + m_pCurrentEditor->textCursor().selectedText());
-    } else {
-      sInsertedText = trUtf8("List");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("List");
       nFormatLength = 0;
-      m_pCurrentEditor->insertPlainText(" * " + sInsertedText);
     }
+    m_pCurrentEditor->insertPlainText(" * " + sInsert);
   } else if ("numberedListAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText(" 1. "
-                                        + m_pCurrentEditor->textCursor().selectedText());
-    } else {
-      sInsertedText = trUtf8("Numbered list");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Numbered list");
       nFormatLength = 0;
-      m_pCurrentEditor->insertPlainText(" 1. " + sInsertedText);
     }
+    m_pCurrentEditor->insertPlainText(" 1. " + sInsert);
   } else if ("wikilinkAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("[:"
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + ":]");
-    } else {
-      sInsertedText = trUtf8("Site name");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Site name");
       nFormatLength = 2;
-      m_pCurrentEditor->insertPlainText("[:" + sInsertedText + ":]");
     }
+    m_pCurrentEditor->insertPlainText("[:" + sInsert + ":]");
   } else if ("externalLinkAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("["
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + "]");
-    } else {
-      sInsertedText = "http://www.example.org/";
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("http://www.example.org/");
       nFormatLength = 1;
-      m_pCurrentEditor->insertPlainText("[" + sInsertedText + "]");
     }
+    m_pCurrentEditor->insertPlainText("[" + sInsert + "]");
   } else if ("imageAct" == sAction) {
-    if (bSelected) {
-      m_pCurrentEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
-                                        + m_pCurrentEditor->textCursor().selectedText()
-                                        + ")]]");
-    } else {
-      sInsertedText = trUtf8("Image.png");
+    if (sInsert.isEmpty()) {
+      sInsert = trUtf8("Image.png");
       nFormatLength = 3;
-      m_pCurrentEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
-                                        + sInsertedText
-                                        + ")]]");
     }
+    m_pCurrentEditor->insertPlainText("[[" + m_pTemplates->getTransImage() + "("
+                                      +  sInsert + ")]]");
   } else {
     QMessageBox::warning(this, qApp->applicationName(),
                          "Error while inserting syntax element: "
@@ -1145,10 +1074,10 @@ void CInyokaEdit::insertMainEditorButtons(const QString &sAction) {
                << "UNKNOWN ACTION" << sAction;
   }
 
-  if (!bSelected) {
+  if (65530 != nFormatLength) {
     QTextCursor textCursor(m_pCurrentEditor->textCursor());
     textCursor.setPosition(m_pCurrentEditor->textCursor().position() -
-                           sInsertedText.length() - nFormatLength);
+                           sInsert.length() - nFormatLength);
     textCursor.setPosition(m_pCurrentEditor->textCursor().position() -
                            nFormatLength, QTextCursor::KeepAnchor);
     m_pCurrentEditor->setTextCursor(textCursor);
