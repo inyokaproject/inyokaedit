@@ -11,7 +11,6 @@ options:
                            [/usr/local]
   --docdir=DIR             install documents in DIR [DATAROOT/docs/inyokaedit]
   --mandir=DIR             install manpage in DIR [DATAROOT/man]
-  --enable-apport=yes/no   enable/disable install Ubuntu Apport files  [yes]
 EOF
 exit 1
 fi
@@ -28,9 +27,6 @@ for opt; do
         --mandir=*)
             mandir="$optarg"
             ;;
-        --enable-apport=*)
-            enableapport="$optarg"
-            ;;
         *)
             ;;
     esac
@@ -39,7 +35,6 @@ done
 test -n "$prefix" || prefix="/usr/local"
 test -n "$docdir" || docdir='${dataroot}/docs/inyokaedit'
 test -n "$mandir" || mandir='${dataroot}/man'
-test -n "$enableapport" || enableapport='yes'
 
 echo ""
 echo "generate config.mak ..."
@@ -50,7 +45,6 @@ cat >> config.mak << EOF
 prefix = $prefix
 docdir = $docdir
 mandir = $mandir
-enableapport = $enableapport
 EOF
 
 cat config.mak

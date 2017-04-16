@@ -570,7 +570,7 @@ void CInyokaEdit::createActions() {
   connect(m_pUi->showSyntaxOverviewAct, SIGNAL(triggered()),
           this, SLOT(showSyntaxOverview()));
 
-  // Report a bug using apport
+  // Report a bug
   connect(m_pUi->reportBugAct, SIGNAL(triggered()),
           m_pUtils, SLOT(reportBug()));
 

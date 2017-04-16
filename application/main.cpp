@@ -33,8 +33,8 @@
  * \li Downloading raw text of existing articles and corresponding images.
  * \li Spell checker
  *
- * \section Launchpad
- * InyokaEdit on Launchpad: https://launchpad.net/inyokaedit
+ * \section GitHub
+ * InyokaEdit on GitHub: https://github.com/inyokaproject/inyokaedit
  */
 
 #include <QApplication>

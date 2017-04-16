@@ -83,7 +83,7 @@ void CUtils::setProxy(const QString &sHostName, const quint16 nPort,
 // ----------------------------------------------------------------------------
 
 void CUtils::checkWindowsUpdate() {
-  QString sDownloadUrl("http://bazaar.launchpad.net/~elthoro/inyokaedit/windows_files/view/head:/LatestVersion.txt");
+  QString sDownloadUrl("https://github.com/inyokaproject/inyokaedit/releases");
   qDebug() << "Looking for updates...";
   m_NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
 }
@@ -97,7 +97,7 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
     qWarning() << "Error (#" << pReply->error() << ")while update check:"
                << pData->errorString();
   } else {
-    QRegExp regExp("\\b(Latest InyokaEdit version: )\\b\\d+.\\d+.\\d+");
+    QRegExp regExp("\\bInyokaEdit-\\d+.\\d+.\\d+-Windows.zip\\b");
     QString sReply = QString::fromUtf8(pData->readAll());
 
     int nIndex = regExp.indexIn(sReply);
@@ -105,7 +105,8 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
       QStringList sListCurrentVer;
       QStringList sListLatestVer;
       QString sLatestVersion(regExp.cap());
-      sLatestVersion.remove("Latest InyokaEdit version:");
+      sLatestVersion.remove("InyokaEdit-");
+      sLatestVersion.remove("-Windows.zip");
       sLatestVersion = sLatestVersion.trimmed();
       qDebug() << "Latest version:" << sLatestVersion;
 
@@ -123,13 +124,15 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
         if (nMainVer2 > nMainVer1
             ||nMinorVer2 > nMinorVer1
             || nRevision2 > nRevision1) {
-          QMessageBox *msgBox = new QMessageBox(QMessageBox::Question,
-                                                trUtf8("Update found"),
-                                                trUtf8("Found a new version of %1.<br>Do you want to download the latest version?")
-                                                .arg(qApp->applicationName()),
-                                                0,
-                                                m_pParent);
-          QPushButton *noDontAskAgainButton = msgBox->addButton(trUtf8("No, don't ask again!"), QMessageBox::NoRole);
+          QMessageBox *msgBox = new QMessageBox(
+                                  QMessageBox::Question,
+                                  trUtf8("Update found"),
+                                  trUtf8("Found a new version of %1.<br>"
+                                         "Do you want to download the latest version?")
+                                  .arg(qApp->applicationName()), 0, m_pParent);
+          QPushButton *noDontAskAgainButton = msgBox->addButton(
+                                                trUtf8("No, don't ask again!"),
+                                                QMessageBox::NoRole);
           QPushButton *noButton = msgBox->addButton(QMessageBox::No);
           QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
 
@@ -142,7 +145,8 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
             return;
           } else if (msgBox->clickedButton() == yesButton) {
             qDebug() << "Calling download page.";
-            QDesktopServices::openUrl(QUrl("https://launchpad.net/inyokaedit/+download"));
+            QDesktopServices::openUrl(
+                  QUrl("https://github.com/inyokaproject/inyokaedit/releases"));
           } else if (msgBox->clickedButton() == noButton) {
             qDebug() << "Don't want to download an update.";
           }
@@ -156,32 +160,8 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 
 void CUtils::reportBug() {
-  // Ubuntu: Using Apport, if needed files exist
-  if (QFile::exists("/usr/bin/ubuntu-bug")
-      && QFile::exists("/etc/apport/crashdb.conf.d/inyokaedit-crashdb.conf")
-      && QFile::exists(qApp->applicationDirPath()
-                       + "/../share/apport/package-hooks/source_inyokaedit.py")) {
-    // Start apport
-    QProcess procApport;
-    procApport.start("ubuntu-bug",
-                     QStringList() << qApp->applicationName().toLower());
-
-    if (!procApport.waitForStarted()) {
-      QMessageBox::critical(m_pParent, qApp->applicationName(),
-                            trUtf8("Error while starting Apport."));
-      qCritical() << "Error while starting Apport - waitForStarted()";
-      return;
-    }
-    if (!procApport.waitForFinished()) {
-      QMessageBox::critical(m_pParent, qApp->applicationName(),
-                            trUtf8("Error while executing Apport."));
-      qCritical() << "Error while executing Apport - waitForFinished()";
-      return;
-    }
-  } else {
-    // Not Ubuntu or apport files not found: Load Launchpad bug tracker
-    QDesktopServices::openUrl(QUrl("https://bugs.launchpad.net/inyokaedit"));
-  }
+    QDesktopServices::openUrl(
+          QUrl("https://github.com/inyokaproject/inyokaedit/issues"));
 }
 
 // ----------------------------------------------------------------------------
@@ -189,22 +169,24 @@ void CUtils::reportBug() {
 
 void CUtils::showAbout() {
   QDate nDate = QDate::currentDate();
-  QMessageBox::about(m_pParent,
-                     trUtf8("About") + " " + qApp->applicationName(),
-                     "<p><b>" + qApp->applicationName() + "</b> - "
-                     + trUtf8("Editor for Inyoka-based portals") + "<br />"
-                     + trUtf8("Version") + ": "
-                     + qApp->applicationVersion() + "</p>"
-                                                    "<p>&copy; 2011-" + QString::number(nDate.year()) + ", "
-                     + trUtf8("The %1 developers").arg(qApp->applicationName())
-                     + "<br />" + trUtf8("Licence") + ": "
-                                                      "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                                                      "GNU General Public License Version 3</a></p>"
-                                                      "<p>" + trUtf8("Special thanks to djcj, bubi97, Lasall, "
-                                                                     "Shakesbier and all testers from "
-                                                                     "<a href=\"http://ubuntuusers.de\">"
-                                                                     "ubuntuusers.de</a>.")
-                     + "</p>""<p>" + trUtf8("This application uses icons from "
-                                            "<a href=\"http://tango.freedesktop.org\">"
-                                            "Tango project</a>.") + "</p>");
+  QMessageBox::about(
+        m_pParent,
+        trUtf8("About") + " " + qApp->applicationName(),
+        "<p><b>" + qApp->applicationName() + " v" + qApp->applicationVersion() + "</b> - " +
+        trUtf8("Editor for Inyoka-based portals") + "<br />"
+        "<a href=\"https://github.com/inyokaproject/inyokaedit\">"
+        "https://github.com/inyokaproject/inyokaedit</a></p>"
+
+        "<p>&copy; 2011-" + QString::number(nDate.year()) + ", " +
+        trUtf8("The %1 developers").arg(qApp->applicationName()) + "<br />" +
+        trUtf8("Licence") + ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+        "GNU General Public License Version 3</a></p>"
+
+        "<p>" + trUtf8("Special thanks to djcj, bubi97, Lasall, Shakesbier and "
+                       "all testers from <a href=\"http://ubuntuusers.de\"> "
+                       "ubuntuusers.de</a>.") + "</p>"
+
+        "<p>" + trUtf8("This application uses icons from "
+                       "<a href=\"http://tango.freedesktop.org\">"
+                       "Tango project</a>.") + "</p>");
 }

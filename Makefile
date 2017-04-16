@@ -67,13 +67,6 @@ install-inyokaedit: infiles
 	$(CP) application/res/images/hicolor    $(DESTDIR)$(dataroot)/icons
 	$(CP) data/iWikiLinks            $(DESTDIR)$(dataroot)/inyokaedit
 	$(CP) data/templates             $(DESTDIR)$(dataroot)/inyokaedit
-ifneq "$(enableapport)" "no"
-	$(INSTALL_DIR) $(DESTDIR)/etc/apport
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/apport/package-hooks
-	$(INSTALL_FILE) apport/inyokaedit-crashdb.conf        $(DESTDIR)/etc/apport
-	$(INSTALL_FILE) apport/source_inyokaedit.py           $(DESTDIR)$(dataroot)/apport/package-hooks
-endif
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
@@ -97,8 +90,6 @@ uninstall:
 	$(RM) -r $(DESTDIR)$(libdir)/inyokaedit
 	$(RM) -r $(DESTDIR)$(dataroot)/inyokaedit
 	$(RM) $(DESTDIR)$(bindir)/inyokaedit
-	$(RM) $(DESTDIR)/etc/apport/inyokaedit-crashdb.conf
-	$(RM) $(DESTDIR)$(dataroot)/apport/package-hooks/source_inyokaedit.py
 	$(RM) $(DESTDIR)$(dataroot)/pixmaps/inyokaedit.xpm
 	$(RM) $(DESTDIR)$(dataroot)/applications/inyokaedit.desktop
 	$(RM) $(DESTDIR)$(dataroot)/mime/packages/inyokaedit.xml
