@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>CHotkey</name>
     <message>
@@ -9,27 +9,27 @@
         <translation>Tastenkombinationen</translation>
     </message>
     <message>
-        <location filename="../CHotkey.cpp" line="235"/>
+        <location filename="../CHotkey.cpp" line="236"/>
         <source>&apos;&apos;&apos;Bold&apos;&apos;&apos;</source>
         <translation>&apos;&apos;&apos;Fett&apos;&apos;&apos;</translation>
     </message>
     <message>
-        <location filename="../CHotkey.cpp" line="384"/>
+        <location filename="../CHotkey.cpp" line="429"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CHotkey.cpp" line="387"/>
+        <location filename="../CHotkey.cpp" line="432"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CHotkey.cpp" line="390"/>
+        <location filename="../CHotkey.cpp" line="435"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CHotkey.cpp" line="394"/>
+        <location filename="../CHotkey.cpp" line="439"/>
         <source>Plugin for defining custom hotkeys.</source>
         <translation>Plugin zum Anlegen eigener Tastenkombinationen.</translation>
     </message>

@@ -168,25 +168,28 @@ void CUtils::reportBug() {
 // ----------------------------------------------------------------------------
 
 void CUtils::showAbout() {
-  QDate nDate = QDate::currentDate();
-  QMessageBox::about(
-        m_pParent,
-        trUtf8("About") + " " + qApp->applicationName(),
-        "<p><b>" + qApp->applicationName() + " v" + qApp->applicationVersion() + "</b> - " +
-        trUtf8("Editor for Inyoka-based portals") + "<br />"
-        "<a href=\"https://github.com/inyokaproject/inyokaedit\">"
-        "https://github.com/inyokaproject/inyokaedit</a></p>"
-
-        "<p>&copy; 2011-" + QString::number(nDate.year()) + ", " +
-        trUtf8("The %1 developers").arg(qApp->applicationName()) + "<br />" +
-        trUtf8("Licence") + ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-        "GNU General Public License Version 3</a></p>"
-
-        "<p>" + trUtf8("Special thanks to djcj, bubi97, Lasall, Shakesbier and "
-                       "all testers from <a href=\"http://ubuntuusers.de\"> "
-                       "ubuntuusers.de</a>.") + "</p>"
-
-        "<p>" + trUtf8("This application uses icons from "
-                       "<a href=\"http://tango.freedesktop.org\">"
-                       "Tango project</a>.") + "</p>");
+  QMessageBox::about(m_pParent, trUtf8("About")+ " " + qApp->applicationName(),
+                     QString("<big><b>%1 %2</b></big><br />"
+                             "%3<br />"
+                             "<small>%4</small><br /><br />"
+                             "%5<br />"
+                             "%6<br />"
+                             "<small>%7</small><br /><br />"
+                             "%8")
+                     .arg(qApp->applicationName())
+                     .arg(qApp->applicationVersion())
+                     .arg(trUtf8("Editor for Inyoka-based portals"))
+                     .arg(APP_COPY)
+                     .arg("URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
+                          "https://github.com/inyokaproject/inyokaedit</a>")
+                     .arg(trUtf8("License") +
+                          ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                          "GNU General Public License Version 3</a>")
+                     .arg(trUtf8("This application uses icons from "
+                                 "<a href=\"http://tango.freedesktop.org\">"
+                                 "Tango project</a>."))
+                     .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, "
+                                 "Shakesbier and all testers from "
+                                 "<a href=\"http://ubuntuusers.de\"> "
+                                 "ubuntuusers.de</a>.")));
 }

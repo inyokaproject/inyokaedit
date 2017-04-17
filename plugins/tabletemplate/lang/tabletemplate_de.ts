@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>CTableTemplate</name>
     <message>
-        <location filename="../CTableTemplate.cpp" line="139"/>
+        <location filename="../CTableTemplate.cpp" line="148"/>
         <source>Table generator / converter</source>
         <translation>Tabellengenerator / -konverter</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="208"/>
+        <location filename="../CTableTemplate.cpp" line="222"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="218"/>
+        <location filename="../CTableTemplate.cpp" line="232"/>
         <source>Head</source>
         <translation>Kopf</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="348"/>
+        <location filename="../CTableTemplate.cpp" line="373"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="351"/>
+        <location filename="../CTableTemplate.cpp" line="376"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="355"/>
+        <location filename="../CTableTemplate.cpp" line="380"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.cpp" line="359"/>
+        <location filename="../CTableTemplate.cpp" line="384"/>
         <source>Plugin for generating styled Inyoka tables.</source>
         <translation>Erweiterung zur Erstellung von Inyoka-Tabellen.</translation>
     </message>
@@ -82,37 +82,32 @@
         <translation>Anzahl Zeilen</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="141"/>
-        <source>about:blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CTableTemplate.ui" line="149"/>
+        <location filename="../CTableTemplate.ui" line="131"/>
         <source>Show preview</source>
         <translation>Vorschau anzeigen</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="157"/>
+        <location filename="../CTableTemplate.ui" line="139"/>
         <source>Converter</source>
         <translation>Konverter</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="165"/>
+        <location filename="../CTableTemplate.ui" line="147"/>
         <source>Inyoka base template:</source>
         <translation>Inyoka Basistemplate:</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="175"/>
+        <location filename="../CTableTemplate.ui" line="157"/>
         <source>Base to new</source>
         <translation>Basis zu Neu</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="186"/>
+        <location filename="../CTableTemplate.ui" line="168"/>
         <source>New to base</source>
         <translation>Neu zu Basis</translation>
     </message>
     <message>
-        <location filename="../CTableTemplate.ui" line="197"/>
+        <location filename="../CTableTemplate.ui" line="179"/>
         <source>New table template:</source>
         <translation>Neues Tabellentemplate:</translation>
     </message>

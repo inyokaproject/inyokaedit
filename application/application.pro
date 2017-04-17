@@ -30,7 +30,8 @@ QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
 
 DEFINES      += APP_NAME=\"\\\"$$QMAKE_TARGET_PRODUCT\\\"\" \
-                APP_VERSION=\"\\\"$$VERSION\\\"\"
+                APP_VERSION=\"\\\"$$VERSION\\\"\" \
+                APP_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\"
 
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs

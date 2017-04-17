@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>CSpellCheckDialog</name>
     <message>
@@ -72,22 +72,22 @@
         <translation>Rechtschreibüberprüfung abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="449"/>
+        <location filename="../CSpellChecker.cpp" line="460"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="452"/>
+        <location filename="../CSpellChecker.cpp" line="463"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="455"/>
+        <location filename="../CSpellChecker.cpp" line="466"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CSpellChecker.cpp" line="459"/>
+        <location filename="../CSpellChecker.cpp" line="470"/>
         <source>Spell checker based on &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</source>
         <translation>Rechtschreibprüfung basierend auf &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</translation>
     </message>
