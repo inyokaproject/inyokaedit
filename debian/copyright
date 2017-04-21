@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: inyokaedit
 Upstream-Contact: Thorsten Roth <elthoro@gmx.de>
-Source: https://code.launchpad.net/inyokaedit
+Source: https://github.com/inyokaproject/inyokaedit
 
 Files: *
 Copyright: 2011-2017 The InyokaEdit developers

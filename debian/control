@@ -14,9 +14,9 @@ Build-Depends:
    libhunspell-dev,
    pkg-config
 Standards-Version: 3.9.5
-Homepage: https://launchpad.net/inyokaedit
-Vcs-Bzr: https://code.launchpad.net/~elthoro/inyokaedit/packaging
-Vcs-Browser: http://bazaar.launchpad.net/~elthoro/inyokaedit/packaging
+Homepage: https://github.com/inyokaproject/inyokaedit
+Vcs-Git: https://github.com/inyokaproject/inyokaedit.git
+Vcs-Browser: https://github.com/inyokaproject/inyokaedit/tree/packaging
 
 Package: inyokaedit
 Architecture: any
