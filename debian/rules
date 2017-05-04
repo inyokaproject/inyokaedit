@@ -14,7 +14,7 @@ BUILDFLAGS = \
 	dh ${@} --parallel
 
 override_dh_auto_build:
-	dh_auto_build -- QMAKE='qmake $(BUILDFLAGS)'
+	dh_auto_build -- QMAKE='qmake-qt4 $(BUILDFLAGS)'
 
 override_dh_auto_install:
 
