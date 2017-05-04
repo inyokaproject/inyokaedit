@@ -32,10 +32,15 @@
 #include <QPrintDialog>
 #include <QScrollBar>
 
+#if QT_VERSION >= 0x050000
 #if QT_VERSION >= 0x050600
 #include <QWebEngineView>
 #else
 #include <QtWebKitWidgets/QWebView>
+#endif
+#else
+// Qt 4
+#include <QWebView>
 #endif
 
 #include "./CFileOperations.h"

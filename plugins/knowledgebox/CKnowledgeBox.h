@@ -52,7 +52,10 @@ class QTextDocument;
 class CKnowledgeBox : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
+
+#if QT_VERSION >= 0x050000
   Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
+#endif
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,

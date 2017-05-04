@@ -31,7 +31,10 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QUrl>
+
+#if QT_VERSION >= 0x050000
 #include <QUrlQuery>
+#endif
 
 #include "./CUpload.h"
 #include "./CUtils.h"
@@ -264,6 +267,14 @@ void CUpload::requestLogin() {
                                + qApp->applicationVersion()).toLatin1());
   m_State = REQULOGIN;
 
+#if QT_VERSION < 0x050000
+  QUrl params;
+  params.addQueryItem("csrfmiddlewaretoken", m_sToken);
+  params.addQueryItem("username", sUsername);
+  params.addEncodedQueryItem("password", QUrl::toPercentEncoding(sPassword));
+  params.addQueryItem("redirect", "");
+  m_pReply = m_pNwManager->post(request, params.encodedQuery());
+#else
   QUrlQuery params;
   params.addQueryItem("csrfmiddlewaretoken", m_sToken);
   params.addQueryItem("username", sUsername);
@@ -272,6 +283,7 @@ void CUpload::requestLogin() {
   params.addQueryItem("redirect", "");
   m_pReply = m_pNwManager->post(request, params.query(
                                   QUrl::FullyEncoded).toUtf8());
+#endif
 }
 
 // ----------------------------------------------------------------------------

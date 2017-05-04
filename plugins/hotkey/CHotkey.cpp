@@ -125,8 +125,13 @@ void CHotkey::buildUi(QWidget *pParent) {
   m_pUi->entriesTable->setRowCount(0);
 
   m_pUi->entriesTable->setColumnWidth(0, 100);
+#if QT_VERSION >= 0x050000
   m_pUi->entriesTable->horizontalHeader()->setSectionResizeMode(
         1, QHeaderView::Stretch);
+#else
+  m_pUi->entriesTable->horizontalHeader()->setResizeMode(
+        1, QHeaderView::Stretch);
+#endif
   m_pUi->entriesTable->setColumnWidth(2, 40);
   m_pUi->entriesTable->viewport()->installEventFilter(this);
 
@@ -435,3 +440,9 @@ void CHotkey::showAbout() {
                    + "</i></p>");
   aboutbox.exec();
 }
+
+// ----------------------------------------------------------------------------
+
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(hotkey, CHotkey)
+#endif

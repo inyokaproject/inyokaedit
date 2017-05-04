@@ -27,12 +27,14 @@
 #ifndef INYOKAEDIT_CPARSELINKS_H_
 #define INYOKAEDIT_CPARSELINKS_H_
 
-#include <QEventLoop>
-#include <QList>
-#include <QNetworkConfigurationManager>
-#include <QNetworkReply>
-#include <QStringList>
 #include <QTextDocument>
+#include <QList>
+#include <QStringList>
+#include <QNetworkReply>
+#include <QEventLoop>
+#if QT_VERSION >= 0x040700
+#include <QNetworkConfigurationManager>
+#endif
 
 
 /**

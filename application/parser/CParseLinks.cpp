@@ -137,8 +137,13 @@ void CParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   int nLength = 0;
   QString sLink("");
   QString sLinkURL("");
+  bool bIsOnline = false;
+
+  // Check for internet connection
+#if QT_VERSION >= 0x040700
   QNetworkConfigurationManager mgr;
-  bool bIsOnline(mgr.isOnline());
+  bIsOnline = mgr.isOnline();
+#endif
 
   nIndex = findInyokaWikiLink.indexIn(sDoc);
   while (nIndex >= 0) {

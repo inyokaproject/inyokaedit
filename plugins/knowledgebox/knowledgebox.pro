@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = knowledgebox
 DESTDIR       = ../
 
-VERSION       = 1.0.5
+VERSION       = 1.0.4
 QMAKE_TARGET_DESCRIPTION = "Knowledge box selection plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
 

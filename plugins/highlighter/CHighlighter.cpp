@@ -205,8 +205,12 @@ void CHighlighter::buildUi(QWidget *pParent) {
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
 
+#if QT_VERSION >= 0x050000
   m_pUi->styleTable->horizontalHeader()->setSectionResizeMode(
         QHeaderView::Stretch);
+#else
+  m_pUi->styleTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
 
   QStringList sListStyleFiles;
   QFileInfo fiStyleFile(m_pSettings->fileName());
@@ -898,3 +902,9 @@ void CHighlighter::showAbout() {
                    + "</i></p>");
   aboutbox.exec();
 }
+
+// ----------------------------------------------------------------------------
+
+#if QT_VERSION < 0x050000
+Q_EXPORT_PLUGIN2(highlighter, CHighlighter)
+#endif

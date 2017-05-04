@@ -28,11 +28,18 @@
 #include <QtGui>
 #include <QScrollBar>
 
+#if QT_VERSION >= 0x050000
 #if QT_VERSION >= 0x050600
 #include <QWebEngineView>
 #include <QWebEngineHistory>
 #else
 #include <QtWebKitWidgets/QWebView>
+#include <QWebFrame>
+#include <QWebHistory>
+#endif
+#else
+// Qt 4
+#include <QWebView>
 #include <QWebFrame>
 #include <QWebHistory>
 #endif

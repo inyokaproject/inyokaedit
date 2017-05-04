@@ -33,10 +33,15 @@
 #include <QSettings>
 #include <QString>
 
+#if QT_VERSION >= 0x050000
 #if QT_VERSION >= 0x050600
 #include <QWebEngineView>
 #else
 #include <QtWebKitWidgets/QWebView>
+#endif
+#else
+// Qt 4
+#include <QWebView>
 #endif
 
 #include "../../application/parser/CParser.h"
@@ -57,7 +62,10 @@ class QTextDocument;
 class CTableTemplate : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
+
+#if QT_VERSION >= 0x050000
   Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
+#endif
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
