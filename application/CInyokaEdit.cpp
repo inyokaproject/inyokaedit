@@ -52,9 +52,11 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   : QMainWindow(parent),
     m_pUi(new Ui::CInyokaEdit),
     m_UserDataDir(userDataDir),
+    m_tmpPreviewImgDir(m_UserDataDir.absolutePath() + "/tmpImages"),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
     m_sSharePath(sharePath.absolutePath()),
-    m_bOpenFileAfterStart(false) {
+    m_bOpenFileAfterStart(false),
+    m_bReloadPreviewBlocked(false){
   qDebug() << "Calling" << Q_FUNC_INFO;
   if (qApp->arguments().contains("--debug")) {
     qWarning() << "DEBUG is enabled!";
@@ -69,16 +71,17 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   }
 
   // Create folder for downloaded article images
-  m_tmpPreviewImgDir = m_UserDataDir.absolutePath() + "/tmpImages";
   if (!m_tmpPreviewImgDir.exists()) {
     // Create folder including possible parent directories (mkPATH)!
     m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());
   }
 
+  QString sFile("");
   if (qApp->arguments().size() > 1) {
     for (int i = 1; i < qApp->arguments().size(); i++) {
       if (!qApp->arguments()[i].startsWith('-')) {
-        m_bOpenFileAfterStart = true;
+        m_bOpenFileAfterStart = true;  // Checked in setupEditor()
+        sFile = qApp->arguments()[i];
         break;
       }
     }
@@ -86,8 +89,6 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 
   // After definition of StylesAndImagesDir AND m_tmpPreviewImgDir!
   this->createObjects();
-
-  // Setup gui, menus, actions, toolbar...
   this->setupEditor();
   this->createActions();
   this->createMenus();
@@ -107,20 +108,13 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 #endif
   }
 
-  m_bReloadPreviewBlocked = false;
-
   if (CUtils::getOnlineState() && m_pSettings->getWindowsCheckUpdate()) {
     m_pUtils->checkWindowsUpdate();
   }
 
   // Load file via command line
-  if (qApp->arguments().size() > 1) {
-    for (int i = 1; i < qApp->arguments().size(); i++) {
-      if (!qApp->arguments()[i].startsWith('-')) {
-        m_pFileOperations->loadFile(qApp->arguments()[i], true);
-        break;
-      }
-    }
+  if (m_bOpenFileAfterStart) {
+    m_pFileOperations->loadFile(sFile, true);
   }
 
   m_pPlugins->loadPlugins();

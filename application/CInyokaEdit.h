@@ -207,10 +207,10 @@ class CInyokaEdit : public QMainWindow {
 
   QSignalMapper *m_pSigMapMainEditorToolbar;
 
-  QDir m_UserDataDir;
+  const QDir m_UserDataDir;
   QDir m_tmpPreviewImgDir;
-  QString m_sPreviewFile;
-  QString m_sSharePath;
+  const QString m_sPreviewFile;
+  const QString m_sSharePath;
 
   // Comboboxes for samplesmacrosBar toolbar
   QComboBox *m_pHeadlineBox;
