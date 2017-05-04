@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = spellchecker
 DESTDIR       = ../
 
-VERSION       = 1.0.3
+VERSION       = 1.0.4
 QMAKE_TARGET_DESCRIPTION = "Spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
 
@@ -31,7 +31,7 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT           += widgets
 
 HEADERS      += CSpellCheckDialog.h \
                 CSpellChecker.h

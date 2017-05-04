@@ -50,12 +50,10 @@ CUtils::CUtils(QWidget *pParent)
 // ----------------------------------------------------------------------------
 
 bool CUtils::getOnlineState() {
-#if QT_VERSION >= 0x040700
   QNetworkConfigurationManager mgr;
   if (!mgr.isOnline()) {
     return false;
   }
-#endif
   return true;
 }
 

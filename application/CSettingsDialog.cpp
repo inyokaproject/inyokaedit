@@ -225,13 +225,8 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
 
   m_pUi->pluginsTable->setColumnWidth(0, 40);
   m_pUi->pluginsTable->setColumnWidth(1, 40);
-#if QT_VERSION >= 0x050000
   m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(
         2, QHeaderView::Stretch);
-#else
-  m_pUi->pluginsTable->horizontalHeader()->setResizeMode(
-        2, QHeaderView::Stretch);
-#endif
   m_pUi->pluginsTable->setColumnWidth(3, 40);
   m_pUi->pluginsTable->setColumnWidth(4, 40);
 

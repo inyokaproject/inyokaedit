@@ -54,10 +54,7 @@
 class CSpellChecker : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-
-#if QT_VERSION >= 0x050000
   Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
-#endif
 
  public:
   ~CSpellChecker();

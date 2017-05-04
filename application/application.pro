@@ -38,17 +38,11 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += core gui network
-equals(QT_MAJOR_VERSION, 4) {  # Qt < 5
-    QT += webkit
-} else {  # Qt >= 5
-    QT += widgets printsupport
-
-    # Qt < 5.6
-    lessThan(QT_MINOR_VERSION, 6): QT += webkitwidgets
-    # Qt >= 5.6
-    greaterThan(QT_MINOR_VERSION, 5): QT += webenginewidgets
-}
+QT           += core gui widgets network printsupport
+# Qt < 5.6
+lessThan(QT_MINOR_VERSION, 6): QT += webkitwidgets
+# Qt >= 5.6
+greaterThan(QT_MINOR_VERSION, 5): QT += webenginewidgets
 
 include(templates/templates.pri)
 include(parser/parser.pri)
