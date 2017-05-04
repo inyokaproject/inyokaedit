@@ -130,15 +130,9 @@ void CKnowledgeBox::buildUi(QWidget *pParent) {
 
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);
-
   m_pUi->entriesTable->setColumnWidth(0, 40);
-#if QT_VERSION >= 0x050000
   m_pUi->entriesTable->horizontalHeader()->setSectionResizeMode(
         1, QHeaderView::Stretch);
-#else
-  m_pUi->entriesTable->horizontalHeader()->setResizeMode(
-        1, QHeaderView::Stretch);
-#endif
   m_pUi->entriesTable->setColumnWidth(2, 40);
 
   if (m_sListEntries.size() != m_bListEntryActive.size()) {
@@ -401,9 +395,3 @@ void CKnowledgeBox::showAbout() {
                    + "</i></p>");
   aboutbox.exec();
 }
-
-// ----------------------------------------------------------------------------
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(knowledgebox, CKnowledgeBox)
-#endif

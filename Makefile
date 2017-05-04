@@ -10,8 +10,8 @@ CP := cp -rf
 RM := rm -f
 LN := ln -s
 GZIP := gzip -f9
-QMAKE := qmake-qt4
-LRELEASE := lrelease-qt4
+QMAKE := qmake
+LRELEASE := lrelease
 MAKE := make
 
 ICON_SIZES = 16 24 32 48 64 96 128 256 512

@@ -17,8 +17,7 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH  += $$PWD
 
-QT          += xml
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT          += widgets xml
 
 HEADERS     += $$PWD/CTemplates.h \
                $$PWD/CXmlParser.h

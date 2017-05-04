@@ -33,15 +33,10 @@
 #include <QSettings>
 #include <QString>
 
-#if QT_VERSION >= 0x050000
-#if QT_VERSION >= 0x050600
-#include <QWebEngineView>
-#else
+#ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
-#endif
 #else
-// Qt 4
-#include <QWebView>
+#include <QWebEngineView>
 #endif
 
 #include "../../application/parser/CParser.h"
@@ -62,10 +57,7 @@ class QTextDocument;
 class CTableTemplate : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-
-#if QT_VERSION >= 0x050000
   Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
-#endif
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
@@ -117,10 +109,10 @@ class CTableTemplate : public QObject, IEditorPlugin {
   QDir m_dirPreview;
   QString m_sSharePath;
   QTextDocument *m_pTextDocument;
-#if QT_VERSION >= 0x050600
-  QWebEngineView *m_pPreviewWebview;
-#else
+#ifdef USEQTWEBKIT
   QWebView *m_pPreviewWebview;
+#else
+  QWebEngineView *m_pPreviewWebview;
 #endif
 
   QStringList m_sListTableStyles;

@@ -46,10 +46,10 @@ class QComboBox;
 class QSignalMapper;
 class QFile;
 class QDir;
-#if QT_VERSION >= 0x050600
-class QWebEngineView;
-#else
+#ifdef USEQTWEBKIT
 class QWebView;
+#else
+class QWebEngineView;
 #endif
 
 class CDownload;
@@ -187,10 +187,10 @@ class CInyokaEdit : public QMainWindow {
 
   QTabWidget *m_pDocumentTabs;
   QPoint m_WebviewScrollPosition;
-#if QT_VERSION >= 0x050600
-  QWebEngineView *m_pWebview;
-#else
+#ifdef USEQTWEBKIT
   QWebView *m_pWebview;
+#else
+  QWebEngineView *m_pWebview;
 #endif
 
   // Inter-Wiki Links

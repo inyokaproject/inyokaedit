@@ -64,10 +64,10 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_pDialog->setModal(true);
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
 
-#if QT_VERSION >= 0x050600
-  m_pPreviewWebview = new QWebEngineView();
-#else
+#ifdef USEQTWEBKIT
   m_pPreviewWebview = new QWebView();
+#else
+  m_pPreviewWebview = new QWebEngineView();
 #endif
   m_pUi->generatorTab->layout()->addWidget(m_pPreviewWebview);
   m_pPreviewWebview->setContextMenuPolicy(Qt::NoContextMenu);
@@ -386,9 +386,3 @@ void CTableTemplate::showAbout() {
 
   aboutbox.exec();
 }
-
-// ----------------------------------------------------------------------------
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(tabletemplate, CTableTemplate)
-#endif

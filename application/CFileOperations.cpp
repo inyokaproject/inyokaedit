@@ -32,15 +32,10 @@
 #include <QPrintDialog>
 #include <QScrollBar>
 
-#if QT_VERSION >= 0x050000
-#if QT_VERSION >= 0x050600
-#include <QWebEngineView>
-#else
+#ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
-#endif
 #else
-// Qt 4
-#include <QWebView>
+#include <QWebEngineView>
 #endif
 
 #include "./CFileOperations.h"
@@ -390,10 +385,10 @@ void CFileOperations::saveDocumentAuto() {
 // ----------------------------------------------------------------------------
 
 void CFileOperations::printPreview() {
-#if QT_VERSION >= 0x050600
-  QWebEngineView previewWebView;
-#else
+#ifdef USEQTWEBKIT
   QWebView previewWebView;
+#else
+  QWebEngineView previewWebView;
 #endif
   QPrinter printer;
   QFile previewFile(m_sPreviewFile);

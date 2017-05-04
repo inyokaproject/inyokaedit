@@ -64,7 +64,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
         "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
   m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
-#if QT_VERSION >= 0x050600
+#ifndef USEQTWEBKIT
   m_pUi->scrollbarSyncCheck->setEnabled(false);
 #endif
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
@@ -225,13 +225,8 @@ void CSettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginLis
 
   m_pUi->pluginsTable->setColumnWidth(0, 40);
   m_pUi->pluginsTable->setColumnWidth(1, 40);
-#if QT_VERSION >= 0x050000
   m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(
         2, QHeaderView::Stretch);
-#else
-  m_pUi->pluginsTable->horizontalHeader()->setResizeMode(
-        2, QHeaderView::Stretch);
-#endif
   m_pUi->pluginsTable->setColumnWidth(3, 40);
   m_pUi->pluginsTable->setColumnWidth(4, 40);
 

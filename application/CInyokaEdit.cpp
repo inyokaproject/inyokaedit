@@ -28,20 +28,13 @@
 #include <QtGui>
 #include <QScrollBar>
 
-#if QT_VERSION >= 0x050000
-#if QT_VERSION >= 0x050600
-#include <QWebEngineView>
-#include <QWebEngineHistory>
-#else
+#ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
 #include <QWebFrame>
 #include <QWebHistory>
-#endif
 #else
-// Qt 4
-#include <QWebView>
-#include <QWebFrame>
-#include <QWebHistory>
+#include <QWebEngineView>
+#include <QWebEngineHistory>
 #endif
 
 #include "./CInyokaEdit.h"
@@ -185,15 +178,15 @@ void CInyokaEdit::createObjects() {
 
   this->setCurrentEditor();
 
-#if QT_VERSION >= 0x050600
-  m_pWebview = new QWebEngineView(this);
-#else
+  // TODO: Find alternative for QWebEngine
+#ifdef USEQTWEBKIT
   m_pWebview = new QWebView(this);
   connect(m_pWebview->page(), SIGNAL(scrollRequested(int, int, QRect)),
           this, SLOT(syncScrollbarsWebview()));
   connect(m_pFileOperations, SIGNAL(movedEditorScrollbar()),
           this, SLOT(syncScrollbarsEditor()));
-  // TODO: Find alternative for QWebEngine
+#else
+  m_pWebview = new QWebEngineView(this);
 #endif
   m_pWebview->installEventFilter(this);
 
@@ -763,11 +756,12 @@ void CInyokaEdit::createToolBars() {
 
   connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
           this, SLOT(changedUrl()));
-#if QT_VERSION < 0x050600
+
+  // TODO: Find alternative for QWebEngine. QWebEngineUrlRequestInterceptor ?
+#ifdef USEQTWEBKIT
   m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
           this, SLOT(clickedLink(QUrl)));
-  // TODO: Find alternative for QWebEngine. QWebEngineUrlRequestInterceptor ?
 #endif
 }
 
@@ -794,7 +788,7 @@ void CInyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
 
 void CInyokaEdit::openFile() {
   // Reset scroll position
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
 #else
   m_pWebview->scroll(0, 0);
@@ -835,12 +829,12 @@ void CInyokaEdit::previewInyokaPage() {
   tmphtmlfile.close();
 
   // Store scroll position
-#if QT_VERSION < 0x050600
+  // TODO: Find alternative for WebEngine
+#ifdef USEQTWEBKIT
   m_WebviewScrollPosition =
       m_pWebview->page()->mainFrame()->scrollPosition();
 #else
   m_WebviewScrollPosition = QPoint(0, 0);
-  // TODO: Find alternative for WebEngine
 #endif
 
   m_pWebview->load(
@@ -1240,7 +1234,7 @@ void CInyokaEdit::displayArticleText(const QString &sArticleText,
 
   // Reset scroll position
   m_WebviewScrollPosition = QPoint(0, 0);
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
 #else
   m_pWebview->scroll(0, 0);
@@ -1268,11 +1262,11 @@ void CInyokaEdit::loadPreviewFinished(const bool bSuccess) {
     }
 
     // Restore scroll position
-#if QT_VERSION < 0x050600
+    // TODO: Find alternative for WebEngine
+#ifdef USEQTWEBKIT
     m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
 #else
     m_pWebview->scroll(0, 0);
-    // TODO: Find alternative for WebEngine
 #endif
     m_bReloadPreviewBlocked = false;
   } else {
@@ -1465,7 +1459,7 @@ void CInyokaEdit::deleteAutoSaveBackups() {
 
 void CInyokaEdit::syncScrollbarsEditor() {
   // TODO: Find alternative for WebEngine
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   if (!m_bWebviewScrolling && true == m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
@@ -1484,7 +1478,7 @@ void CInyokaEdit::syncScrollbarsEditor() {
 
 void CInyokaEdit::syncScrollbarsWebview() {
   // TODO: Find alternative for WebEngine
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   if (!m_bEditorScrolling && true == m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
@@ -1506,7 +1500,7 @@ void CInyokaEdit::showSyntaxOverview() {
   QDialog* dialog = new QDialog(this, this->windowFlags()
                                 & ~Qt::WindowContextHelpButtonHint);
   QGridLayout* layout = new QGridLayout(dialog);
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   QWebView* webview = new QWebView();
 #else
   QWebEngineView* webview = new QWebEngineView();

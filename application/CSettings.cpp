@@ -26,12 +26,7 @@
 
 #include <QApplication>
 #include <QDebug>
-
-#if QT_VERSION >= 0x050000
 #include <QStandardPaths>
-#else
-#include <QDesktopServices>
-#endif
 
 #include "./CSettings.h"
 
@@ -92,7 +87,6 @@ void CSettings::readSettings() {
     m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
   }
 
-#if QT_VERSION >= 0x050000
   QStringList sListPaths = QStandardPaths::standardLocations(
                              QStandardPaths::DocumentsLocation);
   if (sListPaths.isEmpty()) {
@@ -101,12 +95,6 @@ void CSettings::readSettings() {
   }
   m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
                                        sListPaths[0]).toString();
-#else
-  m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
-                                       QDesktopServices::storageLocation(
-                                         QDesktopServices::DocumentsLocation))
-                    .toString();
-#endif
 
   m_bAutomaticImageDownload = m_pSettings->value("AutomaticImageDownload",
                                                  false).toBool();
@@ -121,7 +109,7 @@ void CSettings::readSettings() {
                                            "0x01000004").toString();
   m_nTimedPreview = m_pSettings->value("TimedPreview",
                                        15).toUInt();
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
   m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
                                          true).toBool();
 #else
