@@ -25,4 +25,5 @@ sudo apt-get install inyokaedit inyokaedit-plugins
 
 ## Compiling
 * InyokaEdit can be compiled with Qt 4 (including webkit) or Qt 5 (< 5.6 webkitwidgets / >= 5.6 webenginewidgets)
-* For compiling spell checker plugin: Hunspell
+* Attention for compiling with Debian / Ubuntu: webenginewidgets is not available in some versions (yakkety, zesty, artful, ..., see LP #1579265).
+* For compiling spell checker plugin, libhunspell-dev is needed.
