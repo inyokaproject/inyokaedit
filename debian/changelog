@@ -1,3 +1,11 @@
+inyokaedit (0.19.0-0ubuntu1) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Dropped support for Qt 4.
+  * Moved project from Launchpad to GitHub, removed Apport.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Thu, 04 May 2017 17:01:00 +0200
+
 inyokaedit (0.18.2-0ubuntu1) xenial; urgency=low
 
   [ Thorsten Roth ]
