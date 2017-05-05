@@ -100,8 +100,6 @@ class CHighlighter : public QObject, IEditorPlugin {
   QList<CTextEditor *> m_listEditors;
   CTemplates *m_pTemplates;
 
-  QString m_sTplLang;
-  QString m_sSharePath;
   QString m_sStyleFile;
   QString m_sExt;
 

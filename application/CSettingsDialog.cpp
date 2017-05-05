@@ -71,8 +71,8 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
 
   QStringList sListGuiLanguages;
   sListGuiLanguages << "auto" << "en";
-  QDir appDir(m_sSharePath + "/lang");
-  QFileInfoList fiListFiles = appDir.entryInfoList(
+  QDir extendedShareDir(m_sSharePath + "/lang");
+  QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
                                 QDir::NoDotAndDotDot | QDir::Files);
   foreach (QFileInfo fi, fiListFiles) {
     if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName().toLower() + "_")) {
@@ -101,11 +101,34 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
   m_pUi->numberRecentFilesEdit->setValue((quint16)m_pSettings->m_nMaxLastOpenedFiles);
   m_pUi->numberRecentFilesEdit->setMaximum((quint16)m_pSettings->m_cMAXFILES);
 
+  QStringList sListCommunities;
+  extendedShareDir = m_sSharePath + "/community";
+  fiListFiles = extendedShareDir.entryInfoList(
+                  QDir::NoDotAndDotDot | QDir::Dirs);
+  foreach (QFileInfo fi, fiListFiles) {
+    sListCommunities << fi.fileName();
+  }
+
+  m_pUi->CommunityCombo->blockSignals(true);  // No change index signal emited
+  m_pUi->CommunityCombo->addItems(sListCommunities);
+  if (-1 != m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity())) {
+    m_pUi->CommunityCombo->setCurrentIndex(
+          m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity()));
+  } else if (sListCommunities.size() > 0) {
+    m_pUi->CommunityCombo->setCurrentIndex(0);
+  }
+  m_sCommunity = m_pUi->CommunityCombo->currentText();
+  m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
+  m_pUi->CommunityCombo->blockSignals(false);
+
   // Proxy
   m_pUi->proxyHostNameEdit->setText(m_pSettings->m_sProxyHostName);
   m_pUi->proxyPortSpinBox->setValue(m_pSettings->m_nProxyPort);
   m_pUi->proxyUserNameEdit->setText(m_pSettings->m_sProxyUserName);
   m_pUi->proxyPasswordEdit->setText(m_pSettings->m_sProxyPassword);
+
+  connect(m_pUi->CommunityCombo, SIGNAL(currentIndexChanged(QString)),
+          this, SLOT(changedCommunity(QString)));
 
   connect(m_pUi->buttonBox, SIGNAL(accepted()),
           this, SLOT(accept()));
@@ -132,6 +155,7 @@ void CSettingsDialog::accept() {
   // General
   m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
   m_pSettings->m_bPreviewSplitHorizontal = m_pUi->splitHorizontalRadio->isChecked();
+  m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
   m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
   m_pSettings->m_bAutomaticImageDownload = m_pUi->articleImageDownloadCheck->isChecked();
   m_pSettings->m_bCheckLinks = m_pUi->linkCheckingCheck->isChecked();
@@ -172,8 +196,9 @@ void CSettingsDialog::accept() {
   m_pSettings->m_sListDisabledPlugins.removeAll("");
 
   // If the following settings have been changed, a restart is needed
-  if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang
-      || oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
+  if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang ||
+      m_pUi->CommunityCombo->currentText() != m_sCommunity ||
+      oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
     QMessageBox::information(0, this->windowTitle(),
                              trUtf8("The editor has to be restarted for "
                                     "applying the changes."));
@@ -210,6 +235,32 @@ bool CSettingsDialog::eventFilter(QObject *obj, QEvent *event) {
     }
   }
   return QObject::eventFilter(obj, event);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CSettingsDialog::changedCommunity(QString sCommunity) {
+  QFile communityFile(m_sSharePath + "/community/" + sCommunity + "/community.conf");
+
+  if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QMessageBox::critical(0, trUtf8("Error"),
+                          trUtf8("Could not open/find community file!"));
+    qCritical() << "Could not open/find community file:"
+                << communityFile.fileName();
+  }
+
+  QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
+  communityConfig.setIniCodec("UTF-8");
+
+  QString sUrl(communityConfig.value("Url", "").toString());
+  if (sUrl.isEmpty()) {
+    qWarning() << "Community Url not found!";
+    QMessageBox::warning(0, trUtf8("Warning"),
+                          trUtf8("No community url defined!"));
+  } else {
+    m_pUi->inyokaUrlEdit->setText(sUrl);
+  }
 }
 
 // ----------------------------------------------------------------------------

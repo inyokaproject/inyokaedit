@@ -33,7 +33,7 @@ class CTemplates : public QObject {
   Q_OBJECT
 
  public:
-  CTemplates(const QString &sTplLang, const QString &sSharePath,
+  CTemplates(const QString &sCommunity, const QString &sSharePath,
              const QString &sUserDataDir);
   ~CTemplates();
 
@@ -78,7 +78,7 @@ class CTemplates : public QObject {
   CXmlParser *getDropTPLs() const;
 
  private:
-  void initTemplates();
+  void initTemplates(const QString &sTplPath);
   void initHtmlTpl(const QString &sFileName);
   void initImgMap(const QString &sFileName,
                   QStringList &sListElements,
@@ -89,10 +89,6 @@ class CTemplates : public QObject {
                       const QString &sUserDataFilename,
                       QStringList &sListElements,
                       QStringList &sListStrings);
-
-  QString m_sTplLang;
-  QString m_sSharePath;
-  QString m_sUserDataDir;
 
   QString m_sPreviewTemplate;
   QStringList m_sListTplNamesINY;

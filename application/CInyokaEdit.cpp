@@ -89,13 +89,16 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 
   // Download style files if preview/styles/imgages folders doesn't
   // exist (see QDesktopServices::DataLocation)
-  if (!m_UserDataDir.exists()
-      || !QDir(m_UserDataDir.absolutePath() + "/img").exists()
-      || !QDir(m_UserDataDir.absolutePath() + "/styles").exists()
-      || !QDir(m_UserDataDir.absolutePath() + "/Wiki").exists()) {
+  if (!m_UserDataDir.exists() ||
+      !QDir(m_UserDataDir.absolutePath() + "/community/" +
+            m_pSettings->getInyokaCommunity() + "/img").exists() ||
+      !QDir(m_UserDataDir.absolutePath() + "/community/" +
+            m_pSettings->getInyokaCommunity() + "/styles").exists() ||
+      !QDir(m_UserDataDir.absolutePath() + "/community/" +
+            m_pSettings->getInyokaCommunity() + "/Wiki").exists()) {
     // Create folder because user may not start download.
     // Folder is needed for preview.
-    m_UserDataDir.mkdir(m_UserDataDir.absolutePath());
+    m_UserDataDir.mkpath(m_UserDataDir.absolutePath() + "/community");
 #if !defined _WIN32
     m_pDownloadModule->loadInyokaStyles();
 #endif
@@ -130,9 +133,21 @@ void CInyokaEdit::createObjects() {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_pSettings = new CSettings(this, m_sSharePath);
+  qDebug() << "Inyoka Community:" << m_pSettings->getInyokaCommunity();
+  if (m_pSettings->getInyokaCommunity().isEmpty() ||
+      !QDir(m_sSharePath + "/community/" + m_pSettings->getInyokaCommunity()).exists()) {
+    qCritical() << "No Inyoka community files found / installed!";
+    qCritical() << "Community path:" << m_sSharePath + "/community/" +
+                   m_pSettings->getInyokaCommunity();
+    QMessageBox::critical(this, qApp->applicationName(),
+                          trUtf8("No Inyoka community files found / installed!\n"
+                                 "Please check your installation and restart "
+                                 "the application."));
+    exit(-2);
+  }
 
   // Has to be created before parser
-  m_pTemplates = new CTemplates(m_pSettings->getTemplateLanguage(),
+  m_pTemplates = new CTemplates(m_pSettings->getInyokaCommunity(),
                                 m_sSharePath, m_UserDataDir.absolutePath());
 
   m_pDownloadModule = new CDownload(this, m_UserDataDir.absolutePath(),
@@ -531,9 +546,8 @@ void CInyokaEdit::createActions() {
   m_pSigMapTemplates = new QSignalMapper(this);
 
   this->createXmlActions(m_pSigMapTemplates,
-                         "/templates/"
-                         + m_pSettings->getTemplateLanguage()
-                         + "/",
+                         m_sSharePath + "/community/" +
+                         m_pSettings->getInyokaCommunity() + "/templates/",
                          m_TplActions, m_pTemplates->getTPLs());
 
   connect(m_pSigMapTemplates, SIGNAL(mapped(QString)),
@@ -544,7 +558,9 @@ void CInyokaEdit::createActions() {
 
   m_pSigMapInterWikiLinks = new QSignalMapper(this);
 
-  this->createXmlActions(m_pSigMapInterWikiLinks, "/iWikiLinks/",
+  this->createXmlActions(m_pSigMapInterWikiLinks,
+                         m_sSharePath + "/community/" +
+                         m_pSettings->getInyokaCommunity() + "/iWikiLinks/",
                          m_iWikiLinksActions, m_pTemplates->getIWLs());
 
   connect(m_pSigMapInterWikiLinks, SIGNAL(mapped(QString)),
@@ -581,8 +597,7 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
     listActions.append(emptyActionList);
     for (int j = 0; j < pXmlMenu->getElementNames()[i].size(); j++) {
       listActions[i].append(
-            new QAction(QIcon(m_sSharePath + "/" + sIconPath +
-                              pXmlMenu->getElementIcons()[i][j]),
+            new QAction(QIcon(sIconPath + pXmlMenu->getElementIcons()[i][j]),
                         pXmlMenu->getElementNames()[i][j], this));
 
       SigMap->setMapping(listActions[i][j],
@@ -600,10 +615,11 @@ void CInyokaEdit::createXmlActions(QSignalMapper *SigMap,
 void CInyokaEdit::createMenus() {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
-  QDir articleTemplateDir(m_sSharePath + "/templates/"
-                          + m_pSettings->getTemplateLanguage()
-                          + "/articles");
-  QDir userArticleTemplateDir(m_UserDataDir.absolutePath() +
+  QDir articleTemplateDir(m_sSharePath + "/community/" +
+                          m_pSettings->getInyokaCommunity() +
+                          "/templates/articles");
+  QDir userArticleTemplateDir(m_UserDataDir.absolutePath() + "/community/" +
+                              m_pSettings->getInyokaCommunity() +
                               "/templates/articles");
 
   // File menu (new from template)
@@ -661,13 +677,16 @@ void CInyokaEdit::createMenus() {
   // Insert TPL menu
   m_pTplMenu = new QMenu(m_pTemplates->getTPLs()->getMenuName(), this);
   this->insertXmlMenu(m_pTplMenu, m_TplGroups,
-                      "/templates/" + m_pSettings->getTemplateLanguage() +"/",
+                      m_sSharePath + "/community/" +
+                      m_pSettings->getInyokaCommunity() + "/templates/",
                       m_TplActions, m_pTemplates->getTPLs(),
                       m_pUi->toolsMenu->menuAction());
 
   // Insert IWL menu
   m_piWikiMenu = new QMenu(m_pTemplates->getIWLs()->getMenuName(), this);
-  this->insertXmlMenu(m_piWikiMenu, m_iWikiGroups, "/iWikiLinks/",
+  this->insertXmlMenu(m_piWikiMenu, m_iWikiGroups,
+                      m_sSharePath + "/community/" +
+                      m_pSettings->getInyokaCommunity() + "/iWikiLinks/",
                       m_iWikiLinksActions, m_pTemplates->getIWLs(),
                       m_pUi->toolsMenu->menuAction());
 }
@@ -683,8 +702,8 @@ void CInyokaEdit::insertXmlMenu(QMenu* pMenu, QList<QMenu *> pMenuGroup,
   m_pUi->menuBar->insertMenu(pPosition, pMenu);
 
   for (int i = 0; i < pXmlMenu->getGrouplist().size(); i++) {
-    pMenuGroup.append(pMenu->addMenu(QIcon(m_sSharePath + "/" + sIconPath
-                                           + pXmlMenu->getGroupIcons()[i]),
+    pMenuGroup.append(pMenu->addMenu(QIcon(sIconPath +
+                                           pXmlMenu->getGroupIcons()[i]),
                                      pXmlMenu->getGrouplist()[i]));
 
     pMenuGroup[i]->addActions(listActions[i]);
@@ -1311,7 +1330,8 @@ void CInyokaEdit::updateEditorSettings() {
   }
 
   m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
-                                    m_pSettings->getInyokaUrl());
+                                    m_pSettings->getInyokaUrl(),
+                                    m_pSettings->getInyokaCommunity());
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 
@@ -1507,9 +1527,9 @@ void CInyokaEdit::showSyntaxOverview() {
 #endif
   QTextDocument* pTextDocument = new QTextDocument(this);
 
-  QFile OverviewFile(m_sSharePath + "/templates/"
-                     + m_pSettings->getTemplateLanguage()
-                     + "/SyntaxOverview");
+  QFile OverviewFile(m_sSharePath + "/community/" +
+                     m_pSettings->getInyokaCommunity() +
+                     "/SyntaxOverview.tpl");
 
   QTextStream in(&OverviewFile);
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {

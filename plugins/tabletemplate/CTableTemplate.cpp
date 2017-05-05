@@ -48,11 +48,10 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 
   m_pEditor = pEditor;
   m_dirPreview = userDataDir;
-  m_sSharePath = sSharePath;
   m_pTextDocument = new QTextDocument(this);
   m_pTemplates = new CTemplates(m_pSettings->value(
-                                  "TemplateLanguage", "de").toString(),
-                                m_sSharePath, m_dirPreview.absolutePath());
+                                  "InyokaCommunity", "ubuntuuser_de").toString(),
+                                sSharePath, m_dirPreview.absolutePath());
   m_pParser = new CParser(QDir(""), "", false, m_pTemplates);
 
   // Build UI

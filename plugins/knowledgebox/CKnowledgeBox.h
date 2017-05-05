@@ -91,10 +91,9 @@ class CKnowledgeBox : public QObject, IEditorPlugin {
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   QSettings *m_pSettingsApp;
+  QString m_sCommunity;
   CTextEditor *m_pEditor;
-  QString m_sSharePath;
   CTemplates *m_pTemplates;
-  QString m_sTplLang;
   QList<bool> m_bListEntryActive;
   QStringList m_sListEntries;
   QSignalMapper *m_pSigMapDeleteRow;

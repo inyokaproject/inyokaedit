@@ -39,7 +39,8 @@ CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
     m_sImgDir(sImgDir),
     m_sInyokaUrl("https://wiki.ubuntuusers.de"),
     m_bAutomaticImageDownload(false),
-    m_sSharePath(sSharePath) {
+    m_sSharePath(sSharePath),
+    m_sCommunity("ubuntuusers_de") {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_pNwManager = new QNetworkAccessManager(m_pParent);
@@ -55,9 +56,11 @@ CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
 // ----------------------------------------------------------------------------
 
 void CDownload::updateSettings(const bool bCompleter,
-                               const QString &sInyokaUrl) {
+                               const QString &sInyokaUrl,
+                               const QString &sCommunity) {
   m_bAutomaticImageDownload = bCompleter;
   m_sInyokaUrl = sInyokaUrl;
+  m_sCommunity = sCommunity;
 }
 
 // ----------------------------------------------------------------------------
@@ -106,13 +109,13 @@ void CDownload::callDownloadScript(const QString &sScript) {
 
   CProgressDialog *pDownloadProgress;
 
-  if (QFile::exists(m_sSharePath + "/" + sScript)) {
+  if (QFile::exists(m_sSharePath + "/community/" + m_sCommunity + "/" + sScript)) {
     pDownloadProgress =
-        new CProgressDialog(m_sSharePath + "/" + sScript,
-                            QStringList() << m_sStylesDir);
+        new CProgressDialog(m_sSharePath + "/community/" + m_sCommunity + "/" + sScript,
+                            QStringList() << m_sStylesDir + "/community/" + m_sCommunity);
   } else {
     qWarning() << "Download script could not be found:"
-               << m_sSharePath + "/" + sScript;
+               << m_sSharePath + "/community/" + m_sCommunity + "/" + sScript;
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          trUtf8("Download script could not be found."));
     return;

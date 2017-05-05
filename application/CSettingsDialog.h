@@ -60,14 +60,16 @@ class CSettingsDialog : public QDialog {
   bool eventFilter(QObject *obj, QEvent *event);
 
  private slots:
+  void changedCommunity(QString sCommunity);
   void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
                            const QList<QObject *> PluginObjList);
 
  private:
   Ui::CSettingsDialog *m_pUi;
   CSettings *m_pSettings;
-  QString m_sSharePath;
+  const QString m_sSharePath;
   QString m_sGuiLang;
+  QString m_sCommunity;
 
   QList<IEditorPlugin *> m_listPLugins;
   QList<QPushButton *> m_listPluginSettingsButtons;

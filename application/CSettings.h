@@ -58,11 +58,11 @@ class CSettings : public QObject {
   QString getGuiLanguage() const;
   bool getCodeCompletion() const;
   QString getInyokaUrl() const;
+  QString getInyokaCommunity() const;
   bool getAutomaticImageDownload() const;
   bool getPreviewHorizontal() const;
   QDir getLastOpenedDir() const;
   bool getCheckLinks() const;
-  QString getTemplateLanguage() const;
   quint32 getAutoSave() const;
   qint32 getReloadPreviewKey() const;
   quint32 getTimedPreview() const;
@@ -114,11 +114,11 @@ class CSettings : public QObject {
   QString m_sGuiLanguage;
   bool m_bCodeCompletion;   // Enable / disable code completion
   bool m_bPreviewSplitHorizontal;
+  QString m_sInyokaCommunity;
   QString m_sInyokaUrl;     // Url to inyoka
   QDir m_LastOpenedDir;
   bool m_bAutomaticImageDownload;  // Enable/disable download article images
   bool m_bCheckLinks;
-  QString m_sTemplateLang;
   quint32 m_nAutosave;
   QString m_sReloadPreviewKey;
   quint32 m_nTimedPreview;

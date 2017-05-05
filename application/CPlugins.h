@@ -56,8 +56,8 @@ class CPlugins : public QObject {
   CTextEditor *m_pEditor;
   QString m_sGuiLanguage;
   QStringList m_sListDisabledPlugins;
-  QDir m_userDataDir;
-  QString m_sSharePath;
+  const QDir m_userDataDir;
+  const QString m_sSharePath;
 
   QList<IEditorPlugin *> m_listPlugins;
   QList<QObject *> m_listPluginObjects;

@@ -33,8 +33,7 @@
 CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
                    const QString &sGuiLang,
                    const QStringList &sListDisabledPlugins,
-                   const QDir userDataDir,
-                   const QString &sSharePath)
+                   const QDir userDataDir, const QString &sSharePath)
   : m_pParent(pParent),
     m_pEditor(pEditor),
     m_sGuiLanguage(sGuiLang),

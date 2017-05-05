@@ -70,10 +70,9 @@ void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_pSettings->endGroup();
 
   m_pStyleSet = NULL;
-  m_sSharePath = sSharePath;
   m_pTemplates = new CTemplates(m_pSettings->value(
-                                  "TemplateLanguage", "de").toString(),
-                                m_sSharePath, userDataDir.absolutePath());
+                                  "InyokaCommunity", "ubuntuusers_de").toString(),
+                                sSharePath, userDataDir.absolutePath());
   this->getTranslations();
   this->readStyle(m_sStyleFile);
   this->defineRules();

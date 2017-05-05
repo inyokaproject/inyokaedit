@@ -67,6 +67,8 @@ void CSpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   this->setDictPath();
   m_sDictLang = m_pSettings->value("SpellCheckerLanguage",
                                    "de_DE").toString();
+  m_sCommunity = m_pSettings->value("InyokaCommunity",
+                                    "ubuntuusers_de").toString();
   m_pSettings->endGroup();
 }
 
@@ -239,7 +241,8 @@ bool CSpellChecker::initDictionaries() {
                              dictFilePathBA.constData());
 
   this->loadAdditionalDict(m_sUserDict);
-  this->loadAdditionalDict(m_sSharePath + "/ExtendedDict.txt");
+  this->loadAdditionalDict(m_sSharePath + "/community/" +
+                           m_sCommunity + "/ExtendedDict.txt");
   this->loadAdditionalDict(qApp->applicationDirPath() + "/ExtendedDict.txt");
   return true;
 }

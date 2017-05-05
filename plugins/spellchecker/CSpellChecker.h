@@ -104,6 +104,7 @@ class CSpellChecker : public QObject, IEditorPlugin {
   QString m_sUserDict;
   QDir m_UserDataDir;
   QString m_sSharePath;
+  QString m_sCommunity;
   QString m_sEncoding;
   QTextCodec *m_pCodec;
 };

@@ -32,34 +32,30 @@
 
 #include "./CTemplates.h"
 
-CTemplates::CTemplates(const QString &sTplLang, const QString &sSharePath,
-                       const QString &sUserDataDir)
-  : m_sTplLang(sTplLang),
-    m_sSharePath(sSharePath),
-    m_sUserDataDir(sUserDataDir) {
+CTemplates::CTemplates(const QString &sCommunity, const QString &sSharePath,
+                       const QString &sUserDataDir) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
-  this->initTemplates();
-  this->initHtmlTpl(m_sSharePath + "/templates/Preview.tpl");
-  this->initImgMap(m_sSharePath + "/templates/Flags.conf",
-                   m_sListFlags, m_sListFlagsImg);
-  this->initImgMap(m_sSharePath + "/templates/Smilies.conf",
-                   m_sListSmilies, m_sListSmiliesImg);
-  this->initTextformats(m_sSharePath + "/templates/Textformats.conf");
-  this->initTranslations(m_sSharePath + "/templates/" + m_sTplLang
-                         + "/Translations.conf");
-  this->initTestedWith(m_sSharePath + "/templates/TestedWith.conf",
-                       m_sUserDataDir + "/templates/TestedWith.conf",
+  QString sPath(sSharePath + "/community/" + sCommunity);
+  this->initTemplates(sPath + "/templates");
+  this->initHtmlTpl(sPath + "/Preview.tpl");
+  this->initImgMap(sPath + "/Flags.conf", m_sListFlags, m_sListFlagsImg);
+  this->initImgMap(sPath + "/Smilies.conf", m_sListSmilies, m_sListSmiliesImg);
+  this->initTextformats(sPath + "/Textformats.conf");
+  this->initTranslations(sPath + "/community.conf");
+
+  sPath = "/community/" + sCommunity;
+  this->initTestedWith(sSharePath + sPath + "/templates/TestedWith.conf",
+                       sUserDataDir + sPath + "/templates/TestedWith.conf",
                        m_sListTestedWith, m_sListTestedWithStrings);
-  this->initTestedWith(m_sSharePath + "/templates/TestedWithTouch.conf",
-                       m_sUserDataDir + "/templates/TestedWithTouch.conf",
+  this->initTestedWith(sSharePath + sPath + "/templates/TestedWithTouch.conf",
+                       sUserDataDir + sPath + "/templates/TestedWithTouch.conf",
                        m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
 
-  m_pInterWikiLinks = new CXmlParser(m_sSharePath
-                                     + "/iWikiLinks/iWikiLinks.xml");
-  m_pDropdownTemplates = new CXmlParser(m_sSharePath
-                                        + "/templates/" + m_sTplLang
-                                        + "/Templates_Dropdown.xml");
+  m_pInterWikiLinks = new CXmlParser(sSharePath + sPath +
+                                     "/iWikiLinks/iWikiLinks.xml");
+  m_pDropdownTemplates = new CXmlParser(sSharePath + sPath +
+                                        "/templates/Templates_Dropdown.xml");
 }
 
 CTemplates::~CTemplates() {
@@ -68,11 +64,11 @@ CTemplates::~CTemplates() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTemplates::initTemplates() {
+void CTemplates::initTemplates(const QString &sTplPath) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   QFile TplFile("");
-  QDir TplDir(m_sSharePath + "/templates/" + m_sTplLang);
+  QDir TplDir(sTplPath);
   QString tmpLine("");
   QString sTempTplText("");
   QString sTempMacro("");
@@ -155,9 +151,7 @@ void CTemplates::initTemplates() {
 
   qDebug() << "Loaded templates:" << m_sListTplNamesINY;
 
-  m_pMarkupTemplates = new CXmlParser(m_sSharePath
-                                      + "/templates/" + m_sTplLang
-                                      + "/Templates.xml");
+  m_pMarkupTemplates = new CXmlParser(sTplPath + "/Templates.xml");
 }
 
 // ----------------------------------------------------------------------------
@@ -269,12 +263,13 @@ void CTemplates::initTranslations(const QString &sFilename) {
                           "Could not open template translation file!");
     qCritical() << "Could not open template translation file:"
                 << translFile.fileName();
-    exit(-2);
+    exit(-3);
   }
 
   QSettings configTransl(translFile.fileName(), QSettings::IniFormat);
   configTransl.setIniCodec("UTF-8");
 
+  configTransl.beginGroup("Translations");
   m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
   if ("ERROR" == m_sTransAnchor) {
     qCritical() << "Anchor translation not found.";
@@ -322,6 +317,7 @@ void CTemplates::initTranslations(const QString &sFilename) {
   if ("ERROR" == m_sTransKnowledge) {
     qCritical() << "Knowledge box translation not found.";
   }
+  configTransl.endGroup();
 }
 
 // ----------------------------------------------------------------------------

@@ -65,7 +65,8 @@ class CDownload : public QObject {
 
   void showArticle();
   void updateSettings(const bool bCompleter,
-                      const QString &sInyokaUrl);
+                      const QString &sInyokaUrl,
+                      const QString &sCommunity);
 
  private slots:
   void replyFinished(QNetworkReply *pReply);
@@ -89,9 +90,9 @@ class CDownload : public QObject {
     */
   void downloadImages();
 
-  QWidget *m_pParent;    /**< Pointer to parent window */
-  QString m_sStylesDir;  /**< Folder in which style elements are stored */
-  QString m_sImgDir;
+  QWidget *m_pParent;
+  const QString m_sStylesDir;
+  const QString m_sImgDir;
 
   QNetworkAccessManager *m_pNwManager;
   QList<QNetworkReply *> m_listDownloadReplies;
@@ -102,7 +103,8 @@ class CDownload : public QObject {
   QString m_sSource;
   QString m_sInyokaUrl;
   bool m_bAutomaticImageDownload;
-  QString m_sSharePath;
+  const QString m_sSharePath;
+  QString m_sCommunity;
 
   CDownloadImg *m_DlImages;
   bool m_bDownloadArticle;

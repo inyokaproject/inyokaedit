@@ -81,6 +81,8 @@ void CSettings::readSettings() {
                                          true).toBool();
   m_bPreviewSplitHorizontal = m_pSettings->value("PreviewSplitHorizontal",
                                                  true).toBool();
+  m_sInyokaCommunity = m_pSettings->value("InyokaCommunity",
+                                          "ubuntuusers_de").toString();
   m_sInyokaUrl = m_pSettings->value("InyokaUrl",
                                     "https://wiki.ubuntuusers.de").toString();
   if (m_sInyokaUrl.endsWith("/")) {
@@ -100,8 +102,6 @@ void CSettings::readSettings() {
                                                  false).toBool();
   m_bCheckLinks = m_pSettings->value("CheckLinks",
                                      false).toBool();
-  m_sTemplateLang = m_pSettings->value("TemplateLanguage",
-                                       "de").toString();
   m_nAutosave = m_pSettings->value("AutoSave",
                                    300).toUInt();
   // 0x01000004 = Qt::Key_Return
@@ -191,11 +191,11 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
   m_pSettings->setValue("GuiLanguage", m_sGuiLanguage);
   m_pSettings->setValue("CodeCompletion", m_bCodeCompletion);
   m_pSettings->setValue("PreviewSplitHorizontal", m_bPreviewSplitHorizontal);
+  m_pSettings->setValue("InyokaCommunity", m_sInyokaCommunity);
   m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
   m_pSettings->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
   m_pSettings->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
   m_pSettings->setValue("CheckLinks", m_bCheckLinks);
-  m_pSettings->setValue("TemplateLanguage", m_sTemplateLang);
   m_pSettings->setValue("AutoSave", m_nAutosave);
   m_pSettings->setValue("ReloadPreviewKey", m_sReloadPreviewKey);
   m_pSettings->setValue("TimedPreview", m_nTimedPreview);
@@ -262,6 +262,7 @@ void CSettings::removeObsolete() {
   m_pSettings->remove("SpellCheckerLanguage");
   m_pSettings->remove("PreviewAlongside");
   m_pSettings->remove("PreviewInEditor");
+  m_pSettings->remove("TemplateLanguage");
   m_pSettings->beginGroup("FindDialog");
   m_pSettings->remove("");
   m_pSettings->endGroup();
@@ -291,6 +292,10 @@ QString CSettings::getGuiLanguage() const {
   }
 }
 
+QString CSettings::getInyokaCommunity() const {
+  return m_sInyokaCommunity;
+}
+
 QString CSettings::getInyokaUrl() const {
   return m_sInyokaUrl;
 }
@@ -317,10 +322,6 @@ void CSettings::setLastOpenedDir(const QDir &LastDir) {
 
 bool CSettings::getCheckLinks() const {
   return m_bCheckLinks;
-}
-
-QString CSettings::getTemplateLanguage() const {
-  return m_sTemplateLang;
 }
 
 quint32 CSettings::getAutoSave() const {

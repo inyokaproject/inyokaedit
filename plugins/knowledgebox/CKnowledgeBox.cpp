@@ -59,10 +59,10 @@ void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                                  qApp->applicationName().toLower());
 #endif
   m_pSettings->setIniCodec("UTF-8");
-  m_sTplLang = m_pSettingsApp->value("TemplateLanguage", "de").toString();
   m_pEditor = pEditor;
-  m_sSharePath = sSharePath;
-  m_pTemplates = new CTemplates(m_sTplLang, m_sSharePath,
+  m_sCommunity = m_pSettingsApp->value("InyokaCommunity",
+                                       "ubuntuusers_de").toString();
+  m_pTemplates = new CTemplates(m_sCommunity, sSharePath,
                                 userDataDir.absolutePath());
 
   this->loadTemplateEntries();
@@ -160,14 +160,14 @@ void CKnowledgeBox::loadTemplateEntries() {
   // Load entries from default template or config file
   m_bListEntryActive.clear();
   m_sListEntries.clear();
-  uint nNumOfEntries = m_pSettings->value(m_sTplLang + "/NumOfEntries",
-                                          0).toUInt();
+  uint nNumOfEntries = m_pSettings->value(m_sCommunity + "/NumOfEntries",
+                         0).toUInt();
   if (0 == nNumOfEntries) {
     this->loadTemplateDefaults();
   } else {
     qDebug() << "Reading knowledge box entries from config file";
     QString sTmpEntry("");
-    m_pSettings->beginGroup(m_sTplLang);
+    m_pSettings->beginGroup(m_sCommunity);
     for (uint i = 0; i < nNumOfEntries; i++) {
       sTmpEntry = m_pSettings->value(
                     "Entry_" + QString::number(i), "").toString();
@@ -338,8 +338,8 @@ void CKnowledgeBox::deleteRow(QWidget *widget) {
 // ----------------------------------------------------------------------------
 
 void CKnowledgeBox::writeSettings() {
-  m_pSettings->remove(m_sTplLang);
-  m_pSettings->beginGroup(m_sTplLang);
+  m_pSettings->remove(m_sCommunity);
+  m_pSettings->beginGroup(m_sCommunity);
   m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_pSettings->setValue("Entry_" + QString::number(i),

@@ -107,7 +107,6 @@ class CTableTemplate : public QObject, IEditorPlugin {
   CTemplates *m_pTemplates;
   CParser *m_pParser;
   QDir m_dirPreview;
-  QString m_sSharePath;
   QTextDocument *m_pTextDocument;
 #ifdef USEQTWEBKIT
   QWebView *m_pPreviewWebview;

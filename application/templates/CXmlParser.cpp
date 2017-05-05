@@ -38,7 +38,7 @@ CXmlParser::CXmlParser(const QString &sXmlFile) {
     qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
     QMessageBox::critical(0, "Error",
                           "Can not open \"" + XmlFile.fileName() + "\".");
-    exit(-3);
+    exit(-4);
   }
 
   QXmlSimpleReader xmlReader;
@@ -55,7 +55,7 @@ CXmlParser::CXmlParser(const QString &sXmlFile) {
     QMessageBox::critical(0, "Error",
                           "Error while parsing \""
                           + XmlFile.fileName() + "\".");
-    exit(-4);
+    exit(-5);
   }
 
   m_sMenuName = m_pHandler->m_sMenuName_2;

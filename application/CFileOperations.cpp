@@ -446,7 +446,7 @@ void CFileOperations::printPreview() {
   /*
     // Load preview from url
     previewWebView.load(QUrl::fromLocalFile(m_sPreviewFile));
-    */
+  */
 
   // Add style format; remove unwanted div for printing
   sHtml.replace("</style>",
@@ -463,7 +463,7 @@ void CFileOperations::printPreview() {
                               QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
                                                   .absoluteDir()
                                                   .absolutePath() + "/"));
-    */
+  */
 
   QPrintDialog printDialog(&printer);
   if (QDialog::Accepted == printDialog.exec()) {

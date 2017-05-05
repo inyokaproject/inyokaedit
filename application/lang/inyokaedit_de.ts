@@ -4,12 +4,12 @@
 <context>
     <name>CDownload</name>
     <message>
-        <location filename="../CDownload.cpp" line="67"/>
+        <location filename="../CDownload.cpp" line="70"/>
         <source>Download styles</source>
         <translation>Styles herunterladen</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="68"/>
+        <location filename="../CDownload.cpp" line="71"/>
         <source>In order to preview articles correctly, Inyoka resources have to be downloaded. This process may take a few minutes.
 
 Do you want to download these files now?</source>
@@ -18,48 +18,48 @@ Do you want to download these files now?</source>
 Möchten Sie die Ressourcen jetzt herunterladen?</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="82"/>
+        <location filename="../CDownload.cpp" line="85"/>
         <source>Update IWLs</source>
         <translation>Update IWLs</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="83"/>
+        <location filename="../CDownload.cpp" line="86"/>
         <source>Do you want update the Inyoka InterWiki-Links now?</source>
         <translation>Möchten Sie die Inyoka InterWiki-Links jetzt aktualisieren?</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="102"/>
-        <location filename="../CDownload.cpp" line="132"/>
+        <location filename="../CDownload.cpp" line="105"/>
+        <location filename="../CDownload.cpp" line="135"/>
         <source>Download not possible, no active internet connection found!</source>
         <translation>Herunterladen nicht möglich - keine Internetverbindung vorhanden!</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="117"/>
+        <location filename="../CDownload.cpp" line="120"/>
         <source>Download script could not be found.</source>
         <translation>Downloadskript konnte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="145"/>
+        <location filename="../CDownload.cpp" line="148"/>
         <source>Please insert name of the article which should be downloaded:</source>
         <translation>Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="149"/>
+        <location filename="../CDownload.cpp" line="152"/>
         <source>Category/Article</source>
         <translation>Baustelle/Artikel</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="243"/>
+        <location filename="../CDownload.cpp" line="246"/>
         <source>Could not download the article.</source>
         <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="258"/>
+        <location filename="../CDownload.cpp" line="261"/>
         <source>Could not find meta data.</source>
         <translation>Es konnten keine Metadaten gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../CDownload.cpp" line="289"/>
+        <location filename="../CDownload.cpp" line="292"/>
         <source>Do you want to download the images which are attached to the article?</source>
         <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
     </message>
@@ -85,73 +85,73 @@ Möchten Sie die Ressourcen jetzt herunterladen?</translation>
 <context>
     <name>CFileOperations</name>
     <message>
-        <location filename="../CFileOperations.cpp" line="56"/>
+        <location filename="../CFileOperations.cpp" line="51"/>
         <source>Inyoka document</source>
         <translation>Inyoka Dokument</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="57"/>
+        <location filename="../CFileOperations.cpp" line="52"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="110"/>
+        <location filename="../CFileOperations.cpp" line="105"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="181"/>
+        <location filename="../CFileOperations.cpp" line="176"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="225"/>
+        <location filename="../CFileOperations.cpp" line="220"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="254"/>
+        <location filename="../CFileOperations.cpp" line="249"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="279"/>
+        <location filename="../CFileOperations.cpp" line="274"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="320"/>
+        <location filename="../CFileOperations.cpp" line="315"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="405"/>
+        <location filename="../CFileOperations.cpp" line="400"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="427"/>
-        <location filename="../CFileOperations.cpp" line="478"/>
+        <location filename="../CFileOperations.cpp" line="422"/>
+        <location filename="../CFileOperations.cpp" line="473"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="428"/>
+        <location filename="../CFileOperations.cpp" line="423"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschau Datei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="144"/>
-        <location filename="../CFileOperations.cpp" line="203"/>
-        <location filename="../CFileOperations.cpp" line="214"/>
-        <location filename="../CFileOperations.cpp" line="247"/>
-        <location filename="../CFileOperations.cpp" line="364"/>
+        <location filename="../CFileOperations.cpp" line="139"/>
+        <location filename="../CFileOperations.cpp" line="198"/>
+        <location filename="../CFileOperations.cpp" line="209"/>
+        <location filename="../CFileOperations.cpp" line="242"/>
+        <location filename="../CFileOperations.cpp" line="359"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -479,7 +479,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="373"/>
-        <location filename="../CInyokaEdit.cpp" line="1022"/>
+        <location filename="../CInyokaEdit.cpp" line="1029"/>
         <source>Bold</source>
         <translation>Fett</translation>
     </message>
@@ -490,7 +490,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="385"/>
-        <location filename="../CInyokaEdit.cpp" line="1028"/>
+        <location filename="../CInyokaEdit.cpp" line="1035"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
@@ -501,7 +501,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="397"/>
-        <location filename="../CInyokaEdit.cpp" line="1034"/>
+        <location filename="../CInyokaEdit.cpp" line="1041"/>
         <source>Monotype</source>
         <translation>Monotype</translation>
     </message>
@@ -598,7 +598,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../CInyokaEdit.ui" line="527"/>
-        <location filename="../CInyokaEdit.cpp" line="1040"/>
+        <location filename="../CInyokaEdit.cpp" line="1047"/>
         <source>List</source>
         <translation>Liste</translation>
     </message>
@@ -610,7 +610,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     <message>
         <location filename="../CInyokaEdit.ui" line="539"/>
         <location filename="../CInyokaEdit.ui" line="542"/>
-        <location filename="../CInyokaEdit.cpp" line="1046"/>
+        <location filename="../CInyokaEdit.cpp" line="1053"/>
         <source>Numbered list</source>
         <translation>Nummerierte Liste</translation>
     </message>
@@ -630,116 +630,123 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Temporär mit Artikeln heruntergeladene Bilder löschen.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="719"/>
+        <location filename="../CInyokaEdit.cpp" line="725"/>
         <source>Step</source>
         <translation>Stufe</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="744"/>
+        <location filename="../CInyokaEdit.cpp" line="750"/>
         <source>Text format</source>
         <translation>Textformat</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="746"/>
-        <location filename="../CInyokaEdit.cpp" line="969"/>
+        <location filename="../CInyokaEdit.cpp" line="752"/>
+        <location filename="../CInyokaEdit.cpp" line="976"/>
         <source>Folders</source>
         <translation>Verzeichnisse</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="747"/>
+        <location filename="../CInyokaEdit.cpp" line="753"/>
         <source>Menu entries</source>
         <translation>Menüs</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="748"/>
-        <location filename="../CInyokaEdit.cpp" line="983"/>
+        <location filename="../CInyokaEdit.cpp" line="754"/>
+        <location filename="../CInyokaEdit.cpp" line="990"/>
         <source>Files</source>
         <translation>Dateien</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="749"/>
-        <location filename="../CInyokaEdit.cpp" line="990"/>
+        <location filename="../CInyokaEdit.cpp" line="755"/>
+        <location filename="../CInyokaEdit.cpp" line="997"/>
         <source>Command</source>
         <translation>Befehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="828"/>
+        <location filename="../CInyokaEdit.cpp" line="835"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="976"/>
+        <location filename="../CInyokaEdit.cpp" line="983"/>
         <source>Menu -&gt; sub menu -&gt; menu entry</source>
         <translation>Menü -&gt; Untermenü -&gt; Menübefehl</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1052"/>
+        <location filename="../CInyokaEdit.cpp" line="1059"/>
         <source>Site name</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1058"/>
+        <location filename="../CInyokaEdit.cpp" line="1065"/>
         <source>http://www.example.org/</source>
         <translation>http://www.beispiel.org/</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1064"/>
+        <location filename="../CInyokaEdit.cpp" line="1071"/>
         <source>Image.png</source>
         <translation>Bild.png</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1168"/>
+        <location filename="../CInyokaEdit.cpp" line="1175"/>
         <source>Sitename</source>
         <translation>Seitenname</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1169"/>
+        <location filename="../CInyokaEdit.cpp" line="1176"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1286"/>
+        <location filename="../CInyokaEdit.cpp" line="1293"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1426"/>
+        <location filename="../CInyokaEdit.cpp" line="1434"/>
         <source>Do you really want to delete all images downloaded with articles?</source>
         <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1437"/>
+        <location filename="../CInyokaEdit.cpp" line="1445"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1445"/>
+        <location filename="../CInyokaEdit.cpp" line="1453"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1529"/>
+        <location filename="../CInyokaEdit.cpp" line="1537"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1546"/>
+        <location filename="../CInyokaEdit.cpp" line="1554"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="718"/>
-        <location filename="../CInyokaEdit.cpp" line="864"/>
+        <location filename="../CInyokaEdit.cpp" line="724"/>
+        <location filename="../CInyokaEdit.cpp" line="871"/>
         <source>Headline</source>
         <translation>Überschrift</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="503"/>
+        <location filename="../CInyokaEdit.cpp" line="143"/>
+        <source>No Inyoka community files found / installed!
+Please check your installation and restart the application.</source>
+        <translation>Kein Inyoka Community-Datei gefunden / installiert!
+Bitte überprüfe die Installation und starte das Programm erneut.</translation>
+    </message>
+    <message>
+        <location filename="../CInyokaEdit.cpp" line="505"/>
         <source>Raw text</source>
         <translation>Rohtext</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="504"/>
+        <location filename="../CInyokaEdit.cpp" line="506"/>
         <source>Code without highlighting</source>
         <translation>Code ohne Highlighting</translation>
     </message>
@@ -830,11 +837,6 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Scrollbalken synchronisieren</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="75"/>
-        <source>Horizontal</source>
-        <translation>Horizontal</translation>
-    </message>
-    <message>
         <location filename="../CSettingsDialog.ui" line="68"/>
         <source>Vertical</source>
         <translation>Vertikal</translation>
@@ -843,6 +845,11 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <location filename="../CSettingsDialog.ui" line="61"/>
         <source>Preview window</source>
         <translation>Vorschaufenster</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="75"/>
+        <source>&amp;Horizontal</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../CSettingsDialog.ui" line="154"/>
@@ -885,7 +892,12 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Nach Aktualisierungen suchen (nur Windows)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="282"/>
+        <location filename="../CSettingsDialog.ui" line="281"/>
+        <source>Inyoka Community</source>
+        <translation>Inyoka Community</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="292"/>
         <source>Plugins</source>
         <translation>Erweiterungen</translation>
     </message>
@@ -895,143 +907,163 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="178"/>
+        <location filename="../CSettingsDialog.cpp" line="203"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.cpp" line="247"/>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.cpp" line="248"/>
+        <source>Could not open/find community file!</source>
+        <translation>Community-Datei konnte nicht geöffnet/gefunden werden!</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.cpp" line="259"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.cpp" line="260"/>
+        <source>No community url defined!</source>
+        <translation>Keine Community-Url definiert!</translation>
     </message>
 </context>
 <context>
     <name>CUpload</name>
     <message>
-        <location filename="../CUpload.cpp" line="49"/>
+        <location filename="../CUpload.cpp" line="46"/>
         <source>ConstructionArea</source>
         <translation>Baustelle</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="66"/>
+        <location filename="../CUpload.cpp" line="63"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="82"/>
-        <location filename="../CUpload.cpp" line="89"/>
-        <location filename="../CUpload.cpp" line="201"/>
-        <location filename="../CUpload.cpp" line="208"/>
-        <location filename="../CUpload.cpp" line="221"/>
-        <location filename="../CUpload.cpp" line="298"/>
-        <location filename="../CUpload.cpp" line="316"/>
-        <location filename="../CUpload.cpp" line="362"/>
-        <location filename="../CUpload.cpp" line="409"/>
-        <location filename="../CUpload.cpp" line="424"/>
-        <location filename="../CUpload.cpp" line="489"/>
+        <location filename="../CUpload.cpp" line="79"/>
+        <location filename="../CUpload.cpp" line="86"/>
+        <location filename="../CUpload.cpp" line="198"/>
+        <location filename="../CUpload.cpp" line="205"/>
+        <location filename="../CUpload.cpp" line="218"/>
+        <location filename="../CUpload.cpp" line="286"/>
+        <location filename="../CUpload.cpp" line="304"/>
+        <location filename="../CUpload.cpp" line="350"/>
+        <location filename="../CUpload.cpp" line="397"/>
+        <location filename="../CUpload.cpp" line="412"/>
+        <location filename="../CUpload.cpp" line="477"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="83"/>
+        <location filename="../CUpload.cpp" line="80"/>
         <source>Please insert article text first!</source>
         <translation>Bitte zuerst einen Artikel schreiben!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="90"/>
+        <location filename="../CUpload.cpp" line="87"/>
         <source>Upload not possible, no active internet connection found!</source>
         <translation>Upload nicht möglich. Keine aktive Internetverbindung gefunden!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="96"/>
+        <location filename="../CUpload.cpp" line="93"/>
         <source>Upload</source>
         <translation>Upload</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="97"/>
+        <location filename="../CUpload.cpp" line="94"/>
         <source>Please insert name of the article which should be uploaded.
 It is only possible to upload into the &quot;%1&quot;!</source>
         <translation>Bitte den Namen des Artikels eintragen, der hochgeladen werden soll.
 Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="202"/>
-        <location filename="../CUpload.cpp" line="410"/>
+        <location filename="../CUpload.cpp" line="199"/>
+        <location filename="../CUpload.cpp" line="398"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="209"/>
+        <location filename="../CUpload.cpp" line="206"/>
         <source>Upload failed! No session cookie received.</source>
         <translation>Upload fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="222"/>
+        <location filename="../CUpload.cpp" line="219"/>
         <source>Upload failed! No cookies received.</source>
         <translation>Upload fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="299"/>
+        <location filename="../CUpload.cpp" line="287"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Login fehlgeschlagen. Falsche Zugangsdaten?</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="317"/>
+        <location filename="../CUpload.cpp" line="305"/>
         <source>Login at Inyoka failed.</source>
         <translation>Login fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="485"/>
+        <location filename="../CUpload.cpp" line="473"/>
         <source>Upload failed</source>
         <translation>Upload fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="486"/>
+        <location filename="../CUpload.cpp" line="474"/>
         <source>The page content was not changed!</source>
         <translation>Die Seite wurde nicht verändert!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="490"/>
+        <location filename="../CUpload.cpp" line="478"/>
         <source>Upload failed!</source>
         <translation>Upload fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="417"/>
+        <location filename="../CUpload.cpp" line="405"/>
         <source>Change note</source>
         <translation>Änderungskommentar</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="239"/>
+        <location filename="../CUpload.cpp" line="236"/>
         <source>Login user</source>
         <translation>Login Benutzer</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="240"/>
+        <location filename="../CUpload.cpp" line="237"/>
         <source>Please insert your Inyoka user name:</source>
         <translation>Bitte Deinen Inyoka Benutzernamen eingeben:</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="246"/>
+        <location filename="../CUpload.cpp" line="243"/>
         <source>Login password</source>
         <translation>Login Passwort</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="247"/>
+        <location filename="../CUpload.cpp" line="244"/>
         <source>Please insert your Inyoka password:</source>
         <translation>Bitte Dein Inyoka Passwort eingeben:</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="363"/>
+        <location filename="../CUpload.cpp" line="351"/>
         <source>Last article revision not found!</source>
         <translation>Die letzte Artikelversion wurde nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="418"/>
+        <location filename="../CUpload.cpp" line="406"/>
         <source>Please insert a change message:</source>
         <translation>Bitte einen Änderungskommentar eintragen:</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="425"/>
+        <location filename="../CUpload.cpp" line="413"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Es ist nicht erlaubt einen Artikel ohne Änderungskommentar hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../CUpload.cpp" line="481"/>
+        <location filename="../CUpload.cpp" line="469"/>
         <source>Upload successful!</source>
         <translation>Upload erfolgreich!</translation>
     </message>
@@ -1039,42 +1071,42 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
 <context>
     <name>CUtils</name>
     <message>
-        <location filename="../CUtils.cpp" line="129"/>
+        <location filename="../CUtils.cpp" line="127"/>
         <source>Update found</source>
         <translation>Update gefunden</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="130"/>
+        <location filename="../CUtils.cpp" line="128"/>
         <source>Found a new version of %1.&lt;br&gt;Do you want to download the latest version?</source>
         <translation>Es wurde eine neue Version von %1 gefunden.&lt;br&gt;Wollen Sie diese herunterladen?</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="134"/>
+        <location filename="../CUtils.cpp" line="132"/>
         <source>No, don&apos;t ask again!</source>
         <translation>Nein, nicht erneut nachfragen!</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="185"/>
+        <location filename="../CUtils.cpp" line="183"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="191"/>
+        <location filename="../CUtils.cpp" line="189"/>
         <source>Special thanks to djcj, bubi97, Lasall, Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Besonderen Dank an djcj, bubi97, Lasall, Shakesbier und alle Tester von &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="171"/>
+        <location filename="../CUtils.cpp" line="169"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="181"/>
+        <location filename="../CUtils.cpp" line="179"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Editor für Inyoka-basierende Portale</translation>
     </message>
     <message>
-        <location filename="../CUtils.cpp" line="188"/>
+        <location filename="../CUtils.cpp" line="186"/>
         <source>This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
         <translation>Diese Anwendung verwendet Symbole aus dem &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango Projekt&lt;/a&gt;.</translation>
     </message>
