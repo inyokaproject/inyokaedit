@@ -29,11 +29,13 @@
 CParser::CParser(const QDir &tmpImgDir,
                  const QString &sInyokaUrl,
                  const bool bCheckLinks,
-                 CTemplates *pTemplates)
+                 CTemplates *pTemplates,
+                 const QString sCommunity)
   : m_pRawText(NULL),
     m_tmpImgDir(tmpImgDir),
     m_sInyokaUrl(sInyokaUrl),
-    m_pTemplates(pTemplates) {
+    m_pTemplates(pTemplates),
+    m_sCommunity(sCommunity) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_tmpFileDir = tmpImgDir;
@@ -47,7 +49,8 @@ CParser::CParser(const QDir &tmpImgDir,
                         m_pTemplates->getListTestedWith(),
                         m_pTemplates->getListTestedWithStrings(),
                         m_pTemplates->getListTestedWithTouch(),
-                        m_pTemplates->getListTestedWithTouchStrings());
+                        m_pTemplates->getListTestedWithTouchStrings(),
+                        m_sCommunity);
 
   m_pLinkParser = new CParseLinks(m_sInyokaUrl,
                                   m_pTemplates->getIWLs()->getElementTypes(),
@@ -71,8 +74,10 @@ CParser::~CParser() {
 // ----------------------------------------------------------------------------
 
 void CParser::updateSettings(const QString &sInyokaUrl,
-                             const bool bCheckLinks) {
+                             const bool bCheckLinks,
+                             const QString &sCommunity) {
   m_sInyokaUrl = sInyokaUrl;
+  m_sCommunity = sCommunity;
   m_pLinkParser->updateSettings(sInyokaUrl, bCheckLinks);
 }
 
@@ -149,6 +154,7 @@ QString CParser::genOutput(const QString &sActFile,
   sRevTextCopy = sRevTextCopy.replace(
                    "%date%", QDate::currentDate().toString("dd.MM.yyyy"))
                  .replace("%time%", QTime::currentTime().toString("hh:mm"));
+  sTemplateCopy = sTemplateCopy.replace("%community%", m_sCommunity);
   sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
   sTemplateCopy = sTemplateCopy.replace("%tagtext%",
                                         m_pTemplates->getTransTag() + " "
@@ -959,7 +965,7 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 
     sImageUrl = sListTmpImageInfo[0].trimmed();
     if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
-      sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;

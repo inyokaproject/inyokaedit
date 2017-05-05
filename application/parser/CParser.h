@@ -53,7 +53,8 @@ class CParser : public QObject {
   CParser(const QDir &tmpImgDir,
           const QString &sInyokaUrl,
           const bool bCheckLinks,
-          CTemplates *pTemplates);
+          CTemplates *pTemplates,
+          const QString sCommunity);
   ~CParser();
 
   // PUBLIC FOR DEBUGGING
@@ -63,7 +64,8 @@ class CParser : public QObject {
   QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument);
 
  public slots:
-  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
+  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
+                      const QString &sCommunity);
 
  private:
   // void replaceTemplates(QTextDocument *p_rawDoc);
@@ -108,10 +110,11 @@ class CParser : public QObject {
   CParseImgMap *m_pMapParser;
 
   QDir m_tmpFileDir;
-  QDir m_tmpImgDir;
+  const QDir m_tmpImgDir;
   QString m_sInyokaUrl;
   QString m_sCurrentFile;
   CTemplates *m_pTemplates;
+  QString m_sCommunity;
 };
 
 #endif  // INYOKAEDIT_CPARSER_H_

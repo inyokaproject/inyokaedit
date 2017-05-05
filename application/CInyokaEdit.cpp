@@ -157,7 +157,8 @@ void CInyokaEdit::createObjects() {
   m_pParser = new CParser(m_tmpPreviewImgDir,
                           m_pSettings->getInyokaUrl(),
                           m_pSettings->getCheckLinks(),
-                          m_pTemplates);
+                          m_pTemplates,
+                          m_pSettings->getInyokaCommunity());
 
   m_pDocumentTabs = new QTabWidget;
   m_pDocumentTabs->setTabPosition(QTabWidget::North);
@@ -1316,7 +1317,8 @@ void CInyokaEdit::clickedLink(QUrl newUrl) {
 
 void CInyokaEdit::updateEditorSettings() {
   m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
-                            m_pSettings->getCheckLinks());
+                            m_pSettings->getCheckLinks(),
+                            m_pSettings->getInyokaCommunity());
 
   if (m_pSettings->getPreviewHorizontal()) {
     m_pWidgetSplitter->setOrientation(Qt::Vertical);

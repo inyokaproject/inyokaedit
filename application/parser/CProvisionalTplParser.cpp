@@ -37,14 +37,16 @@ CProvisionalTplParser::CProvisionalTplParser(const QStringList &sListHtmlStart,
                                              const QStringList &sListTestedWith,
                                              const QStringList &sListTestedWithStrings,
                                              const QStringList &sListTestedWithTouch,
-                                             const QStringList &sListTestedWithTouchStrings)
+                                             const QStringList &sListTestedWithTouchStrings,
+                                             const QString &sCommunity)
   : m_sListHtmlStart(sListHtmlStart),
     m_tmpFileDir(tmpFileOutputDir),
     m_tmpImgDir(tmpImgDir),
     m_sListTestedWith(sListTestedWith),
     m_sListTestedWithStrings(sListTestedWithStrings),
     m_sListTestedWithTouch(sListTestedWithTouch),
-    m_sListTestedWithTouchStrings(sListTestedWithTouchStrings){
+    m_sListTestedWithTouchStrings(sListTestedWithTouchStrings),
+    m_sCommunity(sCommunity) {
 }
 
 // ----------------------------------------------------------------------------
@@ -803,7 +805,7 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
 
     sImageUrl = sListArgs[i];
     if (sImageUrl.startsWith("Wiki/")) {
-      sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;
@@ -894,7 +896,7 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
 
   sImageUrl = sListArgs[0].trimmed();
   if (sImageUrl.startsWith("Wiki/")) {
-    sImageUrl = m_tmpFileDir.absolutePath() + "/" + sImageUrl;
+    sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
   } else if (!sImagePath.isEmpty() &&
              QFile(sImagePath + "/" + sImageUrl).exists()) {
     sImageUrl = sImagePath + "/" + sImageUrl;

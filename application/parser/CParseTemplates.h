@@ -43,7 +43,8 @@ class CParseTemplates {
                   const QStringList &sListTestedWith,
                   const QStringList &sListTestedWithStrings,
                   const QStringList &sListTestedWithTouch,
-                  const QStringList &sListTestedWithTouchStrings);
+                  const QStringList &sListTestedWithTouchStrings,
+                  const QString &sCommunity);
 
   void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
 

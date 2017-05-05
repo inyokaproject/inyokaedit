@@ -39,7 +39,8 @@ class CProvisionalTplParser {
                         const QStringList &sListTestedWith,
                         const QStringList &sListTestedWithStrings,
                         const QStringList &sListTestedWithTouch,
-                        const QStringList &sListTestedWithTouchStrings);
+                        const QStringList &sListTestedWithTouchStrings,
+                        const QString &sCommunity);
 
   QString parseTpl(const QStringList &sListArgs, const QString sCurrentFile);
 
@@ -98,6 +99,7 @@ class CProvisionalTplParser {
   QStringList m_sListTestedWithStrings;
   QStringList m_sListTestedWithTouch;
   QStringList m_sListTestedWithTouchStrings;
+  QString m_sCommunity;
 };
 
 #endif  // INYOKAEDIT_CPROVISIONALTPLPARSER_H_

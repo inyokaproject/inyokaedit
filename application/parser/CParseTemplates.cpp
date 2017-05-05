@@ -36,7 +36,8 @@ CParseTemplates::CParseTemplates(QString sTransTpl,
                                  const QStringList &sListTestedWith,
                                  const QStringList &sListTestedWithStrings,
                                  const QStringList &sListTestedWithTouch,
-                                 const QStringList &sListTestedWithTouchStrings)
+                                 const QStringList &sListTestedWithTouchStrings,
+                                 const QString &sCommunity)
   : m_sTransTpl(sTransTpl),
     m_sListTplNames(sListTplNames) {
   m_pProvTplTarser = new CProvisionalTplParser(sListHtmlStart,
@@ -45,7 +46,8 @@ CParseTemplates::CParseTemplates(QString sTransTpl,
                                                sListTestedWith,
                                                sListTestedWithStrings,
                                                sListTestedWithTouch,
-                                               sListTestedWithTouchStrings);
+                                               sListTestedWithTouchStrings,
+                                               sCommunity);
 }
 
 // ----------------------------------------------------------------------------
