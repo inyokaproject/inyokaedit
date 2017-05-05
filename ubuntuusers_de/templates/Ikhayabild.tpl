@@ -1,0 +1,3 @@
+## Macro=[[Vorlage(Ikhayabild, %%Bild, Bildunterschrift%%)]]
+||<tablestyle="width:auto; <@ if $arguments as lowercase contain 'right' @>clear:right; float:right; margin-left:1em;<@ else @>float:left; margin-right:1em;<@ endif @>" cellstyle="background-color: #F2F2F2;" :><@ if $arguments.1 matches_regex "^(:|http://)" @>[<@ $arguments.1 @> <@ endif @>[[Bild(<@ $arguments.0 @><@ if $arguments.1 matches_regex "\d+" @>, <@ $arguments.1 @><@ endif @>)]]<@ if $arguments.1 matches_regex "^(:|http://)" @>]<@ endif @>||
+||<cellstyle="background-color: #F9EAAF;" :> <@ if $arguments.1 matches_regex "^(:|http://)" or $arguments.1 matches_regex "\d+" @><@ $arguments.2 @><@ else @><@ $arguments.1 @><@ endif @>||

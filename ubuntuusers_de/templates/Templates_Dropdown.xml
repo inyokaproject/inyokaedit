@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate templates dropdown menu in InyokaEdit.
+-->
+<menu name="Textbausteine">
+  <group name="">
+    <element type="" url="Baustelle.tpl" name="Baustelle" icon="" />
+    <element type="" url="Inhaltsverzeichnis.macro" name="Inhaltsverzeichnis" icon="" />
+    <element type="" url="Getestet.tpl" name="Getestet" icon="" />
+    <element type="" url="Paketinstallation.tpl" name="Paketinstallation" icon="" />
+    <element type="" url="Befehl.tpl" name="Shell Befehl" icon="" />
+    <element type="" url="PPA.tpl" name="PPA-Vorlage" icon="" />
+    <element type="" url="Hinweis.tpl" name="Hinweis" icon="" />
+    <element type="" url="Fremd.tpl" name="Fremdquellen-Warnung" icon="" />
+    <element type="" url="Warnung.tpl" name="Warnung" icon="" />
+    <element type="" url="Experten.tpl" name="Experten-Info" icon="" />
+    <element type="" url="Tasten.tpl" name="Tasten" icon="" />
+    <element type="" url="Tabelle.tpl" name="Tabelle" icon="" />
+    <element type="" url="Spiel-Infobox.macro" name="Spiel Infobox" icon="" />
+    <element type="" url="Infobox.tpl" name="Infobox" icon="" />
+  </group>
+</menu>
