@@ -513,7 +513,6 @@ QString CProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
   QString sOutput("<table style=\"width:95%\">\n<tbody>\n");
   QStringList sListTitle;
   QString sStyle("");
-  QString sImage("");
 
   if (sListArgs.size() > 0) {
     sListTitle << sListArgs[0].split("/");
@@ -524,25 +523,22 @@ QString CProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
 
   for (int i = 0; i < sListArgs.size(); i++) {
     if (0 == i) {
-      sOutput += "<tr class=\"" + sStyle + "titel\">\n"
-                                           "<td colspan=\"4\">" + sListTitle[0] + "</td>\n</tr>\n"
-                                                                                  "<tr class=\"" + sStyle + "kopf\">\n"
-                                                                                                            "<td style=\"width: 24%\">Icon</td>\n"
-                                                                                                            "<td style=\"width: 25%\">Dateiname</td>\n"
-                                                                                                            "<td style=\"width: 24%\">Icon</td>\n"
-                                                                                                            "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
+      sOutput += "<tr class=\"" + sStyle +
+                 "titel\">\n"
+                 "<td colspan=\"4\">" +
+                 sListTitle[0] + "</td>\n</tr>\n<tr class=\"" +
+          sStyle + "kopf\">\n"
+                   "<td style=\"width: 24%\">Icon</td>\n"
+                   "<td style=\"width: 25%\">Dateiname</td>\n"
+                   "<td style=\"width: 24%\">Icon</td>\n"
+                   "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
     } else {
       if (1 == i % 2) {
         sOutput += "<tr>\n";
       }
-      sOutput += "<td>[[Bild(Wiki/Icons/" + sListArgs[i] + ", x32, center)]]</td>"
-                                                           "<td><strong>" + sListArgs[i] + "</strong></td>\n";
-      /*
-            sOutput += "<td><a href=\"" + sImage + "\" rel=\"nofollow\" "
-                       "class=\"external\"><img src=\"" + sImage + "\" "
-                       "alt=\"" + sImage + "\" class=\"image-center\"></a></td>"
-                    "<td><strong>" + sListArgs[i] + "</strong></td>\n";
-            */
+      sOutput += "<td>[[Bild(Wiki/Icons/" + sListArgs[i] +
+                 ", x32, center)]]</td>"
+                 "<td><strong>" + sListArgs[i] + "</strong></td>\n";
 
       if (0 == i % 2) {
         sOutput += "</tr>\n";
@@ -1597,7 +1593,7 @@ QString CProvisionalTplParser::parsePackageInstallButton(const QStringList &sLis
   }
 
   sOutput += "\" rel=\"nofollow\" class=\"external\">"
-             "<img src=\"img/wiki/button.png\" "
+             "<img src=\"community/" + m_sCommunity + "/img/wiki/button.png\" "
              "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
              "mit [:apturl:]</p>";
 
@@ -1641,7 +1637,7 @@ QString CProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
                                 "System gefährden.");
     sRemark = QString::fromUtf8("Ein PPA unterstützt nicht zwangsläufig "
                                 "alle Ubuntu-Versionen. Weitere Informationen sind der "
-                                "[[Bild(../img/interwiki/ppa.png)]] [https://launchpad.net/~"
+                                "[[Bild(img/interwiki/ppa.png)]] [https://launchpad.net/~"
                                 "%1/+archive/%2 PPA-Beschreibung] des "
                                 "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
               .arg(sUser).arg(sPPA).arg(sUser);

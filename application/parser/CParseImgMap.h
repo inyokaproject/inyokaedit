@@ -35,7 +35,8 @@ class CParseImgMap {
   CParseImgMap();
   void startParsing(QTextDocument *pRawDoc,
                     QStringList sListElements,
-                    QStringList sListImages);
+                    QStringList sListImages,
+                    const QString &sCommunity);
 };
 
 #endif  // INYOKAEDIT_CPARSEIMGMAP_H_

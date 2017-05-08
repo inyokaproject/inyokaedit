@@ -114,11 +114,13 @@ QString CParser::genOutput(const QString &sActFile,
   // Replace flags
   m_pMapParser->startParsing(m_pRawText,
                              m_pTemplates->getListFlags(),
-                             m_pTemplates->getListFlagsImg());
+                             m_pTemplates->getListFlagsImg(),
+                             m_sCommunity);
   // Replace smilies
   m_pMapParser->startParsing(m_pRawText,
                              m_pTemplates->getListSmilies(),
-                             m_pTemplates->getListSmiliesImg());
+                             m_pTemplates->getListSmiliesImg(),
+                             m_sCommunity);
 
   this->replaceQuotes(m_pRawText);
   this->replaceBreaks(m_pRawText);
@@ -965,7 +967,8 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 
     sImageUrl = sListTmpImageInfo[0].trimmed();
     if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
-      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
+      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" +
+                  m_sCommunity + "/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;

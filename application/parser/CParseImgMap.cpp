@@ -36,7 +36,8 @@ CParseImgMap::CParseImgMap() {
 
 void CParseImgMap::startParsing(QTextDocument *pRawDoc,
                                 QStringList sListElements,
-                                QStringList sListImages) {
+                                QStringList sListImages,
+                                const QString &sCommunity) {
   QString sDoc(pRawDoc->toPlainText());
 
   for (int i = 0; i < sListElements.size(); i++) {
@@ -45,7 +46,8 @@ void CParseImgMap::startParsing(QTextDocument *pRawDoc,
       break;
     }
     sDoc.replace(sListElements[i],
-                 "<img src=\"" + sListImages[i] + "\" />");
+                 "<img src=\"community/" + sCommunity + "/" +
+                 sListImages[i] + "\" />");
   }
 
   // Replace raw document with new replaced doc
