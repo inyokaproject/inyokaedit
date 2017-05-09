@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate community specific menus/toolbars/dropdowns.
+  "Path" is relative to share / user data path.
+  "Icon" and .tpl/.macro "insert" is relative to "path".
+  
+  Don't forget to mask the following characters, if used inside a string:
+   * & -> &amp;
+   * < -> &lt;
+   * > -> &gt;
+   * ' -> &apos;
+   * " -> &quot;
+-->
+<menu name="Textbausteine" path="templates">
+  <group name="">
+    <element name="Baustelle" insert="Baustelle.tpl" icon="" />
+    <element name="Inhaltsverzeichnis" insert="Inhaltsverzeichnis.macro" icon="" />
+    <element name="Getestet" insert="Getestet.tpl" icon="" />
+    <element name="Paketinstallation" insert="Paketinstallation.tpl" icon="" />
+    <element name="Shell Befehl" insert="Befehl.tpl" icon="" />
+    <element name="PPA-Vorlage" insert="PPA.tpl" icon="" />
+    <element name="Hinweis" insert="Hinweis.tpl" icon="" />
+    <element name="Fremdquellen-Warnung" insert="Fremd.tpl" icon="" />
+    <element name="Warnung" insert="Warnung.tpl" icon="" />
+    <element name="Experten-Info" insert="Experten.tpl" icon="" />
+    <element name="Tasten" insert="Tasten.tpl" icon="" />
+    <element name="Tabelle" insert="Tabelle.tpl" icon="" />
+    <element name="Spiel Infobox" insert="Spiel-Infobox.macro" icon="" />
+    <element name="Infobox" insert="Infobox.tpl" icon="" />
+  </group>
+</menu>
