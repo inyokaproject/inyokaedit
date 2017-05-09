@@ -1,10 +1,13 @@
 inyokaedit (0.19.0-0ubuntu1) xenial; urgency=low
 
   [ Thorsten Roth ]
+  * Separated Inyoka community specific files.
+  * Define community specific menus via xml files.
   * Dropped support for Qt 4.
+  * Code reconstructions: Defined action icons in ui, decreased debug output.
   * Moved project from Launchpad to GitHub, removed Apport.
 
- -- Thorsten Roth <elthoro@gmx.de>  Thu, 04 May 2017 17:01:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Tue, 09 May 2017 23:29:00 +0200
 
 inyokaedit (0.18.2-0ubuntu1) xenial; urgency=low
 
