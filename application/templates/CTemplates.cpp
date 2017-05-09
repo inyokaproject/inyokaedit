@@ -34,39 +34,48 @@
 
 CTemplates::CTemplates(const QString &sCommunity, const QString &sSharePath,
                        const QString &sUserDataDir) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QString sPath(sSharePath + "/community/" + sCommunity);
   this->initTemplates(sPath + "/templates");
   this->initHtmlTpl(sPath + "/Preview.tpl");
-  this->initImgMap(sPath + "/Flags.conf", m_sListFlags, m_sListFlagsImg);
-  this->initImgMap(sPath + "/Smilies.conf", m_sListSmilies, m_sListSmiliesImg);
+  m_sListIWLs.clear();
+  m_sListIWLUrls.clear();
+  this->initMappings(sPath + "/InterWikiMap.conf", m_sListIWLs, m_sListIWLUrls);
+  m_sListFlags.clear();
+  m_sListFlagsImg.clear();
+  this->initMappings(sPath + "/FlagsMap.conf", m_sListFlags, m_sListFlagsImg);
+  m_sListSmilies.clear();
+  m_sListSmiliesImg.clear();
+  this->initMappings(sPath + "/SmiliesMap.conf", m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
   this->initTranslations(sPath + "/community.conf");
 
   sPath = "/community/" + sCommunity;
-  this->initTestedWith(sSharePath + sPath + "/templates/TestedWith.conf",
-                       sUserDataDir + sPath + "/templates/TestedWith.conf",
+
+  m_sListTestedWith.clear();
+  m_sListTestedWithStrings.clear();
+  this->initMappings(sSharePath + sPath + "/templates/TestedWith.conf",
+                     m_sListTestedWith, m_sListTestedWithStrings);
+  QFile tmpFile(sUserDataDir + sPath + "/templates/TestedWith.conf");
+  if (tmpFile.exists()) {
+    this->initMappings(tmpFile.fileName(),
                        m_sListTestedWith, m_sListTestedWithStrings);
-  this->initTestedWith(sSharePath + sPath + "/templates/TestedWithTouch.conf",
-                       sUserDataDir + sPath + "/templates/TestedWithTouch.conf",
+  }
+
+  m_sListTestedWithTouch.clear();
+  m_sListTestedWithTouchStrings.clear();
+  this->initMappings(sSharePath + sPath + "/templates/TestedWithTouch.conf",
+                     m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
+  tmpFile.setFileName(sUserDataDir + sPath + "/templates/TestedWithTouch.conf");
+  if (tmpFile.exists()) {
+    this->initMappings(tmpFile.fileName(),
                        m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
-
-  m_pInterWikiLinks = new CXmlParser(sSharePath + sPath +
-                                     "/iWikiLinks/iWikiLinks.xml");
-  m_pDropdownTemplates = new CXmlParser(sSharePath + sPath +
-                                        "/templates/Templates_Dropdown.xml");
-}
-
-CTemplates::~CTemplates() {
+  }
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTemplates(const QString &sTplPath) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QFile TplFile("");
   QDir TplDir(sTplPath);
   QString tmpLine("");
@@ -149,17 +158,13 @@ void CTemplates::initTemplates(const QString &sTplPath) {
                << TplDir.absolutePath();
   }
 
-  qDebug() << "Loaded templates:" << m_sListTplNamesINY;
-
-  m_pMarkupTemplates = new CXmlParser(sTplPath + "/Templates.xml");
+  qDebug() << "Found templates:" << m_sListTplNamesINY;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void CTemplates::initHtmlTpl(const QString &sTplFile) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QFile HTMLTplFile(sTplFile);
   if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(0, "Warning",
@@ -179,36 +184,34 @@ void CTemplates::initHtmlTpl(const QString &sTplFile) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTemplates::initImgMap(const QString &sFilename,
-                            QStringList &sListElements,
-                            QStringList &sListImgSource) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
-  QFile ImgMapFile(sFilename);
-  QStringList sListTmpLine;
-  sListElements.clear();
-  sListImgSource.clear();
-
-  if (!ImgMapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, "Warning", "Could not open image map file!");
-    qWarning() << "Could not open image map config file:"
-               << ImgMapFile.fileName();
+void CTemplates::initMappings(const QString &sFileName,
+                              QStringList &sListElements,
+                              QStringList &sListMapping) {
+  QFile MapFile(sFileName);
+  if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QMessageBox::warning(0, "Warning", "Could not open mapping file!");
+    qWarning() << "Could not open mapping config file:"
+               << MapFile.fileName();
     sListElements << "ERROR";
   } else {
-    QTextStream in(&ImgMapFile);
+    QTextStream in(&MapFile);
     in.setCodec("UTF-8");
     QString tmpLine;
+    QString sElement;
+    QString sMapping;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
-        sListTmpLine = tmpLine.split("=");
-        if (2 == sListTmpLine.size()) {
-          sListElements << sListTmpLine[0].trimmed();
-          sListImgSource << sListTmpLine[1].trimmed();
+        sElement = tmpLine.section('=', 0, 0);  // Split only first '='
+        sMapping = tmpLine.section('=', 1);     // Second part after first '='
+        if (!sElement.isEmpty() && !sMapping.isEmpty() &&
+            !sListElements.contains(sElement.trimmed())) {
+          sListElements << sElement.trimmed();
+          sListMapping << sMapping.trimmed();
         }
       }
     }
-    ImgMapFile.close();
+    MapFile.close();
   }
 }
 
@@ -216,8 +219,6 @@ void CTemplates::initImgMap(const QString &sFilename,
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTextformats(const QString &sFilename) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QFile formatsFile(sFilename);
   QStringList sListInput;
 
@@ -255,8 +256,6 @@ void CTemplates::initTextformats(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 
 void CTemplates::initTranslations(const QString &sFilename) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QFile translFile(sFilename);
   if (!translFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::critical(0, "Error",
@@ -323,62 +322,6 @@ void CTemplates::initTranslations(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTemplates::initTestedWith(const QString &sFilename,
-                                const QString &sUserDataFilename,
-                                QStringList &sListElements,
-                                QStringList &sListStrings) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
-  QStringList listFiles;
-  listFiles << sFilename << sUserDataFilename;
-  QStringList sListTmpLine;
-  QFile MapFile;
-  sListElements.clear();
-  sListStrings.clear();
-
-  foreach (QString sFile, listFiles) {
-    MapFile.setFileName(sFile);
-    if (!MapFile.exists()) {
-      continue;
-    }
-    if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-      QMessageBox::warning(0, "Warning", "Could not open Tested map file!");
-      qWarning() << "Could not open TestedWith config file:"
-                 << MapFile.fileName();
-      sListElements << "ERROR";
-    } else {
-      QTextStream in(&MapFile);
-      in.setCodec("UTF-8");
-      QString tmpLine;
-      while (!in.atEnd()) {
-        tmpLine = in.readLine().trimmed();
-        if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
-          sListTmpLine = tmpLine.split("=");
-          if (2 == sListTmpLine.size()) {
-            if (!sListElements.contains(sListTmpLine[0].trimmed())) {
-              sListElements << sListTmpLine[0].trimmed();
-              sListStrings << sListTmpLine[1].trimmed();
-            }
-          }
-        }
-      }
-      MapFile.close();
-    }
-  }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-CXmlParser* CTemplates::getTPLs() const {
-  return m_pMarkupTemplates;
-}
-CXmlParser* CTemplates::getIWLs() const {
-  return m_pInterWikiLinks;
-}
-CXmlParser* CTemplates::getDropTPLs() const {
-  return m_pDropdownTemplates;
-}
 QString CTemplates::getPreviewTemplate() const {
   return m_sPreviewTemplate;
 }
@@ -447,7 +390,14 @@ QStringList CTemplates::getListFormatHtmlEnd() const {
 }
 
 // ----------------------------------------------------------------------------
-// Image maps
+// Mappings
+
+QStringList CTemplates::getListIWLs() const {
+  return m_sListIWLs;
+}
+QStringList CTemplates::getListIWLUrls() const {
+  return m_sListIWLUrls;
+}
 
 QStringList CTemplates::getListFlags() const {
   return m_sListFlags;
@@ -462,9 +412,6 @@ QStringList CTemplates::getListSmilies() const {
 QStringList CTemplates::getListSmiliesImg() const {
   return m_sListSmiliesImg;
 }
-
-// ----------------------------------------------------------------------------
-// TestedWith versions
 
 QStringList CTemplates::getListTestedWith() const {
   return m_sListTestedWith;

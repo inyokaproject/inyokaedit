@@ -41,8 +41,6 @@ CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath),
     m_sCommunity("ubuntuusers_de") {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(replyFinished(QNetworkReply*)));
@@ -97,7 +95,7 @@ void CDownload::updateIWLs() {
 // ----------------------------------------------------------------------------
 
 void CDownload::callDownloadScript(const QString &sScript) {
-  qDebug() << "Calling" << Q_FUNC_INFO << sScript;
+  qDebug() << "Calling download script:" << sScript;
 
   // Check for internet connection
   if (!CUtils::getOnlineState()) {

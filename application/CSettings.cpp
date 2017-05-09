@@ -31,8 +31,6 @@
 #include "./CSettings.h"
 
 CSettings::CSettings(QWidget *pParent, const QString &sSharePath) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
 #if defined _WIN32
   m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
@@ -279,14 +277,17 @@ void CSettings::removeObsolete() {
 // Get / set methods
 
 QString CSettings::getGuiLanguage() const {
+  QString sLang;
   if ("auto" == m_sGuiLanguage) {
 #ifdef Q_OS_UNIX
     QByteArray lang = qgetenv("LANG");
     if (!lang.isEmpty()) {
-      return QLocale(lang).name();
+      sLang = QLocale(lang).name();
+      return sLang.mid(0, sLang.indexOf('_'));
     }
 #endif
-    return QLocale::system().name();
+    sLang = QLocale::system().name();
+    return sLang.mid(0, sLang.indexOf('_'));
   } else {
     return m_sGuiLanguage;
   }

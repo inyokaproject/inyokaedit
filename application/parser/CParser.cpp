@@ -36,8 +36,6 @@ CParser::CParser(const QDir &tmpImgDir,
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_tmpFileDir = tmpImgDir;
   m_tmpFileDir.cdUp();
 
@@ -53,8 +51,8 @@ CParser::CParser(const QDir &tmpImgDir,
                         m_sCommunity);
 
   m_pLinkParser = new CParseLinks(m_sInyokaUrl,
-                                  m_pTemplates->getIWLs()->getElementTypes(),
-                                  m_pTemplates->getIWLs()->getElementUrls(),
+                                  m_pTemplates->getListIWLs(),
+                                  m_pTemplates->getListIWLUrls(),
                                   bCheckLinks,
                                   m_pTemplates->getTransAnchor(),
                                   m_pTemplates->getTransAttachment(),
@@ -86,7 +84,7 @@ void CParser::updateSettings(const QString &sInyokaUrl,
 
 QString CParser::genOutput(const QString &sActFile,
                            QTextDocument *pRawDocument) {
-  qDebug() << "Parse...";
+  qDebug() << "Parsing...";
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
   m_sCurrentFile = sActFile;
@@ -820,7 +818,7 @@ void CParser::replaceHeadlines(QTextDocument *p_rawDoc) {
         default:
           qWarning() << "Found strange formated headline:" << sLine;
       }
-      m_sListHeadlines << sTmp;
+      m_sListHeadlines << sTmp;  // Used for table of contents
 
       // Replace characters for valid link
       sLink = sLine;

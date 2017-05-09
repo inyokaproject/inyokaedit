@@ -54,8 +54,6 @@ CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_bCloseApp(false),
     m_sUserDataDir(sUserDataDir),
     m_sListTplMacros(sListTplMacros) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_pFindReplace = new CFindReplace();
   connect(this, SIGNAL(triggeredFind()),
           m_pFindReplace, SLOT(callFind()));

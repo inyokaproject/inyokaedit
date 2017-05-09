@@ -40,8 +40,6 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
     m_sListDisabledPlugins(sListDisabledPlugins),
     m_userDataDir(userDataDir),
     m_sSharePath(sSharePath) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
   // Plugins in user folder
@@ -90,7 +88,6 @@ CPlugins::CPlugins(QWidget *pParent, CTextEditor *pEditor,
 // ----------------------------------------------------------------------------
 
 void CPlugins::loadPlugins() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
   m_PluginMenuEntries.clear();
   m_PluginToolbarEntries.clear();
 

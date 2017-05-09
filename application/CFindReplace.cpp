@@ -35,8 +35,6 @@ CFindReplace::CFindReplace(QWidget *parent)
   : QDialog(parent),
     m_pUi(new Ui::CFindReplace),
     m_pEditor(NULL) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_pUi->setupUi(this);
   this->setWindowFlags(this->windowFlags()
                        & ~Qt::WindowContextHelpButtonHint);

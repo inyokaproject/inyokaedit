@@ -37,8 +37,6 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
   : QDialog(pParent),
     m_pSettings(pSettings),
     m_sSharePath(sSharePath) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_pUi = new Ui::CSettingsDialog();
   m_pUi->setupUi(this);
   this->setWindowFlags(this->windowFlags()

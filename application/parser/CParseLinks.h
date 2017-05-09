@@ -44,8 +44,8 @@ class CParseLinks : public QObject {
 
  public:
   CParseLinks(const QString &sUrlToWiki,
-              const QList<QStringList> sListIWiki,
-              const QList<QStringList> sListIWikiUrl,
+              const QStringList sListIWiki,
+              const QStringList sListIWikiUrl,
               const bool bCheckLinks,
               const QString &sTransAnchor,
               const QString &sTransAttach,

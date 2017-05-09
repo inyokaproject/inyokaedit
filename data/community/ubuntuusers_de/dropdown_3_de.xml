@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate community specific menus/toolbars/dropdowns.
+  "Path" is relative to share / user data path.
+  "Icon" and .tpl/.macro "insert" is relative to "path".
+  
+  Don't forget to mask the following characters, if used inside a string:
+   * & -> &amp;
+   * < -> &lt;
+   * > -> &gt;
+   * ' -> &apos;
+   * " -> &quot;
+-->
+<menu name="Textformat" path="">
+  <group name="">
+    <element name="Verzeichnisse" insert="&apos;&apos;&apos;%%Verzeichnisse%%&apos;&apos;&apos;" icon="" />
+    <element name="Menüs" insert="&apos;&apos;&quot;%%Menü -> Untermenü -> Menübefehl%%&quot;&apos;&apos;" icon="" />
+    <element name="Dateien" insert="&apos;&apos;&apos;%%Dateien%%&apos;&apos;&apos;" icon="" />
+    <element name="Befehl" insert="`%%Befehl%%`" icon="" />
+  </group>
+</menu>

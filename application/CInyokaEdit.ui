@@ -14,8 +14,9 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset resource="res/inyokaedit_resources.qrc">
-    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
+   <iconset>
+    <normalon>:/images/inyokaedit_64x64.png</normalon>
+   </iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
@@ -43,6 +44,10 @@
     <widget class="QMenu" name="fileMenuLastOpened">
      <property name="title">
       <string>Open &amp;recent</string>
+     </property>
+     <property name="icon">
+      <iconset theme="document-open-recent">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
     <widget class="QMenu" name="fileMenuFromTemplate">
@@ -158,14 +163,6 @@
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
-   <addaction name="boldAct"/>
-   <addaction name="italicAct"/>
-   <addaction name="monotypeAct"/>
-   <addaction name="listAct"/>
-   <addaction name="numberedListAct"/>
-   <addaction name="wikilinkAct"/>
-   <addaction name="externalLinkAct"/>
-   <addaction name="imageAct"/>
   </widget>
   <widget class="QToolBar" name="samplesmacrosBar">
    <property name="windowTitle">
@@ -205,14 +202,20 @@
   </widget>
   <action name="reportBugAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+    <iconset>
+     <normalon>:/images/bug.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Report &amp;bug</string>
    </property>
   </action>
   <action name="aboutAct">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normalon>:/images/help-browser.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;About</string>
    </property>
@@ -221,6 +224,11 @@
    </property>
   </action>
   <action name="newAct">
+   <property name="icon">
+    <iconset theme="document-new">
+     <normalon>:/images/document-new.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -229,6 +237,11 @@
    </property>
   </action>
   <action name="openAct">
+   <property name="icon">
+    <iconset theme="document-open">
+     <normalon>:/images/document-open.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Open...</string>
    </property>
@@ -237,6 +250,11 @@
    </property>
   </action>
   <action name="saveAct">
+   <property name="icon">
+    <iconset theme="document-save">
+     <normalon>:/images/document-save.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -245,6 +263,11 @@
    </property>
   </action>
   <action name="saveAsAct">
+   <property name="icon">
+    <iconset theme="document-save-as">
+     <normalon>:/images/document-save-as.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Save &amp;as...</string>
    </property>
@@ -253,6 +276,10 @@
    </property>
   </action>
   <action name="exitAct">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -261,6 +288,11 @@
    </property>
   </action>
   <action name="undoAct">
+   <property name="icon">
+    <iconset theme="edit-undo">
+     <normalon>:/images/edit-undo.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Undo</string>
    </property>
@@ -269,6 +301,11 @@
    </property>
   </action>
   <action name="redoAct">
+   <property name="icon">
+    <iconset theme="edit-redo">
+     <normalon>:/images/edit-redo.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Redo</string>
    </property>
@@ -277,6 +314,11 @@
    </property>
   </action>
   <action name="cutAct">
+   <property name="icon">
+    <iconset theme="edit-cut">
+     <normalon>:/images/edit-cut.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Cut</string>
    </property>
@@ -285,6 +327,11 @@
    </property>
   </action>
   <action name="copyAct">
+   <property name="icon">
+    <iconset theme="edit-copy">
+     <normalon>:/images/edit-copy.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>C&amp;opy</string>
    </property>
@@ -293,6 +340,11 @@
    </property>
   </action>
   <action name="pasteAct">
+   <property name="icon">
+    <iconset theme="edit-paste">
+     <normalon>:/images/edit-paste.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Paste</string>
    </property>
@@ -301,6 +353,11 @@
    </property>
   </action>
   <action name="searchAct">
+   <property name="icon">
+    <iconset theme="edit-find">
+     <normalon>:/images/edit-find.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Find...</string>
    </property>
@@ -309,6 +366,11 @@
    </property>
   </action>
   <action name="replaceAct">
+   <property name="icon">
+    <iconset theme="edit-find-replace">
+     <normalon>:/images/edit-find-replace.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>R&amp;eplace...</string>
    </property>
@@ -318,8 +380,9 @@
   </action>
   <action name="findNextAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
+    <iconset theme="go-down">
+     <normalon>:/images/go-down.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Find &amp;next</string>
@@ -330,8 +393,9 @@
   </action>
   <action name="findPreviousAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-up.png</normaloff>:/images/go-up.png</iconset>
+    <iconset theme="go-up">
+     <normalon>:/images/go-up.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>F&amp;ind previous</string>
@@ -342,8 +406,9 @@
   </action>
   <action name="previewAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/x-office-document.png</normaloff>:/images/x-office-document.png</iconset>
+    <iconset>
+     <normalon>:/images/x-office-document.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Open preview</string>
@@ -354,8 +419,9 @@
   </action>
   <action name="downloadArticleAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/download.png</normaloff>:/images/download.png</iconset>
+    <iconset>
+     <normalon>:/images/download.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Download raw format</string>
@@ -364,82 +430,11 @@
     <string>Downloads raw format of an existing Inyoka article</string>
    </property>
   </action>
-  <action name="boldAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/format-text-bold.png</normaloff>:/images/format-text-bold.png</iconset>
-   </property>
-   <property name="text">
-    <string>Bold</string>
-   </property>
-   <property name="toolTip">
-    <string>Bold - File names, folders, packages, file extensions</string>
-   </property>
-  </action>
-  <action name="italicAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/format-text-italic.png</normaloff>:/images/format-text-italic.png</iconset>
-   </property>
-   <property name="text">
-    <string>Italic</string>
-   </property>
-   <property name="toolTip">
-    <string>Italic - Menu entries, buttons, G-Conf keys - Always enclosed by quotation marks!</string>
-   </property>
-  </action>
-  <action name="monotypeAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/monotype.png</normaloff>:/images/monotype.png</iconset>
-   </property>
-   <property name="text">
-    <string>Monotype</string>
-   </property>
-   <property name="toolTip">
-    <string>Monotype - Commands and their options, console outputs in continuous text, modules, users, groups</string>
-   </property>
-  </action>
-  <action name="wikilinkAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-next.png</normaloff>:/images/go-next.png</iconset>
-   </property>
-   <property name="text">
-    <string>Link to wikipage</string>
-   </property>
-   <property name="toolTip">
-    <string>Link to an Inyoka wiki page</string>
-   </property>
-  </action>
-  <action name="externalLinkAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/internet-web-browser.png</normaloff>:/images/internet-web-browser.png</iconset>
-   </property>
-   <property name="text">
-    <string>External link</string>
-   </property>
-   <property name="toolTip">
-    <string>Link to an external website - always with flag e.g. {en}, {de}!</string>
-   </property>
-  </action>
-  <action name="imageAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/image-x-generic.png</normaloff>:/images/image-x-generic.png</iconset>
-   </property>
-   <property name="text">
-    <string>Insert image</string>
-   </property>
-   <property name="toolTip">
-    <string>Insert an image</string>
-   </property>
-  </action>
   <action name="deleteTempImagesAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/edit-delete.png</normaloff>:/images/edit-delete.png</iconset>
+    <iconset theme="edit-delete">
+     <normalon>:/images/edit-delete.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Delete temporarily &amp;images</string>
@@ -449,25 +444,36 @@
    </property>
   </action>
   <action name="downloadInyokaStylesAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Download Inyoka styles</string>
    </property>
   </action>
   <action name="goBackBrowserAct">
+   <property name="icon">
+    <iconset theme="go-previous">
+     <normalon>:/images/go-previous.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Back</string>
    </property>
   </action>
   <action name="goForwardBrowserAct">
+   <property name="icon">
+    <iconset theme="go-next">
+     <normalon>:/images/go-next.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Forward</string>
    </property>
   </action>
   <action name="reloadBrowserAct">
+   <property name="icon">
+    <iconset theme="view-refresh">
+     <normalon>:/images/view-refresh.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Reload</string>
    </property>
@@ -476,6 +482,11 @@
    </property>
   </action>
   <action name="printPreviewAct">
+   <property name="icon">
+    <iconset theme="document-print">
+     <normalon>:/images/document-print.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Print preview</string>
    </property>
@@ -490,8 +501,9 @@
   </action>
   <action name="preferencesAct">
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/preferences-system.png</normaloff>:/images/preferences-system.png</iconset>
+    <iconset theme="preferences-system">
+     <normalon>:/images/preferences-system.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Preference&amp;s</string>
@@ -502,50 +514,21 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/upload.png</normaloff>:/images/upload.png</iconset>
+    <iconset>
+     <normalon>:/images/upload.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Upload article</string>
    </property>
   </action>
   <action name="updateIWLsAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/uu.ico</normaloff>:/images/uu.ico</iconset>
-   </property>
    <property name="text">
     <string>&amp;Update InterWiki-Links</string>
    </property>
   </action>
-  <action name="listAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/list-unsorted.png</normaloff>:/images/list-unsorted.png</iconset>
-   </property>
-   <property name="text">
-    <string>List</string>
-   </property>
-   <property name="toolTip">
-    <string>Unsorted list</string>
-   </property>
-  </action>
-  <action name="numberedListAct">
-   <property name="icon">
-    <iconset resource="res/inyokaedit_resources.qrc">
-     <normaloff>:/images/list-sorted.png</normaloff>:/images/list-sorted.png</iconset>
-   </property>
-   <property name="text">
-    <string>Numbered list</string>
-   </property>
-   <property name="toolTip">
-    <string>Numbered list</string>
-   </property>
-  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="res/inyokaedit_resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

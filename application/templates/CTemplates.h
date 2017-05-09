@@ -27,15 +27,11 @@
 #ifndef INYOKAEDIT_CTEMPLATES_H_
 #define INYOKAEDIT_CTEMPLATES_H_
 
-#include "./CXmlParser.h"
 
-class CTemplates : public QObject {
-  Q_OBJECT
-
+class CTemplates {
  public:
   CTemplates(const QString &sCommunity, const QString &sSharePath,
              const QString &sUserDataDir);
-  ~CTemplates();
 
   QString getPreviewTemplate() const;
   QStringList getListTplNamesINY() const;
@@ -61,34 +57,26 @@ class CTemplates : public QObject {
   QStringList getListFormatHtmlStart() const;
   QStringList getListFormatHtmlEnd() const;
 
-  // Image map
+  // Mappings
+  QStringList getListIWLs() const;
+  QStringList getListIWLUrls() const;
   QStringList getListFlags() const;
   QStringList getListFlagsImg() const;
   QStringList getListSmilies() const;
   QStringList getListSmiliesImg() const;
-
-  // Tested With
   QStringList getListTestedWith() const;
   QStringList getListTestedWithStrings() const;
   QStringList getListTestedWithTouch() const;
   QStringList getListTestedWithTouchStrings() const;
 
-  CXmlParser *getTPLs() const;
-  CXmlParser *getIWLs() const;
-  CXmlParser *getDropTPLs() const;
-
  private:
   void initTemplates(const QString &sTplPath);
   void initHtmlTpl(const QString &sFileName);
-  void initImgMap(const QString &sFileName,
-                  QStringList &sListElements,
-                  QStringList &sListImgSource);
+  void initMappings(const QString &sFileName,
+                    QStringList &sListElements,
+                    QStringList &sListMapping);
   void initTextformats(const QString &sFileName);
   void initTranslations(const QString &sFileName);
-  void initTestedWith(const QString &sFilename,
-                      const QString &sUserDataFilename,
-                      QStringList &sListElements,
-                      QStringList &sListStrings);
 
   QString m_sPreviewTemplate;
   QStringList m_sListTplNamesINY;
@@ -105,11 +93,17 @@ class CTemplates : public QObject {
   QStringList m_sListFormatHtmlStart;
   QStringList m_sListFormatHtmlEnd;
 
-  // Lists for image maps
+  // Lists for mappings
+  QStringList m_sListIWLs;
+  QStringList m_sListIWLUrls;
   QStringList m_sListFlags;
   QStringList m_sListFlagsImg;
   QStringList m_sListSmilies;
   QStringList m_sListSmiliesImg;
+  QStringList m_sListTestedWith;
+  QStringList m_sListTestedWithStrings;
+  QStringList m_sListTestedWithTouch;
+  QStringList m_sListTestedWithTouchStrings;
 
   // Translations
   QString m_sTransAnchor;
@@ -123,16 +117,6 @@ class CTemplates : public QObject {
   QString m_sTransTagText;
   QString m_sTransTemplate;
   QString m_sTransTOC;
-
-  // TestedWith versions
-  QStringList m_sListTestedWith;
-  QStringList m_sListTestedWithStrings;
-  QStringList m_sListTestedWithTouch;
-  QStringList m_sListTestedWithTouchStrings;
-
-  CXmlParser *m_pInterWikiLinks;
-  CXmlParser *m_pMarkupTemplates;
-  CXmlParser *m_pDropdownTemplates;
 };
 
 #endif  // INYOKAEDIT_CTEMPLATES_H_

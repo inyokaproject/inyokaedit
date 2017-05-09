@@ -40,7 +40,6 @@
 
 CUtils::CUtils(QWidget *pParent)
   : m_pParent(pParent) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
   m_NwManager = new QNetworkAccessManager(this);
   connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(replyFinished(QNetworkReply*)));
@@ -106,7 +105,7 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
       sLatestVersion.remove("InyokaEdit-");
       sLatestVersion.remove("-Windows.zip");
       sLatestVersion = sLatestVersion.trimmed();
-      qDebug() << "Latest version:" << sLatestVersion;
+      qDebug() << "Latest version on server:" << sLatestVersion;
 
       sListCurrentVer = qApp->applicationVersion().split(".");
       sListLatestVer = sLatestVersion.split(".");

@@ -46,8 +46,6 @@ CUpload::CUpload(QWidget *pParent, const QString &sInyokaUrl)
     m_sConstructionArea(trUtf8("ConstructionArea")),
     m_pEditor(NULL),
     m_sArticlename("") {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(replyFinished(QNetworkReply*)));
@@ -73,8 +71,6 @@ void CUpload::setEditor(QTextEdit *pEditor, const QString &sArticlename) {
 // ----------------------------------------------------------------------------
 
 void CUpload::clickUploadArticle() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   if (m_pEditor->toPlainText().trimmed().isEmpty()) {
     QMessageBox::warning(m_pParent, trUtf8("Error"),
                          trUtf8("Please insert article text first!"));
@@ -116,7 +112,7 @@ void CUpload::clickUploadArticle() {
   m_sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
   m_sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
   m_sSitename.replace(" ", "_");
-  qDebug() << "Upload site name:" << m_sSitename;
+  qDebug() << "UPLOAD site name:" << m_sSitename;
 
   switch (m_State) {
     case REQUTOKEN:
@@ -277,8 +273,6 @@ void CUpload::requestLogin() {
 // ----------------------------------------------------------------------------
 
 void CUpload::getLoginReply(QString sNWReply) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   // If "$IS_LOGGED_IN = false" is found in reply --> login failed
   if (-1 != sNWReply.indexOf("$IS_LOGGED_IN = false")) {
     m_State = REQUTOKEN;
@@ -332,8 +326,6 @@ void CUpload::requestRevision(QString sUrl) {
 // ----------------------------------------------------------------------------
 
 void CUpload::getRevisionReply(QString sNWReply) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QString sURL(m_sInyokaUrl);
   sURL.remove("https://");
   sURL.remove("http://");
@@ -362,7 +354,6 @@ void CUpload::getRevisionReply(QString sNWReply) {
 // ----------------------------------------------------------------------------
 
 void CUpload::requestUpload() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
   m_State = REQUPLOAD;
 
   QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit/");
@@ -461,10 +452,10 @@ void CUpload::requestUpload() {
 // ----------------------------------------------------------------------------
 
 void CUpload::getUploadReply(QString sNWReply) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
   m_State = RECUPLOAD;
 
   if (sNWReply.isEmpty()) {
+    qDebug() << "UPLOAD SUCCESSFUL!";
     QMessageBox::information(m_pParent, "Upload",
                              trUtf8("Upload successful!"));
   } else {
@@ -484,7 +475,6 @@ void CUpload::getUploadReply(QString sNWReply) {
 // ----------------------------------------------------------------------------
 
 void CUpload::replyFinished(QNetworkReply *pReply) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
 #ifndef QT_NO_CURSOR
   QApplication::restoreOverrideCursor();
 #endif

@@ -28,28 +28,20 @@
 #include "./CParseLinks.h"
 
 CParseLinks::CParseLinks(const QString &sUrlToWiki,
-                         const QList<QStringList> sListIWiki,
-                         const QList<QStringList> sListIWikiUrl,
+                         const QStringList sListIWiki,
+                         const QStringList sListIWikiUrl,
                          const bool bCheckLinks,
                          const QString &sTransAnchor,
                          const QString &sTransAttach,
                          const QString &sTmpFilePath)
   : m_sWikiUrl(sUrlToWiki),
+    m_sListInterwikiKey(sListIWiki),
+    m_sListInterwikiLink(sListIWikiUrl),
     m_bCheckLinks(bCheckLinks),
     m_sTransAnchor(sTransAnchor),
     m_sTransAttach(sTransAttach),
     m_sTmpFilePath(sTmpFilePath),
     m_NWreply(NULL) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
-  // Copy interwiki links to lists
-  for (int i = 0; i < sListIWiki.size(); i++) {
-    for (int j = 0; j < sListIWiki[i].size(); j++) {
-      this->m_sListInterwikiKey << sListIWiki[i][j];
-      this->m_sListInterwikiLink << sListIWikiUrl[i][j];
-    }
-  }
-
   m_NWAManager = new QNetworkAccessManager(this);
 }
 

@@ -38,7 +38,7 @@ OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-QT           += core gui widgets network printsupport
+QT           += core gui widgets network printsupport xml
 
 qtHaveModule(webkitwidgets) {
   QT         += webkitwidgets
@@ -66,6 +66,7 @@ HEADERS      += CInyokaEdit.h \
                 CSettingsDialog.h \
                 CUpload.h \
                 CUtils.h \
+                CXmlParser.h \
                 IEditorPlugin.h
 
 SOURCES      += main.cpp \
@@ -80,6 +81,7 @@ SOURCES      += main.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
                 CUpload.cpp \
+                CXmlParser.cpp \
                 CUtils.cpp
 
 FORMS        += CInyokaEdit.ui \

@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Xml parser for importing interwiki links.
+ * Xml parser for importing menus/dropdown/toolbars.
  */
 
 #include <QDebug>
@@ -29,20 +29,23 @@
 
 #include "./CXmlParser.h"
 
-CXmlParser::CXmlParser(const QString &sXmlFile) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
+CXmlParser::CXmlParser() {
+}
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+bool CXmlParser::parseXml(const QString &sXmlFile) {
   QFile XmlFile(sXmlFile);
   // Check if file exist and it's readable
   if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
     qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
     QMessageBox::critical(0, "Error",
                           "Can not open \"" + XmlFile.fileName() + "\".");
-    exit(-4);
+    return false;
   }
 
   QXmlSimpleReader xmlReader;
-
   m_pXmlSource = new QXmlInputSource(&XmlFile);
   m_pHandler = new CHandler;
 
@@ -55,57 +58,52 @@ CXmlParser::CXmlParser(const QString &sXmlFile) {
     QMessageBox::critical(0, "Error",
                           "Error while parsing \""
                           + XmlFile.fileName() + "\".");
-    exit(-5);
+    return false;
   }
 
   m_sMenuName = m_pHandler->m_sMenuName_2;
+  m_sPath = m_pHandler->m_sPath_2;
   m_sListGroups = m_pHandler->m_sListGroups_2;
   m_sListGroupIcons = m_pHandler->m_sListGroupIcons_2;
-  m_sListTypes = m_pHandler->m_sListTypes_2;
-  m_sListUrls = m_pHandler->m_sListUrls_2;
   m_sListNames = m_pHandler->m_sListNames_2;
+  m_sListInserts = m_pHandler->m_sListInserts_2;
   m_sListIcons = m_pHandler->m_sListIcons_2;
 
-  /*
-    for (int i = 0; i < sListGroups.size(); i++ ) {
-        qDebug() << "\n" << sListGroups[i].toUpper()
-                 << " (" << sListGroupIcons[i] << "): ";
-        for (int j = 0; j < sListInterWikiLinks[i].size(); j++) {
-            qDebug() << sListInterWikiLinks[i][j] << " "
-                     << sListInterWikiLinksUrls[i][j] << " "
-                     << sListInterWikiLinksNames[i][j] << " "
-                     << sListInterWikiLinksIcons[i][j];
-        }
-    }
-    */
+  if (NULL != m_pXmlSource) {
+    delete m_pXmlSource;
+  }
+  m_pXmlSource = NULL;
+  if (NULL != m_pHandler) {
+    delete m_pHandler;
+  }
+  m_pHandler = NULL;
+
+  return true;
 }
 
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 QString CXmlParser::getMenuName() const {
   return m_sMenuName;
 }
+QString CXmlParser::getPath() const {
+  return m_sPath;
+}
 
-QStringList CXmlParser::getGrouplist() const {
+QStringList CXmlParser::getGroupNames() const {
   return m_sListGroups;
 }
-
 QStringList CXmlParser::getGroupIcons() const {
   return m_sListGroupIcons;
-}
-
-QList<QStringList> CXmlParser::getElementTypes() const {
-  return m_sListTypes;
-}
-
-QList<QStringList> CXmlParser::getElementUrls() const {
-  return m_sListUrls;
 }
 
 QList<QStringList> CXmlParser::getElementNames() const {
   return m_sListNames;
 }
-
+QList<QStringList> CXmlParser::getElementInserts() const {
+  return m_sListInserts;
+}
 QList<QStringList> CXmlParser::getElementIcons() const {
   return m_sListIcons;
 }
@@ -119,16 +117,17 @@ bool CXmlParser::CHandler::startDocument() {
 }
 
 // ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 bool CXmlParser::CHandler::endElement(const QString&, const QString&,
                                       const QString &sName) {
   if ("menu" == sName) {
     m_bInElement = false;
     m_sMenuName_2 = m_tmpMenuName;
+    m_sPath_2 = m_tmpPath;
   } else if ("group" == sName) {
-    m_sListTypes_2 << m_tmpListTypes;
-    m_sListUrls_2 << m_tmpListUrls;
     m_sListNames_2 << m_tmpListNames;
+    m_sListInserts_2 << m_tmpListInserts;
     m_sListIcons_2 << m_tmpListIcons;
   }
 
@@ -136,23 +135,23 @@ bool CXmlParser::CHandler::endElement(const QString&, const QString&,
 }
 
 // ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 bool CXmlParser::CHandler::startElement(const QString&, const QString&,
                                         const QString &sElement,
                                         const QXmlAttributes &attrs) {
   QString sMenuName("");
+  QString sPath("");
   QString sGroupName("");
   QString sGroupIcon("");
-  QString sType("");
-  QString sUrl("");
   QString sName("");
+  QString sInsert("");
   QString sIcon("");
 
   // Found group
   if (m_bInElement && "group" == sElement) {
-    m_tmpListTypes.clear();
-    m_tmpListUrls.clear();
     m_tmpListNames.clear();
+    m_tmpListInserts.clear();
     m_tmpListIcons.clear();
 
     sGroupName = "GROUPNAME NOT FOUND";
@@ -167,38 +166,38 @@ bool CXmlParser::CHandler::startElement(const QString&, const QString&,
     }
     m_sListGroups_2 << sGroupName;
     m_sListGroupIcons_2 << sGroupIcon;
-  } else if (m_bInElement && "element" == sElement) {  // Found interwikilink
-    sType = "TYPE NOT FOUND";
-    sUrl = "URL NOT FOUND";
+  } else if (m_bInElement && "element" == sElement) {  // Found element
     sName = "NAME NOT FOUND";
+    sInsert = "INSERT NOT FOUND";
     sIcon = "ICON NOT FOUND";
 
     for (int i = 0; i < attrs.count(); i++) {
-      if ("type" == attrs.localName(i)) {
-        sType = attrs.value(i);
-      } else if ("url" == attrs.localName(i)) {
-        sUrl = attrs.value(i);
-      } else if ("name" == attrs.localName(i)) {
+      if ("name" == attrs.localName(i)) {
         sName = attrs.value(i);
+      } else if ("insert" == attrs.localName(i)) {
+        sInsert = attrs.value(i);
       } else if ("icon" == attrs.localName(i)) {
         sIcon = attrs.value(i);
       }
     }
 
-    m_tmpListTypes << sType;
-    m_tmpListUrls << sUrl;
     m_tmpListNames << sName;
+    m_tmpListInserts << sInsert;
     m_tmpListIcons << sIcon;
   } else if ("menu" == sElement) {  // Found start of document
     m_bInElement = true;
 
     sMenuName = "Unnamed";
+    sPath = "";
     for (int i = 0; i < attrs.count(); i++) {
       if ("name" == attrs.localName(i)) {
         sMenuName = attrs.value(i);
+      } else if ("path" == attrs.localName(i)) {
+        sPath = attrs.value(i);
       }
     }
     m_tmpMenuName = sMenuName;
+    m_tmpPath = sPath;
   }
 
   return true;

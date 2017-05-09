@@ -32,11 +32,12 @@
 #include "./CDownloadImg.h"
 
 CDownloadImg::CDownloadImg() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(downloadFinished(QNetworkReply*)));
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 void CDownloadImg::setDLs(const QStringList &sListUrls,
                           const QStringList &sListSavePath) {

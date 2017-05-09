@@ -17,10 +17,8 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH  += $$PWD
 
-QT          += widgets xml
+QT          += widgets
 
-HEADERS     += $$PWD/CTemplates.h \
-               $$PWD/CXmlParser.h
+HEADERS     += $$PWD/CTemplates.h
 
-SOURCES     += $$PWD/CTemplates.cpp \
-               $$PWD/CXmlParser.cpp
+SOURCES     += $$PWD/CTemplates.cpp

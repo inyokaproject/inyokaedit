@@ -43,7 +43,6 @@
  */
 
 #include <QAbstractItemView>
-#include <QDebug>
 #include <QFile>
 #include <QKeyEvent>
 #include <QScrollBar>
@@ -57,8 +56,6 @@ CTextEditor::CTextEditor(QStringList sListTplMacros,
     m_sFileName(""),
     m_bCodeCompletion(false),
     m_sListCompleter(sListTplMacros) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
   QStringList sListTemp = m_sListCompleter;
   m_sListCompleter.clear();
   for (int i = 0; i < sListTemp.size(); i++) {

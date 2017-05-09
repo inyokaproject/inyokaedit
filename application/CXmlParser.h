@@ -31,60 +31,21 @@
 
 /**
  * \class CXmlParser
- * \brief Delivering templates (groups, url, icon) from xml file.
+ * \brief Delivering menu structure from xml file.
  */
 class CXmlParser {
   class CHandler;
 
  public:
-  /**
-    * \brief Constructor
-    * \param sAppName Application name
-    * \param sAppPath Application path
-    * \param sFilePath (Relative) path and filename to xml file
-    */
-  explicit CXmlParser(const QString &sXmlFile);
+  CXmlParser();
+  bool parseXml(const QString &sXmlFile);
 
-  /**
-    * \brief Get menu name
-    * \return String with name
-    */
   QString getMenuName() const;
-
-  /**
-    * \brief Get list of template groups
-    * \return List with group names
-    */
-  QStringList getGrouplist() const;
-
-  /**
-    * \brief Get list of template group icons
-    * \return List with group icons
-    */
+  QString getPath() const;
+  QStringList getGroupNames() const;
   QStringList getGroupIcons() const;
-
-  /**
-    * \brief Get list of list template types
-    * \return List of list of template types
-    */
-  QList<QStringList> getElementTypes() const;
-
-  /**
-    * \brief Get list of list of template urls
-    * \return List of list of template urls
-    */
-  QList<QStringList> getElementUrls() const;
-
-  /**
-    * \brief Get list of list of template names
-    * \return List of list of template names
-    */
   QList<QStringList> getElementNames() const;
-
-  /**
-    * \brief Get list of list of template icons
-    * \return List of list of template icons
-    */
+  QList<QStringList> getElementInserts() const;
   QList<QStringList> getElementIcons() const;
 
  private:
@@ -92,12 +53,12 @@ class CXmlParser {
   CHandler *m_pHandler;  /**< Handle to xml parser module */
 
   QString m_sMenuName;
-  QStringList m_sListGroups;        /**< Interwiki link groups list */
-  QStringList m_sListGroupIcons;    /**< Interwiki link group icons list */
-  QList<QStringList> m_sListTypes;  /**< List of list interwiki links */
-  QList<QStringList> m_sListUrls;   /**< List of list interwiki link urls */
-  QList<QStringList> m_sListNames;  /**< List of list interwiki link names */
-  QList<QStringList> m_sListIcons;  /**< List of list interwiki link icons */
+  QString m_sPath;
+  QStringList m_sListGroups;
+  QStringList m_sListGroupIcons;
+  QList<QStringList> m_sListNames;
+  QList<QStringList> m_sListInserts;
+  QList<QStringList> m_sListIcons;
 };
 
 // ----------------------------------------------------------------------------
@@ -136,18 +97,18 @@ class CXmlParser::CHandler : public QXmlDefaultHandler {
   bool m_bInElement;
 
   QString m_tmpMenuName;
-  QStringList m_tmpListTypes;
-  QStringList m_tmpListUrls;
+  QString m_tmpPath;
   QStringList m_tmpListNames;
+  QStringList m_tmpListInserts;
   QStringList m_tmpListIcons;
 
   QString m_sMenuName_2;
+  QString m_sPath_2;
   QStringList m_sListGroups_2;
   QStringList m_sListGroupIcons_2;
-  QList<QStringList> m_sListTypes_2;
-  QList<QStringList> m_sListUrls_2;
   QList<QStringList> m_sListNames_2;
+  QList<QStringList> m_sListInserts_2;
   QList<QStringList> m_sListIcons_2;
 };
 
-#endif  // INYOKAEDIT_CINTERWIKI_H_
+#endif  // INYOKAEDIT_CXMLPARSER_H_
