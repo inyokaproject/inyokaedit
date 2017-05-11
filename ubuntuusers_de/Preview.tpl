@@ -5,11 +5,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>InyokaEdit - %filename%</title>
-    <link rel="stylesheet" type="text/css" href="community/%community%/styles/main.css" />
-    <link rel="stylesheet" type="text/css" href="community/%community%/styles/markup2.css" />
-    <link rel="stylesheet" type="text/css" href="community/%community%/styles/wiki.css" />
-    <link rel="stylesheet" type="text/css" href="community/%community%/styles/highlight.css" />
-    <link rel="stylesheet" type="text/css" href="community/%community%/styles/markup.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/styles/markup2.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/styles/wiki.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/styles/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/styles/markup.css" />
     <style type="text/css">
       div.wrap{min-width:0px;}
       div.body{padding-bottom:0px;}
