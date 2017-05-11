@@ -29,7 +29,6 @@
 #include <QInputDialog>
 
 #include "./CDownload.h"
-#include "./CProgressDialog.h"
 #include "./CUtils.h"
 
 CDownload::CDownload(QWidget *pParent, const QString &sStylesDir,
@@ -59,67 +58,6 @@ void CDownload::updateSettings(const bool bCompleter,
   m_bAutomaticImageDownload = bCompleter;
   m_sInyokaUrl = sInyokaUrl;
   m_sCommunity = sCommunity;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CDownload::loadInyokaStyles() {
-  int iRet = QMessageBox::question(m_pParent, trUtf8("Download styles"),
-                                   trUtf8("In order to preview articles "
-                                          "correctly, Inyoka resources have "
-                                          "to be downloaded. This process may "
-                                          "take a few minutes.\n\nDo you want "
-                                          "to download these files now?"),
-                                   QMessageBox::Yes | QMessageBox::No,
-                                   QMessageBox::No);
-
-  if (iRet != QMessageBox::No) {
-    this->callDownloadScript("GetInyokaStyles");
-  }
-}
-
-void CDownload::updateIWLs() {
-  int iRet = QMessageBox::question(m_pParent, trUtf8("Update IWLs"),
-                                   trUtf8("Do you want update the Inyoka "
-                                          "InterWiki-Links now?"),
-                                   QMessageBox::Yes | QMessageBox::No,
-                                   QMessageBox::No);
-
-  if (iRet != QMessageBox::No) {
-    this->callDownloadScript("GetIWLs");
-  }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void CDownload::callDownloadScript(const QString &sScript) {
-  qDebug() << "Calling download script:" << sScript;
-
-  // Check for internet connection
-  if (!CUtils::getOnlineState()) {
-    QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("Download not possible, no active internet "
-                                "connection found!"));
-    return;
-  }
-
-  CProgressDialog *pDownloadProgress;
-
-  if (QFile::exists(m_sSharePath + "/community/" + m_sCommunity + "/" + sScript)) {
-    pDownloadProgress =
-        new CProgressDialog(m_sSharePath + "/community/" + m_sCommunity + "/" + sScript,
-                            QStringList() << m_sStylesDir + "/community/" + m_sCommunity);
-  } else {
-    qWarning() << "Download script could not be found:"
-               << m_sSharePath + "/community/" + m_sCommunity + "/" + sScript;
-    QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("Download script could not be found."));
-    return;
-  }
-
-  pDownloadProgress->show();
 }
 
 // ----------------------------------------------------------------------------

@@ -94,21 +94,10 @@ CInyokaEdit::CInyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   this->createXmlMenus();
   this->setUnifiedTitleAndToolBarOnMac(true);
 
-  // Download style files if preview/styles/imgages folders doesn't
-  // exist (see QDesktopServices::DataLocation)
-  if (!m_UserDataDir.exists() ||
-      !QDir(m_UserDataDir.absolutePath() + "/community/" +
-            m_pSettings->getInyokaCommunity() + "/img").exists() ||
-      !QDir(m_UserDataDir.absolutePath() + "/community/" +
-            m_pSettings->getInyokaCommunity() + "/styles").exists() ||
-      !QDir(m_UserDataDir.absolutePath() + "/community/" +
-            m_pSettings->getInyokaCommunity() + "/Wiki").exists()) {
-    // Create folder because user may not start download.
-    // Folder is needed for preview.
-    m_UserDataDir.mkpath(m_UserDataDir.absolutePath() + "/community");
-#if !defined _WIN32
-    m_pDownloadModule->loadInyokaStyles();
-#endif
+  if (!QFile(m_UserDataDir.absolutePath() + "/community/" +
+             m_pSettings->getInyokaCommunity()).exists()) {
+    m_UserDataDir.mkpath(m_UserDataDir.absolutePath() + "/community/" +
+                         m_pSettings->getInyokaCommunity());
   }
 
   if (CUtils::getOnlineState() && m_pSettings->getWindowsCheckUpdate()) {
@@ -159,7 +148,7 @@ void CInyokaEdit::createObjects() {
                                     m_tmpPreviewImgDir.absolutePath(),
                                     m_sSharePath);
 
-  m_pParser = new CParser(m_tmpPreviewImgDir,
+  m_pParser = new CParser(m_sSharePath, m_tmpPreviewImgDir,
                           m_pSettings->getInyokaUrl(),
                           m_pSettings->getCheckLinks(),
                           m_pTemplates,
@@ -392,16 +381,6 @@ void CInyokaEdit::createActions() {
 
   // ------------------------------------------------------------------------
   // TOOLS MENU
-
-  // Download styles and IWLs
-  connect(m_pUi->downloadInyokaStylesAct, SIGNAL(triggered()),
-          m_pDownloadModule, SLOT(loadInyokaStyles()));
-  connect(m_pUi->updateIWLsAct, SIGNAL(triggered()),
-          m_pDownloadModule, SLOT(updateIWLs()));
-#if defined _WIN32
-  m_pUi->downloadInyokaStylesAct->setDisabled(true);
-  m_pUi->updateIWLsAct->setDisabled(true);
-#endif
 
   // Clear temp. image download folder
   connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()),

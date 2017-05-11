@@ -34,7 +34,6 @@
 
 #include "./CParseTemplates.h"
 #include "./CParseLinks.h"
-#include "./CParseImgMap.h"
 #include "../templates/CTemplates.h"
 
 // Qt classes
@@ -50,11 +49,12 @@ class CParser : public QObject {
   Q_OBJECT
 
  public:
-  CParser(const QDir &tmpImgDir,
+  CParser(const QString &sSharePath,
+          const QDir &tmpImgDir,
           const QString &sInyokaUrl,
           const bool bCheckLinks,
           CTemplates *pTemplates,
-          const QString sCommunity);
+          const QString &sCommunity);
   ~CParser();
 
   // PUBLIC FOR DEBUGGING
@@ -107,9 +107,8 @@ class CParser : public QObject {
 
   CParseTemplates *m_pTemplateParser;
   CParseLinks *m_pLinkParser;
-  CParseImgMap *m_pMapParser;
 
-  QDir m_tmpFileDir;
+  const QString m_sSharePath;
   const QDir m_tmpImgDir;
   QString m_sInyokaUrl;
   QString m_sCurrentFile;

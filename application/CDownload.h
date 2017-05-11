@@ -34,35 +34,17 @@
 
 /**
  * \class CDownload
- * \brief Download functions (Inyoka styles, articles, article images)
+ * \brief Download functions (articles, article images)
  */
 class CDownload : public QObject {
   Q_OBJECT
 
  public:
-  /**
-    * \brief Constructor
-    * \param pParent Pointer to parent window
-    * \param sAppName Application name
-    * \param sAppDir Application directory
-    * \param StylesDir Folder in which Inyoka style elements should be stored
-    */
   CDownload(QWidget *pParent, const QString &sStylesDir,
             const QString &sImgDir, const QString &sSharePath);
 
  public slots:
-  /**
-    * \brief Start download of an existing article
-    */
   void downloadArticle(QString sUrl = "");
-
-  /**
-    * \brief Start download of Inyoka style elements
-    */
-  void loadInyokaStyles();
-  void updateIWLs();
-  void callDownloadScript(const QString &sScript);
-
   void showArticle();
   void updateSettings(const bool bCompleter,
                       const QString &sInyokaUrl,
@@ -72,22 +54,11 @@ class CDownload : public QObject {
   void replyFinished(QNetworkReply *pReply);
 
  signals:
-  /** Signal for sending downloaded article text to editor */
   void sendArticleText(const QString &, const QString &);
 
  private:
   QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                    const QUrl& oldRedirectUrl);
-
-  /**
-    * \brief Start download of images which are attached to an article
-    * \param sArticlename Name of the article
-    * \param ImgDir Folder in which attached images should be downloaded
-    * \param sInyokaUrl Full url to the Inyoka wiki
-    * \param AutomaticImageDownload True or false if attached article images
-    *        should be downloaded without any question
-    * \return True or false for successful / not successful download
-    */
   void downloadImages();
 
   QWidget *m_pParent;

@@ -34,7 +34,7 @@
 class CProvisionalTplParser {
  public:
   CProvisionalTplParser(const QStringList &sListHtmlStart,
-                        const QDir &tmpFileOutputDir,
+                        const QString &sSharePath,
                         const QDir &tmpImgDir,
                         const QStringList &sListTestedWith,
                         const QStringList &sListTestedWithStrings,
@@ -93,7 +93,7 @@ class CProvisionalTplParser {
 
   QStringList m_sListHtmlStart;
   QString m_sCurrentFile;
-  QDir m_tmpFileDir;
+  const QString m_sSharePath;
   QDir m_tmpImgDir;
   QStringList m_sListTestedWith;
   QStringList m_sListTestedWithStrings;

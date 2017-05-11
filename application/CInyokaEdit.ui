@@ -99,8 +99,6 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="updateIWLsAct"/>
-    <addaction name="downloadInyokaStylesAct"/>
     <addaction name="deleteTempImagesAct"/>
    </widget>
    <addaction name="fileMenu"/>
@@ -443,11 +441,6 @@
     <string>Delete images which had been downloaded with an article.</string>
    </property>
   </action>
-  <action name="downloadInyokaStylesAct">
-   <property name="text">
-    <string>&amp;Download Inyoka styles</string>
-   </property>
-  </action>
   <action name="goBackBrowserAct">
    <property name="icon">
     <iconset theme="go-previous">
@@ -520,11 +513,6 @@
    </property>
    <property name="text">
     <string>Upload article</string>
-   </property>
-  </action>
-  <action name="updateIWLsAct">
-   <property name="text">
-    <string>&amp;Update InterWiki-Links</string>
    </property>
   </action>
  </widget>

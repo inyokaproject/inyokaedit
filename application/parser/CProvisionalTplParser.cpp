@@ -32,7 +32,7 @@
 #include "./CProvisionalTplParser.h"
 
 CProvisionalTplParser::CProvisionalTplParser(const QStringList &sListHtmlStart,
-                                             const QDir &tmpFileOutputDir,
+                                             const QString &sSharePath,
                                              const QDir &tmpImgDir,
                                              const QStringList &sListTestedWith,
                                              const QStringList &sListTestedWithStrings,
@@ -40,7 +40,7 @@ CProvisionalTplParser::CProvisionalTplParser(const QStringList &sListHtmlStart,
                                              const QStringList &sListTestedWithTouchStrings,
                                              const QString &sCommunity)
   : m_sListHtmlStart(sListHtmlStart),
-    m_tmpFileDir(tmpFileOutputDir),
+    m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
     m_sListTestedWith(sListTestedWith),
     m_sListTestedWithStrings(sListTestedWithStrings),
@@ -801,7 +801,8 @@ QString CProvisionalTplParser::parseImageCollection(const QStringList &sListArgs
 
     sImageUrl = sListArgs[i];
     if (sImageUrl.startsWith("Wiki/")) {
-      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
+      sImageUrl = m_sSharePath + "/community/" +
+                  m_sCommunity + "/web/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;
@@ -892,7 +893,8 @@ QString CProvisionalTplParser::parseImageSubscrition(const QStringList &sListArg
 
   sImageUrl = sListArgs[0].trimmed();
   if (sImageUrl.startsWith("Wiki/")) {
-    sImageUrl = m_tmpFileDir.absolutePath() + "/community/" + m_sCommunity + "/" + sImageUrl;
+    sImageUrl = m_sSharePath + "/community/" +
+                m_sCommunity + "/web/" + sImageUrl;
   } else if (!sImagePath.isEmpty() &&
              QFile(sImagePath + "/" + sImageUrl).exists()) {
     sImageUrl = sImagePath + "/" + sImageUrl;
@@ -1593,7 +1595,8 @@ QString CProvisionalTplParser::parsePackageInstallButton(const QStringList &sLis
   }
 
   sOutput += "\" rel=\"nofollow\" class=\"external\">"
-             "<img src=\"community/" + m_sCommunity + "/img/wiki/button.png\" "
+             "<img src=\"" + m_sSharePath + "/community/" +
+             m_sCommunity + "/web" + "/img/wiki/button.png\" "
              "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
              "mit [:apturl:]</p>";
 

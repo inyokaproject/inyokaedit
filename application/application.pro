@@ -60,7 +60,6 @@ HEADERS      += CInyokaEdit.h \
                 CFileOperations.h \
                 CFindReplace.h \
                 CPlugins.h \
-                CProgressDialog.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
@@ -76,7 +75,6 @@ SOURCES      += main.cpp \
                 CFileOperations.cpp \
                 CFindReplace.cpp  \
                 CPlugins.cpp \
-                CProgressDialog.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
@@ -86,7 +84,6 @@ SOURCES      += main.cpp \
 
 FORMS        += CInyokaEdit.ui \
                 CFindReplace.ui \
-                CProgressDialog.ui \
                 CSettingsDialog.ui
 
 RESOURCES     = res/inyokaedit_resources.qrc

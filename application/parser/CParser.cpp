@@ -25,25 +25,25 @@
  */
 
 #include "./CParser.h"
+#include "./CParseImgMap.h"
 
-CParser::CParser(const QDir &tmpImgDir,
+CParser::CParser(const QString &sSharePath,
+                 const QDir &tmpImgDir,
                  const QString &sInyokaUrl,
                  const bool bCheckLinks,
                  CTemplates *pTemplates,
-                 const QString sCommunity)
+                 const QString &sCommunity)
   : m_pRawText(NULL),
+    m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity) {
-  m_tmpFileDir = tmpImgDir;
-  m_tmpFileDir.cdUp();
-
   m_pTemplateParser = new CParseTemplates(
                         m_pTemplates->getTransTemplate(),
                         m_pTemplates->getListTplNamesINY(),
                         m_pTemplates->getListFormatHtmlStart(),
-                        m_tmpFileDir, m_tmpImgDir,
+                        m_sSharePath, m_tmpImgDir,
                         m_pTemplates->getListTestedWith(),
                         m_pTemplates->getListTestedWithStrings(),
                         m_pTemplates->getListTestedWithTouch(),
@@ -57,8 +57,6 @@ CParser::CParser(const QDir &tmpImgDir,
                                   m_pTemplates->getTransAnchor(),
                                   m_pTemplates->getTransAttachment(),
                                   m_tmpImgDir.absolutePath());
-
-  m_pMapParser = new CParseImgMap();
 }
 
 CParser::~CParser() {
@@ -110,14 +108,16 @@ QString CParser::genOutput(const QString &sActFile,
   m_pLinkParser->startParsing(m_pRawText);
 
   // Replace flags
-  m_pMapParser->startParsing(m_pRawText,
+  CParseImgMap::startParsing(m_pRawText,
                              m_pTemplates->getListFlags(),
                              m_pTemplates->getListFlagsImg(),
+                             m_sSharePath,
                              m_sCommunity);
   // Replace smilies
-  m_pMapParser->startParsing(m_pRawText,
+  CParseImgMap::startParsing(m_pRawText,
                              m_pTemplates->getListSmilies(),
                              m_pTemplates->getListSmiliesImg(),
+                             m_sSharePath,
                              m_sCommunity);
 
   this->replaceQuotes(m_pRawText);
@@ -154,7 +154,9 @@ QString CParser::genOutput(const QString &sActFile,
   sRevTextCopy = sRevTextCopy.replace(
                    "%date%", QDate::currentDate().toString("dd.MM.yyyy"))
                  .replace("%time%", QTime::currentTime().toString("hh:mm"));
-  sTemplateCopy = sTemplateCopy.replace("%community%", m_sCommunity);
+  sTemplateCopy = sTemplateCopy.replace("%folder%",
+                                        m_sSharePath + "/community/" +
+                                        m_sCommunity + "/web");
   sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
   sTemplateCopy = sTemplateCopy.replace("%tagtext%",
                                         m_pTemplates->getTransTag() + " "
@@ -965,8 +967,8 @@ void CParser::replaceImages(QTextDocument *p_rawDoc) {
 
     sImageUrl = sListTmpImageInfo[0].trimmed();
     if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
-      sImageUrl = m_tmpFileDir.absolutePath() + "/community/" +
-                  m_sCommunity + "/" + sImageUrl;
+      sImageUrl = m_sSharePath + "/community/" +
+                  m_sCommunity + "/web/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;

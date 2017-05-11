@@ -38,7 +38,7 @@ class CParseTemplates {
   CParseTemplates(QString sTransTpl,
                   QStringList sListTplNames,
                   const QStringList &sListHtmlStart,
-                  const QDir &tmpFileOutputDir,
+                  const QString &sSharePath,
                   const QDir &tmpImgDir,
                   const QStringList &sListTestedWith,
                   const QStringList &sListTestedWithStrings,
