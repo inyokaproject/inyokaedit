@@ -1,7 +1,7 @@
 ## Macro=[[Vorlage(Getestet, %%Ubuntuversion%%)]]
 {{|<title="Dieser Artikel wurde für die folgenden
 Ubuntu-Versionen getestet:" class="box tested_for">
-<@ if ['general', 'zesty', 'yakkety', 'xenial', 'trusty', 'precise'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase)@> 
+<@ if ['general', 'zesty', 'yakkety', 'xenial', 'trusty' ] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @><@ if $arguments as lowercase contain 'zesty' @>
@@ -12,8 +12,6 @@ Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
   * [:Xenial_Xerus:Ubuntu 16.04] Xenial Xerus
 <@ endif @><@ if $arguments as lowercase contain 'trusty' @>
   * [:Trusty_Tahr:Ubuntu 14.04] Trusty Tahr
-<@ endif @><@ if $arguments as lowercase contain 'precise' @>
-  * [:Precise_Pangolin:Ubuntu 12.04] Precise Pangolin
 <@ endif @>
 <@ endif @>
 <@ else @>
