@@ -27,6 +27,7 @@ Depends:
    wget
 Suggests:
    inyokaedit-plugins,
+   inyokaedit-data-ubuntuusersde
    fonts-liberation,
    python-pygments
 Description: Editor for Inyoka based portals
@@ -55,3 +56,16 @@ Description: Plugins for Inyokaedit
   * tabletemplate
   * syntax highlighter
   * hotkeys
+
+Package: inyokaedit-data-ubuntuusersde
+Architecture: any
+Depends:
+   ${shlibs:Depends},
+   ${misc:Depends},
+   inyokaedit (= ${binary:Version})
+Description: uu.de community files for Inyokaedit
+ InyokaEdit provides offline support for Inyoka based portals like
+ ubuntuusers.de.
+ .
+ This package will install Inyoka community files for ubuntuusers.de
+  
