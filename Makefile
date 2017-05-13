@@ -38,7 +38,7 @@ all:
 	$(LRELEASE) plugins/spellchecker/lang/*.ts
 	$(LRELEASE) plugins/tabletemplate/lang/*.ts
 
-install: install-inyokaedit install-plugins install-hook
+install: install-inyokaedit install-plugins install-data-ubuntuusersde install-hook
 
 infiles:
 	$(foreach FILE,$(INFILES),sed -e 's@___PREFIX___@$(prefix)@g' $(FILE).in > $(FILE) ; )
@@ -77,6 +77,9 @@ install-plugins:
 	$(INSTALL_FILE) plugins/spellchecker/lang/spellchecker_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) plugins/tabletemplate/lang/tabletemplate_de.qm $(DESTDIR)$(dataroot)/inyokaedit/lang
 
+install-data-ubuntuusersde:
+	$(CP) community    $(DESTDIR)$(dataroot)/inyokaedit/community
+	
 install-hook:
 	$(GZIP) $(DESTDIR)$(mandir)/man1/inyokaedit.1
 	$(GZIP) $(DESTDIR)$(mandir)/de/man1/inyokaedit.1
