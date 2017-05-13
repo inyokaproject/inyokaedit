@@ -78,6 +78,7 @@ install-plugins:
 	$(INSTALL_FILE) plugins/tabletemplate/lang/tabletemplate_de.qm $(DESTDIR)$(dataroot)/inyokaedit/lang
 
 install-data-ubuntuusersde:
+	$(INSTALL_DIR)     $(DESTDIR)$(dataroot)/inyokaedit/community
 	$(CP) community    $(DESTDIR)$(dataroot)/inyokaedit/community
 	
 install-hook:
