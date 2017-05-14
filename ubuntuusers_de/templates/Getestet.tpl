@@ -31,8 +31,6 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #getestet: xenial
 <@ endif @><@ if $arguments as lowercase contain 'trusty' @>
 #getestet: trusty
-<@ endif @><@ if $arguments as lowercase contain 'precise' @>
-#getestet: precise
 <@ endif @>
 <@ endif @>
 <@ else @>

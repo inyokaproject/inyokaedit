@@ -2,13 +2,13 @@
 This project is using icons from the following projects:
 
  * Tango Desktop Projekt - http://tango.freedesktop.org/
-  - License: CC BY-SA 3.0 - http://creativecommons.org/licenses/by-sa/3.0/
+  - License: Public Domain - http://creativecommons.org/licenses/publicdomain/
 
  * NuoveXT - http://nuovext.pwsp.net
    - License: GNU GPL - http://www.gnu.org/licenses/gpl.html
 
- * Oxygen Project - https://techbase.kde.org/Projects/Oxygen
-   - License: GNU LGPL - http://www.gnu.org/licenses/lgpl.html
+ * Oxygen - https://github.com/KDE/oxygen-icons
+   - License: GNU LGPLv3 - http://www.gnu.org/licenses/lgpl.html
 
- * Breeze - https://github.com/NitruxSA/breeze-icon-theme 
+ * Breeze - https://github.com/KDE/breeze-icons
    - License: GNU LGPLv3 - http://www.gnu.org/licenses/lgpl.html
