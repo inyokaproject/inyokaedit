@@ -25,6 +25,79 @@ Copyright: 2012-2015 Christian Schaerf <code.c.schaerf@t-online.de>
            2012-2017 Thorsten Roth <elthoro@gmx.de>
 License: GPL-3+
 
+Files: community/ubuntuusers_de/web/Wiki/Icons/Breeze/*
+Copyright: 2014 Uri Herrera <uri_herrera@nitrux.in> and others
+License: LGPL-3+
+
+Files: community/ubuntuusers_de/web/Wiki/Icons/Oxygen/*
+Copyright: 2007 Nuno Pinheiro <nuno@oxygen-icons.org>
+           2007 David Vignoni <david@icon-king.com>
+           2007 David Miller <miller@oxygen-icons.org>
+           2007 Johann Ollivier Lapeyre <johann@oxygen-icons.org>
+           2007 Kenneth Wimer <kwwii@bootsplash.org>
+           2007 Riccardo Iaconelli <riccardo@oxygen-icons.org>
+           and others
+License: LGPL-3+
+
+Files: community/ubuntuusers_de/web/Wiki/Icons/Tango/*
+Copyright: 2005-2009 Ulisse Perusin <uli.peru@gmail.com>
+           2005-2009 Steven Garrity <sgarrity@silverorange.com>
+           2005-2009 Lapo Calamandrei <calamandrei@gmail.com>
+           2005-2009 Ryan Collier <rcollier@novell.com>
+           2005-2009 Rodney Dawes <dobey@novell.com>
+           2005-2009 Andreas Nilsson <nisses.mail@home.se>
+           2005-2009 Tuomas Kuosmanen <tigert@tigert.com>
+           2005-2009 Garrett LeSage <garrett@novell.com>
+           2005-2009 Jakub Steiner <jimmac@novell.com>
+           and others
+License: public-domain
+ In the preparation of the 0.8.90 release Novell took care of tracking
+ down all the contributors to get them to relicense their artwork
+ into Public Domain.
+ .
+ The COPYING file of the tarball states the following:
+ The icons in this repository are herefore released into the Public Domain.
+ .
+ Additionally the copyright status of the files was tracked in the CVS and the
+ rdf properties of the SVGs adjusted for all files that were put into Public
+ Domain (see rdf:about and rdf:resource).  Both fields contain a link to the
+ Creative Commons Public Domain Dediciation[0] as reproduced below:
+ Public Domain Dedication
+ .
+ Copyright-Only Dedication (based on United States law) or Public Domain
+ Certification
+ .
+ The person or persons who have associated work with this document (the
+ "Dedicator" or "Certifier") hereby either (a) certifies that, to the best
+ of his knowledge, the work of authorship identified is in the public
+ domain of the country from which the work is published, or (b)
+ hereby dedicates whatever copyright the dedicators holds in the work
+ of authorship identified below (the "Work") to the public domain. A
+ certifier, moreover, dedicates any copyright interest he may have in
+ the associated work, and for these purposes, is described as a
+ "dedicator" below.
+ .
+ A certifier has taken reasonable steps to verify the copyright
+ status of this work. Certifier recognizes that his good faith efforts
+ may not shield him from liability if in fact the work certified is not
+ in the public domain.
+ .
+ Dedicator makes this dedication for the benefit of the public at
+ large and to the detriment of the Dedicator's heirs and successors.
+ Dedicator intends this dedication to be an overt act of relinquishment
+ in perpetuity of all present and future rights under copyright law,
+ whether vested or contingent, in the Work. Dedicator understands that
+ such relinquishment of all rights includes the relinquishment of all
+ rights to enforce (by lawsuit or otherwise) those copyrights in the
+ Work.
+ .
+ Dedicator recognizes that, once placed in the public domain, the Work
+ may be freely reproduced, distributed, transmitted, used, modified,
+ built upon, or otherwise exploited by anyone for any purpose, commercial
+ or non-commercial, and in any way, including by methods that have not
+ yet been invented or conceived.
+ [0] http://creativecommons.org/licenses/publicdomain/
+
 License: GPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -41,3 +114,20 @@ License: GPL-3+
  .
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
+
+License: LGPL-3+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 3 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License version 3 can be found in "/usr/share/common-licenses/LGPL-3".
