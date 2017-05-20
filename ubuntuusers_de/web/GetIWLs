@@ -92,6 +92,7 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/askubuntu.p
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/atomicgamer.png -O atomicgamer.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bitbucket.png -O bitbucket.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/blogspot.png -O blogspot.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/box.png -O box.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/brainstorm.png -O brainstorm.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bug.png -O bug.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonical.png -O canonical.png

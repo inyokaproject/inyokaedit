@@ -235,6 +235,12 @@ a.interwiki-blogspot {
   padding-left: 20px;
 }
 
+a.interwiki-box {
+  background-image: url(../img/interwiki/box.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
 a.interwiki-brainstorm {
   background-image: url(../img/interwiki/brainstorm.png);
   background-repeat: no-repeat;

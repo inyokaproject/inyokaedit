@@ -123,6 +123,7 @@
   </group>
   <group name="Sonstiges" icon="youtube.png">
     <element name="Blogspot" insert="[blogspot:%%Seitenname%%:]" icon="blogspot.png" />
+    <element name="box.com" insert="[box:%%Seitenname%%:]" icon="box.png" />
     <element name="derStandard" insert="[derstandard:%%Seitenname%%:]" icon="derstandard.png" />
     <element name="Diaspora" insert="[diaspora:%%Seitenname%%:]" icon="diaspora.png" />
     <element name="DuckDuckGo" insert="[duckduckgo:%%Suchbegriff%%:]" icon="duckduckgo.png" />
