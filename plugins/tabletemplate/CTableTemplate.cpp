@@ -50,11 +50,11 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
   m_pTemplates = new CTemplates(m_pSettings->value(
-                                  "InyokaCommunity", "ubuntuuser_de").toString(),
+                                  "InyokaCommunity", "ubuntuusers_de").toString(),
                                 sSharePath, m_dirPreview.absolutePath());
   m_pParser = new CParser(sSharePath, QDir(""), "", false, m_pTemplates,
                           m_pSettings->value("InyokaCommunity",
-                                             "ubuntuuser_de").toString());
+                                             "ubuntuusers_de").toString());
 
   // Build UI
   m_pDialog = new QDialog(pParent);
