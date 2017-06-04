@@ -27,7 +27,7 @@ Depends:
    wget
 Suggests:
    inyokaedit-plugins,
-   inyokaedit-data-ubuntuusersde
+   inyokaedit-data-ubuntuusersde,
    fonts-liberation,
    python-pygments
 Description: Editor for Inyoka based portals
