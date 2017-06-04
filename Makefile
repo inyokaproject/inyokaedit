@@ -79,7 +79,7 @@ install-plugins:
 
 install-data-ubuntuusersde:
 	$(INSTALL_DIR)     $(DESTDIR)$(dataroot)/inyokaedit/community
-	$(CP) community    $(DESTDIR)$(dataroot)/inyokaedit/community
+	$(CP) community    $(DESTDIR)$(dataroot)/inyokaedit
 	
 install-hook:
 	$(GZIP) $(DESTDIR)$(mandir)/man1/inyokaedit.1

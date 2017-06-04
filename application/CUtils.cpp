@@ -32,7 +32,6 @@
 #include <QNetworkProxy>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QProcess>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
