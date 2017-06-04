@@ -1,4 +1,4 @@
-inyokaedit (0.19.0-0ubuntu2) xenial; urgency=low
+inyokaedit (0.19.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Separated Inyoka community specific files.
@@ -9,14 +9,14 @@ inyokaedit (0.19.0-0ubuntu2) xenial; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Tue, 09 May 2017 23:29:00 +0200
 
-inyokaedit (0.18.2-0ubuntu1) xenial; urgency=low
+inyokaedit (0.18.2-0) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Fix for special characters in login password.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 04 Feb 2017 17:34:00 +0200
 
-inyokaedit (0.18.1-0ubuntu1) xenial; urgency=low
+inyokaedit (0.18.1-0) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Fixed uploading an article, which is including special characters.
@@ -27,7 +27,7 @@ inyokaedit (0.18.1-0ubuntu1) xenial; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Fri, 03 Feb 2017 16:57:00 +0200
 
-inyokaedit (0.18.0-0ubuntu1) xenial; urgency=low
+inyokaedit (0.18.0-0) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Moved TestedWith version definitions to external config file.
@@ -39,7 +39,7 @@ inyokaedit (0.18.0-0ubuntu1) xenial; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Thu, 27 Oct 2016 15:10:00 +0200
 
-inyokaedit (0.17.0-0ubuntu1) wily; urgency=low
+inyokaedit (0.17.0-0) wily; urgency=low
 
   [ Thorsten Roth ]
   * Added hotkey plugin (LP: #847272)
@@ -51,7 +51,7 @@ inyokaedit (0.17.0-0ubuntu1) wily; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 02 Apr 2016 17:11:00 +0200
 
-inyokaedit (0.16.0-0ubuntu1) trusty; urgency=low
+inyokaedit (0.16.0-0) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Added article upload (LP: #847264)
@@ -59,7 +59,7 @@ inyokaedit (0.16.0-0ubuntu1) trusty; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Fri, 04 Sep 2015 16:06:00 +0200
 
-inyokaedit (0.15.1-0ubuntu1) trusty; urgency=low
+inyokaedit (0.15.1-0) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Bug fixed, which prevented loading preview at switching tabs.
@@ -67,7 +67,7 @@ inyokaedit (0.15.1-0ubuntu1) trusty; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 11 Jul 2015 18:21:00 +0200
 
-inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
+inyokaedit (0.15.0-0) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Document tabs for editing multiple files in one session (LP: #847263)
@@ -82,7 +82,7 @@ inyokaedit (0.15.0-0ubuntu1) trusty; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 21 Jun 2015 19:54:00 +0200
 
-inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
+inyokaedit (0.14.0-0) trusty; urgency=low
 
   [ djcj ]
   * Added hicolor icons.
@@ -100,7 +100,7 @@ inyokaedit (0.14.0-0ubuntu1) trusty; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Nov 2014 17:40:00 +0200
 
-inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
+inyokaedit (0.13.0-0) trusty; urgency=low
 
   [ Thorsten Roth ]
   * Fixed LP: #1276300 (TOC level selection)
@@ -114,7 +114,7 @@ inyokaedit (0.13.0-0ubuntu1) trusty; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Thu, 19 Jun 2014 21:14:00 +0200
 
-inyokaedit (0.12.0-0ubuntu1) saucy; urgency=low
+inyokaedit (0.12.0-0) saucy; urgency=low
 
   [ Thorsten Roth ]
   * Fixed LP: #1202798 (escaping characters)
@@ -126,7 +126,7 @@ inyokaedit (0.12.0-0ubuntu1) saucy; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Mon, 06 Jan 2014 16:41:00 +0200
 
-inyokaedit (0.11.0-0ubuntu1) raring; urgency=low
+inyokaedit (0.11.0-0) raring; urgency=low
 
   [ Dominique Lasserre ]
   * Added keywords to .desktop file.
@@ -141,7 +141,7 @@ inyokaedit (0.11.0-0ubuntu1) raring; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Mon, 30 Sep 2013 14:57:00 +0200
 
-inyokaedit (0.10.0-0ubuntu1) raring; urgency=low
+inyokaedit (0.10.0-0) raring; urgency=low
 
   [ Thorsten Roth ]
   * Fixed LP: #942173 (Old table syntax not supported)
@@ -151,7 +151,7 @@ inyokaedit (0.10.0-0ubuntu1) raring; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Tue, 16 Jul 2013 14:00:02 +0200
 
-inyokaedit (0.9.0-0ubuntu1) quantal; urgency=low
+inyokaedit (0.9.0-0) quantal; urgency=low
 
   [ Dominique Lasserre ]
   * Register text/x-inyoka MIME type for *.inyoka and *.iny.
@@ -173,7 +173,7 @@ inyokaedit (0.9.0-0ubuntu1) quantal; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 20 Apr 2013 21:25:51 +0200
 
-inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
+inyokaedit (0.8.0-0) quantal; urgency=low
 
   [ Christian Schaerf ]
   * Added graphical settings dialog (LP: #879320).
@@ -193,7 +193,7 @@ inyokaedit (0.8.0-0ubuntu1) quantal; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 26 Jan 2013 15:48:28 +0200
 
-inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
+inyokaedit (0.7.1-0) quantal; urgency=low
 
   [ Thorsten Roth ]
   * Fixed ugly highlighting bug of headlines.
@@ -201,7 +201,7 @@ inyokaedit (0.7.1-0ubuntu1) quantal; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sat, 10 Nov 2012 17:05:32 +0200
 
-inyokaedit (0.7.0-0ubuntu1) precise; urgency=low
+inyokaedit (0.7.0-0) precise; urgency=low
 
   [ Dominique Lasserre ]
   * No longer needed lintian override removed (spelling Programm - Program).
@@ -222,7 +222,7 @@ inyokaedit (0.7.0-0ubuntu1) precise; urgency=low
 
  -- Dominique Lasserre <lasserre.d@gmail.com>  Sun, 04 Nov 2012 17:16:29 +0100
 
-inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
+inyokaedit (0.6.0-0) precise; urgency=low
 
   [ Thorsten Roth ]
   * Possibility to choose preview reload key.
@@ -237,7 +237,7 @@ inyokaedit (0.6.0-0ubuntu1) precise; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Jul 2012 17:24:28 +0200
 
-inyokaedit (0.5.0-0ubuntu2) precise; urgency=low
+inyokaedit (0.5.0-2) precise; urgency=low
 
   [ Christian Schaerf ]
   * New uploader.
@@ -269,7 +269,7 @@ inyokaedit (0.5.0-0ubuntu2) precise; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Tue, 17 Jul 2012 20:35:27 +0200
 
-inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
+inyokaedit (0.4.0-0) precise; urgency=low
 
   [ Dominique Lasserre ]
   * Improved Makefile (installation target). Hunspell dependency now optional
@@ -287,13 +287,13 @@ inyokaedit (0.4.0-0ubuntu1) precise; urgency=low
 
  -- Thorsten Roth <elthoro@gmx.de>  Tue, 17 Apr 2012 20:41:57 +0200
 
-inyokaedit (0.3.1-0ubuntu1) oneiric; urgency=low
+inyokaedit (0.3.1-0) oneiric; urgency=low
 
   * Fixed table of contents and code block generation.
 
  -- Thorsten Roth <elthoro@gmx.de>  Sun, 04 Mar 2012 23:01:08 +0200
 
-inyokaedit (0.3.0-0ubuntu1) oneiric; urgency=low
+inyokaedit (0.3.0-0) oneiric; urgency=low
 
   [ Dominique Lasserre ]
   * Apply new versions scheme.
