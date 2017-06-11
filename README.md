@@ -20,7 +20,7 @@ PPA for Ubuntu:
 ```
 sudo add-apt-repository ppa:elthoro/inyokaedit
 sudo apt-get update
-sudo apt-get install inyokaedit inyokaedit-plugins
+sudo apt-get install inyokaedit inyokaedit-data-ubuntuusersde inyokaedit-plugins
 ```
 
 ## Compiling

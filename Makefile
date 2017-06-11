@@ -78,9 +78,9 @@ install-plugins:
 	$(INSTALL_FILE) plugins/tabletemplate/lang/tabletemplate_de.qm $(DESTDIR)$(dataroot)/inyokaedit/lang
 
 install-data-ubuntuusersde:
-	$(INSTALL_DIR)     $(DESTDIR)$(dataroot)/inyokaedit/community
-	$(CP) community    $(DESTDIR)$(dataroot)/inyokaedit
-	
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/community
+	$(CP) community/ubuntuusers_de $(DESTDIR)$(dataroot)/inyokaedit/community
+
 install-hook:
 	$(GZIP) $(DESTDIR)$(mandir)/man1/inyokaedit.1
 	$(GZIP) $(DESTDIR)$(mandir)/de/man1/inyokaedit.1
@@ -98,7 +98,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/scalable/apps/inyokaedit.svg
 	$(foreach SIZE,$(ICON_SIZES),$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/$(SIZE)x$(SIZE)/apps/inyokaedit.png ;)
 
-
 clean:
 	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) clean
 	$(RM) $(INFILES)
@@ -113,4 +112,3 @@ clean:
 distclean: clean
 	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) distclean
 	$(RM) config.mak
-
