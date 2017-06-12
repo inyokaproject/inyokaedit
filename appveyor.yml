@@ -1,61 +1,63 @@
-version: 0.19.0-{build}
-branches:
-  only:
-  - master
-install:
-- ps: (Get-Content inyokaedit.pro).replace("plugins/spellchecker ", '') | Set-Content inyokaedit.pro
-build_script:
-- cmd: >-
-    git clone -b windows_files --single-branch https://github.com/inyokaproject/inyokaedit.git windows_files
-
-    git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
-
-    set PATH=C:\Qt\5.8\msvc2015_64\bin;%PATH%
-
-    call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-
-    qmake inyokaedit.pro
-
-    lrelease application\application.pro
-
-    lrelease plugins\highlighter\highlighter.pro
-
-    lrelease plugins\hotkey\hotkey.pro
-
-    lrelease plugins\knowledgebox\knowledgebox.pro
-
-    lrelease plugins\tabletemplate\tabletemplate.pro
-
-    nmake
-
-    mkdir InyokaEdit\lang
-
-    mkdir InyokaEdit\plugins
-
-    mkdir InyokaEdit\community
-
-    copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
-
-    windeployqt --release --no-translations --no-angle --no-opengl-sw InyokaEdit\InyokaEdit.exe
-
-    copy COPYING InyokaEdit\
-
-    copy README.md InyokaEdit\
-
-    copy application\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\highlighter\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\hotkey\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\knowledgebox\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\tabletemplate\lang\*.qm InyokaEdit\lang\
-
-    copy release\..\plugins\*.dll InyokaEdit\plugins\
-
-    xcopy /i /e /s community\* InyokaEdit\community\
-
-    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_msvc2015_64.zip .\InyokaEdit\
-artifacts:
+version: 0.19.0-{build}
+branches:
+  only:
+  - master
+install:
+- ps: (Get-Content inyokaedit.pro).replace("plugins/spellchecker ", '') | Set-Content inyokaedit.pro
+build_script:
+- cmd: >-
+    git clone -b windows_files --single-branch https://github.com/inyokaproject/inyokaedit.git windows_files
+
+    git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
+
+    set PATH=C:\Qt\5.8\msvc2015_64\bin;%PATH%
+
+    call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
+
+    qmake inyokaedit.pro
+
+    lrelease application\application.pro
+
+    lrelease plugins\highlighter\highlighter.pro
+
+    lrelease plugins\hotkey\hotkey.pro
+
+    lrelease plugins\knowledgebox\knowledgebox.pro
+
+    lrelease plugins\tabletemplate\tabletemplate.pro
+
+    nmake
+
+    mkdir InyokaEdit\lang
+
+    mkdir InyokaEdit\plugins
+
+    mkdir InyokaEdit\community
+
+    copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
+
+    windeployqt --release --no-translations --no-angle --no-opengl-sw InyokaEdit\InyokaEdit.exe
+
+    copy COPYING InyokaEdit\
+
+    copy README.md InyokaEdit\
+
+    copy windows_files\OpenSSL_x64\* InyokaEdit\
+
+    copy application\lang\*.qm InyokaEdit\lang\
+
+    copy plugins\highlighter\lang\*.qm InyokaEdit\lang\
+
+    copy plugins\hotkey\lang\*.qm InyokaEdit\lang\
+
+    copy plugins\knowledgebox\lang\*.qm InyokaEdit\lang\
+
+    copy plugins\tabletemplate\lang\*.qm InyokaEdit\lang\
+
+    copy release\..\plugins\*.dll InyokaEdit\plugins\
+
+    xcopy /i /e /s community\* InyokaEdit\community\
+
+    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_msvc2015_64.zip .\InyokaEdit\
+artifacts:
 - path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_msvc2015_64.zip
