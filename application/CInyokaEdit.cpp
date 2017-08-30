@@ -164,7 +164,8 @@ void CInyokaEdit::createObjects() {
   m_pFileOperations = new CFileOperations(this, m_pDocumentTabs, m_pSettings,
                                           m_sPreviewFile,
                                           m_UserDataDir.absolutePath(),
-                                          m_pTemplates->getListTplMacrosALL());
+                                          m_pTemplates->getListTplMacrosALL(),
+                                          m_pTemplates->getTransTemplate());
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
 
   connect(m_pFileOperations, SIGNAL(callPreview()),
@@ -740,7 +741,7 @@ void CInyokaEdit::insertMacro(const QString &sInsert) {
 
   // No text selected
   if (m_pCurrentEditor->textCursor().selectedText().isEmpty()) {
-    int nCurrentPos =  m_pCurrentEditor->textCursor().position();
+    int nCurrentPos = m_pCurrentEditor->textCursor().position();
     sMacro.remove("%%");  // Remove placeholder
     m_pCurrentEditor->insertPlainText(sMacro);
 

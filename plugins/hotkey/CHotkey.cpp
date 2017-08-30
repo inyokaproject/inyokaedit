@@ -313,7 +313,7 @@ void CHotkey::insertElement(QString sId) {
   sText.replace("\\n", "\n");
   int nPlaceholder1(sText.indexOf("%%"));
   int nPlaceholder2(sText.lastIndexOf("%%"));
-  int nCurrentPos =  m_pEditor->textCursor().position();
+  int nCurrentPos = m_pEditor->textCursor().position();
 
   sText.remove("%%");  // Remove placeholder
   m_pEditor->insertPlainText(sText);

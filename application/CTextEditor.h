@@ -55,7 +55,8 @@ class CTextEditor : public QTextEdit {
   Q_OBJECT
 
  public:
-  CTextEditor(QStringList sListTplMacros, QWidget *pParent = 0);
+  CTextEditor(QStringList sListTplMacros, QString sTransTemplate,
+              QWidget *pParent = 0);
   ~CTextEditor();
 
   void setFileName(const QString sFileName);
@@ -78,13 +79,14 @@ class CTextEditor : public QTextEdit {
   void insertCompletion(const QString &sCompletion);
 
  private:
-  QString textUnderCursor() const;
+  QString getLineUnderCursor();
   void setCompleter(QCompleter *c);
 
   QString m_sFileName;
   QCompleter *m_pCompleter;
   bool m_bCodeCompletion;
   QStringList m_sListCompleter;
+  const QString m_sTransTemplate;
 };
 
 #endif  // INYOKAEDIT_CTEXTEDITOR_H_

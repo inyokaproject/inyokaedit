@@ -42,7 +42,8 @@
 
 CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                  CSettings *pSettings, const QString &sPreviewFile,
-                                 QString sUserDataDir, QStringList sListTplMacros)
+                                 QString sUserDataDir, QStringList sListTplMacros,
+                                 QString sTransTemplate)
   : m_pParent(pParent),
     m_pDocumentTabs(pTabWidget),
     m_pCurrentEditor(NULL),
@@ -53,7 +54,8 @@ CFileOperations::CFileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_bLoadPreview(false),
     m_bCloseApp(false),
     m_sUserDataDir(sUserDataDir),
-    m_sListTplMacros(sListTplMacros) {
+    m_sListTplMacros(sListTplMacros),
+    m_sTransTemplate(sTransTemplate) {
   m_pFindReplace = new CFindReplace();
   connect(this, SIGNAL(triggeredFind()),
           m_pFindReplace, SLOT(callFind()));
@@ -123,7 +125,8 @@ void CFileOperations::newFile() {
 void CFileOperations::newFile(QString sFileName) {
   static quint8 nCntDocs = 0;
 
-  m_pCurrentEditor = new CTextEditor(m_sListTplMacros, m_pParent);
+  m_pCurrentEditor = new CTextEditor(m_sListTplMacros, m_sTransTemplate,
+                                     m_pParent);
   m_pListEditors << m_pCurrentEditor;
   m_pCurrentEditor->installEventFilter(m_pParent);
 

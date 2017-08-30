@@ -50,24 +50,18 @@
 #include "./CTextEditor.h"
 
 
-CTextEditor::CTextEditor(QStringList sListTplMacros,
+CTextEditor::CTextEditor(QStringList sListTplMacros, QString sTransTemplate,
                          QWidget *pParent)
   : QTextEdit(pParent),
     m_sFileName(""),
     m_bCodeCompletion(false),
-    m_sListCompleter(sListTplMacros) {
-  QStringList sListTemp = m_sListCompleter;
-  m_sListCompleter.clear();
-  for (int i = 0; i < sListTemp.size(); i++) {
-    if (sListTemp[i].startsWith("[[")) {
-      // "[[" can not be handled by completer
-      m_sListCompleter << sListTemp[i].remove("[[");
-      // Remove markers for description
-      m_sListCompleter.last() = sListTemp[i].remove("%%");
-      m_sListCompleter.last() = m_sListCompleter.last().replace(
-                                  "\\n", "\n");
-    }
+    m_sListCompleter(sListTplMacros),
+    m_sTransTemplate(sTransTemplate) {
+  for (int i = 0; i < m_sListCompleter.size(); i++) {
+    m_sListCompleter[i].replace("\\n", "\n");
   }
+  m_sListCompleter.push_front("[[" + m_sTransTemplate + "(");
+  m_sListCompleter.push_front("{{{#!" + m_sTransTemplate.toLower() + " ");
   m_pCompleter = new QCompleter(m_sListCompleter, this);
   this->setCompleter(m_pCompleter);
 
@@ -91,8 +85,6 @@ void CTextEditor::updateTextEditorSettings(const bool bCompleter) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// TODO: Move completer to plugin?
-
 void CTextEditor::setCompleter(QCompleter *completer) {
   if (m_pCompleter) {
     QObject::disconnect(m_pCompleter, 0, this, 0);
@@ -114,23 +106,41 @@ void CTextEditor::setCompleter(QCompleter *completer) {
 // ----------------------------------------------------------------------------
 
 void CTextEditor::insertCompletion(const QString &sCompletion) {
-  if ( m_pCompleter->widget() != this ) {
+  if (m_pCompleter->widget() != this) {
     return;
   }
+
   QTextCursor tc = textCursor();
-  int extra = sCompletion.length()-m_pCompleter->completionPrefix().length();
+  int extra = sCompletion.length() - m_pCompleter->completionPrefix().length();
   tc.movePosition(QTextCursor::Left);
   tc.movePosition(QTextCursor::EndOfWord);
-  tc.insertText(sCompletion.right(extra));
   setTextCursor(tc);
+
+  int nCurrentPos = tc.position();
+  QString sMacro = sCompletion.right(extra);
+  int nPlaceholder1(sMacro.indexOf("%%"));
+  int nPlaceholder2(sMacro.lastIndexOf("%%"));
+  sMacro.remove("%%");  // Remove placeholder
+  tc.insertText(sMacro);
+
+  // Select placeholder
+  if ((nPlaceholder1 != nPlaceholder2) &&
+      nPlaceholder1 >= 0 &&
+      nPlaceholder2 >= 0) {
+    QTextCursor cursor(textCursor());
+    cursor.setPosition(nCurrentPos + nPlaceholder1);
+    cursor.setPosition(nCurrentPos + nPlaceholder2 - 2,
+                       QTextCursor::KeepAnchor);
+    setTextCursor(cursor);
+  }
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CTextEditor::textUnderCursor() const {
+QString CTextEditor::getLineUnderCursor() {
   QTextCursor tc = textCursor();
-  tc.select(QTextCursor::WordUnderCursor);
+  tc.select(QTextCursor::LineUnderCursor);
   return tc.selectedText();
 }
 
@@ -170,30 +180,23 @@ void CTextEditor::keyPressEvent(QKeyEvent *e) {
     QTextEdit::keyPressEvent(e);
   }
 
-  const bool ctrlOrShift = e->modifiers()
-                           & (Qt::ControlModifier | Qt::ShiftModifier);
+  const bool ctrlOrShift = e->modifiers() &
+                           (Qt::ControlModifier | Qt::ShiftModifier);
   if (!m_pCompleter || (ctrlOrShift && e->text().isEmpty())) {
     return;
   }
 
-  static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-=");  // End of word
+  static QString eow("~@$%^&*_+|:\"<>?,./;'\\-=");  // End of word
   bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
-  QString completionPrefix = textUnderCursor();
-
-  //    if (!isShortcut && (hasModifier || e->text().isEmpty()
-  //                        || completionPrefix.length() < 3
-  //                        || eow.contains(e->text().right(1)))) {
-  //        c->popup()->hide();
-  //        return;
-  //    }
+  QString completionPrefix = this->getLineUnderCursor();
 
   if (false == m_bCodeCompletion) {
     m_pCompleter->popup()->hide();
     return;
-  } else if (!isShortcut && (hasModifier
-                             || e->text().isEmpty()
-                             || completionPrefix.length() < 3
-                             || eow.contains(e->text().right(1)))) {
+  } else if (!isShortcut && (hasModifier ||
+                             e->text().isEmpty() ||
+                             completionPrefix.length() < 3 ||
+                             eow.contains(e->text().right(1)))) {
     m_pCompleter->popup()->hide();
     return;
   }
