@@ -86,6 +86,7 @@ class CTextEditor : public QTextEdit {
   QCompleter *m_pCompleter;
   bool m_bCodeCompletion;
   QStringList m_sListCompleter;
+  QList<QPoint> m_listPosCompleter;
   const QString m_sTransTemplate;
 };
 

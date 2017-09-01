@@ -57,11 +57,23 @@ CTextEditor::CTextEditor(QStringList sListTplMacros, QString sTransTemplate,
     m_bCodeCompletion(false),
     m_sListCompleter(sListTplMacros),
     m_sTransTemplate(sTransTemplate) {
+  int nPlaceholder1(0);
+  int nPlaceholder2(0);
   for (int i = 0; i < m_sListCompleter.size(); i++) {
+    if (!m_sListCompleter[i].startsWith('[') &&
+        !m_sListCompleter[i].startsWith('{')) {
+      m_sListCompleter[i].clear();
+    }
     m_sListCompleter[i].replace("\\n", "\n");
+    nPlaceholder1 = m_sListCompleter[i].indexOf("%%");
+    nPlaceholder2 = m_sListCompleter[i].lastIndexOf("%%");
+    m_sListCompleter[i].remove("%%");
+    m_listPosCompleter << QPoint(nPlaceholder1, nPlaceholder2);
   }
   m_sListCompleter.push_front("[[" + m_sTransTemplate + "(");
   m_sListCompleter.push_front("{{{#!" + m_sTransTemplate.toLower() + " ");
+  m_listPosCompleter.push_front(QPoint(-1, -1));
+  m_listPosCompleter.push_front(QPoint(-1, -1));
   m_pCompleter = new QCompleter(m_sListCompleter, this);
   this->setCompleter(m_pCompleter);
 
@@ -115,23 +127,20 @@ void CTextEditor::insertCompletion(const QString &sCompletion) {
   tc.movePosition(QTextCursor::Left);
   tc.movePosition(QTextCursor::EndOfWord);
   setTextCursor(tc);
-
-  int nCurrentPos = tc.position();
-  QString sMacro = sCompletion.right(extra);
-  int nPlaceholder1(sMacro.indexOf("%%"));
-  int nPlaceholder2(sMacro.lastIndexOf("%%"));
-  sMacro.remove("%%");  // Remove placeholder
-  tc.insertText(sMacro);
+  tc.insertText(sCompletion.right(extra));
 
   // Select placeholder
-  if ((nPlaceholder1 != nPlaceholder2) &&
-      nPlaceholder1 >= 0 &&
-      nPlaceholder2 >= 0) {
-    QTextCursor cursor(textCursor());
-    cursor.setPosition(nCurrentPos + nPlaceholder1);
-    cursor.setPosition(nCurrentPos + nPlaceholder2 - 2,
-                       QTextCursor::KeepAnchor);
-    setTextCursor(cursor);
+  int nIndex(m_sListCompleter.indexOf(sCompletion));
+  if (-1 != nIndex &&
+      nIndex < m_listPosCompleter.length()) {
+    if ((m_listPosCompleter[nIndex].x() != m_listPosCompleter[nIndex].y()) &&
+        m_listPosCompleter[nIndex].x() >= 0 &&
+        m_listPosCompleter[nIndex].y() >= 0) {
+      tc.setPosition(m_listPosCompleter[nIndex].x());
+      tc.setPosition(m_listPosCompleter[nIndex].y() - 2,
+                     QTextCursor::KeepAnchor);
+      setTextCursor(tc);
+    }
   }
 }
 
