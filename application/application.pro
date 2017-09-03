@@ -63,6 +63,7 @@ HEADERS      += CInyokaEdit.h \
                 CTextEditor.h \
                 CSettings.h \
                 CSettingsDialog.h \
+                CSyntaxCheck.h \
                 CUpload.h \
                 CUtils.h \
                 CXmlParser.h \
@@ -78,6 +79,7 @@ SOURCES      += main.cpp \
                 CTextEditor.cpp \
                 CSettings.cpp \
                 CSettingsDialog.cpp \
+                CSyntaxCheck.cpp \
                 CUpload.cpp \
                 CXmlParser.cpp \
                 CUtils.cpp

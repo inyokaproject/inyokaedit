@@ -57,6 +57,7 @@ class CSettings : public QObject {
   // General
   QString getGuiLanguage() const;
   bool getCodeCompletion() const;
+  bool getSyntaxCheck() const;
   QString getInyokaUrl() const;
   QString getInyokaCommunity() const;
   bool getAutomaticImageDownload() const;
@@ -113,6 +114,7 @@ class CSettings : public QObject {
   // General
   QString m_sGuiLanguage;
   bool m_bCodeCompletion;   // Enable / disable code completion
+  bool m_bSyntaxCheck;
   bool m_bPreviewSplitHorizontal;
   QString m_sInyokaCommunity;
   QString m_sInyokaUrl;     // Url to inyoka

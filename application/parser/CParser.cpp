@@ -26,6 +26,7 @@
 
 #include "./CParser.h"
 #include "./CParseImgMap.h"
+#include "../CSyntaxCheck.h"
 
 CParser::CParser(const QString &sSharePath,
                  const QDir &tmpImgDir,
@@ -81,7 +82,8 @@ void CParser::updateSettings(const QString &sInyokaUrl,
 // ----------------------------------------------------------------------------
 
 QString CParser::genOutput(const QString &sActFile,
-                           QTextDocument *pRawDocument) {
+                           QTextDocument *pRawDocument,
+                           const bool &bSyntaxCheck) {
   qDebug() << "Parsing...";
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
@@ -95,6 +97,11 @@ QString CParser::genOutput(const QString &sActFile,
   m_sListNoTranslate.clear();
   this->filterEscapedChars(m_pRawText);  // Before everything
   this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
+  if (bSyntaxCheck) {
+    CSyntaxCheck::checkInyokaSyntax(m_pRawText,
+                                    m_pTemplates->getListTplNamesINY(),
+                                    m_pTemplates->getTransTemplate());
+  }
   this->replaceCodeblocks(m_pRawText);
 
   m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);

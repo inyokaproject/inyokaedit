@@ -52,6 +52,7 @@ CSettingsDialog::CSettingsDialog(CSettings *pSettings,
   // Load Settings
   // General
   m_pUi->codeCompletionCheck->setChecked(m_pSettings->m_bCodeCompletion);
+  m_pUi->syntaxCheck->setChecked(m_pSettings->m_bSyntaxCheck);
   m_pUi->splitHorizontalRadio->setChecked(m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->splitVerticalRadio->setChecked(!m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
@@ -152,6 +153,7 @@ void CSettingsDialog::accept() {
 
   // General
   m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
+  m_pSettings->m_bSyntaxCheck = m_pUi->syntaxCheck->isChecked();
   m_pSettings->m_bPreviewSplitHorizontal = m_pUi->splitHorizontalRadio->isChecked();
   m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
   m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();

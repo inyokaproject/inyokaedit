@@ -650,7 +650,8 @@ void CInyokaEdit::previewInyokaPage() {
 
   QString sRetHTML("");
   sRetHTML = m_pParser->genOutput(m_pFileOperations->getCurrentFile(),
-                                  m_pCurrentEditor->document());
+                                  m_pCurrentEditor->document(),
+                                  m_pSettings->getSyntaxCheck());
 
   // File for temporary html output
   QFile tmphtmlfile(m_sPreviewFile);

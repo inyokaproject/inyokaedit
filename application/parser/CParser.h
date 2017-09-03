@@ -61,7 +61,8 @@ class CParser : public QObject {
   void replaceTemplates(QTextDocument *p_rawDoc);
 
   // Starts generating HTML-code
-  QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument);
+  QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument,
+                    const bool &bSyntaxCheck = false);
 
  public slots:
   void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,

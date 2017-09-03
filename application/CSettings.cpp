@@ -77,6 +77,8 @@ void CSettings::readSettings() {
   m_sGuiLanguage = m_pSettings->value("GuiLanguage", "auto").toString();
   m_bCodeCompletion = m_pSettings->value("CodeCompletion",
                                          true).toBool();
+  m_bSyntaxCheck = m_pSettings->value("InyokaSyntaxCheck",
+                                         true).toBool();
   m_bPreviewSplitHorizontal = m_pSettings->value("PreviewSplitHorizontal",
                                                  true).toBool();
   m_sInyokaCommunity = m_pSettings->value("InyokaCommunity",
@@ -188,6 +190,7 @@ void CSettings::writeSettings(const QByteArray WinGeometry,
   // General settings
   m_pSettings->setValue("GuiLanguage", m_sGuiLanguage);
   m_pSettings->setValue("CodeCompletion", m_bCodeCompletion);
+  m_pSettings->setValue("InyokaSyntaxCheck", m_bSyntaxCheck);
   m_pSettings->setValue("PreviewSplitHorizontal", m_bPreviewSplitHorizontal);
   m_pSettings->setValue("InyokaCommunity", m_sInyokaCommunity);
   m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
@@ -303,6 +306,10 @@ QString CSettings::getInyokaUrl() const {
 
 bool CSettings::getCodeCompletion() const {
   return m_bCodeCompletion;
+}
+
+bool CSettings::getSyntaxCheck() const {
+  return m_bSyntaxCheck;
 }
 
 bool CSettings::getAutomaticImageDownload() const {
