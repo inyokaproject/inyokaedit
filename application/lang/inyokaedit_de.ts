@@ -55,73 +55,136 @@
 <context>
     <name>CFileOperations</name>
     <message>
-        <location filename="../CFileOperations.cpp" line="51"/>
-        <source>Inyoka document</source>
-        <translation>Inyoka Dokument</translation>
+        <location filename="../CFileOperations.cpp" line="53"/>
+        <source>Inyoka article</source>
+        <translation>Inyoka Artikel</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="52"/>
+        <location filename="../CFileOperations.cpp" line="54"/>
+        <source>Inyoka article + images</source>
+        <translation>Inyoka Artikel + Bilder</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="55"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="103"/>
+        <location filename="../CFileOperations.cpp" line="108"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="174"/>
+        <location filename="../CFileOperations.cpp" line="180"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="218"/>
+        <location filename="../CFileOperations.cpp" line="224"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="247"/>
+        <location filename="../CFileOperations.cpp" line="253"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="272"/>
+        <location filename="../CFileOperations.cpp" line="284"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="313"/>
+        <location filename="../CFileOperations.cpp" line="339"/>
+        <source>The file &quot;%1&quot; could not be opened.</source>
+        <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden.</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="350"/>
+        <source>The file &quot;%1&quot; is empty!</source>
+        <translation>Die Datei &quot;%1&quot; ist leer!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="358"/>
+        <source>Error reading &quot;%1&quot;</source>
+        <translation>Fehler beim Lesen von&quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="370"/>
+        <source>Something went wrong while reading &quot;%1&quot;</source>
+        <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="392"/>
+        <source>Error while extracting &quot;%1&quot; from archive!</source>
+        <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="402"/>
+        <source>Error while extracting archive!</source>
+        <translation>Fehler während des Entpackens des Archivs!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="425"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="398"/>
+        <location filename="../CFileOperations.cpp" line="482"/>
+        <source>Error while creating archive &quot;%1&quot;</source>
+        <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="494"/>
+        <source>Error while packing image files:
+%1.</source>
+        <translation>Fehler während des Packens der Bilddatei:
+%1.</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="519"/>
+        <location filename="../CFileOperations.cpp" line="533"/>
+        <source>Error while adding &quot;%1&quot; to archive!</source>
+        <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="544"/>
+        <source>Error while finalizing archive!</source>
+        <translation>Fehler während der Fertigstellung des Archivs!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="553"/>
+        <source>Error while creating archive!</source>
+        <translation>Fehler bei der Archiverstellung!</translation>
+    </message>
+    <message>
+        <location filename="../CFileOperations.cpp" line="617"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="420"/>
-        <location filename="../CFileOperations.cpp" line="471"/>
+        <location filename="../CFileOperations.cpp" line="639"/>
+        <location filename="../CFileOperations.cpp" line="690"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="421"/>
+        <location filename="../CFileOperations.cpp" line="640"/>
         <source>Could not open preview file for printing!</source>
-        <translation>Vorschau Datei konnte nicht zum Drucken geöffnet werden!</translation>
+        <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="137"/>
-        <location filename="../CFileOperations.cpp" line="196"/>
-        <location filename="../CFileOperations.cpp" line="207"/>
-        <location filename="../CFileOperations.cpp" line="240"/>
-        <location filename="../CFileOperations.cpp" line="357"/>
+        <location filename="../CFileOperations.cpp" line="143"/>
+        <location filename="../CFileOperations.cpp" line="202"/>
+        <location filename="../CFileOperations.cpp" line="213"/>
+        <location filename="../CFileOperations.cpp" line="246"/>
+        <location filename="../CFileOperations.cpp" line="572"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -450,46 +513,46 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     <message>
         <location filename="../CInyokaEdit.ui" line="438"/>
         <source>Delete temporarily &amp;images</source>
-        <translation>Heruntergeladene Bilder &amp;löschen</translation>
+        <translation>Temporäre Bilder &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="451"/>
+        <location filename="../CInyokaEdit.ui" line="448"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="461"/>
+        <location filename="../CInyokaEdit.ui" line="458"/>
         <source>Forward</source>
         <translation>Vorwärts</translation>
     </message>
     <message>
+        <location filename="../CInyokaEdit.ui" line="468"/>
         <location filename="../CInyokaEdit.ui" line="471"/>
-        <location filename="../CInyokaEdit.ui" line="474"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="484"/>
+        <location filename="../CInyokaEdit.ui" line="481"/>
         <source>&amp;Print preview</source>
         <translation>&amp;Vorschau drucken</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="502"/>
+        <location filename="../CInyokaEdit.ui" line="499"/>
         <source>Preference&amp;s</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="487"/>
+        <location filename="../CInyokaEdit.ui" line="484"/>
         <source>Print preview or export to PDF</source>
         <translation>Vorschau ausdrucken oder als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="492"/>
+        <location filename="../CInyokaEdit.ui" line="489"/>
         <source>&amp;Syntax overview</source>
         <translation>&amp;Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="515"/>
+        <location filename="../CInyokaEdit.ui" line="512"/>
         <source>Upload article</source>
         <translation>Artikel hochladen</translation>
     </message>
@@ -504,42 +567,37 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.ui" line="441"/>
-        <source>Delete images which had been downloaded with an article.</source>
-        <translation>Temporär mit Artikeln heruntergeladene Bilder löschen.</translation>
-    </message>
-    <message>
-        <location filename="../CInyokaEdit.cpp" line="660"/>
+        <location filename="../CInyokaEdit.cpp" line="661"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="824"/>
+        <location filename="../CInyokaEdit.cpp" line="825"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="966"/>
-        <source>Do you really want to delete all images downloaded with articles?</source>
-        <translation>Sollen wirklich alle von Artikeln herunter geladene Bilder gelöscht werden?</translation>
+        <location filename="../CInyokaEdit.cpp" line="967"/>
+        <source>Do you really want to delete all temporay article images?</source>
+        <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="977"/>
+        <location filename="../CInyokaEdit.cpp" line="978"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="985"/>
+        <location filename="../CInyokaEdit.cpp" line="986"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1069"/>
+        <location filename="../CInyokaEdit.cpp" line="1070"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1086"/>
+        <location filename="../CInyokaEdit.cpp" line="1087"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>

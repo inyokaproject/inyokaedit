@@ -111,7 +111,13 @@ class CFileOperations : public QObject {
     * \brief Load existing file
     * \param sFileName Path and name of file which should be loaded
     */
-  void loadFile(const QString &sFileName, const bool bUpdateRecent = false);
+  void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
+                const bool bArchive = false);
+
+  /**
+    * \brief Load article from archive with images
+    */
+  void loadInyArchive(const QString &sArchive);
 
   /**
     * \brief Save current file
@@ -119,6 +125,11 @@ class CFileOperations : public QObject {
     * \return True or false if saving was successful / not successful
     */
   bool saveFile(const QString &sFileName);
+
+  /**
+    * \brief Save article into archive with images
+    */
+  bool saveInyArchive(const QString &sArchive);
 
   /** \brief Print preview (printer / PDF) */
   void printPreview();
@@ -185,7 +196,8 @@ class CFileOperations : public QObject {
   bool m_bLoadPreview;
   bool m_bCloseApp;
   QTimer *m_pTimerAutosave;
-  QString m_sUserDataDir;
+  const QString m_sUserDataDir;
+  const QString m_sExtractDir;
 
   CFindReplace *m_pFindReplace;
   CUpload *m_pUploadModule;

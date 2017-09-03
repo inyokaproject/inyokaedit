@@ -961,11 +961,11 @@ bool CInyokaEdit::eventFilter(QObject *obj, QEvent *event) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// Delete images in temp. download folder (images downloaded with articles)
+// Delete images in temp folder (images downloaded with articles / from inyzip)
 void CInyokaEdit::deleteTempImages() {
   int nRet = QMessageBox::question(this, qApp->applicationName(),
                                    trUtf8("Do you really want to delete all "
-                                          "images downloaded with articles?"),
+                                          "temporay article images?"),
                                    QMessageBox::Yes | QMessageBox::No);
 
   if (QMessageBox::Yes== nRet) {
