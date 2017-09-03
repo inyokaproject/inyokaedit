@@ -93,7 +93,7 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
     qWarning() << "Error (#" << pReply->error() << ")while update check:"
                << pData->errorString();
   } else {
-    QRegExp regExp("\\bInyokaEdit-\\d+.\\d+.\\d+-Windows.zip\\b");
+    QRegExp regExp("\\bInyokaEdit-\\d+.\\d+.\\d+-\\d+-Windows_x64.zip\\b");
     QString sReply = QString::fromUtf8(pData->readAll());
 
     int nIndex = regExp.indexIn(sReply);
@@ -102,7 +102,8 @@ void CUtils::replyFinished(QNetworkReply *pReply) {
       QStringList sListLatestVer;
       QString sLatestVersion(regExp.cap());
       sLatestVersion.remove("InyokaEdit-");
-      sLatestVersion.remove("-Windows.zip");
+      sLatestVersion.remove("-Windows_x64.zip");
+      sLatestVersion = sLatestVersion.left(sLatestVersion.lastIndexOf("-"));
       sLatestVersion = sLatestVersion.trimmed();
       qDebug() << "Latest version on server:" << sLatestVersion;
 
