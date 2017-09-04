@@ -98,10 +98,11 @@ QString CParser::genOutput(const QString &sActFile,
   this->filterEscapedChars(m_pRawText);  // Before everything
   this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
   if (bSyntaxCheck) {
-    CSyntaxCheck::checkInyokaSyntax(m_pRawText,
-                                    m_pTemplates->getListTplNamesINY(),
-                                    m_pTemplates->getTransTemplate(),
-                                    m_pTemplates->getListSmilies());
+    qint32 nRet = CSyntaxCheck::checkInyokaSyntax(m_pRawText,
+                                                  m_pTemplates->getListTplNamesINY(),
+                                                  m_pTemplates->getTransTemplate(),
+                                                  m_pTemplates->getListSmilies());
+    emit this->hightlightSyntaxError(nRet);
   }
   this->replaceCodeblocks(m_pRawText);
 

@@ -153,6 +153,8 @@ void CInyokaEdit::createObjects() {
                           m_pSettings->getCheckLinks(),
                           m_pTemplates,
                           m_pSettings->getInyokaCommunity());
+  connect(m_pParser, SIGNAL(hightlightSyntaxError(qint32)),
+          this, SLOT(highlightSyntaxError(qint32)));
 
   m_pDocumentTabs = new QTabWidget;
   m_pDocumentTabs->setTabPosition(QTabWidget::North);
@@ -686,6 +688,26 @@ void CInyokaEdit::previewInyokaPage() {
   m_pWebview->load(
         QUrl::fromLocalFile(
           QFileInfo(tmphtmlfile).absoluteFilePath()));
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void CInyokaEdit::highlightSyntaxError(const qint32 nPos) {
+  QList<QTextEdit::ExtraSelection> extras;
+  QTextEdit::ExtraSelection selection;
+  selection.format.setBackground(Qt::yellow);
+  selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+qDebug() << nPos;
+  extras.clear();
+  if (-1 != nPos) {
+    selection.cursor = m_pCurrentEditor->textCursor();
+    selection.cursor.setPosition(nPos);
+    selection.cursor.clearSelection();
+    extras << selection;
+  }
+
+  m_pCurrentEditor->setExtraSelections(extras);
 }
 
 // ----------------------------------------------------------------------------

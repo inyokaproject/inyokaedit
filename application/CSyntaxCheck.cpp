@@ -34,20 +34,27 @@ CSyntaxCheck::CSyntaxCheck() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                     const QStringList &sListTplMacros,
-                                     const QString &sTransTpl,
-                                     const QStringList &sListSmilies) {
-  CSyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
-  CSyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros, sTransTpl);
+qint32 CSyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
+                                        const QStringList &sListTplMacros,
+                                        const QString &sTransTpl,
+                                        const QStringList &sListSmilies) {
+  qint32 nRet(-1);
+
+  nRet = CSyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
+  if (-1 == nRet) {
+    nRet = CSyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros, sTransTpl);
+  }
+
+  return nRet;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
-                                    const QStringList &sListSmilies) {
+qint32 CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
+                                       const QStringList &sListSmilies) {
   QList<QChar> listParenthesis;
+  QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
   QString sReplace("");
 
@@ -57,9 +64,12 @@ void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   }
 
   listParenthesis.clear();
+  qint32 nCnt(0);
   foreach (QChar c, sDoc) {
+    nCnt++;
     if ('(' == c || '{' == c || '[' == c) {
       listParenthesis.push_back(c);
+      listPos.push_back(nCnt);
     } else if (')' == c || '}' == c || ']' == c) {
       if (listParenthesis.isEmpty() ||
           !CSyntaxCheck::checkParenthesisPair(listParenthesis.last(), c)) {
@@ -67,9 +77,10 @@ void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
                              trUtf8("Syntax error detected - "
                                     "closing parenthesis without "
                                     "opening paraenthesis!"));
-        return;
+        return nCnt;
       } else {
         listParenthesis.pop_back();
+        listPos.pop_back();
       }
     }
   }
@@ -77,7 +88,9 @@ void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   if (!listParenthesis.isEmpty()) {
     QMessageBox::warning(NULL, trUtf8("Inyoka syntax check"),
                          trUtf8("Syntax error detected - open parenthesis!"));
+    return listPos.last();
   }
+  return -1;
 }
 
 // ----------------------------------------------------------------------------
@@ -98,9 +111,9 @@ bool CSyntaxCheck::checkParenthesisPair(const QChar cLeft,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
-                                       const QStringList &sListTplMacros,
-                                       const QString &sTransTpl) {
+qint32 CSyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
+                                          const QStringList &sListTplMacros,
+                                          const QString &sTransTpl) {
   QStringList sListTplRegExp;
   sListTplRegExp << "\\{\\{\\{#!" + sTransTpl + " .+\\}\\}\\}"
                  << "\\[\\[" + sTransTpl + "\\s*\\(.+\\)\\]\\]";
@@ -127,9 +140,17 @@ void CSyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         }
       } else if (sMacro.startsWith("{{{#!" + sTransTpl + " ",
                                    Qt::CaseInsensitive)) {
-        sMacro.remove("{{{#!" + sTransTpl, Qt::CaseInsensitive);
+        sMacro.remove("{{{#!" + sTransTpl + " ", Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
-        sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+        if (-1 != sMacro.indexOf(" ") && -1 != sMacro.indexOf("\n")) {
+            if (sMacro.indexOf(" ") < sMacro.indexOf("\n")) {
+              sMacro = sMacro.left(sMacro.indexOf(" ")).trimmed();
+            } else {
+              sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+            }
+        } else {
+          sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+        }
 
         if (sListTplMacros.contains(sMacro)) {
           sMacro.clear();
@@ -140,10 +161,13 @@ void CSyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         QMessageBox::warning(NULL, trUtf8("Inyoka syntax check"),
                              trUtf8("Found unknown template: %1")
                              .arg(sMacro));
+        return nPos;
       }
 
       // Proceed with next position
       nPos += findTemplate.cap(0).length();
     }
   }
+
+  return -1;
 }

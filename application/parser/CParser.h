@@ -68,6 +68,9 @@ class CParser : public QObject {
   void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
                       const QString &sCommunity);
 
+ signals:
+  void hightlightSyntaxError(const qint32);
+
  private:
   // void replaceTemplates(QTextDocument *p_rawDoc);
 

@@ -88,6 +88,7 @@ class CInyokaEdit : public QMainWindow {
   void insertMacro(const QString &sInsert);
   void dropdownXmlChanged(int nIndex);
   void deleteTempImages();
+  void highlightSyntaxError(const qint32 nPos);
   // Preview
   void previewInyokaPage();
   void loadPreviewFinished(const bool bSuccess);

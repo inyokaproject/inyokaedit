@@ -70,29 +70,29 @@
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="108"/>
+        <location filename="../CFileOperations.cpp" line="109"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="180"/>
+        <location filename="../CFileOperations.cpp" line="181"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="224"/>
+        <location filename="../CFileOperations.cpp" line="225"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="253"/>
+        <location filename="../CFileOperations.cpp" line="254"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="284"/>
+        <location filename="../CFileOperations.cpp" line="285"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
@@ -136,55 +136,55 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="482"/>
+        <location filename="../CFileOperations.cpp" line="481"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="494"/>
+        <location filename="../CFileOperations.cpp" line="493"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="519"/>
-        <location filename="../CFileOperations.cpp" line="533"/>
+        <location filename="../CFileOperations.cpp" line="518"/>
+        <location filename="../CFileOperations.cpp" line="532"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="544"/>
+        <location filename="../CFileOperations.cpp" line="543"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="553"/>
+        <location filename="../CFileOperations.cpp" line="552"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="617"/>
+        <location filename="../CFileOperations.cpp" line="616"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="639"/>
-        <location filename="../CFileOperations.cpp" line="690"/>
+        <location filename="../CFileOperations.cpp" line="638"/>
+        <location filename="../CFileOperations.cpp" line="689"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="640"/>
+        <location filename="../CFileOperations.cpp" line="639"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="143"/>
-        <location filename="../CFileOperations.cpp" line="202"/>
-        <location filename="../CFileOperations.cpp" line="213"/>
-        <location filename="../CFileOperations.cpp" line="246"/>
-        <location filename="../CFileOperations.cpp" line="572"/>
+        <location filename="../CFileOperations.cpp" line="144"/>
+        <location filename="../CFileOperations.cpp" line="203"/>
+        <location filename="../CFileOperations.cpp" line="214"/>
+        <location filename="../CFileOperations.cpp" line="247"/>
+        <location filename="../CFileOperations.cpp" line="571"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -567,37 +567,37 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="661"/>
+        <location filename="../CInyokaEdit.cpp" line="662"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="825"/>
+        <location filename="../CInyokaEdit.cpp" line="826"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="967"/>
+        <location filename="../CInyokaEdit.cpp" line="968"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="978"/>
+        <location filename="../CInyokaEdit.cpp" line="979"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="986"/>
+        <location filename="../CInyokaEdit.cpp" line="987"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1070"/>
+        <location filename="../CInyokaEdit.cpp" line="1071"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1087"/>
+        <location filename="../CInyokaEdit.cpp" line="1088"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
@@ -632,17 +632,17 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Gui Sprache</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="179"/>
+        <location filename="../CSettingsDialog.ui" line="186"/>
         <source>Connection</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="188"/>
+        <location filename="../CSettingsDialog.ui" line="195"/>
         <source>URL to Inyoka wiki</source>
         <translation>URL zum Inyoka Wiki</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="198"/>
+        <location filename="../CSettingsDialog.ui" line="205"/>
         <source>Download article images automatically</source>
         <translation>Artikelbilder autom. herunterladen</translation>
     </message>
@@ -707,42 +707,47 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="212"/>
+        <location filename="../CSettingsDialog.ui" line="178"/>
+        <source>Check Inyoka syntax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="219"/>
         <source>Proxy host name</source>
         <translation>Proxy Hostname</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="222"/>
+        <location filename="../CSettingsDialog.ui" line="229"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="236"/>
+        <location filename="../CSettingsDialog.ui" line="243"/>
         <source>User name</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="246"/>
+        <location filename="../CSettingsDialog.ui" line="253"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="260"/>
+        <location filename="../CSettingsDialog.ui" line="267"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Attention: Password not encrypted!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Achtung: Passwort wird nicht verschlüsselt!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="274"/>
+        <location filename="../CSettingsDialog.ui" line="281"/>
         <source>Check for updates (Windows only)</source>
         <translation>Nach Aktualisierungen suchen (nur Windows)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="281"/>
+        <location filename="../CSettingsDialog.ui" line="288"/>
         <source>Inyoka Community</source>
         <translation>Inyoka Community</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="292"/>
+        <location filename="../CSettingsDialog.ui" line="299"/>
         <source>Plugins</source>
         <translation>Erweiterungen</translation>
     </message>
@@ -752,29 +757,54 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="201"/>
+        <location filename="../CSettingsDialog.cpp" line="203"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="245"/>
+        <location filename="../CSettingsDialog.cpp" line="247"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="246"/>
+        <location filename="../CSettingsDialog.cpp" line="248"/>
         <source>Could not open/find community file!</source>
         <translation>Community-Datei konnte nicht geöffnet/gefunden werden!</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="257"/>
+        <location filename="../CSettingsDialog.cpp" line="259"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.cpp" line="258"/>
+        <location filename="../CSettingsDialog.cpp" line="260"/>
         <source>No community url defined!</source>
         <translation>Keine Community-Url definiert!</translation>
+    </message>
+</context>
+<context>
+    <name>CSyntaxCheck</name>
+    <message>
+        <location filename="../CSyntaxCheck.cpp" line="76"/>
+        <location filename="../CSyntaxCheck.cpp" line="89"/>
+        <location filename="../CSyntaxCheck.cpp" line="153"/>
+        <source>Inyoka syntax check</source>
+        <translation>Inyoka Syntaxüberprüfung</translation>
+    </message>
+    <message>
+        <location filename="../CSyntaxCheck.cpp" line="77"/>
+        <source>Syntax error detected - closing parenthesis without opening paraenthesis!</source>
+        <translation>Syntaxfehler entdeckt - schließende Klammer ohne öffnende Klammer!</translation>
+    </message>
+    <message>
+        <location filename="../CSyntaxCheck.cpp" line="90"/>
+        <source>Syntax error detected - open parenthesis!</source>
+        <translation>Syntaxfehler entdeckt - offene Klammer!</translation>
+    </message>
+    <message>
+        <location filename="../CSyntaxCheck.cpp" line="154"/>
+        <source>Found unknown template: %1</source>
+        <translation>Unbekannte Vorlage entdeckt: %1</translation>
     </message>
 </context>
 <context>
