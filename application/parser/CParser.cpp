@@ -100,7 +100,8 @@ QString CParser::genOutput(const QString &sActFile,
   if (bSyntaxCheck) {
     CSyntaxCheck::checkInyokaSyntax(m_pRawText,
                                     m_pTemplates->getListTplNamesINY(),
-                                    m_pTemplates->getTransTemplate());
+                                    m_pTemplates->getTransTemplate(),
+                                    m_pTemplates->getListSmilies());
   }
   this->replaceCodeblocks(m_pRawText);
 

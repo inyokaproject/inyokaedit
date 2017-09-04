@@ -37,18 +37,17 @@ class CSyntaxCheck : public QObject {
   explicit CSyntaxCheck();
 
   static void checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                const QStringList sListTplMacros,
-                                const QString sTransTpl);
+                                const QStringList &sListTplMacros,
+                                const QString &sTransTpl,
+                                const QStringList &sListSmilies);
 
  private:
-  static void checkParenthesis(const QTextDocument *pRawDoc);
+  static void checkParenthesis(const QTextDocument *pRawDoc,
+                               const QStringList &sListSmilies);
   static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
   static void checkKnownTemplates(const QTextDocument *pRawDoc,
-                                  const QStringList sListTplMacros,
-                                  const QString sTransTpl);
-
-  const QStringList m_sListTplMacros;
-  const QString sTransTpl;
+                                  const QStringList &sListTplMacros,
+                                  const QString &sTransTpl);
 };
 
 #endif  // INYOKAEDIT_CSYNTAXCHECK_H_

@@ -35,18 +35,26 @@ CSyntaxCheck::CSyntaxCheck() {
 // ----------------------------------------------------------------------------
 
 void CSyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                     const QStringList sListTplMacros,
-                                     const QString sTransTpl) {
-  CSyntaxCheck::checkParenthesis(pRawDoc);
+                                     const QStringList &sListTplMacros,
+                                     const QString &sTransTpl,
+                                     const QStringList &sListSmilies) {
+  CSyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   CSyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros, sTransTpl);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc) {
+void CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
+                                    const QStringList &sListSmilies) {
   QList<QChar> listParenthesis;
   QString sDoc(pRawDoc->toPlainText());
+  QString sReplace("");
+
+  // Replace smilies, since most of them are including open parenthesis
+  foreach (QString s, sListSmilies) {
+    sDoc = sDoc.replace(s, sReplace.fill(s.length()));
+  }
 
   listParenthesis.clear();
   foreach (QChar c, sDoc) {
@@ -91,8 +99,8 @@ bool CSyntaxCheck::checkParenthesisPair(const QChar cLeft,
 // ----------------------------------------------------------------------------
 
 void CSyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
-                                       const QStringList sListTplMacros,
-                                       const QString sTransTpl) {
+                                       const QStringList &sListTplMacros,
+                                       const QString &sTransTpl) {
   QStringList sListTplRegExp;
   sListTplRegExp << "\\{\\{\\{#!" + sTransTpl + " .+\\}\\}\\}"
                  << "\\[\\[" + sTransTpl + "\\s*\\(.+\\)\\]\\]";
