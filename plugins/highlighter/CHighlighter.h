@@ -120,6 +120,7 @@ class CHighlighter : public QObject, IEditorPlugin {
   QTextCharFormat m_imgMapFormat;
   QTextCharFormat m_listFormat;
   QTextCharFormat m_miscFormat;
+  QTextCharFormat m_syntaxErrorFormat;
   bool m_bSystemForeground;
   bool m_bSystemBackground;
   QColor m_colorForeground;

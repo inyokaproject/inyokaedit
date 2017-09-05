@@ -696,18 +696,53 @@ void CInyokaEdit::previewInyokaPage() {
 void CInyokaEdit::highlightSyntaxError(const qint32 nPos) {
   QList<QTextEdit::ExtraSelection> extras;
   QTextEdit::ExtraSelection selection;
-  selection.format.setBackground(Qt::yellow);
+
+  selection.format.setBackground(m_colorSyntaxError);
   selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-qDebug() << nPos;
+
   extras.clear();
   if (-1 != nPos) {
     selection.cursor = m_pCurrentEditor->textCursor();
     selection.cursor.setPosition(nPos);
     selection.cursor.clearSelection();
     extras << selection;
+    m_pCurrentEditor->setTextCursor(selection.cursor);
   }
 
   m_pCurrentEditor->setExtraSelections(extras);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QColor CInyokaEdit::getHighlightErrorColor() {
+#if defined _WIN32
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+                     qApp->applicationName().toLower(),
+                     qApp->applicationName().toLower());
+#else
+  QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
+                     qApp->applicationName().toLower(),
+                     qApp->applicationName().toLower());
+#endif
+  QString sStyle = settings.value("Plugin_highlighter/Style",
+                                  "standard-style").toString();
+
+#if defined _WIN32
+  QSettings styleset(QSettings::IniFormat, QSettings::UserScope,
+                     qApp->applicationName().toLower(), sStyle);
+#else
+  QSettings styleset(QSettings::NativeFormat, QSettings::UserScope,
+                     qApp->applicationName().toLower(), sStyle);
+#endif
+  sStyle = styleset.value("Style/SyntaxError",
+                          "---|---|---|0xffff00").toString();
+
+  QColor color(sStyle.right(8).replace("0x", "#"));
+  if (color.isValid()) {
+    return color;
+  }
+  return Qt::yellow;
 }
 
 // ----------------------------------------------------------------------------
@@ -890,6 +925,8 @@ void CInyokaEdit::updateEditorSettings() {
                                     m_pSettings->getInyokaCommunity());
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
+
+  m_colorSyntaxError = this->getHighlightErrorColor();
 
   // Setting proxy if available
   CUtils::setProxy(m_pSettings->getProxyHostName(),

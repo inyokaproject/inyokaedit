@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>496</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,13 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="syntaxCheck">
+         <property name="text">
+          <string>Check Inyoka syntax</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
         <widget class="QCheckBox" name="linkCheckingCheck">
          <property name="text">
@@ -65,14 +72,14 @@
        <item row="4" column="1">
         <widget class="QRadioButton" name="splitVerticalRadio">
          <property name="text">
-          <string>Vertical</string>
+          <string>Ve&amp;rtical</string>
          </property>
         </widget>
        </item>
        <item row="5" column="1">
         <widget class="QRadioButton" name="splitHorizontalRadio">
          <property name="text">
-          <string>&amp;Horizontal</string>
+          <string>Hori&amp;zontal</string>
          </property>
         </widget>
        </item>
@@ -158,13 +165,6 @@
        <item row="11" column="1">
         <widget class="QFontComboBox" name="fontComboBox"/>
        </item>
-       <item row="12" column="1">
-        <widget class="QDoubleSpinBox" name="fontSizeEdit">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
        <item row="12" column="0">
         <widget class="QLabel" name="fontSizeLabel">
          <property name="text">
@@ -172,10 +172,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="syntaxCheck">
-         <property name="text">
-          <string>Check Inyoka syntax</string>
+       <item row="12" column="1">
+        <widget class="QDoubleSpinBox" name="fontSizeEdit">
+         <property name="decimals">
+          <number>1</number>
          </property>
         </widget>
        </item>

@@ -200,7 +200,8 @@ void CFileOperations::openRecentFile(const int nEntry) {
 
 bool CFileOperations::save() {
   if (m_pCurrentEditor->getFileName().isEmpty() ||
-      m_pCurrentEditor->getFileName().contains(trUtf8("Untitled"))) {
+      m_pCurrentEditor->getFileName().contains(trUtf8("Untitled")) ||
+      !QFile::exists(m_pCurrentEditor->getFileName())) {
     return this->saveAs();
   } else {
     return this->saveFile(m_pCurrentEditor->getFileName());

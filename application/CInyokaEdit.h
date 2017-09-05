@@ -89,6 +89,7 @@ class CInyokaEdit : public QMainWindow {
   void dropdownXmlChanged(int nIndex);
   void deleteTempImages();
   void highlightSyntaxError(const qint32 nPos);
+  QColor getHighlightErrorColor();
   // Preview
   void previewInyokaPage();
   void loadPreviewFinished(const bool bSuccess);
@@ -141,6 +142,7 @@ class CInyokaEdit : public QMainWindow {
   const QString m_sSharePath;
   const QDir m_UserDataDir;
   const QString m_sPreviewFile;
+  QColor m_colorSyntaxError;
   QDir m_tmpPreviewImgDir;
   QTimer *m_pPreviewTimer;
   bool m_bOpenFileAfterStart;

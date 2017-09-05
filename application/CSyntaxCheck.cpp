@@ -60,13 +60,12 @@ qint32 CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
 
   // Replace smilies, since most of them are including open parenthesis
   foreach (QString s, sListSmilies) {
-    sDoc = sDoc.replace(s, sReplace.fill(s.length()));
+    sDoc = sDoc.replace(s, sReplace.fill('X', s.length()));
   }
 
   listParenthesis.clear();
   qint32 nCnt(0);
   foreach (QChar c, sDoc) {
-    nCnt++;
     if ('(' == c || '{' == c || '[' == c) {
       listParenthesis.push_back(c);
       listPos.push_back(nCnt);
@@ -83,6 +82,7 @@ qint32 CSyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
         listPos.pop_back();
       }
     }
+    nCnt++;
   }
 
   if (!listParenthesis.isEmpty()) {

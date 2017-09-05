@@ -162,6 +162,7 @@ void CHighlighter::copyDefaultStyles() {
       out << "Parser=0x800000|true|false\n";
       out << "TableCellFormating=0x800080|false|false\n";
       out << "TextFormating=0xff0000|false|false\n";
+      out << "SyntaxError=---|---|---|0xffff00\n";
       out.flush();
       stylefile.close();
     }
@@ -187,6 +188,7 @@ void CHighlighter::copyDefaultStyles() {
       out << "Parser=0xcc0000|true|false\n";
       out << "TableCellFormating=0x75507b|false|false\n";
       out << "TextFormating=0xfcaf3e|true|false\n";
+      out << "SyntaxError=---|---|---|0xaaaa7f\n";
       out.flush();
       stylefile.close();
     }
@@ -233,7 +235,8 @@ void CHighlighter::buildUi(QWidget *pParent) {
               << trUtf8("Hyperlink") << trUtf8("InterWiki")
               << trUtf8("Macro") << trUtf8("Parser") << trUtf8("List")
               << trUtf8("Table line") << trUtf8("Table cell format")
-              << trUtf8("ImgMap") << trUtf8("Misc") << trUtf8("Comment");
+              << trUtf8("ImgMap") << trUtf8("Misc") << trUtf8("Comment")
+              << trUtf8("Syntax error");
   m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 
   connect(m_pUi->styleFilesBox, SIGNAL(currentIndexChanged(int)),
@@ -324,6 +327,9 @@ void CHighlighter::readStyle(const QString &sStyle) {
   this->evalKey(sTmpKey, m_newTableLineFormat);
   sTmpKey = m_pStyleSet->value("Misc", "0xff0000").toString();
   this->evalKey(sTmpKey, m_miscFormat);
+  sTmpKey = m_pStyleSet->value("SyntaxError", "---" + sSEPARATOR + "---" +
+                               sSEPARATOR + "---" + sSEPARATOR + "0xffff00").toString();
+  this->evalKey(sTmpKey, m_syntaxErrorFormat);
   m_pStyleSet->endGroup();
 }
 
@@ -349,27 +355,35 @@ void CHighlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
 
   // Foreground color
   if (sListTmp.size() > 0) {
-    tmpColor.setRgb(sListTmp[0].trimmed().toInt(&bOk, 16));
-    if (bOk) {
-      tmpBrush.setColor(tmpColor);
-      charFormat.setForeground(tmpBrush);
+    if ("---" != sListTmp[0].trimmed()) {
+      tmpColor.setRgb(sListTmp[0].trimmed().toInt(&bOk, 16));
+      if (bOk) {
+        tmpBrush.setColor(tmpColor);
+        charFormat.setForeground(tmpBrush);
+      }
     }
     // Font weight
     if (sListTmp.size() > 1) {
-      if ("true" == sListTmp[1].trimmed().toLower()) {
-        charFormat.setFontWeight(QFont::Bold);
+      if ("---" != sListTmp[1].trimmed()) {
+        if ("true" == sListTmp[1].trimmed().toLower()) {
+          charFormat.setFontWeight(QFont::Bold);
+        }
       }
       // Italic
       if (sListTmp.size() > 2) {
-        if ("true" == sListTmp[2].trimmed().toLower()) {
-          charFormat.setFontItalic(true);
+        if ("---" != sListTmp[2].trimmed()) {
+          if ("true" == sListTmp[2].trimmed().toLower()) {
+            charFormat.setFontItalic(true);
+          }
         }
         // Background
         if (sListTmp.size() > 3) {
-          tmpColor.setRgb(sListTmp[3].trimmed().toInt(&bOk, 16));
-          if (bOk) {
-            tmpBrush.setColor(tmpColor);
-            charFormat.setBackground(tmpBrush);
+          if ("---" != sListTmp[3].trimmed()) {
+            tmpColor.setRgb(sListTmp[3].trimmed().toInt(&bOk, 16));
+            if (bOk) {
+              tmpBrush.setColor(tmpColor);
+              charFormat.setBackground(tmpBrush);
+            }
           }
         }
       }
@@ -407,6 +421,11 @@ void CHighlighter::saveStyle() {
   this->writeFormat("ImgMap", m_imgMapFormat);
   this->writeFormat("Misc", m_miscFormat);
   this->writeFormat("Comment", m_commentFormat);
+  if (m_syntaxErrorFormat.background().isOpaque()) {
+    m_pStyleSet->setValue(
+          "SyntaxError", "---" + sSEPARATOR + "---" + sSEPARATOR + "---" +
+          sSEPARATOR + "0x" + m_syntaxErrorFormat.background().color().name().remove("#"));
+  }
   m_pStyleSet->endGroup();
 }
 
@@ -488,6 +507,8 @@ void CHighlighter::loadHighlighting(const QString &sStyleFile) {
   this->readValue(11, this->m_imgMapFormat);         // Image map
   this->readValue(12, this->m_miscFormat);           // Misc
   this->readValue(13, this->m_commentFormat);        // Comment
+  m_pUi->styleTable->item(14, 3)->setText(
+        m_syntaxErrorFormat.background().color().name());  // Syntax error
 }
 
 // ----------------------------------------------------------------------------
@@ -569,6 +590,7 @@ void CHighlighter::saveHighlighting() {
   this->evalKey(this->createValues(11), m_imgMapFormat);
   this->evalKey(this->createValues(12), m_miscFormat);
   this->evalKey(this->createValues(13), m_commentFormat);
+  this->evalKey(this->createValues(14), m_syntaxErrorFormat);
 
   this->saveStyle();
   this->readStyle(m_pUi->styleFilesBox->currentText());
