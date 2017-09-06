@@ -30,7 +30,6 @@
 
 #include "./CTableTemplate.h"
 #include "ui_CTableTemplate.h"
-#include "../../application/CSyntaxCheck.h"
 
 void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
                                 const QDir userDataDir,
