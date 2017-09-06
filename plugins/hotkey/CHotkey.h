@@ -28,6 +28,7 @@
 #define INYOKAEDIT_CHOTKEY_H_
 
 #include <QDialog>
+#include <QKeySequenceEdit>
 #include <QtPlugin>
 #include <QPushButton>
 #include <QShortcut>
@@ -86,8 +87,7 @@ class CHotkey : public QObject, IEditorPlugin {
   void buildUi(QWidget *pParent);
   void registerHotkeys();
   void writeSettings();
-  void createRow(const QKeySequence &sequence, const QString &sText);
-  bool eventFilter(QObject *pObject, QEvent *pEvent);
+  void createRow(QKeySequenceEdit *sequenceEdit, const QString &sText);
 
   QWidget *m_pParent;
   Ui::CHotkeyClass *m_pUi;
@@ -96,8 +96,8 @@ class CHotkey : public QObject, IEditorPlugin {
   QSettings *m_pSettingsApp;
   CTextEditor *m_pEditor;
   QString m_sSharePath;
+  QList<QKeySequenceEdit *> m_listSequenceEdit;
   QStringList m_sListEntries;
-  QList<QKeySequence> m_listEntryKey;
   QList<QAction *> m_listActions;
   QList<QAction *> m_listActionsOld;
   QSignalMapper *m_pSigMapHotkey;

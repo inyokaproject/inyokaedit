@@ -130,14 +130,14 @@ void CHotkey::buildUi(QWidget *pParent) {
   m_pUi->entriesTable->setColumnWidth(2, 40);
   m_pUi->entriesTable->viewport()->installEventFilter(this);
 
-  if (m_sListEntries.size() != m_listEntryKey.size()) {
+  if (m_sListEntries.size() != m_listSequenceEdit.size()) {
     qCritical() << "Error building hotkey dialog. List sizes:"
                 << m_sListEntries.size() << "!="
-                << m_listEntryKey.size();
+                << m_listSequenceEdit.size();
     return;
   }
   for (int nRow = 0; nRow < m_sListEntries.size(); nRow++) {
-    this->createRow(m_listEntryKey[nRow], m_sListEntries[nRow]);
+    this->createRow(m_listSequenceEdit[nRow], m_sListEntries[nRow]);
   }
 
   connect(m_pSigMapHotkey, SIGNAL(mapped(QString)),
@@ -155,16 +155,16 @@ void CHotkey::buildUi(QWidget *pParent) {
 
 void CHotkey::loadHotkeyEntries() {
   // Load entries from default template or config file
-  m_listEntryKey.clear();
+  m_listSequenceEdit.clear();
   m_sListEntries.clear();
   uint nNumOfEntries = m_pSettings->value("Hotkey/NumOfEntries",
                                           0).toUInt();
   if (0 == nNumOfEntries) {
-    m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_B);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
     m_sListEntries << "'''Bold'''";
-    m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_I);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_I);
     m_sListEntries << "''Italic''";
-    m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_L);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_L);
     m_sListEntries << "Text %%Selected%%";
     this->writeSettings();
   } else {
@@ -176,8 +176,9 @@ void CHotkey::loadHotkeyEntries() {
                     "Entry_" + QString::number(i), "").toString();
       if (!sTmpEntry.isEmpty()) {
         m_sListEntries << sTmpEntry;
-        m_listEntryKey << m_pSettings->value(
-                            "Key_" + QString::number(i), "").toString();
+        m_listSequenceEdit << new QKeySequenceEdit(
+                                m_pSettings->value("Key_" + QString::number(i),
+                                                   "").toString());
       }
     }
     m_pSettings->endGroup();
@@ -203,16 +204,8 @@ void CHotkey::executePlugin() {
 void CHotkey::accept() {
   int nSize = m_sListEntries.size();
   m_sListEntries.clear();
-  m_listEntryKey.clear();
   for (int i = 0; i < nSize; i ++) {
-    if (!m_pUi->entriesTable->item(i, 1)->text().isEmpty()) {
-      m_sListEntries << m_pUi->entriesTable->item(i, 1)->text();
-      if (!m_pUi->entriesTable->item(i, 0)->text().isEmpty()) {
-        m_listEntryKey << m_pUi->entriesTable->item(i, 0)->text();
-      } else {
-        m_sListEntries.removeLast();
-      }
-    }
+    m_sListEntries << m_pUi->entriesTable->item(i, 1)->text();
   }
 
   this->writeSettings();
@@ -229,8 +222,8 @@ void CHotkey::reject() {
 
 void CHotkey::addRow() {
   m_sListEntries << trUtf8("'''Bold'''");
-  m_listEntryKey << QKeySequence(Qt::CTRL + Qt::Key_B);
-  this->createRow(m_listEntryKey.last(), m_sListEntries.last());
+  m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
+  this->createRow(m_listSequenceEdit.last(), m_sListEntries.last());
   m_pUi->entriesTable->scrollToBottom();
   m_pUi->entriesTable->editItem(m_pUi->entriesTable->item(
                                   m_sListEntries.size() - 1, 1));
@@ -239,7 +232,7 @@ void CHotkey::addRow() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::createRow(const QKeySequence &sequence, const QString &sText) {
+void CHotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -248,7 +241,7 @@ void CHotkey::createRow(const QKeySequence &sequence, const QString &sText) {
   }
 
   // Key sequence
-  m_pUi->entriesTable->item(nRow, 0)->setText(sequence.toString());
+  m_pUi->entriesTable->setCellWidget(nRow, 0, sequenceEdit);
 
   // Text
   m_pUi->entriesTable->item(nRow, 1)->setText(sText);
@@ -275,10 +268,11 @@ void CHotkey::deleteRow(QWidget *widget) {
     // qDebug() << "DELETE ROW:" << nIndex;
     if (nIndex >= 0 && nIndex < m_sListEntries.size()) {
       m_sListEntries.removeAt(nIndex);
-      m_listEntryKey.removeAt(nIndex);
       delete button;
       button = NULL;
       m_listDelRowButtons.removeAt(nIndex);
+      delete m_listSequenceEdit[nIndex];
+      m_listSequenceEdit.removeAt(nIndex);
       m_pUi->entriesTable->removeRow(nIndex);
     }
   }
@@ -296,7 +290,7 @@ void CHotkey::registerHotkeys() {
   m_listActions.clear();
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_listActions << new QAction(QString::number(i), m_pParent);
-    m_listActions.last()->setShortcut(m_listEntryKey[i]);
+    m_listActions.last()->setShortcut(m_listSequenceEdit[i]->keySequence());
     m_pSigMapHotkey->setMapping(m_listActions.last(), QString::number(i));
     connect(m_listActions.last(), SIGNAL(triggered()),
             m_pSigMapHotkey, SLOT(map()));
@@ -342,53 +336,9 @@ void CHotkey::writeSettings() {
     m_pSettings->setValue("Entry_" + QString::number(i),
                           m_sListEntries[i]);
     m_pSettings->setValue("Key_" + QString::number(i),
-                          m_listEntryKey[i].toString());
+                          m_listSequenceEdit[i]->keySequence().toString());
   }
   m_pSettings->endGroup();
-}
-
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-bool CHotkey::eventFilter(QObject *pObject, QEvent *pEvent) {
-  if (pEvent->type() == QEvent::ShortcutOverride) {
-    if (pObject == m_pUi->entriesTable->viewport()) {
-      QTableWidgetItem *pItem = m_pUi->entriesTable->currentItem();
-
-      if (0 == pItem->column()) {  // Check only key column
-        QKeyEvent *pKeyEvent = static_cast<QKeyEvent*>(pEvent);
-
-        int nKeyInt = pKeyEvent->key();
-        Qt::Key key = static_cast<Qt::Key>(nKeyInt);
-        if(key == Qt::Key_unknown){
-          qWarning() << "Unknown key:" << pKeyEvent->key();
-          return QObject::eventFilter(pObject, pEvent);
-        } else if (key == Qt::Key_Return || key == Qt::Key_Enter) {
-          return QObject::eventFilter(pObject, pEvent);
-        }
-
-        // Check key sequence and modifiers
-        Qt::KeyboardModifiers modifiers = pKeyEvent->modifiers();
-        if (modifiers & Qt::ShiftModifier) {
-          nKeyInt += Qt::SHIFT;
-        }
-        if (modifiers & Qt::ControlModifier) {
-          nKeyInt += Qt::CTRL;
-        }
-        if (modifiers & Qt::AltModifier) {
-          nKeyInt += Qt::ALT;
-        }
-        if (modifiers & Qt::MetaModifier) {
-          nKeyInt += Qt::META;
-        }
-
-        pItem->setText(QKeySequence(nKeyInt).toString(QKeySequence::NativeText));
-      }
-    }
-  }
-
-  return QObject::eventFilter(pObject, pEvent);
 }
 
 // ----------------------------------------------------------------------------
