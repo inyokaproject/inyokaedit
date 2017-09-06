@@ -6,8 +6,10 @@ Features:
 * Upload article into Inyoka wiki
 * Integrated article preview
 * Tab support for editing multiple articles in parallel
-* Simple code completion
+* Code completion for templates
+* Simple Inyoka syntax check (parenthesis, known templates)
 * All Inyoka templates and InterWiki links available via menu entries
+* Save article together with images in one file
 * Plug-ins:
   * Syntax highlighting of Inyoka elements
   * Spell checker (based on Hunspell)
