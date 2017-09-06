@@ -56,8 +56,16 @@ build_script:
 
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
-    xcopy /i /e /s community\* InyokaEdit\community\
+    chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
 
-    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_msvc2015_64.zip .\InyokaEdit\
+    rmdir /S /Q InyokaEdit\bearer
+
+    rmdir /S /Q InyokaEdit\iconengines
+
+    rmdir /S /Q InyokaEdit\imageformats
+
+    rmdir /S /Q InyokaEdit\position
+
+    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_x64.zip .\InyokaEdit\
 artifacts:
-- path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_msvc2015_64.zip
+- path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_x64.zip
