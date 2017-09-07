@@ -58,8 +58,6 @@ build_script:
 
     chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
 
-    rmdir /S /Q InyokaEdit\bearer
-
     rmdir /S /Q InyokaEdit\iconengines
 
     rmdir /S /Q InyokaEdit\imageformats

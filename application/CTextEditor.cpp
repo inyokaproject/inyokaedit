@@ -127,6 +127,8 @@ void CTextEditor::insertCompletion(const QString &sCompletion) {
   tc.movePosition(QTextCursor::Left);
   tc.movePosition(QTextCursor::EndOfWord);
   setTextCursor(tc);
+  int nCurrentPos = tc.position();
+  int nPosInCompletion = sCompletion.length() - extra;
   tc.insertText(sCompletion.right(extra));
 
   // Select placeholder
@@ -136,9 +138,11 @@ void CTextEditor::insertCompletion(const QString &sCompletion) {
     if ((m_listPosCompleter[nIndex].x() != m_listPosCompleter[nIndex].y()) &&
         m_listPosCompleter[nIndex].x() >= 0 &&
         m_listPosCompleter[nIndex].y() >= 0) {
-      tc.setPosition(m_listPosCompleter[nIndex].x());
-      tc.setPosition(m_listPosCompleter[nIndex].y() - 2,
-                     QTextCursor::KeepAnchor);
+      tc.setPosition(
+            nCurrentPos - nPosInCompletion + m_listPosCompleter[nIndex].x());
+      tc.setPosition(
+            nCurrentPos - nPosInCompletion + m_listPosCompleter[nIndex].y() - 2,
+            QTextCursor::KeepAnchor);
       setTextCursor(tc);
     }
   }
