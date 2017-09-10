@@ -80,111 +80,111 @@
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="225"/>
+        <location filename="../CFileOperations.cpp" line="226"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="254"/>
+        <location filename="../CFileOperations.cpp" line="255"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="285"/>
+        <location filename="../CFileOperations.cpp" line="286"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="339"/>
+        <location filename="../CFileOperations.cpp" line="340"/>
         <source>The file &quot;%1&quot; could not be opened.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="350"/>
+        <location filename="../CFileOperations.cpp" line="351"/>
         <source>The file &quot;%1&quot; is empty!</source>
         <translation>Die Datei &quot;%1&quot; ist leer!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="358"/>
+        <location filename="../CFileOperations.cpp" line="359"/>
         <source>Error reading &quot;%1&quot;</source>
         <translation>Fehler beim Lesen von&quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="370"/>
+        <location filename="../CFileOperations.cpp" line="371"/>
         <source>Something went wrong while reading &quot;%1&quot;</source>
         <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="392"/>
+        <location filename="../CFileOperations.cpp" line="393"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="402"/>
+        <location filename="../CFileOperations.cpp" line="403"/>
         <source>Error while extracting archive!</source>
         <translation>Fehler während des Entpackens des Archivs!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="425"/>
+        <location filename="../CFileOperations.cpp" line="426"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="481"/>
+        <location filename="../CFileOperations.cpp" line="482"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="493"/>
+        <location filename="../CFileOperations.cpp" line="494"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="518"/>
-        <location filename="../CFileOperations.cpp" line="532"/>
+        <location filename="../CFileOperations.cpp" line="519"/>
+        <location filename="../CFileOperations.cpp" line="533"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="543"/>
+        <location filename="../CFileOperations.cpp" line="544"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="552"/>
+        <location filename="../CFileOperations.cpp" line="553"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="616"/>
+        <location filename="../CFileOperations.cpp" line="617"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="638"/>
-        <location filename="../CFileOperations.cpp" line="689"/>
+        <location filename="../CFileOperations.cpp" line="639"/>
+        <location filename="../CFileOperations.cpp" line="690"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../CFileOperations.cpp" line="639"/>
+        <location filename="../CFileOperations.cpp" line="640"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
         <location filename="../CFileOperations.cpp" line="144"/>
         <location filename="../CFileOperations.cpp" line="203"/>
-        <location filename="../CFileOperations.cpp" line="214"/>
-        <location filename="../CFileOperations.cpp" line="247"/>
-        <location filename="../CFileOperations.cpp" line="571"/>
+        <location filename="../CFileOperations.cpp" line="215"/>
+        <location filename="../CFileOperations.cpp" line="248"/>
+        <location filename="../CFileOperations.cpp" line="572"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -567,37 +567,37 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="662"/>
+        <location filename="../CInyokaEdit.cpp" line="664"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="826"/>
+        <location filename="../CInyokaEdit.cpp" line="883"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="968"/>
+        <location filename="../CInyokaEdit.cpp" line="1027"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="979"/>
+        <location filename="../CInyokaEdit.cpp" line="1038"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="987"/>
+        <location filename="../CInyokaEdit.cpp" line="1046"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1071"/>
+        <location filename="../CInyokaEdit.cpp" line="1130"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../CInyokaEdit.cpp" line="1088"/>
+        <location filename="../CInyokaEdit.cpp" line="1147"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
@@ -627,7 +627,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Codevervollständigung</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="137"/>
+        <location filename="../CSettingsDialog.ui" line="144"/>
         <source>Gui language</source>
         <translation>Gui Sprache</translation>
     </message>
@@ -647,57 +647,47 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Artikelbilder autom. herunterladen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="47"/>
+        <location filename="../CSettingsDialog.ui" line="54"/>
         <source>Enable link checking</source>
         <translation>Inyoka-Links überprüfen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="89"/>
+        <location filename="../CSettingsDialog.ui" line="96"/>
         <source>Time which to autosave an article after (sec, 0 means disabled)</source>
         <translation>Zeit nach der ein Artikel automatisch gespeichert wird (sek, 0 = deaktiviert)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="82"/>
+        <location filename="../CSettingsDialog.ui" line="89"/>
         <source>Autosave time (in sec)</source>
         <translation>Autospeicherzeit (in sek)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="99"/>
+        <location filename="../CSettingsDialog.ui" line="106"/>
         <source>Reload preview key</source>
         <translation>Taste Vorschau neu laden</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="106"/>
+        <location filename="../CSettingsDialog.ui" line="113"/>
         <source>Select input box and press the desired reload key. Press DEL to remove the key.</source>
         <translation>Eingabefeld markieren und gewünschte Reload-Taste drücken. Drücke &quot;Entf&quot; zum löschen der eingestellten Taste.</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="113"/>
+        <location filename="../CSettingsDialog.ui" line="120"/>
         <source>Auto reload preview (in sec)</source>
         <translation>Auto-Vorschau (in sek)</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="54"/>
+        <location filename="../CSettingsDialog.ui" line="61"/>
         <source>Scrollbar synchronization</source>
         <translation>Scrollbalken synchronisieren</translation>
     </message>
     <message>
         <location filename="../CSettingsDialog.ui" line="68"/>
-        <source>Vertical</source>
-        <translation>Vertikal</translation>
-    </message>
-    <message>
-        <location filename="../CSettingsDialog.ui" line="61"/>
         <source>Preview window</source>
         <translation>Vorschaufenster</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="75"/>
-        <source>&amp;Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CSettingsDialog.ui" line="154"/>
+        <location filename="../CSettingsDialog.ui" line="161"/>
         <source>Font</source>
         <translation>Schriftart</translation>
     </message>
@@ -707,9 +697,19 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Schriftgröße</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="178"/>
+        <location filename="../CSettingsDialog.ui" line="47"/>
         <source>Check Inyoka syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>Inyoka Syntaxprüfunng</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="75"/>
+        <source>Ve&amp;rtical</source>
+        <translation>Ve&amp;rtikal</translation>
+    </message>
+    <message>
+        <location filename="../CSettingsDialog.ui" line="82"/>
+        <source>Hori&amp;zontal</source>
+        <translation>Hori&amp;zontal</translation>
     </message>
     <message>
         <location filename="../CSettingsDialog.ui" line="219"/>
@@ -752,7 +752,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Erweiterungen</translation>
     </message>
     <message>
-        <location filename="../CSettingsDialog.ui" line="123"/>
+        <location filename="../CSettingsDialog.ui" line="130"/>
         <source>Number of entries in recent files list</source>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
@@ -785,14 +785,14 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
 <context>
     <name>CSyntaxCheck</name>
     <message>
-        <location filename="../CSyntaxCheck.cpp" line="76"/>
+        <location filename="../CSyntaxCheck.cpp" line="75"/>
         <location filename="../CSyntaxCheck.cpp" line="89"/>
-        <location filename="../CSyntaxCheck.cpp" line="153"/>
+        <location filename="../CSyntaxCheck.cpp" line="161"/>
         <source>Inyoka syntax check</source>
         <translation>Inyoka Syntaxüberprüfung</translation>
     </message>
     <message>
-        <location filename="../CSyntaxCheck.cpp" line="77"/>
+        <location filename="../CSyntaxCheck.cpp" line="76"/>
         <source>Syntax error detected - closing parenthesis without opening paraenthesis!</source>
         <translation>Syntaxfehler entdeckt - schließende Klammer ohne öffnende Klammer!</translation>
     </message>
@@ -802,7 +802,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Syntaxfehler entdeckt - offene Klammer!</translation>
     </message>
     <message>
-        <location filename="../CSyntaxCheck.cpp" line="154"/>
+        <location filename="../CSyntaxCheck.cpp" line="162"/>
         <source>Found unknown template: %1</source>
         <translation>Unbekannte Vorlage entdeckt: %1</translation>
     </message>
