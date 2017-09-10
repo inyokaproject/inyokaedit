@@ -1,4 +1,4 @@
-inyokaedit (0.20.0-0) xenial; urgency=low
+inyokaedit (0.20.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Possibility to save an article and images together in one file (#75).
