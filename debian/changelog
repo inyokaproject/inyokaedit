@@ -1,3 +1,13 @@
+inyokaedit (0.20.0-0) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Possibility to save an article and images together in one file (#75).
+  * Improved code completion for templates at beginning of a line (#69).
+  * Simple Inyoka syntax check.
+  * Improved hotkey plugin by using QKeySequenceEdit widget.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 10 Sep 2017 15:24:00 +0200
+
 inyokaedit (0.19.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
