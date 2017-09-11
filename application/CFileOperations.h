@@ -124,7 +124,7 @@ class CFileOperations : public QObject {
     * \param sFileName Path and name of file which should be saved
     * \return True or false if saving was successful / not successful
     */
-  bool saveFile(const QString &sFileName);
+  bool saveFile(QString sFileName);
 
   /**
     * \brief Save article into archive with images

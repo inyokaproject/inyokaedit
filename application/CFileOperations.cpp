@@ -328,9 +328,6 @@ void CFileOperations::loadInyArchive(const QString &sArchive) {
   QString sOutput("");
   QFileInfo file(sArchive);
 
-  // TODO: Special characters not allowed!
-  // See: https://github.com/richgel999/miniz/issues/75
-
   mz_zip_archive zip_archive;
   memset(&zip_archive, 0, sizeof(zip_archive));
   mz_zip_archive_file_stat file_stat;
@@ -411,9 +408,17 @@ void CFileOperations::loadInyArchive(const QString &sArchive) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CFileOperations::saveFile(const QString &sFileName) {
+bool CFileOperations::saveFile(QString sFileName) {
   QFile file;
   if (sFileName.endsWith(".inyzip")) {
+    // Special characters not allowed for miniz achives
+    sFileName.replace(QString::fromUtf8("Ä"), "Ae");
+    sFileName.replace(QString::fromUtf8("Ü"), "Ue");
+    sFileName.replace(QString::fromUtf8("Ö"), "Oe");
+    sFileName.replace(QString::fromUtf8("ä"), "ae");
+    sFileName.replace(QString::fromUtf8("ü"), "ue");
+    sFileName.replace(QString::fromUtf8("ö"), "oe");
+
     QString sFile(sFileName);
     file.setFileName(sFile.replace(".inyzip", ".iny"));
   } else {
@@ -470,9 +475,6 @@ bool CFileOperations::saveInyArchive(const QString &sArchive) {
   QFileInfo file(sArchive);
   QString sArticle(file.baseName() + ".iny");
   QByteArray baComment("");
-
-  // TODO: Special characters not allowed!
-  // See: https://github.com/richgel999/miniz/issues/75
 
   mz_zip_archive zip_archive;
   memset(&zip_archive, 0, sizeof(zip_archive));
