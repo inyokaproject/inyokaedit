@@ -509,9 +509,15 @@ bool CFileOperations::saveInyArchive(const QString &sArchive) {
   imgTagRegex.setMinimal(true);
   int nOffset = 0;
   QFileInfo img;
+  QStringList sListFiles;
   while (-1 != (nOffset = imgTagRegex.indexIn(sHtml, nOffset))) {
       nOffset += imgTagRegex.matchedLength();
       img.setFile(imgTagRegex.cap(1).remove("file:///"));  // (Windows file:///)
+      if (sListFiles.contains(img.fileName())) {
+        continue;
+      } else {
+        sListFiles << img.fileName();
+      }
 
       if (!mz_zip_writer_add_file(&zip_archive, img.fileName().toLatin1(),
                                   img.absoluteFilePath().toLatin1(),
