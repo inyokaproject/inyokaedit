@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['yakkety', 'xenial', 'wily', 'trusty'] contains $arg @>
+<@ if $loop.index < 3 or ['xenial', 'wily', 'trusty'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,12 +39,12 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'zesty' or $arguments contain 'yakkety' or $arguments contain 'xenial' or $arguments contain 'trusty' @>
+<@ if $arguments contain 'zesty' or $arguments contain 'xenial' or $arguments contain 'trusty' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['zesty', 'yakkety', 'xenial', 'wily', 'trusty', 'precise'] contains $arg @>
+<@ if ['artful', 'zesty', 'xenial', 'wily', 'trusty', 'precise'] contains $arg @>
+<@ if $arg == 'artful' @>[:Artful_Aardvark: Ubuntu 17.10]<@ endif @>
 <@ if $arg == 'zesty' @>[:Zesty_Zapus: Ubuntu 17.04]<@ endif @>
-<@ if $arg == 'yakkety' @>[:Yakkety_Yak: Ubuntu 16.10]<@ endif @>
 <@ if $arg == 'xenial' @>[:Xenial_Xerus: Ubuntu 16.04]<@ endif @>
 <@ if $arg == 'trusty' @>[:Trusty_Tahr: Ubuntu 14.04]<@ endif @>
 <@ if $loop.revindex > 2 @>, <@ endif @>
