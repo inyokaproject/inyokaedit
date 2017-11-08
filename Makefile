@@ -18,7 +18,6 @@ ICON_SIZES = 16 24 32 48 64 96 128 256 512
 
 MAKEFILE = inyokaedit.mk
 INFILES = \
-	data/menu \
 	man/inyokaedit.1 \
 	man/de/inyokaedit.1
 
@@ -48,7 +47,6 @@ install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/menu
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/man1
@@ -58,7 +56,6 @@ install-inyokaedit: infiles
 	$(INSTALL_FILE) application/res/images/inyokaedit.xpm $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_FILE) data/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_FILE) data/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
-	$(INSTALL_FILE) data/menu               $(DESTDIR)$(dataroot)/menu/inyokaedit
 	$(INSTALL_FILE) man/inyokaedit.1        $(DESTDIR)$(mandir)/man1
 	$(INSTALL_FILE) man/de/inyokaedit.1     $(DESTDIR)$(mandir)/de/man1
 	$(CP) application/res/images/hicolor    $(DESTDIR)$(dataroot)/icons
@@ -92,7 +89,6 @@ uninstall:
 	$(RM) $(DESTDIR)$(dataroot)/pixmaps/inyokaedit.xpm
 	$(RM) $(DESTDIR)$(dataroot)/applications/inyokaedit.desktop
 	$(RM) $(DESTDIR)$(dataroot)/mime/packages/inyokaedit.xml
-	$(RM) $(DESTDIR)$(dataroot)/menu/inyokaedit
 	$(RM) $(DESTDIR)$(mandir)/man1/inyokaedit.1*
 	$(RM) $(DESTDIR)$(mandir)/de/man1/inyokaedit.1*
 	$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/scalable/apps/inyokaedit.svg
