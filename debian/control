@@ -1,6 +1,6 @@
 Source: inyokaedit
 Section: editors
-Priority: extra
+Priority: optional
 Maintainer: Thorsten Roth <elthoro@gmx.de>
 Uploaders:
    Dominique Lasserre <lasserre.d@gmail.com>,
@@ -14,7 +14,7 @@ Build-Depends:
    libqt5webkit5-dev,
    libhunspell-dev,
    pkg-config
-Standards-Version: 3.9.5
+Standards-Version: 4.1.1
 Homepage: https://github.com/inyokaproject/inyokaedit
 Vcs-Git: https://github.com/inyokaproject/inyokaedit.git
 Vcs-Browser: https://github.com/inyokaproject/inyokaedit/tree/packaging
