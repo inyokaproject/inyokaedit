@@ -1,5 +1,5 @@
 /**
- * \file CSpellCheckDialog.h
+ * \file spellcheckdialog.h
  *
  * \section LICENSE
  *
@@ -27,22 +27,22 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef INYOKAEDIT_CSPELLCHECKDIALOG_H_
-#define INYOKAEDIT_CSPELLCHECKDIALOG_H_
+#ifndef INYOKAEDIT_SPELLCHECKDIALOG_H_
+#define INYOKAEDIT_SPELLCHECKDIALOG_H_
 
 #include <QDialog>
 
-class CSpellChecker;
+class SpellChecker;
 
 namespace Ui {
-  class CSpellCheckDialog;
+  class SpellCheckDialog;
 }
 
 /**
- * \class CSpellCheckDialog
+ * \class SpellCheckDialog
  * \brief Spell checker dialog.
  */
-class CSpellCheckDialog : public QDialog {
+class SpellCheckDialog : public QDialog {
   Q_OBJECT
 
  public:
@@ -51,9 +51,9 @@ class CSpellCheckDialog : public QDialog {
     ReplaceOnce, ReplaceAll, AddToDict
   };
 
-  explicit CSpellCheckDialog(CSpellChecker *pSpellChecker,
-                             QWidget *pParent = 0);
-  ~CSpellCheckDialog();
+  explicit SpellCheckDialog(SpellChecker *pSpellChecker,
+                            QWidget *pParent = 0);
+  ~SpellCheckDialog();
 
   QString replacement() const;
 
@@ -72,10 +72,10 @@ class CSpellCheckDialog : public QDialog {
   void closeDialog();
 
  private:
-  Ui::CSpellCheckDialog *m_pUi;
-  CSpellChecker *m_pSpellChecker;
+  Ui::SpellCheckDialog *m_pUi;
+  SpellChecker *m_pSpellChecker;
   QString m_sUnkownWord;
   SpellCheckAction m_returnCode;
 };
 
-#endif  // INYOKAEDIT_CSPELLCHECKDIALOG_H_
+#endif  // INYOKAEDIT_SPELLCHECKDIALOG_H_

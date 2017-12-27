@@ -1,5 +1,5 @@
 /**
- * \file CSpellChecker.h
+ * \file spellchecker.h
  *
  * \section LICENSE
  *
@@ -27,8 +27,8 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef INYOKAEDIT_CSPELLCHECKER_H_
-#define INYOKAEDIT_CSPELLCHECKER_H_
+#ifndef INYOKAEDIT_SPELLCHECKER_H_
+#define INYOKAEDIT_SPELLCHECKER_H_
 
 #include <QObject>
 #include <QTranslator>
@@ -39,7 +39,7 @@
 
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
-#include "./CSpellCheckDialog.h"
+#include "./spellcheckdialog.h"
 
 #if defined _WIN32
 #include "../windows_files/hunspell-mingw/include/hunspell.hxx"
@@ -48,16 +48,16 @@
 #endif
 
 /**
- * \class CSpellChecker
+ * \class SpellChecker
  * \brief Spell checker using hunspell.
  */
-class CSpellChecker : public QObject, IEditorPlugin {
+class SpellChecker : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 
  public:
-  ~CSpellChecker();
+  ~SpellChecker();
 
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
@@ -80,7 +80,7 @@ class CSpellChecker : public QObject, IEditorPlugin {
   void showAbout();
 
  private:
-  friend class CSpellCheckDialog;
+  friend class SpellCheckDialog;
 
   void setDictPath();
   bool initDictionaries();
@@ -95,7 +95,7 @@ class CSpellChecker : public QObject, IEditorPlugin {
   Hunspell *m_pHunspell;
   CTextEditor *m_pEditor;
   QAction *m_pExecuteAct;
-  CSpellCheckDialog *m_pCheckDialog;
+  SpellCheckDialog *m_pCheckDialog;
   QSettings *m_pSettings;
   QTextCursor m_oldCursor;
   QString m_sDictPath;
@@ -109,4 +109,4 @@ class CSpellChecker : public QObject, IEditorPlugin {
   QTextCodec *m_pCodec;
 };
 
-#endif  // INYOKAEDIT_CSPELLCHECKER_H_
+#endif  // INYOKAEDIT_SPELLCHECKER_H_

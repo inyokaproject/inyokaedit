@@ -47,13 +47,13 @@ qtHaveModule(webkitwidgets) {
 include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)
 
-HEADERS      += CTableTemplate.h \
+HEADERS      += tabletemplate.h \
                 ../../application/CSyntaxCheck.h
 
-SOURCES      += CTableTemplate.cpp \
+SOURCES      += tabletemplate.cpp \
                 ../../application/CSyntaxCheck.cpp
 
-FORMS        += CTableTemplate.ui
+FORMS        += tabletemplate.ui
 
 RESOURCES     = res/tabletemplate_resources.qrc
 

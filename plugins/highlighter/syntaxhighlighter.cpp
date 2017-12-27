@@ -1,5 +1,5 @@
 /**
- * \file CSyntaxHighlighter.cpp
+ * \file syntaxhighlighter.cpp
  *
  * \section LICENSE
  *
@@ -24,19 +24,19 @@
  * Syntax highlighting with builtin Qt functions.
  */
 
-#include "./CSyntaxHighlighter.h"
+#include "./syntaxhighlighter.h"
 
-CSyntaxHighlighter::CSyntaxHighlighter(QTextDocument *pDoc)
+SyntaxHighlighter::SyntaxHighlighter(QTextDocument *pDoc)
   : QSyntaxHighlighter(pDoc) {
 }
 
-CSyntaxHighlighter::~CSyntaxHighlighter() {
+SyntaxHighlighter::~SyntaxHighlighter() {
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
+void SyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
   m_highlightingRules = rules;
 }
 
@@ -82,7 +82,7 @@ void CSyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
 ****************************************************************************/
 
 // Apply collected highlighting rules
-void CSyntaxHighlighter::highlightBlock(const QString &sText) {
+void SyntaxHighlighter::highlightBlock(const QString &sText) {
   // Go through each highlighting rule
   // rules for every syntax element had been appended in constructor
   foreach (const HighlightingRule &rule, m_highlightingRules) {

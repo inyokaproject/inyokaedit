@@ -1,5 +1,5 @@
 /**
- * \file CHotkey.h
+ * \file knowledgebox.h
  *
  * \section LICENSE
  *
@@ -21,38 +21,38 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition hotkey dialog
+ * Class definition knowledge box dialog
  */
 
-#ifndef INYOKAEDIT_CHOTKEY_H_
-#define INYOKAEDIT_CHOTKEY_H_
+#ifndef INYOKAEDIT_KNOWLEDGEBOX_H_
+#define INYOKAEDIT_KNOWLEDGEBOX_H_
 
 #include <QDialog>
-#include <QKeySequenceEdit>
+#include <QDir>
 #include <QtPlugin>
 #include <QPushButton>
-#include <QShortcut>
 #include <QSettings>
 #include <QSignalMapper>
 #include <QString>
 
+#include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-  class CHotkeyClass;
+  class KnowledgeBoxClass;
 }
 class QDir;
 class QTextDocument;
 
 /**
- * \class CHotkey
- * \brief Dialog for hotkey definition
+ * \class KnowledgeBox
+ * \brief Dialog for table insertion
  */
-class CHotkey : public QObject, IEditorPlugin {
+class KnowledgeBox : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
@@ -77,32 +77,28 @@ class CHotkey : public QObject, IEditorPlugin {
 
  private slots:
   void accept();
-  void reject();
   void addRow();
   void deleteRow(QWidget *widget);
-  void insertElement(QString sId);
 
  private:
-  void loadHotkeyEntries();
+  void loadTemplateDefaults();
+  void loadTemplateEntries();
   void buildUi(QWidget *pParent);
-  void registerHotkeys();
   void writeSettings();
-  void createRow(QKeySequenceEdit *sequenceEdit, const QString &sText);
+  void createRow(const bool &bActive, const QString &sText);
 
-  QWidget *m_pParent;
-  Ui::CHotkeyClass *m_pUi;
+  Ui::KnowledgeBoxClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   QSettings *m_pSettingsApp;
+  QString m_sCommunity;
   CTextEditor *m_pEditor;
-  QString m_sSharePath;
-  QList<QKeySequenceEdit *> m_listSequenceEdit;
+  CTemplates *m_pTemplates;
+  QList<bool> m_bListEntryActive;
   QStringList m_sListEntries;
-  QList<QAction *> m_listActions;
-  QList<QAction *> m_listActionsOld;
-  QSignalMapper *m_pSigMapHotkey;
   QSignalMapper *m_pSigMapDeleteRow;
   QList<QPushButton *> m_listDelRowButtons;
+  bool m_bCalledSettings;
 };
 
-#endif  // INYOKAEDIT_CHOTKEY_H_
+#endif  // INYOKAEDIT_KNOWLEDGEBOX_H_

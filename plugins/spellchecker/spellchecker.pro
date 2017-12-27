@@ -33,13 +33,13 @@ RCC_DIR       = ./.rcc
 
 QT           += widgets
 
-HEADERS      += CSpellCheckDialog.h \
-                CSpellChecker.h
+HEADERS      += spellcheckdialog.h \
+                spellchecker.h
 
-SOURCES      += CSpellCheckDialog.cpp \
-                CSpellChecker.cpp
+SOURCES      += spellcheckdialog.cpp \
+                spellchecker.cpp
 
-FORMS        += CSpellCheckDialog.ui
+FORMS        += spellcheckdialog.ui
 
 RESOURCES     = res/spellchecker_resources.qrc
 

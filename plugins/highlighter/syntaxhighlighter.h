@@ -1,5 +1,5 @@
 /**
- * \file CSyntaxHighlighter.h
+ * \file syntaxhighlighter.h
  *
  * \section LICENSE
  *
@@ -24,8 +24,8 @@
  * Class definition for syntax highlighting.
  */
 
-#ifndef INYOKAEDIT_CSYNTAXHIGHLIGHTER_H_
-#define INYOKAEDIT_CSYNTAXHIGHLIGHTER_H_
+#ifndef INYOKAEDIT_SYNTAXHIGHLIGHTER_H_
+#define INYOKAEDIT_SYNTAXHIGHLIGHTER_H_
 
 #include <QHash>
 #include <QSyntaxHighlighter>
@@ -38,15 +38,15 @@ struct HighlightingRule {
 class QTextDocument;
 
 /**
- * \class CSyntaxHighlighter
+ * \class SyntaxHighlighter
  * \brief Syntax highlighting
  */
-class CSyntaxHighlighter : public QSyntaxHighlighter {
+class SyntaxHighlighter : public QSyntaxHighlighter {
   Q_OBJECT
 
  public:
-  CSyntaxHighlighter(QTextDocument *pDoc = 0);
-  ~CSyntaxHighlighter();
+  SyntaxHighlighter(QTextDocument *pDoc = 0);
+  ~SyntaxHighlighter();
   void setRules(QVector<HighlightingRule> rules);
 
  protected:
@@ -57,4 +57,4 @@ class CSyntaxHighlighter : public QSyntaxHighlighter {
   QVector<HighlightingRule> m_highlightingRules;
 };
 
-#endif  // INYOKAEDIT_CSYNTAXHIGHLIGHTER_H_
+#endif  // INYOKAEDIT_SYNTAXHIGHLIGHTER_H_

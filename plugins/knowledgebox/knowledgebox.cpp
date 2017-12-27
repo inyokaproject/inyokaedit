@@ -1,5 +1,5 @@
 /**
- * \file CKnowledgeBox.cpp
+ * \file knowledgebox.cpp
  *
  * \section LICENSE
  *
@@ -29,12 +29,12 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#include "./CKnowledgeBox.h"
-#include "ui_CKnowledgeBox.h"
+#include "./knowledgebox.h"
+#include "ui_knowledgebox.h"
 
-void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                               const QDir userDataDir,
-                               const QString sSharePath) {
+void KnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                              const QDir userDataDir,
+                              const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -75,19 +75,19 @@ void CKnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CKnowledgeBox::getPluginName() const {
+QString KnowledgeBox::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString CKnowledgeBox::getPluginVersion() const {
+QString KnowledgeBox::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sSharePath,
-                                                const QString &sLocale) {
+QTranslator* KnowledgeBox::getPluginTranslator(const QString &sSharePath,
+                                               const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
   if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
@@ -100,27 +100,27 @@ QTranslator* CKnowledgeBox::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CKnowledgeBox::getCaption() const {
+QString KnowledgeBox::getCaption() const {
   return trUtf8("Knowledge box selector");
 }
-QIcon CKnowledgeBox::getIcon() const {
+QIcon KnowledgeBox::getIcon() const {
   return QIcon();
   // return QIcon(":/knowledgebox.png");
 }
 
-bool CKnowledgeBox::includeMenu() const {
+bool KnowledgeBox::includeMenu() const {
   return true;
 }
-bool CKnowledgeBox::includeToolbar() const {
+bool KnowledgeBox::includeToolbar() const {
   return false;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::buildUi(QWidget *pParent) {
+void KnowledgeBox::buildUi(QWidget *pParent) {
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::CKnowledgeBoxClass();
+  m_pUi = new Ui::KnowledgeBoxClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -156,7 +156,7 @@ void CKnowledgeBox::buildUi(QWidget *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::loadTemplateEntries() {
+void KnowledgeBox::loadTemplateEntries() {
   // Load entries from default template or config file
   m_bListEntryActive.clear();
   m_sListEntries.clear();
@@ -185,7 +185,7 @@ void CKnowledgeBox::loadTemplateEntries() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::loadTemplateDefaults() {
+void KnowledgeBox::loadTemplateDefaults() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   QStringList sListTemplates;
   QStringList sListTplMacros;
@@ -220,19 +220,19 @@ void CKnowledgeBox::loadTemplateDefaults() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::callPlugin() {
+void KnowledgeBox::callPlugin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_bCalledSettings = false;
   m_pDialog->show();
   m_pDialog->exec();
 }
 
-void CKnowledgeBox::executePlugin() {}
+void KnowledgeBox::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::accept() {
+void KnowledgeBox::accept() {
   int nSize = m_sListEntries.size();
   m_sListEntries.clear();
   m_bListEntryActive.clear();
@@ -271,7 +271,7 @@ void CKnowledgeBox::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::addRow() {
+void KnowledgeBox::addRow() {
   m_sListEntries << trUtf8("[:Article:New entry]");
   m_bListEntryActive << true;
   this->createRow(m_bListEntryActive.last(), m_sListEntries.last());
@@ -283,7 +283,7 @@ void CKnowledgeBox::addRow() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::createRow(const bool &bActive, const QString &sText) {
+void KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -318,7 +318,7 @@ void CKnowledgeBox::createRow(const bool &bActive, const QString &sText) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::deleteRow(QWidget *widget) {
+void KnowledgeBox::deleteRow(QWidget *widget) {
   QPushButton *button = reinterpret_cast<QPushButton*>(widget);
   if (button != NULL) {
     int nIndex = m_listDelRowButtons.indexOf(button);
@@ -337,7 +337,7 @@ void CKnowledgeBox::deleteRow(QWidget *widget) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::writeSettings() {
+void KnowledgeBox::writeSettings() {
   m_pSettings->remove(m_sCommunity);
   m_pSettings->beginGroup(m_sCommunity);
   m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
@@ -353,11 +353,11 @@ void CKnowledgeBox::writeSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CKnowledgeBox::hasSettings() const {
+bool KnowledgeBox::hasSettings() const {
   return true;
 }
 
-void CKnowledgeBox::showSettings() {
+void KnowledgeBox::showSettings() {
   m_bCalledSettings = true;
   m_pDialog->show();
   m_pDialog->exec();
@@ -366,18 +366,18 @@ void CKnowledgeBox::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::setCurrentEditor(CTextEditor *pEditor) {
+void KnowledgeBox::setCurrentEditor(CTextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void CKnowledgeBox::setEditorlist(QList<CTextEditor *> listEditors) {
+void KnowledgeBox::setEditorlist(QList<CTextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CKnowledgeBox::showAbout() {
+void KnowledgeBox::showAbout() {
   QDate nDate = QDate::currentDate();
   QMessageBox aboutbox(NULL);
 

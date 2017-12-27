@@ -33,11 +33,11 @@ RCC_DIR       = ./.rcc
 
 include(../../application/templates/templates.pri)
 
-HEADERS      += CKnowledgeBox.h
+HEADERS      += knowledgebox.h
 
-SOURCES      += CKnowledgeBox.cpp
+SOURCES      += knowledgebox.cpp
 
-FORMS        += CKnowledgeBox.ui
+FORMS        += knowledgebox.ui
 
 RESOURCES     = res/knowledgebox_resources.qrc
 

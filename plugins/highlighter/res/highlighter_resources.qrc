@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>standard-style.conf</file>
+        <file>dark-style.conf</file>
+    </qresource>
+</RCC>

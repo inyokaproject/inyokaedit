@@ -10,7 +10,7 @@ build_script:
 
     git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
 
-    set PATH=C:\Qt\5.9.1\msvc2015_64\bin;%PATH%
+    set PATH=C:\Qt\5.9.2\msvc2015_64\bin;%PATH%
 
     call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
 

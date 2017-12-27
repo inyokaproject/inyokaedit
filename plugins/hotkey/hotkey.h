@@ -1,5 +1,5 @@
 /**
- * \file CTableTemplate.h
+ * \file hotkey.h
  *
  * \section LICENSE
  *
@@ -21,43 +21,38 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition table insert dialog
+ * Class definition hotkey dialog
  */
 
-#ifndef INYOKAEDIT_CTABLETEMPLATE_H_
-#define INYOKAEDIT_CTABLETEMPLATE_H_
+#ifndef INYOKAEDIT_HOTKEY_H_
+#define INYOKAEDIT_HOTKEY_H_
 
 #include <QDialog>
-#include <QDir>
+#include <QKeySequenceEdit>
 #include <QtPlugin>
+#include <QPushButton>
+#include <QShortcut>
 #include <QSettings>
+#include <QSignalMapper>
 #include <QString>
 
-#ifdef USEQTWEBKIT
-#include <QtWebKitWidgets/QWebView>
-#else
-#include <QWebEngineView>
-#endif
-
-#include "../../application/parser/CParser.h"
-#include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-  class CTableTemplateClass;
+  class HotkeyClass;
 }
 class QDir;
 class QTextDocument;
 
 /**
- * \class CTableTemplate
- * \brief Dialog for table insertion
+ * \class Hotkey
+ * \brief Dialog for hotkey definition
  */
-class CTableTemplate : public QObject, IEditorPlugin {
+class Hotkey : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
@@ -81,46 +76,33 @@ class CTableTemplate : public QObject, IEditorPlugin {
   void showAbout();
 
  private slots:
-  /** \brief Show preview */
-  void preview();
-
-  /** \brief Convert base template to new table template */
-  void convertToBaseTemplate();
-
-  /** \brief Convert new table template to base template */
-  void convertToNewTemplate();
-
-  /** \brief Dialog finished */
   void accept();
+  void reject();
+  void addRow();
+  void deleteRow(QWidget *widget);
+  void insertElement(QString sId);
 
  private:
-  /**
-    * \brief Generate specific table
-    * \return String including the generated table code
-    */
-  QString generateTable();
+  void loadHotkeyEntries();
+  void buildUi(QWidget *pParent);
+  void registerHotkeys();
+  void writeSettings();
+  void createRow(QKeySequenceEdit *sequenceEdit, const QString &sText);
 
-  Ui::CTableTemplateClass *m_pUi;
+  QWidget *m_pParent;
+  Ui::HotkeyClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
+  QSettings *m_pSettingsApp;
   CTextEditor *m_pEditor;
-  CTemplates *m_pTemplates;
-  CParser *m_pParser;
-  QDir m_dirPreview;
-  QTextDocument *m_pTextDocument;
-#ifdef USEQTWEBKIT
-  QWebView *m_pPreviewWebview;
-#else
-  QWebEngineView *m_pPreviewWebview;
-#endif
-
-  QStringList m_sListTableStyles;
-  QStringList m_sListTableStylesPrefix;
-  QString m_sRowClassTitle;
-  QString m_sRowClassHead;
-  QString m_sRowClassHighlight;
-
-  bool m_bBaseToNew;
+  QString m_sSharePath;
+  QList<QKeySequenceEdit *> m_listSequenceEdit;
+  QStringList m_sListEntries;
+  QList<QAction *> m_listActions;
+  QList<QAction *> m_listActionsOld;
+  QSignalMapper *m_pSigMapHotkey;
+  QSignalMapper *m_pSigMapDeleteRow;
+  QList<QPushButton *> m_listDelRowButtons;
 };
 
-#endif  // INYOKAEDIT_CTABLETEMPLATE_H_
+#endif  // INYOKAEDIT_HOTKEY_H_

@@ -1,5 +1,5 @@
 /**
- * \file CHotkey.cpp
+ * \file hotkey.cpp
  *
  * \section LICENSE
  *
@@ -30,12 +30,12 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 
-#include "./CHotkey.h"
-#include "ui_CHotkey.h"
+#include "./hotkey.h"
+#include "ui_hotkey.h"
 
-void CHotkey::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                         const QDir userDataDir,
-                         const QString sSharePath) {
+void Hotkey::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                        const QDir userDataDir,
+                        const QString sSharePath) {
   Q_UNUSED(userDataDir);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -68,18 +68,18 @@ void CHotkey::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CHotkey::getPluginName() const {
+QString Hotkey::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString CHotkey::getPluginVersion() const {
+QString Hotkey::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CHotkey::getPluginTranslator(const QString &sSharePath,
+QTranslator* Hotkey::getPluginTranslator(const QString &sSharePath,
                                           const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
@@ -93,26 +93,26 @@ QTranslator* CHotkey::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CHotkey::getCaption() const {
+QString Hotkey::getCaption() const {
   return trUtf8("Hotkey selector");
 }
-QIcon CHotkey::getIcon() const {
+QIcon Hotkey::getIcon() const {
   return QIcon(":/preferences-desktop-keyboard-shortcuts.png");
 }
 
-bool CHotkey::includeMenu() const {
+bool Hotkey::includeMenu() const {
   return true;
 }
-bool CHotkey::includeToolbar() const {
+bool Hotkey::includeToolbar() const {
   return false;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::buildUi(QWidget *pParent) {
+void Hotkey::buildUi(QWidget *pParent) {
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::CHotkeyClass();
+  m_pUi = new Ui::HotkeyClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -153,7 +153,7 @@ void CHotkey::buildUi(QWidget *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::loadHotkeyEntries() {
+void Hotkey::loadHotkeyEntries() {
   // Load entries from default template or config file
   m_listSequenceEdit.clear();
   m_sListEntries.clear();
@@ -188,20 +188,20 @@ void CHotkey::loadHotkeyEntries() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::callPlugin() {
+void Hotkey::callPlugin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_listActionsOld = m_listActions;
   this->showSettings();
 }
 
-void CHotkey::executePlugin() {
+void Hotkey::executePlugin() {
   this->registerHotkeys();
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::accept() {
+void Hotkey::accept() {
   int nSize = m_sListEntries.size();
   m_sListEntries.clear();
   for (int i = 0; i < nSize; i ++) {
@@ -213,14 +213,14 @@ void CHotkey::accept() {
   m_pDialog->done(QDialog::Accepted);
 }
 
-void CHotkey::reject() {
+void Hotkey::reject() {
   this->accept();
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::addRow() {
+void Hotkey::addRow() {
   m_sListEntries << trUtf8("'''Bold'''");
   m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
   this->createRow(m_listSequenceEdit.last(), m_sListEntries.last());
@@ -232,7 +232,7 @@ void CHotkey::addRow() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
+void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -261,7 +261,7 @@ void CHotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::deleteRow(QWidget *widget) {
+void Hotkey::deleteRow(QWidget *widget) {
   QPushButton *button = reinterpret_cast<QPushButton*>(widget);
   if (button != NULL) {
     int nIndex = m_listDelRowButtons.indexOf(button);
@@ -281,7 +281,7 @@ void CHotkey::deleteRow(QWidget *widget) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::registerHotkeys() {
+void Hotkey::registerHotkeys() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   foreach (QAction* act, m_listActionsOld) {
     m_pParent->removeAction(act);
@@ -302,7 +302,7 @@ void CHotkey::registerHotkeys() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::insertElement(QString sId) {
+void Hotkey::insertElement(QString sId) {
   QString sText(m_sListEntries[sId.toInt()]);
   sText.replace("\\n", "\n");
   int nPlaceholder1(sText.indexOf("%%"));
@@ -328,7 +328,7 @@ void CHotkey::insertElement(QString sId) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::writeSettings() {
+void Hotkey::writeSettings() {
   m_pSettings->remove("Hotkey");
   m_pSettings->beginGroup("Hotkey");
   m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
@@ -344,11 +344,11 @@ void CHotkey::writeSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CHotkey::hasSettings() const {
+bool Hotkey::hasSettings() const {
   return true;
 }
 
-void CHotkey::showSettings() {
+void Hotkey::showSettings() {
   m_pDialog->show();
   m_pDialog->exec();
 }
@@ -356,18 +356,18 @@ void CHotkey::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::setCurrentEditor(CTextEditor *pEditor) {
+void Hotkey::setCurrentEditor(CTextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void CHotkey::setEditorlist(QList<CTextEditor *> listEditors) {
+void Hotkey::setEditorlist(QList<CTextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHotkey::showAbout() {
+void Hotkey::showAbout() {
   QDate nDate = QDate::currentDate();
   QMessageBox aboutbox(NULL);
 

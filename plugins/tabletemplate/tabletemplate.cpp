@@ -1,5 +1,5 @@
 /**
- * \file CTableTemplate.cpp
+ * \file tabletemplate.cpp
  *
  * \section LICENSE
  *
@@ -28,12 +28,12 @@
 #include <QDebug>
 #include <QTextDocument>
 
-#include "./CTableTemplate.h"
-#include "ui_CTableTemplate.h"
+#include "./tabletemplate.h"
+#include "ui_tabletemplate.h"
 
-void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                                const QDir userDataDir,
-                                const QString sSharePath) {
+void TableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                               const QDir userDataDir,
+                               const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -58,7 +58,7 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 
   // Build UI
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::CTableTemplateClass();
+  m_pUi = new Ui::TableTemplateClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -120,19 +120,19 @@ void CTableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CTableTemplate::getPluginName() const {
+QString TableTemplate::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString CTableTemplate::getPluginVersion() const {
+QString TableTemplate::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CTableTemplate::getPluginTranslator(const QString &sSharePath,
-                                                 const QString &sLocale) {
+QTranslator* TableTemplate::getPluginTranslator(const QString &sSharePath,
+                                                const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
   if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
@@ -145,24 +145,24 @@ QTranslator* CTableTemplate::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CTableTemplate::getCaption() const {
+QString TableTemplate::getCaption() const {
   return trUtf8("Table generator / converter");
 }
-QIcon CTableTemplate::getIcon() const {
+QIcon TableTemplate::getIcon() const {
   return QIcon(":/tabletemplate.png");
 }
 
-bool CTableTemplate::includeMenu() const {
+bool TableTemplate::includeMenu() const {
   return true;
 }
-bool CTableTemplate::includeToolbar() const {
+bool TableTemplate::includeToolbar() const {
   return true;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::callPlugin() {
+void TableTemplate::callPlugin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_pUi->tableStyleBox->setCurrentIndex(0);
   m_pUi->showHeadBox->setChecked(false);
@@ -184,12 +184,12 @@ void CTableTemplate::callPlugin() {
   m_pDialog->exec();
 }
 
-void CTableTemplate::executePlugin() {}
+void TableTemplate::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::preview() {
+void TableTemplate::preview() {
   m_pTextDocument->setPlainText(this->generateTable());
 
   QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
@@ -206,7 +206,7 @@ void CTableTemplate::preview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CTableTemplate::generateTable() {
+QString TableTemplate::generateTable() {
   QString sTableCode("");
   int colsNum = m_pUi->colsNum->value();
   int rowsNum = m_pUi->rowsNum->value();
@@ -258,7 +258,7 @@ QString CTableTemplate::generateTable() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::convertToBaseTemplate() {
+void TableTemplate::convertToBaseTemplate() {
   m_bBaseToNew = false;
   QString sTableCode("");
   QString sInput(m_pUi->newTextEdit->toPlainText());
@@ -293,7 +293,7 @@ void CTableTemplate::convertToBaseTemplate() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::convertToNewTemplate() {
+void TableTemplate::convertToNewTemplate() {
   m_bBaseToNew = true;
   QString sTableCode("");
   QStringList sListInput;
@@ -332,7 +332,7 @@ void CTableTemplate::convertToNewTemplate() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::accept() {
+void TableTemplate::accept() {
   if (0 == m_pUi->tabWidget->currentIndex()) {
     m_pEditor->insertPlainText(this->generateTable());
   } else if (1 == m_pUi->tabWidget->currentIndex() && m_bBaseToNew) {
@@ -346,28 +346,28 @@ void CTableTemplate::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CTableTemplate::hasSettings() const {
+bool TableTemplate::hasSettings() const {
   return false;
 }
 
-void CTableTemplate::showSettings() {
+void TableTemplate::showSettings() {
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::setCurrentEditor(CTextEditor *pEditor) {
+void TableTemplate::setCurrentEditor(CTextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void CTableTemplate::setEditorlist(QList<CTextEditor *> listEditors) {
+void TableTemplate::setEditorlist(QList<CTextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CTableTemplate::showAbout() {
+void TableTemplate::showAbout() {
   QDate nDate = QDate::currentDate();
   QMessageBox aboutbox(NULL);
 

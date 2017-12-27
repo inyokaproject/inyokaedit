@@ -1,5 +1,5 @@
 /**
- * \file CSpellCheckDialog.cpp
+ * \file spellcheckdialog.cpp
  *
  * \section LICENSE
  *
@@ -30,14 +30,14 @@
 #include <QDebug>
 #include <QTextEdit>
 
-#include "./CSpellCheckDialog.h"
-#include "ui_CSpellCheckDialog.h"
-#include "./CSpellChecker.h"
+#include "./spellcheckdialog.h"
+#include "ui_spellcheckdialog.h"
+#include "./spellchecker.h"
 
-CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *pSpellChecker,
-                                     QWidget *pParent)
+SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
+                                   QWidget *pParent)
   : QDialog(pParent),
-    m_pUi(new Ui::CSpellCheckDialog) {
+    m_pUi(new Ui::SpellCheckDialog) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_pUi->setupUi(this);
@@ -74,7 +74,7 @@ CSpellCheckDialog::CSpellCheckDialog(CSpellChecker *pSpellChecker,
   }
 }
 
-CSpellCheckDialog::~CSpellCheckDialog() {
+SpellCheckDialog::~SpellCheckDialog() {
   if (NULL != m_pUi) {
     delete m_pUi;
   }
@@ -84,7 +84,7 @@ CSpellCheckDialog::~CSpellCheckDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(
+SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
     const QString &sWord) {
   m_sUnkownWord = sWord;
   m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(m_sUnkownWord));
@@ -107,32 +107,32 @@ CSpellCheckDialog::SpellCheckAction CSpellCheckDialog::checkWord(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CSpellCheckDialog::replacement() const {
+QString SpellCheckDialog::replacement() const {
   return m_pUi->ledtReplaceWith->text();
 }
 
-void CSpellCheckDialog::ignoreOnce() {
+void SpellCheckDialog::ignoreOnce() {
   m_returnCode = IgnoreOnce;
   this->accept();
 }
 
-void CSpellCheckDialog::ignoreAll() {
+void SpellCheckDialog::ignoreAll() {
   m_pSpellChecker->ignoreWord(m_sUnkownWord);
   m_returnCode = IgnoreAll;
   this->accept();
 }
 
-void CSpellCheckDialog::replaceOnce() {
+void SpellCheckDialog::replaceOnce() {
   m_returnCode = ReplaceOnce;
   this->accept();
 }
 
-void CSpellCheckDialog::replaceAll() {
+void SpellCheckDialog::replaceAll() {
   m_returnCode = ReplaceAll;
   this->accept();
 }
 
-void CSpellCheckDialog::closeDialog() {
+void SpellCheckDialog::closeDialog() {
   m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->currentText();
   m_pSpellChecker->m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
   m_pSpellChecker->m_pSettings->setValue("SpellCheckerLanguage",
@@ -144,7 +144,7 @@ void CSpellCheckDialog::closeDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSpellCheckDialog::changeLanguage(const QString &sLanguage) {
+void SpellCheckDialog::changeLanguage(const QString &sLanguage) {
   m_pSpellChecker->m_sDictLang = sLanguage;  // Before initDictionaries() !
   m_pSpellChecker->initDictionaries();
 }
@@ -152,7 +152,7 @@ void CSpellCheckDialog::changeLanguage(const QString &sLanguage) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CSpellCheckDialog::addToDict() {
+void SpellCheckDialog::addToDict() {
   m_pSpellChecker->addToUserWordlist(m_sUnkownWord);
   m_returnCode = AddToDict;
   this->accept();

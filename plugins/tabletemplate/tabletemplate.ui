@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CTableTemplateClass</class>
- <widget class="QDialog" name="CTableTemplateClass">
+ <class>TableTemplateClass</class>
+ <widget class="QDialog" name="TableTemplateClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -207,7 +207,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CTableTemplateClass</receiver>
+   <receiver>TableTemplateClass</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

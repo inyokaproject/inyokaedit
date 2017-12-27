@@ -1,5 +1,5 @@
 /**
- * \file CHighlighter.h
+ * \file highlighter.h
  *
  * \section LICENSE
  *
@@ -24,8 +24,8 @@
  * Class definition for syntax highlighting.
  */
 
-#ifndef INYOKAEDIT_CHIGHLIGHTER_H_
-#define INYOKAEDIT_CHIGHLIGHTER_H_
+#ifndef INYOKAEDIT_HIGHLIGHTER_H_
+#define INYOKAEDIT_HIGHLIGHTER_H_
 
 #include <QHash>
 #include <QtPlugin>
@@ -33,21 +33,21 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-#include "CSyntaxHighlighter.h"
+#include "syntaxhighlighter.h"
 #include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-  class CHighlighterDialog;
+  class HighlighterDialog;
 }
 class QSettings;
 
 /**
- * \class CHighlighter
+ * \class Highlighter
  * \brief Syntax highlighting
  */
-class CHighlighter : public QObject, IEditorPlugin {
+class Highlighter : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.highlighter")
@@ -93,10 +93,10 @@ class CHighlighter : public QObject, IEditorPlugin {
   void evalKey(const QString &sKey, QTextCharFormat &charFormat);
   void rehighlightAll();
 
-  Ui::CHighlighterDialog *m_pUi;
+  Ui::HighlighterDialog *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
-  QList<CSyntaxHighlighter *> m_ListHighlighters;
+  QList<SyntaxHighlighter *> m_ListHighlighters;
   QList<CTextEditor *> m_listEditors;
   CTemplates *m_pTemplates;
 
@@ -127,4 +127,4 @@ class CHighlighter : public QObject, IEditorPlugin {
   QColor m_colorBackground;
 };
 
-#endif  // INYOKAEDIT_CHIGHLIGHTER_H_
+#endif  // INYOKAEDIT_HIGHLIGHTER_H_

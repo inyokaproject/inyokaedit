@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CHotkeyClass</class>
- <widget class="QDialog" name="CHotkeyClass">
+ <class>HotkeyClass</class>
+ <widget class="QDialog" name="HotkeyClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -91,7 +91,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CHotkeyClass</receiver>
+   <receiver>HotkeyClass</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

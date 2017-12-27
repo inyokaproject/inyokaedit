@@ -870,7 +870,6 @@ void CParser::replaceTableOfContents(QTextDocument *p_rawDoc) {
   quint16 nTOCLevel;
   quint16 nCurrentLevel;
 
-
   // Replace characters for valid links (ä, ü, ö, spaces)
   QStringList sListHeadlines_Links;
   foreach (QString s, m_sListHeadlines) {

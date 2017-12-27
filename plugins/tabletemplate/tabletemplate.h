@@ -1,5 +1,5 @@
 /**
- * \file CKnowledgeBox.h
+ * \file tabletemplate.h
  *
  * \section LICENSE
  *
@@ -21,38 +21,43 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition knowledge box dialog
+ * Class definition table insert dialog
  */
 
-#ifndef INYOKAEDIT_CKNOWLEDGEBOX_H_
-#define INYOKAEDIT_CKNOWLEDGEBOX_H_
+#ifndef INYOKAEDIT_TABLETEMPLATE_H_
+#define INYOKAEDIT_TABLETEMPLATE_H_
 
 #include <QDialog>
 #include <QDir>
 #include <QtPlugin>
-#include <QPushButton>
 #include <QSettings>
-#include <QSignalMapper>
 #include <QString>
 
+#ifdef USEQTWEBKIT
+#include <QtWebKitWidgets/QWebView>
+#else
+#include <QWebEngineView>
+#endif
+
+#include "../../application/parser/CParser.h"
 #include "../../application/templates/CTemplates.h"
 #include "../../application/CTextEditor.h"
 #include "../../application/IEditorPlugin.h"
 
 namespace Ui {
-  class CKnowledgeBoxClass;
+  class TableTemplateClass;
 }
 class QDir;
 class QTextDocument;
 
 /**
- * \class CKnowledgeBox
+ * \class TableTemplate
  * \brief Dialog for table insertion
  */
-class CKnowledgeBox : public QObject, IEditorPlugin {
+class TableTemplate : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
 
  public:
   void initPlugin(QWidget *pParent, CTextEditor *pEditor,
@@ -76,29 +81,46 @@ class CKnowledgeBox : public QObject, IEditorPlugin {
   void showAbout();
 
  private slots:
+  /** \brief Show preview */
+  void preview();
+
+  /** \brief Convert base template to new table template */
+  void convertToBaseTemplate();
+
+  /** \brief Convert new table template to base template */
+  void convertToNewTemplate();
+
+  /** \brief Dialog finished */
   void accept();
-  void addRow();
-  void deleteRow(QWidget *widget);
 
  private:
-  void loadTemplateDefaults();
-  void loadTemplateEntries();
-  void buildUi(QWidget *pParent);
-  void writeSettings();
-  void createRow(const bool &bActive, const QString &sText);
+  /**
+    * \brief Generate specific table
+    * \return String including the generated table code
+    */
+  QString generateTable();
 
-  Ui::CKnowledgeBoxClass *m_pUi;
+  Ui::TableTemplateClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
-  QSettings *m_pSettingsApp;
-  QString m_sCommunity;
   CTextEditor *m_pEditor;
   CTemplates *m_pTemplates;
-  QList<bool> m_bListEntryActive;
-  QStringList m_sListEntries;
-  QSignalMapper *m_pSigMapDeleteRow;
-  QList<QPushButton *> m_listDelRowButtons;
-  bool m_bCalledSettings;
+  CParser *m_pParser;
+  QDir m_dirPreview;
+  QTextDocument *m_pTextDocument;
+#ifdef USEQTWEBKIT
+  QWebView *m_pPreviewWebview;
+#else
+  QWebEngineView *m_pPreviewWebview;
+#endif
+
+  QStringList m_sListTableStyles;
+  QStringList m_sListTableStylesPrefix;
+  QString m_sRowClassTitle;
+  QString m_sRowClassHead;
+  QString m_sRowClassHighlight;
+
+  bool m_bBaseToNew;
 };
 
-#endif  // INYOKAEDIT_CKNOWLEDGEBOX_H_
+#endif  // INYOKAEDIT_TABLETEMPLATE_H_

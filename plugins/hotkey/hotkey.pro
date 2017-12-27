@@ -33,11 +33,11 @@ RCC_DIR       = ./.rcc
 
 QT           += widgets
 
-HEADERS      += CHotkey.h
+HEADERS      += hotkey.h
 
-SOURCES      += CHotkey.cpp
+SOURCES      += hotkey.cpp
 
-FORMS        += CHotkey.ui
+FORMS        += hotkey.ui
 
 RESOURCES     = res/hotkey_resources.qrc
 

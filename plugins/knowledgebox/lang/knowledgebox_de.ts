@@ -2,42 +2,42 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>CKnowledgeBox</name>
+    <name>KnowledgeBox</name>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="104"/>
+        <location filename="../knowledgebox.cpp" line="104"/>
         <source>Knowledge box selector</source>
         <translation>Wissensblock Auswahl</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="281"/>
+        <location filename="../knowledgebox.cpp" line="275"/>
         <source>[:Article:New entry]</source>
         <translation>[:Artikel:Neuer Eintrag]</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="390"/>
+        <location filename="../knowledgebox.cpp" line="384"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="393"/>
+        <location filename="../knowledgebox.cpp" line="387"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="396"/>
+        <location filename="../knowledgebox.cpp" line="390"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../CKnowledgeBox.cpp" line="400"/>
+        <location filename="../knowledgebox.cpp" line="394"/>
         <source>Plugin for choosing knowledge box entries.</source>
         <translation>Plugin zur Auswahl von Wissensblockeinträgen.</translation>
     </message>
 </context>
 <context>
-    <name>CKnowledgeBoxClass</name>
+    <name>KnowledgeBoxClass</name>
     <message>
-        <location filename="../CKnowledgeBox.ui" line="32"/>
+        <location filename="../knowledgebox.ui" line="32"/>
         <source>Knowledge Box</source>
         <translation>Wissensblock</translation>
     </message>

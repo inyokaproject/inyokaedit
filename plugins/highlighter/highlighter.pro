@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.2.0
+VERSION       = 1.2.1
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
 
@@ -33,14 +33,14 @@ RCC_DIR       = ./.rcc
 
 include(../../application/templates/templates.pri)
 
-HEADERS      += CHighlighter.h \
-                CSyntaxHighlighter.h
+HEADERS      += highlighter.h \
+                syntaxhighlighter.h
 
-SOURCES      += CHighlighter.cpp \
-                CSyntaxHighlighter.cpp
+SOURCES      += highlighter.cpp \
+                syntaxhighlighter.cpp
 
-FORMS        += CHighlighter.ui
+FORMS        += highlighter.ui
 
-# RESOURCES     = res/highlighter_resources.qrc
+RESOURCES     = res/highlighter_resources.qrc
 
 TRANSLATIONS += lang/highlighter_de.ts

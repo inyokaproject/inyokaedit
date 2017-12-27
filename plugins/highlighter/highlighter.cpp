@@ -1,5 +1,5 @@
 /**
- * \file CHighlighter.cpp
+ * \file highlighter.cpp
  *
  * \section LICENSE
  *
@@ -30,14 +30,14 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include "./CHighlighter.h"
-#include "ui_CHighlighter.h"
+#include "./highlighter.h"
+#include "ui_highlighter.h"
 
 const QString sSEPARATOR("|");
 
-void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
-                              const QDir userDataDir,
-                              const QString sSharePath) {
+void Highlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+                             const QDir userDataDir,
+                             const QString sSharePath) {
   Q_UNUSED(pEditor);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -83,19 +83,19 @@ void CHighlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CHighlighter::getPluginName() const {
+QString Highlighter::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString CHighlighter::getPluginVersion() const {
+QString Highlighter::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* CHighlighter::getPluginTranslator(const QString &sSharePath,
-                                               const QString &sLocale) {
+QTranslator* Highlighter::getPluginTranslator(const QString &sSharePath,
+                                              const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
   if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
@@ -108,89 +108,52 @@ QTranslator* CHighlighter::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CHighlighter::getCaption() const {
+QString Highlighter::getCaption() const {
   return trUtf8("Syntax highlighter");
 }
-QIcon CHighlighter::getIcon() const {
+QIcon Highlighter::getIcon() const {
   return QIcon();
   // return QIcon(":/highlighter.png");
 }
 
-bool CHighlighter::includeMenu() const {
+bool Highlighter::includeMenu() const {
   return false;
 }
-bool CHighlighter::includeToolbar() const {
+bool Highlighter::includeToolbar() const {
   return false;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::callPlugin() {
+void Highlighter::callPlugin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_pDialog->show();
   m_pDialog->exec();
 }
 
-void CHighlighter::executePlugin() {
+void Highlighter::executePlugin() {
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::copyDefaultStyles() {
+void Highlighter::copyDefaultStyles() {
   QFileInfo fi(m_pSettings->fileName());
+
   QFile stylefile(fi.absolutePath() + "/standard-style" + m_sExt);
-  QTextStream out(&stylefile);
   if (!stylefile.exists()) {
-    if (!stylefile.open(QIODevice::WriteOnly)) {
+    if (!QFile::copy(":/standard-style.conf",
+                     fi.absolutePath() + "/standard-style" + m_sExt)) {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
-    } else {
-      out << "[General]\n";
-      out << "Background=System\n";
-      out << "Foreground=System\n\n";
-      out << "[Style]\n";
-      out << "Comment=0xa0a0a4|false|false\n";
-      out << "Heading=0x008000|true|false\n";
-      out << "Hyperlink=0x000080|false|false\n";
-      out << "ImgMap=0x808000|false|false\n";
-      out << "InterWiki=0x0000ff|false|false\n";
-      out << "List=0xff0000|false|false\n";
-      out << "Macro=0x008080|false|false\n";
-      out << "Misc=0xff0000|false|false\n";
-      out << "NewTableLine=0xff0000|false|false\n";
-      out << "Parser=0x800000|true|false\n";
-      out << "TableCellFormating=0x800080|false|false\n";
-      out << "TextFormating=0xff0000|false|false\n";
-      out << "SyntaxError=---|---|---|0xffff00\n";
-      out.flush();
-      stylefile.close();
     }
   }
+
   stylefile.setFileName(fi.absolutePath() + "/dark-style" + m_sExt);
   if (!stylefile.exists()) {
-    if (!stylefile.open(QIODevice::WriteOnly)) {
+    if (!QFile::copy(":/dark-style.conf",
+                     fi.absolutePath() + "/dark-style" + m_sExt)) {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
-    } else {
-      out << "[General]\n";
-      out << "Background=0x2e3436\n";
-      out << "Foreground=0xeeeeec\n\n";
-      out << "[Style]\n";
-      out << "Comment=0x888a85|false|true\n";
-      out << "Heading=0x8ae234|false|false\n";
-      out << "Hyperlink=0x729fcf|false|false\n";
-      out << "ImgMap=0xc17d11|false|false\n";
-      out << "InterWiki=0xad7fa8|false|false\n";
-      out << "List=0xedd400|false|false\n";
-      out << "Macro=0xf57900|true|false\n";
-      out << "Misc=0xef2929|false|false\n";
-      out << "NewTableLine=0xedd400|false|false\n";
-      out << "Parser=0xcc0000|true|false\n";
-      out << "TableCellFormating=0x75507b|false|false\n";
-      out << "TextFormating=0xfcaf3e|true|false\n";
-      out << "SyntaxError=---|---|---|0xaaaa7f\n";
-      out.flush();
-      stylefile.close();
     }
   }
 }
@@ -198,9 +161,9 @@ void CHighlighter::copyDefaultStyles() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::buildUi(QWidget *pParent) {
+void Highlighter::buildUi(QWidget *pParent) {
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::CHighlighterDialog();
+  m_pUi = new Ui::HighlighterDialog();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -251,7 +214,7 @@ void CHighlighter::buildUi(QWidget *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::readStyle(const QString &sStyle) {
+void Highlighter::readStyle(const QString &sStyle) {
   bool bOk = false;
   m_bSystemForeground = false;
   m_bSystemBackground = false;
@@ -336,7 +299,7 @@ void CHighlighter::readStyle(const QString &sStyle) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
+void Highlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
   bool bOk = false;
   QColor tmpColor;
   QBrush tmpBrush;
@@ -394,7 +357,7 @@ void CHighlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::saveStyle() {
+void Highlighter::saveStyle() {
   if (m_bSystemForeground) {
     m_pStyleSet->setValue("Foreground", "System");
   } else {
@@ -432,8 +395,8 @@ void CHighlighter::saveStyle() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::writeFormat(const QString &sKey,
-                               const QTextCharFormat &charFormat) {
+void Highlighter::writeFormat(const QString &sKey,
+                              const QTextCharFormat &charFormat) {
   // Foreground color
   QString sValue = "0x" + charFormat.foreground().color().name().remove("#");
 
@@ -463,7 +426,7 @@ void CHighlighter::writeFormat(const QString &sKey,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::getTranslations() {
+void Highlighter::getTranslations() {
   m_sListMacroKeywords << m_pTemplates->getTransTemplate()
                        << m_pTemplates->getTransTOC()
                        << m_pTemplates->getTransImage()
@@ -477,7 +440,7 @@ void CHighlighter::getTranslations() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::loadHighlighting(const QString &sStyleFile) {
+void Highlighter::loadHighlighting(const QString &sStyleFile) {
   this->readStyle(sStyleFile);
 
   // Background
@@ -514,8 +477,8 @@ void CHighlighter::loadHighlighting(const QString &sStyleFile) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::readValue(const quint16 nRow,
-                             const QTextCharFormat &charFormat) {
+void Highlighter::readValue(const quint16 nRow,
+                            const QTextCharFormat &charFormat) {
   // Foreground
   m_pUi->styleTable->item(nRow, 0)->setText(
         charFormat.foreground().color().name());
@@ -543,7 +506,7 @@ void CHighlighter::readValue(const quint16 nRow,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::clickedStyleCell(int nRow, int nCol) {
+void Highlighter::clickedStyleCell(int nRow, int nCol) {
   if (0 == nCol || 3 == nCol) {
     QColorDialog colorDialog;
     QColor initialColor(m_pUi->styleTable->item(nRow, nCol)->text());
@@ -559,7 +522,7 @@ void CHighlighter::clickedStyleCell(int nRow, int nCol) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::saveHighlighting() {
+void Highlighter::saveHighlighting() {
   m_sStyleFile = m_pUi->styleFilesBox->currentText();
   this->readStyle(m_pUi->styleFilesBox->currentText());
 
@@ -603,7 +566,7 @@ void CHighlighter::saveHighlighting() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString CHighlighter::createValues(const quint16 nRow) {
+QString Highlighter::createValues(const quint16 nRow) {
   QString sReturn("");
   QString sTmp("");
   sTmp = m_pUi->styleTable->item(nRow, 0)->text();
@@ -625,7 +588,7 @@ QString CHighlighter::createValues(const quint16 nRow) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::changedStyle(int nIndex) {
+void Highlighter::changedStyle(int nIndex) {
   QString sFileName("");
 
   if (0 == nIndex) {  // Create new style
@@ -686,7 +649,7 @@ void CHighlighter::changedStyle(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::defineRules() {
+void Highlighter::defineRules() {
   HighlightingRule rule;
   QStringList sListRegExpPatterns;
   QString sTmpRegExp;
@@ -831,7 +794,7 @@ void CHighlighter::defineRules() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::accept() {
+void Highlighter::accept() {
   this->saveHighlighting();
   this->defineRules();
   this->rehighlightAll();
@@ -842,11 +805,11 @@ void CHighlighter::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool CHighlighter::hasSettings() const {
+bool Highlighter::hasSettings() const {
   return true;
 }
 
-void CHighlighter::showSettings() {
+void Highlighter::showSettings() {
   m_pDialog->show();
   m_pDialog->exec();
 }
@@ -854,11 +817,11 @@ void CHighlighter::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::setCurrentEditor(CTextEditor *pEditor) {
+void Highlighter::setCurrentEditor(CTextEditor *pEditor) {
   Q_UNUSED(pEditor);
 }
 
-void CHighlighter::setEditorlist(QList<CTextEditor *> listEditors) {
+void Highlighter::setEditorlist(QList<CTextEditor *> listEditors) {
   m_ListHighlighters.clear();
 
   foreach (CTextEditor *pEd, listEditors) {
@@ -870,7 +833,7 @@ void CHighlighter::setEditorlist(QList<CTextEditor *> listEditors) {
     if (!listEditors.contains(pEd)) {
       m_listEditors.removeOne(pEd);
     } else {
-      m_ListHighlighters << new CSyntaxHighlighter(pEd->document());
+      m_ListHighlighters << new SyntaxHighlighter(pEd->document());
     }
   }
 
@@ -880,8 +843,8 @@ void CHighlighter::setEditorlist(QList<CTextEditor *> listEditors) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::rehighlightAll() {
-  foreach (CSyntaxHighlighter *hlight, m_ListHighlighters) {
+void Highlighter::rehighlightAll() {
+  foreach (SyntaxHighlighter *hlight, m_ListHighlighters) {
     hlight->setRules(m_highlightingRules);
     hlight->rehighlight();
   }
@@ -897,7 +860,7 @@ void CHighlighter::rehighlightAll() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void CHighlighter::showAbout() {
+void Highlighter::showAbout() {
   QDate nDate = QDate::currentDate();
   QMessageBox aboutbox(NULL);
 
