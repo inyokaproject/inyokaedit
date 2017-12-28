@@ -31,7 +31,7 @@
 #include "./tabletemplate.h"
 #include "ui_tabletemplate.h"
 
-void TableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                const QDir userDataDir,
                                const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
@@ -49,12 +49,12 @@ void TableTemplate::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_pEditor = pEditor;
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
-  m_pTemplates = new CTemplates(m_pSettings->value(
-                                  "InyokaCommunity", "ubuntuusers_de").toString(),
+  m_pTemplates = new Templates(m_pSettings->value(
+                                 "InyokaCommunity", "ubuntuusers_de").toString(),
                                 sSharePath, m_dirPreview.absolutePath());
-  m_pParser = new CParser(sSharePath, QDir(""), "", false, m_pTemplates,
-                          m_pSettings->value("InyokaCommunity",
-                                             "ubuntuusers_de").toString());
+  m_pParser = new Parser(sSharePath, QDir(""), "", false, m_pTemplates,
+                         m_pSettings->value("InyokaCommunity",
+                                            "ubuntuusers_de").toString());
 
   // Build UI
   m_pDialog = new QDialog(pParent);
@@ -356,11 +356,11 @@ void TableTemplate::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::setCurrentEditor(CTextEditor *pEditor) {
+void TableTemplate::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void TableTemplate::setEditorlist(QList<CTextEditor *> listEditors) {
+void TableTemplate::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 

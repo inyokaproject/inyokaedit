@@ -54,41 +54,41 @@ qtHaveModule(webkitwidgets) {
 include(templates/templates.pri)
 include(parser/parser.pri)
 
-HEADERS      += CInyokaEdit.h \
-                CDownload.h \
-                CDownloadImg.h \
-                CFileOperations.h \
-                CFindReplace.h \
-                CPlugins.h \
-                CTextEditor.h \
-                CSettings.h \
-                CSettingsDialog.h \
-                CSyntaxCheck.h \
-                CUpload.h \
-                CUtils.h \
-                CXmlParser.h \
-                IEditorPlugin.h
+HEADERS      += inyokaedit.h \
+                download.h \
+                downloadimg.h \
+                fileoperations.h \
+                findreplace.h \
+                plugins.h \
+                texteditor.h \
+                settings.h \
+                settingsdialog.h \
+                syntaxcheck.h \
+                upload.h \
+                utils.h \
+                xmlparser.h \
+                ieditorplugin.h
 
 SOURCES      += main.cpp \
-                CInyokaEdit.cpp \
-                CDownload.cpp \
-                CDownloadImg.cpp \
-                CFileOperations.cpp \
-                CFindReplace.cpp  \
-                CPlugins.cpp \
-                CTextEditor.cpp \
-                CSettings.cpp \
-                CSettingsDialog.cpp \
-                CSyntaxCheck.cpp \
-                CUpload.cpp \
-                CXmlParser.cpp \
-                CUtils.cpp
+                inyokaedit.cpp \
+                download.cpp \
+                downloadimg.cpp \
+                fileoperations.cpp \
+                findreplace.cpp  \
+                plugins.cpp \
+                texteditor.cpp \
+                settings.cpp \
+                settingsdialog.cpp \
+                syntaxcheck.cpp \
+                upload.cpp \
+                xmlparser.cpp \
+                utils.cpp
 
-FORMS        += CInyokaEdit.ui \
-                CFindReplace.ui \
-                CSettingsDialog.ui
+FORMS        += inyokaedit.ui \
+                findreplace.ui \
+                settingsdialog.ui
 
 RESOURCES     = res/inyokaedit_resources.qrc
-win32:RC_FILE = res/inyokaedit.rc
+win32:RC_FILE = res/inyokaedit_win.rc
 
 TRANSLATIONS += lang/inyokaedit_de.ts

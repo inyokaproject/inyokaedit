@@ -46,7 +46,7 @@
 #include <QTranslator>
 #include <QTextStream>
 
-#include "./CInyokaEdit.h"
+#include "./inyokaedit.h"
 
 QFile logfile;
 QTextStream out(&logfile);
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
   }
   app.installTranslator(&AppTranslator);
 
-  CInyokaEdit InyokaEdit(userDataDir, sSharePath);
-  InyokaEdit.show();
+  InyokaEdit myInyokaEdit(userDataDir, sSharePath);
+  myInyokaEdit.show();
   int nRet = app.exec();
 
   qDebug() << "Closing" << app.applicationName();

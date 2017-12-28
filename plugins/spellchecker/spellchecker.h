@@ -37,8 +37,8 @@
 #include <QString>
 #include <QTextCursor>
 
-#include "../../application/CTextEditor.h"
-#include "../../application/IEditorPlugin.h"
+#include "../../application/texteditor.h"
+#include "../../application/ieditorplugin.h"
 #include "./spellcheckdialog.h"
 
 #if defined _WIN32
@@ -59,7 +59,7 @@ class SpellChecker : public QObject, IEditorPlugin {
  public:
   ~SpellChecker();
 
-  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
   QString getPluginName() const;
   QString getPluginVersion() const;
@@ -70,8 +70,8 @@ class SpellChecker : public QObject, IEditorPlugin {
   bool includeMenu() const;
   bool includeToolbar() const;
   bool hasSettings() const;
-  void setCurrentEditor(CTextEditor *pEditor);
-  void setEditorlist(QList<CTextEditor *> listEditors);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(QList<TextEditor *> listEditors);
 
  public slots:
   void callPlugin();
@@ -93,7 +93,7 @@ class SpellChecker : public QObject, IEditorPlugin {
   void putWord(const QString &sWord);
 
   Hunspell *m_pHunspell;
-  CTextEditor *m_pEditor;
+  TextEditor *m_pEditor;
   QAction *m_pExecuteAct;
   SpellCheckDialog *m_pCheckDialog;
   QSettings *m_pSettings;

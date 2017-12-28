@@ -34,9 +34,9 @@
 #include <QTextCharFormat>
 
 #include "syntaxhighlighter.h"
-#include "../../application/templates/CTemplates.h"
-#include "../../application/CTextEditor.h"
-#include "../../application/IEditorPlugin.h"
+#include "../../application/templates/templates.h"
+#include "../../application/texteditor.h"
+#include "../../application/ieditorplugin.h"
 
 namespace Ui {
   class HighlighterDialog;
@@ -53,7 +53,7 @@ class Highlighter : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.highlighter")
 
  public:
-  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
   QString getPluginName() const;
   QString getPluginVersion() const;
@@ -64,8 +64,8 @@ class Highlighter : public QObject, IEditorPlugin {
   bool includeMenu() const;
   bool includeToolbar() const;
   bool hasSettings() const;
-  void setCurrentEditor(CTextEditor *pEditor);
-  void setEditorlist(QList<CTextEditor *> listEditors);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(QList<TextEditor *> listEditors);
 
  public slots:
   void callPlugin();
@@ -97,8 +97,8 @@ class Highlighter : public QObject, IEditorPlugin {
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   QList<SyntaxHighlighter *> m_ListHighlighters;
-  QList<CTextEditor *> m_listEditors;
-  CTemplates *m_pTemplates;
+  QList<TextEditor *> m_listEditors;
+  Templates *m_pTemplates;
 
   QString m_sStyleFile;
   QString m_sExt;

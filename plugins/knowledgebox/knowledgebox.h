@@ -35,9 +35,9 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include "../../application/templates/CTemplates.h"
-#include "../../application/CTextEditor.h"
-#include "../../application/IEditorPlugin.h"
+#include "../../application/templates/templates.h"
+#include "../../application/texteditor.h"
+#include "../../application/ieditorplugin.h"
 
 namespace Ui {
   class KnowledgeBoxClass;
@@ -55,7 +55,7 @@ class KnowledgeBox : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
 
  public:
-  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
   QString getPluginName() const;
   QString getPluginVersion() const;
@@ -66,8 +66,8 @@ class KnowledgeBox : public QObject, IEditorPlugin {
   bool includeMenu() const;
   bool includeToolbar() const;
   bool hasSettings() const;
-  void setCurrentEditor(CTextEditor *pEditor);
-  void setEditorlist(QList<CTextEditor *> listEditors);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(QList<TextEditor *> listEditors);
 
  public slots:
   void callPlugin();
@@ -92,8 +92,8 @@ class KnowledgeBox : public QObject, IEditorPlugin {
   QSettings *m_pSettings;
   QSettings *m_pSettingsApp;
   QString m_sCommunity;
-  CTextEditor *m_pEditor;
-  CTemplates *m_pTemplates;
+  TextEditor *m_pEditor;
+  Templates *m_pTemplates;
   QList<bool> m_bListEntryActive;
   QStringList m_sListEntries;
   QSignalMapper *m_pSigMapDeleteRow;

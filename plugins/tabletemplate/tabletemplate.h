@@ -39,10 +39,10 @@
 #include <QWebEngineView>
 #endif
 
-#include "../../application/parser/CParser.h"
-#include "../../application/templates/CTemplates.h"
-#include "../../application/CTextEditor.h"
-#include "../../application/IEditorPlugin.h"
+#include "../../application/parser/parser.h"
+#include "../../application/templates/templates.h"
+#include "../../application/texteditor.h"
+#include "../../application/ieditorplugin.h"
 
 namespace Ui {
   class TableTemplateClass;
@@ -60,7 +60,7 @@ class TableTemplate : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
 
  public:
-  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
   QString getPluginName() const;
   QString getPluginVersion() const;
@@ -71,8 +71,8 @@ class TableTemplate : public QObject, IEditorPlugin {
   bool includeMenu() const;
   bool includeToolbar() const;
   bool hasSettings() const;
-  void setCurrentEditor(CTextEditor *pEditor);
-  void setEditorlist(QList<CTextEditor *> listEditors);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(QList<TextEditor *> listEditors);
 
  public slots:
   void callPlugin();
@@ -103,9 +103,9 @@ class TableTemplate : public QObject, IEditorPlugin {
   Ui::TableTemplateClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
-  CTextEditor *m_pEditor;
-  CTemplates *m_pTemplates;
-  CParser *m_pParser;
+  TextEditor *m_pEditor;
+  Templates *m_pTemplates;
+  Parser *m_pParser;
   QDir m_dirPreview;
   QTextDocument *m_pTextDocument;
 #ifdef USEQTWEBKIT

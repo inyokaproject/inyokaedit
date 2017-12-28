@@ -33,7 +33,7 @@
 #include "./hotkey.h"
 #include "ui_hotkey.h"
 
-void Hotkey::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
                         const QDir userDataDir,
                         const QString sSharePath) {
   Q_UNUSED(userDataDir);
@@ -356,11 +356,11 @@ void Hotkey::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Hotkey::setCurrentEditor(CTextEditor *pEditor) {
+void Hotkey::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void Hotkey::setEditorlist(QList<CTextEditor *> listEditors) {
+void Hotkey::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 

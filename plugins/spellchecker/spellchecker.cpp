@@ -41,7 +41,7 @@
 SpellChecker::~SpellChecker() {
 }
 
-void SpellChecker::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir userDataDir,
                               const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
@@ -445,11 +445,11 @@ void SpellChecker::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker::setCurrentEditor(CTextEditor *pEditor) {
+void SpellChecker::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void SpellChecker::setEditorlist(QList<CTextEditor *> listEditors) {
+void SpellChecker::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 

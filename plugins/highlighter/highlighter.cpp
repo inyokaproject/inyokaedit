@@ -35,7 +35,7 @@
 
 const QString sSEPARATOR("|");
 
-void Highlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
                              const QDir userDataDir,
                              const QString sSharePath) {
   Q_UNUSED(pEditor);
@@ -70,9 +70,9 @@ void Highlighter::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_pSettings->endGroup();
 
   m_pStyleSet = NULL;
-  m_pTemplates = new CTemplates(m_pSettings->value(
-                                  "InyokaCommunity", "ubuntuusers_de").toString(),
-                                sSharePath, userDataDir.absolutePath());
+  m_pTemplates = new Templates(m_pSettings->value(
+                                 "InyokaCommunity", "ubuntuusers_de").toString(),
+                               sSharePath, userDataDir.absolutePath());
   this->getTranslations();
   this->readStyle(m_sStyleFile);
   this->defineRules();
@@ -817,19 +817,19 @@ void Highlighter::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Highlighter::setCurrentEditor(CTextEditor *pEditor) {
+void Highlighter::setCurrentEditor(TextEditor *pEditor) {
   Q_UNUSED(pEditor);
 }
 
-void Highlighter::setEditorlist(QList<CTextEditor *> listEditors) {
+void Highlighter::setEditorlist(QList<TextEditor *> listEditors) {
   m_ListHighlighters.clear();
 
-  foreach (CTextEditor *pEd, listEditors) {
+  foreach (TextEditor *pEd, listEditors) {
     if (!m_listEditors.contains(pEd)) {
       m_listEditors << pEd;
     }
   }
-  foreach (CTextEditor *pEd, m_listEditors) {
+  foreach (TextEditor *pEd, m_listEditors) {
     if (!listEditors.contains(pEd)) {
       m_listEditors.removeOne(pEd);
     } else {
@@ -852,7 +852,7 @@ void Highlighter::rehighlightAll() {
   QPalette pal;
   pal.setColor(QPalette::Base, m_colorBackground);
   pal.setColor(QPalette::Text, m_colorForeground);
-  foreach (CTextEditor *editor, m_listEditors) {
+  foreach (TextEditor *editor, m_listEditors) {
     editor->setPalette(pal);
   }
 }

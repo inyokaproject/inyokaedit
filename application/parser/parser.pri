@@ -17,14 +17,14 @@
 INCLUDEPATH += $$PWD
 DEPENDPATH  += $$PWD
 
-HEADERS     += $$PWD/CParser.h \
-               $$PWD/CParseImgMap.h \
-               $$PWD/CParseLinks.h \
-               $$PWD/CParseTemplates.h \
-               $$PWD/CProvisionalTplParser.h
+HEADERS     += $$PWD/parser.h \
+               $$PWD/parseimgmap.h \
+               $$PWD/parselinks.h \
+               $$PWD/parsetemplates.h \
+               $$PWD/provisionaltplparser.h
 
-SOURCES     += $$PWD/CParser.cpp \
-               $$PWD/CParseImgMap.cpp \
-               $$PWD/CParseLinks.cpp \
-               $$PWD/CParseTemplates.cpp \
-               $$PWD/CProvisionalTplParser.cpp
+SOURCES     += $$PWD/parser.cpp \
+               $$PWD/parseimgmap.cpp \
+               $$PWD/parselinks.cpp \
+               $$PWD/parsetemplates.cpp \
+               $$PWD/provisionaltplparser.cpp

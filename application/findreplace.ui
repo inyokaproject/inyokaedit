@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FindReplace</class>
+ <widget class="QDialog" name="FindReplace">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>409</width>
+    <height>222</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Search</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="res/inyokaedit_resources.qrc">
+    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedKingdom"/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <layout class="QHBoxLayout" name="layout_MainHorizontal">
+   <item>
+    <layout class="QVBoxLayout" name="layout_left">
+     <item>
+      <layout class="QVBoxLayout" name="layout_left_top">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_Input">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_Search">
+           <property name="text">
+            <string>Search:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="text_Search"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_Replace">
+           <property name="text">
+            <string>Replace:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="text_Replace"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbl_Error">
+       <property name="text">
+        <string>errorLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="layout_left_bottom">
+       <item>
+        <widget class="QGroupBox" name="groupBox_Direction">
+         <property name="title">
+          <string>Search direction</string>
+         </property>
+         <layout class="QVBoxLayout" name="layout_Direction">
+          <item>
+           <widget class="QRadioButton" name="radio_Forward">
+            <property name="text">
+             <string>Forward</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radio_Backward">
+            <property name="text">
+             <string>Backward</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_Options">
+         <property name="title">
+          <string>Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="layout_Options">
+          <item>
+           <widget class="QCheckBox" name="check_Case">
+            <property name="text">
+             <string>Case sensitive</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="check_WholeWord">
+            <property name="text">
+             <string>Match cases</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="check_Regexp">
+            <property name="text">
+             <string>Regular expressions</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="layout_right">
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="button_Find">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Search</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_Cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_Replace">
+       <property name="text">
+        <string>Replace</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_ReplaceAll">
+       <property name="text">
+        <string>Replace all</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_Buttons">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="res/inyokaedit_resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -36,8 +36,8 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include "../../application/CTextEditor.h"
-#include "../../application/IEditorPlugin.h"
+#include "../../application/texteditor.h"
+#include "../../application/ieditorplugin.h"
 
 namespace Ui {
   class HotkeyClass;
@@ -55,7 +55,7 @@ class Hotkey : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
 
  public:
-  void initPlugin(QWidget *pParent, CTextEditor *pEditor,
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
                   const QDir userDataDir, const QString sSharePath);
   QString getPluginName() const;
   QString getPluginVersion() const;
@@ -66,8 +66,8 @@ class Hotkey : public QObject, IEditorPlugin {
   bool includeMenu() const;
   bool includeToolbar() const;
   bool hasSettings() const;
-  void setCurrentEditor(CTextEditor *pEditor);
-  void setEditorlist(QList<CTextEditor *> listEditors);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(QList<TextEditor *> listEditors);
 
  public slots:
   void callPlugin();
@@ -94,7 +94,7 @@ class Hotkey : public QObject, IEditorPlugin {
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   QSettings *m_pSettingsApp;
-  CTextEditor *m_pEditor;
+  TextEditor *m_pEditor;
   QString m_sSharePath;
   QList<QKeySequenceEdit *> m_listSequenceEdit;
   QStringList m_sListEntries;

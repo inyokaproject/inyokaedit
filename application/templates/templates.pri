@@ -19,6 +19,6 @@ DEPENDPATH  += $$PWD
 
 QT          += widgets
 
-HEADERS     += $$PWD/CTemplates.h
+HEADERS     += $$PWD/templates.h
 
-SOURCES     += $$PWD/CTemplates.cpp
+SOURCES     += $$PWD/templates.cpp

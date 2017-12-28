@@ -48,10 +48,10 @@ include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)
 
 HEADERS      += tabletemplate.h \
-                ../../application/CSyntaxCheck.h
+                ../../application/syntaxcheck.h
 
 SOURCES      += tabletemplate.cpp \
-                ../../application/CSyntaxCheck.cpp
+                ../../application/syntaxcheck.cpp
 
 FORMS        += tabletemplate.ui
 

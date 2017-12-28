@@ -32,7 +32,7 @@
 #include "./knowledgebox.h"
 #include "ui_knowledgebox.h"
 
-void KnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
+void KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir userDataDir,
                               const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
@@ -62,8 +62,8 @@ void KnowledgeBox::initPlugin(QWidget *pParent, CTextEditor *pEditor,
   m_pEditor = pEditor;
   m_sCommunity = m_pSettingsApp->value("InyokaCommunity",
                                        "ubuntuusers_de").toString();
-  m_pTemplates = new CTemplates(m_sCommunity, sSharePath,
-                                userDataDir.absolutePath());
+  m_pTemplates = new Templates(m_sCommunity, sSharePath,
+                               userDataDir.absolutePath());
 
   this->loadTemplateEntries();
   this->buildUi(pParent);  // After loading template entries
@@ -366,11 +366,11 @@ void KnowledgeBox::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::setCurrentEditor(CTextEditor *pEditor) {
+void KnowledgeBox::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void KnowledgeBox::setEditorlist(QList<CTextEditor *> listEditors) {
+void KnowledgeBox::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
