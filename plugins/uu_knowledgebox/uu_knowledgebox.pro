@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2017 The InyokaEdit developers
+#  Copyright (C) 2013-2017 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,29 +16,30 @@
 
 TEMPLATE      = lib
 CONFIG       += plugin
-TARGET        = knowledgebox
+TARGET        = uu_knowledgebox
 DESTDIR       = ../
 
-VERSION       = 1.0.5
-QMAKE_TARGET_DESCRIPTION = "Knowledge box selection plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
+VERSION       = 1.1.0
+QMAKE_TARGET_DESCRIPTION = "uu.de knowledge box selection plugin for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2013-2017 - Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
-                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
+                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \
+                PLUGIN_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\"
 
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
 UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
-include(../../application/templates/templates.pri)
+QT           += widgets
 
-HEADERS      += knowledgebox.h
+HEADERS      += uu_knowledgebox.h
 
-SOURCES      += knowledgebox.cpp
+SOURCES      += uu_knowledgebox.cpp
 
-FORMS        += knowledgebox.ui
+FORMS        += uu_knowledgebox.ui
 
-RESOURCES     = res/knowledgebox_resources.qrc
+RESOURCES     = res/uu_knowledgebox_resources.qrc
 
-TRANSLATIONS += lang/knowledgebox_de.ts
+TRANSLATIONS += lang/uu_knowledgebox_de.ts

@@ -291,11 +291,6 @@ void Templates::initTranslations(const QString &sFilename) {
   if ("ERROR" == m_sTransTable) {
     qCritical() << "Table translation not found.";
   }
-  // Translation needed for knowledge box selector plugin
-  m_sTransKnowledge = configTransl.value("Knowledge", "ERROR").toString();
-  if ("ERROR" == m_sTransKnowledge) {
-    qCritical() << "Knowledge box translation not found.";
-  }
   configTransl.endGroup();
 }
 
@@ -324,9 +319,6 @@ QStringList Templates::getListTplMacrosALL() const {
 
 QString Templates::getTransCodeBlock() const {
   return m_sTransCodeBlock;
-}
-QString Templates::getTransKnowledge() const {
-  return m_sTransKnowledge;
 }
 QString Templates::getTransRev() const {
   return m_sTransRevText;

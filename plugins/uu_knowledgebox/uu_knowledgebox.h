@@ -1,9 +1,9 @@
 /**
- * \file knowledgebox.h
+ * \file uu_knowledgebox.h
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2013-2017 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,11 +21,11 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition knowledge box dialog
+ * Class definition uu.de knowledge box dialog
  */
 
-#ifndef INYOKAEDIT_KNOWLEDGEBOX_H_
-#define INYOKAEDIT_KNOWLEDGEBOX_H_
+#ifndef INYOKAEDIT_UU_KNOWLEDGEBOX_H_
+#define INYOKAEDIT_UU_KNOWLEDGEBOX_H_
 
 #include <QDialog>
 #include <QDir>
@@ -35,24 +35,23 @@
 #include <QSignalMapper>
 #include <QString>
 
-#include "../../application/templates/templates.h"
 #include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class KnowledgeBoxClass;
+  class Uu_KnowledgeBoxClass;
 }
 class QDir;
 class QTextDocument;
 
 /**
- * \class KnowledgeBox
+ * \class Uu_KnowledgeBox
  * \brief Dialog for table insertion
  */
-class KnowledgeBox : public QObject, IEditorPlugin {
+class Uu_KnowledgeBox : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.knowledgebox")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.uuknowledgebox")
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -87,13 +86,11 @@ class KnowledgeBox : public QObject, IEditorPlugin {
   void writeSettings();
   void createRow(const bool &bActive, const QString &sText);
 
-  Ui::KnowledgeBoxClass *m_pUi;
+  Ui::Uu_KnowledgeBoxClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
-  QSettings *m_pSettingsApp;
-  QString m_sCommunity;
+  QString m_sExt;
   TextEditor *m_pEditor;
-  Templates *m_pTemplates;
   QList<bool> m_bListEntryActive;
   QStringList m_sListEntries;
   QSignalMapper *m_pSigMapDeleteRow;
@@ -101,4 +98,4 @@ class KnowledgeBox : public QObject, IEditorPlugin {
   bool m_bCalledSettings;
 };
 
-#endif  // INYOKAEDIT_KNOWLEDGEBOX_H_
+#endif  // INYOKAEDIT_UU_KNOWLEDGEBOX_H_

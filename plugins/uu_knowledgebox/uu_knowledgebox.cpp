@@ -1,9 +1,9 @@
 /**
- * \file knowledgebox.cpp
+ * \file uu_knowledgebox.cpp
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2013-2017 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Shows a modal window for knowledge box entry selection.
+ * Shows a modal window for uu.de knowledge box entry selection.
  */
 
 #include <QCoreApplication>
@@ -29,12 +29,14 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#include "./knowledgebox.h"
-#include "ui_knowledgebox.h"
+#include "./uu_knowledgebox.h"
+#include "ui_uu_knowledgebox.h"
 
-void KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                              const QDir userDataDir,
-                              const QString sSharePath) {
+void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
+                                 const QDir userDataDir,
+                                 const QString sSharePath) {
+  Q_UNUSED(userDataDir);
+  Q_UNUSED(sSharePath);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -42,28 +44,14 @@ void KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               PLUGIN_NAME);
-
-  m_pSettingsApp = new QSettings(QSettings::IniFormat,
-                                 QSettings::UserScope,
-                                 qApp->applicationName().toLower(),
-                                 qApp->applicationName().toLower());
 #else
   m_pSettings = new QSettings(QSettings::NativeFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               PLUGIN_NAME);
-
-  m_pSettingsApp = new QSettings(QSettings::NativeFormat,
-                                 QSettings::UserScope,
-                                 qApp->applicationName().toLower(),
-                                 qApp->applicationName().toLower());
 #endif
   m_pSettings->setIniCodec("UTF-8");
   m_pEditor = pEditor;
-  m_sCommunity = m_pSettingsApp->value("InyokaCommunity",
-                                       "ubuntuusers_de").toString();
-  m_pTemplates = new Templates(m_sCommunity, sSharePath,
-                               userDataDir.absolutePath());
 
   this->loadTemplateEntries();
   this->buildUi(pParent);  // After loading template entries
@@ -75,19 +63,19 @@ void KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString KnowledgeBox::getPluginName() const {
+QString Uu_KnowledgeBox::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString KnowledgeBox::getPluginVersion() const {
+QString Uu_KnowledgeBox::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* KnowledgeBox::getPluginTranslator(const QString &sSharePath,
-                                               const QString &sLocale) {
+QTranslator* Uu_KnowledgeBox::getPluginTranslator(const QString &sSharePath,
+                                                  const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
   if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
@@ -100,27 +88,27 @@ QTranslator* KnowledgeBox::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString KnowledgeBox::getCaption() const {
-  return trUtf8("Knowledge box selector");
+QString Uu_KnowledgeBox::getCaption() const {
+  return trUtf8("Ubuntuusers.de knowledge box");
 }
-QIcon KnowledgeBox::getIcon() const {
+QIcon Uu_KnowledgeBox::getIcon() const {
   return QIcon();
   // return QIcon(":/knowledgebox.png");
 }
 
-bool KnowledgeBox::includeMenu() const {
+bool Uu_KnowledgeBox::includeMenu() const {
   return true;
 }
-bool KnowledgeBox::includeToolbar() const {
+bool Uu_KnowledgeBox::includeToolbar() const {
   return false;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::buildUi(QWidget *pParent) {
+void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::KnowledgeBoxClass();
+  m_pUi = new Ui::Uu_KnowledgeBoxClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -156,18 +144,17 @@ void KnowledgeBox::buildUi(QWidget *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::loadTemplateEntries() {
+void Uu_KnowledgeBox::loadTemplateEntries() {
   // Load entries from default template or config file
   m_bListEntryActive.clear();
   m_sListEntries.clear();
-  uint nNumOfEntries = m_pSettings->value(m_sCommunity + "/NumOfEntries",
-                         0).toUInt();
+  uint nNumOfEntries = m_pSettings->value("NumOfEntries", 0).toUInt();
+
   if (0 == nNumOfEntries) {
     this->loadTemplateDefaults();
   } else {
     qDebug() << "Reading knowledge box entries from config file";
     QString sTmpEntry("");
-    m_pSettings->beginGroup(m_sCommunity);
     for (uint i = 0; i < nNumOfEntries; i++) {
       sTmpEntry = m_pSettings->value(
                     "Entry_" + QString::number(i), "").toString();
@@ -178,40 +165,45 @@ void KnowledgeBox::loadTemplateEntries() {
                                 false).toBool();
       }
     }
-    m_pSettings->endGroup();
   }
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::loadTemplateDefaults() {
+void Uu_KnowledgeBox::loadTemplateDefaults() {
   qDebug() << "Calling" << Q_FUNC_INFO;
-  QStringList sListTemplates;
-  QStringList sListTplMacros;
+  QFile fiDefault(":/uu_knowledgebox.default");
   m_bListEntryActive.clear();
   m_sListEntries.clear();
 
-  sListTemplates = m_pTemplates->getListTplNamesINY();
-  sListTplMacros = m_pTemplates->getListTplMacrosINY();
-
-  int nIndex = sListTemplates.indexOf(m_pTemplates->getTransKnowledge());
-  if (nIndex >= 0  &&
-      sListTplMacros.size() >= 2 &&
-      sListTplMacros.size() >= nIndex) {
-    m_sListEntries = sListTplMacros[nIndex].split("\\n");
-    m_sListEntries.removeFirst();
-    m_sListEntries.removeLast();
-    if (m_sListEntries.size() >= 1) {
-      m_sListEntries[0].remove("%%");
-      m_sListEntries[m_sListEntries.size() - 1].remove("%%");
-    }
+  if (!fiDefault.open(QIODevice::ReadOnly)) {
+    qWarning() << "Could not open uu_knowledgebox.default";
+    QMessageBox::warning(NULL, trUtf8("Error"),
+                         trUtf8("Could not open %1")
+                         .arg("uu_knowledgebox.default"));
   } else {
-    qCritical() << "Error while loading knowledge box template.";
+    QTextStream in(&fiDefault);
+    in.setCodec("UTF-8");
+    QString tmpLine("");
+
+    while (!in.atEnd()) {
+      tmpLine = in.readLine().trimmed();
+      if (!tmpLine.trimmed().isEmpty()) {
+        m_sListEntries << tmpLine.trimmed();
+      }
+    }
+    fiDefault.close();
   }
 
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_bListEntryActive << true;
+  }
+
+  if (0 == m_sListEntries.size()) {
+    qWarning() << "Knowledgebox defaults are empty!";
+    QMessageBox::warning(NULL, trUtf8("Error"),
+                         trUtf8("uu.de knowledgebox defaults are empty!"));
   }
 
   this->writeSettings();
@@ -220,19 +212,19 @@ void KnowledgeBox::loadTemplateDefaults() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::callPlugin() {
+void Uu_KnowledgeBox::callPlugin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_bCalledSettings = false;
   m_pDialog->show();
   m_pDialog->exec();
 }
 
-void KnowledgeBox::executePlugin() {}
+void Uu_KnowledgeBox::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::accept() {
+void Uu_KnowledgeBox::accept() {
   int nSize = m_sListEntries.size();
   m_sListEntries.clear();
   m_bListEntryActive.clear();
@@ -248,8 +240,7 @@ void KnowledgeBox::accept() {
   }
 
   if (!m_bCalledSettings) {
-    QString sOutput = "{{{#!" + m_pTemplates->getTransTemplate().toLower() +
-                      " " + m_pTemplates->getTransKnowledge() + "\n";
+    QString sOutput = "{{{#!vorlage Wissen\n";
     if (m_sListEntries.size() == m_bListEntryActive.size()) {
       for (int i = 0; i < m_sListEntries.size(); i++) {
         if (m_bListEntryActive[i]) {
@@ -271,7 +262,7 @@ void KnowledgeBox::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::addRow() {
+void Uu_KnowledgeBox::addRow() {
   m_sListEntries << trUtf8("[:Article:New entry]");
   m_bListEntryActive << true;
   this->createRow(m_bListEntryActive.last(), m_sListEntries.last());
@@ -283,7 +274,7 @@ void KnowledgeBox::addRow() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
+void Uu_KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -318,7 +309,7 @@ void KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::deleteRow(QWidget *widget) {
+void Uu_KnowledgeBox::deleteRow(QWidget *widget) {
   QPushButton *button = reinterpret_cast<QPushButton*>(widget);
   if (button != NULL) {
     int nIndex = m_listDelRowButtons.indexOf(button);
@@ -337,9 +328,8 @@ void KnowledgeBox::deleteRow(QWidget *widget) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::writeSettings() {
-  m_pSettings->remove(m_sCommunity);
-  m_pSettings->beginGroup(m_sCommunity);
+void Uu_KnowledgeBox::writeSettings() {
+  m_pSettings->remove("General");
   m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_pSettings->setValue("Entry_" + QString::number(i),
@@ -347,17 +337,16 @@ void KnowledgeBox::writeSettings() {
     m_pSettings->setValue("Active_" + QString::number(i),
                           m_bListEntryActive[i]);
   }
-  m_pSettings->endGroup();
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool KnowledgeBox::hasSettings() const {
+bool Uu_KnowledgeBox::hasSettings() const {
   return true;
 }
 
-void KnowledgeBox::showSettings() {
+void Uu_KnowledgeBox::showSettings() {
   m_bCalledSettings = true;
   m_pDialog->show();
   m_pDialog->exec();
@@ -366,32 +355,32 @@ void KnowledgeBox::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::setCurrentEditor(TextEditor *pEditor) {
+void Uu_KnowledgeBox::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void KnowledgeBox::setEditorlist(QList<TextEditor *> listEditors) {
+void Uu_KnowledgeBox::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void KnowledgeBox::showAbout() {
-  QDate nDate = QDate::currentDate();
+void Uu_KnowledgeBox::showAbout() {
   QMessageBox aboutbox(NULL);
-
   aboutbox.setWindowTitle(trUtf8("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
-  aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
-                   + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
-                   + "<p>&copy; 2013-" + QString::number(nDate.year())
-                   + " &ndash; " + QString::fromUtf8("Thorsten Roth")
-                   + "<br />" + trUtf8("Licence") + ": "
-                   + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                     "GNU General Public License Version 3</a></p>"
-                   + "<p><i>"
-                   + trUtf8("Plugin for choosing knowledge box entries.")
-                   + "</i></p>");
+  aboutbox.setText(QString("<p><b>%1</b><br />"
+                           "%2</p>"
+                           "<p>%3<br />"
+                           "%4</p>"
+                           "<p><i>%5</i></p>")
+                   .arg(this->getCaption())
+                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(PLUGIN_COPY)
+                   .arg(trUtf8("Licence") + ": " +
+                        "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                        "GNU General Public License Version 3</a>")
+                   .arg(trUtf8("Plugin for choosing uu.de knowledge box entries.")));
   aboutbox.exec();
 }

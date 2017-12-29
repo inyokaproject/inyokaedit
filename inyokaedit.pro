@@ -18,7 +18,7 @@ TEMPLATE = subdirs
 CONFIG  += ordered
 SUBDIRS  = plugins/spellchecker \
            plugins/tabletemplate \
-           plugins/knowledgebox \
+           plugins/uu_knowledgebox \
            plugins/highlighter \
            plugins/hotkey \
            application

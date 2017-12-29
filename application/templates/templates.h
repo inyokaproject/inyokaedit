@@ -41,7 +41,6 @@ class Templates {
   QStringList getListTplMacrosALL() const;
 
   QString getTransCodeBlock() const;
-  QString getTransKnowledge() const;
   QString getTransRev() const;
   QString getTransTable() const;
   QString getTransTag() const;
@@ -102,7 +101,6 @@ class Templates {
 
   // Translations
   QString m_sTransCodeBlock;
-  QString m_sTransKnowledge;
   QString m_sTransRevText;
   QString m_sTransTable;
   QString m_sTransTagText;
