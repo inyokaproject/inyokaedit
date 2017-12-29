@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2017 The InyokaEdit developers
+#  Copyright (C) 2012-2017 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,15 +16,16 @@
 
 TEMPLATE      = lib
 CONFIG       += plugin
-TARGET        = tabletemplate
+TARGET        = uu_tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.2.1
-QMAKE_TARGET_DESCRIPTION = "Table template plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
+VERSION       = 1.3.0
+QMAKE_TARGET_DESCRIPTION = "uu.de table template plugin for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2017 - Christian Schärf, Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
-                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
+                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \
+                PLUGIN_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\"
 
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
@@ -47,14 +48,12 @@ qtHaveModule(webkitwidgets) {
 include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)
 
-HEADERS      += tabletemplate.h \
-                ../../application/syntaxcheck.h
+HEADERS      += uu_tabletemplate.h
 
-SOURCES      += tabletemplate.cpp \
-                ../../application/syntaxcheck.cpp
+SOURCES      += uu_tabletemplate.cpp
 
-FORMS        += tabletemplate.ui
+FORMS        += uu_tabletemplate.ui
 
-RESOURCES     = res/tabletemplate_resources.qrc
+RESOURCES     = res/uu_tabletemplate_resources.qrc
 
-TRANSLATIONS += lang/tabletemplate_de.ts
+TRANSLATIONS += lang/uu_tabletemplate_de.ts

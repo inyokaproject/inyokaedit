@@ -1,9 +1,9 @@
 /**
- * \file tabletemplate.cpp
+ * \file uu_tabletemplate.cpp
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2012-2017 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,19 +21,18 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Shows a modal window with table template.
+ * Shows a modal window for uu.de table templates.
  */
 
-#include <QDate>
 #include <QDebug>
 #include <QTextDocument>
 
-#include "./tabletemplate.h"
-#include "ui_tabletemplate.h"
+#include "./uu_tabletemplate.h"
+#include "ui_uu_tabletemplate.h"
 
-void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                               const QDir userDataDir,
-                               const QString sSharePath) {
+void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
+                                  const QDir userDataDir,
+                                  const QString sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -51,14 +50,14 @@ void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pTextDocument = new QTextDocument(this);
   m_pTemplates = new Templates(m_pSettings->value(
                                  "InyokaCommunity", "ubuntuusers_de").toString(),
-                                sSharePath, m_dirPreview.absolutePath());
+                               sSharePath, m_dirPreview.absolutePath());
   m_pParser = new Parser(sSharePath, QDir(""), "", false, m_pTemplates,
                          m_pSettings->value("InyokaCommunity",
                                             "ubuntuusers_de").toString());
 
   // Build UI
   m_pDialog = new QDialog(pParent);
-  m_pUi = new Ui::TableTemplateClass();
+  m_pUi = new Ui::Uu_TableTemplateClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
@@ -75,6 +74,11 @@ void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pPreviewWebview->setAcceptDrops(false);
   m_pPreviewWebview->setUrl(QUrl("about:blank"));
 
+  // Remove old obsoleteconf entry
+  m_pSettings->beginGroup("Plugin_tabletemplate");
+  m_pSettings->remove("");
+  m_pSettings->endGroup();
+
   // Load table styles
   m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
   m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
@@ -84,7 +88,8 @@ void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_sListTableStylesPrefix << "" << "kde-" << "xfce-" << "edu-"
                            << "studio-" << "lxde-";
   m_sListTableStylesPrefix = m_pSettings->value(
-                               "TableStylesPrefix", m_sListTableStylesPrefix).toStringList();
+                               "TableStylesPrefix",
+                               m_sListTableStylesPrefix).toStringList();
   m_sRowClassTitle = m_pSettings->value("RowClassTitle", "titel").toString();
   m_sRowClassHead = m_pSettings->value("RowClassHead", "kopf").toString();
   m_sRowClassHighlight = m_pSettings->value(
@@ -120,19 +125,19 @@ void TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString TableTemplate::getPluginName() const {
+QString Uu_TableTemplate::getPluginName() const {
   return PLUGIN_NAME;
 }
 
-QString TableTemplate::getPluginVersion() const {
+QString Uu_TableTemplate::getPluginVersion() const {
   return PLUGIN_VERSION;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* TableTemplate::getPluginTranslator(const QString &sSharePath,
-                                                const QString &sLocale) {
+QTranslator* Uu_TableTemplate::getPluginTranslator(const QString &sSharePath,
+                                                   const QString &sLocale) {
   QTranslator* pPluginTranslator = new QTranslator(this);
   QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
   if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
@@ -145,25 +150,25 @@ QTranslator* TableTemplate::getPluginTranslator(const QString &sSharePath,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString TableTemplate::getCaption() const {
-  return trUtf8("Table generator / converter");
+QString Uu_TableTemplate::getCaption() const {
+  return trUtf8("Ubuntuusers.de table generator");
 }
-QIcon TableTemplate::getIcon() const {
+QIcon Uu_TableTemplate::getIcon() const {
   return QIcon(":/tabletemplate.png");
 }
 
-bool TableTemplate::includeMenu() const {
+bool Uu_TableTemplate::includeMenu() const {
   return true;
 }
-bool TableTemplate::includeToolbar() const {
+bool Uu_TableTemplate::includeToolbar() const {
   return true;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::callPlugin() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
+void Uu_TableTemplate::callPlugin() {
+  qDebug() << Q_FUNC_INFO;
   m_pUi->tableStyleBox->setCurrentIndex(0);
   m_pUi->showHeadBox->setChecked(false);
   m_pUi->showTitleBox->setChecked(false);
@@ -184,12 +189,12 @@ void TableTemplate::callPlugin() {
   m_pDialog->exec();
 }
 
-void TableTemplate::executePlugin() {}
+void Uu_TableTemplate::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::preview() {
+void Uu_TableTemplate::preview() {
   m_pTextDocument->setPlainText(this->generateTable());
 
   QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
@@ -206,13 +211,10 @@ void TableTemplate::preview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString TableTemplate::generateTable() {
-  QString sTableCode("");
+QString Uu_TableTemplate::generateTable() {
+  QString sTableCode("{{{#!vorlage Tabelle\n");
   int colsNum = m_pUi->colsNum->value();
   int rowsNum = m_pUi->rowsNum->value();
-
-  sTableCode = "{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
-               + m_pTemplates->getTransTable() + "\n";
 
   // Create title if set
   if (m_pUi->showTitleBox->isChecked()) {
@@ -258,15 +260,14 @@ QString TableTemplate::generateTable() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::convertToBaseTemplate() {
+void Uu_TableTemplate::convertToBaseTemplate() {
   m_bBaseToNew = false;
   QString sTableCode("");
   QString sInput(m_pUi->newTextEdit->toPlainText());
   QStringList sListInput;
   QStringList sListRow;
 
-  sInput.remove("{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
-                + m_pTemplates->getTransTable());
+  sInput.remove("{{{#!vorlage Tabelle");
   sInput = sInput.trimmed();
   if (sInput.endsWith("}}}")) {
     sInput.remove(sInput.length() - 3, 3);
@@ -293,14 +294,11 @@ void TableTemplate::convertToBaseTemplate() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::convertToNewTemplate() {
+void Uu_TableTemplate::convertToNewTemplate() {
   m_bBaseToNew = true;
-  QString sTableCode("");
+  QString sTableCode("{{{#!vorlage Tabelle");
   QStringList sListInput;
   QStringList sListRow;
-
-  sTableCode = "{{{#!" +  m_pTemplates->getTransTemplate().toLower() + " "
-               + m_pTemplates->getTransTable();
 
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
                   QRegExp("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
@@ -332,7 +330,7 @@ void TableTemplate::convertToNewTemplate() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::accept() {
+void Uu_TableTemplate::accept() {
   if (0 == m_pUi->tabWidget->currentIndex()) {
     m_pEditor->insertPlainText(this->generateTable());
   } else if (1 == m_pUi->tabWidget->currentIndex() && m_bBaseToNew) {
@@ -346,44 +344,42 @@ void TableTemplate::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool TableTemplate::hasSettings() const {
+bool Uu_TableTemplate::hasSettings() const {
   return false;
 }
 
-void TableTemplate::showSettings() {
+void Uu_TableTemplate::showSettings() {
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::setCurrentEditor(TextEditor *pEditor) {
+void Uu_TableTemplate::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void TableTemplate::setEditorlist(QList<TextEditor *> listEditors) {
+void Uu_TableTemplate::setEditorlist(QList<TextEditor *> listEditors) {
   Q_UNUSED(listEditors);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TableTemplate::showAbout() {
-  QDate nDate = QDate::currentDate();
+void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(NULL);
-
   aboutbox.setWindowTitle(trUtf8("Info"));
   aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
-  aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
-                   + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
-                   + "<p>&copy; 2012-" + QString::number(nDate.year())
-                   + " &ndash; " + QString::fromUtf8("Christian Schärf, ")
-                   + QString::fromUtf8("Thorsten Roth")
-                   + "<br />" + trUtf8("Licence") + ": "
-                   + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                     "GNU General Public License Version 3</a></p>"
-                   + "<p><i>"
-                   + trUtf8("Plugin for generating styled Inyoka tables.")
-                   + "</i></p>");
-
+  aboutbox.setText(QString("<p><b>%1</b><br />"
+                           "%2</p>"
+                           "<p>%3<br />"
+                           "%4</p>"
+                           "<p><i>%5</i></p>")
+                   .arg(this->getCaption())
+                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(PLUGIN_COPY)
+                   .arg(trUtf8("Licence") + ": " +
+                        "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                        "GNU General Public License Version 3</a>")
+                   .arg(trUtf8("Plugin for generating uu.de styled Inyoka tables.")));
   aboutbox.exec();
 }

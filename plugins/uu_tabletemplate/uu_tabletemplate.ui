@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TableTemplateClass</class>
- <widget class="QDialog" name="TableTemplateClass">
+ <class>Uu_TableTemplateClass</class>
+ <widget class="QDialog" name="Uu_TableTemplateClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,7 +32,7 @@
    <string>Table</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="res/tabletemplate_resources.qrc">
+   <iconset resource="res/uu_tabletemplate_resources.qrc">
     <normaloff>:/tabletemplate.png</normaloff>:/tabletemplate.png</iconset>
   </property>
   <property name="locale">
@@ -154,7 +154,7 @@
          <item row="2" column="0">
           <widget class="QPushButton" name="BaseToNewButton">
            <property name="text">
-            <string>Base to new</string>
+            <string>Base to uu.de</string>
            </property>
            <property name="icon">
             <iconset resource="../../application/res/inyokaedit_resources.qrc">
@@ -165,7 +165,7 @@
          <item row="2" column="1">
           <widget class="QPushButton" name="NewToBaseButton">
            <property name="text">
-            <string>New to base</string>
+            <string>uu.de to base</string>
            </property>
            <property name="icon">
             <iconset resource="../../application/res/inyokaedit_resources.qrc">
@@ -176,7 +176,7 @@
          <item row="3" column="0" colspan="2">
           <widget class="QLabel" name="NewformatLabel">
            <property name="text">
-            <string>New table template:</string>
+            <string>ubuntuusers.de table template:</string>
            </property>
           </widget>
          </item>
@@ -200,14 +200,14 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="res/tabletemplate_resources.qrc"/>
   <include location="../../application/res/inyokaedit_resources.qrc"/>
+  <include location="res/uu_tabletemplate_resources.qrc"/>
  </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>TableTemplateClass</receiver>
+   <receiver>Uu_TableTemplateClass</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -1,9 +1,9 @@
 /**
- * \file tabletemplate.h
+ * \file uu_tabletemplate.h
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2012-2017 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,11 +21,11 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition table insert dialog
+ * Class definition uu.de table template dialog
  */
 
-#ifndef INYOKAEDIT_TABLETEMPLATE_H_
-#define INYOKAEDIT_TABLETEMPLATE_H_
+#ifndef INYOKAEDIT_UU_TABLETEMPLATE_H_
+#define INYOKAEDIT_UU_TABLETEMPLATE_H_
 
 #include <QDialog>
 #include <QDir>
@@ -45,19 +45,19 @@
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class TableTemplateClass;
+  class Uu_TableTemplateClass;
 }
 class QDir;
 class QTextDocument;
 
 /**
- * \class TableTemplate
+ * \class Uu_TableTemplate
  * \brief Dialog for table insertion
  */
-class TableTemplate : public QObject, IEditorPlugin {
+class Uu_TableTemplate : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.tabletemplate")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.uutabletemplate")
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -100,7 +100,7 @@ class TableTemplate : public QObject, IEditorPlugin {
     */
   QString generateTable();
 
-  Ui::TableTemplateClass *m_pUi;
+  Ui::Uu_TableTemplateClass *m_pUi;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   TextEditor *m_pEditor;
@@ -123,4 +123,4 @@ class TableTemplate : public QObject, IEditorPlugin {
   bool m_bBaseToNew;
 };
 
-#endif  // INYOKAEDIT_TABLETEMPLATE_H_
+#endif  // INYOKAEDIT_UU_TABLETEMPLATE_H_

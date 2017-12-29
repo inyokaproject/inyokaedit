@@ -25,7 +25,6 @@
  */
 
 #include <QCoreApplication>
-#include <QDate>
 #include <QDebug>
 #include <QMessageBox>
 
@@ -172,7 +171,7 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::loadTemplateDefaults() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
+  qDebug() << Q_FUNC_INFO;
   QFile fiDefault(":/uu_knowledgebox.default");
   m_bListEntryActive.clear();
   m_sListEntries.clear();
@@ -213,7 +212,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::callPlugin() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
+  qDebug() << Q_FUNC_INFO;
   m_bCalledSettings = false;
   m_pDialog->show();
   m_pDialog->exec();
