@@ -1,5 +1,5 @@
 /**
- * \file parseimgmap.h
+ * \file parsetable.h
  *
  * \section LICENSE
  *
@@ -21,22 +21,21 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for image map parser.
+ * Class definition for table parser.
  */
 
-#ifndef INYOKAEDIT_PARSEIMGMAP_H_
-#define INYOKAEDIT_PARSEIMGMAP_H_
+#ifndef INYOKAEDIT_PARSETABLE_H_
+#define INYOKAEDIT_PARSETABLE_H_
 
 #include <QTextDocument>
 
-class ParseImgMap {
+class ParseTable {
  public:
-  ParseImgMap();
-  static void startParsing(QTextDocument *pRawDoc,
-                           QStringList sListElements,
-                           QStringList sListImages,
-                           const QString &sSharePath,
-                           const QString &sCommunity);
+  ParseTable();
+  static void startParsing(QTextDocument *pRawDoc);
+
+ private:
+  static QString createTable(const QStringList &sListLines);
 };
 
-#endif  // INYOKAEDIT_PARSEIMGMAP_H_
+#endif  // INYOKAEDIT_PARSETABLE_H_

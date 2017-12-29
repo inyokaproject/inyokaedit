@@ -20,11 +20,13 @@ DEPENDPATH  += $$PWD
 HEADERS     += $$PWD/parser.h \
                $$PWD/parseimgmap.h \
                $$PWD/parselinks.h \
+               $$PWD/parsetable.h \
                $$PWD/parsetemplates.h \
                $$PWD/provisionaltplparser.h
 
 SOURCES     += $$PWD/parser.cpp \
                $$PWD/parseimgmap.cpp \
                $$PWD/parselinks.cpp \
+               $$PWD/parsetable.cpp \
                $$PWD/parsetemplates.cpp \
                $$PWD/provisionaltplparser.cpp

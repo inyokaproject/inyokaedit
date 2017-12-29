@@ -429,8 +429,8 @@ void ParseLinks::createAnchor(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void ParseLinks::replaceAttachments(QTextDocument *p_RawDoc) {
-  QString sDoc(p_RawDoc->toPlainText());
+void ParseLinks::replaceAttachments(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QString sRegExp("\\[\\[" + m_sTransAttach + "\\(.*\\)\\]\\]");
   QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
   findMacro.setMinimal(true);
@@ -451,5 +451,5 @@ void ParseLinks::replaceAttachments(QTextDocument *p_RawDoc) {
     nPos += sMacro.length();
   }
 
-  p_RawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
