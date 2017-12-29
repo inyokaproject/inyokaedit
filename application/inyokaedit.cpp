@@ -974,23 +974,6 @@ bool InyokaEdit::eventFilter(QObject *obj, QEvent *event) {
     }
     // --------------------------------------------------------------------
     // --------------------------------------------------------------------
-    // CTRL + SHIFT + T (only for debugging)
-    else if (keyEvent->key() == Qt::Key_T
-             && isSHIFT && isCTRL) {
-      static bool bToggle(false);
-      static QTextDocument docBackup("");
-
-      if (!bToggle) {
-        docBackup.setPlainText(m_pCurrentEditor->document()->toPlainText());
-        m_pParser->replaceTemplates(m_pCurrentEditor->document());
-      } else {
-        m_pCurrentEditor->setText(docBackup.toPlainText());
-      }
-      bToggle = !bToggle;
-      return true;
-    }
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
     // Reload preview at F5 or defined button
     else if ((Qt::Key_F5 == keyEvent->key()
               || m_pSettings->getReloadPreviewKey() == keyEvent->key())

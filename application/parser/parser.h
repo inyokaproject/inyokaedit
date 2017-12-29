@@ -54,9 +54,6 @@ class Parser : public QObject {
          Templates *pTemplates, const QString &sCommunity);
   ~Parser();
 
-  // PUBLIC FOR DEBUGGING
-  void replaceTemplates(QTextDocument *p_rawDoc);
-
   // Starts generating HTML-code
   QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument,
                     const bool &bSyntaxCheck = false);
@@ -79,7 +76,6 @@ class Parser : public QObject {
   void removeComments(QTextDocument *p_rawDoc);
   void generateParagraphs(QTextDocument *p_rawDoc);
 
-  void replaceFlags(QTextDocument *p_rawDoc);
   void replaceImages(QTextDocument *p_rawDoc);
   void replaceQuotes(QTextDocument *p_rawDoc);
   void replaceBreaks(QTextDocument *p_rawDoc);

@@ -92,9 +92,6 @@ QString Parser::genOutput(const QString &sActFile,
   m_pRawText = pRawDocument->clone();
   m_sCurrentFile = sActFile;
 
-  // Replace macros with Inyoka markup templates
-  // this->replaceTemplates(m_pRawText);
-
   this->removeComments(m_pRawText);
 
   m_sListNoTranslate.clear();
@@ -180,7 +177,7 @@ QString Parser::genOutput(const QString &sActFile,
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-
+/*
 void Parser::replaceTemplates(QTextDocument *p_rawDoc) {
   QString sDoc(p_rawDoc->toPlainText());
   QString sMacro;
@@ -246,7 +243,7 @@ void Parser::replaceTemplates(QTextDocument *p_rawDoc) {
   // Replace p_rawDoc with adapted document
   p_rawDoc->setPlainText(sDoc);
 }
-
+*/
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
