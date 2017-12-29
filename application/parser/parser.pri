@@ -22,6 +22,7 @@ HEADERS     += $$PWD/parser.h \
                $$PWD/parselinks.h \
                $$PWD/parsetable.h \
                $$PWD/parsetemplates.h \
+               $$PWD/parsetextformats.h \
                $$PWD/provisionaltplparser.h
 
 SOURCES     += $$PWD/parser.cpp \
@@ -29,4 +30,5 @@ SOURCES     += $$PWD/parser.cpp \
                $$PWD/parselinks.cpp \
                $$PWD/parsetable.cpp \
                $$PWD/parsetemplates.cpp \
+               $$PWD/parsetextformats.cpp \
                $$PWD/provisionaltplparser.cpp

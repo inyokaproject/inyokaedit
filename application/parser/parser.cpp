@@ -27,6 +27,7 @@
 #include "./parser.h"
 #include "./parseimgmap.h"
 #include "./parsetable.h"
+#include "./parsetextformats.h"
 #include "../syntaxcheck.h"
 
 Parser::Parser(const QString &sSharePath,
@@ -135,11 +136,11 @@ QString Parser::genOutput(const QString &sActFile,
   this->replaceHorLines(m_pRawText);
   this->replaceDates(m_pRawText);
 
-  this->replaceTextformat(m_pRawText,
-                          m_pTemplates->getListFormatStart(),
-                          m_pTemplates->getListFormatEnd(),
-                          m_pTemplates->getListFormatHtmlStart(),
-                          m_pTemplates->getListFormatHtmlEnd());
+  ParseTextformats::startParsing(m_pRawText,
+                                 m_pTemplates->getListFormatStart(),
+                                 m_pTemplates->getListFormatEnd(),
+                                 m_pTemplates->getListFormatHtmlStart(),
+                                 m_pTemplates->getListFormatHtmlEnd());
 
   this->generateParagraphs(m_pRawText);
   this->replaceFootnotes(m_pRawText);
@@ -461,8 +462,8 @@ void Parser::filterNoTranslate(QTextDocument *p_rawDoc) {
     }
   }
 
-  this->replaceTextformat(p_rawDoc, sListFormatStart, sListFormatEnd,
-                          sListHtmlStart, sListHtmlEnd);
+  ParseTextformats::startParsing(p_rawDoc, sListFormatStart, sListFormatEnd,
+                                 sListHtmlStart, sListHtmlEnd);
 
   patternFormat.setCaseSensitivity(Qt::CaseInsensitive);
   patternFormat.setMinimal(true);  // Search only for smallest match
@@ -484,139 +485,6 @@ void Parser::filterNoTranslate(QTextDocument *p_rawDoc) {
       nNoTranslate++;
     }
   }
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Parser::replaceTextformat(QTextDocument *p_rawDoc,
-                               const QStringList &sListFormatStart,
-                               const QStringList &sListFormatEnd,
-                               const QStringList &sListHtmlStart,
-                               const QStringList &sListHtmlEnd) {
-  QString sDoc(p_rawDoc->toPlainText());
-  QRegExp patternTextformat;
-  QString sFormatedText;
-  QString sTmpRegExp;
-  bool bFoundStart;
-  int nIndex;
-  int nLength;
-
-  patternTextformat.setCaseSensitivity(Qt::CaseInsensitive);
-  patternTextformat.setMinimal(true);  // Search only for smallest match
-
-  for (int i = 0; i < sListFormatStart.size(); i++) {
-    bFoundStart = true;
-
-    // Start and end is not identical
-    if (sListFormatStart[i] != sListFormatEnd[i]) {
-      if (!sListFormatStart[i].startsWith("RegExp=")) {
-        sDoc.replace(sListFormatStart[i], sListHtmlStart[i]);
-      } else {
-        sTmpRegExp = sListFormatStart[i];
-        sTmpRegExp.remove("RegExp=");
-        sTmpRegExp = sTmpRegExp.trimmed();
-        patternTextformat.setPattern(sTmpRegExp);
-
-        nIndex = patternTextformat.indexIn(sDoc);
-
-        while (nIndex >= 0) {
-          QString sCap("");
-          nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
-          sCap = patternTextformat.cap(1);
-
-          if (sCap.isEmpty()) {
-            sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
-          } else {
-            sDoc.replace(nIndex, nLength,
-                         sListHtmlStart[i].arg(sCap));
-          }
-
-          // Go on with RegExp-Search
-          nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
-        }
-      }
-      if (!sListFormatEnd[i].startsWith("RegExp=")) {
-        sDoc.replace(sListFormatEnd[i], sListHtmlEnd[i]);
-      } else {
-        sTmpRegExp = sListFormatEnd[i];
-        sTmpRegExp.remove("RegExp=");
-        sTmpRegExp = sTmpRegExp.trimmed();
-        patternTextformat.setPattern(sTmpRegExp);
-
-        nIndex = patternTextformat.indexIn(sDoc);
-
-        while (nIndex >= 0) {
-          QString sCap("");
-          nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
-          sCap = patternTextformat.cap(1);
-
-          if (sCap.isEmpty()) {
-            sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
-          } else {
-            sDoc.replace(nIndex, nLength,
-                         sListHtmlEnd[i].arg(sCap));
-          }
-
-          // Go on with RegExp-Search
-          nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
-        }
-      }
-    } else {  // Start and end is identical
-      if (!sListFormatStart[i].startsWith("RegExp=")) {
-        while (-1 != sDoc.indexOf(sListFormatStart[i])) {
-          if (bFoundStart) {
-            sDoc.replace(sDoc.indexOf(sListFormatStart[i]),
-                         sListFormatStart[i].length(),
-                         sListHtmlStart[i]);
-          } else {
-            sDoc.replace(sDoc.indexOf(sListFormatStart[i]),
-                         sListFormatStart[i].length(),
-                         sListHtmlEnd[i]);
-          }
-          bFoundStart = !bFoundStart;
-        }
-      } else {
-        sTmpRegExp = sListFormatStart[i];
-        sTmpRegExp.remove("RegExp=");
-        sTmpRegExp = sTmpRegExp.trimmed();
-        patternTextformat.setPattern(sTmpRegExp);
-
-        nIndex = patternTextformat.indexIn(sDoc);
-
-        while (nIndex >= 0) {
-          QString sCap("");
-          nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
-          sCap = patternTextformat.cap(1);
-
-          if (sCap.isEmpty()) {
-            if (bFoundStart) {
-              sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
-            } else {
-              sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
-            }
-          } else {
-            if (bFoundStart) {
-              sDoc.replace(nIndex, nLength,
-                           sListHtmlStart[i].arg(sCap));
-            } else {
-              sDoc.replace(nIndex, nLength,
-                           sListHtmlEnd[i].arg(sCap));
-            }
-          }
-
-          // Go on with RegExp-Search
-          nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
-        }
-      }
-    }
-  }
-
-  // Replace p_rawDoc with adapted document
   p_rawDoc->setPlainText(sDoc);
 }
 
