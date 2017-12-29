@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Parse all image mapped elents (simple replacement).
+ * Parse all text formats.
  */
 
 #include <QRegExp>

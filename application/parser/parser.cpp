@@ -26,6 +26,7 @@
 
 #include "./parser.h"
 #include "./parseimgmap.h"
+#include "./parselist.h"
 #include "./parsetable.h"
 #include "./parsetextformats.h"
 #include "../syntaxcheck.h"
@@ -112,7 +113,7 @@ QString Parser::genOutput(const QString &sActFile,
 
   this->replaceHeadlines(m_pRawText);        // And generate list for TOC
   this->replaceTableOfContents(m_pRawText);  // Use before link parser!
-  this->replaceLists(m_pRawText);
+  ParseList::startParsing(m_pRawText);
   ParseTable::startParsing(m_pRawText);
   this->replaceImages(m_pRawText);
 
@@ -913,156 +914,6 @@ void Parser::replaceImages(QTextDocument *p_rawDoc) {
   }
 
   // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Parser::replaceLists(QTextDocument *p_rawDoc) {
-  QString sDoc("");
-  QString sLine("");
-  QString sClass("arabic");
-  int nPreviousIndex = -1;
-  int nCurrentIndex = -1;
-  QList<bool> bArrayListType;  // Unsorted = false, sorted = true
-
-  // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
-       block = block.next()) {
-    if (block.text().trimmed().startsWith("*")
-        || block.text().trimmed().startsWith("1.")
-        || block.text().trimmed().startsWith("a.")
-        || block.text().trimmed().startsWith("A.")
-        || block.text().trimmed().startsWith("i.")
-        || block.text().trimmed().startsWith("I.")) {
-      sLine = block.text();
-
-      if (sLine.indexOf(" * ") >= 0) {  // Unsorted list
-        nPreviousIndex = nCurrentIndex;
-        nCurrentIndex = sLine.indexOf(" * ");
-        sLine.remove(0, sLine.indexOf(" * ") + 3);
-        // qDebug() << "LIST:" << sLine << nCurrentIndex << false;
-
-        if (nCurrentIndex != nPreviousIndex) {
-          if (nCurrentIndex > nPreviousIndex) {  // New tag
-            sDoc += "<ul>\n";
-            bArrayListType << false;
-          } else {  // Close previous tag and maybe create new
-            if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
-                sDoc += "</ul>\n";
-              } else {
-                sDoc += "</ol>\n";
-              }
-              bArrayListType.removeLast();
-            }
-
-            if (!bArrayListType.isEmpty()) {
-              if (true == bArrayListType.last()) {
-                sDoc += "</ol>\n<ul>\n";
-                bArrayListType.removeLast();
-                bArrayListType << false;
-              }
-            }
-          }
-        }
-        sDoc += "<li>" + sLine + "</li>\n";
-
-      } else if (sLine.indexOf(" 1. ") >= 0
-                 || sLine.indexOf(" a. ") >= 0
-                 || sLine.indexOf(" A. ") >= 0
-                 || sLine.indexOf(" i. ") >= 0
-                 || sLine.indexOf(" I. ") >= 0) {  // Sorted list
-        nPreviousIndex = nCurrentIndex;
-
-        nCurrentIndex = sLine.indexOf(" 1. ");
-        if (nCurrentIndex >= 0) {
-          sClass = "arabic";
-        } else {
-          nCurrentIndex = sLine.indexOf(" a. ");
-          if (nCurrentIndex >= 0) {
-            sClass = "alphalower";
-          } else {
-            nCurrentIndex = sLine.indexOf(" A. ");
-            if (nCurrentIndex >= 0) {
-              sClass = "alphaupper";
-            } else {
-              nCurrentIndex = sLine.indexOf(" i. ");
-              if (nCurrentIndex >= 0) {
-                sClass = "romanlower";
-              } else {
-                nCurrentIndex = sLine.indexOf(" I. ");
-                if (nCurrentIndex >= 0) {
-                  sClass = "romanupper";
-                }
-              }
-            }
-          }
-        }
-
-        sLine.remove(0, nCurrentIndex + 4);
-        // qDebug() << "LIST:" << sLine << nCurrentIndex << true;
-
-        if (nCurrentIndex != nPreviousIndex) {
-          if (nCurrentIndex > nPreviousIndex) {  // New tag
-            sDoc += "<ol class=\"" + sClass + "\">\n";
-            bArrayListType << true;
-          } else {  // Close previous tag and maybe create new
-            if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
-                sDoc += "</ul>\n";
-              } else {
-                sDoc += "</ol>\n";
-              }
-              bArrayListType.removeLast();
-            }
-
-            if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
-                sDoc += "</ul>\n<ol class=\"" + sClass + "\">\n";
-                bArrayListType.removeLast();
-                bArrayListType << true;
-              }
-            }
-          }
-        }
-        sDoc += "<li>" + sLine + "</li>\n";
-
-      } else {  // Not a list element
-        // Close all open tags
-        while (!bArrayListType.isEmpty()) {
-          if (false == bArrayListType.last()) {
-            sDoc += "</ul>\n";
-          } else {
-            sDoc += "</ol>\n";
-          }
-          bArrayListType.removeLast();
-        }
-        nPreviousIndex = -1;
-        nCurrentIndex = -1;
-        sDoc += block.text() + "\n";
-        // qDebug() << "LIST END";
-      }
-
-    } else {  // Everything else
-      // Close all open tags
-      while (!bArrayListType.isEmpty()) {
-        if (false == bArrayListType.last()) {
-          sDoc += "</ul>\n";
-        } else {
-          sDoc += "</ol>\n";
-        }
-        bArrayListType.removeLast();
-      }
-      nPreviousIndex = -1;
-      nCurrentIndex = -1;
-      sDoc += block.text() + "\n";
-      // qDebug() << "LIST END";
-    }
-  }
-
   p_rawDoc->setPlainText(sDoc);
 }
 

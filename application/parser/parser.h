@@ -79,7 +79,6 @@ class Parser : public QObject {
   void removeComments(QTextDocument *p_rawDoc);
   void generateParagraphs(QTextDocument *p_rawDoc);
 
-  void replaceLists(QTextDocument *p_rawDoc);
   void replaceFlags(QTextDocument *p_rawDoc);
   void replaceImages(QTextDocument *p_rawDoc);
   void replaceQuotes(QTextDocument *p_rawDoc);

@@ -1,5 +1,5 @@
 /**
- * \file parsetextformats.h
+ * \file parselist.h
  *
  * \section LICENSE
  *
@@ -21,22 +21,18 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for text formats parser.
+ * Class definition list parser.
  */
 
-#ifndef INYOKAEDIT_PARSETEXTFORMATS_H_
-#define INYOKAEDIT_PARSETEXTFORMATS_H_
+#ifndef INYOKAEDIT_PARSELIST_H_
+#define INYOKAEDIT_PARSELIST_H_
 
 #include <QTextDocument>
 
-class ParseTextformats {
+class ParseList {
  public:
-  ParseTextformats();
-  static void startParsing(QTextDocument *pRawDoc,
-                           const QStringList &sListFormatStart,
-                           const QStringList &sListFormatEnd,
-                           const QStringList &sListHtmlStart,
-                           const QStringList &sListHtmlEnd);
+  ParseList();
+  static void startParsing(QTextDocument *pRawDoc);
 };
 
-#endif  // INYOKAEDIT_PARSETEXTFORMATS_H_
+#endif  // INYOKAEDIT_PARSELIST_H_
