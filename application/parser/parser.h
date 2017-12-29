@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QMessageBox>
 
+#include "./macros.h"
 #include "./parsetemplates.h"
 #include "./parselinks.h"
 #include "../templates/templates.h"
@@ -59,8 +60,7 @@ class Parser : public QObject {
                     const bool &bSyntaxCheck = false);
 
  public slots:
-  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
-                      const QString &sCommunity);
+  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
 
  signals:
   void hightlightSyntaxError(const qint32);
@@ -76,13 +76,9 @@ class Parser : public QObject {
   void removeComments(QTextDocument *p_rawDoc);
   void generateParagraphs(QTextDocument *p_rawDoc);
 
-  void replaceImages(QTextDocument *p_rawDoc);
   void replaceQuotes(QTextDocument *p_rawDoc);
-  void replaceBreaks(QTextDocument *p_rawDoc);
   void replaceHorLines(QTextDocument *p_rawDoc);
-  void replaceHeadlines(QTextDocument *p_rawDoc);
-  void replaceTableOfContents(QTextDocument *p_rawDoc);
-  void replaceDates(QTextDocument *p_rawDoc);
+  void replaceHeadlines(QTextDocument *p_rawDoc, QStringList &slistHeadlines);
   void replaceFootnotes(QTextDocument *p_rawDoc);
   QString generateTags(QTextDocument *p_rawDoc);
   QString highlightCode(const QString &sLanguage, const QString &sCode);
@@ -91,7 +87,6 @@ class Parser : public QObject {
   QTextDocument *m_pRawText;
 
   QStringList m_sListNoTranslate;
-  QStringList m_sListHeadlines;
 
   ParseTemplates *m_pTemplateParser;
   ParseLinks *m_pLinkParser;
@@ -101,7 +96,8 @@ class Parser : public QObject {
   QString m_sInyokaUrl;
   QString m_sCurrentFile;
   Templates *m_pTemplates;
-  QString m_sCommunity;
+  Macros *m_pMacros;
+  const QString m_sCommunity;
 };
 
 #endif  // INYOKAEDIT_PARSER_H_

@@ -43,6 +43,8 @@ Parser::Parser(const QString &sSharePath,
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity) {
+  m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
+
   m_pTemplateParser = new ParseTemplates(
                         m_pTemplates->getTransTemplate(),
                         m_pTemplates->getListTplNamesINY(),
@@ -57,10 +59,7 @@ Parser::Parser(const QString &sSharePath,
   m_pLinkParser = new ParseLinks(m_sInyokaUrl,
                                  m_pTemplates->getListIWLs(),
                                  m_pTemplates->getListIWLUrls(),
-                                 bCheckLinks,
-                                 m_pTemplates->getTransAnchor(),
-                                 m_pTemplates->getTransAttachment(),
-                                 m_tmpImgDir.absolutePath());
+                                 bCheckLinks);
 }
 
 Parser::~Parser() {
@@ -74,10 +73,8 @@ Parser::~Parser() {
 // ----------------------------------------------------------------------------
 
 void Parser::updateSettings(const QString &sInyokaUrl,
-                            const bool bCheckLinks,
-                            const QString &sCommunity) {
+                            const bool bCheckLinks) {
   m_sInyokaUrl = sInyokaUrl;
-  m_sCommunity = sCommunity;
   m_pLinkParser->updateSettings(sInyokaUrl, bCheckLinks);
 }
 
@@ -91,7 +88,7 @@ QString Parser::genOutput(const QString &sActFile,
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
   m_sCurrentFile = sActFile;
-
+  QStringList sListHeadlines;
   this->removeComments(m_pRawText);
 
   m_sListNoTranslate.clear();
@@ -108,12 +105,11 @@ QString Parser::genOutput(const QString &sActFile,
 
   m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);
 
-  this->replaceHeadlines(m_pRawText);        // And generate list for TOC
-  this->replaceTableOfContents(m_pRawText);  // Use before link parser!
-  ParseList::startParsing(m_pRawText);
+  this->replaceHeadlines(m_pRawText, sListHeadlines);  //Generates list for TOC
   ParseTable::startParsing(m_pRawText);
-  this->replaceImages(m_pRawText);
-
+  m_pMacros->startParsing(m_pRawText, m_sCurrentFile,
+                          m_sCommunity, sListHeadlines);
+  ParseList::startParsing(m_pRawText);
   m_pLinkParser->startParsing(m_pRawText);
 
   // Replace flags
@@ -129,17 +125,14 @@ QString Parser::genOutput(const QString &sActFile,
                             m_sSharePath,
                             m_sCommunity);
 
-  this->replaceQuotes(m_pRawText);
-  this->replaceBreaks(m_pRawText);
-  this->replaceHorLines(m_pRawText);
-  this->replaceDates(m_pRawText);
-
   ParseTextformats::startParsing(m_pRawText,
                                  m_pTemplates->getListFormatStart(),
                                  m_pTemplates->getListFormatEnd(),
                                  m_pTemplates->getListFormatHtmlStart(),
                                  m_pTemplates->getListFormatHtmlEnd());
 
+  this->replaceQuotes(m_pRawText);
+  this->replaceHorLines(m_pRawText);
   this->generateParagraphs(m_pRawText);
   this->replaceFootnotes(m_pRawText);
 
@@ -505,19 +498,6 @@ void Parser::reinstertNoTranslate(QTextDocument *p_rawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceBreaks(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
-
-  sDoc.replace("[[BR]]", "<br />");
-  sDoc.replace("\\\\", "<br />");
-
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
 void Parser::replaceHorLines(QTextDocument *p_rawDoc) {
   QString sDoc("");
 
@@ -644,13 +624,14 @@ void Parser::removeComments(QTextDocument *p_rawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceHeadlines(QTextDocument *p_rawDoc) {
+void Parser::replaceHeadlines(QTextDocument *p_rawDoc,
+                              QStringList &slistHeadlines) {
   QString sDoc("");
   QString sLine("");
   QString sTmp("");
   QString sLink("");
   quint16 nHeadlineLevel = 5;
-  m_sListHeadlines.clear();
+  slistHeadlines.clear();
 
   // Go through each text block
   for (QTextBlock block = p_rawDoc->firstBlock();
@@ -696,7 +677,7 @@ void Parser::replaceHeadlines(QTextDocument *p_rawDoc) {
         default:
           qWarning() << "Found strange formated headline:" << sLine;
       }
-      m_sListHeadlines << sTmp;  // Used for table of contents
+      slistHeadlines << sTmp;  // Used for table of contents
 
       // Replace characters for valid link
       sLink = sLine;
@@ -717,241 +698,8 @@ void Parser::replaceHeadlines(QTextDocument *p_rawDoc) {
       break;
     }
   }
-  // qDebug() << "HEADLINES:" << m_sListHeadlines;
+  // qDebug() << "HEADLINES:" << slistHeadlines;
 
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Parser::replaceTableOfContents(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + m_pTemplates->getTransTOC() + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
-  QString sMacro;
-  QString sSpaces;
-  QString sTmp;
-  int nPos = 0;
-  quint16 nTOCLevel;
-  quint16 nCurrentLevel;
-
-  // Replace characters for valid links (ä, ü, ö, spaces)
-  QStringList sListHeadlines_Links;
-  foreach (QString s, m_sListHeadlines) {
-    sMacro = s;
-    sMacro.replace(" ", "-");
-    sMacro.replace(QString::fromUtf8("Ä"), "Ae");
-    sMacro.replace(QString::fromUtf8("Ü"), "Ue");
-    sMacro.replace(QString::fromUtf8("Ö"), "Oe");
-    sMacro.replace(QString::fromUtf8("ä"), "ae");
-    sMacro.replace(QString::fromUtf8("ü"), "ue");
-    sMacro.replace(QString::fromUtf8("ö"), "oe");
-    sListHeadlines_Links << sMacro.remove(QRegExp("#{1,5}\\d#{1,5}"));
-  }
-
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + m_pTemplates->getTransTOC() + "(");
-    sMacro.remove(")]]");
-
-    if (sMacro.trimmed().length() > 0) {
-      nTOCLevel = sMacro.trimmed().toUShort();
-    } else {
-      nTOCLevel = 3;  // Default
-    }
-    // qDebug() << "TOC level:" << nTOCLevel;
-
-    sMacro = "<div class=\"toc\">\n<div class=\"head\">"
-             + m_pTemplates->getTransTOC() + "</div>\n";
-    for (int i = 0; i < m_sListHeadlines.size(); i++) {
-      sTmp = m_sListHeadlines[i];
-      sTmp.remove(QRegExp("#{1,5}\\d#{1,5}"));
-      m_sListHeadlines[i].remove(
-            m_sListHeadlines[i].length() - sTmp.length(),
-            sTmp.length()).remove("#");
-
-      nCurrentLevel = m_sListHeadlines[i].toUShort();
-      sSpaces.fill(' ', nCurrentLevel);
-
-      if (nCurrentLevel > 0 && nCurrentLevel <= nTOCLevel) {
-        sMacro += sSpaces + "1. [#" + sListHeadlines_Links[i] + " "
-                  + sTmp + "]\n";
-      } else if (0 == nCurrentLevel) {
-        qWarning() << "Found strange formated headline:" << sTmp;
-      }
-    }
-    sMacro += "\n</div>\n";
-
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
-    // Go on with new start position
-    nPos += sMacro.length();
-  }
-
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Parser::replaceImages(QTextDocument *p_rawDoc) {
-#if defined _WIN32
-  QString sExt("file:///");
-#else
-  QString sExt("");
-#endif
-  QString sDoc(p_rawDoc->toPlainText());
-  QRegExp findImages("\\[\\[" + m_pTemplates->getTransImage()
-                     + "\\(.+\\)\\]\\]");
-  int nLength;
-  QString sTmpImage;
-  QStringList sListTmpImageInfo;
-
-  QString sImageUrl("");
-  QString sImageAlign("default");
-  // QString sImageAlt("");
-
-  QString sImagePath("");
-  if (!m_sCurrentFile.isEmpty()) {
-    QFileInfo fiArticleFile(m_sCurrentFile);
-    sImagePath = fiArticleFile.absolutePath();
-  }
-
-  double iImgHeight, iImgWidth;
-  double tmpH, tmpW;
-
-  findImages.setMinimal(true);
-  int nIndex = findImages.indexIn(sDoc);
-  while (nIndex >= 0) {
-    nLength = findImages.matchedLength();
-    sTmpImage = findImages.cap();
-
-    sTmpImage.remove("[[" + m_pTemplates->getTransImage() + "(");
-    sTmpImage.remove(")]]");
-
-    sImageAlign = "default";
-    iImgHeight = 0;
-    iImgWidth = 0;
-    tmpH = 0;
-    tmpW = 0;
-
-    sListTmpImageInfo.clear();
-    sListTmpImageInfo << sTmpImage.split(",");
-
-    sImageUrl = sListTmpImageInfo[0].trimmed();
-    if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
-      sImageUrl = m_sSharePath + "/community/" +
-                  m_sCommunity + "/web/" + sImageUrl;
-    } else if (!sImagePath.isEmpty() &&
-               QFile(sImagePath + "/" + sImageUrl).exists()) {
-      sImageUrl = sImagePath + "/" + sImageUrl;
-    } else {
-      sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
-    }
-
-    for (int i = 1; i < sListTmpImageInfo.length(); i++) {
-      // Found integer (width)
-      if (sListTmpImageInfo[i].trimmed().toUInt() != 0) {
-        tmpW = sListTmpImageInfo[i].trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed().startsWith("x")) {
-        // Found x+integer (height)
-        tmpH = sListTmpImageInfo[i].remove("x").trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].contains("x")) {
-        // Found int x int (width x height)
-        QString sTmp = sListTmpImageInfo[i];  // Copy needed!
-        tmpW = sListTmpImageInfo[i].remove(
-                 sListTmpImageInfo[i].indexOf("x"),
-                 sListTmpImageInfo[i].length()).trimmed().toUInt();
-        tmpH = sTmp.remove(0, sTmp.indexOf("x")+1).trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed() == "left"
-                 || sListTmpImageInfo[i].trimmed() == "align=left") {
-        // Found alignment
-        sImageAlign = "left";
-      } else if (sListTmpImageInfo[i].trimmed() == "right"
-                 || sListTmpImageInfo[i].trimmed() == "align=right") {
-        sImageAlign = "right";
-      } else if (sListTmpImageInfo[i].trimmed() == "center"
-                 || sListTmpImageInfo[i].trimmed() == "align=center") {
-        sImageAlign = "center";
-      }
-    }
-
-    // No size given
-    if (tmpH == 0 && tmpW == 0) {
-      iImgHeight = QImage(sImageUrl).height();
-      tmpH = iImgHeight;
-      iImgWidth = QImage(sImageUrl).width();
-      tmpW = iImgWidth;
-    }
-
-    if (tmpH > tmpW) {
-      iImgHeight = QImage(sImageUrl).height();
-      tmpW = static_cast<double>(QImage(sImageUrl).width()) /
-             (iImgHeight / static_cast<double>(tmpH));
-    } else if (tmpW > tmpH) {
-      iImgWidth = QImage(sImageUrl).width();
-      tmpH = static_cast<double>(QImage(sImageUrl).height()) /
-             (iImgWidth / static_cast<double>(tmpW));
-    }
-
-    // HTML code
-    sTmpImage = "<a href=\"" + sExt + sImageUrl + "\" class=\"crosslink\">";
-    sTmpImage += "<img src=\"" + sExt + sImageUrl + "\" alt=\"" + sImageUrl
-                 + "\" height=\"" + QString::number(tmpH) + "\" width=\""
-                 + QString::number(tmpW) + "\" ";
-    sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
-
-    // Replace
-    sDoc.replace(nIndex, nLength, sTmpImage);
-
-    // Go on with RegExp-Search
-    nIndex = findImages.indexIn(sDoc, nIndex + nLength);
-  }
-
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Parser::replaceDates(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + m_pTemplates->getTransDate() + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
-  QString sMacro;
-  QDateTime datetime;
-  bool bConversionOk;
-  int nPos = 0;
-
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + m_pTemplates->getTransDate() + "(");
-    sMacro.remove(")]]");
-
-    // First assume ISO 8601 datetime
-    datetime = QDateTime::fromString(sMacro, Qt::ISODate);
-    bConversionOk = true;
-    // Otherwise handle input as unix timestamp
-    if (!datetime.isValid()) {
-      datetime.setTime_t(sMacro.toUInt(&bConversionOk));
-    }
-
-    if (bConversionOk && datetime.isValid()) {
-      sMacro = datetime.toString(Qt::SystemLocaleShortDate);
-    } else {
-      sMacro = "Invalid date";
-    }
-
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
-    // Go on with new start position
-    nPos += sMacro.length();
-  }
-
-  // Replace p_rawDoc with adapted document
   p_rawDoc->setPlainText(sDoc);
 }
 

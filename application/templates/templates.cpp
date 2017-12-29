@@ -269,33 +269,13 @@ void Templates::initTranslations(const QString &sFilename) {
   configTransl.setIniCodec("UTF-8");
 
   configTransl.beginGroup("Translations");
-  m_sTransAnchor = configTransl.value("Anchor", "ERROR").toString();
-  if ("ERROR" == m_sTransAnchor) {
-    qCritical() << "Anchor translation not found.";
-  }
-  m_sTransAttachment = configTransl.value("Attachment", "ERROR").toString();
-  if ("ERROR" == m_sTransAttachment) {
-    qCritical() << "Attachment translation not found.";
-  }
   m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
   if ("ERROR" == m_sTransCodeBlock) {
     qCritical() << "Code block translation not found.";
   }
-  m_sTransDate = configTransl.value("Date", "ERROR").toString();
-  if ("ERROR" == m_sTransDate) {
-    qCritical() << "Date translation not found.";
-  }
-  m_sTransImage = configTransl.value("Image", "ERROR").toString();
-  if ("ERROR" == m_sTransImage) {
-    qCritical() << "Image translation not found.";
-  }
   m_sTransRevText = configTransl.value("RevText", "ERROR").toString();
   if ("ERROR" == m_sTransRevText) {
     qCritical() << "Revision text translation not found.";
-  }
-  m_sTransTOC = configTransl.value("TableOfContents", "ERROR").toString();
-  if ("ERROR" == m_sTransTOC) {
-    qCritical() << "TOC translation not found.";
   }
   m_sTransTagText = configTransl.value("TagText", "ERROR").toString();
   if ("ERROR" == m_sTransTagText) {
@@ -342,20 +322,8 @@ QStringList Templates::getListTplMacrosALL() const {
   return m_sListTplMacrosALL;
 }
 
-QString Templates::getTransAnchor() const {
-  return m_sTransAnchor;
-}
-QString Templates::getTransAttachment() const {
-  return m_sTransAttachment;
-}
 QString Templates::getTransCodeBlock() const {
   return m_sTransCodeBlock;
-}
-QString Templates::getTransDate() const {
-  return m_sTransDate;
-}
-QString Templates::getTransImage() const {
-  return m_sTransImage;
 }
 QString Templates::getTransKnowledge() const {
   return m_sTransKnowledge;
@@ -371,9 +339,6 @@ QString Templates::getTransTag() const {
 }
 QString Templates::getTransTemplate() const {
   return m_sTransTemplate;
-}
-QString Templates::getTransTOC() const {
-  return m_sTransTOC;
 }
 
 QStringList Templates::getListFormatStart() const {

@@ -30,17 +30,11 @@
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
                        const QStringList sListIWiki,
                        const QStringList sListIWikiUrl,
-                       const bool bCheckLinks,
-                       const QString &sTransAnchor,
-                       const QString &sTransAttach,
-                       const QString &sTmpFilePath)
+                       const bool bCheckLinks)
   : m_sWikiUrl(sUrlToWiki),
     m_sListInterwikiKey(sListIWiki),
     m_sListInterwikiLink(sListIWikiUrl),
     m_bCheckLinks(bCheckLinks),
-    m_sTransAnchor(sTransAnchor),
-    m_sTransAttach(sTransAttach),
-    m_sTmpFilePath(sTmpFilePath),
     m_NWreply(NULL) {
   m_NWAManager = new QNetworkAccessManager(this);
 }
@@ -63,8 +57,6 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
   this->replaceInterwikiLinks(pRawDoc);
   this->replaceAnchorLinks(pRawDoc);
   this->replaceKnowledgeBoxLinks(pRawDoc);
-  this->createAnchor(pRawDoc);
-  this->replaceAttachments(pRawDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -378,77 +370,6 @@ void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
 
     // Go on with next
     nIndex = findKnowledgeBoxLink.indexIn(sDoc, nIndex + nLength);
-  }
-
-  pRawDoc->setPlainText(sDoc);
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-// Create anchor
-void ParseLinks::createAnchor(QTextDocument *pRawDoc) {
-  QRegExp findAnchor("\\[{2,2}\\b("
-                     + m_sTransAnchor
-                     + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
-  QString sDoc(pRawDoc->toPlainText());
-  int nIndex;
-  int nLength;
-  QString sAnchor;
-
-  nIndex = findAnchor.indexIn(sDoc);
-  while (nIndex >= 0) {
-    nLength = findAnchor.matchedLength();
-    sAnchor = findAnchor.cap();
-    // qDebug() << sAnchor;
-
-    sAnchor.remove("[[" + m_sTransAnchor + "(");
-    sAnchor.remove(")]]");
-    sAnchor = sAnchor.trimmed();
-
-    // Replace characters for valid links (ä, ü, ö, spaces)
-    sAnchor.replace(" ", "-");
-    sAnchor.replace(QString::fromUtf8("Ä"), "Ae");
-    sAnchor.replace(QString::fromUtf8("Ü"), "Ue");
-    sAnchor.replace(QString::fromUtf8("Ö"), "Oe");
-    sAnchor.replace(QString::fromUtf8("ä"), "ae");
-    sAnchor.replace(QString::fromUtf8("ü"), "ue");
-    sAnchor.replace(QString::fromUtf8("ö"), "oe");
-
-    // Replace
-    sDoc.replace(nIndex, nLength,
-                 "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
-                 + "\" class=\"crosslink anchor\"> </a>");
-
-    // Go on with RegExp-Search
-    nIndex = findAnchor.indexIn(sDoc, nIndex + nLength);
-  }
-
-  pRawDoc->setPlainText(sDoc);
-}
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void ParseLinks::replaceAttachments(QTextDocument *pRawDoc) {
-  QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + m_sTransAttach + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
-  QString sMacro;
-  int nPos = 0;
-
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + m_sTransAttach + "(");
-    sMacro.remove(")]]");
-    sMacro.remove('"');
-
-    sMacro = "<a href=\"" + m_sTmpFilePath + "/" + sMacro +
-             "\" class=\"crosslink\">" + sMacro + "</a>";
-
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
-    // Go on with new start position
-    nPos += sMacro.length();
   }
 
   pRawDoc->setPlainText(sDoc);

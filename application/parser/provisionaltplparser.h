@@ -99,7 +99,7 @@ class ProvisionalTplParser {
   QStringList m_sListTestedWithStrings;
   QStringList m_sListTestedWithTouch;
   QStringList m_sListTestedWithTouchStrings;
-  QString m_sCommunity;
+  const QString m_sCommunity;
 };
 
 #endif  // INYOKAEDIT_PROVISIONALTPLPARSER_H_

@@ -902,8 +902,7 @@ void InyokaEdit::clickedLink(QUrl newUrl) {
 
 void InyokaEdit::updateEditorSettings() {
   m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
-                            m_pSettings->getCheckLinks(),
-                            m_pSettings->getInyokaCommunity());
+                            m_pSettings->getCheckLinks());
 
   if (m_pSettings->getPreviewHorizontal()) {
     m_pWidgetSplitter->setOrientation(Qt::Vertical);
@@ -917,8 +916,7 @@ void InyokaEdit::updateEditorSettings() {
   }
 
   m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
-                                    m_pSettings->getInyokaUrl(),
-                                    m_pSettings->getInyokaCommunity());
+                                    m_pSettings->getInyokaUrl());
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 

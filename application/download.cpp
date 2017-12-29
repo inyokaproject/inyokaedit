@@ -38,8 +38,7 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
     m_sImgDir(sImgDir),
     m_sInyokaUrl("https://wiki.ubuntuusers.de"),
     m_bAutomaticImageDownload(false),
-    m_sSharePath(sSharePath),
-    m_sCommunity("ubuntuusers_de") {
+    m_sSharePath(sSharePath) {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
           this, SLOT(replyFinished(QNetworkReply*)));
@@ -53,11 +52,9 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
 // ----------------------------------------------------------------------------
 
 void Download::updateSettings(const bool bCompleter,
-                              const QString &sInyokaUrl,
-                              const QString &sCommunity) {
+                              const QString &sInyokaUrl) {
   m_bAutomaticImageDownload = bCompleter;
   m_sInyokaUrl = sInyokaUrl;
-  m_sCommunity = sCommunity;
 }
 
 // ----------------------------------------------------------------------------

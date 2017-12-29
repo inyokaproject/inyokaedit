@@ -47,8 +47,7 @@ class Download : public QObject {
   void downloadArticle(QString sUrl = "");
   void showArticle();
   void updateSettings(const bool bCompleter,
-                      const QString &sInyokaUrl,
-                      const QString &sCommunity);
+                      const QString &sInyokaUrl);
 
  private slots:
   void replyFinished(QNetworkReply *pReply);
@@ -75,7 +74,6 @@ class Download : public QObject {
   QString m_sInyokaUrl;
   bool m_bAutomaticImageDownload;
   const QString m_sSharePath;
-  QString m_sCommunity;
 
   DownloadImg *m_DlImages;
   bool m_bDownloadArticle;

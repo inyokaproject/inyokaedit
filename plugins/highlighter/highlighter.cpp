@@ -427,14 +427,38 @@ void Highlighter::writeFormat(const QString &sKey,
 // ----------------------------------------------------------------------------
 
 void Highlighter::getTranslations() {
-  m_sListMacroKeywords << m_pTemplates->getTransTemplate()
-                       << m_pTemplates->getTransTOC()
-                       << m_pTemplates->getTransImage()
-                       << m_pTemplates->getTransAnchor()
-                       << m_pTemplates->getTransAttachment()
-                       << m_pTemplates->getTransDate();
-  m_sListParserKeywords << m_pTemplates->getTransTemplate().toLower()
-                        << m_pTemplates->getTransCodeBlock().toLower();
+  QFile fiMacros(":/macros.conf");
+  if (!fiMacros.open(QIODevice::ReadOnly)) {
+    qWarning() << "Could not open macros.conf";
+    QMessageBox::warning(NULL, "Error",
+                         "Could not open macros.conf");
+  } else {
+    QTextStream in(&fiMacros);
+    in.setCodec("UTF-8");
+    QString tmpLine("");
+    QStringList tmpList;
+    QStringList tmpList2;
+
+    while (!in.atEnd()) {
+      tmpLine = in.readLine().trimmed();
+      if (!tmpLine.trimmed().isEmpty()) {
+        tmpList = tmpLine.split("=");
+        if (2 == tmpList.size()) {
+          tmpList2 = tmpList[1].split(",");
+          foreach (QString s, tmpList2) {
+            m_sListMacroKeywords << s.trimmed();
+
+            if ("Template" == tmpList[0].trimmed()) {
+              m_sListParserKeywords << s.trimmed().toLower();
+            } else if ("CodeBlock" == tmpList[0].trimmed()) {
+              m_sListParserKeywords << s.trimmed().toLower();
+            }
+          }
+        }
+      }
+    }
+    fiMacros.close();
+  }
 }
 
 // ----------------------------------------------------------------------------

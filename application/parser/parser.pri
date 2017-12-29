@@ -18,6 +18,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH  += $$PWD
 
 HEADERS     += $$PWD/parser.h \
+               $$PWD/macros.h \
                $$PWD/parseimgmap.h \
                $$PWD/parselinks.h \
                $$PWD/parselist.h \
@@ -27,6 +28,7 @@ HEADERS     += $$PWD/parser.h \
                $$PWD/provisionaltplparser.h
 
 SOURCES     += $$PWD/parser.cpp \
+               $$PWD/macros.cpp \
                $$PWD/parseimgmap.cpp \
                $$PWD/parselinks.cpp \
                $$PWD/parselist.cpp \
