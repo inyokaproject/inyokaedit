@@ -42,7 +42,6 @@ class Templates {
 
   QString getTransCodeBlock() const;
   QString getTransRev() const;
-  QString getTransTable() const;
   QString getTransTag() const;
   QString getTransTemplate() const;
 
@@ -102,7 +101,6 @@ class Templates {
   // Translations
   QString m_sTransCodeBlock;
   QString m_sTransRevText;
-  QString m_sTransTable;
   QString m_sTransTagText;
   QString m_sTransTemplate;
 };

@@ -285,12 +285,6 @@ void Templates::initTranslations(const QString &sFilename) {
   if ("ERROR" == m_sTransTemplate) {
     qCritical() << "Template translation not found.";
   }
-
-  // Translation needed for table template plugin
-  m_sTransTable = configTransl.value("Table", "ERROR").toString();
-  if ("ERROR" == m_sTransTable) {
-    qCritical() << "Table translation not found.";
-  }
   configTransl.endGroup();
 }
 
@@ -322,9 +316,6 @@ QString Templates::getTransCodeBlock() const {
 }
 QString Templates::getTransRev() const {
   return m_sTransRevText;
-}
-QString Templates::getTransTable() const {
-  return m_sTransTable;
 }
 QString Templates::getTransTag() const {
   return m_sTransTagText;

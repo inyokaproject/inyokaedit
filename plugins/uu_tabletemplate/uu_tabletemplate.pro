@@ -48,9 +48,11 @@ qtHaveModule(webkitwidgets) {
 include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)
 
-HEADERS      += uu_tabletemplate.h
+HEADERS      += uu_tabletemplate.h \
+                ../../application/syntaxcheck.h
 
-SOURCES      += uu_tabletemplate.cpp
+SOURCES      += uu_tabletemplate.cpp \
+                ../../application/syntaxcheck.cpp
 
 FORMS        += uu_tabletemplate.ui
 
