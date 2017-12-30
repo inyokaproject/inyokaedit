@@ -22,9 +22,9 @@ build_script:
 
     lrelease plugins\hotkey\hotkey.pro
 
-    lrelease plugins\knowledgebox\knowledgebox.pro
+    lrelease plugins\uu_knowledgebox\uu_knowledgebox.pro
 
-    lrelease plugins\tabletemplate\tabletemplate.pro
+    lrelease plugins\uu_tabletemplate\uu_tabletemplate.pro
 
     nmake
 
@@ -50,9 +50,9 @@ build_script:
 
     copy plugins\hotkey\lang\*.qm InyokaEdit\lang\
 
-    copy plugins\knowledgebox\lang\*.qm InyokaEdit\lang\
+    copy plugins\uu_knowledgebox\lang\*.qm InyokaEdit\lang\
 
-    copy plugins\tabletemplate\lang\*.qm InyokaEdit\lang\
+    copy plugins\uu_tabletemplate\lang\*.qm InyokaEdit\lang\
 
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
