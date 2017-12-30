@@ -4,27 +4,27 @@
 <context>
     <name>Hotkey</name>
     <message>
-        <location filename="../hotkey.cpp" line="97"/>
+        <location filename="../hotkey.cpp" line="96"/>
         <source>Hotkey selector</source>
         <translation>Tastenkombinationen</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="224"/>
+        <location filename="../hotkey.cpp" line="223"/>
         <source>&apos;&apos;&apos;Bold&apos;&apos;&apos;</source>
         <translation>&apos;&apos;&apos;Fett&apos;&apos;&apos;</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="374"/>
+        <location filename="../hotkey.cpp" line="371"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="377"/>
+        <location filename="../hotkey.cpp" line="379"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="380"/>
+        <location filename="../hotkey.cpp" line="381"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>

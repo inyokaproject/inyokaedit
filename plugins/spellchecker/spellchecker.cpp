@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2014-2017 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -30,7 +30,6 @@
 #include "./spellchecker.h"
 
 #include <QCoreApplication>
-#include <QDate>
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
@@ -457,23 +456,22 @@ void SpellChecker::setEditorlist(QList<TextEditor *> listEditors) {
 // ----------------------------------------------------------------------------
 
 void SpellChecker::showAbout() {
-  QDate nDate = QDate::currentDate();
   QMessageBox aboutbox(NULL);
-
   aboutbox.setWindowTitle(trUtf8("Info"));
   aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
-  aboutbox.setText("<p><b>" + this->getCaption() + "</b><br />"
-                   + trUtf8("Version") + ": " + PLUGIN_VERSION +"</p>"
-                   + "<p>&copy; 2011-" + QString::number(nDate.year())
-                   + " &ndash; " + QString::fromUtf8("Thorsten Roth")
-                   + "<br />" + trUtf8("Licence") + ": "
-                   + "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                     "GNU General Public License Version 3</a></p>"
-                   + "<p><i>"
-                   + trUtf8("Spell checker based on "
-                            "<a href=\"http://hunspell.sourceforge.net/\">"
-                            "Hunspell</a>.")
-                   + "</i></p>");
-
+  aboutbox.setText(QString("<p><b>%1</b><br />"
+                           "%2</p>"
+                           "<p>%3<br />"
+                           "%4</p>"
+                           "<p><i>%5</i></p>")
+                   .arg(this->getCaption())
+                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(PLUGIN_COPY)
+                   .arg(trUtf8("Licence") + ": " +
+                        "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                        "GNU General Public License Version 3</a>")
+                   .arg(trUtf8("Spell checker based on "
+                               "<a href=\"http://hunspell.sourceforge.net/\">"
+                               "Hunspell</a>.")));
   aboutbox.exec();
 }

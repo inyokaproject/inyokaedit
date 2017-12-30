@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2017 The InyokaEdit developers
+#  Copyright (C) 2014-2017 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,11 +20,12 @@ TARGET        = spellchecker
 DESTDIR       = ../
 
 VERSION       = 1.0.4
-QMAKE_TARGET_DESCRIPTION = "Spell checker plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
+QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2017 - Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
-                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\"
+                PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \
+                PLUGIN_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\"
 
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs

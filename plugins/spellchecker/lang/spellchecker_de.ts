@@ -62,27 +62,27 @@
 <context>
     <name>SpellChecker</name>
     <message>
-        <location filename="../spellchecker.cpp" line="104"/>
+        <location filename="../spellchecker.cpp" line="103"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="365"/>
+        <location filename="../spellchecker.cpp" line="364"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="463"/>
+        <location filename="../spellchecker.cpp" line="460"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="466"/>
+        <location filename="../spellchecker.cpp" line="468"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="469"/>
+        <location filename="../spellchecker.cpp" line="470"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
