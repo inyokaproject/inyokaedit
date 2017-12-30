@@ -199,6 +199,17 @@ void SettingsDialog::accept() {
   if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang ||
       m_pUi->CommunityCombo->currentText() != m_sCommunity ||
       oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
+    QFile communityFile(m_sSharePath + "/community/" +
+                        m_pUi->CommunityCombo->currentText() + "/community.conf");
+    QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
+    communityConfig.setIniCodec("UTF-8");
+    QString sConstArea(communityConfig.value("ConstructionArea", "").toString());
+    if (sConstArea.isEmpty()) {
+      qWarning() << "Inyoka construction area not found!";
+    } else {
+      m_pSettings->m_sInyokaConstArea = sConstArea;
+    }
+
     QMessageBox::information(0, this->windowTitle(),
                              trUtf8("The editor has to be restarted for "
                                     "applying the changes."));

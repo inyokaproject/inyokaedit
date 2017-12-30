@@ -37,6 +37,7 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
     m_sStylesDir(sStylesDir),
     m_sImgDir(sImgDir),
     m_sInyokaUrl("https://wiki.ubuntuusers.de"),
+    m_sConstructionArea(""),
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath) {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
@@ -52,14 +53,15 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
 // ----------------------------------------------------------------------------
 
 void Download::updateSettings(const bool bCompleter,
-                              const QString &sInyokaUrl) {
+                              const QString &sInyokaUrl,
+                              const QString &sConstArea) {
   m_bAutomaticImageDownload = bCompleter;
   m_sInyokaUrl = sInyokaUrl;
+  m_sConstructionArea = sConstArea;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-// DOWNLOAD EXISTING INYOKA WIKI ARTICLE
 
 void Download::downloadArticle(QString sUrl) {
   // Check for internet connection
@@ -82,7 +84,7 @@ void Download::downloadArticle(QString sUrl) {
                                                "article which should be "
                                                "downloaded:"),
                                         QLineEdit::Normal,
-                                        trUtf8("Category/Article"),
+                                        m_sConstructionArea + "/" + trUtf8("Article"),
                                         &bOk);
 
     // Click on "cancel" or string is empty

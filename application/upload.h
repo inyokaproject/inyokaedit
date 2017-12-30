@@ -40,7 +40,8 @@ class Upload : public QNetworkCookieJar {
   Q_OBJECT
 
  public:
-  explicit Upload(QWidget *pParent, const QString &sInyokaUrl);
+  explicit Upload(QWidget *pParent, const QString &sInyokaUrl,
+                  const QString &sConstArea);
 
   void setEditor(QTextEdit *pEditor, const QString &sArticlename);
 
@@ -72,6 +73,7 @@ class Upload : public QNetworkCookieJar {
 
   REQUESTSTATE m_State;
   QString m_sToken;
+  QString m_sHash;
   QNetworkCookie m_SessionCookie;
   QList<QNetworkCookie> m_ListCookies;
   QString m_sSitename;

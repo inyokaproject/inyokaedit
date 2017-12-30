@@ -36,14 +36,16 @@
 #include "./upload.h"
 #include "./utils.h"
 
-Upload::Upload(QWidget *pParent, const QString &sInyokaUrl)
+Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,
+               const QString &sConstArea)
   : m_pParent(pParent),
     m_sInyokaUrl(sInyokaUrl),
     m_State(REQUTOKEN),
     m_sToken(""),
+    m_sHash("153cae855e0ae527d6dc2434f3eb8ef60b782570"),
     m_sSitename(""),
     m_sRevision(""),
-    m_sConstructionArea(trUtf8("ConstructionArea")),
+    m_sConstructionArea(sConstArea),
     m_pEditor(NULL),
     m_sArticlename("") {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
@@ -282,13 +284,16 @@ void Upload::getLoginReply(QString sNWReply) {
     return;
   } else {
     foreach (QNetworkCookie cookie, m_ListCookies) {
-      // Includes cookie message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
-      // --> "Du hast dich erfolgreich angemeldet"
-      if (-1 != cookie.toRawForm().indexOf(
-            "153cae855e0ae527d6dc2434f3eb8ef60b782570")) {
-        m_State = RECLOGIN;
-        qDebug() << "LOGIN SUCCESSFUL!";
-        break;
+      if (cookie.isSessionCookie()) {
+        // E.g. uu.de includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
+        // --> "Du hast dich erfolgreich angemeldet"
+        // See raw debug output:
+        // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
+        if (cookie.toRawForm().contains(m_sHash.toLatin1())) {
+          m_State = RECLOGIN;
+          qDebug() << "LOGIN SUCCESSFUL!";
+          break;
+        }
       }
     }
 

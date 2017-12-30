@@ -60,6 +60,7 @@ class Settings : public QObject {
   bool getSyntaxCheck() const;
   QString getInyokaUrl() const;
   QString getInyokaCommunity() const;
+  QString getInyokaConstructionArea() const;
   bool getAutomaticImageDownload() const;
   bool getPreviewHorizontal() const;
   QDir getLastOpenedDir() const;
@@ -118,6 +119,7 @@ class Settings : public QObject {
   bool m_bPreviewSplitHorizontal;
   QString m_sInyokaCommunity;
   QString m_sInyokaUrl;     // Url to inyoka
+  QString m_sInyokaConstArea;
   QDir m_LastOpenedDir;
   bool m_bAutomaticImageDownload;  // Enable/disable download article images
   bool m_bCheckLinks;

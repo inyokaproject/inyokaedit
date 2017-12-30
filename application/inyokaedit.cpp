@@ -56,7 +56,6 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_bEditorScrolling(false),
     m_bWebviewScrolling(false),
     m_bReloadPreviewBlocked(false) {
-  qDebug() << "Starting" << qApp->applicationName();
   if (qApp->arguments().contains("--debug")) {
     qWarning() << "DEBUG is enabled!";
   }
@@ -598,6 +597,9 @@ void InyokaEdit::createXmlMenus() {
             }
           }
         } else {
+          if (1 == n && sPath == m_sSharePath) {
+            qWarning() << "Xml menu file not found:" << xmlFile.fileName();
+          }
           break;
         }
       }
@@ -915,7 +917,8 @@ void InyokaEdit::updateEditorSettings() {
   }
 
   m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
-                                    m_pSettings->getInyokaUrl());
+                                    m_pSettings->getInyokaUrl(),
+                                    m_pSettings->getInyokaConstructionArea());
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 

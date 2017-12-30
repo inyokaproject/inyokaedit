@@ -88,6 +88,7 @@ void Settings::readSettings() {
   if (m_sInyokaUrl.endsWith("/")) {
     m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
   }
+  m_sInyokaConstArea = m_pSettings->value("ConstructionArea", "").toString();
 
   QStringList sListPaths = QStandardPaths::standardLocations(
                              QStandardPaths::DocumentsLocation);
@@ -194,6 +195,7 @@ void Settings::writeSettings(const QByteArray WinGeometry,
   m_pSettings->setValue("PreviewSplitHorizontal", m_bPreviewSplitHorizontal);
   m_pSettings->setValue("InyokaCommunity", m_sInyokaCommunity);
   m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
+  m_pSettings->setValue("ConstructionArea", m_sInyokaConstArea);
   m_pSettings->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
   m_pSettings->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
   m_pSettings->setValue("CheckLinks", m_bCheckLinks);
@@ -302,6 +304,10 @@ QString Settings::getInyokaCommunity() const {
 
 QString Settings::getInyokaUrl() const {
   return m_sInyokaUrl;
+}
+
+QString Settings::getInyokaConstructionArea() const {
+  return m_sInyokaConstArea;
 }
 
 bool Settings::getCodeCompletion() const {
