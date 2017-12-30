@@ -1,7 +1,5 @@
-<?xml version="1.0"  encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="de-de">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>InyokaEdit - %filename%</title>
@@ -26,9 +24,9 @@
             %content%
           </div>
           <p class="meta">
-            %revtext%
+            Diese Revision wurde am %date% um %time% Uhr erstellt.
             <br />
-            %tagtext%
+            Dieser Seite wurden die folgenden Begriffe zugeordnet: %tags%
           </p>
         </div>
       </div>
