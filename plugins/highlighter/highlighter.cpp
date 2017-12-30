@@ -449,7 +449,7 @@ void Highlighter::getTranslations() {
 
             if ("Template" == tmpList[0].trimmed()) {
               m_sListParserKeywords << s.trimmed().toLower();
-            } else if ("CodeBlock" == tmpList[0].trimmed()) {
+            } else if ("Code" == tmpList[0].trimmed()) {
               m_sListParserKeywords << s.trimmed().toLower();
             }
           }

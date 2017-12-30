@@ -38,8 +38,8 @@ class SyntaxCheck : public QObject {
 
   static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
                                   const QStringList &sListTplMacros,
-                                  const QString &sTransTpl,
-                                  const QStringList &sListSmilies);
+                                  const QStringList &sListSmilies,
+                                  const QStringList &sListTplTrans);
 
  private:
   static qint32 checkParenthesis(const QTextDocument *pRawDoc,
@@ -47,7 +47,7 @@ class SyntaxCheck : public QObject {
   static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
   static qint32 checkKnownTemplates(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,
-                                    const QString &sTransTpl);
+                                    const QStringList &sListTplTrans);
 };
 
 #endif  // INYOKAEDIT_SYNTAXCHECK_H_

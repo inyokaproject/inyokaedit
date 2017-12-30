@@ -43,6 +43,7 @@ class Macros {
                     const QString &sCurrentFile,
                     const QString &sCommunity,
                     QStringList &sListHeadlines);
+  QStringList getTplTranslations() const;
 
  private:
   void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
@@ -58,6 +59,7 @@ class Macros {
   const QString m_sSharePath;
   const QDir m_tmpImgDir;
   QList<MACRO> m_listMacros;
+  QStringList m_sListTplTranslations;
 };
 
 #endif  // INYOKAEDIT_MACROS_H_

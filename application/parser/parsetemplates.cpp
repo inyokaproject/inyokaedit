@@ -28,7 +28,7 @@
 
 #include "./parsetemplates.h"
 
-ParseTemplates::ParseTemplates(QString sTransTpl,
+ParseTemplates::ParseTemplates(QStringList sListTransTpl,
                                QStringList sListTplNames,
                                const QStringList &sListHtmlStart,
                                const QString &sSharePath,
@@ -38,7 +38,7 @@ ParseTemplates::ParseTemplates(QString sTransTpl,
                                const QStringList &sListTestedWithTouch,
                                const QStringList &sListTestedWithTouchStrings,
                                const QString &sCommunity)
-  : m_sTransTpl(sTransTpl),
+  : m_sListTransTpl(sListTransTpl),
     m_sListTplNames(sListTplNames) {
   m_pProvTplTarser = new ProvisionalTplParser(sListHtmlStart,
                                               sSharePath,
@@ -58,8 +58,12 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
   m_sCurrentFile = sCurrentFile;
 
   QStringList sListTplRegExp;
-  sListTplRegExp << "\\{\\{\\{#!" + m_sTransTpl + " .+\\}\\}\\}"
-                 << "\\[\\[" + m_sTransTpl + "\\s*\\(.+\\)\\]\\]";
+  QStringList sListTrans;
+  foreach (QString s, m_sListTransTpl) {
+    sListTplRegExp << "\\{\\{\\{#!" + s + " .+\\}\\}\\}"
+                   << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
+    sListTrans << s << s;
+  }
   QString sDoc(pRawDoc->toPlainText());
   QString sMacro;
   QString sBackupMacro;
@@ -74,9 +78,9 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
       sMacro = findTemplate.cap(0);
       sBackupMacro = sMacro;
-      if (sMacro.startsWith("[[" + m_sTransTpl, Qt::CaseInsensitive)) {
+      if (sMacro.startsWith("[[" + sListTrans[k], Qt::CaseInsensitive)) {
         // Step needed because of possible spaces
-        sMacro.remove("[[" + m_sTransTpl, Qt::CaseInsensitive);
+        sMacro.remove("[[" + sListTrans[k], Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
       }
       sListArguments.clear();
@@ -120,10 +124,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               sListArguments.removeAt(i);
             }
           }
-        } else if (sMacro.startsWith("{{{#!" + m_sTransTpl + " "
+        } else if (sMacro.startsWith("{{{#!" + sListTrans[k] + " "
                                      + m_sListTplNames[i],
                                      Qt::CaseInsensitive)) {
-          sMacro.remove("{{{#!" + m_sTransTpl + " ",
+          sMacro.remove("{{{#!" + sListTrans[k] + " ",
                         Qt::CaseInsensitive);
           sMacro.remove("\n\\}}}");
           sMacro.remove("\\}}}");

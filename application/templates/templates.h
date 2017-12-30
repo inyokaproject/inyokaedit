@@ -40,11 +40,6 @@ class Templates {
   QStringList getListTplNamesALL() const;
   QStringList getListTplMacrosALL() const;
 
-  QString getTransCodeBlock() const;
-  QString getTransRev() const;
-  QString getTransTag() const;
-  QString getTransTemplate() const;
-
   QStringList getListFormatStart() const;
   QStringList getListFormatEnd() const;
   QStringList getListFormatHtmlStart() const;
@@ -69,7 +64,6 @@ class Templates {
                     QStringList &sListElements,
                     QStringList &sListMapping);
   void initTextformats(const QString &sFileName);
-  void initTranslations(const QString &sFileName);
 
   QString m_sPreviewTemplate;
   QStringList m_sListTplNamesINY;
@@ -97,12 +91,6 @@ class Templates {
   QStringList m_sListTestedWithStrings;
   QStringList m_sListTestedWithTouch;
   QStringList m_sListTestedWithTouchStrings;
-
-  // Translations
-  QString m_sTransCodeBlock;
-  QString m_sTransRevText;
-  QString m_sTransTagText;
-  QString m_sTransTemplate;
 };
 
 #endif  // INYOKAEDIT_TEMPLATES_H_

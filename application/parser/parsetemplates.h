@@ -35,7 +35,7 @@
 
 class ParseTemplates {
  public:
-  ParseTemplates(QString sTransTpl,
+  ParseTemplates(QStringList sListTransTpl,
                  QStringList sListTplNames,
                  const QStringList &sListHtmlStart,
                  const QString &sSharePath,
@@ -50,7 +50,7 @@ class ParseTemplates {
 
  private:
   ProvisionalTplParser *m_pProvTplTarser;
-  QString m_sTransTpl;
+  QStringList m_sListTransTpl;
   QStringList m_sListTplNames;
   QString m_sCurrentFile;
 };

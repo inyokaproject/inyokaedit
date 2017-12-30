@@ -55,7 +55,7 @@ class TextEditor : public QTextEdit {
   Q_OBJECT
 
  public:
-  TextEditor(QStringList sListTplMacros, QString sTransTemplate,
+  TextEditor(QStringList sListTplMacros, const QString &sTransTemplate,
              QWidget *pParent = 0);
   ~TextEditor();
 
@@ -87,7 +87,6 @@ class TextEditor : public QTextEdit {
   bool m_bCodeCompletion;
   QStringList m_sListCompleter;
   QList<QPoint> m_listPosCompleter;
-  const QString m_sTransTemplate;
 };
 
 #endif  // INYOKAEDIT_TEXTEDITOR_H_

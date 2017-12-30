@@ -56,7 +56,7 @@ class Parser : public QObject {
   ~Parser();
 
   // Starts generating HTML-code
-  QString genOutput(const QString &sActFile, QTextDocument *p_rawDocument,
+  QString genOutput(const QString &sActFile, QTextDocument *pRawDocument,
                     const bool &bSyntaxCheck = false);
 
  public slots:
@@ -66,21 +66,21 @@ class Parser : public QObject {
   void hightlightSyntaxError(const qint32);
 
  private:
-  // void replaceTemplates(QTextDocument *p_rawDoc);
+  // void replaceTemplates(QTextDocument *pRawDoc);
 
-  void filterEscapedChars(QTextDocument *p_rawDoc);
-  void filterNoTranslate(QTextDocument *p_rawDoc);
-  void replaceCodeblocks(QTextDocument *p_rawDoc);
-  void reinstertNoTranslate(QTextDocument *p_rawDoc);
+  void filterEscapedChars(QTextDocument *pRawDoc);
+  void filterNoTranslate(QTextDocument *pRawDoc);
+  void replaceCodeblocks(QTextDocument *pRawDoc);
+  void reinstertNoTranslate(QTextDocument *pRawDoc);
 
-  void removeComments(QTextDocument *p_rawDoc);
-  void generateParagraphs(QTextDocument *p_rawDoc);
+  void removeComments(QTextDocument *pRawDoc);
+  void generateParagraphs(QTextDocument *pRawDoc);
 
-  void replaceQuotes(QTextDocument *p_rawDoc);
-  void replaceHorLines(QTextDocument *p_rawDoc);
-  void replaceHeadlines(QTextDocument *p_rawDoc, QStringList &slistHeadlines);
-  void replaceFootnotes(QTextDocument *p_rawDoc);
-  QString generateTags(QTextDocument *p_rawDoc);
+  void replaceQuotes(QTextDocument *pRawDoc);
+  void replaceHorLines(QTextDocument *pRawDoc);
+  void replaceHeadlines(QTextDocument *pRawDoc, QStringList &slistHeadlines);
+  void replaceFootnotes(QTextDocument *pRawDoc);
+  QString generateTags(QTextDocument *pRawDoc);
   QString highlightCode(const QString &sLanguage, const QString &sCode);
 
   // Text from editor

@@ -54,8 +54,7 @@ class FileOperations : public QObject {
     */
   FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                  Settings *pSettings, const QString &sPreviewFile,
-                 QString sUserDataDir, QStringList sListTplMacros,
-                 QString sTransTemplate);
+                 QString sUserDataDir, QStringList sListTplMacros);
 
   void newFile(QString sFileName);
 
@@ -208,7 +207,6 @@ class FileOperations : public QObject {
   QAction *m_pClearRecentFilesAct;
 
   QStringList m_sListTplMacros;
-  const QString m_sTransTemplate;
 };
 
 #endif  // INYOKAEDIT_FILEOPERATIONS_H_

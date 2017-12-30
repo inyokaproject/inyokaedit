@@ -50,13 +50,13 @@
 #include "./texteditor.h"
 
 
-TextEditor::TextEditor(QStringList sListTplMacros, QString sTransTemplate,
+TextEditor::TextEditor(QStringList sListTplMacros,
+                       const QString &sTransTemplate,
                        QWidget *pParent)
   : QTextEdit(pParent),
     m_sFileName(""),
     m_bCodeCompletion(false),
-    m_sListCompleter(sListTplMacros),
-    m_sTransTemplate(sTransTemplate) {
+    m_sListCompleter(sListTplMacros) {
   int nPlaceholder1(0);
   int nPlaceholder2(0);
   for (int i = 0; i < m_sListCompleter.size(); i++) {
@@ -70,8 +70,8 @@ TextEditor::TextEditor(QStringList sListTplMacros, QString sTransTemplate,
     m_sListCompleter[i].remove("%%");
     m_listPosCompleter << QPoint(nPlaceholder1, nPlaceholder2);
   }
-  m_sListCompleter.push_front("[[" + m_sTransTemplate + "(");
-  m_sListCompleter.push_front("{{{#!" + m_sTransTemplate.toLower() + " ");
+  m_sListCompleter.push_front("[[" + sTransTemplate + "(");
+  m_sListCompleter.push_front("{{{#!" + sTransTemplate.toLower() + " ");
   m_listPosCompleter.push_front(QPoint(-1, -1));
   m_listPosCompleter.push_front(QPoint(-1, -1));
   m_pCompleter = new QCompleter(m_sListCompleter, this);

@@ -46,7 +46,7 @@ Parser::Parser(const QString &sSharePath,
   m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
 
   m_pTemplateParser = new ParseTemplates(
-                        m_pTemplates->getTransTemplate(),
+                        m_pMacros->getTplTranslations(),
                         m_pTemplates->getListTplNamesINY(),
                         m_pTemplates->getListFormatHtmlStart(),
                         m_sSharePath, m_tmpImgDir,
@@ -97,8 +97,8 @@ QString Parser::genOutput(const QString &sActFile,
   if (bSyntaxCheck) {
     qint32 nRet = SyntaxCheck::checkInyokaSyntax(m_pRawText,
                                                  m_pTemplates->getListTplNamesINY(),
-                                                 m_pTemplates->getTransTemplate(),
-                                                 m_pTemplates->getListSmilies());
+                                                 m_pTemplates->getListSmilies(),
+                                                 m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(nRet);
   }
   this->replaceCodeblocks(m_pRawText);
@@ -152,17 +152,15 @@ QString Parser::genOutput(const QString &sActFile,
   // Copy needed, otherwise %tags% will be replaced/removed in template!
   QString sTemplateCopy(m_pTemplates->getPreviewTemplate());
   sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
-  QString sRevTextCopy(m_pTemplates->getTransRev());  // Copy needed!
-  sRevTextCopy = sRevTextCopy.replace(
-                   "%date%", QDate::currentDate().toString("dd.MM.yyyy"))
-                 .replace("%time%", QTime::currentTime().toString("hh:mm"));
   sTemplateCopy = sTemplateCopy.replace("%folder%",
                                         m_sSharePath + "/community/" +
                                         m_sCommunity + "/web");
-  sTemplateCopy = sTemplateCopy.replace("%revtext%", sRevTextCopy);
-  sTemplateCopy = sTemplateCopy.replace("%tagtext%",
-                                        m_pTemplates->getTransTag() + " "
-                                        + this->generateTags(m_pRawText));
+  sTemplateCopy = sTemplateCopy.replace("%date%",
+                                        QDate::currentDate().toString("dd.MM.yyyy"));
+  sTemplateCopy = sTemplateCopy.replace("%time%",
+                                        QTime::currentTime().toString("hh:mm"));
+  sTemplateCopy = sTemplateCopy.replace("%tags%",
+                                        this->generateTags(m_pRawText));
   sTemplateCopy = sTemplateCopy.replace("%content%",
                                         m_pRawText->toPlainText());
   return sTemplateCopy;
@@ -171,8 +169,8 @@ QString Parser::genOutput(const QString &sActFile,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 /*
-void Parser::replaceTemplates(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+void Parser::replaceTemplates(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QString sMacro;
   QStringList sListArguments;
   int nPos = 0;
@@ -233,23 +231,19 @@ void Parser::replaceTemplates(QTextDocument *p_rawDoc) {
     // nPos += findTemplate.matchedLength();
   }
 
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
+  // Replace pRawDoc with adapted document
+  pRawDoc->setPlainText(sDoc);
 }
 */
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceCodeblocks(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QStringList sListTplRegExp;
-  // Search for {{{#!code ...}}} and {{{ ... [without #!vorlage] ...}}}
-  sListTplRegExp << "\\{\\{\\{#!"
-                    + m_pTemplates->getTransCodeBlock()
-                    + " .+\\}\\}\\}"
-                 << "\\{\\{\\{(?!#!"
-                    + m_pTemplates->getTransTemplate()
-                    + ").+\\}\\}\\}";
+  // Search for {{{#!code ...}}} and {{{ ... without #!X ...}}}
+  sListTplRegExp << "\\{\\{\\{#!code .+\\}\\}\\}"
+                 << "\\{\\{\\{(?!#!\\S).+\\}\\}\\}";
   QString sMacro;
   QStringList sListLines;
   int nPos;
@@ -265,12 +259,9 @@ void Parser::replaceCodeblocks(QTextDocument *p_rawDoc) {
       sMacro = findTemplate.cap(0);
       sMacro.remove("{{{\n");
       sMacro.remove("{{{");
-      if (sMacro.startsWith(
-            "#!" + m_pTemplates->getTransCodeBlock() + " ",
-            Qt::CaseInsensitive)) {
+      if (sMacro.startsWith("#!code ", Qt::CaseInsensitive)) {
         bFormated = true;
-        sMacro.remove("#!" + m_pTemplates->getTransCodeBlock() + " ",
-                      Qt::CaseInsensitive);
+        sMacro.remove("#!code ", Qt::CaseInsensitive);
       }
       sMacro.remove("\n}}}");
       sMacro.remove("}}}");
@@ -341,8 +332,8 @@ void Parser::replaceCodeblocks(QTextDocument *p_rawDoc) {
     }
   }
 
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
+  // Replace pRawDoc with adapted document
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
@@ -406,8 +397,8 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::filterEscapedChars(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QRegExp pattern("\\\\.", Qt::CaseInsensitive);
   QString sEscChar("");
   int nPos(0);
@@ -426,13 +417,13 @@ void Parser::filterEscapedChars(QTextDocument *p_rawDoc) {
     // Go on with search
     nPos += sEscChar.length();
   }
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::filterNoTranslate(QTextDocument *p_rawDoc) {
+void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   QStringList sListFormatStart;
   QStringList sListFormatEnd;
   QStringList sListHtmlStart;
@@ -453,13 +444,13 @@ void Parser::filterNoTranslate(QTextDocument *p_rawDoc) {
     }
   }
 
-  ParseTextformats::startParsing(p_rawDoc, sListFormatStart, sListFormatEnd,
+  ParseTextformats::startParsing(pRawDoc, sListFormatStart, sListFormatEnd,
                                  sListHtmlStart, sListHtmlEnd);
 
   patternFormat.setCaseSensitivity(Qt::CaseInsensitive);
   patternFormat.setMinimal(true);  // Search only for smallest match
 
-  sDoc = p_rawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
+  sDoc = pRawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
   // qDebug() << "\n\n" << sDoc << "\n\n";
   nNoTranslate = m_sListNoTranslate.size();
   for (int i = 0; i < sListHtmlStart.size(); i++) {
@@ -476,14 +467,14 @@ void Parser::filterNoTranslate(QTextDocument *p_rawDoc) {
       nNoTranslate++;
     }
   }
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::reinstertNoTranslate(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+void Parser::reinstertNoTranslate(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
 
   // Reinsert filtered monotype codeblock
   // Has to be decremental, because of possible nested blocks
@@ -492,17 +483,17 @@ void Parser::reinstertNoTranslate(QTextDocument *p_rawDoc) {
                  m_sListNoTranslate[i]);
   }
 
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceHorLines(QTextDocument *p_rawDoc) {
+void Parser::replaceHorLines(QTextDocument *pRawDoc) {
   QString sDoc("");
 
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if ("----" == block.text()) {
       sDoc += "\n<hr />\n";
@@ -511,22 +502,22 @@ void Parser::replaceHorLines(QTextDocument *p_rawDoc) {
     }
   }
 
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc);
+  // Replace pRawDoc with adapted document
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Parser::generateTags(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+QString Parser::generateTags(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QString sLine("");
   QString sTags("");
   QStringList sListTags;
 
   // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (block.text().trimmed().startsWith("#tag:")
         || block.text().trimmed().startsWith("# tag:")) {
@@ -551,21 +542,21 @@ QString Parser::generateTags(QTextDocument *p_rawDoc) {
     }
   }
 
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
   return sTags;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceQuotes(QTextDocument *p_rawDoc) {
+void Parser::replaceQuotes(QTextDocument *pRawDoc) {
   QString sDoc("");
   QString sLine("");
   quint16 nQuotes = 0;
 
   // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (block.text().startsWith(">")) {
       sLine = block.text().trimmed();
@@ -580,18 +571,18 @@ void Parser::replaceQuotes(QTextDocument *p_rawDoc) {
     }
   }
 
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::generateParagraphs(QTextDocument *p_rawDoc) {
+void Parser::generateParagraphs(QTextDocument *pRawDoc) {
   QString sDoc("<p>\n");
 
   // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (block.text().trimmed().isEmpty()) {
       sDoc += "</p>\n<p>\n";
@@ -600,31 +591,31 @@ void Parser::generateParagraphs(QTextDocument *p_rawDoc) {
     }
   }
 
-  p_rawDoc->setPlainText(sDoc + "</p>");
+  pRawDoc->setPlainText(sDoc + "</p>");
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::removeComments(QTextDocument *p_rawDoc) {
+void Parser::removeComments(QTextDocument *pRawDoc) {
   QString sDoc("");
 
   // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (!block.text().startsWith("##")) {
       sDoc += block.text() + "\n";
     }
   }
 
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceHeadlines(QTextDocument *p_rawDoc,
+void Parser::replaceHeadlines(QTextDocument *pRawDoc,
                               QStringList &slistHeadlines) {
   QString sDoc("");
   QString sLine("");
@@ -634,8 +625,8 @@ void Parser::replaceHeadlines(QTextDocument *p_rawDoc,
   slistHeadlines.clear();
 
   // Go through each text block
-  for (QTextBlock block = p_rawDoc->firstBlock();
-       block.isValid() && !(p_rawDoc->lastBlock() < block);
+  for (QTextBlock block = pRawDoc->firstBlock();
+       block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     // Order is important! First level 5, 4, 3, 2, 1
     for (int i = 5; i >= 0; i--) {
@@ -700,14 +691,14 @@ void Parser::replaceHeadlines(QTextDocument *p_rawDoc,
   }
   // qDebug() << "HEADLINES:" << slistHeadlines;
 
-  p_rawDoc->setPlainText(sDoc);
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceFootnotes(QTextDocument *p_rawDoc) {
-  QString sDoc(p_rawDoc->toPlainText());
+void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
+  QString sDoc(pRawDoc->toPlainText());
   QString sRegExp("\\(\\(.*\\)\\)");
   QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
   findMacro.setMinimal(true);
@@ -744,6 +735,6 @@ void Parser::replaceFootnotes(QTextDocument *p_rawDoc) {
     sFootnotes = "<ul class=\"footnotes\">\n" + sFootnotes + "</ul>\n";
   }
 
-  // Replace p_rawDoc with adapted document
-  p_rawDoc->setPlainText(sDoc + sFootnotes);
+  // Replace pRawDoc with adapted document
+  pRawDoc->setPlainText(sDoc + sFootnotes);
 }

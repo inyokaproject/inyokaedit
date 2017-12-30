@@ -166,8 +166,7 @@ void InyokaEdit::createObjects() {
   m_pFileOperations = new FileOperations(this, m_pDocumentTabs, m_pSettings,
                                          m_sPreviewFile,
                                          m_UserDataDir.absolutePath(),
-                                         m_pTemplates->getListTplMacrosALL(),
-                                         m_pTemplates->getTransTemplate());
+                                         m_pTemplates->getListTplMacrosALL());
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
 
   connect(m_pFileOperations, SIGNAL(callPreview()),

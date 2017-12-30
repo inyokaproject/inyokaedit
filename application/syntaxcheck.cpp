@@ -36,13 +36,14 @@ SyntaxCheck::SyntaxCheck() {
 
 qint32 SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
                                       const QStringList &sListTplMacros,
-                                      const QString &sTransTpl,
-                                      const QStringList &sListSmilies) {
+                                      const QStringList &sListSmilies,
+                                      const QStringList &sListTplTrans) {
   qint32 nRet(-1);
 
   nRet = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == nRet) {
-    nRet = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros, sTransTpl);
+    nRet = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros,
+                                            sListTplTrans);
   }
 
   return nRet;
@@ -113,10 +114,15 @@ bool SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 
 qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                                         const QStringList &sListTplMacros,
-                                        const QString &sTransTpl) {
+                                        const QStringList &sListTplTrans) {
   QStringList sListTplRegExp;
-  sListTplRegExp << "\\{\\{\\{#!" + sTransTpl + " .+\\}\\}\\}"
-                 << "\\[\\[" + sTransTpl + "\\s*\\(.+\\)\\]\\]";
+  QStringList sListTrans;
+  foreach (QString s, sListTplTrans) {
+    sListTplRegExp << "\\{\\{\\{#!" + s + " .+\\}\\}\\}"
+                   << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
+    sListTrans << s << s;
+  }
+
   QString sDoc(pRawDoc->toPlainText());
   QString sMacro("");
   int nPos;
@@ -128,9 +134,9 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
 
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
       sMacro = findTemplate.cap(0);
-      if (sMacro.startsWith("[[" + sTransTpl,
+      if (sMacro.startsWith("[[" + sListTrans[i],
                             Qt::CaseInsensitive)) {
-        sMacro.remove("[[" + sTransTpl, Qt::CaseInsensitive);
+        sMacro.remove("[[" + sListTrans[i], Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
         sMacro.remove(0, 1);  // Remove (
         sMacro = sMacro.left(sMacro.indexOf(",")).trimmed();
@@ -138,9 +144,9 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         if (sListTplMacros.contains(sMacro)) {
           sMacro.clear();
         }
-      } else if (sMacro.startsWith("{{{#!" + sTransTpl + " ",
+      } else if (sMacro.startsWith("{{{#!" + sListTrans[i] + " ",
                                    Qt::CaseInsensitive)) {
-        sMacro.remove("{{{#!" + sTransTpl + " ", Qt::CaseInsensitive);
+        sMacro.remove("{{{#!" + sListTrans[i] + " ", Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
         if (-1 != sMacro.indexOf(" ") && -1 != sMacro.indexOf("\n")) {
             if (sMacro.indexOf(" ") < sMacro.indexOf("\n")) {

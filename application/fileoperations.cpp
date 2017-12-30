@@ -43,8 +43,7 @@
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                Settings *pSettings, const QString &sPreviewFile,
-                               QString sUserDataDir, QStringList sListTplMacros,
-                               QString sTransTemplate)
+                               QString sUserDataDir, QStringList sListTplMacros)
   : m_pParent(pParent),
     m_pDocumentTabs(pTabWidget),
     m_pCurrentEditor(NULL),
@@ -57,8 +56,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_bCloseApp(false),
     m_sUserDataDir(sUserDataDir),
     m_sExtractDir(m_sUserDataDir + "/tmpImages"),
-    m_sListTplMacros(sListTplMacros),
-    m_sTransTemplate(sTransTemplate) {
+    m_sListTplMacros(sListTplMacros) {
     qDebug() << "Using miniz version:" << MZ_VERSION;
   m_pFindReplace = new FindReplace();
   connect(this, SIGNAL(triggeredFind()),
@@ -129,7 +127,7 @@ void FileOperations::newFile() {
 void FileOperations::newFile(QString sFileName) {
   static quint8 nCntDocs = 0;
 
-  m_pCurrentEditor = new TextEditor(m_sListTplMacros, m_sTransTemplate,
+  m_pCurrentEditor = new TextEditor(m_sListTplMacros, trUtf8("Template"),
                                     m_pParent);
   m_pListEditors << m_pCurrentEditor;
   m_pCurrentEditor->installEventFilter(m_pParent);

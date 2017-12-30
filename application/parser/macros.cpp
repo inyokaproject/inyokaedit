@@ -51,18 +51,23 @@ Macros::Macros(const QString &sSharePath,
 
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
-      if (!tmpLine.startsWith("Template") &&
-          !tmpLine.startsWith("CodeBlock") &&
+      if (!tmpLine.startsWith("Code") &&
           !tmpLine.trimmed().isEmpty()) {
         tmpList = tmpLine.split("=");
         if (2 == tmpList.size()) {
           tmpMacro.name = tmpList[0].trimmed();
           tmpMacro.translations.clear();
           tmpList2 = tmpList[1].split(",");
-          foreach (QString s, tmpList2) {
-            tmpMacro.translations << s.trimmed();
+          if ("Template" != tmpMacro.name) {
+            foreach (QString s, tmpList2) {
+              tmpMacro.translations << s.trimmed();
+            }
+            m_listMacros << tmpMacro;
+          } else {
+            foreach (QString s, tmpList2) {
+              m_sListTplTranslations << s.trimmed();
+            }
           }
-          m_listMacros << tmpMacro;
         }
       }
     }
@@ -103,6 +108,13 @@ void Macros::startParsing(QTextDocument *pRawDoc,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+QStringList Macros::getTplTranslations() const {
+  return m_sListTplTranslations;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
   QRegExp findAnchor("\\[{2,2}\\b(" + sTrans + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
   QString sDoc(pRawDoc->toPlainText());
@@ -129,11 +141,9 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
     sAnchor.replace(QString::fromUtf8("ü"), "ue");
     sAnchor.replace(QString::fromUtf8("ö"), "oe");
 
-    // Replace
     sDoc.replace(nIndex, nLength,
                  "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
                  + "\" class=\"crosslink anchor\"> </a>");
-
     // Go on with RegExp-Search
     nIndex = findAnchor.indexIn(sDoc, nIndex + nLength);
   }
@@ -206,7 +216,6 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
     nPos += sMacro.length();
   }
 
-  // Replace pRawDoc with adapted document
   pRawDoc->setPlainText(sDoc);
 }
 
@@ -282,7 +291,7 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
 
     for (int i = 1; i < sListTmpImageInfo.length(); i++) {
       // Found integer (width)
-      if (sListTmpImageInfo[i].trimmed().toUInt() != 0) {
+      if (0 != sListTmpImageInfo[i].trimmed().toUInt()) {
         tmpW = sListTmpImageInfo[i].trimmed().toUInt();
       } else if (sListTmpImageInfo[i].trimmed().startsWith("x")) {
         // Found x+integer (height)
@@ -294,21 +303,21 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
                  sListTmpImageInfo[i].indexOf("x"),
                  sListTmpImageInfo[i].length()).trimmed().toUInt();
         tmpH = sTmp.remove(0, sTmp.indexOf("x")+1).trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed() == "left"
-                 || sListTmpImageInfo[i].trimmed() == "align=left") {
+      } else if (sListTmpImageInfo[i].trimmed() == "left" ||
+                 sListTmpImageInfo[i].trimmed() == "align=left") {
         // Found alignment
         sImageAlign = "left";
-      } else if (sListTmpImageInfo[i].trimmed() == "right"
-                 || sListTmpImageInfo[i].trimmed() == "align=right") {
+      } else if (sListTmpImageInfo[i].trimmed() == "right" ||
+                 sListTmpImageInfo[i].trimmed() == "align=right") {
         sImageAlign = "right";
-      } else if (sListTmpImageInfo[i].trimmed() == "center"
-                 || sListTmpImageInfo[i].trimmed() == "align=center") {
+      } else if (sListTmpImageInfo[i].trimmed() == "center" ||
+                 sListTmpImageInfo[i].trimmed() == "align=center") {
         sImageAlign = "center";
       }
     }
 
     // No size given
-    if (tmpH == 0 && tmpW == 0) {
+    if (0 == tmpH && 0 == tmpW) {
       iImgHeight = QImage(sImageUrl).height();
       tmpH = iImgHeight;
       iImgWidth = QImage(sImageUrl).width();
@@ -332,14 +341,11 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
                  + QString::number(tmpW) + "\" ";
     sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
 
-    // Replace
     sDoc.replace(nIndex, nLength, sTmpImage);
-
     // Go on with RegExp-Search
     nIndex = findImages.indexIn(sDoc, nIndex + nLength);
   }
 
-  // Replace pRawDoc with adapted document
   pRawDoc->setPlainText(sDoc);
 }
 
@@ -412,7 +418,6 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     nPos += sMacro.length();
   }
 
-  // Replace pRawDoc with adapted document
   pRawDoc->setPlainText(sDoc);
 }
 
@@ -462,7 +467,6 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
       sClass = " class=\"" + sArgs[1].remove("\"") + "\"";
     }
     if (sArgs.size() > 2) {
-
       sStyle = " style=\"" + sArgs[2].remove("\"") + "\"";
     }
     sMacro = "<span" + sStyle + sClass + ">" + sMacro + "</span>";

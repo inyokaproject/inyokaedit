@@ -47,7 +47,6 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   m_sListSmiliesImg.clear();
   this->initMappings(sPath + "/SmiliesMap.conf", m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
-  this->initTranslations(sPath + "/community.conf");
 
   sPath = "/community/" + sCommunity;
 
@@ -255,42 +254,6 @@ void Templates::initTextformats(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Templates::initTranslations(const QString &sFilename) {
-  QFile translFile(sFilename);
-  if (!translFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::critical(0, "Error",
-                          "Could not open template translation file!");
-    qCritical() << "Could not open template translation file:"
-                << translFile.fileName();
-    exit(-3);
-  }
-
-  QSettings configTransl(translFile.fileName(), QSettings::IniFormat);
-  configTransl.setIniCodec("UTF-8");
-
-  configTransl.beginGroup("Translations");
-  m_sTransCodeBlock = configTransl.value("CodeBlock", "ERROR").toString();
-  if ("ERROR" == m_sTransCodeBlock) {
-    qCritical() << "Code block translation not found.";
-  }
-  m_sTransRevText = configTransl.value("RevText", "ERROR").toString();
-  if ("ERROR" == m_sTransRevText) {
-    qCritical() << "Revision text translation not found.";
-  }
-  m_sTransTagText = configTransl.value("TagText", "ERROR").toString();
-  if ("ERROR" == m_sTransTagText) {
-    qCritical() << "Tag text translation not found.";
-  }
-  m_sTransTemplate = configTransl.value("Template", "ERROR").toString();
-  if ("ERROR" == m_sTransTemplate) {
-    qCritical() << "Template translation not found.";
-  }
-  configTransl.endGroup();
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
 QString Templates::getPreviewTemplate() const {
   return m_sPreviewTemplate;
 }
@@ -309,19 +272,6 @@ QStringList Templates::getListTplNamesALL() const {
 }
 QStringList Templates::getListTplMacrosALL() const {
   return m_sListTplMacrosALL;
-}
-
-QString Templates::getTransCodeBlock() const {
-  return m_sTransCodeBlock;
-}
-QString Templates::getTransRev() const {
-  return m_sTransRevText;
-}
-QString Templates::getTransTag() const {
-  return m_sTransTagText;
-}
-QString Templates::getTransTemplate() const {
-  return m_sTransTemplate;
 }
 
 QStringList Templates::getListFormatStart() const {
