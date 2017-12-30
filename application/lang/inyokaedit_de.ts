@@ -704,7 +704,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     <message>
         <location filename="../settingsdialog.ui" line="47"/>
         <source>Check Inyoka syntax</source>
-        <translation>Inyoka Syntaxprüfunng</translation>
+        <translation>Inyoka Syntaxprüfung</translation>
     </message>
     <message>
         <location filename="../settingsdialog.ui" line="75"/>

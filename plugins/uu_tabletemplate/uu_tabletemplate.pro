@@ -20,7 +20,7 @@ TARGET        = uu_tabletemplate
 DESTDIR       = ../
 
 VERSION       = 1.3.0
-QMAKE_TARGET_DESCRIPTION = "uu.de table template plugin for InyokaEdit"
+QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2017 - Christian Schärf, Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \

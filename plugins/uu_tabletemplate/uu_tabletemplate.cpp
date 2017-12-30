@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Shows a modal window for uu.de table templates.
+ * Shows a modal window for ubuntuusers.de table templates.
  */
 
 #include <QDebug>
@@ -380,6 +380,6 @@ void Uu_TableTemplate::showAbout() {
                    .arg(trUtf8("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for generating uu.de styled Inyoka tables.")));
+                   .arg(trUtf8("Plugin for generating ubuntuusers.de styled Inyoka tables.")));
   aboutbox.exec();
 }

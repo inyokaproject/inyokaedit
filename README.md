@@ -14,8 +14,8 @@ Features:
   * Syntax highlighting of Inyoka elements
   * Spell checker (based on Hunspell)
   * Hotkyes for own text blocks
-  * Knowledge block dialog (uu.de)
-  * Table generator / converter (uu.de)
+  * Knowledge block dialog (ubuntuusers.de)
+  * Table generator / converter (ubuntuusers.de)
 
 ## Installation
 PPA for Ubuntu:

@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition uu.de knowledge box dialog
+ * Class definition ubuntuusers.de knowledge box dialog
  */
 
 #ifndef INYOKAEDIT_UU_KNOWLEDGEBOX_H_

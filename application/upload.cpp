@@ -285,7 +285,7 @@ void Upload::getLoginReply(QString sNWReply) {
   } else {
     foreach (QNetworkCookie cookie, m_ListCookies) {
       if (cookie.isSessionCookie()) {
-        // E.g. uu.de includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
+        // E.g. ubuntuusers.de includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
         // --> "Du hast dich erfolgreich angemeldet"
         // See raw debug output:
         // qDebug() << "RawSessionCookie:" << cookie.toRawForm();

@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition uu.de table template dialog
+ * Class definition ubuntuusers.de table template dialog
  */
 
 #ifndef INYOKAEDIT_UU_TABLETEMPLATE_H_

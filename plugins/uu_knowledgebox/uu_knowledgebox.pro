@@ -20,7 +20,7 @@ TARGET        = uu_knowledgebox
 DESTDIR       = ../
 
 VERSION       = 1.1.0
-QMAKE_TARGET_DESCRIPTION = "uu.de knowledge box selection plugin for InyokaEdit"
+QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de knowledge box selection plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2013-2017 - Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \

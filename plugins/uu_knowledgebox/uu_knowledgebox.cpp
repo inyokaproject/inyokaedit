@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Shows a modal window for uu.de knowledge box entry selection.
+ * Shows a modal window for ubuntuusers.de knowledge box entry selection.
  */
 
 #include <QCoreApplication>
@@ -202,7 +202,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
   if (0 == m_sListEntries.size()) {
     qWarning() << "Knowledgebox defaults are empty!";
     QMessageBox::warning(NULL, trUtf8("Error"),
-                         trUtf8("uu.de knowledgebox defaults are empty!"));
+                         trUtf8("ubuntuusers.de knowledgebox defaults are empty!"));
   }
 
   this->writeSettings();
@@ -380,6 +380,6 @@ void Uu_KnowledgeBox::showAbout() {
                    .arg(trUtf8("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for choosing uu.de knowledge box entries.")));
+                   .arg(trUtf8("Plugin for choosing ubuntuusers.de knowledge box entries.")));
   aboutbox.exec();
 }

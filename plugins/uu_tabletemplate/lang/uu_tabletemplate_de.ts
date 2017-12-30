@@ -2,6 +2,31 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>SyntaxCheck</name>
+    <message>
+        <location filename="../../../application/syntaxcheck.cpp" line="76"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="90"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="167"/>
+        <source>Inyoka syntax check</source>
+        <translation>Inyoka Syntaxüberprüfung</translation>
+    </message>
+    <message>
+        <location filename="../../../application/syntaxcheck.cpp" line="77"/>
+        <source>Syntax error detected - closing parenthesis without opening paraenthesis!</source>
+        <translation>&gt;Syntaxfehler entdeckt - schließende Klammer ohne öffnende Klammer!</translation>
+    </message>
+    <message>
+        <location filename="../../../application/syntaxcheck.cpp" line="91"/>
+        <source>Syntax error detected - open parenthesis!</source>
+        <translation>Syntaxfehler entdeckt - offene Klammer!</translation>
+    </message>
+    <message>
+        <location filename="../../../application/syntaxcheck.cpp" line="168"/>
+        <source>Found unknown template: %1</source>
+        <translation>Unbekannte Vorlage entdeckt: %1</translation>
+    </message>
+</context>
+<context>
     <name>Uu_TableTemplate</name>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="154"/>
@@ -35,8 +60,8 @@
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="383"/>
-        <source>Plugin for generating uu.de styled Inyoka tables.</source>
-        <translation>Erweiterung zur Erstellung von uu.de Inyoka-Tabellen.</translation>
+        <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
+        <translation>Erweiterung zur Erstellung von ubuntuusers.de Inyoka-Tabellen.</translation>
     </message>
 </context>
 <context>
@@ -98,13 +123,13 @@
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="157"/>
-        <source>Base to uu.de</source>
-        <translation>Basis zu uu.de</translation>
+        <source>Base to ubuntuusers.de</source>
+        <translation>Basis zu ubuntuusers.de</translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="168"/>
-        <source>uu.de to base</source>
-        <translation>uu.de zu Basis</translation>
+        <source>ubuntuusers.de to base</source>
+        <translation>ubuntuusers.de zu Basis</translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="179"/>
