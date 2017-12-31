@@ -37,12 +37,12 @@
 #include "./utils.h"
 
 Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,
-               const QString &sConstArea)
+               const QString &sConstArea, const QString &sHash)
   : m_pParent(pParent),
     m_sInyokaUrl(sInyokaUrl),
     m_State(REQUTOKEN),
     m_sToken(""),
-    m_sHash("153cae855e0ae527d6dc2434f3eb8ef60b782570"),
+    m_sHash(sHash),
     m_sSitename(""),
     m_sRevision(""),
     m_sConstructionArea(sConstArea),
@@ -73,6 +73,12 @@ void Upload::setEditor(QTextEdit *pEditor, const QString &sArticlename) {
 // ----------------------------------------------------------------------------
 
 void Upload::clickUploadArticle() {
+  if (m_sHash.isEmpty()) {
+    QMessageBox::warning(m_pParent, trUtf8("Error"),
+                         trUtf8("Inyoka community hash not defined!"));
+    return;
+  }
+
   if (m_pEditor->toPlainText().trimmed().isEmpty()) {
     QMessageBox::warning(m_pParent, trUtf8("Error"),
                          trUtf8("Please insert article text first!"));

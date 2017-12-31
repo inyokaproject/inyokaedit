@@ -203,11 +203,17 @@ void SettingsDialog::accept() {
                         m_pUi->CommunityCombo->currentText() + "/community.conf");
     QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
     communityConfig.setIniCodec("UTF-8");
-    QString sConstArea(communityConfig.value("ConstructionArea", "").toString());
-    if (sConstArea.isEmpty()) {
+    QString sValue(communityConfig.value("ConstructionArea", "").toString());
+    if (sValue.isEmpty()) {
       qWarning() << "Inyoka construction area not found!";
     } else {
-      m_pSettings->m_sInyokaConstArea = sConstArea;
+      m_pSettings->m_sInyokaConstArea = sValue;
+    }
+    sValue = communityConfig.value("Hash", "").toString();
+    if (sValue.isEmpty()) {
+      qWarning() << "Inyoka hash is empty!";
+    } else {
+      m_pSettings->m_sInyokaHash = sValue;
     }
 
     QMessageBox::information(0, this->windowTitle(),
@@ -264,7 +270,7 @@ void SettingsDialog::changedCommunity(QString sCommunity) {
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
   communityConfig.setIniCodec("UTF-8");
 
-  QString sUrl(communityConfig.value("Url", "").toString());
+  QString sUrl(communityConfig.value("InyokaUrl", "").toString());
   if (sUrl.isEmpty()) {
     qWarning() << "Community Url not found!";
     QMessageBox::warning(0, trUtf8("Warning"),

@@ -41,7 +41,7 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath) {
                               qApp->applicationName().toLower());
 #endif
 
-  this->readSettings();
+  this->readSettings(sSharePath);
 
   m_pSettingsDialog = new SettingsDialog(this, sSharePath, pParent);
 
@@ -72,7 +72,7 @@ Settings::~Settings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Settings::readSettings() {
+void Settings::readSettings(const QString &sSharePath) {
   // General settings
   m_sGuiLanguage = m_pSettings->value("GuiLanguage", "auto").toString();
   m_bCodeCompletion = m_pSettings->value("CodeCompletion",
@@ -83,12 +83,44 @@ void Settings::readSettings() {
                                                  true).toBool();
   m_sInyokaCommunity = m_pSettings->value("InyokaCommunity",
                                           "ubuntuusers_de").toString();
-  m_sInyokaUrl = m_pSettings->value("InyokaUrl",
-                                    "https://wiki.ubuntuusers.de").toString();
-  if (m_sInyokaUrl.endsWith("/")) {
-    m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
+  // Community settings
+  QFile communityFile(sSharePath + "/community/" +
+                      m_sInyokaCommunity + "/community.conf");
+  QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
+  communityConfig.setIniCodec("UTF-8");
+
+  m_sInyokaUrl = m_pSettings->value("InyokaUrl", "").toString();
+  if (m_sInyokaUrl.isEmpty()) {
+    QString sValue(communityConfig.value("InyokaUrl", "").toString());
+    if (sValue.isEmpty()) {
+      qWarning() << "Inyoka construction area not found!";
+    } else {
+      m_sInyokaUrl = sValue;
+    }
   }
+  if (m_sInyokaUrl.endsWith("/")) {
+    m_sInyokaUrl = m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
+  }
+
   m_sInyokaConstArea = m_pSettings->value("ConstructionArea", "").toString();
+  if (m_sInyokaConstArea.isEmpty()) {
+    QString sValue(communityConfig.value("ConstructionArea", "").toString());
+    if (sValue.isEmpty()) {
+      qWarning() << "Inyoka construction area not found!";
+    } else {
+      m_sInyokaConstArea = sValue;
+    }
+  }
+
+  m_sInyokaHash = m_pSettings->value("Hash", "").toString();
+  if (m_sInyokaHash.isEmpty()) {
+    QString sValue(communityConfig.value("Hash", "").toString());
+    if (sValue.isEmpty()) {
+      qWarning() << "Inyoka hash is empty!";
+    } else {
+      m_sInyokaHash = sValue;
+    }
+  }
 
   QStringList sListPaths = QStandardPaths::standardLocations(
                              QStandardPaths::DocumentsLocation);
@@ -196,6 +228,7 @@ void Settings::writeSettings(const QByteArray WinGeometry,
   m_pSettings->setValue("InyokaCommunity", m_sInyokaCommunity);
   m_pSettings->setValue("InyokaUrl", m_sInyokaUrl);
   m_pSettings->setValue("ConstructionArea", m_sInyokaConstArea);
+  m_pSettings->setValue("Hash", m_sInyokaHash);
   m_pSettings->setValue("LastOpenedDir", m_LastOpenedDir.absolutePath());
   m_pSettings->setValue("AutomaticImageDownload", m_bAutomaticImageDownload);
   m_pSettings->setValue("CheckLinks", m_bCheckLinks);
@@ -301,13 +334,14 @@ QString Settings::getGuiLanguage() const {
 QString Settings::getInyokaCommunity() const {
   return m_sInyokaCommunity;
 }
-
 QString Settings::getInyokaUrl() const {
   return m_sInyokaUrl;
 }
-
 QString Settings::getInyokaConstructionArea() const {
   return m_sInyokaConstArea;
+}
+QString Settings::getInyokaHash() const {
+  return m_sInyokaHash;
 }
 
 bool Settings::getCodeCompletion() const {

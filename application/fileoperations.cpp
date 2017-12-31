@@ -69,7 +69,8 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
           m_pFindReplace, SLOT(findPrevious()));
 
   m_pUploadModule = new Upload(m_pParent, m_pSettings->getInyokaUrl(),
-                               m_pSettings->getInyokaConstructionArea());
+                               m_pSettings->getInyokaConstructionArea(),
+                               m_pSettings->getInyokaHash());
   connect(this, SIGNAL(triggeredUpload()),
           m_pUploadModule, SLOT(clickUploadArticle()));
 

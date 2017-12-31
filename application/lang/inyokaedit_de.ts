@@ -70,126 +70,126 @@
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="108"/>
+        <location filename="../fileoperations.cpp" line="109"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="131"/>
+        <location filename="../fileoperations.cpp" line="132"/>
         <source>Template</source>
         <translation>Vorlage</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="180"/>
+        <location filename="../fileoperations.cpp" line="181"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="225"/>
+        <location filename="../fileoperations.cpp" line="226"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="254"/>
+        <location filename="../fileoperations.cpp" line="255"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="285"/>
+        <location filename="../fileoperations.cpp" line="286"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="336"/>
+        <location filename="../fileoperations.cpp" line="337"/>
         <source>The file &quot;%1&quot; could not be opened.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="347"/>
+        <location filename="../fileoperations.cpp" line="348"/>
         <source>The file &quot;%1&quot; is empty!</source>
         <translation>Die Datei &quot;%1&quot; ist leer!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="355"/>
+        <location filename="../fileoperations.cpp" line="356"/>
         <source>Error reading &quot;%1&quot;</source>
         <translation>Fehler beim Lesen von&quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="367"/>
+        <location filename="../fileoperations.cpp" line="368"/>
         <source>Something went wrong while reading &quot;%1&quot;</source>
         <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="389"/>
+        <location filename="../fileoperations.cpp" line="390"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="399"/>
+        <location filename="../fileoperations.cpp" line="400"/>
         <source>Error while extracting archive!</source>
         <translation>Fehler während des Entpackens des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="430"/>
+        <location filename="../fileoperations.cpp" line="431"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="483"/>
+        <location filename="../fileoperations.cpp" line="484"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="495"/>
+        <location filename="../fileoperations.cpp" line="496"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="526"/>
-        <location filename="../fileoperations.cpp" line="540"/>
+        <location filename="../fileoperations.cpp" line="527"/>
+        <location filename="../fileoperations.cpp" line="541"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="551"/>
+        <location filename="../fileoperations.cpp" line="552"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="560"/>
+        <location filename="../fileoperations.cpp" line="561"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="624"/>
+        <location filename="../fileoperations.cpp" line="625"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="646"/>
-        <location filename="../fileoperations.cpp" line="697"/>
+        <location filename="../fileoperations.cpp" line="647"/>
+        <location filename="../fileoperations.cpp" line="698"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="647"/>
+        <location filename="../fileoperations.cpp" line="648"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="143"/>
-        <location filename="../fileoperations.cpp" line="202"/>
-        <location filename="../fileoperations.cpp" line="214"/>
-        <location filename="../fileoperations.cpp" line="247"/>
-        <location filename="../fileoperations.cpp" line="579"/>
+        <location filename="../fileoperations.cpp" line="144"/>
+        <location filename="../fileoperations.cpp" line="203"/>
+        <location filename="../fileoperations.cpp" line="215"/>
+        <location filename="../fileoperations.cpp" line="248"/>
+        <location filename="../fileoperations.cpp" line="580"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -762,27 +762,27 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="214"/>
+        <location filename="../settingsdialog.cpp" line="220"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="258"/>
+        <location filename="../settingsdialog.cpp" line="264"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="259"/>
+        <location filename="../settingsdialog.cpp" line="265"/>
         <source>Could not open/find community file!</source>
         <translation>Community-Datei konnte nicht geöffnet/gefunden werden!</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="270"/>
+        <location filename="../settingsdialog.cpp" line="276"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="271"/>
+        <location filename="../settingsdialog.cpp" line="277"/>
         <source>No community url defined!</source>
         <translation>Keine Community-Url definiert!</translation>
     </message>
@@ -821,124 +821,130 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     </message>
     <message>
         <location filename="../upload.cpp" line="77"/>
-        <location filename="../upload.cpp" line="84"/>
-        <location filename="../upload.cpp" line="196"/>
-        <location filename="../upload.cpp" line="203"/>
-        <location filename="../upload.cpp" line="216"/>
-        <location filename="../upload.cpp" line="282"/>
-        <location filename="../upload.cpp" line="303"/>
-        <location filename="../upload.cpp" line="347"/>
-        <location filename="../upload.cpp" line="393"/>
-        <location filename="../upload.cpp" line="408"/>
-        <location filename="../upload.cpp" line="473"/>
+        <location filename="../upload.cpp" line="83"/>
+        <location filename="../upload.cpp" line="90"/>
+        <location filename="../upload.cpp" line="202"/>
+        <location filename="../upload.cpp" line="209"/>
+        <location filename="../upload.cpp" line="222"/>
+        <location filename="../upload.cpp" line="288"/>
+        <location filename="../upload.cpp" line="309"/>
+        <location filename="../upload.cpp" line="353"/>
+        <location filename="../upload.cpp" line="399"/>
+        <location filename="../upload.cpp" line="414"/>
+        <location filename="../upload.cpp" line="479"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../upload.cpp" line="78"/>
+        <source>Inyoka community hash not defined!</source>
+        <translation>Inyoka Community Hash ist nicht definiert!</translation>
+    </message>
+    <message>
+        <location filename="../upload.cpp" line="84"/>
         <source>Please insert article text first!</source>
         <translation>Bitte zuerst einen Artikel schreiben!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="85"/>
+        <location filename="../upload.cpp" line="91"/>
         <source>Upload not possible, no active internet connection found!</source>
         <translation>Upload nicht möglich. Keine aktive Internetverbindung gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="91"/>
+        <location filename="../upload.cpp" line="97"/>
         <source>Upload</source>
         <translation>Upload</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="92"/>
+        <location filename="../upload.cpp" line="98"/>
         <source>Please insert name of the article which should be uploaded.
 It is only possible to upload into the &quot;%1&quot;!</source>
         <translation>Bitte den Namen des Artikels eintragen, der hochgeladen werden soll.
 Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="197"/>
-        <location filename="../upload.cpp" line="394"/>
+        <location filename="../upload.cpp" line="203"/>
+        <location filename="../upload.cpp" line="400"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="204"/>
+        <location filename="../upload.cpp" line="210"/>
         <source>Upload failed! No session cookie received.</source>
         <translation>Upload fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="217"/>
+        <location filename="../upload.cpp" line="223"/>
         <source>Upload failed! No cookies received.</source>
         <translation>Upload fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="283"/>
+        <location filename="../upload.cpp" line="289"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Login fehlgeschlagen. Falsche Zugangsdaten?</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="304"/>
+        <location filename="../upload.cpp" line="310"/>
         <source>Login at Inyoka failed.</source>
         <translation>Login fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="469"/>
+        <location filename="../upload.cpp" line="475"/>
         <source>Upload failed</source>
         <translation>Upload fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="470"/>
+        <location filename="../upload.cpp" line="476"/>
         <source>The page content was not changed!</source>
         <translation>Die Seite wurde nicht verändert!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="474"/>
+        <location filename="../upload.cpp" line="480"/>
         <source>Upload failed!</source>
         <translation>Upload fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="401"/>
+        <location filename="../upload.cpp" line="407"/>
         <source>Change note</source>
         <translation>Änderungskommentar</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="234"/>
+        <location filename="../upload.cpp" line="240"/>
         <source>Login user</source>
         <translation>Login Benutzer</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="235"/>
+        <location filename="../upload.cpp" line="241"/>
         <source>Please insert your Inyoka user name:</source>
         <translation>Bitte Deinen Inyoka Benutzernamen eingeben:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="241"/>
+        <location filename="../upload.cpp" line="247"/>
         <source>Login password</source>
         <translation>Login Passwort</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="242"/>
+        <location filename="../upload.cpp" line="248"/>
         <source>Please insert your Inyoka password:</source>
         <translation>Bitte Dein Inyoka Passwort eingeben:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="348"/>
+        <location filename="../upload.cpp" line="354"/>
         <source>Last article revision not found!</source>
         <translation>Die letzte Artikelversion wurde nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="402"/>
+        <location filename="../upload.cpp" line="408"/>
         <source>Please insert a change message:</source>
         <translation>Bitte einen Änderungskommentar eintragen:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="409"/>
+        <location filename="../upload.cpp" line="415"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Es ist nicht erlaubt einen Artikel ohne Änderungskommentar hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="465"/>
+        <location filename="../upload.cpp" line="471"/>
         <source>Upload successful!</source>
         <translation>Upload erfolgreich!</translation>
     </message>

@@ -48,7 +48,7 @@ class Settings : public QObject {
   ~Settings();
 
   // Load / save application settings
-  void readSettings();
+  void readSettings(const QString &sSharePath);
   void writeSettings(const QByteArray WinGeometry, const QByteArray WinState,
                      const QByteArray SplitterState = 0);
 
@@ -61,6 +61,7 @@ class Settings : public QObject {
   QString getInyokaUrl() const;
   QString getInyokaCommunity() const;
   QString getInyokaConstructionArea() const;
+  QString getInyokaHash() const;
   bool getAutomaticImageDownload() const;
   bool getPreviewHorizontal() const;
   QDir getLastOpenedDir() const;
@@ -120,6 +121,7 @@ class Settings : public QObject {
   QString m_sInyokaCommunity;
   QString m_sInyokaUrl;     // Url to inyoka
   QString m_sInyokaConstArea;
+  QString m_sInyokaHash;
   QDir m_LastOpenedDir;
   bool m_bAutomaticImageDownload;  // Enable/disable download article images
   bool m_bCheckLinks;
