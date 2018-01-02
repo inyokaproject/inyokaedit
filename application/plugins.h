@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for plugin management.
  */
 
-#ifndef INYOKAEDIT_PLUGINS_H_
-#define INYOKAEDIT_PLUGINS_H_
+#ifndef APPLICATION_PLUGINS_H_
+#define APPLICATION_PLUGINS_H_
 
 #include <QAction>
 #include <QDir>
@@ -37,32 +37,32 @@
 class Plugins : public QObject {
   Q_OBJECT
 
- public:
-  Plugins(QWidget *pParent, TextEditor *pEditor, const QString &sGuiLang,
-          const QStringList &sListDisabledPlugins, const QDir userDataDir,
-          const QString &sSharePath);
-  void loadPlugins();
-  void setCurrentEditor(TextEditor *pEditor);
-  void setEditorlist(QList<TextEditor *> listEditors);
+  public:
+    Plugins(QWidget *pParent, TextEditor *pEditor, const QString &sGuiLang,
+            const QStringList &sListDisabledPlugins, const QDir userDataDir,
+            const QString &sSharePath);
+    void loadPlugins();
+    void setCurrentEditor(TextEditor *pEditor);
+    void setEditorlist(QList<TextEditor *> listEditors);
 
- signals:
-  void availablePlugins(const QList<IEditorPlugin *> PluginList,
-                        const QList<QObject *> PluginObjList);
-  void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
-                             const QList<QAction *> MenueEntries);
+  signals:
+    void availablePlugins(const QList<IEditorPlugin *> PluginList,
+                          const QList<QObject *> PluginObjList);
+    void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
+                               const QList<QAction *> MenueEntries);
 
- private:
-  QWidget *m_pParent;
-  TextEditor *m_pEditor;
-  QString m_sGuiLanguage;
-  QStringList m_sListDisabledPlugins;
-  const QDir m_userDataDir;
-  const QString m_sSharePath;
+  private:
+    QWidget *m_pParent;
+    TextEditor *m_pEditor;
+    QString m_sGuiLanguage;
+    QStringList m_sListDisabledPlugins;
+    const QDir m_userDataDir;
+    const QString m_sSharePath;
 
-  QList<IEditorPlugin *> m_listPlugins;
-  QList<QObject *> m_listPluginObjects;
-  QList<QAction *> m_PluginMenuEntries;
-  QList<QAction *> m_PluginToolbarEntries;
+    QList<IEditorPlugin *> m_listPlugins;
+    QList<QObject *> m_listPluginObjects;
+    QList<QAction *> m_PluginMenuEntries;
+    QList<QAction *> m_PluginToolbarEntries;
 };
 
-#endif  // INYOKAEDIT_PLUGINS_H_
+#endif  // APPLICATION_PLUGINS_H_

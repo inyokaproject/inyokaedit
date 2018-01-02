@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition of settings gui.
  */
 
-#ifndef INYOKAEDIT_SETTINGSDIALOG_H_
-#define INYOKAEDIT_SETTINGSDIALOG_H_
+#ifndef APPLICATION_SETTINGSDIALOG_H_
+#define APPLICATION_SETTINGSDIALOG_H_
 
 #include <QDialog>
 
@@ -44,36 +44,36 @@ class Settings;
 class SettingsDialog : public QDialog {
   Q_OBJECT
 
- public:
-  SettingsDialog(Settings *pSettings, const QString &sSharePath,
-                 QWidget *pParent = 0);
-  virtual ~SettingsDialog();
+  public:
+    SettingsDialog(Settings *pSettings, const QString &sSharePath,
+                   QWidget *pParent = 0);
+    virtual ~SettingsDialog();
 
- public slots:
-  void accept();
-  void reject();
+  public slots:
+    void accept();
+    void reject();
 
- signals:
-  void updatedSettings();
+  signals:
+    void updatedSettings();
 
- protected:
-  bool eventFilter(QObject *obj, QEvent *event);
+  protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 
- private slots:
-  void changedCommunity(QString sCommunity);
-  void getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
-                           const QList<QObject *> PluginObjList);
+  private slots:
+    void changedCommunity(QString sCommunity);
+    void getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
+                             const QList<QObject *> PluginObjList);
 
- private:
-  Ui::SettingsDialog *m_pUi;
-  Settings *m_pSettings;
-  const QString m_sSharePath;
-  QString m_sGuiLang;
-  QString m_sCommunity;
+  private:
+    Ui::SettingsDialog *m_pUi;
+    Settings *m_pSettings;
+    const QString m_sSharePath;
+    QString m_sGuiLang;
+    QString m_sCommunity;
 
-  QList<IEditorPlugin *> m_listPLugins;
-  QList<QPushButton *> m_listPluginSettingsButtons;
-  QList<QPushButton *> m_listPluginInfoButtons;
+    QList<IEditorPlugin *> m_listPLugins;
+    QList<QPushButton *> m_listPluginSettingsButtons;
+    QList<QPushButton *> m_listPluginInfoButtons;
 };
 
-#endif  // INYOKAEDIT_SETTINGSDIALOG_H_
+#endif  // APPLICATION_SETTINGSDIALOG_H_

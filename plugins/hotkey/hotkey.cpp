@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2015-2017 The InyokaEdit developers
+ * Copyright (C) 2015-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -369,7 +369,8 @@ void Hotkey::setEditorlist(QList<TextEditor *> listEditors) {
 void Hotkey::showAbout() {
   QMessageBox aboutbox(NULL);
   aboutbox.setWindowTitle(trUtf8("Info"));
-  aboutbox.setIconPixmap(QPixmap(":/preferences-desktop-keyboard-shortcuts.png"));
+  aboutbox.setIconPixmap(
+        QPixmap(":/preferences-desktop-keyboard-shortcuts.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
                            "<p>%3<br />"

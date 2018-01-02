@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2013-2017 The InyokaEdit developers
+ * Copyright (C) 2013-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -201,8 +201,9 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
 
   if (0 == m_sListEntries.size()) {
     qWarning() << "Knowledgebox defaults are empty!";
-    QMessageBox::warning(NULL, trUtf8("Error"),
-                         trUtf8("ubuntuusers.de knowledgebox defaults are empty!"));
+    QMessageBox::warning(
+          NULL, trUtf8("Error"),
+          trUtf8("ubuntuusers.de knowledgebox defaults are empty!"));
   }
 
   this->writeSettings();
@@ -369,17 +370,19 @@ void Uu_KnowledgeBox::showAbout() {
   QMessageBox aboutbox(NULL);
   aboutbox.setWindowTitle(trUtf8("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
-  aboutbox.setText(QString("<p><b>%1</b><br />"
-                           "%2</p>"
-                           "<p>%3<br />"
-                           "%4</p>"
-                           "<p><i>%5</i></p>")
-                   .arg(this->getCaption())
-                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
-                   .arg(PLUGIN_COPY)
-                   .arg(trUtf8("Licence") + ": " +
-                        "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for choosing ubuntuusers.de knowledge box entries.")));
+  aboutbox.setText(
+        QString("<p><b>%1</b><br />"
+                "%2</p>"
+                "<p>%3<br />"
+                "%4</p>"
+                "<p><i>%5</i></p>")
+        .arg(this->getCaption())
+        .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+        .arg(PLUGIN_COPY)
+        .arg(trUtf8("Licence") + ": " +
+             "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+             "GNU General Public License Version 3</a>")
+        .arg(trUtf8("Plugin for choosing ubuntuusers.de knowledge "
+                    "box entries.")));
   aboutbox.exec();
 }

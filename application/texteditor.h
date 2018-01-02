@@ -41,8 +41,8 @@
  * Class definition for extended QTextEdit (editor widget).
  */
 
-#ifndef INYOKAEDIT_TEXTEDITOR_H_
-#define INYOKAEDIT_TEXTEDITOR_H_
+#ifndef APPLICATION_TEXTEDITOR_H_
+#define APPLICATION_TEXTEDITOR_H_
 
 #include <QCompleter>
 #include <QTextEdit>
@@ -54,39 +54,39 @@
 class TextEditor : public QTextEdit {
   Q_OBJECT
 
- public:
-  TextEditor(QStringList sListTplMacros, const QString &sTransTemplate,
-             QWidget *pParent = 0);
-  ~TextEditor();
+  public:
+    TextEditor(QStringList sListTplMacros, const QString &sTransTemplate,
+               QWidget *pParent = 0);
+    ~TextEditor();
 
-  void setFileName(const QString sFileName);
-  QString getFileName();
+    void setFileName(const QString sFileName);
+    QString getFileName();
 
-  bool isUndoAvailable();
-  bool isRedoAvailable();
+    bool isUndoAvailable();
+    bool isRedoAvailable();
 
- signals:
-  void documentChanged(bool);
+  signals:
+    void documentChanged(bool);
 
- protected:
-  void keyPressEvent(QKeyEvent *e);
-  void focusInEvent(QFocusEvent *e);
+  protected:
+    void keyPressEvent(QKeyEvent *e);
+    void focusInEvent(QFocusEvent *e);
 
- public slots:
-  void updateTextEditorSettings(const bool bCompleter);
+  public slots:
+    void updateTextEditorSettings(const bool bCompleter);
 
- private slots:
-  void insertCompletion(const QString &sCompletion);
+  private slots:
+    void insertCompletion(const QString &sCompletion);
 
- private:
-  QString getLineUnderCursor();
-  void setCompleter(QCompleter *c);
+  private:
+    QString getLineUnderCursor();
+    void setCompleter(QCompleter *c);
 
-  QString m_sFileName;
-  QCompleter *m_pCompleter;
-  bool m_bCodeCompletion;
-  QStringList m_sListCompleter;
-  QList<QPoint> m_listPosCompleter;
+    QString m_sFileName;
+    QCompleter *m_pCompleter;
+    bool m_bCodeCompletion;
+    QStringList m_sListCompleter;
+    QList<QPoint> m_listPosCompleter;
 };
 
-#endif  // INYOKAEDIT_TEXTEDITOR_H_
+#endif  // APPLICATION_TEXTEDITOR_H_

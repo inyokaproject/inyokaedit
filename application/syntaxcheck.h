@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for Inyoka syntax checks.
  */
 
-#ifndef INYOKAEDIT_SYNTAXCHECK_H_
-#define INYOKAEDIT_SYNTAXCHECK_H_
+#ifndef APPLICATION_SYNTAXCHECK_H_
+#define APPLICATION_SYNTAXCHECK_H_
 
 #include <QObject>
 #include <QTextDocument>
@@ -33,21 +33,21 @@
 class SyntaxCheck : public QObject {
   Q_OBJECT
 
- public:
-  explicit SyntaxCheck();
+  public:
+    explicit SyntaxCheck();
 
-  static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                  const QStringList &sListTplMacros,
-                                  const QStringList &sListSmilies,
-                                  const QStringList &sListTplTrans);
-
- private:
-  static qint32 checkParenthesis(const QTextDocument *pRawDoc,
-                                 const QStringList &sListSmilies);
-  static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
-  static qint32 checkKnownTemplates(const QTextDocument *pRawDoc,
+    static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,
+                                    const QStringList &sListSmilies,
                                     const QStringList &sListTplTrans);
+
+  private:
+    static qint32 checkParenthesis(const QTextDocument *pRawDoc,
+                                   const QStringList &sListSmilies);
+    static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
+    static qint32 checkKnownTemplates(const QTextDocument *pRawDoc,
+                                      const QStringList &sListTplMacros,
+                                      const QStringList &sListTplTrans);
 };
 
-#endif  // INYOKAEDIT_SYNTAXCHECK_H_
+#endif  // APPLICATION_SYNTAXCHECK_H_

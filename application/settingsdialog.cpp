@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -53,10 +53,13 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   // General
   m_pUi->codeCompletionCheck->setChecked(m_pSettings->m_bCodeCompletion);
   m_pUi->syntaxCheck->setChecked(m_pSettings->m_bSyntaxCheck);
-  m_pUi->splitHorizontalRadio->setChecked(m_pSettings->m_bPreviewSplitHorizontal);
-  m_pUi->splitVerticalRadio->setChecked(!m_pSettings->m_bPreviewSplitHorizontal);
+  m_pUi->splitHorizontalRadio->setChecked(
+        m_pSettings->m_bPreviewSplitHorizontal);
+  m_pUi->splitVerticalRadio->setChecked(
+        !m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
-  m_pUi->articleImageDownloadCheck->setChecked(m_pSettings->m_bAutomaticImageDownload);
+  m_pUi->articleImageDownloadCheck->setChecked(
+        m_pSettings->m_bAutomaticImageDownload);
   m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
   m_pUi->autosaveEdit->setValue(m_pSettings->m_nAutosave);
   m_pUi->reloadPreviewKeyEdit->setText(
@@ -74,7 +77,8 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
                                 QDir::NoDotAndDotDot | QDir::Files);
   foreach (QFileInfo fi, fiListFiles) {
-    if ("qm" == fi.suffix() && fi.baseName().startsWith(qAppName().toLower() + "_")) {
+    if ("qm" == fi.suffix() &&
+        fi.baseName().startsWith(qAppName().toLower() + "_")) {
       sListGuiLanguages << fi.baseName().remove(qAppName().toLower() + "_");
     }
   }
@@ -97,8 +101,10 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->fontSizeEdit->setValue(m_pSettings->m_nFontsize);
 
   // Recent files
-  m_pUi->numberRecentFilesEdit->setValue((quint16)m_pSettings->m_nMaxLastOpenedFiles);
-  m_pUi->numberRecentFilesEdit->setMaximum((quint16)m_pSettings->m_cMAXFILES);
+  m_pUi->numberRecentFilesEdit->setValue(
+        (quint16)m_pSettings->m_nMaxLastOpenedFiles);
+  m_pUi->numberRecentFilesEdit->setMaximum(
+        (quint16)m_pSettings->m_cMAXFILES);
 
   QStringList sListCommunities;
   extendedShareDir = m_sSharePath + "/community";
@@ -110,7 +116,8 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   m_pUi->CommunityCombo->blockSignals(true);  // No change index signal emited
   m_pUi->CommunityCombo->addItems(sListCommunities);
-  if (-1 != m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity())) {
+  if (-1 != m_pUi->CommunityCombo->findText(
+        m_pSettings->getInyokaCommunity())) {
     m_pUi->CommunityCombo->setCurrentIndex(
           m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity()));
   } else if (sListCommunities.size() > 0) {
@@ -154,10 +161,12 @@ void SettingsDialog::accept() {
   // General
   m_pSettings->m_bCodeCompletion = m_pUi->codeCompletionCheck->isChecked();
   m_pSettings->m_bSyntaxCheck = m_pUi->syntaxCheck->isChecked();
-  m_pSettings->m_bPreviewSplitHorizontal = m_pUi->splitHorizontalRadio->isChecked();
+  m_pSettings->m_bPreviewSplitHorizontal =
+      m_pUi->splitHorizontalRadio->isChecked();
   m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
   m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
-  m_pSettings->m_bAutomaticImageDownload = m_pUi->articleImageDownloadCheck->isChecked();
+  m_pSettings->m_bAutomaticImageDownload =
+      m_pUi->articleImageDownloadCheck->isChecked();
   m_pSettings->m_bCheckLinks = m_pUi->linkCheckingCheck->isChecked();
   m_pSettings->m_nAutosave = m_pUi->autosaveEdit->value();
   m_pSettings->m_sReloadPreviewKey = tmpReloadPreviewKey;
@@ -199,8 +208,9 @@ void SettingsDialog::accept() {
   if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang ||
       m_pUi->CommunityCombo->currentText() != m_sCommunity ||
       oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
-    QFile communityFile(m_sSharePath + "/community/" +
-                        m_pUi->CommunityCombo->currentText() + "/community.conf");
+    QFile communityFile(
+          m_sSharePath + "/community/" +
+          m_pUi->CommunityCombo->currentText() + "/community.conf");
     QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
     communityConfig.setIniCodec("UTF-8");
     QString sValue(communityConfig.value("ConstructionArea", "").toString());
@@ -258,7 +268,8 @@ bool SettingsDialog::eventFilter(QObject *obj, QEvent *event) {
 // ----------------------------------------------------------------------------
 
 void SettingsDialog::changedCommunity(QString sCommunity) {
-  QFile communityFile(m_sSharePath + "/community/" + sCommunity + "/community.conf");
+  QFile communityFile(m_sSharePath + "/community/" +
+                      sCommunity + "/community.conf");
 
   if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::critical(0, trUtf8("Error"),
@@ -283,9 +294,9 @@ void SettingsDialog::changedCommunity(QString sCommunity) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginList,
+void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
                                          const QList<QObject *> PluginObjList) {
-  m_listPLugins = PluginList;
+  m_listPLugins = Plugins;
   const quint8 nNUMCOLS = 5;
 
   m_pUi->pluginsTable->setColumnCount(nNUMCOLS);
@@ -324,8 +335,10 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginList
     // Settings
     if (m_listPLugins[nRow]->hasSettings()) {
       m_listPluginInfoButtons << new QPushButton(
-                                   QIcon::fromTheme("preferences-system",
-                                                    QIcon(":/images/preferences-system.png")), "");
+                                   QIcon::fromTheme(
+                                     "preferences-system",
+                                     QIcon(":/images/preferences-system.png")),
+                                   "");
       connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
               PluginObjList[nRow], SLOT(showSettings()));
 
@@ -340,8 +353,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> PluginList
 
     // Info
     m_listPluginInfoButtons << new QPushButton(
-                                 QIcon::fromTheme("help-about",
-                                                  QIcon(":/images/help-browser.png")), "");
+                                 QIcon::fromTheme(
+                                   "help-about",
+                                   QIcon(":/images/help-browser.png")), "");
     connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
             PluginObjList[nRow], SLOT(showAbout()));
     m_pUi->pluginsTable->setCellWidget(nRow, 4,

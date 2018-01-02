@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -79,13 +79,12 @@ void Download::downloadArticle(QString sUrl) {
     bool bOk;
 
     // Show input dialog
-    m_sSitename = QInputDialog::getText(m_pParent, qApp->applicationName(),
-                                        trUtf8("Please insert name of the "
-                                               "article which should be "
-                                               "downloaded:"),
-                                        QLineEdit::Normal,
-                                        m_sConstructionArea + "/" + trUtf8("Article"),
-                                        &bOk);
+    m_sSitename = QInputDialog::getText(
+                    m_pParent, qApp->applicationName(),
+                    trUtf8("Please insert name of the article which "
+                           "should be downloaded:"),
+                    QLineEdit::Normal,
+                    m_sConstructionArea + "/" + trUtf8("Article"), &bOk);
 
     // Click on "cancel" or string is empty
     if (true != bOk || m_sSitename.isEmpty()) {
@@ -187,7 +186,6 @@ void Download::replyFinished(QNetworkReply *pReply) {
         // --------------------------------------------------------------------
       } else {
         // Download article images metadata
-        int iRet = 0;
         QStringList sListTmp, sListMetadata, sListSaveFolder;
 
         // Site does not exist etc.
@@ -219,6 +217,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
 
         // If attachments exist
         if (sListMetadata.size() > 0) {
+          int iRet = 0;
           // Ask if images should be downloaded,
           // if not enabled by default in settings
           if (true != m_bAutomaticImageDownload) {

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,19 +24,19 @@
  * Class definition for image map parser.
  */
 
-#ifndef INYOKAEDIT_PARSEIMGMAP_H_
-#define INYOKAEDIT_PARSEIMGMAP_H_
+#ifndef APPLICATION_PARSER_PARSEIMGMAP_H_
+#define APPLICATION_PARSER_PARSEIMGMAP_H_
 
 #include <QTextDocument>
 
 class ParseImgMap {
- public:
-  ParseImgMap();
-  static void startParsing(QTextDocument *pRawDoc,
-                           QStringList sListElements,
-                           QStringList sListImages,
-                           const QString &sSharePath,
-                           const QString &sCommunity);
+  public:
+    ParseImgMap();
+    static void startParsing(QTextDocument *pRawDoc,
+                             QStringList sListElements,
+                             QStringList sListImages,
+                             const QString &sSharePath,
+                             const QString &sCommunity);
 };
 
-#endif  // INYOKAEDIT_PARSEIMGMAP_H_
+#endif  // APPLICATION_PARSER_PARSEIMGMAP_H_

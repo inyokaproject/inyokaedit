@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -27,8 +27,8 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef INYOKAEDIT_SPELLCHECKDIALOG_H_
-#define INYOKAEDIT_SPELLCHECKDIALOG_H_
+#ifndef PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_
+#define PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_
 
 #include <QDialog>
 
@@ -45,37 +45,37 @@ namespace Ui {
 class SpellCheckDialog : public QDialog {
   Q_OBJECT
 
- public:
-  enum SpellCheckAction {
-    None, AbortCheck, IgnoreOnce, IgnoreAll,
-    ReplaceOnce, ReplaceAll, AddToDict
-  };
+  public:
+    enum SpellCheckAction {
+      None, AbortCheck, IgnoreOnce, IgnoreAll,
+      ReplaceOnce, ReplaceAll, AddToDict
+    };
 
-  explicit SpellCheckDialog(SpellChecker *pSpellChecker,
-                            QWidget *pParent = 0);
-  ~SpellCheckDialog();
+    explicit SpellCheckDialog(SpellChecker *pSpellChecker,
+                              QWidget *pParent = 0);
+    ~SpellCheckDialog();
 
-  QString replacement() const;
+    QString replacement() const;
 
- public slots:
-  SpellCheckAction checkWord(const QString &sWord);
+  public slots:
+    SpellCheckAction checkWord(const QString &sWord);
 
- protected slots:
-  void ignoreOnce();
-  void ignoreAll();
-  void replaceOnce();
-  void replaceAll();
-  void addToDict();
+  protected slots:
+    void ignoreOnce();
+    void ignoreAll();
+    void replaceOnce();
+    void replaceAll();
+    void addToDict();
 
- private slots:
-  void changeLanguage(const QString &sLanguage);
-  void closeDialog();
+  private slots:
+    void changeLanguage(const QString &sLanguage);
+    void closeDialog();
 
- private:
-  Ui::SpellCheckDialog *m_pUi;
-  SpellChecker *m_pSpellChecker;
-  QString m_sUnkownWord;
-  SpellCheckAction m_returnCode;
+  private:
+    Ui::SpellCheckDialog *m_pUi;
+    SpellChecker *m_pSpellChecker;
+    QString m_sUnkownWord;
+    SpellCheckAction m_returnCode;
 };
 
-#endif  // INYOKAEDIT_SPELLCHECKDIALOG_H_
+#endif  // PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_

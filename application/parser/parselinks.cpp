@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -252,7 +252,8 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
           if (sListLink.size() >= 3) {
             QString sTmpUrl(
-                  m_sListInterwikiLink[m_sListInterwikiKey.indexOf(sListLink[0])]);
+                  m_sListInterwikiLink[m_sListInterwikiKey.indexOf(
+                  sListLink[0])]);
             // Check for iWikilink with $Page
             if (sTmpUrl.contains("$Page", Qt::CaseInsensitive)) {
               sTmpUrl.replace("$Page", sListLink[1],
@@ -350,13 +351,11 @@ void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
   QRegExp findKnowledgeBoxLink("\\[{1,1}[0-9]{1,}\\]{1,1}");
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
-  int nLength;
-  QString sLink;
 
   nIndex = findKnowledgeBoxLink.indexIn(sDoc);
   while (nIndex >= 0) {
-    nLength = findKnowledgeBoxLink.matchedLength();
-    sLink = findKnowledgeBoxLink.cap();
+    int nLength = findKnowledgeBoxLink.matchedLength();
+    QString sLink = findKnowledgeBoxLink.cap();
     // qDebug() << sLink;
 
     sLink.remove("[");

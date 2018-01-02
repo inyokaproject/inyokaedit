@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2017 The InyokaEdit developers
+#  Copyright (C) 2011-2018 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ DESTDIR       = ../
 VERSION       = 0.21.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2017 The InyokaEdit developers"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2018 The InyokaEdit developers"
 
 DEFINES      += APP_NAME=\"\\\"$$QMAKE_TARGET_PRODUCT\\\"\" \
                 APP_VERSION=\"\\\"$$VERSION\\\"\" \

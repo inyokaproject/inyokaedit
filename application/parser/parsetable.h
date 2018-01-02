@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,18 +24,18 @@
  * Class definition for table parser.
  */
 
-#ifndef INYOKAEDIT_PARSETABLE_H_
-#define INYOKAEDIT_PARSETABLE_H_
+#ifndef APPLICATION_PARSER_PARSETABLE_H_
+#define APPLICATION_PARSER_PARSETABLE_H_
 
 #include <QTextDocument>
 
 class ParseTable {
- public:
-  ParseTable();
-  static void startParsing(QTextDocument *pRawDoc);
+  public:
+    ParseTable();
+    static void startParsing(QTextDocument *pRawDoc);
 
- private:
-  static QString createTable(const QStringList &sListLines);
+  private:
+    static QString createTable(const QStringList &sListLines);
 };
 
-#endif  // INYOKAEDIT_PARSETABLE_H_
+#endif  // APPLICATION_PARSER_PARSETABLE_H_

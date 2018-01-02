@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2013-2017 The InyokaEdit developers
+ * Copyright (C) 2013-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition ubuntuusers.de knowledge box dialog
  */
 
-#ifndef INYOKAEDIT_UU_KNOWLEDGEBOX_H_
-#define INYOKAEDIT_UU_KNOWLEDGEBOX_H_
+#ifndef PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_
+#define PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_
 
 #include <QDialog>
 #include <QDir>
@@ -53,49 +53,49 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.uuknowledgebox")
 
- public:
-  void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir userDataDir, const QString sSharePath);
-  QString getPluginName() const;
-  QString getPluginVersion() const;
-  QTranslator* getPluginTranslator(const QString &sSharePath,
-                                   const QString &sLocale);
-  QString getCaption() const;
-  QIcon getIcon() const;
-  bool includeMenu() const;
-  bool includeToolbar() const;
-  bool hasSettings() const;
-  void setCurrentEditor(TextEditor *pEditor);
-  void setEditorlist(QList<TextEditor *> listEditors);
+  public:
+    void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                    const QDir userDataDir, const QString sSharePath);
+    QString getPluginName() const;
+    QString getPluginVersion() const;
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
+    QString getCaption() const;
+    QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
+    bool hasSettings() const;
+    void setCurrentEditor(TextEditor *pEditor);
+    void setEditorlist(QList<TextEditor *> listEditors);
 
- public slots:
-  void callPlugin();
-  void executePlugin();
-  void showSettings();
-  void showAbout();
+  public slots:
+    void callPlugin();
+    void executePlugin();
+    void showSettings();
+    void showAbout();
 
- private slots:
-  void accept();
-  void addRow();
-  void deleteRow(QWidget *widget);
+  private slots:
+    void accept();
+    void addRow();
+    void deleteRow(QWidget *widget);
 
- private:
-  void loadTemplateDefaults();
-  void loadTemplateEntries();
-  void buildUi(QWidget *pParent);
-  void writeSettings();
-  void createRow(const bool &bActive, const QString &sText);
+  private:
+    void loadTemplateDefaults();
+    void loadTemplateEntries();
+    void buildUi(QWidget *pParent);
+    void writeSettings();
+    void createRow(const bool &bActive, const QString &sText);
 
-  Ui::Uu_KnowledgeBoxClass *m_pUi;
-  QDialog *m_pDialog;
-  QSettings *m_pSettings;
-  QString m_sExt;
-  TextEditor *m_pEditor;
-  QList<bool> m_bListEntryActive;
-  QStringList m_sListEntries;
-  QSignalMapper *m_pSigMapDeleteRow;
-  QList<QPushButton *> m_listDelRowButtons;
-  bool m_bCalledSettings;
+    Ui::Uu_KnowledgeBoxClass *m_pUi;
+    QDialog *m_pDialog;
+    QSettings *m_pSettings;
+    QString m_sExt;
+    TextEditor *m_pEditor;
+    QList<bool> m_bListEntryActive;
+    QStringList m_sListEntries;
+    QSignalMapper *m_pSigMapDeleteRow;
+    QList<QPushButton *> m_listDelRowButtons;
+    bool m_bCalledSettings;
 };
 
-#endif  // INYOKAEDIT_UU_KNOWLEDGEBOX_H_
+#endif  // PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_

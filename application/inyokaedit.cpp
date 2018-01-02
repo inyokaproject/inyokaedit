@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -49,8 +49,6 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
     m_tmpPreviewImgDir(m_UserDataDir.absolutePath() + "/tmpImages"),
-
-
     m_pPreviewTimer(new QTimer(this)),
     m_bOpenFileAfterStart(false),
     m_bEditorScrolling(false),
@@ -128,12 +126,13 @@ void InyokaEdit::createObjects() {
   m_pSettings = new Settings(this, m_sSharePath);
   qDebug() << "Inyoka Community:" << m_pSettings->getInyokaCommunity();
   if (m_pSettings->getInyokaCommunity().isEmpty() ||
-      !QDir(m_sSharePath + "/community/" + m_pSettings->getInyokaCommunity()).exists()) {
+      !QDir(m_sSharePath + "/community/" +
+            m_pSettings->getInyokaCommunity()).exists()) {
     qCritical() << "No Inyoka community files found / installed!";
     qCritical() << "Community path:" << m_sSharePath + "/community/" +
                    m_pSettings->getInyokaCommunity();
     QMessageBox::critical(this, qApp->applicationName(),
-                          trUtf8("No Inyoka community files found / installed!\n"
+                          trUtf8("No Inyoka community files found/installed!\n"
                                  "Please check your installation and restart "
                                  "the application."));
     exit(-2);
@@ -175,8 +174,10 @@ void InyokaEdit::createObjects() {
   connect(m_pFileOperations, SIGNAL(changedCurrentEditor()),
           this, SLOT(setCurrentEditor()));
 
-  m_pPlugins = new Plugins(this, m_pCurrentEditor, m_pSettings->getGuiLanguage(),
-                           m_pSettings->getDisabledPlugins(), m_UserDataDir,
+  m_pPlugins = new Plugins(this, m_pCurrentEditor,
+                           m_pSettings->getGuiLanguage(),
+                           m_pSettings->getDisabledPlugins(),
+                           m_UserDataDir,
                            m_sSharePath);
   connect(m_pPlugins,
           SIGNAL(addMenuToolbarEntries(QList<QAction*>, QList<QAction*>)),
@@ -189,7 +190,7 @@ void InyokaEdit::createObjects() {
 
   this->setCurrentEditor();
 
-  // TODO: Find alternative for QWebEngine
+  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   m_pWebview = new QWebView(this);
   connect(m_pWebview->page(), SIGNAL(scrollRequested(int, int, QRect)),
@@ -270,7 +271,8 @@ void InyokaEdit::setupEditor() {
   connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
           this, SLOT(changedUrl()));
 
-  // TODO: Find alternative for QWebEngine. QWebEngineUrlRequestInterceptor ?
+  // TODO(volunteer): Find solution for QWebEngineView
+  // QWebEngineUrlRequestInterceptor ?
 #ifdef USEQTWEBKIT
   m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
@@ -306,9 +308,9 @@ void InyokaEdit::createActions() {
   m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
   connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
           m_pFileOperations, SLOT(printPreview()));
+  // TODO(volunteer): Check print functionality again with Qt 5.7
 #if QT_VERSION >= 0x050600
   m_pUi->printPreviewAct->setEnabled(false);
-  // TODO: Check print functionality again with Qt 5.7
 #endif
 
   // Exit application
@@ -476,7 +478,8 @@ void InyokaEdit::createMenus() {
   }
 
   // File menu (recent opened files)
-  m_pUi->fileMenuLastOpened->addActions(m_pFileOperations->getLastOpenedFiles());
+  m_pUi->fileMenuLastOpened->addActions(
+        m_pFileOperations->getLastOpenedFiles());
   if (0 == m_pSettings->getRecentFiles().size()) {
     m_pUi->fileMenuLastOpened->setEnabled(false);
   }
@@ -527,7 +530,8 @@ void InyokaEdit::createXmlMenus() {
               connect(m_pXmlDropdowns.last(), SIGNAL(currentIndexChanged(int)),
                       this, SLOT(dropdownXmlChanged(int)));
             } else if ("toolbar" == sObj) {
-              m_pXmlToolbars.append(new QToolBar(xmlParser.getMenuName(), this));
+              m_pXmlToolbars.append(
+                    new QToolBar(xmlParser.getMenuName(), this));
               m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbars.last());
             }
 
@@ -544,8 +548,9 @@ void InyokaEdit::createXmlMenus() {
                 tmplListActions.append(m_pXmlActions.last());
 
                 if ("dropdown" == sObj) {
-                  m_pXmlDropdowns.last()->addItem(xmlParser.getElementNames()[i][j],
-                                                  QVariant::fromValue(m_pXmlActions.last()));
+                  m_pXmlDropdowns.last()->addItem(
+                        xmlParser.getElementNames()[i][j],
+                        QVariant::fromValue(m_pXmlActions.last()));
                 }
 
                 // qDebug() << "INSERT" << xmlParser.getElementInserts()[i][j];
@@ -563,8 +568,9 @@ void InyokaEdit::createXmlMenus() {
                                   tmp.fileName();
                   }
                 } else {
-                  m_pSigMapXmlActions->setMapping(m_pXmlActions.last(),
-                                                  xmlParser.getElementInserts()[i][j]);
+                  m_pSigMapXmlActions->setMapping(
+                        m_pXmlActions.last(),
+                        xmlParser.getElementInserts()[i][j]);
                 }
                 connect(m_pXmlActions.last(), SIGNAL(triggered()),
                         m_pSigMapXmlActions, SLOT(map()));
@@ -573,9 +579,11 @@ void InyokaEdit::createXmlMenus() {
                 if (xmlParser.getGroupNames()[i].isEmpty()) {
                   m_pXmlMenus.last()->addActions(tmplListActions);
                 } else {
-                  m_pXmlSubMenus.append(new QMenu(xmlParser.getGroupNames()[i], this));
-                  m_pXmlSubMenus.last()->setIcon(QIcon(sTmpPath + xmlParser.getPath() +
-                                                       "/" + xmlParser.getGroupIcons()[i]));
+                  m_pXmlSubMenus.append(
+                        new QMenu(xmlParser.getGroupNames()[i], this));
+                  m_pXmlSubMenus.last()->setIcon(
+                        QIcon(sTmpPath + xmlParser.getPath() +
+                              "/" + xmlParser.getGroupIcons()[i]));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlMenus.last()->addMenu(m_pXmlSubMenus.last());
                 }
@@ -585,10 +593,13 @@ void InyokaEdit::createXmlMenus() {
                   m_pXmlToolbars.last()->addActions(tmplListActions);
                 } else {
                   m_pXmlToolbuttons.append(new QToolButton(this));
-                  m_pXmlToolbuttons.last()->setIcon(QIcon(sTmpPath + xmlParser.getPath() +
-                                                          "/" + xmlParser.getGroupIcons()[i]));
-                  m_pXmlToolbuttons.last()->setPopupMode(QToolButton::InstantPopup);
-                  m_pXmlSubMenus.append(new QMenu(xmlParser.getGroupNames()[i], this));
+                  m_pXmlToolbuttons.last()->setIcon(
+                        QIcon(sTmpPath + xmlParser.getPath() +
+                              "/" + xmlParser.getGroupIcons()[i]));
+                  m_pXmlToolbuttons.last()->setPopupMode(
+                        QToolButton::InstantPopup);
+                  m_pXmlSubMenus.append(new QMenu(xmlParser.getGroupNames()[i],
+                                                  this));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlToolbuttons.last()->setMenu(m_pXmlSubMenus.last());
                   m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbuttons.last());
@@ -674,7 +685,7 @@ void InyokaEdit::previewInyokaPage() {
   tmphtmlfile.close();
 
   // Store scroll position
-  // TODO: Find alternative for WebEngine
+  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   m_WebviewScrollPosition =
       m_pWebview->page()->mainFrame()->scrollPosition();
@@ -868,7 +879,7 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     }
 
     // Restore scroll position
-    // TODO: Find alternative for WebEngine
+    // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
     m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
 #else
@@ -934,67 +945,57 @@ void InyokaEdit::updateEditorSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool InyokaEdit::eventFilter(QObject *obj, QEvent *event) {
-  if (obj == m_pCurrentEditor && event->type() == QEvent::KeyPress) {
-    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
+  if (pObj == m_pCurrentEditor && pEvent->type() == QEvent::KeyPress) {
+    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(pEvent);
 
     // Bug fix for LP: #922808
     Qt::KeyboardModifiers keyMod = QApplication::keyboardModifiers();
-    bool isSHIFT(keyMod.testFlag(Qt::ShiftModifier));
-    bool isCTRL(keyMod.testFlag(Qt::ControlModifier));
+    bool bShift(keyMod.testFlag(Qt::ShiftModifier));
+    bool bCtrl(keyMod.testFlag(Qt::ControlModifier));
 
-    if (keyEvent->key() == Qt::Key_Right
-        && isSHIFT && isCTRL) {
+    if (keyEvent->key() == Qt::Key_Right && bShift && bCtrl) {
       // CTRL + SHIFT + arrow right
       QTextCursor cursor(m_pCurrentEditor->textCursor());
       cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor);
       cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Right
-               && !isSHIFT && isCTRL) {
+    } else if (keyEvent->key() == Qt::Key_Right && !bShift && bCtrl) {
       // CTRL + arrow right
       m_pCurrentEditor->moveCursor(QTextCursor::Right);
       m_pCurrentEditor->moveCursor(QTextCursor::EndOfWord);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Up
-               && isSHIFT && isCTRL) {
+    } else if (keyEvent->key() == Qt::Key_Up && bShift && bCtrl) {
       // CTRL + SHIFT arrow down (Bug fix for LP: #889321)
       QTextCursor cursor(m_pCurrentEditor->textCursor());
       cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Down
-               && isSHIFT && isCTRL) {
+    } else if (keyEvent->key() == Qt::Key_Down && bShift && bCtrl) {
       // CTRL + SHIFT arrow down (Bug fix for LP: #889321)
       QTextCursor cursor(m_pCurrentEditor->textCursor());
       cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    }
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
-    // Reload preview at F5 or defined button
-    else if ((Qt::Key_F5 == keyEvent->key()
-              || m_pSettings->getReloadPreviewKey() == keyEvent->key())
-             && !m_bReloadPreviewBlocked) {
+    } else if ((Qt::Key_F5 == keyEvent->key() ||
+                m_pSettings->getReloadPreviewKey() == keyEvent->key()) &&
+               !m_bReloadPreviewBlocked) {  // Preview F5 or defined button
       m_bReloadPreviewBlocked = true;
       previewInyokaPage();
     }
-  }
-  // Forward / backward mouse button
-  else if (obj == m_pWebview && event->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+  } else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
+    // Forward / backward mouse button
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(pEvent);
 
-    if (mouseEvent->button() == Qt::XButton1) {
+    if (Qt::XButton1 == mouseEvent->button()) {
       m_pWebview->back();
-    } else if (mouseEvent->button() == Qt::XButton2) {
+    } else if (Qt::XButton2 == mouseEvent->button()) {
       m_pWebview->forward();
     }
   }
 
-  // Else
-  return QObject::eventFilter(obj, event);
+  return QObject::eventFilter(pObj, pEvent);
 }
 
 // ----------------------------------------------------------------------------
@@ -1050,17 +1051,18 @@ void InyokaEdit::deleteAutoSaveBackups() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsEditor() {
-  // TODO: Find alternative for WebEngine
+  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   if (!m_bWebviewScrolling && true == m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                             Qt::Vertical);
-    float nRatio = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
+    float nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
 
     m_bEditorScrolling = true;
     m_pWebview->page()->mainFrame()->setScrollPosition(
-          QPoint(0, m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nRatio));
+          QPoint(0,
+                 m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR));
     m_bEditorScrolling = false;
   }
 #endif
@@ -1069,7 +1071,7 @@ void InyokaEdit::syncScrollbarsEditor() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsWebview() {
-  // TODO: Find alternative for WebEngine
+  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   if (!m_bEditorScrolling && true == m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
@@ -1133,12 +1135,12 @@ void InyokaEdit::showSyntaxOverview() {
 // ----------------------------------------------------------------------------
 
 // Close event (File -> Close or X)
-void InyokaEdit::closeEvent(QCloseEvent *event) {
+void InyokaEdit::closeEvent(QCloseEvent *pEvent) {
   if (m_pFileOperations->closeAllmaybeSave()) {
     m_pSettings->writeSettings(saveGeometry(), saveState(),
                                m_pWidgetSplitter->saveState());
-    event->accept();
+    pEvent->accept();
   } else {
-    event->ignore();
+    pEvent->ignore();
   }
 }

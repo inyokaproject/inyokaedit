@@ -57,18 +57,15 @@ TextEditor::TextEditor(QStringList sListTplMacros,
     m_sFileName(""),
     m_bCodeCompletion(false),
     m_sListCompleter(sListTplMacros) {
-  int nPlaceholder1(0);
-  int nPlaceholder2(0);
   for (int i = 0; i < m_sListCompleter.size(); i++) {
     if (!m_sListCompleter[i].startsWith('[') &&
         !m_sListCompleter[i].startsWith('{')) {
       m_sListCompleter[i].clear();
     }
     m_sListCompleter[i].replace("\\n", "\n");
-    nPlaceholder1 = m_sListCompleter[i].indexOf("%%");
-    nPlaceholder2 = m_sListCompleter[i].lastIndexOf("%%");
     m_sListCompleter[i].remove("%%");
-    m_listPosCompleter << QPoint(nPlaceholder1, nPlaceholder2);
+    m_listPosCompleter << QPoint(m_sListCompleter[i].indexOf("%%"),
+                                 m_sListCompleter[i].lastIndexOf("%%"));
   }
   m_sListCompleter.push_front("[[" + sTransTemplate + "(");
   m_sListCompleter.push_front("{{{#!" + sTransTemplate.toLower() + " ");

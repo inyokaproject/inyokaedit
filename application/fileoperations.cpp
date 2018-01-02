@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -328,48 +328,48 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   QString sOutput("");
   QFileInfo file(sArchive);
 
-  mz_zip_archive zip_archive;
-  memset(&zip_archive, 0, sizeof(zip_archive));
+  mz_zip_archive archive;
+  memset(&archive, 0, sizeof(archive));
   mz_zip_archive_file_stat file_stat;
 
-  if (!mz_zip_reader_init_file(&zip_archive, sArchive.toLatin1(), 0)) {
+  if (!mz_zip_reader_init_file(&archive, sArchive.toLatin1(), 0)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          trUtf8("The file \"%1\" could not be opened.")
                          .arg(sArchive));
     qWarning() << "mz_zip_reader_init_file() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return;
   }
 
-  int nFileCount = (int)mz_zip_reader_get_num_files(&zip_archive);
+  int nFileCount = static_cast<int>(mz_zip_reader_get_num_files(&archive));
   if (0 == nFileCount) {
-    mz_zip_reader_end(&zip_archive);
+    mz_zip_reader_end(&archive);
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          trUtf8("The file \"%1\" is empty!")
                          .arg(sArchive));
-    qWarning() << "Archive is empty!" ;
+    qWarning() << "Archive is empty!";
     return;
   }
 
-  if (!mz_zip_reader_file_stat(&zip_archive, 0, &file_stat)) {
+  if (!mz_zip_reader_file_stat(&archive, 0, &file_stat)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          trUtf8("Error reading \"%1\"")
                          .arg(sArchive));
     qWarning() << "Error reading archive!" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
-    mz_zip_reader_end(&zip_archive);
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    mz_zip_reader_end(&archive);
     return;
   }
 
   // Go through each file from archive
   for (int i = 0; i < nFileCount; i++) {
-    if (!mz_zip_reader_file_stat(&zip_archive, i, &file_stat)) {
+    if (!mz_zip_reader_file_stat(&archive, i, &file_stat)) {
       QMessageBox::critical(m_pParent, qApp->applicationName(),
                             trUtf8("Something went wrong while reading \"%1\"")
                             .arg(sArchive));
       qWarning() << "mz_zip_reader_file_stat() failed:" <<
-                    mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
-      mz_zip_reader_end(&zip_archive);
+                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+      mz_zip_reader_end(&archive);
       return;
     }
     // qDebug() << "Extracting:" << file_stat.m_filename;
@@ -385,21 +385,22 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
       sOutput = m_sExtractDir + "/" + sOutput;
     }
 
-    if (!mz_zip_reader_extract_to_file(&zip_archive, i, sOutput.toLatin1(), 0)) {
-      QMessageBox::critical(m_pParent, qApp->applicationName(),
-                            trUtf8("Error while extracting \"%1\" from archive!")
-                            .arg(file_stat.m_filename));
+    if (!mz_zip_reader_extract_to_file(&archive, i, sOutput.toLatin1(), 0)) {
+      QMessageBox::critical(
+            m_pParent, qApp->applicationName(),
+            trUtf8("Error while extracting \"%1\" from archive!")
+            .arg(file_stat.m_filename));
       qWarning() << "mz_zip_reader_extract_to_file() failed:" <<
-                    mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     }
   }
 
   // Close the archive, freeing any resources it was using
-  if (!mz_zip_reader_end(&zip_archive)) {
+  if (!mz_zip_reader_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           trUtf8("Error while extracting archive!"));
     qWarning() << "mz_zip_reader_end() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
   }
 
   this->loadFile(sArticle, true, true);
@@ -476,15 +477,15 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   QString sArticle(file.baseName() + ".iny");
   QByteArray baComment("");
 
-  mz_zip_archive zip_archive;
-  memset(&zip_archive, 0, sizeof(zip_archive));
+  mz_zip_archive archive;
+  memset(&archive, 0, sizeof(archive));
 
-  if (!mz_zip_writer_init_file(&zip_archive, sArchive.toLatin1(), 65537)) {
+  if (!mz_zip_writer_init_file(&archive, sArchive.toLatin1(), 65537)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           trUtf8("Error while creating archive \"%1\"")
                           .arg(sArchive));
     qWarning() << "mz_zip_writer_init_file() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -519,20 +520,21 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
         sListFiles << img.fileName();
       }
 
-      if (!mz_zip_writer_add_file(&zip_archive, img.fileName().toLatin1(),
+      if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
                                   img.absoluteFilePath().toLatin1(),
                                   baComment, baComment.size(),
                                   MZ_BEST_COMPRESSION)) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),
                               trUtf8("Error while adding \"%1\" to archive!")
                               .arg(img.absoluteFilePath()));
-        qWarning() << "Error while adding" << img.absoluteFilePath() << "to archive!:" <<
-                      mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+        qWarning() << "Error while adding" <<
+                      img.absoluteFilePath() << "to archive!:" <<
+                      mz_zip_get_error_string(mz_zip_get_last_error(&archive));
         return false;
       }
   }
 
-  if (!mz_zip_writer_add_file(&zip_archive, sArticle.toLatin1(),
+  if (!mz_zip_writer_add_file(&archive, sArticle.toLatin1(),
                               QString(file.absolutePath() + "/" +
                                       sArticle.toLatin1()).toLatin1(),
                               baComment, baComment.size(),
@@ -540,27 +542,28 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           trUtf8("Error while adding \"%1\" to archive!")
                           .arg(sArticle));
-    qWarning() << "Error while adding" << img.absoluteFilePath() << "to archive!:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+    qWarning() << "Error while adding" <<
+                  img.absoluteFilePath() << "to archive!:" <<
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
-  if (!mz_zip_writer_finalize_archive(&zip_archive)) {
-    mz_zip_writer_end(&zip_archive);
+  if (!mz_zip_writer_finalize_archive(&archive)) {
+    mz_zip_writer_end(&archive);
     QFile::remove(sArchive);
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           trUtf8("Error while finalizing archive!"));
     qWarning() << "mz_zip_writer_finalize_archive() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
   // Close the archive, freeing any resources it was using
-  if (!mz_zip_writer_end(&zip_archive)) {
+  if (!mz_zip_writer_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           trUtf8("Error while creating archive!"));
     qWarning() << "mz_zip_writer_end() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&zip_archive));
+                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -692,12 +695,13 @@ void FileOperations::printPreview() {
 
   QPrintDialog printDialog(&printer);
   if (QDialog::Accepted == printDialog.exec()) {
+    // TODO(volunteer): Check print functionality again with Qt 5.7
 #if QT_VERSION < 0x050600
     previewWebView.print(&printer);
 #else
-    QMessageBox::warning(0, trUtf8("Warning"), "Printing currently not supported with Qt >= 5.6.0");
+    QMessageBox::warning(0, trUtf8("Warning"),
+                         "Printing currently not supported with Qt >= 5.6.0");
     qWarning() << "Printing currently not supported with Qt >= 5.6.0";
-    // TODO: Check print functionality again with Qt 5.7
 #endif
   }
 }
@@ -821,7 +825,7 @@ bool FileOperations::closeDocument(int nIndex) {
   if (this->maybeSave()) {
     if (m_pCurrentEditor->getFileName().endsWith(".inyzip")) {
       if (!QFile::remove(
-            m_pCurrentEditor->getFileName().replace(".inyzip",".iny"))) {
+            m_pCurrentEditor->getFileName().replace(".inyzip", ".iny"))) {
         qWarning() << "Couldn't remove temp iny from archive" <<
                       m_pCurrentEditor->getFileName();
       }

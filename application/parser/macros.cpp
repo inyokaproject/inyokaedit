@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -116,16 +116,14 @@ QStringList Macros::getTplTranslations() const {
 // ----------------------------------------------------------------------------
 
 void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
-  QRegExp findAnchor("\\[{2,2}\\b(" + sTrans + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
+  QRegExp regex("\\[{2,2}\\b(" + sTrans + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
-  int nLength;
-  QString sAnchor;
 
-  nIndex = findAnchor.indexIn(sDoc);
+  nIndex = regex.indexIn(sDoc);
   while (nIndex >= 0) {
-    nLength = findAnchor.matchedLength();
-    sAnchor = findAnchor.cap();
+    int nLength = regex.matchedLength();
+    QString sAnchor = regex.cap();
     // qDebug() << sAnchor;
 
     sAnchor.remove("[[" + sTrans + "(");
@@ -145,7 +143,7 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
                  "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
                  + "\" class=\"crosslink anchor\"> </a>");
     // Go on with RegExp-Search
-    nIndex = findAnchor.indexIn(sDoc, nIndex + nLength);
+    nIndex = regex.indexIn(sDoc, nIndex + nLength);
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -243,13 +241,7 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
 #endif
   QString sDoc(pRawDoc->toPlainText());
   QRegExp findImages("\\[\\[" + sTrans + "\\(.+\\)\\]\\]");
-  int nLength;
-  QString sTmpImage;
   QStringList sListTmpImageInfo;
-
-  QString sImageUrl("");
-  QString sImageAlign("default");
-  // QString sImageAlt("");
 
   QString sImagePath("");
   if (!sCurrentFile.isEmpty()) {
@@ -257,28 +249,24 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
     sImagePath = fiArticleFile.absolutePath();
   }
 
-  double iImgHeight, iImgWidth;
-  double tmpH, tmpW;
-
   findImages.setMinimal(true);
   int nIndex = findImages.indexIn(sDoc);
   while (nIndex >= 0) {
-    nLength = findImages.matchedLength();
-    sTmpImage = findImages.cap();
-
+    int nLength = findImages.matchedLength();
+    QString sTmpImage = findImages.cap();
     sTmpImage.remove("[[" + sTrans + "(");
     sTmpImage.remove(")]]");
 
-    sImageAlign = "default";
-    iImgHeight = 0;
-    iImgWidth = 0;
-    tmpH = 0;
-    tmpW = 0;
+    QString sImageAlign = "default";
+    double iImgHeight = 0;
+    double iImgWidth = 0;
+    double tmpH = 0;
+    double tmpW = 0;
 
     sListTmpImageInfo.clear();
     sListTmpImageInfo << sTmpImage.split(",");
 
-    sImageUrl = sListTmpImageInfo[0].trimmed();
+    QString sImageUrl = sListTmpImageInfo[0].trimmed();
     if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
       sImageUrl = m_sSharePath + "/community/" +
                   sCommunity + "/web/" + sImageUrl;

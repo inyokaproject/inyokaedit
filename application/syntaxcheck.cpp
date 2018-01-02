@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -122,18 +122,15 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                    << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
     sListTrans << s << s;
   }
-
   QString sDoc(pRawDoc->toPlainText());
-  QString sMacro("");
-  int nPos;
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
     QRegExp findTemplate(sListTplRegExp[i], Qt::CaseInsensitive);
     findTemplate.setMinimal(true);
-    nPos = 0;
+    int nPos = 0;
 
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-      sMacro = findTemplate.cap(0);
+      QString sMacro = findTemplate.cap(0);
       if (sMacro.startsWith("[[" + sListTrans[i],
                             Qt::CaseInsensitive)) {
         sMacro.remove("[[" + sListTrans[i], Qt::CaseInsensitive);

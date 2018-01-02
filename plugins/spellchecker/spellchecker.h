@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2017 The InyokaEdit developers
+ * Copyright (C) 2014-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -27,8 +27,8 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
-#ifndef INYOKAEDIT_SPELLCHECKER_H_
-#define INYOKAEDIT_SPELLCHECKER_H_
+#ifndef PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
+#define PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 
 #include <QObject>
 #include <QTranslator>
@@ -56,57 +56,57 @@ class SpellChecker : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 
- public:
-  ~SpellChecker();
+  public:
+    ~SpellChecker();
 
-  void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir userDataDir, const QString sSharePath);
-  QString getPluginName() const;
-  QString getPluginVersion() const;
-  QTranslator* getPluginTranslator(const QString &sSharePath,
-                                   const QString &sLocale);
-  QString getCaption() const;
-  QIcon getIcon() const;
-  bool includeMenu() const;
-  bool includeToolbar() const;
-  bool hasSettings() const;
-  void setCurrentEditor(TextEditor *pEditor);
-  void setEditorlist(QList<TextEditor *> listEditors);
+    void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                    const QDir userDataDir, const QString sSharePath);
+    QString getPluginName() const;
+    QString getPluginVersion() const;
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
+    QString getCaption() const;
+    QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
+    bool hasSettings() const;
+    void setCurrentEditor(TextEditor *pEditor);
+    void setEditorlist(QList<TextEditor *> listEditors);
 
- public slots:
-  void callPlugin();
-  void executePlugin();
-  void showSettings();
-  void showAbout();
+  public slots:
+    void callPlugin();
+    void executePlugin();
+    void showSettings();
+    void showAbout();
 
- private:
-  friend class SpellCheckDialog;
+  private:
+    friend class SpellCheckDialog;
 
-  void setDictPath();
-  bool initDictionaries();
-  void loadAdditionalDict(const QString &sFilename);
+    void setDictPath();
+    bool initDictionaries();
+    void loadAdditionalDict(const QString &sFilename);
 
-  bool spell(const QString &sWord);
-  QStringList suggest(const QString &sWord);
-  void ignoreWord(const QString &sWord);
-  void addToUserWordlist(const QString &sWord);
-  void putWord(const QString &sWord);
+    bool spell(const QString &sWord);
+    QStringList suggest(const QString &sWord);
+    void ignoreWord(const QString &sWord);
+    void addToUserWordlist(const QString &sWord);
+    void putWord(const QString &sWord);
 
-  Hunspell *m_pHunspell;
-  TextEditor *m_pEditor;
-  QAction *m_pExecuteAct;
-  SpellCheckDialog *m_pCheckDialog;
-  QSettings *m_pSettings;
-  QTextCursor m_oldCursor;
-  QString m_sDictPath;
-  QStringList m_sListDicts;
-  QString m_sDictLang;
-  QString m_sUserDict;
-  QDir m_UserDataDir;
-  QString m_sSharePath;
-  QString m_sCommunity;
-  QString m_sEncoding;
-  QTextCodec *m_pCodec;
+    Hunspell *m_pHunspell;
+    TextEditor *m_pEditor;
+    QAction *m_pExecuteAct;
+    SpellCheckDialog *m_pCheckDialog;
+    QSettings *m_pSettings;
+    QTextCursor m_oldCursor;
+    QString m_sDictPath;
+    QStringList m_sListDicts;
+    QString m_sDictLang;
+    QString m_sUserDict;
+    QDir m_UserDataDir;
+    QString m_sSharePath;
+    QString m_sCommunity;
+    QString m_sEncoding;
+    QTextCodec *m_pCodec;
 };
 
-#endif  // INYOKAEDIT_SPELLCHECKER_H_
+#endif  // PLUGINS_SPELLCHECKER_SPELLCHECKER_H_

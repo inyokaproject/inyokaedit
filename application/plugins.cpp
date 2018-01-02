@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -92,7 +92,7 @@ void Plugins::loadPlugins() {
   m_PluginToolbarEntries.clear();
 
   for (int i = 0; i < m_listPlugins.size(); i++) {
-    qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+    qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
     // Install translator, even if plugin is disabled
     // Translated caption shall be visible in settings dialog
     qApp->installTranslator(
@@ -125,7 +125,7 @@ void Plugins::loadPlugins() {
     m_listPlugins[i]->executePlugin();
 
     if (i == m_listPlugins.size() - 1) {
-      qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+      qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
     }
   }
 

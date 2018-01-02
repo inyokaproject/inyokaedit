@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition find/replace dialog.
  */
 
-#ifndef INYOKAEDIT_FINDREPLACE_H_
-#define INYOKAEDIT_FINDREPLACE_H_
+#ifndef APPLICATION_FINDREPLACE_H_
+#define APPLICATION_FINDREPLACE_H_
 
 #include <QCloseEvent>
 #include <QDialog>
@@ -41,34 +41,34 @@ class FindReplace : public QDialog {
   Q_OBJECT
 
   public:
-  explicit FindReplace(QWidget *parent = 0);
-  ~FindReplace();
+    explicit FindReplace(QWidget *parent = 0);
+    ~FindReplace();
 
-  void setEditor(QTextEdit *pEditor);
+    void setEditor(QTextEdit *pEditor);
 
- public slots:
-  void callFind();
-  void callReplace();
-  void findNext();
-  void findPrevious();
+  public slots:
+    void callFind();
+    void callReplace();
+    void findNext();
+    void findPrevious();
 
- protected:
-  void showEvent(QShowEvent *event);
-  void closeEvent(QCloseEvent *event);
+  protected:
+    void showEvent(QShowEvent *event);
+    void closeEvent(QCloseEvent *event);
 
- private slots:
-  void textSearchChanged();
-  void find();
-  void replace();
-  void replaceAll();
+  private slots:
+    void textSearchChanged();
+    void find();
+    void replace();
+    void replaceAll();
 
- private:
-  void find(const bool bForward);
-  void toggleSearchReplace(bool bReplace);
+  private:
+    void find(const bool bForward);
+    void toggleSearchReplace(bool bReplace);
 
-  Ui::FindReplace *m_pUi;
-  QTextEdit *m_pEditor;
-  QTextCursor m_TextCursor;
+    Ui::FindReplace *m_pUi;
+    QTextEdit *m_pEditor;
+    QTextCursor m_TextCursor;
 };
 
-#endif  // INYOKAEDIT_FINDREPLACE_H_
+#endif  // APPLICATION_FINDREPLACE_H_

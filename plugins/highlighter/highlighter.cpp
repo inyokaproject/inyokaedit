@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2017 The InyokaEdit developers
+ * Copyright (C) 2014-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -69,9 +69,10 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pSettings->endGroup();
 
   m_pStyleSet = NULL;
-  m_pTemplates = new Templates(m_pSettings->value(
-                                 "InyokaCommunity", "ubuntuusers_de").toString(),
-                               sSharePath, userDataDir.absolutePath());
+  m_pTemplates = new Templates(
+                   m_pSettings->value(
+                     "InyokaCommunity", "ubuntuusers_de").toString(),
+                   sSharePath, userDataDir.absolutePath());
   this->getTranslations();
   this->readStyle(m_sStyleFile);
   this->defineRules();
@@ -289,8 +290,9 @@ void Highlighter::readStyle(const QString &sStyle) {
   this->evalKey(sTmpKey, m_newTableLineFormat);
   sTmpKey = m_pStyleSet->value("Misc", "0xff0000").toString();
   this->evalKey(sTmpKey, m_miscFormat);
-  sTmpKey = m_pStyleSet->value("SyntaxError", "---" + sSEPARATOR + "---" +
-                               sSEPARATOR + "---" + sSEPARATOR + "0xffff00").toString();
+  sTmpKey = m_pStyleSet->value(
+              "SyntaxError", "---" + sSEPARATOR + "---" + sSEPARATOR + "---" +
+              sSEPARATOR + "0xffff00").toString();
   this->evalKey(sTmpKey, m_syntaxErrorFormat);
   m_pStyleSet->endGroup();
 }
@@ -386,7 +388,8 @@ void Highlighter::saveStyle() {
   if (m_syntaxErrorFormat.background().isOpaque()) {
     m_pStyleSet->setValue(
           "SyntaxError", "---" + sSEPARATOR + "---" + sSEPARATOR + "---" +
-          sSEPARATOR + "0x" + m_syntaxErrorFormat.background().color().name().remove("#"));
+          sSEPARATOR + "0x" +
+          m_syntaxErrorFormat.background().color().name().remove("#"));
   }
   m_pStyleSet->endGroup();
 }

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -88,24 +88,25 @@ QString Parser::genOutput(const QString &sActFile,
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
   m_sCurrentFile = sActFile;
-  QStringList sListHeadlines;
   this->removeComments(m_pRawText);
 
   m_sListNoTranslate.clear();
   this->filterEscapedChars(m_pRawText);  // Before everything
   this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
   if (bSyntaxCheck) {
-    qint32 nRet = SyntaxCheck::checkInyokaSyntax(m_pRawText,
-                                                 m_pTemplates->getListTplNamesINY(),
-                                                 m_pTemplates->getListSmilies(),
-                                                 m_pMacros->getTplTranslations());
+    qint32 nRet = SyntaxCheck::checkInyokaSyntax(
+                    m_pRawText,
+                    m_pTemplates->getListTplNamesINY(),
+                    m_pTemplates->getListSmilies(),
+                    m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(nRet);
   }
   this->replaceCodeblocks(m_pRawText);
 
   m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);
 
-  this->replaceHeadlines(m_pRawText, sListHeadlines);  //Generates list for TOC
+  QStringList sListHeadlines;
+  sListHeadlines = this->replaceHeadlines(m_pRawText);  // Returns list for TOC
   ParseTable::startParsing(m_pRawText);
   m_pMacros->startParsing(m_pRawText, m_sCurrentFile,
                           m_sCommunity, sListHeadlines);
@@ -155,10 +156,10 @@ QString Parser::genOutput(const QString &sActFile,
   sTemplateCopy = sTemplateCopy.replace("%folder%",
                                         m_sSharePath + "/community/" +
                                         m_sCommunity + "/web");
-  sTemplateCopy = sTemplateCopy.replace("%date%",
-                                        QDate::currentDate().toString("dd.MM.yyyy"));
-  sTemplateCopy = sTemplateCopy.replace("%time%",
-                                        QTime::currentTime().toString("hh:mm"));
+  sTemplateCopy = sTemplateCopy.replace(
+                    "%date%", QDate::currentDate().toString("dd.MM.yyyy"));
+  sTemplateCopy = sTemplateCopy.replace(
+                    "%time%", QTime::currentTime().toString("hh:mm"));
   sTemplateCopy = sTemplateCopy.replace("%tags%",
                                         this->generateTags(m_pRawText));
   sTemplateCopy = sTemplateCopy.replace("%content%",
@@ -244,19 +245,16 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
   // Search for {{{#!code ...}}} and {{{ ... without #!X ...}}}
   sListTplRegExp << "\\{\\{\\{#!code .+\\}\\}\\}"
                  << "\\{\\{\\{(?!#!\\S).+\\}\\}\\}";
-  QString sMacro;
   QStringList sListLines;
-  int nPos;
-  bool bFormated;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
     QRegExp findTemplate(sListTplRegExp[k], Qt::CaseInsensitive);
     findTemplate.setMinimal(true);
-    nPos = 0;
+    int nPos = 0;
 
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-      bFormated = false;
-      sMacro = findTemplate.cap(0);
+      bool bFormated = false;
+      QString sMacro = findTemplate.cap(0);
       sMacro.remove("{{{\n");
       sMacro.remove("{{{");
       if (sMacro.startsWith("#!code ", Qt::CaseInsensitive)) {
@@ -430,8 +428,6 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   QStringList sListHtmlEnd;
   QString sDoc("");
   QRegExp patternFormat;
-  QString sFormatedText;
-  int nIndex;
   unsigned int nNoTranslate;
 
   for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
@@ -455,10 +451,10 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   nNoTranslate = m_sListNoTranslate.size();
   for (int i = 0; i < sListHtmlStart.size(); i++) {
     patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
-    nIndex = patternFormat.indexIn(sDoc);
+    int nIndex = patternFormat.indexIn(sDoc);
 
     while (nIndex >= 0) {
-      sFormatedText = patternFormat.cap();
+      QString sFormatedText = patternFormat.cap();
       m_sListNoTranslate << sFormatedText;
       nIndex = patternFormat.indexIn(sDoc,
                                      nIndex + sFormatedText.length());
@@ -615,14 +611,13 @@ void Parser::removeComments(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::replaceHeadlines(QTextDocument *pRawDoc,
-                              QStringList &slistHeadlines) {
+QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
   QString sDoc("");
   QString sLine("");
   QString sTmp("");
   QString sLink("");
   quint16 nHeadlineLevel = 5;
-  slistHeadlines.clear();
+  QStringList slistHeadlines;
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
@@ -681,10 +676,10 @@ void Parser::replaceHeadlines(QTextDocument *pRawDoc,
       sLink.replace(QString::fromUtf8("ö"), "oe");
 
       // usHeadlineLevel + 1 !!!
-      sLine = "<h" + QString::number(nHeadlineLevel+1) + " id=\"" + sLink
-              + "\">" + sLine + " <a href=\"#" + sLink + "\" "
-                                                         "class=\"headerlink\"> &para;</a></h"
-              + QString::number(nHeadlineLevel+1) + ">\n";
+      sLine = "<h" + QString::number(nHeadlineLevel+1) + " id=\"" +
+              sLink + "\">" + sLine + " <a href=\"#" + sLink +
+              "\" class=\"headerlink\"> &para;</a></h" +
+              QString::number(nHeadlineLevel+1) + ">\n";
       sDoc += sLine;
       break;
     }
@@ -692,6 +687,7 @@ void Parser::replaceHeadlines(QTextDocument *pRawDoc,
   // qDebug() << "HEADLINES:" << slistHeadlines;
 
   pRawDoc->setPlainText(sDoc);
+  return slistHeadlines;
 }
 
 // ----------------------------------------------------------------------------

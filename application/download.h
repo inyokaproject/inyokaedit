@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for download functions.
  */
 
-#ifndef INYOKAEDIT_DOWNLOAD_H_
-#define INYOKAEDIT_DOWNLOAD_H_
+#ifndef APPLICATION_DOWNLOAD_H_
+#define APPLICATION_DOWNLOAD_H_
 
 #include <QNetworkReply>
 
@@ -39,46 +39,46 @@
 class Download : public QObject {
   Q_OBJECT
 
- public:
-  Download(QWidget *pParent, const QString &sStylesDir,
-           const QString &sImgDir, const QString &sSharePath);
+  public:
+    Download(QWidget *pParent, const QString &sStylesDir,
+             const QString &sImgDir, const QString &sSharePath);
 
- public slots:
-  void downloadArticle(QString sUrl = "");
-  void showArticle();
-  void updateSettings(const bool bCompleter,
-                      const QString &sInyokaUrl,
-                      const QString &sConstArea);
+  public slots:
+    void downloadArticle(QString sUrl = "");
+    void showArticle();
+    void updateSettings(const bool bCompleter,
+                        const QString &sInyokaUrl,
+                        const QString &sConstArea);
 
- private slots:
-  void replyFinished(QNetworkReply *pReply);
+  private slots:
+    void replyFinished(QNetworkReply *pReply);
 
- signals:
-  void sendArticleText(const QString &, const QString &);
+  signals:
+    void sendArticleText(const QString &, const QString &);
 
- private:
-  QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                   const QUrl& oldRedirectUrl);
-  void downloadImages();
+  private:
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl);
+    void downloadImages();
 
-  QWidget *m_pParent;
-  const QString m_sStylesDir;
-  const QString m_sImgDir;
+    QWidget *m_pParent;
+    const QString m_sStylesDir;
+    const QString m_sImgDir;
 
-  QNetworkAccessManager *m_pNwManager;
-  QList<QNetworkReply *> m_listDownloadReplies;
-  QUrl m_urlRedirectedTo;
-  QString m_sArticleText;
-  QString m_sSitename;
-  QString m_sRevision;
-  QString m_sSource;
-  QString m_sInyokaUrl;
-  QString m_sConstructionArea;
-  bool m_bAutomaticImageDownload;
-  const QString m_sSharePath;
+    QNetworkAccessManager *m_pNwManager;
+    QList<QNetworkReply *> m_listDownloadReplies;
+    QUrl m_urlRedirectedTo;
+    QString m_sArticleText;
+    QString m_sSitename;
+    QString m_sRevision;
+    QString m_sSource;
+    QString m_sInyokaUrl;
+    QString m_sConstructionArea;
+    bool m_bAutomaticImageDownload;
+    const QString m_sSharePath;
 
-  DownloadImg *m_DlImages;
-  bool m_bDownloadArticle;
+    DownloadImg *m_DlImages;
+    bool m_bDownloadArticle;
 };
 
-#endif  // INYOKAEDIT_DOWNLOAD_H_
+#endif  // APPLICATION_DOWNLOAD_H_

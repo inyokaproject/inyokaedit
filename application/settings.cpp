@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -75,10 +75,8 @@ Settings::~Settings() {
 void Settings::readSettings(const QString &sSharePath) {
   // General settings
   m_sGuiLanguage = m_pSettings->value("GuiLanguage", "auto").toString();
-  m_bCodeCompletion = m_pSettings->value("CodeCompletion",
-                                         true).toBool();
-  m_bSyntaxCheck = m_pSettings->value("InyokaSyntaxCheck",
-                                         true).toBool();
+  m_bCodeCompletion = m_pSettings->value("CodeCompletion", true).toBool();
+  m_bSyntaxCheck = m_pSettings->value("InyokaSyntaxCheck", true).toBool();
   m_bPreviewSplitHorizontal = m_pSettings->value("PreviewSplitHorizontal",
                                                  true).toBool();
   m_sInyokaCommunity = m_pSettings->value("InyokaCommunity",
@@ -133,22 +131,20 @@ void Settings::readSettings(const QString &sSharePath) {
 
   m_bAutomaticImageDownload = m_pSettings->value("AutomaticImageDownload",
                                                  false).toBool();
-  m_bCheckLinks = m_pSettings->value("CheckLinks",
-                                     false).toBool();
-  m_nAutosave = m_pSettings->value("AutoSave",
-                                   300).toUInt();
+  m_bCheckLinks = m_pSettings->value("CheckLinks", false).toBool();
+  m_nAutosave = m_pSettings->value("AutoSave", 300).toUInt();
   // 0x01000004 = Qt::Key_Return
   m_sReloadPreviewKey = m_pSettings->value("ReloadPreviewKey",
                                            "0x01000004").toString();
-  m_nTimedPreview = m_pSettings->value("TimedPreview",
-                                       15).toUInt();
+  m_nTimedPreview = m_pSettings->value("TimedPreview", 15).toUInt();
+
+  // TODO(volunteer): Check again as soon as QWebEngine scrolling is available
 #ifdef USEQTWEBKIT
-  m_bSyncScrollbars = m_pSettings->value("SyncScrollbars",
-                                         true).toBool();
+  m_bSyncScrollbars = m_pSettings->value("SyncScrollbars", true).toBool();
 #else
   m_bSyncScrollbars = false;
-  // TODO: To be checked again as soon as scrolling is working with QWebEngine
 #endif
+
   m_bWinCheckUpdate = m_pSettings->value("WindowsCheckForUpdate",
                                          false).toBool();
 

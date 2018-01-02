@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2012-2017 The InyokaEdit developers
+ * Copyright (C) 2012-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition ubuntuusers.de table template dialog
  */
 
-#ifndef INYOKAEDIT_UU_TABLETEMPLATE_H_
-#define INYOKAEDIT_UU_TABLETEMPLATE_H_
+#ifndef PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
+#define PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 
 #include <QDialog>
 #include <QDir>
@@ -59,68 +59,68 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.uutabletemplate")
 
- public:
-  void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir userDataDir, const QString sSharePath);
-  QString getPluginName() const;
-  QString getPluginVersion() const;
-  QTranslator* getPluginTranslator(const QString &sSharePath,
-                                   const QString &sLocale);
-  QString getCaption() const;
-  QIcon getIcon() const;
-  bool includeMenu() const;
-  bool includeToolbar() const;
-  bool hasSettings() const;
-  void setCurrentEditor(TextEditor *pEditor);
-  void setEditorlist(QList<TextEditor *> listEditors);
+  public:
+    void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                    const QDir userDataDir, const QString sSharePath);
+    QString getPluginName() const;
+    QString getPluginVersion() const;
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
+    QString getCaption() const;
+    QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
+    bool hasSettings() const;
+    void setCurrentEditor(TextEditor *pEditor);
+    void setEditorlist(QList<TextEditor *> listEditors);
 
- public slots:
-  void callPlugin();
-  void executePlugin();
-  void showSettings();
-  void showAbout();
+  public slots:
+    void callPlugin();
+    void executePlugin();
+    void showSettings();
+    void showAbout();
 
- private slots:
-  /** \brief Show preview */
-  void preview();
+  private slots:
+    /** \brief Show preview */
+    void preview();
 
-  /** \brief Convert base template to new table template */
-  void convertToBaseTemplate();
+    /** \brief Convert base template to new table template */
+    void convertToBaseTemplate();
 
-  /** \brief Convert new table template to base template */
-  void convertToNewTemplate();
+    /** \brief Convert new table template to base template */
+    void convertToNewTemplate();
 
-  /** \brief Dialog finished */
-  void accept();
+    /** \brief Dialog finished */
+    void accept();
 
- private:
-  /**
+  private:
+    /**
     * \brief Generate specific table
     * \return String including the generated table code
     */
-  QString generateTable();
+    QString generateTable();
 
-  Ui::Uu_TableTemplateClass *m_pUi;
-  QDialog *m_pDialog;
-  QSettings *m_pSettings;
-  TextEditor *m_pEditor;
-  Templates *m_pTemplates;
-  Parser *m_pParser;
-  QDir m_dirPreview;
-  QTextDocument *m_pTextDocument;
+    Ui::Uu_TableTemplateClass *m_pUi;
+    QDialog *m_pDialog;
+    QSettings *m_pSettings;
+    TextEditor *m_pEditor;
+    Templates *m_pTemplates;
+    Parser *m_pParser;
+    QDir m_dirPreview;
+    QTextDocument *m_pTextDocument;
 #ifdef USEQTWEBKIT
-  QWebView *m_pPreviewWebview;
+    QWebView *m_pPreviewWebview;
 #else
-  QWebEngineView *m_pPreviewWebview;
+    QWebEngineView *m_pPreviewWebview;
 #endif
 
-  QStringList m_sListTableStyles;
-  QStringList m_sListTableStylesPrefix;
-  QString m_sRowClassTitle;
-  QString m_sRowClassHead;
-  QString m_sRowClassHighlight;
+    QStringList m_sListTableStyles;
+    QStringList m_sListTableStylesPrefix;
+    QString m_sRowClassTitle;
+    QString m_sRowClassHead;
+    QString m_sRowClassHighlight;
 
-  bool m_bBaseToNew;
+    bool m_bBaseToNew;
 };
 
-#endif  // INYOKAEDIT_UU_TABLETEMPLATE_H_
+#endif  // PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for download manager for images.
  */
 
-#ifndef INYOKAEDIT_DOWNLOADIMG_H_
-#define INYOKAEDIT_DOWNLOADIMG_H_
+#ifndef APPLICATION_DOWNLOADIMG_H_
+#define APPLICATION_DOWNLOADIMG_H_
 
 #include <QNetworkReply>
 #include <QProgressDialog>
@@ -34,41 +34,41 @@
 class DownloadImg : public QObject {
   Q_OBJECT
 
- public:
-  explicit DownloadImg();
-  void setDLs(const QStringList &sListUrls,
-              const QStringList &sListSavePath);
+  public:
+    explicit DownloadImg();
+    void setDLs(const QStringList &sListUrls,
+                const QStringList &sListSavePath);
 
- public slots:
-  void startDownloads();
+  public slots:
+    void startDownloads();
 
- private slots:
-  void downloadFinished(QNetworkReply *reply);
-  void cancelDownloads();
+  private slots:
+    void downloadFinished(QNetworkReply *reply);
+    void cancelDownloads();
 
- signals:
-  void finsihedImageDownload();
+  signals:
+    void finsihedImageDownload();
 
- private:
-  void doDownload(const QUrl &url,
-                  const QString &sSavePath,
-                  const QString sBase = "");
-  QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                   const QUrl& oldRedirectUrl) const;
+  private:
+    void doDownload(const QUrl &url,
+                    const QString &sSavePath,
+                    const QString sBase = "");
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl) const;
 
-  QNetworkAccessManager m_NwManager;
-  QList<QNetworkReply *> m_listDownloadReplies;
+    QNetworkAccessManager m_NwManager;
+    QList<QNetworkReply *> m_listDownloadReplies;
 
-  QProgressDialog *m_pProgessDialog;
-  quint16 m_nProgress;
-  QString m_sDownloadError;
+    QProgressDialog *m_pProgessDialog;
+    quint16 m_nProgress;
+    QString m_sDownloadError;
 
-  QUrl m_urlRedirectedTo;
-  QStringList m_sListUrls;
-  QStringList m_sListSavePath;
+    QUrl m_urlRedirectedTo;
+    QStringList m_sListUrls;
+    QStringList m_sListSavePath;
 
-  QStringList m_sListRepliesPath;
-  QStringList m_sListBasename;
+    QStringList m_sListRepliesPath;
+    QStringList m_sListBasename;
 };
 
-#endif  // INYOKAEDIT_DOWNLOADIMG_H_
+#endif  // APPLICATION_DOWNLOADIMG_H_

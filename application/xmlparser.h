@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition.
  */
 
-#ifndef INYOKAEDIT_XMLPARSER_H_
-#define INYOKAEDIT_XMLPARSER_H_
+#ifndef APPLICATION_XMLPARSER_H_
+#define APPLICATION_XMLPARSER_H_
 
 #include <QXmlSimpleReader>
 
@@ -36,29 +36,29 @@
 class XmlParser {
   class Handler;
 
- public:
-  XmlParser();
-  bool parseXml(const QString &sXmlFile);
+  public:
+    XmlParser();
+    bool parseXml(const QString &sXmlFile);
 
-  QString getMenuName() const;
-  QString getPath() const;
-  QStringList getGroupNames() const;
-  QStringList getGroupIcons() const;
-  QList<QStringList> getElementNames() const;
-  QList<QStringList> getElementInserts() const;
-  QList<QStringList> getElementIcons() const;
+    QString getMenuName() const;
+    QString getPath() const;
+    QStringList getGroupNames() const;
+    QStringList getGroupIcons() const;
+    QList<QStringList> getElementNames() const;
+    QList<QStringList> getElementInserts() const;
+    QList<QStringList> getElementIcons() const;
 
- private:
-  QXmlInputSource *m_pXmlSource;  /**< Pointer to xml input source file */
-  Handler *m_pHandler;  /**< Handle to xml parser module */
+  private:
+    QXmlInputSource *m_pXmlSource;  /**< Pointer to xml input source file */
+    Handler *m_pHandler;  /**< Handle to xml parser module */
 
-  QString m_sMenuName;
-  QString m_sPath;
-  QStringList m_sListGroups;
-  QStringList m_sListGroupIcons;
-  QList<QStringList> m_sListNames;
-  QList<QStringList> m_sListInserts;
-  QList<QStringList> m_sListIcons;
+    QString m_sMenuName;
+    QString m_sPath;
+    QStringList m_sListGroups;
+    QStringList m_sListGroupIcons;
+    QList<QStringList> m_sListNames;
+    QList<QStringList> m_sListInserts;
+    QList<QStringList> m_sListIcons;
 };
 
 // ----------------------------------------------------------------------------
@@ -70,45 +70,45 @@ class XmlParser {
 class XmlParser::Handler : public QXmlDefaultHandler {
   friend class XmlParser;
 
- public:
-  /**
+  public:
+    /**
     * \brief Called at document start
     * \return True
     */
-  bool startDocument();
+    bool startDocument();
 
-  /**
+    /**
     * \brief Found end of a xml element
     * \param name Element name
     * \return True
     */
-  bool endElement(const QString&, const QString&, const QString &name);
+    bool endElement(const QString&, const QString&, const QString &name);
 
-  /**
+    /**
     * \brief Found start of a xml element
     * \param name Element name
     * \param attrs Attribute name
     * \return True
     */
-  bool startElement(const QString&, const QString&, const QString &name,
-                    const QXmlAttributes &attrs);
+    bool startElement(const QString&, const QString&, const QString &name,
+                      const QXmlAttributes &attrs);
 
- private:
-  bool m_bInElement;
+  private:
+    bool m_bInElement;
 
-  QString m_tmpMenuName;
-  QString m_tmpPath;
-  QStringList m_tmpListNames;
-  QStringList m_tmpListInserts;
-  QStringList m_tmpListIcons;
+    QString m_tmpMenuName;
+    QString m_tmpPath;
+    QStringList m_tmpListNames;
+    QStringList m_tmpListInserts;
+    QStringList m_tmpListIcons;
 
-  QString m_sMenuName_2;
-  QString m_sPath_2;
-  QStringList m_sListGroups_2;
-  QStringList m_sListGroupIcons_2;
-  QList<QStringList> m_sListNames_2;
-  QList<QStringList> m_sListInserts_2;
-  QList<QStringList> m_sListIcons_2;
+    QString m_sMenuName_2;
+    QString m_sPath_2;
+    QStringList m_sListGroups_2;
+    QStringList m_sListGroupIcons_2;
+    QList<QStringList> m_sListNames_2;
+    QList<QStringList> m_sListInserts_2;
+    QList<QStringList> m_sListIcons_2;
 };
 
-#endif  // INYOKAEDIT_XMLPARSER_H_
+#endif  // APPLICATION_XMLPARSER_H_

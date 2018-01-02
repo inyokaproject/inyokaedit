@@ -29,37 +29,37 @@
 <context>
     <name>Uu_TableTemplate</name>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="154"/>
+        <location filename="../uu_tabletemplate.cpp" line="155"/>
         <source>Ubuntuusers.de table generator</source>
         <translation>Ubuntuusers.de Tabellengenerator</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="225"/>
+        <location filename="../uu_tabletemplate.cpp" line="226"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="235"/>
+        <location filename="../uu_tabletemplate.cpp" line="236"/>
         <source>Head</source>
         <translation>Kopf</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="370"/>
+        <location filename="../uu_tabletemplate.cpp" line="372"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="378"/>
+        <location filename="../uu_tabletemplate.cpp" line="380"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="380"/>
+        <location filename="../uu_tabletemplate.cpp" line="382"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="383"/>
+        <location filename="../uu_tabletemplate.cpp" line="385"/>
         <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
         <translation>Erweiterung zur Erstellung von ubuntuusers.de Inyoka-Tabellen.</translation>
     </message>

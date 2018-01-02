@@ -9,7 +9,7 @@
         <translation>Herunterladen nicht möglich - keine Internetverbindung vorhanden!</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="83"/>
+        <location filename="../download.cpp" line="84"/>
         <source>Please insert name of the article which should be downloaded:</source>
         <translation>Bitte Namen des Artikel eingeben, der heruntergeladen werden soll:</translation>
     </message>
@@ -19,17 +19,17 @@
         <translation>Artikel</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="181"/>
+        <location filename="../download.cpp" line="180"/>
         <source>Could not download the article.</source>
         <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="196"/>
+        <location filename="../download.cpp" line="195"/>
         <source>Could not find meta data.</source>
         <translation>Es konnten keine Metadaten gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="227"/>
+        <location filename="../download.cpp" line="226"/>
         <source>Do you want to download the images which are attached to the article?</source>
         <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
     </message>
@@ -124,63 +124,63 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="390"/>
+        <location filename="../fileoperations.cpp" line="391"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="400"/>
+        <location filename="../fileoperations.cpp" line="401"/>
         <source>Error while extracting archive!</source>
         <translation>Fehler während des Entpackens des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="431"/>
+        <location filename="../fileoperations.cpp" line="432"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="484"/>
+        <location filename="../fileoperations.cpp" line="485"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="496"/>
+        <location filename="../fileoperations.cpp" line="497"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="527"/>
-        <location filename="../fileoperations.cpp" line="541"/>
+        <location filename="../fileoperations.cpp" line="528"/>
+        <location filename="../fileoperations.cpp" line="543"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="552"/>
+        <location filename="../fileoperations.cpp" line="555"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="561"/>
+        <location filename="../fileoperations.cpp" line="564"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="625"/>
+        <location filename="../fileoperations.cpp" line="628"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="647"/>
-        <location filename="../fileoperations.cpp" line="698"/>
+        <location filename="../fileoperations.cpp" line="650"/>
+        <location filename="../fileoperations.cpp" line="702"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="648"/>
+        <location filename="../fileoperations.cpp" line="651"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
@@ -189,7 +189,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <location filename="../fileoperations.cpp" line="203"/>
         <location filename="../fileoperations.cpp" line="215"/>
         <location filename="../fileoperations.cpp" line="248"/>
-        <location filename="../fileoperations.cpp" line="580"/>
+        <location filename="../fileoperations.cpp" line="583"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -572,46 +572,46 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="661"/>
+        <location filename="../inyokaedit.cpp" line="135"/>
+        <source>No Inyoka community files found/installed!
+Please check your installation and restart the application.</source>
+        <translation>Kein Inyoka Community-Datei gefunden/installiert!
+Bitte überprüfe die Installation und starte das Programm erneut.</translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.cpp" line="672"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="880"/>
+        <location filename="../inyokaedit.cpp" line="891"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1006"/>
+        <location filename="../inyokaedit.cpp" line="1007"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1017"/>
+        <location filename="../inyokaedit.cpp" line="1018"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen:</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1025"/>
+        <location filename="../inyokaedit.cpp" line="1026"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1109"/>
+        <location filename="../inyokaedit.cpp" line="1111"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1126"/>
+        <location filename="../inyokaedit.cpp" line="1128"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
-    </message>
-    <message>
-        <location filename="../inyokaedit.cpp" line="136"/>
-        <source>No Inyoka community files found / installed!
-Please check your installation and restart the application.</source>
-        <translation>Kein Inyoka Community-Datei gefunden / installiert!
-Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     </message>
 </context>
 <context>
@@ -762,27 +762,27 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="220"/>
+        <location filename="../settingsdialog.cpp" line="230"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="264"/>
+        <location filename="../settingsdialog.cpp" line="275"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="265"/>
+        <location filename="../settingsdialog.cpp" line="276"/>
         <source>Could not open/find community file!</source>
         <translation>Community-Datei konnte nicht geöffnet/gefunden werden!</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="276"/>
+        <location filename="../settingsdialog.cpp" line="287"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="277"/>
+        <location filename="../settingsdialog.cpp" line="288"/>
         <source>No community url defined!</source>
         <translation>Keine Community-Url definiert!</translation>
     </message>
@@ -823,15 +823,15 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <location filename="../upload.cpp" line="77"/>
         <location filename="../upload.cpp" line="83"/>
         <location filename="../upload.cpp" line="90"/>
-        <location filename="../upload.cpp" line="202"/>
-        <location filename="../upload.cpp" line="209"/>
-        <location filename="../upload.cpp" line="222"/>
-        <location filename="../upload.cpp" line="288"/>
-        <location filename="../upload.cpp" line="309"/>
-        <location filename="../upload.cpp" line="353"/>
-        <location filename="../upload.cpp" line="399"/>
-        <location filename="../upload.cpp" line="414"/>
-        <location filename="../upload.cpp" line="479"/>
+        <location filename="../upload.cpp" line="200"/>
+        <location filename="../upload.cpp" line="208"/>
+        <location filename="../upload.cpp" line="221"/>
+        <location filename="../upload.cpp" line="290"/>
+        <location filename="../upload.cpp" line="311"/>
+        <location filename="../upload.cpp" line="355"/>
+        <location filename="../upload.cpp" line="401"/>
+        <location filename="../upload.cpp" line="416"/>
+        <location filename="../upload.cpp" line="481"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -851,60 +851,60 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Upload nicht möglich. Keine aktive Internetverbindung gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="97"/>
+        <location filename="../upload.cpp" line="98"/>
         <source>Upload</source>
         <translation>Upload</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="98"/>
+        <location filename="../upload.cpp" line="99"/>
         <source>Please insert name of the article which should be uploaded.
 It is only possible to upload into the &quot;%1&quot;!</source>
         <translation>Bitte den Namen des Artikels eintragen, der hochgeladen werden soll.
 Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="203"/>
-        <location filename="../upload.cpp" line="400"/>
+        <location filename="../upload.cpp" line="201"/>
+        <location filename="../upload.cpp" line="402"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="210"/>
+        <location filename="../upload.cpp" line="209"/>
         <source>Upload failed! No session cookie received.</source>
         <translation>Upload fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="223"/>
+        <location filename="../upload.cpp" line="222"/>
         <source>Upload failed! No cookies received.</source>
         <translation>Upload fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="289"/>
+        <location filename="../upload.cpp" line="291"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Login fehlgeschlagen. Falsche Zugangsdaten?</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="310"/>
+        <location filename="../upload.cpp" line="312"/>
         <source>Login at Inyoka failed.</source>
         <translation>Login fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="475"/>
+        <location filename="../upload.cpp" line="477"/>
         <source>Upload failed</source>
         <translation>Upload fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="476"/>
+        <location filename="../upload.cpp" line="478"/>
         <source>The page content was not changed!</source>
         <translation>Die Seite wurde nicht verändert!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="480"/>
+        <location filename="../upload.cpp" line="482"/>
         <source>Upload failed!</source>
         <translation>Upload fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="407"/>
+        <location filename="../upload.cpp" line="409"/>
         <source>Change note</source>
         <translation>Änderungskommentar</translation>
     </message>
@@ -919,32 +919,32 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
         <translation>Bitte Deinen Inyoka Benutzernamen eingeben:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="247"/>
+        <location filename="../upload.cpp" line="248"/>
         <source>Login password</source>
         <translation>Login Passwort</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="248"/>
+        <location filename="../upload.cpp" line="249"/>
         <source>Please insert your Inyoka password:</source>
         <translation>Bitte Dein Inyoka Passwort eingeben:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="354"/>
+        <location filename="../upload.cpp" line="356"/>
         <source>Last article revision not found!</source>
         <translation>Die letzte Artikelversion wurde nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="408"/>
+        <location filename="../upload.cpp" line="410"/>
         <source>Please insert a change message:</source>
         <translation>Bitte einen Änderungskommentar eintragen:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="415"/>
+        <location filename="../upload.cpp" line="417"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Es ist nicht erlaubt einen Artikel ohne Änderungskommentar hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="471"/>
+        <location filename="../upload.cpp" line="473"/>
         <source>Upload successful!</source>
         <translation>Upload erfolgreich!</translation>
     </message>
@@ -962,32 +962,32 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
         <translation>Es wurde eine neue Version von %1 gefunden.&lt;br&gt;Wollen Sie diese herunterladen?</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="131"/>
+        <location filename="../utils.cpp" line="132"/>
         <source>No, don&apos;t ask again!</source>
         <translation>Nein, nicht erneut nachfragen!</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="182"/>
+        <location filename="../utils.cpp" line="184"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="188"/>
+        <location filename="../utils.cpp" line="190"/>
         <source>Special thanks to djcj, bubi97, Lasall, Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Besonderen Dank an djcj, bubi97, Lasall, Shakesbier und alle Tester von &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="168"/>
+        <location filename="../utils.cpp" line="170"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="178"/>
+        <location filename="../utils.cpp" line="180"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Editor für Inyoka-basierende Portale</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="185"/>
+        <location filename="../utils.cpp" line="187"/>
         <source>This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
         <translation>Diese Anwendung verwendet Symbole aus dem &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango Projekt&lt;/a&gt;.</translation>
     </message>

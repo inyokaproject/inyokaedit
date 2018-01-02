@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for upload functions.
  */
 
-#ifndef INYOKAEDIT_UPLOAD_H_
-#define INYOKAEDIT_UPLOAD_H_
+#ifndef APPLICATION_UPLOAD_H_
+#define APPLICATION_UPLOAD_H_
 
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
@@ -39,49 +39,49 @@
 class Upload : public QNetworkCookieJar {
   Q_OBJECT
 
- public:
-  explicit Upload(QWidget *pParent, const QString &sInyokaUrl,
-                  const QString &sConstArea, const QString &sHash);
+  public:
+    explicit Upload(QWidget *pParent, const QString &sInyokaUrl,
+                    const QString &sConstArea, const QString &sHash);
 
-  void setEditor(QTextEdit *pEditor, const QString &sArticlename);
+    void setEditor(QTextEdit *pEditor, const QString &sArticlename);
 
- public slots:
-  void clickUploadArticle();
+  public slots:
+    void clickUploadArticle();
 
- private slots:
-  void replyFinished(QNetworkReply *pReply);
+  private slots:
+    void replyFinished(QNetworkReply *pReply);
 
- private:
-  void requestToken();
-  void getTokenReply(QString sNWReply);
-  void requestLogin();
-  void getLoginReply(QString sNWReply);
-  void requestRevision(QString sUrl = "");
-  void getRevisionReply(QString sNWReply);
-  QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                   const QUrl& oldRedirectUrl);
-  void requestUpload();
-  void getUploadReply(QString sNWReply);
+  private:
+    void requestToken();
+    void getTokenReply(QString sNWReply);
+    void requestLogin();
+    void getLoginReply(QString sNWReply);
+    void requestRevision(QString sUrl = "");
+    void getRevisionReply(QString sNWReply);
+    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl);
+    void requestUpload();
+    void getUploadReply(QString sNWReply);
 
-  enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN,
-                     REQUREVISION, RECREVISION, REQUPLOAD, RECUPLOAD};
+    enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN,
+                       REQUREVISION, RECREVISION, REQUPLOAD, RECUPLOAD};
 
-  QWidget *m_pParent;    /**< Pointer to parent window */
-  QString m_sInyokaUrl;
-  QNetworkAccessManager *m_pNwManager;
-  QNetworkReply *m_pReply;
+    QWidget *m_pParent;    /**< Pointer to parent window */
+    QString m_sInyokaUrl;
+    QNetworkAccessManager *m_pNwManager;
+    QNetworkReply *m_pReply;
 
-  REQUESTSTATE m_State;
-  QString m_sToken;
-  QString m_sHash;
-  QNetworkCookie m_SessionCookie;
-  QList<QNetworkCookie> m_ListCookies;
-  QString m_sSitename;
-  QUrl m_urlRedirectedTo;
-  QString m_sRevision;
-  QString m_sConstructionArea;
-  QTextEdit *m_pEditor;
-  QString m_sArticlename;
+    REQUESTSTATE m_State;
+    QString m_sToken;
+    QString m_sHash;
+    QNetworkCookie m_SessionCookie;
+    QList<QNetworkCookie> m_ListCookies;
+    QString m_sSitename;
+    QUrl m_urlRedirectedTo;
+    QString m_sRevision;
+    QString m_sConstructionArea;
+    QTextEdit *m_pEditor;
+    QString m_sArticlename;
 };
 
-#endif  // INYOKAEDIT_CUPLOAD_H_
+#endif  // APPLICATION_UPLOAD_H_

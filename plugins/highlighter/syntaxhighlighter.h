@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for syntax highlighting.
  */
 
-#ifndef INYOKAEDIT_SYNTAXHIGHLIGHTER_H_
-#define INYOKAEDIT_SYNTAXHIGHLIGHTER_H_
+#ifndef PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_
+#define PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_
 
 #include <QHash>
 #include <QSyntaxHighlighter>
@@ -44,17 +44,17 @@ class QTextDocument;
 class SyntaxHighlighter : public QSyntaxHighlighter {
   Q_OBJECT
 
- public:
-  SyntaxHighlighter(QTextDocument *pDoc = 0);
-  ~SyntaxHighlighter();
-  void setRules(QVector<HighlightingRule> rules);
+  public:
+    explicit SyntaxHighlighter(QTextDocument *pDoc = 0);
+    ~SyntaxHighlighter();
+    void setRules(QVector<HighlightingRule> rules);
 
- protected:
-  // Apply highlighting rules
-  void highlightBlock(const QString &sText);
+  protected:
+    // Apply highlighting rules
+    void highlightBlock(const QString &sText);
 
- private:
-  QVector<HighlightingRule> m_highlightingRules;
+  private:
+    QVector<HighlightingRule> m_highlightingRules;
 };
 
-#endif  // INYOKAEDIT_SYNTAXHIGHLIGHTER_H_
+#endif  // PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_

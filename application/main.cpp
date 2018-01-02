@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -26,8 +26,8 @@
 
 /** \mainpage
  * \section Introduction
- * InyokaEdit is a small markup editor for Inyoka articles (http://ubuntuusers.de/inyoka/).<br />
- * <br />Some features:<br />
+ * InyokaEdit is a small markup editor for Inyoka articles
+ * (http://ubuntuusers.de/inyoka/).<br /><br />Some features:<br />
  * \li Syntax highlighting
  * \li Offline preview
  * \li Downloading raw text of existing articles and corresponding images.

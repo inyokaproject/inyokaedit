@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for link parser.
  */
 
-#ifndef INYOKAEDIT_PARSELINKS_H_
-#define INYOKAEDIT_PARSELINKS_H_
+#ifndef APPLICATION_PARSER_PARSELINKS_H_
+#define APPLICATION_PARSER_PARSELINKS_H_
 
 #include <QEventLoop>
 #include <QList>
@@ -34,7 +34,6 @@
 #include <QStringList>
 #include <QTextDocument>
 
-
 /**
  * \class ParseLinks
  * \brief Part of parser module responsible for any kind of links.
@@ -42,32 +41,32 @@
 class ParseLinks : public QObject {
   Q_OBJECT
 
- public:
-  ParseLinks(const QString &sUrlToWiki,
-             const QStringList sListIWiki,
-             const QStringList sListIWikiUrl,
-             const bool bCheckLinks);
+  public:
+    ParseLinks(const QString &sUrlToWiki,
+               const QStringList sListIWiki,
+               const QStringList sListIWikiUrl,
+               const bool bCheckLinks);
 
-  void startParsing(QTextDocument *pRawDoc);
+    void startParsing(QTextDocument *pRawDoc);
 
- public slots:
-  void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
+  public slots:
+    void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
 
- private:
-  void replaceHyperlinks(QTextDocument *pRawDoc);
-  void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
-  void replaceInterwikiLinks(QTextDocument *pRawDoc);
-  void replaceAnchorLinks(QTextDocument *pRawDoc);
-  void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
+  private:
+    void replaceHyperlinks(QTextDocument *pRawDoc);
+    void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
+    void replaceInterwikiLinks(QTextDocument *pRawDoc);
+    void replaceAnchorLinks(QTextDocument *pRawDoc);
+    void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
 
-  QString m_sWikiUrl;   // Inyoka wiki url
-  QStringList m_sListInterwikiKey;   // Interwiki link keywords
-  QStringList m_sListInterwikiLink;  // Interwiki link urls
+    QString m_sWikiUrl;   // Inyoka wiki url
+    QStringList m_sListInterwikiKey;   // Interwiki link keywords
+    QStringList m_sListInterwikiLink;  // Interwiki link urls
 
-  bool m_bCheckLinks;
-  QString m_sLinkClassAddition;
-  QNetworkAccessManager *m_NWAManager;
-  QNetworkReply *m_NWreply;
+    bool m_bCheckLinks;
+    QString m_sLinkClassAddition;
+    QNetworkAccessManager *m_NWAManager;
+    QNetworkReply *m_NWreply;
 };
 
-#endif  // INYOKAEDIT_PARSELINKS_H_
+#endif  // APPLICATION_PARSER_PARSELINKS_H_

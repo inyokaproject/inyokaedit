@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for utile functions.
  */
 
-#ifndef INYOKAEDIT_UTILS_H_
-#define INYOKAEDIT_UTILS_H_
+#ifndef APPLICATION_UTILS_H_
+#define APPLICATION_UTILS_H_
 
 #include <QApplication>
 #include <QNetworkAccessManager>
@@ -33,27 +33,27 @@
 class Utils : public QObject {
   Q_OBJECT
 
- public:
-  explicit Utils(QWidget *pParent);
+  public:
+    explicit Utils(QWidget *pParent);
 
-  static bool getOnlineState();
-  static void setProxy(const QString &sHostName, const quint16 nPort,
-                       const QString &sUser, const QString &sPassword);
-  void checkWindowsUpdate();
+    static bool getOnlineState();
+    static void setProxy(const QString &sHostName, const quint16 nPort,
+                         const QString &sUser, const QString &sPassword);
+    void checkWindowsUpdate();
 
- public slots:
-  void reportBug();
-  void showAbout();
+  public slots:
+    void reportBug();
+    void showAbout();
 
- private slots:
-  void replyFinished(QNetworkReply *pReply);
+  private slots:
+    void replyFinished(QNetworkReply *pReply);
 
- signals:
-  void setWindowsUpdateCheck(const bool);
+  signals:
+    void setWindowsUpdateCheck(const bool);
 
- private:
-  QWidget *m_pParent;
-  QNetworkAccessManager *m_NwManager;
+  private:
+    QWidget *m_pParent;
+    QNetworkAccessManager *m_NwManager;
 };
 
-#endif  // INYOKAEDIT_UTILS_H_
+#endif  // APPLICATION_UTILS_H_

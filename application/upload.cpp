@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -94,15 +94,13 @@ void Upload::clickUploadArticle() {
   }
 
   bool bOk = false;
-  m_sSitename = QInputDialog::getText(m_pParent, trUtf8("Upload"),
-                                      trUtf8("Please insert name of the article "
-                                             "which should be uploaded.\n"
-                                             "It is only possible to upload "
-                                             "into the \"%1\"!")
-                                      .arg(m_sConstructionArea),
-                                      QLineEdit::Normal,
-                                      m_sConstructionArea + "/" + m_sArticlename,
-                                      &bOk);
+  m_sSitename = QInputDialog::getText(
+                  m_pParent, trUtf8("Upload"),
+                  trUtf8("Please insert name of the article which should be "
+                         "uploaded.\nIt is only possible to upload into "
+                         "the \"%1\"!").arg(m_sConstructionArea),
+                  QLineEdit::Normal, m_sConstructionArea + "/" + m_sArticlename,
+                  &bOk);
   m_sSitename = m_sSitename.trimmed();
 
   // Click on "cancel" or string is empty
@@ -206,8 +204,9 @@ void Upload::getTokenReply(QString sNWReply) {
     } else if (sSessionCookie.isEmpty()) {
       qWarning() << "No session cookie received.";
       qWarning() << "COOKIES" << m_ListCookies;
-      QMessageBox::warning(m_pParent, trUtf8("Error"),
-                           trUtf8("Upload failed! No session cookie received."));
+      QMessageBox::warning(
+            m_pParent, trUtf8("Error"),
+            trUtf8("Upload failed! No session cookie received."));
       m_State = REQUTOKEN;
       return;
     } else {  // SUCCESS
@@ -237,21 +236,24 @@ void Upload::requestLogin() {
   QString sUsername("");
   QString sPassword("");
 
-  sUsername = QInputDialog::getText(m_pParent, trUtf8("Login user"),
-                                    trUtf8("Please insert your Inyoka user name:"),
-                                    QLineEdit::Normal, "", &bOk).trimmed();
+  sUsername = QInputDialog::getText(
+                m_pParent, trUtf8("Login user"),
+                trUtf8("Please insert your Inyoka user name:"),
+                QLineEdit::Normal, "", &bOk).trimmed();
   if (true != bOk || sUsername.isEmpty()) {
     return;
   }
 
-  sPassword = QInputDialog::getText(m_pParent, trUtf8("Login password"),
-                                    trUtf8("Please insert your Inyoka password:"),
-                                    QLineEdit::Password, "", &bOk).trimmed();
+  sPassword = QInputDialog::getText(
+                m_pParent, trUtf8("Login password"),
+                trUtf8("Please insert your Inyoka password:"),
+                QLineEdit::Password, "", &bOk).trimmed();
   if (true != bOk || sPassword.isEmpty()) {
     return;
   }
 
-  sUrl = sUrl.remove("wiki.") + "/login/?next=" + m_sInyokaUrl + "/" + m_sSitename;
+  sUrl = sUrl.remove("wiki.") + "/login/?next=" +
+         m_sInyokaUrl + "/" + m_sSitename;
 
 #ifndef QT_NO_CURSOR
   QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -271,7 +273,7 @@ void Upload::requestLogin() {
   QUrlQuery params;
   params.addQueryItem("csrfmiddlewaretoken", m_sToken);
   params.addQueryItem("username", sUsername);
-  sPassword.replace(QChar('+'),QString("%2B"));
+  sPassword.replace(QChar('+'), QString("%2B"));
   params.addQueryItem("password", sPassword);
   params.addQueryItem("redirect", "");
   m_pReply = m_pNwManager->post(request, params.query(
@@ -291,7 +293,7 @@ void Upload::getLoginReply(QString sNWReply) {
   } else {
     foreach (QNetworkCookie cookie, m_ListCookies) {
       if (cookie.isSessionCookie()) {
-        // E.g. ubuntuusers.de includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
+        // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
         // --> "Du hast dich erfolgreich angemeldet"
         // See raw debug output:
         // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
@@ -501,9 +503,9 @@ void Upload::replyFinished(QNetworkReply *pReply) {
   } else {
     if (m_State == REQUREVISION) {
       // Check for redirection
-      QVariant possibleRedirectUrl = pReply->attribute(
-                                       QNetworkRequest::RedirectionTargetAttribute);
-      m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
+      QVariant varRedirectUrl = pReply->attribute(
+                                  QNetworkRequest::RedirectionTargetAttribute);
+      m_urlRedirectedTo = this->redirectUrl(varRedirectUrl.toUrl(),
                                             m_urlRedirectedTo);
     }
     if (!m_urlRedirectedTo.isEmpty() && m_State == REQUREVISION) {
@@ -546,8 +548,7 @@ void Upload::replyFinished(QNetworkReply *pReply) {
 QUrl Upload::redirectUrl(const QUrl &possibleRedirectUrl,
                           const QUrl &oldRedirectUrl) {
   QUrl redirectUrl;
-  if (!possibleRedirectUrl.isEmpty()
-      && possibleRedirectUrl != oldRedirectUrl) {
+  if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl) {
     redirectUrl = possibleRedirectUrl;
     m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
     if (m_sSitename.startsWith('/')) {

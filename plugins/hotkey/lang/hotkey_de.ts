@@ -19,17 +19,17 @@
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="379"/>
+        <location filename="../hotkey.cpp" line="380"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="381"/>
+        <location filename="../hotkey.cpp" line="382"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="384"/>
+        <location filename="../hotkey.cpp" line="385"/>
         <source>Plugin for defining custom hotkeys.</source>
         <translation>Plugin zum Anlegen eigener Tastenkombinationen.</translation>
     </message>

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2017 The InyokaEdit developers
+ * Copyright (C) 2014-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for syntax highlighting.
  */
 
-#ifndef INYOKAEDIT_HIGHLIGHTER_H_
-#define INYOKAEDIT_HIGHLIGHTER_H_
+#ifndef PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
+#define PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
 
 #include <QHash>
 #include <QtPlugin>
@@ -52,79 +52,79 @@ class Highlighter : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.highlighter")
 
- public:
-  void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir userDataDir, const QString sSharePath);
-  QString getPluginName() const;
-  QString getPluginVersion() const;
-  QTranslator* getPluginTranslator(const QString &sSharePath,
-                                   const QString &sLocale);
-  QString getCaption() const;
-  QIcon getIcon() const;
-  bool includeMenu() const;
-  bool includeToolbar() const;
-  bool hasSettings() const;
-  void setCurrentEditor(TextEditor *pEditor);
-  void setEditorlist(QList<TextEditor *> listEditors);
+  public:
+    void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                    const QDir userDataDir, const QString sSharePath);
+    QString getPluginName() const;
+    QString getPluginVersion() const;
+    QTranslator* getPluginTranslator(const QString &sSharePath,
+                                     const QString &sLocale);
+    QString getCaption() const;
+    QIcon getIcon() const;
+    bool includeMenu() const;
+    bool includeToolbar() const;
+    bool hasSettings() const;
+    void setCurrentEditor(TextEditor *pEditor);
+    void setEditorlist(QList<TextEditor *> listEditors);
 
- public slots:
-  void callPlugin();
-  void executePlugin();
-  void showSettings();
-  void showAbout();
+  public slots:
+    void callPlugin();
+    void executePlugin();
+    void showSettings();
+    void showAbout();
 
- private slots:
-  void changedStyle(int nIndex);
-  void clickedStyleCell(int nRow, int nCol);
-  void accept();
+  private slots:
+    void changedStyle(int nIndex);
+    void clickedStyleCell(int nRow, int nCol);
+    void accept();
 
- private:
-  void copyDefaultStyles();
-  void buildUi(QWidget *pParent);
-  void loadHighlighting(const QString &sStyleFile);
-  void readValue(const quint16 nRow, const QTextCharFormat &charFormat);
-  void saveHighlighting();
-  QString createValues(const quint16 nRow);
-  void saveStyle();
-  void readStyle(const QString &sStyle);
-  void getTranslations();
-  void defineRules();
-  void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
-  void evalKey(const QString &sKey, QTextCharFormat &charFormat);
-  void rehighlightAll();
+  private:
+    void copyDefaultStyles();
+    void buildUi(QWidget *pParent);
+    void loadHighlighting(const QString &sStyleFile);
+    void readValue(const quint16 nRow, const QTextCharFormat &charFormat);
+    void saveHighlighting();
+    QString createValues(const quint16 nRow);
+    void saveStyle();
+    void readStyle(const QString &sStyle);
+    void getTranslations();
+    void defineRules();
+    void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
+    void evalKey(const QString &sKey, QTextCharFormat &charFormat);
+    void rehighlightAll();
 
-  Ui::HighlighterDialog *m_pUi;
-  QDialog *m_pDialog;
-  QSettings *m_pSettings;
-  QList<SyntaxHighlighter *> m_ListHighlighters;
-  QList<TextEditor *> m_listEditors;
-  Templates *m_pTemplates;
+    Ui::HighlighterDialog *m_pUi;
+    QDialog *m_pDialog;
+    QSettings *m_pSettings;
+    QList<SyntaxHighlighter *> m_ListHighlighters;
+    QList<TextEditor *> m_listEditors;
+    Templates *m_pTemplates;
 
-  QString m_sStyleFile;
-  QString m_sExt;
+    QString m_sStyleFile;
+    QString m_sExt;
 
-  QSettings *m_pStyleSet;
-  QStringList m_sListMacroKeywords;
-  QStringList m_sListParserKeywords;
+    QSettings *m_pStyleSet;
+    QStringList m_sListMacroKeywords;
+    QStringList m_sListParserKeywords;
 
-  QVector<HighlightingRule> m_highlightingRules;
-  QTextCharFormat m_headingsFormat;
-  QTextCharFormat m_interwikiLinksFormat;
-  QTextCharFormat m_linksFormat;
-  QTextCharFormat m_tablecellsFormat;
-  QTextCharFormat m_newTableLineFormat;
-  QTextCharFormat m_macrosFormat;
-  QTextCharFormat m_parserFormat;
-  QTextCharFormat m_textformatFormat;
-  QTextCharFormat m_commentFormat;
-  QTextCharFormat m_imgMapFormat;
-  QTextCharFormat m_listFormat;
-  QTextCharFormat m_miscFormat;
-  QTextCharFormat m_syntaxErrorFormat;
-  bool m_bSystemForeground;
-  bool m_bSystemBackground;
-  QColor m_colorForeground;
-  QColor m_colorBackground;
+    QVector<HighlightingRule> m_highlightingRules;
+    QTextCharFormat m_headingsFormat;
+    QTextCharFormat m_interwikiLinksFormat;
+    QTextCharFormat m_linksFormat;
+    QTextCharFormat m_tablecellsFormat;
+    QTextCharFormat m_newTableLineFormat;
+    QTextCharFormat m_macrosFormat;
+    QTextCharFormat m_parserFormat;
+    QTextCharFormat m_textformatFormat;
+    QTextCharFormat m_commentFormat;
+    QTextCharFormat m_imgMapFormat;
+    QTextCharFormat m_listFormat;
+    QTextCharFormat m_miscFormat;
+    QTextCharFormat m_syntaxErrorFormat;
+    bool m_bSystemForeground;
+    bool m_bSystemBackground;
+    QColor m_colorForeground;
+    QColor m_colorBackground;
 };
 
-#endif  // INYOKAEDIT_HIGHLIGHTER_H_
+#endif  // PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_

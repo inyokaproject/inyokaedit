@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for parser.
  */
 
-#ifndef INYOKAEDIT_PARSER_H_
-#define INYOKAEDIT_PARSER_H_
+#ifndef APPLICATION_PARSER_PARSER_H_
+#define APPLICATION_PARSER_PARSER_H_
 
 #include <QWidget>
 #include <QtGui>
@@ -49,55 +49,55 @@ class QDir;
 class Parser : public QObject {
   Q_OBJECT
 
- public:
-  Parser(const QString &sSharePath, const QDir &tmpImgDir,
-         const QString &sInyokaUrl, const bool bCheckLinks,
-         Templates *pTemplates, const QString &sCommunity);
-  ~Parser();
+  public:
+    Parser(const QString &sSharePath, const QDir &tmpImgDir,
+           const QString &sInyokaUrl, const bool bCheckLinks,
+           Templates *pTemplates, const QString &sCommunity);
+    ~Parser();
 
-  // Starts generating HTML-code
-  QString genOutput(const QString &sActFile, QTextDocument *pRawDocument,
-                    const bool &bSyntaxCheck = false);
+    // Starts generating HTML-code
+    QString genOutput(const QString &sActFile, QTextDocument *pRawDocument,
+                      const bool &bSyntaxCheck = false);
 
- public slots:
-  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
+  public slots:
+    void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
 
- signals:
-  void hightlightSyntaxError(const qint32);
+  signals:
+    void hightlightSyntaxError(const qint32);
 
- private:
-  // void replaceTemplates(QTextDocument *pRawDoc);
+  private:
+    // void replaceTemplates(QTextDocument *pRawDoc);
 
-  void filterEscapedChars(QTextDocument *pRawDoc);
-  void filterNoTranslate(QTextDocument *pRawDoc);
-  void replaceCodeblocks(QTextDocument *pRawDoc);
-  void reinstertNoTranslate(QTextDocument *pRawDoc);
+    void filterEscapedChars(QTextDocument *pRawDoc);
+    void filterNoTranslate(QTextDocument *pRawDoc);
+    void replaceCodeblocks(QTextDocument *pRawDoc);
+    void reinstertNoTranslate(QTextDocument *pRawDoc);
 
-  void removeComments(QTextDocument *pRawDoc);
-  void generateParagraphs(QTextDocument *pRawDoc);
+    void removeComments(QTextDocument *pRawDoc);
+    void generateParagraphs(QTextDocument *pRawDoc);
 
-  void replaceQuotes(QTextDocument *pRawDoc);
-  void replaceHorLines(QTextDocument *pRawDoc);
-  void replaceHeadlines(QTextDocument *pRawDoc, QStringList &slistHeadlines);
-  void replaceFootnotes(QTextDocument *pRawDoc);
-  QString generateTags(QTextDocument *pRawDoc);
-  QString highlightCode(const QString &sLanguage, const QString &sCode);
+    void replaceQuotes(QTextDocument *pRawDoc);
+    void replaceHorLines(QTextDocument *pRawDoc);
+    QStringList replaceHeadlines(QTextDocument *pRawDoc);
+    void replaceFootnotes(QTextDocument *pRawDoc);
+    QString generateTags(QTextDocument *pRawDoc);
+    QString highlightCode(const QString &sLanguage, const QString &sCode);
 
-  // Text from editor
-  QTextDocument *m_pRawText;
+    // Text from editor
+    QTextDocument *m_pRawText;
 
-  QStringList m_sListNoTranslate;
+    QStringList m_sListNoTranslate;
 
-  ParseTemplates *m_pTemplateParser;
-  ParseLinks *m_pLinkParser;
+    ParseTemplates *m_pTemplateParser;
+    ParseLinks *m_pLinkParser;
 
-  const QString m_sSharePath;
-  const QDir m_tmpImgDir;
-  QString m_sInyokaUrl;
-  QString m_sCurrentFile;
-  Templates *m_pTemplates;
-  Macros *m_pMacros;
-  const QString m_sCommunity;
+    const QString m_sSharePath;
+    const QDir m_tmpImgDir;
+    QString m_sInyokaUrl;
+    QString m_sCurrentFile;
+    Templates *m_pTemplates;
+    Macros *m_pMacros;
+    const QString m_sCommunity;
 };
 
-#endif  // INYOKAEDIT_PARSER_H_
+#endif  // APPLICATION_PARSER_PARSER_H_

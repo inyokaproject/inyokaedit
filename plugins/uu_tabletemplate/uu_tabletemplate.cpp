@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2012-2017 The InyokaEdit developers
+ * Copyright (C) 2012-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -48,9 +48,10 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pEditor = pEditor;
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
-  m_pTemplates = new Templates(m_pSettings->value(
-                                 "InyokaCommunity", "ubuntuusers_de").toString(),
-                               sSharePath, m_dirPreview.absolutePath());
+  m_pTemplates = new Templates(
+                   m_pSettings->value(
+                     "InyokaCommunity", "ubuntuusers_de").toString(),
+                   sSharePath, m_dirPreview.absolutePath());
   m_pParser = new Parser(sSharePath, QDir(""), "", false, m_pTemplates,
                          m_pSettings->value("InyokaCommunity",
                                             "ubuntuusers_de").toString());
@@ -212,14 +213,14 @@ void Uu_TableTemplate::preview() {
 // ----------------------------------------------------------------------------
 
 QString Uu_TableTemplate::generateTable() {
-  QString sTableCode("{{{#!vorlage Tabelle\n");
+  QString sTab("{{{#!vorlage Tabelle\n");
   int colsNum = m_pUi->colsNum->value();
   int rowsNum = m_pUi->rowsNum->value();
 
   // Create title if set
   if (m_pUi->showTitleBox->isChecked()) {
-    sTableCode += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
-                  .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
+    sTab += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
+            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
         .arg(m_sRowClassTitle)
         .arg(colsNum)
         .arg(trUtf8("Title"));
@@ -227,34 +228,35 @@ QString Uu_TableTemplate::generateTable() {
 
   // Create head if set
   if (m_pUi->showHeadBox->isChecked()) {
-    sTableCode +=QString("<rowclass=\"%1%2\"> ")
-                 .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
+    sTab += QString("<rowclass=\"%1%2\"> ")
+            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
         .arg(m_sRowClassHead);
 
     for (int i = 0; i < colsNum; i++) {
-      sTableCode += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
+      sTab += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
     }
 
-    sTableCode += "+++\n";
+    sTab += "+++\n";
   }
 
   // Create body
   for (int i = 0; i < rowsNum; i++) {
     if (m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2) {
-      sTableCode += QString("<rowclass=\"%1%2\">")
-                    .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
+      sTab += QString("<rowclass=\"%1%2\">")
+              .arg(
+                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
           .arg(m_sRowClassHighlight);
     }
     for (int j = 0; j < colsNum; j++) {
-      sTableCode += "\n";
+      sTab += "\n";
     }
     if (i != rowsNum-1) {
-      sTableCode += "+++\n";
+      sTab += "+++\n";
     }
   }
 
-  sTableCode += "}}}\n";
-  return sTableCode;
+  sTab += "}}}\n";
+  return sTab;
 }
 
 // ----------------------------------------------------------------------------
@@ -380,6 +382,7 @@ void Uu_TableTemplate::showAbout() {
                    .arg(trUtf8("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for generating ubuntuusers.de styled Inyoka tables.")));
+                   .arg(trUtf8("Plugin for generating ubuntuusers.de styled "
+                               "Inyoka tables.")));
   aboutbox.exec();
 }

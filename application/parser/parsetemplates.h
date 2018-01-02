@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for parsing templates.
  */
 
-#ifndef INYOKAEDIT_PARSETEMPLATES_H_
-#define INYOKAEDIT_PARSETEMPLATES_H_
+#ifndef APPLICATION_PARSER_PARSETEMPLATES_H_
+#define APPLICATION_PARSER_PARSETEMPLATES_H_
 
 #include <QString>
 #include <QStringList>
@@ -34,25 +34,25 @@
 #include "./provisionaltplparser.h"
 
 class ParseTemplates {
- public:
-  ParseTemplates(QStringList sListTransTpl,
-                 QStringList sListTplNames,
-                 const QStringList &sListHtmlStart,
-                 const QString &sSharePath,
-                 const QDir &tmpImgDir,
-                 const QStringList &sListTestedWith,
-                 const QStringList &sListTestedWithStrings,
-                 const QStringList &sListTestedWithTouch,
-                 const QStringList &sListTestedWithTouchStrings,
-                 const QString &sCommunity);
+  public:
+    ParseTemplates(QStringList sListTransTpl,
+                   QStringList sListTplNames,
+                   const QStringList &sListHtmlStart,
+                   const QString &sSharePath,
+                   const QDir &tmpImgDir,
+                   const QStringList &sListTestedWith,
+                   const QStringList &sListTestedWithStrings,
+                   const QStringList &sListTestedWithTouch,
+                   const QStringList &sListTestedWithTouchStrings,
+                   const QString &sCommunity);
 
-  void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
+    void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
 
- private:
-  ProvisionalTplParser *m_pProvTplTarser;
-  QStringList m_sListTransTpl;
-  QStringList m_sListTplNames;
-  QString m_sCurrentFile;
+  private:
+    ProvisionalTplParser *m_pProvTplTarser;
+    QStringList m_sListTransTpl;
+    QStringList m_sListTplNames;
+    QString m_sCurrentFile;
 };
 
-#endif  // INYOKAEDIT_PARSETEMPLATES_H_
+#endif  // APPLICATION_PARSER_PARSETEMPLATES_H_

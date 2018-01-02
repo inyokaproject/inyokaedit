@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Class definition for macros.
  */
 
-#ifndef INYOKAEDIT_MACROS_H_
-#define INYOKAEDIT_MACROS_H_
+#ifndef APPLICATION_PARSER_MACROS_H_
+#define APPLICATION_PARSER_MACROS_H_
 
 #include <QDir>
 
@@ -37,29 +37,31 @@ struct MACRO {
 };
 
 class Macros {
- public:
-  Macros(const QString &sSharePath, const QDir &tmpImgDir);
-  void startParsing(QTextDocument *pRawDoc,
-                    const QString &sCurrentFile,
-                    const QString &sCommunity,
-                    QStringList &sListHeadlines);
-  QStringList getTplTranslations() const;
+  public:
+    Macros(const QString &sSharePath, const QDir &tmpImgDir);
+    void startParsing(QTextDocument *pRawDoc,
+                      const QString &sCurrentFile,
+                      const QString &sCommunity,
+                      QStringList &sListHeadlines);
+    QStringList getTplTranslations() const;
 
- private:
-  void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
-  void replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans);
-  void replaceDates(QTextDocument *pRawDoc, const QString &sTrans);
-  void replaceNewline(QTextDocument *pRawDoc, const QString &sTrans);
-  void replacePictures(QTextDocument *pRawDoc, const QString &sTrans,
-                       const QString &sCurrentFile, const QString &sCommunity);
-  void replaceTableOfContents(QTextDocument *pRawDoc, const QString &sTrans,
-                              QStringList &sListHeadlines);
-  void replaceSpan(QTextDocument *pRawDoc, const QString &sTrans);
+  private:
+    void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
+    void replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans);
+    void replaceDates(QTextDocument *pRawDoc, const QString &sTrans);
+    void replaceNewline(QTextDocument *pRawDoc, const QString &sTrans);
+    void replacePictures(QTextDocument *pRawDoc,
+                         const QString &sTrans,
+                         const QString &sCurrentFile,
+                         const QString &sCommunity);
+    void replaceTableOfContents(QTextDocument *pRawDoc, const QString &sTrans,
+                                QStringList &sListHeadlines);
+    void replaceSpan(QTextDocument *pRawDoc, const QString &sTrans);
 
-  const QString m_sSharePath;
-  const QDir m_tmpImgDir;
-  QList<MACRO> m_listMacros;
-  QStringList m_sListTplTranslations;
+    const QString m_sSharePath;
+    const QDir m_tmpImgDir;
+    QList<MACRO> m_listMacros;
+    QStringList m_sListTplTranslations;
 };
 
-#endif  // INYOKAEDIT_MACROS_H_
+#endif  // APPLICATION_PARSER_MACROS_H_

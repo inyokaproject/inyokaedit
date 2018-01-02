@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -125,7 +125,8 @@ void Utils::replyFinished(QNetworkReply *pReply) {
                                   QMessageBox::Question,
                                   trUtf8("Update found"),
                                   trUtf8("Found a new version of %1.<br>"
-                                         "Do you want to download the latest version?")
+                                         "Do you want to download the latest "
+                                         "version?")
                                   .arg(qApp->applicationName()), 0, m_pParent);
           QPushButton *noDontAskAgainButton = msgBox->addButton(
                                                 trUtf8("No, don't ask again!"),
@@ -165,28 +166,29 @@ void Utils::reportBug() {
 // ----------------------------------------------------------------------------
 
 void Utils::showAbout() {
-  QMessageBox::about(m_pParent, trUtf8("About")+ " " + qApp->applicationName(),
-                     QString("<big><b>%1 %2</b></big><br />"
-                             "%3<br />"
-                             "<small>%4</small><br /><br />"
-                             "%5<br />"
-                             "%6<br />"
-                             "<small>%7</small><br /><br />"
-                             "%8")
-                     .arg(qApp->applicationName())
-                     .arg(qApp->applicationVersion())
-                     .arg(trUtf8("Editor for Inyoka-based portals"))
-                     .arg(APP_COPY)
-                     .arg("URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
-                          "https://github.com/inyokaproject/inyokaedit</a>")
-                     .arg(trUtf8("License") +
-                          ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                          "GNU General Public License Version 3</a>")
-                     .arg(trUtf8("This application uses icons from "
-                                 "<a href=\"http://tango.freedesktop.org\">"
-                                 "Tango project</a>."))
-                     .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, "
-                                 "Shakesbier and all testers from "
-                                 "<a href=\"http://ubuntuusers.de\"> "
-                                 "ubuntuusers.de</a>.")));
+  QMessageBox::about(
+        m_pParent, trUtf8("About")+ " " + qApp->applicationName(),
+        QString("<big><b>%1 %2</b></big><br />"
+                "%3<br />"
+                "<small>%4</small><br /><br />"
+                "%5<br />"
+                "%6<br />"
+                "<small>%7</small><br /><br />"
+                "%8")
+        .arg(qApp->applicationName())
+        .arg(qApp->applicationVersion())
+        .arg(trUtf8("Editor for Inyoka-based portals"))
+        .arg(APP_COPY)
+        .arg("URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
+             "https://github.com/inyokaproject/inyokaedit</a>")
+        .arg(trUtf8("License") +
+             ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+             "GNU General Public License Version 3</a>")
+        .arg(trUtf8("This application uses icons from "
+                    "<a href=\"http://tango.freedesktop.org\">"
+                    "Tango project</a>."))
+        .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, "
+                    "Shakesbier and all testers from "
+                    "<a href=\"http://ubuntuusers.de\"> "
+                    "ubuntuusers.de</a>.")));
 }

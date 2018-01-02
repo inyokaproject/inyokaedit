@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,15 +24,15 @@
  * Class definition list parser.
  */
 
-#ifndef INYOKAEDIT_PARSELIST_H_
-#define INYOKAEDIT_PARSELIST_H_
+#ifndef APPLICATION_PARSER_PARSELIST_H_
+#define APPLICATION_PARSER_PARSELIST_H_
 
 #include <QTextDocument>
 
 class ParseList {
- public:
-  ParseList();
-  static void startParsing(QTextDocument *pRawDoc);
+  public:
+    ParseList();
+    static void startParsing(QTextDocument *pRawDoc);
 };
 
-#endif  // INYOKAEDIT_PARSELIST_H_
+#endif  // APPLICATION_PARSER_PARSELIST_H_

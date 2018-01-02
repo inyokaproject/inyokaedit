@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,8 +24,8 @@
  * Editor interfaces definition for additional plugins.
  */
 
-#ifndef INYOKAEDIT_IEDITORPLUGIN_H_
-#define INYOKAEDIT_IEDITORPLUGIN_H_
+#ifndef APPLICATION_IEDITORPLUGIN_H_
+#define APPLICATION_IEDITORPLUGIN_H_
 
 #include <QAction>
 #include <QDir>
@@ -35,32 +35,32 @@
 class TextEditor;
 
 class IEditorPlugin {
- public:
-  virtual ~IEditorPlugin() {}
+  public:
+    virtual ~IEditorPlugin() {}
 
-  // ALL FUNCTIONS PURE VIRTUAL !!!
-  virtual void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                          const QDir userDataDir,
-                          const QString sSharePath) = 0;
-  virtual QString getPluginName() const = 0;
-  virtual QString getPluginVersion() const = 0;
-  virtual QTranslator* getPluginTranslator(const QString &sSharePath,
-                                           const QString &sLocale) = 0;
-  virtual QString getCaption() const = 0;
-  virtual QIcon getIcon() const = 0;
-  virtual bool includeMenu() const = 0;
-  virtual bool includeToolbar() const = 0;
-  virtual bool hasSettings() const = 0;
-  virtual void setCurrentEditor(TextEditor *pEditor) = 0;
-  virtual void setEditorlist(QList<TextEditor *> listEditors) = 0;
+    // ALL FUNCTIONS PURE VIRTUAL !!!
+    virtual void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                            const QDir userDataDir,
+                            const QString sSharePath) = 0;
+    virtual QString getPluginName() const = 0;
+    virtual QString getPluginVersion() const = 0;
+    virtual QTranslator* getPluginTranslator(const QString &sSharePath,
+                                             const QString &sLocale) = 0;
+    virtual QString getCaption() const = 0;
+    virtual QIcon getIcon() const = 0;
+    virtual bool includeMenu() const = 0;
+    virtual bool includeToolbar() const = 0;
+    virtual bool hasSettings() const = 0;
+    virtual void setCurrentEditor(TextEditor *pEditor) = 0;
+    virtual void setEditorlist(QList<TextEditor *> listEditors) = 0;
 
- public slots:
-  virtual void callPlugin() = 0;     // Execute manually / call dialog
-  virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
-  virtual void showSettings() = 0;
-  virtual void showAbout() = 0;
+  public slots:
+    virtual void callPlugin() = 0;     // Execute manually / call dialog
+    virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
+    virtual void showSettings() = 0;
+    virtual void showAbout() = 0;
 };
 
 Q_DECLARE_INTERFACE(IEditorPlugin, "InyokaEdit.PluginInterface")
 
-#endif  // INYOKAEDIT_IEDITORPLUGIN_H_
+#endif  // APPLICATION_IEDITORPLUGIN_H_

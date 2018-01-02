@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -24,19 +24,19 @@
  * Class definition for text formats parser.
  */
 
-#ifndef INYOKAEDIT_PARSETEXTFORMATS_H_
-#define INYOKAEDIT_PARSETEXTFORMATS_H_
+#ifndef APPLICATION_PARSER_PARSETEXTFORMATS_H_
+#define APPLICATION_PARSER_PARSETEXTFORMATS_H_
 
 #include <QTextDocument>
 
 class ParseTextformats {
- public:
-  ParseTextformats();
-  static void startParsing(QTextDocument *pRawDoc,
-                           const QStringList &sListFormatStart,
-                           const QStringList &sListFormatEnd,
-                           const QStringList &sListHtmlStart,
-                           const QStringList &sListHtmlEnd);
+  public:
+    ParseTextformats();
+    static void startParsing(QTextDocument *pRawDoc,
+                             const QStringList &sListFormatStart,
+                             const QStringList &sListFormatEnd,
+                             const QStringList &sListHtmlStart,
+                             const QStringList &sListHtmlEnd);
 };
 
-#endif  // INYOKAEDIT_PARSETEXTFORMATS_H_
+#endif  // APPLICATION_PARSER_PARSETEXTFORMATS_H_

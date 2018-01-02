@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -39,13 +39,16 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   this->initHtmlTpl(sPath + "/Preview.tpl");
   m_sListIWLs.clear();
   m_sListIWLUrls.clear();
-  this->initMappings(sPath + "/InterWikiMap.conf", m_sListIWLs, m_sListIWLUrls);
+  this->initMappings(sPath + "/InterWikiMap.conf",
+                     m_sListIWLs, m_sListIWLUrls);
   m_sListFlags.clear();
   m_sListFlagsImg.clear();
-  this->initMappings(sPath + "/FlagsMap.conf", m_sListFlags, m_sListFlagsImg);
+  this->initMappings(sPath + "/FlagsMap.conf",
+                     m_sListFlags, m_sListFlagsImg);
   m_sListSmilies.clear();
   m_sListSmiliesImg.clear();
-  this->initMappings(sPath + "/SmiliesMap.conf", m_sListSmilies, m_sListSmiliesImg);
+  this->initMappings(sPath + "/SmiliesMap.conf",
+                     m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
 
   sPath = "/community/" + sCommunity;

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -41,7 +41,6 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
   QRegExp patternTextformat;
   QString sFormatedText;
   QString sTmpRegExp;
-  bool bFoundStart;
   int nIndex;
   int nLength;
 
@@ -49,7 +48,7 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
   patternTextformat.setMinimal(true);  // Search only for smallest match
 
   for (int i = 0; i < sListFormatStart.size(); i++) {
-    bFoundStart = true;
+    bool bFoundStart = true;
 
     // Start and end is not identical
     if (sListFormatStart[i] != sListFormatEnd[i]) {

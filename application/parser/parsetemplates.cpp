@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2017 The InyokaEdit developers
+ * Copyright (C) 2011-2018 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -65,19 +65,16 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
     sListTrans << s << s;
   }
   QString sDoc(pRawDoc->toPlainText());
-  QString sMacro;
-  QString sBackupMacro;
   QStringList sListArguments;
-  int nPos;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
     QRegExp findTemplate(sListTplRegExp[k], Qt::CaseInsensitive);
     findTemplate.setMinimal(true);
-    nPos = 0;
+    int nPos = 0;
 
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-      sMacro = findTemplate.cap(0);
-      sBackupMacro = sMacro;
+      QString sMacro = findTemplate.cap(0);
+      QString sBackupMacro = sMacro;
       if (sMacro.startsWith("[[" + sListTrans[k], Qt::CaseInsensitive)) {
         // Step needed because of possible spaces
         sMacro.remove("[[" + sListTrans[k], Qt::CaseInsensitive);
