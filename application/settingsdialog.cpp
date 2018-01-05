@@ -72,16 +72,19 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
   QStringList sListGuiLanguages;
-  sListGuiLanguages << "auto" << "en";
+  sListGuiLanguages << "en";
   QDir extendedShareDir(m_sSharePath + "/lang");
   QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
                                 QDir::NoDotAndDotDot | QDir::Files);
   foreach (QFileInfo fi, fiListFiles) {
     if ("qm" == fi.suffix() &&
-        fi.baseName().startsWith(qAppName().toLower() + "_")) {
-      sListGuiLanguages << fi.baseName().remove(qAppName().toLower() + "_");
+        fi.baseName().startsWith(qApp->applicationName().toLower() + "_")) {
+      sListGuiLanguages << fi.baseName().remove(
+                             qApp->applicationName().toLower() + "_");
     }
   }
+  sListGuiLanguages.sort();
+  sListGuiLanguages.push_front("auto");
 
   m_pUi->GuiLangCombo->addItems(sListGuiLanguages);
   if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
