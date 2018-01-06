@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="highlighter_de.qm">../lang/highlighter_de.qm</file>
+    </qresource>
+</RCC>

@@ -40,6 +40,7 @@ SOURCES      += uu_knowledgebox.cpp
 
 FORMS        += uu_knowledgebox.ui
 
-RESOURCES     = res/uu_knowledgebox_resources.qrc
+RESOURCES     = res/uu_knowledgebox_resources.qrc \
+                res/translations.qrc
 
 TRANSLATIONS += lang/uu_knowledgebox_de.ts

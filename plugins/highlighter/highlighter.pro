@@ -42,6 +42,7 @@ SOURCES      += highlighter.cpp \
 
 FORMS        += highlighter.ui
 
-RESOURCES     = res/highlighter_resources.qrc
+RESOURCES     = res/highlighter_resources.qrc \
+                res/translations.qrc
 
 TRANSLATIONS += lang/highlighter_de.ts

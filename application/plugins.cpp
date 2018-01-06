@@ -93,11 +93,6 @@ void Plugins::loadPlugins() {
 
   for (int i = 0; i < m_listPlugins.size(); i++) {
     qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-    // Install translator, even if plugin is disabled
-    // Translated caption shall be visible in settings dialog
-    qApp->installTranslator(
-          m_listPlugins[i]->getPluginTranslator(m_sSharePath,
-                                                m_sGuiLanguage));
     if (m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
       qDebug() << "Disabled plugin:" << m_listPlugins[i]->getPluginName();
       continue;
@@ -105,6 +100,7 @@ void Plugins::loadPlugins() {
 
     m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
                                  m_userDataDir, m_sSharePath);
+    m_listPlugins[i]->installTranslator(qApp, m_sGuiLanguage);
 
     QString sMenu(m_listPlugins[i]->getCaption());
     if (!sMenu.isEmpty() && m_listPlugins[i]->includeMenu()) {

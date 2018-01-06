@@ -42,7 +42,8 @@ SOURCES      += spellcheckdialog.cpp \
 
 FORMS        += spellcheckdialog.ui
 
-RESOURCES     = res/spellchecker_resources.qrc
+RESOURCES     = res/spellchecker_resources.qrc \
+                res/translations.qrc
 
 TRANSLATIONS += lang/spellchecker_de.ts
 

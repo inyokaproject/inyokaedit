@@ -74,7 +74,7 @@ SOURCES      += main.cpp \
                 download.cpp \
                 downloadimg.cpp \
                 fileoperations.cpp \
-                findreplace.cpp  \
+                findreplace.cpp \
                 plugins.cpp \
                 texteditor.cpp \
                 settings.cpp \
@@ -88,7 +88,8 @@ FORMS        += inyokaedit.ui \
                 findreplace.ui \
                 settingsdialog.ui
 
-RESOURCES     = res/inyokaedit_resources.qrc
+RESOURCES     = res/inyokaedit_resources.qrc \
+                res/translations.qrc
 win32:RC_FILE = res/inyokaedit_win.rc
 
 TRANSLATIONS += lang/inyokaedit_de.ts

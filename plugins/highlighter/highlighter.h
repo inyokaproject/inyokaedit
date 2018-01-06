@@ -57,8 +57,7 @@ class Highlighter : public QObject, IEditorPlugin {
                     const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
+    void installTranslator(QApplication *pApp, const QString &sLang);
     QString getCaption() const;
     QIcon getIcon() const;
     bool includeMenu() const;
@@ -94,6 +93,8 @@ class Highlighter : public QObject, IEditorPlugin {
     void rehighlightAll();
 
     Ui::HighlighterDialog *m_pUi;
+    QTranslator m_translator;
+    QString m_sSharePath;
     QDialog *m_pDialog;
     QSettings *m_pSettings;
     QList<SyntaxHighlighter *> m_ListHighlighters;

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="inyokaedit_de.qm">../lang/inyokaedit_de.qm</file>
+    </qresource>
+</RCC>

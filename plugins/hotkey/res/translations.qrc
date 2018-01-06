@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="hotkey_de.qm">../lang/hotkey_de.qm</file>
+    </qresource>
+</RCC>

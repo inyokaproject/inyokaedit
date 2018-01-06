@@ -24,6 +24,7 @@
  * Shows a modal window for ubuntuusers.de table templates.
  */
 
+#include <QApplication>
 #include <QDebug>
 #include <QTextDocument>
 
@@ -48,11 +49,12 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pEditor = pEditor;
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
+  m_sSharePath = sSharePath;
   m_pTemplates = new Templates(
                    m_pSettings->value(
                      "InyokaCommunity", "ubuntuusers_de").toString(),
-                   sSharePath, m_dirPreview.absolutePath());
-  m_pParser = new Parser(sSharePath, QDir(""), "", false, m_pTemplates,
+                   m_sSharePath, m_dirPreview.absolutePath());
+  m_pParser = new Parser(m_sSharePath, QDir(""), "", false, m_pTemplates,
                          m_pSettings->value("InyokaCommunity",
                                             "ubuntuusers_de").toString());
 
@@ -137,15 +139,31 @@ QString Uu_TableTemplate::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QTranslator* Uu_TableTemplate::getPluginTranslator(const QString &sSharePath,
-                                                   const QString &sLocale) {
-  QTranslator* pPluginTranslator = new QTranslator(this);
-  QString sLocaleFile = QString(PLUGIN_NAME) + "_" + sLocale;
-  if (!pPluginTranslator->load(sLocaleFile, sSharePath + "/lang")) {
-    qWarning() << "Could not load plugin translation:" << sLocaleFile;
-    return NULL;
+void Uu_TableTemplate::installTranslator(QApplication *pApp,
+                                         const QString &sLang) {
+  pApp->removeTranslator(&m_translator);
+  if ("en" == sLang) {
+    return;
   }
-  return pPluginTranslator;
+
+  if (!m_translator.load(":/" + QString(PLUGIN_NAME).toLower() +
+                         "_" + sLang + ".qm")) {
+    qWarning() << "Could not load translation" <<
+                  ":/" + QString(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
+    if (!m_translator.load(QString(PLUGIN_NAME).toLower() + "_" + sLang,
+                           m_sSharePath + "/lang")) {
+      qWarning() << "Could not load translation" <<
+                    m_sSharePath + "/lang/" + QString(PLUGIN_NAME).toLower() +
+                    "_" + sLang + ".qm";
+      return;
+    }
+  }
+
+  if (pApp->installTranslator(&m_translator)) {
+    m_pUi->retranslateUi(m_pDialog);
+  } else {
+    qWarning() << "Translator could not be installed!";
+  }
 }
 
 // ----------------------------------------------------------------------------

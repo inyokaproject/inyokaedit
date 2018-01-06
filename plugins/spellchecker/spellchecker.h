@@ -63,8 +63,7 @@ class SpellChecker : public QObject, IEditorPlugin {
                     const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
+    void installTranslator(QApplication *pApp, const QString &sLang);
     QString getCaption() const;
     QIcon getIcon() const;
     bool includeMenu() const;
@@ -103,6 +102,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     QString m_sDictLang;
     QString m_sUserDict;
     QDir m_UserDataDir;
+    QTranslator m_translator;
     QString m_sSharePath;
     QString m_sCommunity;
     QString m_sEncoding;

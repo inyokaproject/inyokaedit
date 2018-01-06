@@ -65,6 +65,8 @@ class SettingsDialog : public QDialog {
                              const QList<QObject *> PluginObjList);
 
   private:
+    QStringList searchTranslations();
+
     Ui::SettingsDialog *m_pUi;
     Settings *m_pSettings;
     const QString m_sSharePath;

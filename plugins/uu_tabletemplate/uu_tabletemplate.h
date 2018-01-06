@@ -64,8 +64,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
                     const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
+    void installTranslator(QApplication *pApp, const QString &sLang);
     QString getCaption() const;
     QIcon getIcon() const;
     bool includeMenu() const;
@@ -114,12 +113,13 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     QWebEngineView *m_pPreviewWebview;
 #endif
 
+    QTranslator m_translator;
+    QString m_sSharePath;
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;
     QString m_sRowClassTitle;
     QString m_sRowClassHead;
     QString m_sRowClassHighlight;
-
     bool m_bBaseToNew;
 };
 

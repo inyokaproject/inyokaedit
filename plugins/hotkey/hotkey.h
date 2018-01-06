@@ -59,8 +59,7 @@ class Hotkey : public QObject, IEditorPlugin {
                     const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    QTranslator* getPluginTranslator(const QString &sSharePath,
-                                     const QString &sLocale);
+    void installTranslator(QApplication *pApp, const QString &sLang);
     QString getCaption() const;
     QIcon getIcon() const;
     bool includeMenu() const;
@@ -95,6 +94,7 @@ class Hotkey : public QObject, IEditorPlugin {
     QSettings *m_pSettings;
     QSettings *m_pSettingsApp;
     TextEditor *m_pEditor;
+    QTranslator m_translator;
     QString m_sSharePath;
     QList<QKeySequenceEdit *> m_listSequenceEdit;
     QStringList m_sListEntries;

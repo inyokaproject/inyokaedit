@@ -56,6 +56,7 @@ SOURCES      += uu_tabletemplate.cpp \
 
 FORMS        += uu_tabletemplate.ui
 
-RESOURCES     = res/uu_tabletemplate_resources.qrc
+RESOURCES     = res/uu_tabletemplate_resources.qrc \
+                res/translations.qrc
 
 TRANSLATIONS += lang/uu_tabletemplate_de.ts

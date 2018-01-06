@@ -40,6 +40,7 @@ SOURCES      += hotkey.cpp
 
 FORMS        += hotkey.ui
 
-RESOURCES     = res/hotkey_resources.qrc
+RESOURCES     = res/hotkey_resources.qrc \
+                res/translations.qrc
 
 TRANSLATIONS += lang/hotkey_de.ts

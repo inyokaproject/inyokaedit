@@ -96,9 +96,6 @@ int main(int argc, char *argv[]) {
   const QString sLang(getLanguage(sSharePath));
   const QString sDebugFile("debug.log");
 
-  // Resource file (images, icons)
-  Q_INIT_RESOURCE(inyokaedit_resources);
-
   if (!userDataDir.exists()) {
     // Create folder including possible parent directories (mkPATH)!
     userDataDir.mkpath(userDataDir.absolutePath());
@@ -117,10 +114,16 @@ int main(int argc, char *argv[]) {
   app.installTranslator(&qtTranslator);
 
   // Setup gui translation (app)
-  if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
-                          sSharePath + "/lang")) {
-    qWarning() << "Could not load application translation:"
+  if (!AppTranslator.load(":/" + qApp->applicationName().toLower() + "_"
+                          + sLang + ".qm")) {
+    qWarning() << "Could not load app translation resource: :/"
                << app.applicationName().toLower() + "_" + sLang;
+    // Fallback: Try to load translation from share folder
+    if (!AppTranslator.load(app.applicationName().toLower() + "_" + sLang,
+                            sSharePath + "/lang")) {
+      qWarning() << "Could not load app translation from share folder:"
+                 << app.applicationName().toLower() + "_" + sLang;
+    }
   }
   app.installTranslator(&AppTranslator);
 
@@ -222,7 +225,9 @@ QString getLanguage(const QString &sSharePath) {
     }
 #endif
     return QLocale::system().name();
-  } else if (!QFile(sSharePath + "/lang/" + qApp->applicationName().toLower() +
+  } else if (!QFile(":/" + qApp->applicationName().toLower() +
+                   "_" + sLang + ".qm").exists() &&
+             !QFile(sSharePath + "/lang/" + qApp->applicationName().toLower() +
                     "_" + sLang + ".qm").exists()) {
     settings.setValue("GuiLanguage", "en");
     return "en";

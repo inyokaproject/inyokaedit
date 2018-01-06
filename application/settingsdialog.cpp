@@ -25,6 +25,7 @@
  */
 
 #include <QDebug>
+#include <QDirIterator>
 #include <QKeyEvent>
 #include <QPushButton>
 
@@ -71,22 +72,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 #endif
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
-  QStringList sListGuiLanguages;
-  sListGuiLanguages << "en";
-  QDir extendedShareDir(m_sSharePath + "/lang");
-  QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
-                                QDir::NoDotAndDotDot | QDir::Files);
-  foreach (QFileInfo fi, fiListFiles) {
-    if ("qm" == fi.suffix() &&
-        fi.baseName().startsWith(qApp->applicationName().toLower() + "_")) {
-      sListGuiLanguages << fi.baseName().remove(
-                             qApp->applicationName().toLower() + "_");
-    }
-  }
-  sListGuiLanguages.sort();
-  sListGuiLanguages.push_front("auto");
-
-  m_pUi->GuiLangCombo->addItems(sListGuiLanguages);
+  m_pUi->GuiLangCombo->addItems(this->searchTranslations());
   if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
     m_pUi->GuiLangCombo->setCurrentIndex(
           m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
@@ -110,9 +96,9 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
         (quint16)m_pSettings->m_cMAXFILES);
 
   QStringList sListCommunities;
-  extendedShareDir = m_sSharePath + "/community";
-  fiListFiles = extendedShareDir.entryInfoList(
-                  QDir::NoDotAndDotDot | QDir::Dirs);
+  QDir extendedShareDir(m_sSharePath + "/community");
+  QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
+                                QDir::NoDotAndDotDot | QDir::Dirs);
   foreach (QFileInfo fi, fiListFiles) {
     sListCommunities << fi.fileName();
   }
@@ -364,4 +350,49 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
     m_pUi->pluginsTable->setCellWidget(nRow, 4,
                                        m_listPluginInfoButtons.last());
   }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QStringList SettingsDialog::searchTranslations() {
+  QStringList sList;
+  QString sTmp;
+
+  // Translations build in resources
+  QDirIterator it(":", QStringList() << "*.qm",
+                  QDir::NoDotAndDotDot | QDir::Files);
+  while (it.hasNext()) {
+    it.next();
+    sTmp = it.fileName();
+    // qDebug() << sTmp;
+
+    if (sTmp.startsWith(qApp->applicationName().toLower() + "_") &&
+        sTmp.endsWith(".qm")) {
+      sList << sTmp.remove(
+                 qApp->applicationName().toLower() + "_").remove(".qm");
+    }
+  }
+
+  // Check for additional translation files in share folder
+  QDirIterator it2(m_sSharePath + "/lang", QStringList() << "*.qm",
+                   QDir::NoDotAndDotDot | QDir::Files);
+  while (it2.hasNext()) {
+    it2.next();
+    sTmp = it2.fileName();
+    // qDebug() << sTmp;
+
+    if (sTmp.startsWith(qApp->applicationName().toLower() + "_")) {
+      sTmp = sTmp.remove(
+               qApp->applicationName().toLower() + "_") .remove(".qm");
+      if (!sList.contains(sTmp)) {
+        sList << sTmp;
+      }
+    }
+  }
+
+  sList << "en";
+  sList.sort();
+  sList.push_front("auto");
+  return sList;
 }

@@ -31,11 +31,11 @@ all:
 	$(QMAKE) -o $(MAKEFILE)
 	$(MAKE) -f $(MAKEFILE)
 	$(LRELEASE) application/lang/*.ts
-	$(LRELEASE) plugins/hotkey/lang/*.ts
 	$(LRELEASE) plugins/highlighter/lang/*.ts
-	$(LRELEASE) plugins/knowledgebox/lang/*.ts
+	$(LRELEASE) plugins/hotkey/lang/*.ts
 	$(LRELEASE) plugins/spellchecker/lang/*.ts
-	$(LRELEASE) plugins/tabletemplate/lang/*.ts
+	$(LRELEASE) plugins/uu_knowledgebox/lang/*.ts
+	$(LRELEASE) plugins/uu_tabletemplate/lang/*.ts
 
 install: install-inyokaedit install-plugins install-data-ubuntuusersde install-hook
 
@@ -46,13 +46,11 @@ install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(bindir)
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/man1
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/de/man1
 	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(bindir)
-	$(INSTALL_FILE) application/lang/inyokaedit_de.qm     $(DESTDIR)$(dataroot)/inyokaedit/lang
 	$(INSTALL_FILE) application/res/images/inyokaedit.xpm $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_FILE) data/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_FILE) data/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
@@ -62,17 +60,11 @@ install-inyokaedit: infiles
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_FILE) plugins/libhotkey.so        $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_FILE) plugins/libhighlighter.so   $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_FILE) plugins/libknowledgebox.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_FILE) plugins/libspellchecker.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_FILE) plugins/libtabletemplate.so $(DESTDIR)$(libdir)/inyokaedit/plugins
-	$(INSTALL_FILE) plugins/hotkey/lang/hotkey_de.qm               $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_FILE) plugins/highlighter/lang/highlighter_de.qm     $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_FILE) plugins/knowledgebox/lang/knowledgebox_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_FILE) plugins/spellchecker/lang/spellchecker_de.qm   $(DESTDIR)$(dataroot)/inyokaedit/lang
-	$(INSTALL_FILE) plugins/tabletemplate/lang/tabletemplate_de.qm $(DESTDIR)$(dataroot)/inyokaedit/lang
+	$(INSTALL_FILE) plugins/libhighlighter.so      $(DESTDIR)$(libdir)/inyokaedit/plugins
+	$(INSTALL_FILE) plugins/libhotkey.so           $(DESTDIR)$(libdir)/inyokaedit/plugins
+	$(INSTALL_FILE) plugins/libspellchecker.so     $(DESTDIR)$(libdir)/inyokaedit/plugins
+	$(INSTALL_FILE) plugins/libuu_knowledgebox.so  $(DESTDIR)$(libdir)/inyokaedit/plugins
+	$(INSTALL_FILE) plugins/libuu_tabletemplate.so $(DESTDIR)$(libdir)/inyokaedit/plugins
 
 install-data-ubuntuusersde:
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/community
@@ -98,12 +90,6 @@ clean:
 	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) clean
 	$(RM) $(INFILES)
 	$(RM) plugins/*.so
-	$(RM) application/lang/*.qm
-	$(RM) plugins/hotkey/lang/*.qm
-	$(RM) plugins/highlighter/lang/*.qm
-	$(RM) plugins/knowledgebox/lang/*.qm
-	$(RM) plugins/spellchecker/lang/*.qm
-	$(RM) plugins/tabletemplate/lang/*.qm
 
 distclean: clean
 	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) distclean

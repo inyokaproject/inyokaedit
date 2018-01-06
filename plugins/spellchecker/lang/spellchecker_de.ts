@@ -62,32 +62,32 @@
 <context>
     <name>SpellChecker</name>
     <message>
-        <location filename="../spellchecker.cpp" line="103"/>
+        <location filename="../spellchecker.cpp" line="115"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="364"/>
+        <location filename="../spellchecker.cpp" line="376"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="460"/>
+        <location filename="../spellchecker.cpp" line="472"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="468"/>
+        <location filename="../spellchecker.cpp" line="480"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="470"/>
+        <location filename="../spellchecker.cpp" line="482"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../spellchecker.cpp" line="473"/>
+        <location filename="../spellchecker.cpp" line="485"/>
         <source>Spell checker based on &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</source>
         <translation>Rechtschreibprüfung basierend auf &lt;a href=&quot;http://hunspell.sourceforge.net/&quot;&gt;Hunspell&lt;/a&gt;.</translation>
     </message>
