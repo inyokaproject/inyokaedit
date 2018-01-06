@@ -44,8 +44,7 @@ class IEditorPlugin {
                             const QString sSharePath) = 0;
     virtual QString getPluginName() const = 0;
     virtual QString getPluginVersion() const = 0;
-    virtual void installTranslator(QApplication *pApp,
-                                   const QString &sLang) = 0;
+    virtual void installTranslator(const QString &sLang) = 0;
     virtual QString getCaption() const = 0;
     virtual QIcon getIcon() const = 0;
     virtual bool includeMenu() const = 0;

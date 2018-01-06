@@ -100,7 +100,7 @@ void Plugins::loadPlugins() {
 
     m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
                                  m_userDataDir, m_sSharePath);
-    m_listPlugins[i]->installTranslator(qApp, m_sGuiLanguage);
+    m_listPlugins[i]->installTranslator(m_sGuiLanguage);
 
     QString sMenu(m_listPlugins[i]->getCaption());
     if (!sMenu.isEmpty() && m_listPlugins[i]->includeMenu()) {

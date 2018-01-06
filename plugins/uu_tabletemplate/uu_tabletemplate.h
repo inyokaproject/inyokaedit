@@ -64,7 +64,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
                     const QDir userDataDir, const QString sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
-    void installTranslator(QApplication *pApp, const QString &sLang);
+    void installTranslator(const QString &sLang);
     QString getCaption() const;
     QIcon getIcon() const;
     bool includeMenu() const;

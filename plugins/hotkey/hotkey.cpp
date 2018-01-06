@@ -78,8 +78,8 @@ QString Hotkey::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Hotkey::installTranslator(QApplication *pApp, const QString &sLang) {
-  pApp->removeTranslator(&m_translator);
+void Hotkey::installTranslator(const QString &sLang) {
+  qApp->removeTranslator(&m_translator);
   if ("en" == sLang) {
     return;
   }
@@ -97,7 +97,7 @@ void Hotkey::installTranslator(QApplication *pApp, const QString &sLang) {
     }
   }
 
-  if (pApp->installTranslator(&m_translator)) {
+  if (qApp->installTranslator(&m_translator)) {
     m_pUi->retranslateUi(m_pDialog);
   } else {
     qWarning() << "Translator could not be installed!";

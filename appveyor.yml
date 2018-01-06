@@ -28,8 +28,6 @@ build_script:
 
     nmake
 
-    mkdir InyokaEdit\lang
-
     mkdir InyokaEdit\plugins
 
     mkdir InyokaEdit\community
@@ -43,16 +41,6 @@ build_script:
     copy README.md InyokaEdit\
 
     copy windows_files\OpenSSL_x64\* InyokaEdit\
-
-    copy application\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\highlighter\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\hotkey\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\uu_knowledgebox\lang\*.qm InyokaEdit\lang\
-
-    copy plugins\uu_tabletemplate\lang\*.qm InyokaEdit\lang\
 
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 

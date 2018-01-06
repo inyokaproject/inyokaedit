@@ -85,8 +85,8 @@ QString SpellChecker::getPluginVersion() const {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker::installTranslator(QApplication *pApp, const QString &sLang) {
-  pApp->removeTranslator(&m_translator);
+void SpellChecker::installTranslator(const QString &sLang) {
+  qApp->removeTranslator(&m_translator);
   if ("en" == sLang) {
     return;
   }
@@ -104,7 +104,7 @@ void SpellChecker::installTranslator(QApplication *pApp, const QString &sLang) {
     }
   }
 
-  if (!pApp->installTranslator(&m_translator)) {
+  if (!qApp->installTranslator(&m_translator)) {
     qWarning() << "Translator could not be installed!";
   }
 }
