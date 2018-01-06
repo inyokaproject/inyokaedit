@@ -103,6 +103,8 @@ class Settings : public QObject {
 
   signals:
     void showSettingsDialog();
+    void changeLang(const QString &sLang);
+    void updateUiLang();
     void updateEditorSettings();
     void availablePlugins(const QList<IEditorPlugin *> PluginList,
                           const QList<QObject *> PluginObjList);

@@ -197,6 +197,8 @@ void SettingsDialog::accept() {
   if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang ||
       m_pUi->CommunityCombo->currentText() != m_sCommunity ||
       oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
+    emit changeLang(m_pSettings->getGuiLanguage());
+
     QFile communityFile(
           m_sSharePath + "/community/" +
           m_pUi->CommunityCombo->currentText() + "/community.conf");
@@ -278,6 +280,13 @@ void SettingsDialog::changedCommunity(QString sCommunity) {
   } else {
     m_pUi->inyokaUrlEdit->setText(sUrl);
   }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void SettingsDialog::updateUiLang() {
+  m_pUi->retranslateUi(this);
 }
 
 // ----------------------------------------------------------------------------

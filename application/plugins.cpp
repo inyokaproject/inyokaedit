@@ -31,12 +31,10 @@
 #include "./plugins.h"
 
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
-                 const QString &sGuiLang,
                  const QStringList &sListDisabledPlugins,
                  const QDir userDataDir, const QString &sSharePath)
   : m_pParent(pParent),
     m_pEditor(pEditor),
-    m_sGuiLanguage(sGuiLang),
     m_sListDisabledPlugins(sListDisabledPlugins),
     m_userDataDir(userDataDir),
     m_sSharePath(sSharePath) {
@@ -87,7 +85,7 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Plugins::loadPlugins() {
+void Plugins::loadPlugins(const QString &sLang) {
   m_PluginMenuEntries.clear();
   m_PluginToolbarEntries.clear();
 
@@ -100,7 +98,7 @@ void Plugins::loadPlugins() {
 
     m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
                                  m_userDataDir, m_sSharePath);
-    m_listPlugins[i]->installTranslator(m_sGuiLanguage);
+    m_listPlugins[i]->installTranslator(sLang);
 
     QString sMenu(m_listPlugins[i]->getCaption());
     if (!sMenu.isEmpty() && m_listPlugins[i]->includeMenu()) {
@@ -148,6 +146,17 @@ void Plugins::setEditorlist(QList<TextEditor *> listEditors) {
     if (!m_sListDisabledPlugins.contains(
           m_listPlugins[i]->getPluginName())) {
       m_listPlugins[i]->setEditorlist(listEditors);
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void Plugins::changeLang(const QString &sLang) {
+  for (int i = 0; i < m_listPlugins.size(); i++) {
+    if (!m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
+      m_listPlugins[i]->installTranslator(sLang);
     }
   }
 }

@@ -52,8 +52,10 @@ class SettingsDialog : public QDialog {
   public slots:
     void accept();
     void reject();
+    void updateUiLang();
 
   signals:
+    void changeLang(const QString &sLang);
     void updatedSettings();
 
   protected:

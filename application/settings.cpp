@@ -53,6 +53,10 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath) {
   connect(this, SIGNAL(showSettingsDialog()),
           m_pSettingsDialog, SLOT(show()));
 
+  connect(m_pSettingsDialog, SIGNAL(changeLang(QString)),
+          this, SIGNAL(changeLang(QString)));
+  connect(this, SIGNAL(updateUiLang()),
+          m_pSettingsDialog, SLOT(updateUiLang()));
   connect(m_pSettingsDialog, SIGNAL(updatedSettings()),
           this, SIGNAL(updateEditorSettings()));
 }

@@ -78,10 +78,15 @@ class InyokaEdit : public QMainWindow {
     void updateEditorSettings();
 
   protected:
+    void changeEvent(QEvent *pEvent);
     void closeEvent(QCloseEvent *pEvent);
     bool eventFilter(QObject *pObj, QEvent *pEvent);
 
+  signals:
+    void updateUiLang();
+
   private slots:
+    void loadLanguage(const QString &sLang);
     void showSyntaxOverview();
     void openFile();
     void setCurrentEditor();
@@ -107,8 +112,13 @@ class InyokaEdit : public QMainWindow {
     void deleteAutoSaveBackups();
     void readSettings();
     void writeSettings();
+    bool switchTranslator(QTranslator *translator, const QString &sFile,
+                          const QString &sPath = "");
 
     Ui::InyokaEdit *m_pUi;
+    QTranslator m_translator;  // App translations
+    QTranslator m_translatorQt;  // Qt translations
+    QString m_sCurrLang;
     Templates *m_pTemplates;
     FileOperations *m_pFileOperations;
     TextEditor *m_pCurrentEditor;

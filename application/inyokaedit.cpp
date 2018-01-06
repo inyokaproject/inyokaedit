@@ -45,6 +45,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
                        QWidget *parent)
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
+    m_sCurrLang(""),
     m_sSharePath(sharePath.absolutePath()),
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
@@ -106,7 +107,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_pFileOperations->loadFile(sFile, true);
   }
 
-  m_pPlugins->loadPlugins();
+  m_pPlugins->loadPlugins(m_pSettings->getGuiLanguage());
   this->updateEditorSettings();
   this->deleteAutoSaveBackups();
   m_pCurrentEditor->setFocus();
@@ -137,6 +138,11 @@ void InyokaEdit::createObjects() {
                                  "the application."));
     exit(-2);
   }
+  connect(m_pSettings, SIGNAL(changeLang(QString)),
+         this, SLOT(loadLanguage(QString)));
+  connect(this, SIGNAL(updateUiLang()),
+          m_pSettings, SIGNAL(updateUiLang()));
+  this->loadLanguage(m_pSettings->getGuiLanguage());
 
   // Has to be created before parser
   m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(),
@@ -175,10 +181,11 @@ void InyokaEdit::createObjects() {
           this, SLOT(setCurrentEditor()));
 
   m_pPlugins = new Plugins(this, m_pCurrentEditor,
-                           m_pSettings->getGuiLanguage(),
                            m_pSettings->getDisabledPlugins(),
                            m_UserDataDir,
                            m_sSharePath);
+  connect(m_pSettings, SIGNAL(changeLang(QString)),
+          m_pPlugins, SLOT(changeLang(QString)));
   connect(m_pPlugins,
           SIGNAL(addMenuToolbarEntries(QList<QAction*>, QList<QAction*>)),
           this,
@@ -1085,6 +1092,60 @@ void InyokaEdit::syncScrollbarsWebview() {
     m_bWebviewScrolling = false;
   }
 #endif
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void InyokaEdit::loadLanguage(const QString &sLang) {
+  if (m_sCurrLang != sLang) {
+    m_sCurrLang = sLang;
+    if (!this->switchTranslator(&m_translatorQt, "qt_" + sLang,
+                                QLibraryInfo::location(
+                                  QLibraryInfo::TranslationsPath))) {
+      this->switchTranslator(&m_translatorQt, "qt_" + sLang,
+                             m_sSharePath + "/lang");
+    }
+
+    if (!this->switchTranslator(
+          &m_translator,
+          ":/" + qApp->applicationName().toLower() + "_" + sLang + ".qm")) {
+      this->switchTranslator(
+            &m_translator, qApp->applicationName().toLower() + "_" + sLang,
+            m_sSharePath + "/lang");
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
+bool InyokaEdit::switchTranslator(QTranslator *translator,
+                                  const QString &sFile, const QString &sPath) {
+  qApp->removeTranslator(translator);
+  if (translator->load(sFile, sPath)) {
+    qApp->installTranslator(translator);
+  } else {
+    if (!sFile.endsWith("_en") && !sFile.endsWith("_en.qm")) {
+      // EN is build in translation -> no file
+      qWarning() << "Could not find translation" << sFile << "in" << sPath;
+    }
+    return false;
+  }
+  return true;
+}
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
+void InyokaEdit::changeEvent(QEvent *pEvent) {
+  if (0 != pEvent) {
+    if (QEvent::LanguageChange == pEvent->type()) {
+      m_pUi->retranslateUi(this);
+      emit updateUiLang();
+    }
+  }
+  QMainWindow::changeEvent(pEvent);
 }
 
 // ----------------------------------------------------------------------------
