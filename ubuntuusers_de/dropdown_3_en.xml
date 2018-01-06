@@ -11,11 +11,11 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="Textformat" path="">
+<menu name="Text format" path="">
   <group name="">
-    <element name="Verzeichnis" insert="&apos;&apos;&apos;%%Verzeichnis%%&apos;&apos;&apos;" icon="" />
-    <element name="Menü" insert="&apos;&apos;&quot;%%Menü -> Untermenü -> Menübefehl%%&quot;&apos;&apos;" icon="" />
-    <element name="Datei" insert="&apos;&apos;&apos;%%Datei%%&apos;&apos;&apos;" icon="" />
-    <element name="Befehl" insert="`%%Befehl%%`" icon="" />
+    <element name="Folder" insert="&apos;&apos;&apos;%%Folder%%&apos;&apos;&apos;" icon="" />
+    <element name="Menu" insert="&apos;&apos;&quot;%%Menu -> Sub menu -> Command%%&quot;&apos;&apos;" icon="" />
+    <element name="File" insert="&apos;&apos;&apos;%%File%%&apos;&apos;&apos;" icon="" />
+    <element name="Command" insert="`%%Command%%`" icon="" />
   </group>
 </menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate community specific menus/toolbars/dropdowns.
+  "Path" is relative to share / user data path.
+  "Icon" and .tpl/.macro "insert" is relative to "path".
+  
+  Don't forget to mask the following characters, if used inside a string:
+   * & -> &amp;
+   * < -> &lt;
+   * > -> &gt;
+   * ' -> &apos;
+   * " -> &quot;
+-->
+<menu name="Headline" path="">
+  <group name="">
+    <element name="Headline: Level 1" insert="= %%Headline%% =\n" icon="" />
+    <element name="Headline: Level 2" insert="== %%Headline%% ==\n" icon="" />
+    <element name="Headline: Level 3" insert="=== %%Headline%% ===\n" icon="" />
+    <element name="Headline: Level 4" insert="==== %%Headline%% ====\n" icon="" />
+    <element name="Headline: Level 5" insert="===== %%Headline%% =====\n" icon="" />
+  </group>
+</menu>
