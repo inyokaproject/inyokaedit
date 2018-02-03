@@ -514,8 +514,10 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   while (-1 != (nOffset = imgTagRegex.indexIn(sHtml, nOffset))) {
       nOffset += imgTagRegex.matchedLength();
       img.setFile(imgTagRegex.cap(1).remove("file:///"));  // (Windows file:///)
-      if (sListFiles.contains(img.fileName())) {
-        continue;
+      if (sListFiles.contains(img.fileName()) ||
+          img.absoluteFilePath().contains("/web/Wiki/", Qt::CaseInsensitive) ||
+          img.absoluteFilePath().contains("/web/img/", Qt::CaseInsensitive)) {
+        continue;  // Filter duplicates or community images
       } else {
         sListFiles << img.fileName();
       }
