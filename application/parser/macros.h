@@ -28,7 +28,6 @@
 #define APPLICATION_PARSER_MACROS_H_
 
 #include <QDir>
-
 #include <QTextDocument>
 
 struct MACRO {

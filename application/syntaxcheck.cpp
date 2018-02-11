@@ -24,9 +24,9 @@
  * Inyoka syntax checks.
  */
 
-#include <QMessageBox>
-
 #include "./syntaxcheck.h"
+
+#include <QMessageBox>
 
 SyntaxCheck::SyntaxCheck() {
 }

@@ -24,13 +24,14 @@
  * Syntax highlighting with builtin Qt functions.
  */
 
+#include "./highlighter.h"
+
 #include <QApplication>
 #include <QColorDialog>
 #include <QDebug>
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include "./highlighter.h"
 #include "ui_highlighter.h"
 
 const QString sSEPARATOR("|");

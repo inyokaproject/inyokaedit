@@ -24,11 +24,12 @@
  * Download functions: Styles, article, images
  */
 
+#include "./download.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QInputDialog>
 
-#include "./download.h"
 #include "./utils.h"
 
 Download::Download(QWidget *pParent, const QString &sStylesDir,

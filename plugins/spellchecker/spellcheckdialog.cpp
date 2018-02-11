@@ -27,10 +27,11 @@
  * Original code form: http://developer.qt.nokia.com/wiki/Spell_Checking_with_Hunspell
  */
 
+#include "./spellcheckdialog.h"
+
 #include <QDebug>
 #include <QTextEdit>
 
-#include "./spellcheckdialog.h"
 #include "ui_spellcheckdialog.h"
 #include "./spellchecker.h"
 

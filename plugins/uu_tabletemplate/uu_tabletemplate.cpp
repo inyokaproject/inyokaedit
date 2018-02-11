@@ -24,11 +24,12 @@
  * Shows a modal window for ubuntuusers.de table templates.
  */
 
+#include "./uu_tabletemplate.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QTextDocument>
 
-#include "./uu_tabletemplate.h"
 #include "ui_uu_tabletemplate.h"
 
 void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,

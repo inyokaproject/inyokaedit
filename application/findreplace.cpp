@@ -24,11 +24,12 @@
  * Find/replace dialog.
  */
 
+#include "./findreplace.h"
+
 #include <QDebug>
 #include <QMessageBox>
 #include <QTextDocument>
 
-#include "./findreplace.h"
 #include "ui_findreplace.h"
 
 FindReplace::FindReplace(QWidget *parent)

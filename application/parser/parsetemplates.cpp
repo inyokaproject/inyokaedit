@@ -24,9 +24,9 @@
  * Parsing templates.
  */
 
-#include <QDebug>
-
 #include "./parsetemplates.h"
+
+#include <QDebug>
 
 ParseTemplates::ParseTemplates(QStringList sListTransTpl,
                                QStringList sListTplNames,

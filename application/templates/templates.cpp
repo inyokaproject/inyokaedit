@@ -24,13 +24,13 @@
  * Loading and providing templates.
  */
 
+#include "./templates.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
 #include <QMessageBox>
 #include <QSettings>
-
-#include "./templates.h"
 
 Templates::Templates(const QString &sCommunity, const QString &sSharePath,
                      const QString &sUserDataDir) {

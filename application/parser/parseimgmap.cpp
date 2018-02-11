@@ -24,11 +24,11 @@
  * Parse all image mapped elements (simple replacement).
  */
 
+#include "./parseimgmap.h"
+
 #include <QDebug>
 #include <QRegExp>
 #include <QStringList>
-
-#include "./parseimgmap.h"
 
 ParseImgMap::ParseImgMap() {
 }

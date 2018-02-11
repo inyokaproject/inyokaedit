@@ -24,11 +24,11 @@
  * Parse tables.
  */
 
+#include "./parsetable.h"
+
 #include <QRegExp>
 #include <QStringList>
 #include <QTextBlock>
-
-#include "./parsetable.h"
 
 ParseTable::ParseTable() {
 }

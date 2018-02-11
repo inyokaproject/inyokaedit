@@ -25,11 +25,11 @@
  * is not supperted.
  */
 
+#include "./provisionaltplparser.h"
+
 #include <QDebug>
 #include <QFileInfo>
 #include <QImage>
-
-#include "./provisionaltplparser.h"
 
 ProvisionalTplParser::ProvisionalTplParser(
     const QStringList &sListHtmlStart,
@@ -1898,7 +1898,6 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
   }
 
   for (int i = 1; i < sArgs.length(); i++) {
-    bool bCellStyleWasSet = false;
     sTmpTD.clear();
 
     if (sArgs[i] == "+++") {  // New line
@@ -1919,6 +1918,7 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
       if (nIndex >= 0
           && !sArgs[i].trimmed().startsWith("<span")
           && !bTextformat) {
+        bool bCellStyleWasSet = false;
         nLength = tablePattern.matchedLength();
         sStyleInfo = tablePattern.cap();
 

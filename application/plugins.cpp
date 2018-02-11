@@ -24,11 +24,11 @@
  * Plugin management.
  */
 
+#include "./plugins.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QPluginLoader>
-
-#include "./plugins.h"
 
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,

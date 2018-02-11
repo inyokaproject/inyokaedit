@@ -24,6 +24,8 @@
  * Utile functions, which can be used by different classes.
  */
 
+#include "./utils.h"
+
 #include <QDate>
 #include <QDebug>
 #include <QDesktopServices>
@@ -34,8 +36,6 @@
 #include <QPushButton>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-
-#include "./utils.h"
 
 Utils::Utils(QWidget *pParent)
   : m_pParent(pParent) {

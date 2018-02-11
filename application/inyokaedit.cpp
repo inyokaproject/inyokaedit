@@ -24,6 +24,8 @@
  * Main application generation (gui, object creation etc.).
  */
 
+#include "./inyokaedit.h"
+
 #include <QComboBox>
 #include <QtGui>
 #include <QScrollBar>
@@ -38,7 +40,6 @@
 #endif
 
 #include "./xmlparser.h"
-#include "./inyokaedit.h"
 #include "ui_inyokaedit.h"
 
 InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,

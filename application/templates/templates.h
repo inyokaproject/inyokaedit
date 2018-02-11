@@ -27,6 +27,9 @@
 #ifndef APPLICATION_TEMPLATES_TEMPLATES_H_
 #define APPLICATION_TEMPLATES_TEMPLATES_H_
 
+#include <QString>
+#include <QStringList>
+
 class Templates {
   public:
     Templates(const QString &sCommunity, const QString &sSharePath,

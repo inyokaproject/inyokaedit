@@ -24,6 +24,8 @@
  * Upload raw text of an article to Inyoka.
  */
 
+#include "./upload.h"
+
 #include <QDateTime>
 #include <QDebug>
 #include <QFileInfo>
@@ -33,7 +35,6 @@
 #include <QUrl>
 #include <QUrlQuery>
 
-#include "./upload.h"
 #include "./utils.h"
 
 Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,

@@ -24,13 +24,13 @@
  * Handle build-in macros.
  */
 
+#include "./macros.h"
+
 #include <QDateTime>
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
-
-#include "./macros.h"
 
 Macros::Macros(const QString &sSharePath,
                const QDir &tmpImgDir)

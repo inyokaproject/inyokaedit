@@ -24,9 +24,9 @@
  * Parse sorted/unsorted lists.
  */
 
-#include <QTextBlock>
-
 #include "./parselist.h"
+
+#include <QTextBlock>
 
 ParseList::ParseList() {
 }

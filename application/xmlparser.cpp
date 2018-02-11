@@ -24,10 +24,10 @@
  * Xml parser for importing menus/dropdown/toolbars.
  */
 
+#include "./xmlparser.h"
+
 #include <QDebug>
 #include <QMessageBox>
-
-#include "./xmlparser.h"
 
 XmlParser::XmlParser() {
 }

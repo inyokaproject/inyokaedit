@@ -24,12 +24,13 @@
  * Shows a modal window for hotkey entry selection.
  */
 
+#include "./hotkey.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QMessageBox>
 
-#include "./hotkey.h"
 #include "ui_hotkey.h"
 
 void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,

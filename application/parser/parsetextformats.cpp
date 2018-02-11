@@ -24,10 +24,10 @@
  * Parse all text formats.
  */
 
+#include "./parsetextformats.h"
+
 #include <QRegExp>
 #include <QStringList>
-
-#include "./parsetextformats.h"
 
 ParseTextformats::ParseTextformats() {
 }

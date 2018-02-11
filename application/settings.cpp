@@ -24,11 +24,11 @@
  * Read and write settings.
  */
 
+#include "./settings.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QStandardPaths>
-
-#include "./settings.h"
 
 Settings::Settings(QWidget *pParent, const QString &sSharePath) {
 #if defined _WIN32

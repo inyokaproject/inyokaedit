@@ -24,8 +24,9 @@
  * Parse all kind of links (external, InterWiki, etc.)
  */
 
-#include <QDebug>
 #include "./parselinks.h"
+
+#include <QDebug>
 
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
                        const QStringList sListIWiki,

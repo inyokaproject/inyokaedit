@@ -33,7 +33,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
-#include "syntaxhighlighter.h"
+#include "./syntaxhighlighter.h"
 #include "../../application/templates/templates.h"
 #include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"

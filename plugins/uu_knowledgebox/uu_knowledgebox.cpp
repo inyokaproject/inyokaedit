@@ -24,11 +24,12 @@
  * Shows a modal window for ubuntuusers.de knowledge box entry selection.
  */
 
+#include "./uu_knowledgebox.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QMessageBox>
 
-#include "./uu_knowledgebox.h"
 #include "ui_uu_knowledgebox.h"
 
 void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,

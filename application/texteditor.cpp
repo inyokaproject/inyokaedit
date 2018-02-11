@@ -42,13 +42,12 @@
  * syntax elements.
  */
 
+#include "./texteditor.h"
+
 #include <QAbstractItemView>
 #include <QFile>
 #include <QKeyEvent>
 #include <QScrollBar>
-
-#include "./texteditor.h"
-
 
 TextEditor::TextEditor(QStringList sListTplMacros,
                        const QString &sTransTemplate,

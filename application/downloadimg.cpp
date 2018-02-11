@@ -24,12 +24,12 @@
  * Download manager for images.
  */
 
+#include "./downloadimg.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QMessageBox>
 #include <QFileInfo>
-
-#include "./downloadimg.h"
 
 DownloadImg::DownloadImg() {
   connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),

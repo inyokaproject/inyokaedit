@@ -24,6 +24,8 @@
  * File operations: New, load, save...
  */
 
+#include "./fileoperations.h"
+
 #include <QApplication>
 #include <QDebug>
 #include <QFileDialog>
@@ -38,7 +40,6 @@
 #include <QWebEngineView>
 #endif
 
-#include "./fileoperations.h"
 #include "./3rdparty/miniz/miniz.c"
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,

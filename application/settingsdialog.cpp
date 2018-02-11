@@ -24,12 +24,13 @@
  * Settings gui.
  */
 
+#include "./settingsdialog.h"
+
 #include <QDebug>
 #include <QDirIterator>
 #include <QKeyEvent>
 #include <QPushButton>
 
-#include "./settingsdialog.h"
 #include "ui_settingsdialog.h"
 
 SettingsDialog::SettingsDialog(Settings *pSettings,
