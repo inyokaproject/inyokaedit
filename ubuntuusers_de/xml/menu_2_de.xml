@@ -11,7 +11,7 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="InterWiki-Links" path="iWikiLinks">
+<menu name="InterWiki-Links" path="../iWikiLinks">
   <group name="Inyoka" icon="user.png">
     <element name="Forum" insert="[forum:%%Forum%%:]" icon="" />
     <element name="Topic" insert="[topic:%%Topic%%:]" icon="" />

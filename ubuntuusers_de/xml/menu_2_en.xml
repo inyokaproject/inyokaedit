@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<!--
+  This document is used to generate community specific menus/toolbars/dropdowns.
+  "Path" is relative to share / user data path.
+  "Icon" and .tpl/.macro "insert" is relative to "path".
+  
+  Don't forget to mask the following characters, if used inside a string:
+   * & -> &amp;
+   * < -> &lt;
+   * > -> &gt;
+   * ' -> &apos;
+   * " -> &quot;
+-->
+<menu name="InterWiki-Links" path="../iWikiLinks">
+  <group name="Inyoka" icon="user.png">
+    <element name="Forum" insert="[forum:%%Forum%%:]" icon="" />
+    <element name="Topic" insert="[topic:%%Topic%%:]" icon="" />
+    <element name="Post" insert="[post:%%Post%%:]" icon="" />
+    <element name="User" insert="[user:%%uu-user%%:]" icon="user.png" />
+    <element name="Ikhaya" insert="[ikhaya:%%Ikhaya article%%:]" icon="ikhaya.png" />
+    <element name="Calendar" insert="[calendar:%%Calender%%:]" icon="office-calendar.png" />
+    <element name="Inyoka-Ticket" insert="[ticket:%%Ticket%%:]" icon="ticket.png" />
+    <element name="Wiki Tag" insert="[tag:%%Wiki-Tag%%:]" icon="" />
+    <element name="Behind Ubuntuusers" insert="[behind:%%Behind%%:]" icon="favicon.ico" />
+    <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="edit-select-all.png" />
+    <element name="Planet" insert="[planet:%%Article%%:]" icon="internet.png" />
+  </group>
+  <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
+    <element name="Canonical" insert="[canonical:%%Sitename%%:]" icon="canonical.png" />
+    <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
+    <element name="Canonical Voises" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
+    <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
+    <element name="Apt" insert="[apt:%%Package name%%:]" icon="" />
+    <element name="Ubuntu Wiki" insert="[ubuntu:%%Sitename%%:]" icon="ubuntu.png" />
+    <element name="Ubuntu.com sub page" insert="[ubuntusub:%%Sitename%%:]" icon="ubuntusub.png" />
+    <element name="Ubuntu Help" insert="[ubuntu_doc:%%Sitename%%:]" icon="ubuntu_doc.png" />
+    <element name="Ubuntu Manpage" insert="[man:%%Sitename%%:]" icon="man.png" />
+    <element name="Ubuntu Manpage (german)" insert="[man_de:%%Sitename%%:]" icon="man_de.png" />
+    <element name="Ubuntu Mailinglist" insert="[ml:%%Sitename%%:]" icon="ml.png" />
+    <element name="Ubuntu Brainstorm" insert="[brainstorm:%%Sitename%%:]" icon="brainstorm.png" />
+    <element name="Ubuntu Fridge" insert="[ubuntufridge:%%Sitename%%:]" icon="ubuntufridge.png" />
+    <element name="Ubuntu Discourse" insert="[ubuntudiscourse:%%Sitename%%:]" icon="ubuntudiscourse.png" />
+    <element name="Ubuntu Resources" insert="[ubunturesources:%%Sitename%%:]" icon="ubunturesources.png" />
+    <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%App name%%:]" icon="ubuntuapps.png" />
+    <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%App name%%:]" icon="uappexplorer.png" />
+    <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="openstore.png" />
+    <element name="OpenStore 2 (unofficial)" insert="[openstore2:%%App name%%:]" icon="openstore2.png" />
+    <element name="Ubuntu Scopes" insert="[scope:%%Sitename%%:]" icon="scope.png" />
+    <element name="Ubuntu One" insert="[ubuntuone:%%Sitename%%:]" icon="ubuntuone.png" />
+    <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
+    <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="[omgubuntu.png" />
+    <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
+    <element name="Ubuntuforums.org Thread" insert="[uf_thread:%%Thread%%:]" icon="uf_thread.png" />
+    <element name="Ubuntuforums.org Member" insert="[uf_member:%%uf-user%%:]" icon="uf_member.png" />
+    <element name="French Ubuntuwiki" insert="[ubuntu_fr:%%Sitename%%:]" icon="ubuntu_fr.png" />
+    <element name="Italian Ubuntuwiki" insert="[ubuntu_it:%%Sitename%%:]" icon="" />
+  </group>
+  <group name="Ubuntu derivatives" icon="kubuntu.png">
+    <element name="Edubuntu" insert="[edubuntu:%%Sitename%%:]" icon="edubuntu.png" />
+    <element name="Kubuntu" insert="[kubuntu:%%Sitename%%:]" icon="kubuntu.png" />
+    <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Sitename%%:]" icon="kubuntu_doc.png" />
+    <element name="German Kubuntuwiki" insert="[kubuntu-de:%%Sitename%%:]" icon="kubuntu-de.png" />
+    <element name="Lubuntu" insert="[lubuntu:%%Sitename%%:]" icon="lubuntu.png" />
+    <element name="Mythbuntu" insert="[mythbuntu:%%Sitename%%:]" icon="mythbuntu.png" />
+    <element name="Ubuntu GNOME" insert="[ubuntugnome:%%Sitename%%:]" icon="ubuntugnome.png" />
+    <element name="Ubuntu MATE" insert="[ubuntumate:%%Sitename%%:]" icon="ubuntumate.png" />
+    <element name="Ubuntu Studio" insert="[ubuntustudio:%%Sitename%%:]" icon="ubuntustudio.png" />
+    <element name="Xubuntu" insert="[xubuntu:%%Sitename%%:]" icon="xubuntu.png" />
+  </group>
+  <group name="Other distributions, OSS projects" icon="debian.png">
+    <element name="ArchWiki" insert="[archwiki:%%Sitename%%:]" icon="archwiki.png" />
+    <element name="Debianwiki" insert="[debian:%%Sitename%%:]" icon="debian.png" />
+    <element name="German Debianwiki" insert="[debian_de:%%Sitename%%:]" icon="debian_de.png" />
+    <element name="GNOME apps" insert="[gnomeapps:%%Sitename%%:]" icon="gnomeapps.png" />
+    <element name="GNOME projects" insert="[gnomeprojects:%%Sitename%%:]" icon="gnomeprojects.png" />
+    <element name="openSUSE" insert="[opensuse:%%Sitename%%:]" icon="opensuse.jpg" />
+    <element name="Freedesktop Software" insert="[freedesktop-software:%%Sitename%%:]" icon="freedesktop.png" />
+    <element name="Pro-Linux" insert="[prolinux:%%Sitename%%:]" icon="prolinux.png" />
+    <element name="Xfce Docs" insert="[xfcedocs:%%Sitename%%:]" icon="xfcedocs.png" />
+  </group>
+  <group name="Wikimedia" icon="wikimedia.png">
+    <element name="German Wikipedia" insert="[wikipedia:%%Sitename%%:]" icon="wikipedia.png" />
+    <element name="Engl. Wikipedia" insert="[wikipedia_en:%%Sitename%%:]" icon="wikipedia_en.png" />
+    <element name="German Wikibooks" insert="[wikibooks:%%Sitename%%:]" icon="wikibooks.png" />
+    <element name="Engl. Wikibooks" insert="[wikibooks_en:%%Sitename%%:]" icon="wikibooks_en.png" />
+    <element name="Wikimedia" insert="[wikimedia:%%Sitename%%:]" icon="wikimedia.png" />
+  </group>
+  <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
+    <element name="Bitbucket" insert="[bitbucket:%%Sitename%%:]" icon="bitbucket.png" />
+    <element name="Debian Bugs" insert="[debianbug:%%Bug%%:]" icon="debianbug.png" />
+    <element name="Freecode" insert="[freecode:%%Sitename%%:]" icon="freecode.png" />
+    <element name="Freshmeat" insert="[freshmeat:%%Sitename%%:]" icon="freshmeat.png" />
+    <element name="Freedesktop Bugs" insert="[freedesktop:%%Sitename%%:]" icon="freedesktop.png" />
+    <element name="GetDeb" insert="[getdeb:%%Sitename%%:]" icon="getdeb.png" />
+    <element name="GitHub" insert="[github:%%Sitename%%:]" icon="github.png" />
+    <element name="Gnome Bugs" insert="[gnome:%%Sitename%%:]" icon="gnome.png" />
+    <element name="Google Code" insert="[googlecode:%%Sitename%%:]" icon="googlecode.png" />
+    <element name="KDE Bugs" insert="[kdebugs:%%Bug%%:]" icon="kdebugs.png" />
+    <element name="Launchpad" insert="[launchpad:%%Sitename%%:]" icon="launchpad.png" />
+    <element name="Launchpad 2" insert="[launchpad2:%%Sitename%%:]" icon="launchpad2.png" />
+    <element name="Launchpad Code" insert="[lpcode:%%Sitename%%:]" icon="lpcode.png" />
+    <element name="Bug (Launchpad)" insert="[bug:%%LP-Bug number%%:]" icon="bug.png" />
+    <element name="Launchpad Answers" insert="[launchpad_answers:%%Sitename%%:]" icon="launchpad.png" />
+    <element name="Launchpad User" insert="[lpuser:%%LP-user%%:]" icon="lpuser.png" />
+    <element name="PlayDeb" insert="[playdeb:%%Sitename%%:]" icon="playdeb.png" />
+    <element name="Sourceforge" insert="[sourceforge:%%Sitename%%:]" icon="sourceforge.png" />
+    <element name="Sourceforge 2" insert="[sourceforge2:%%Sitename%%:]" icon="sourceforge2.png" />
+  </group>
+  <group name="Games" icon="holarse.png">
+    <element name="AtomicGamer" insert="[atomicgamer:%%Sitename%%:]" icon="atomicgamer.png" />
+    <element name="Desura" insert="[desura:%%Sitename%%:]" icon="desura.png" />
+    <element name="Gameolith" insert="[gameolith:%%Sitename%%:]" icon="gameolith.png" />
+    <element name="GOG.com Games catalogue" insert="[gog:%%Sitename%%:]" icon="gog.png" />
+    <element name="Holarse" insert="[holarse:%%Sitename%%:]" icon="holarse.png" />
+    <element name="Humble Bundle Store" insert="[humble:%%Sitename%%:]" icon="humble.png" />
+    <element name="Indie DB Video Games" insert="[indiedb:%%Sitename%%:]" icon="indiedb.png" />
+    <element name="Linux Installers" insert="[liflg:%%Sitename%%:]" icon="liflg.png" />
+    <element name="Linux game database" insert="[lgdb:%%Sitename%%:]" icon="lgdb.png" />
+    <element name="Linux Gaming" insert="[linuxgaming:%%Sitename%%:]" icon="linuxgaming.png" />
+    <element name="Moby Games" insert="[moby:%%Sitename%%:]" icon="moby.png" />
+    <element name="Mod DB" insert="[moddb:%%Sitename%%:]" icon="moddb.png" />
+    <element name="Steam" insert="[steam:%%Sitename%%:]" icon="steam.png" />
+  </group>
+  <group name="Misc" icon="youtube.png">
+    <element name="Blogspot" insert="[blogspot:%%Sitename%%:]" icon="blogspot.png" />
+    <element name="box.com" insert="[box:%%Sitename%%:]" icon="box.png" />
+    <element name="derStandard" insert="[derstandard:%%Sitename%%:]" icon="derstandard.png" />
+    <element name="Diaspora" insert="[diaspora:%%Sitename%%:]" icon="diaspora.png" />
+    <element name="DuckDuckGo" insert="[duckduckgo:%%Search term%%:]" icon="duckduckgo.png" />
+    <element name="Dropbox" insert="[dropbox:%%Sitename%%:]" icon="dropbox.png" />
+    <element name="EAN" insert="[ean:%%EAN%%:]" icon="ean.png" />
+    <element name="Facebook" insert="[fb:%%Sitename%%:]" icon="fb.png" />
+    <element name="Freenode Web IRC" insert="[freenode:%%IRC Name%%:]" icon="freenode.png" />
+    <element name="Google" insert="[google:%%Search term%%:]" icon="" />
+    <element name="Google+" insert="[gplus:%%Sitename%%:]" icon="gplus.png" />
+    <element name="heise online" insert="[heise:%%Sitename%%:]" icon="heise.png" />
+    <element name="Identica" insert="[identica:%%Sitename%%:]" icon="identica.png" />
+    <element name="Internet Wayback Machine" insert="[iawm:%%Sitename%%:]" icon="iawm.png" />
+    <element name="ISBN" insert="[isbn:%%ISBN%%:]" icon="isbn.png" />
+    <element name="Ixquick" insert="[ixquick:%%Search term%%:]" icon="ixquick.png" />
+    <element name="Last.fm" insert="[lastfm:%%Sitename%%:]" icon="lastfm.png" />
+    <element name="OpenStreetMap" insert="[osm:%%Sitename%%:]" icon="osm.png" />
+    <element name="PDF file" insert="[pdf:%%PDF%%:]" icon="pdf.png" />
+    <element name="QuakeNet IRC" insert="[quakenet:%%Sitename%%:]" icon="quakenet.png" />
+    <element name="Stack Overflow" insert="[stackoverflow:%%Sitename%%:]" icon="stackoverflow.png" />
+    <element name="Startpage search" insert="[startpage:%%Search term%%:]" icon="startpage.png" />
+    <element name="Twitter" insert="[twitter:%%Sitename%%:]" icon="twitter.png" />
+    <element name="Vimeo" insert="[vimeo:%%Sitename%%:]" icon="vimeo.png" />
+    <element name="Wordpress" insert="[wordpress:%%Sitename%%:]" icon="wordpress.png" />
+    <element name="Youtube" insert="[youtube:%%Sitename%%:]" icon="youtube.png" />
+  </group>
+</menu>

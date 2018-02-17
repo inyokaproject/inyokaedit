@@ -11,7 +11,7 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="Textbau&amp;steine" path="templates">
+<menu name="Textbau&amp;steine" path="../templates">
   <group name="&amp;Am Anfang eines Artikels">
     <element name="Baustelle" insert="Baustelle.tpl" icon="" />
     <element name="Getestet" insert="Getestet.tpl" icon="" />
