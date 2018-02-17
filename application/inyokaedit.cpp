@@ -523,6 +523,18 @@ void InyokaEdit::createXmlMenus() {
               sTmpPath + sObj + "_" + QString::number(n) + "_" +
               m_pSettings->getGuiLanguage() + ".xml");
 
+        if (!xmlFile.exists() && m_pSettings->getGuiLanguage() != "en") {
+          if (1 == n && sPath == m_sSharePath) {
+            qWarning() << "Xml menu file not found:" << xmlFile.fileName() <<
+                          "- Trying to load English fallback.";
+          }
+          // Try English fallback
+          QString sTemp(xmlFile.fileName());
+          sTemp.replace("_" + m_pSettings->getGuiLanguage() + ".xml",
+                        "_en.xml");
+          xmlFile.setFileName(sTemp);
+        }
+
         if (xmlFile.exists()) {
           // qDebug() << "Read XML" << xmlFile.fileName();
           if (xmlParser.parseXml(xmlFile.fileName())) {
