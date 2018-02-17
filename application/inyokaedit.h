@@ -108,6 +108,7 @@ class InyokaEdit : public QMainWindow {
     void createActions();
     void createMenus();
     void setupEditor();
+    void clearXmlMenus();
     void createXmlMenus();
     void deleteAutoSaveBackups();
     void readSettings();

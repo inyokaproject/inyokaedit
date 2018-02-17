@@ -194,12 +194,13 @@ void SettingsDialog::accept() {
   oldDisabledPlugins.removeAll("");
   m_pSettings->m_sListDisabledPlugins.removeAll("");
 
-  // If the following settings have been changed, a restart is needed
-  if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang ||
-      m_pUi->CommunityCombo->currentText() != m_sCommunity ||
-      oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
+  if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang) {
     emit changeLang(m_pSettings->getGuiLanguage());
+  }
 
+  // If the following settings have been changed, a restart is needed
+  if (m_pUi->CommunityCombo->currentText() != m_sCommunity ||
+      oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
     QFile communityFile(
           m_sSharePath + "/community/" +
           m_pUi->CommunityCombo->currentText() + "/community.conf");

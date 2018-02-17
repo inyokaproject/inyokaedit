@@ -47,6 +47,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
     m_sCurrLang(""),
+    m_pSigMapXmlActions(NULL),
     m_sSharePath(sharePath.absolutePath()),
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
@@ -498,6 +499,49 @@ void InyokaEdit::createMenus() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void InyokaEdit::clearXmlMenus() {
+  if (NULL != m_pSigMapXmlActions) {
+    disconnect(m_pSigMapXmlActions, 0, 0, 0);
+    foreach (QMenu *m, m_pXmlSubMenus) {
+      m->clear();
+    }
+    foreach (QMenu *m, m_pXmlMenus) {
+      m->clear();
+      m->deleteLater();
+    }
+    foreach (QComboBox *q, m_pXmlDropdowns) {
+      q->clear();
+    }
+
+    foreach (QToolBar *t, m_pXmlToolbars) {
+      t->clear();
+    }
+
+    foreach (QAction *a, m_pXmlActions) {
+      m_pUi->inyokaeditorBar->removeAction(a);
+      m_pUi->menuBar->removeAction(a);
+      m_pUi->samplesmacrosBar->removeAction(a);
+      foreach (QToolButton *b, m_pXmlToolbuttons) {
+        b->removeAction(a);
+      }
+      a->deleteLater();
+    }
+    m_pUi->inyokaeditorBar->clear();
+    m_pUi->samplesmacrosBar->clear();
+
+    m_pXmlActions.clear();
+    m_pXmlSubMenus.clear();
+    m_pXmlMenus.clear();
+    m_pXmlDropdowns.clear();
+    m_pXmlToolbuttons.clear();
+    delete m_pSigMapXmlActions;
+  }
+  m_pSigMapXmlActions = NULL;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void InyokaEdit::createXmlMenus() {
   XmlParser xmlParser;
   QFile xmlFile;
@@ -508,6 +552,8 @@ void InyokaEdit::createXmlMenus() {
   QStringList sListObjects;
   sListObjects << "menu" << "dropdown" << "toolbar";
 
+  this->clearXmlMenus();
+
   m_pSigMapXmlActions = new QSignalMapper(this);
 
   // Check share and user path
@@ -517,7 +563,7 @@ void InyokaEdit::createXmlMenus() {
       // Search for max 9 files
       for (int n = 1; n < 9; n++) {
         sTmpPath = sPath + "/community/" +
-                   m_pSettings->getInyokaCommunity() + "/";
+                   m_pSettings->getInyokaCommunity() + "/xml/";
         // File name e.g. menu_1_de.xml
         xmlFile.setFileName(
               sTmpPath + sObj + "_" + QString::number(n) + "_" +
@@ -1155,6 +1201,7 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
   if (0 != pEvent) {
     if (QEvent::LanguageChange == pEvent->type()) {
       m_pUi->retranslateUi(this);
+      this->createXmlMenus();
       emit updateUiLang();
     }
   }
