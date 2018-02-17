@@ -187,7 +187,7 @@ void Utils::showAbout() {
         .arg(trUtf8("This application uses icons from "
                     "<a href=\"http://tango.freedesktop.org\">"
                     "Tango project</a>."))
-        .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, "
+        .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, Vistaus, "
                     "Shakesbier and all testers from "
                     "<a href=\"http://ubuntuusers.de\"> "
                     "ubuntuusers.de</a>.")));

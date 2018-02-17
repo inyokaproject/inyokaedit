@@ -92,4 +92,5 @@ RESOURCES     = res/inyokaedit_resources.qrc \
                 res/translations.qrc
 win32:RC_FILE = res/inyokaedit_win.rc
 
-TRANSLATIONS += lang/inyokaedit_de.ts
+TRANSLATIONS += lang/inyokaedit_de.ts \
+                lang/inyokaedit_nl.ts
