@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file alias="uu_tabletemplate_de.qm">../lang/uu_tabletemplate_de.qm</file>
+        <file alias="uu_tabletemplate_nl.qm">../lang/uu_tabletemplate_nl.qm</file>
     </qresource>
 </RCC>

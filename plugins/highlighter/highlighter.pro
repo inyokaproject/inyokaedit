@@ -45,4 +45,5 @@ FORMS        += highlighter.ui
 RESOURCES     = res/highlighter_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/highlighter_de.ts
+TRANSLATIONS += lang/highlighter_de.ts \
+                lang/highlighter_nl.ts

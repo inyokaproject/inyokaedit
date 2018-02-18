@@ -59,4 +59,5 @@ FORMS        += uu_tabletemplate.ui
 RESOURCES     = res/uu_tabletemplate_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/uu_tabletemplate_de.ts
+TRANSLATIONS += lang/uu_tabletemplate_de.ts \
+                lang/uu_tabletemplate_nl.ts

@@ -43,4 +43,5 @@ FORMS        += hotkey.ui
 RESOURCES     = res/hotkey_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/hotkey_de.ts
+TRANSLATIONS += lang/hotkey_de.ts \
+                lang/hotkey_nl.ts

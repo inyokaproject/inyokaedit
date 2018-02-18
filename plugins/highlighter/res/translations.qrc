@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file alias="highlighter_de.qm">../lang/highlighter_de.qm</file>
+        <file alias="highlighter_nl.qm">../lang/highlighter_nl.qm</file>
     </qresource>
 </RCC>

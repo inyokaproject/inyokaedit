@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file alias="uu_knowledgebox_de.qm">../lang/uu_knowledgebox_de.qm</file>
+        <file alias="uu_knowledgebox_nl.qm">../lang/uu_knowledgebox_nl.qm</file>
     </qresource>
 </RCC>

@@ -45,7 +45,8 @@ FORMS        += spellcheckdialog.ui
 RESOURCES     = res/spellchecker_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/spellchecker_de.ts
+TRANSLATIONS += lang/spellchecker_de.ts \
+                lang/spellchecker_nl.ts
 
 win32:LIBS   += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
 unix:LIBS    += -lhunspell

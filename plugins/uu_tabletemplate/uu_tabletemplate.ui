@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
+    <width>530</width>
     <height>415</height>
    </rect>
   </property>
@@ -200,8 +200,8 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="res/uu_tabletemplate_resources.qrc"/>
   <include location="../../application/res/inyokaedit_resources.qrc"/>
+  <include location="res/uu_tabletemplate_resources.qrc"/>
  </resources>
  <connections>
   <connection>

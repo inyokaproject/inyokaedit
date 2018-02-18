@@ -43,4 +43,5 @@ FORMS        += uu_knowledgebox.ui
 RESOURCES     = res/uu_knowledgebox_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/uu_knowledgebox_de.ts
+TRANSLATIONS += lang/uu_knowledgebox_de.ts \
+                lang/uu_knowledgebox_nl.ts
