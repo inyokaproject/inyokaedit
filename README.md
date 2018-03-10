@@ -30,3 +30,6 @@ Build for Windows: https://github.com/inyokaproject/inyokaedit/releases
 ## Compiling
 * InyokaEdit can be compiled with Qt 5 (including webkitwidgets or webenginewidgets)
 * For compiling spell checker plugin, libhunspell-dev is needed.
+
+### Manual installation
+For executing **make install** successfully, one has to include the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) inside the master branch root folder.

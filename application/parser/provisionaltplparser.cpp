@@ -2087,7 +2087,7 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
         sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                     "unterstützten Ubuntu-Version getestet! "
                                     "Bitte diesen Artikel testen und das "
-                                    "getestet-Tag entsprechend anpassen.");
+                                    "Getestet-Tag entsprechend anpassen.");
       }
       sOutput += "\n";
     }
@@ -2095,7 +2095,7 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
     sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                 "unterstützten Ubuntu-Version getestet! "
                                 "Bitte diesen Artikel testen und das "
-                                "getestet-Tag entsprechend anpassen.");
+                                "Getestet-Tag entsprechend anpassen.");
   }
 
   return this->insertBox("box tested_for",
