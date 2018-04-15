@@ -1,12 +1,13 @@
-inyokaedit (0.21.0-1) xenial; urgency=low
+inyokaedit (0.21.0-2) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Heavy code reconstructions.
   * Improvements for inyzip.
+  * IWL updates.
   * Change gui language without restarting the application.
   * Added Dutch translation - many thanks to Vistaus!
 
- -- Thorsten Roth <elthoro@gmx.de>  Sun, 15 Apr 2018 14:58:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 15 Apr 2018 15:53:00 +0200
 
 inyokaedit (0.20.0-1) xenial; urgency=low
 
