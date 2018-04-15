@@ -37,9 +37,7 @@
     <element name="Ubuntu Manpage" insert="[man:%%Sitename%%:]" icon="man.png" />
     <element name="Ubuntu Manpage (german)" insert="[man_de:%%Sitename%%:]" icon="man_de.png" />
     <element name="Ubuntu Mailinglist" insert="[ml:%%Sitename%%:]" icon="ml.png" />
-    <element name="Ubuntu Brainstorm" insert="[brainstorm:%%Sitename%%:]" icon="brainstorm.png" />
     <element name="Ubuntu Fridge" insert="[ubuntufridge:%%Sitename%%:]" icon="ubuntufridge.png" />
-    <element name="Ubuntu Discourse" insert="[ubuntudiscourse:%%Sitename%%:]" icon="ubuntudiscourse.png" />
     <element name="Ubuntu Resources" insert="[ubunturesources:%%Sitename%%:]" icon="ubunturesources.png" />
     <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%App name%%:]" icon="ubuntuapps.png" />
     <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%App name%%:]" icon="uappexplorer.png" />
@@ -107,7 +105,6 @@
     <element name="Sourceforge 2" insert="[sourceforge2:%%Sitename%%:]" icon="sourceforge2.png" />
   </group>
   <group name="Games" icon="holarse.png">
-    <element name="AtomicGamer" insert="[atomicgamer:%%Sitename%%:]" icon="atomicgamer.png" />
     <element name="Desura" insert="[desura:%%Sitename%%:]" icon="desura.png" />
     <element name="Gameolith" insert="[gameolith:%%Sitename%%:]" icon="gameolith.png" />
     <element name="GOG.com Games catalogue" insert="[gog:%%Sitename%%:]" icon="gog.png" />
