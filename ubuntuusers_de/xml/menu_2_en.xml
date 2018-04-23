@@ -44,7 +44,6 @@
     <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="openstore.png" />
     <element name="OpenStore 2 (unofficial)" insert="[openstore2:%%App name%%:]" icon="openstore2.png" />
     <element name="Ubuntu Scopes" insert="[scope:%%Sitename%%:]" icon="scope.png" />
-    <element name="Ubuntu One" insert="[ubuntuone:%%Sitename%%:]" icon="ubuntuone.png" />
     <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
     <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="[omgubuntu.png" />
     <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
@@ -86,7 +85,6 @@
   <group name="Bugtracker, Project-Hoster" icon="launchpad.png">
     <element name="Bitbucket" insert="[bitbucket:%%Sitename%%:]" icon="bitbucket.png" />
     <element name="Debian Bugs" insert="[debianbug:%%Bug%%:]" icon="debianbug.png" />
-    <element name="Freecode" insert="[freecode:%%Sitename%%:]" icon="freecode.png" />
     <element name="Freshmeat" insert="[freshmeat:%%Sitename%%:]" icon="freshmeat.png" />
     <element name="Freedesktop Bugs" insert="[freedesktop:%%Sitename%%:]" icon="freedesktop.png" />
     <element name="GetDeb" insert="[getdeb:%%Sitename%%:]" icon="getdeb.png" />
@@ -106,7 +104,6 @@
   </group>
   <group name="Games" icon="holarse.png">
     <element name="Desura" insert="[desura:%%Sitename%%:]" icon="desura.png" />
-    <element name="Gameolith" insert="[gameolith:%%Sitename%%:]" icon="gameolith.png" />
     <element name="GOG.com Games catalogue" insert="[gog:%%Sitename%%:]" icon="gog.png" />
     <element name="Holarse" insert="[holarse:%%Sitename%%:]" icon="holarse.png" />
     <element name="Humble Bundle Store" insert="[humble:%%Sitename%%:]" icon="humble.png" />
