@@ -119,9 +119,6 @@ QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
                  "Ikhaya-Projektvorstellung").toLower()) {
       sArgs.removeFirst();
       return this->parseIkhayaProjectPresentation();
-    }  else if (sArgs[0].toLower() == QString::fromUtf8("IM").toLower()) {
-      sArgs.removeFirst();
-      return this->parseIM(sArgs);
     } else if (sArgs[0].toLower() == QString::fromUtf8(
                  "Bildersammlung").toLower()) {
       sArgs.removeFirst();
@@ -657,126 +654,6 @@ QString ProvisionalTplParser::parseIkhayaProjectPresentation() {
                           "Alle Projektvorstellungen können im Wikiartikel "
                           "[:ubuntuusers/Ikhayateam/Projektvorstellungen:"
                           "Projektvorstellungen] eingesehen werden."));
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-QString ProvisionalTplParser::parseIM(const QStringList &sListArgs) {
-  QString sOutput("");
-  QList<QStringList> sListEntries;
-  QStringList sListTmp;
-  QStringList sList2;
-
-  // Extract list entries (split by "+++")
-  foreach (QString s, sListArgs) {
-    if ("+++" == s) {
-      sListEntries << sListTmp;
-      sListTmp.clear();
-    } else {
-      sListTmp << s;
-    }
-  }
-  sListEntries << sListTmp;
-  sListTmp.clear();
-
-  if (sListEntries.size() >= 1) {
-    if (sListEntries[0].size() >= 1) {
-      sOutput = "||<tablestyle=\"width:96%; background-color:#f2f2f2;\" -2 "
-                "rowclass=\"titel\">" + sListEntries[0][0] +
-                "||\n||<rowclass=\"kopf\">Programm||Beschreibung||\n";
-    }
-    for (int i = 1; i < sListEntries.size(); i++) {
-      for (int j = 0; j < sListEntries[i].size(); j++) {
-        if (0 == j) {
-          sOutput += "||<cellstyle=\"font-weight:bold;\" :>";
-          if (!sListEntries[i][j].trimmed().isEmpty()) {
-            sOutput += "[[Bild(" + sListEntries[i][j].trimmed() +
-                       ".png)]][[BR]]";
-          }
-        } else if (1 == j) {
-          sOutput += "[:" + sListEntries[i][j].trimmed() + ":]";
-        } else if (2 == j) {
-          sOutput += "||<cellstyle=\"padding-top:0.8em;\"> "
-                     + sListEntries[i][j].trimmed() + "[[BR]]";
-        } else if (3 == j) {
-          sOutput += "~-(";
-          sList2.clear();
-          sList2 << sListEntries[i][j].split(", ");
-          foreach (QString s, sList2) {
-            if (s.toLower().contains("aim")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/aim-24.png)]] ";
-            } else if (s.toLower().contains("bonjour")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/bonjour-24.png)]] ";
-            } else if (s.toLower().contains("gadu-gadu")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/gadu-gadu-24.png)]] ";
-            } else if (s.toLower().contains("icq")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/icq-24.png)]] ";
-            } else if (s.toLower().contains("sametime")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/sametime-24.png)]] ";
-            } else if (s.toLower().contains("irc")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/irc-24.png)]] ";
-            } else if (s.toLower().contains("meanwhile")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/meanwhile-24.png)]] ";
-            } else if (s.toLower().contains("mrim")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/mrim-24.png)]] ";
-            } else if (s.toLower().contains("msn")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/msn-24.png)]] ";
-            } else if (s.toLower().contains("mxit")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/mxit-24.png)]] ";
-            } else if (s.toLower().contains("myspace")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/myspace-24.png)]] ";
-            } else if (s.toLower().contains("netsoul")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/netsoul-24.png)]] ";
-            } else if (s.toLower().contains("novell")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/novell-24.png)]] ";
-            } else if (s.toLower().contains("qq")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/qq-24.png)]] ";
-            } else if (s.toLower().contains("rss")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/rss-24.png)]] ";
-            } else if (s.toLower().contains("silc")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/silc-24.png)]] ";
-            } else if (s.toLower().contains("simple")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/simple-24.png)]] ";
-            } else if (s.toLower().contains("skype")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/skype-24.png)]] ";
-            } else if (s.toLower().contains("sms")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/sms-24.png)]] ";
-            } else if (s.toLower().contains("twitter")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/twitter-24.png)]] ";
-            } else if (s.toLower().contains("vkontakte")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/vkontakte-24.png)]] ";
-            } else if (s.toLower().contains("winpopup")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/winpopup-24.png)]] ";
-            } else if (s.toLower().contains("xmpp")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/xmpp-24.png)]] ";
-            } else if (s.toLower().contains("yahoo")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/yahoo-24.png)]] ";
-            } else if (s.toLower().contains("zephyr")) {
-              sOutput += "[[Bild(Wiki/Icons/Protokolle/zephyr-24.png)]] ";
-            }
-          }
-          sOutput += "[[BR]]";
-        } else if (4 == j) {
-          sListTmp.clear();
-          sListTmp << sListEntries[i][j].split(",");
-          for (int k = 0; k < sListTmp.size(); k++) {
-            sList2.clear();
-            sList2 << sListTmp[k];
-            sOutput += this->parseStatusIcon(sList2);
-            if (k != sListTmp.size() - 1) {
-              sOutput += "| ";
-            }
-          }
-        }
-        if (sListEntries[i].size() - 1 == j) {
-          sOutput += ")-~||\n";
-        }
-      }
-    }
-  }
-
-  return sOutput;
 }
 
 // ----------------------------------------------------------------------------

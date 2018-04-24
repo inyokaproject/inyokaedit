@@ -62,7 +62,6 @@ class ProvisionalTplParser {
     QString parseIkhayaAward(const QStringList &sListArgs);
     QString parseIkhayaImage(const QStringList &sListArgs);
     QString parseIkhayaProjectPresentation();
-    QString parseIM(const QStringList &sListArgs);
     QString parseImageCollect(const QStringList &sListArgs);
     QString parseImageSub(const QStringList &sListArgs);
     QString parseImprovable(const QStringList &sListArgs);
