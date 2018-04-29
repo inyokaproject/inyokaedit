@@ -384,25 +384,43 @@ void SpellChecker::executePlugin() {}
 // ----------------------------------------------------------------------------
 
 bool SpellChecker::spell(const QString &sWord) {
-  // Encode from Unicode to the encoding used by current dictionary
+#if defined(USE_NEW_HUNSPELL)  // Hunspell >= 1.5
+  return m_pHunspell->spell(m_pCodec->fromUnicode(sWord).toStdString());
+#else
   return m_pHunspell->spell(m_pCodec->fromUnicode(sWord).constData()) != 0;
+#endif
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 QStringList SpellChecker::suggest(const QString &sWord) {
+  QStringList sListSuggestions;
+  int nSuggestions = 0;
+
+#if defined(USE_NEW_HUNSPELL)  // Hunspell >= 1.5
+  std::vector<std::string> wordlist;
+  wordlist = m_pHunspell->suggest(m_pCodec->fromUnicode(sWord).toStdString());
+
+  nSuggestions = wordlist.size();
+  if (nSuggestions > 0) {
+    for (int i = 0; i < nSuggestions; i++) {
+      sListSuggestions << m_pCodec->toUnicode(
+                            QByteArray::fromStdString(wordlist[i]));
+    }
+  }
+#else
   char **suggestWordList;
 
   // Encode from Unicode to the encoding used by current dictionary
-  int nSuggestions = m_pHunspell->suggest(&suggestWordList,
-                                          m_pCodec->fromUnicode(sWord)
-                                          .constData());
-  QStringList sListSuggestions;
+  nSuggestions = m_pHunspell->suggest(&suggestWordList,
+                                      m_pCodec->fromUnicode(sWord)
+                                      .constData());
   for (int i = 0; i < nSuggestions; ++i) {
     sListSuggestions << m_pCodec->toUnicode(suggestWordList[i]);
     free(suggestWordList[i]);
   }
+#endif
   return sListSuggestions;
 }
 
