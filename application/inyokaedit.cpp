@@ -135,9 +135,9 @@ void InyokaEdit::createObjects() {
     qCritical() << "Community path:" << m_sSharePath + "/community/" +
                    m_pSettings->getInyokaCommunity();
     QMessageBox::critical(this, qApp->applicationName(),
-                          trUtf8("No Inyoka community files found/installed!\n"
-                                 "Please check your installation and restart "
-                                 "the application."));
+                          tr("No Inyoka community files found/installed!\n"
+                             "Please check your installation and restart "
+                             "the application."));
     exit(-2);
   }
   connect(m_pSettings, SIGNAL(changeLang(QString)),
@@ -735,7 +735,7 @@ void InyokaEdit::previewInyokaPage() {
   // No write permission
   if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
     QMessageBox::warning(this, qApp->applicationName(),
-                         trUtf8("Could not create temporary HTML file!"));
+                         tr("Could not create temporary HTML file!"));
     qWarning() << "Could not create temporary HTML file:"
                << m_sPreviewFile;
     return;
@@ -954,7 +954,7 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     m_bReloadPreviewBlocked = false;
   } else {
     QMessageBox::warning(this, qApp->applicationName(),
-                         trUtf8("Error while loading preview."));
+                         tr("Error while loading preview."));
     qWarning() << "Error while loading preview:" << m_sPreviewFile;
   }
 }
@@ -1070,8 +1070,8 @@ bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
 // Delete images in temp folder (images downloaded with articles / from inyzip)
 void InyokaEdit::deleteTempImages() {
   int nRet = QMessageBox::question(this, qApp->applicationName(),
-                                   trUtf8("Do you really want to delete all "
-                                          "temporay article images?"),
+                                   tr("Do you really want to delete all "
+                                      "temporay article images?"),
                                    QMessageBox::Yes | QMessageBox::No);
 
   if (QMessageBox::Yes== nRet) {
@@ -1081,15 +1081,14 @@ void InyokaEdit::deleteTempImages() {
     foreach (QFileInfo fi, fiListFiles) {
       if (!m_tmpPreviewImgDir.remove(fi.fileName())) {
         QMessageBox::warning(this, qApp->applicationName(),
-                             trUtf8("Could not delete file: ")
-                             + fi.fileName());
+                             tr("Could not delete file: ") + fi.fileName());
         qWarning() << "Could not delete files:" <<
                       fi.fileName();
         return;
       }
     }
     QMessageBox::information(this, qApp->applicationName(),
-                             trUtf8("Images successfully deleted."));
+                             tr("Images successfully deleted."));
   } else {
     return;
   }
@@ -1229,7 +1228,7 @@ void InyokaEdit::showSyntaxOverview() {
   QTextStream in(&OverviewFile);
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(0, "Warning",
-                         trUtf8("Could not open syntax overview file!"));
+                         tr("Could not open syntax overview file!"));
     qWarning() << "Could not open syntax overview file:"
                << OverviewFile.fileName();
     return;
@@ -1246,7 +1245,7 @@ void InyokaEdit::showSyntaxOverview() {
   layout->setMargin(2);
   layout->setSpacing(0);
   layout->addWidget(webview);
-  dialog->setWindowTitle(trUtf8("Syntax overview"));
+  dialog->setWindowTitle(tr("Syntax overview"));
 
   webview->setHtml(pTextDocument->toPlainText(),
                    QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));

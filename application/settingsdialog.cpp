@@ -220,8 +220,8 @@ void SettingsDialog::accept() {
     }
 
     QMessageBox::information(0, this->windowTitle(),
-                             trUtf8("The editor has to be restarted for "
-                                    "applying the changes."));
+                             tr("The editor has to be restarted for "
+                                "applying the changes."));
   }
 
   m_pUi->tabWidget->setCurrentIndex(0);  // Reset first tab after start
@@ -265,8 +265,8 @@ void SettingsDialog::changedCommunity(QString sCommunity) {
                       sCommunity + "/community.conf");
 
   if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::critical(0, trUtf8("Error"),
-                          trUtf8("Could not open/find community file!"));
+    QMessageBox::critical(0, tr("Error"),
+                          tr("Could not open/find community file!"));
     qCritical() << "Could not open/find community file:"
                 << communityFile.fileName();
   }
@@ -277,8 +277,7 @@ void SettingsDialog::changedCommunity(QString sCommunity) {
   QString sUrl(communityConfig.value("InyokaUrl", "").toString());
   if (sUrl.isEmpty()) {
     qWarning() << "Community Url not found!";
-    QMessageBox::warning(0, trUtf8("Warning"),
-                          trUtf8("No community url defined!"));
+    QMessageBox::warning(0, tr("Warning"), tr("No community url defined!"));
   } else {
     m_pUi->inyokaUrlEdit->setText(sUrl);
   }

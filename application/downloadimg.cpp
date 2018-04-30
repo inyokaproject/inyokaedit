@@ -53,8 +53,8 @@ void DownloadImg::startDownloads() {
   m_sDownloadError.clear();
 
   // Create progress dialog
-  m_pProgessDialog = new QProgressDialog(trUtf8("Downloading images..."),
-                                         trUtf8("Cancel"), m_nProgress,
+  m_pProgessDialog = new QProgressDialog(tr("Downloading images..."),
+                                         tr("Cancel"), m_nProgress,
                                          m_sListUrls.size(), 0,
                                          Qt::WindowTitleHint
                                          | Qt::WindowSystemMenuHint);
@@ -171,7 +171,7 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
 
     // Show error messages
     if (!m_sDownloadError.isEmpty()) {
-      QMessageBox::warning(0, trUtf8("Download error"), m_sDownloadError);
+      QMessageBox::warning(0, tr("Download error"), m_sDownloadError);
     }
 
     emit finsihedImageDownload();

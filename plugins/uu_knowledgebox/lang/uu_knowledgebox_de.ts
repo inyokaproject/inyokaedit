@@ -4,48 +4,48 @@
 <context>
     <name>Uu_KnowledgeBox</name>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="104"/>
+        <location filename="../uu_knowledgebox.cpp" line="107"/>
         <source>Ubuntuusers.de knowledge box</source>
         <translation>Ubuntuusers.de Wissensblock</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="194"/>
-        <location filename="../uu_knowledgebox.cpp" line="218"/>
+        <location filename="../uu_knowledgebox.cpp" line="197"/>
+        <location filename="../uu_knowledgebox.cpp" line="220"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="195"/>
+        <location filename="../uu_knowledgebox.cpp" line="197"/>
         <source>Could not open %1</source>
         <translation>Datei konnte nicht geöffnet werden: %1</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="219"/>
+        <location filename="../uu_knowledgebox.cpp" line="221"/>
         <source>ubuntuusers.de knowledgebox defaults are empty!</source>
         <translation>ubuntuusers.de Wissensblock-Standardeinträge sind leer!</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="279"/>
+        <location filename="../uu_knowledgebox.cpp" line="281"/>
         <source>[:Article:New entry]</source>
         <translation>[:Artikel:Neuer Eintrag]</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="384"/>
+        <location filename="../uu_knowledgebox.cpp" line="386"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="393"/>
+        <location filename="../uu_knowledgebox.cpp" line="395"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="395"/>
+        <location filename="../uu_knowledgebox.cpp" line="397"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../uu_knowledgebox.cpp" line="398"/>
+        <location filename="../uu_knowledgebox.cpp" line="400"/>
         <source>Plugin for choosing ubuntuusers.de knowledge box entries.</source>
         <translation>Plugin zur Auswahl von ubuntuusers.de Wissensblockeinträgen.</translation>
     </message>

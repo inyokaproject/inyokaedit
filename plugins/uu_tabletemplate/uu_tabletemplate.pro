@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = uu_tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.3.0
+VERSION       = 1.3.1
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2018 - Christian Schärf, Thorsten Roth"
 
@@ -33,6 +33,9 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += network
+
+DEFINES      += QT_DEPRECATED_WARNINGS
+DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
 
 qtHaveModule(webkitwidgets) {
   QT         += webkitwidgets

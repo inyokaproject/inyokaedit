@@ -109,7 +109,7 @@ void Hotkey::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 QString Hotkey::getCaption() const {
-  return trUtf8("Hotkey selector");
+  return tr("Hotkey selector");
 }
 QIcon Hotkey::getIcon() const {
   return QIcon(":/preferences-desktop-keyboard-shortcuts.png");
@@ -236,7 +236,7 @@ void Hotkey::reject() {
 // ----------------------------------------------------------------------------
 
 void Hotkey::addRow() {
-  m_sListEntries << trUtf8("'''Bold'''");
+  m_sListEntries << tr("'''Bold'''");
   m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
   this->createRow(m_listSequenceEdit.last(), m_sListEntries.last());
   m_pUi->entriesTable->scrollToBottom();
@@ -384,7 +384,7 @@ void Hotkey::setEditorlist(QList<TextEditor *> listEditors) {
 
 void Hotkey::showAbout() {
   QMessageBox aboutbox(NULL);
-  aboutbox.setWindowTitle(trUtf8("Info"));
+  aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(
         QPixmap(":/preferences-desktop-keyboard-shortcuts.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"
@@ -393,11 +393,11 @@ void Hotkey::showAbout() {
                            "%4</p>"
                            "<p><i>%5</i></p>")
                    .arg(this->getCaption())
-                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
                    .arg(PLUGIN_COPY)
-                   .arg(trUtf8("Licence") + ": " +
+                   .arg(tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for defining custom hotkeys.")));
+                   .arg(tr("Plugin for defining custom hotkeys.")));
   aboutbox.exec();
 }

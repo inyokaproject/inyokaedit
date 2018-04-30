@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.2.1
+VERSION       = 1.2.2
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2018 - Thorsten Roth"
 
@@ -33,6 +33,9 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 include(../../application/templates/templates.pri)
+
+DEFINES      += QT_DEPRECATED_WARNINGS
+DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
 
 HEADERS      += highlighter.h \
                 syntaxhighlighter.h

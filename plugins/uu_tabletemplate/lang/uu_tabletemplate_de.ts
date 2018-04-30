@@ -5,8 +5,8 @@
     <name>SyntaxCheck</name>
     <message>
         <location filename="../../../application/syntaxcheck.cpp" line="76"/>
-        <location filename="../../../application/syntaxcheck.cpp" line="90"/>
-        <location filename="../../../application/syntaxcheck.cpp" line="164"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="89"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="163"/>
         <source>Inyoka syntax check</source>
         <translation>Inyoka Syntaxüberprüfung</translation>
     </message>
@@ -16,12 +16,12 @@
         <translation>&gt;Syntaxfehler entdeckt - schließende Klammer ohne öffnende Klammer!</translation>
     </message>
     <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="91"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="90"/>
         <source>Syntax error detected - open parenthesis!</source>
         <translation>Syntaxfehler entdeckt - offene Klammer!</translation>
     </message>
     <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="165"/>
+        <location filename="../../../application/syntaxcheck.cpp" line="164"/>
         <source>Found unknown template: %1</source>
         <translation>Unbekannte Vorlage entdeckt: %1</translation>
     </message>
@@ -29,37 +29,37 @@
 <context>
     <name>Uu_TableTemplate</name>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="169"/>
+        <location filename="../uu_tabletemplate.cpp" line="173"/>
         <source>Ubuntuusers.de table generator</source>
         <translation>Ubuntuusers.de Tabellengenerator</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="240"/>
+        <location filename="../uu_tabletemplate.cpp" line="244"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="250"/>
+        <location filename="../uu_tabletemplate.cpp" line="254"/>
         <source>Head</source>
         <translation>Kopf</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="386"/>
+        <location filename="../uu_tabletemplate.cpp" line="390"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="394"/>
+        <location filename="../uu_tabletemplate.cpp" line="398"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="396"/>
+        <location filename="../uu_tabletemplate.cpp" line="400"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="399"/>
+        <location filename="../uu_tabletemplate.cpp" line="403"/>
         <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
         <translation>Erweiterung zur Erstellung von ubuntuusers.de Inyoka-Tabellen.</translation>
     </message>

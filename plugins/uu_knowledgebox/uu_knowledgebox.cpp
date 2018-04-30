@@ -104,7 +104,7 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 QString Uu_KnowledgeBox::getCaption() const {
-  return trUtf8("Ubuntuusers.de knowledge box");
+  return tr("Ubuntuusers.de knowledge box");
 }
 QIcon Uu_KnowledgeBox::getIcon() const {
   return QIcon();
@@ -194,8 +194,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
 
   if (!fiDefault.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open uu_knowledgebox.default";
-    QMessageBox::warning(NULL, trUtf8("Error"),
-                         trUtf8("Could not open %1")
+    QMessageBox::warning(NULL, tr("Error"), tr("Could not open %1")
                          .arg("uu_knowledgebox.default"));
   } else {
     QTextStream in(&fiDefault);
@@ -218,8 +217,8 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
   if (0 == m_sListEntries.size()) {
     qWarning() << "Knowledgebox defaults are empty!";
     QMessageBox::warning(
-          NULL, trUtf8("Error"),
-          trUtf8("ubuntuusers.de knowledgebox defaults are empty!"));
+          NULL, tr("Error"),
+          tr("ubuntuusers.de knowledgebox defaults are empty!"));
   }
 
   this->writeSettings();
@@ -279,7 +278,7 @@ void Uu_KnowledgeBox::accept() {
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::addRow() {
-  m_sListEntries << trUtf8("[:Article:New entry]");
+  m_sListEntries << tr("[:Article:New entry]");
   m_bListEntryActive << true;
   this->createRow(m_bListEntryActive.last(), m_sListEntries.last());
   m_pUi->entriesTable->scrollToBottom();
@@ -384,7 +383,7 @@ void Uu_KnowledgeBox::setEditorlist(QList<TextEditor *> listEditors) {
 
 void Uu_KnowledgeBox::showAbout() {
   QMessageBox aboutbox(NULL);
-  aboutbox.setWindowTitle(trUtf8("Info"));
+  aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
   aboutbox.setText(
         QString("<p><b>%1</b><br />"
@@ -393,12 +392,11 @@ void Uu_KnowledgeBox::showAbout() {
                 "%4</p>"
                 "<p><i>%5</i></p>")
         .arg(this->getCaption())
-        .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+        .arg(tr("Version") + ": " + PLUGIN_VERSION)
         .arg(PLUGIN_COPY)
-        .arg(trUtf8("Licence") + ": " +
+        .arg(tr("Licence") + ": " +
              "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
              "GNU General Public License Version 3</a>")
-        .arg(trUtf8("Plugin for choosing ubuntuusers.de knowledge "
-                    "box entries.")));
+        .arg(tr("Plugin for choosing ubuntuusers.de knowledge box entries.")));
   aboutbox.exec();
 }

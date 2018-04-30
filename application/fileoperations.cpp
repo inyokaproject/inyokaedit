@@ -50,9 +50,9 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_pCurrentEditor(NULL),
     m_pSettings(pSettings),
     m_sPreviewFile(sPreviewFile),
-    m_sFileFilter(trUtf8("Inyoka article") + " (*.iny *.inyoka);;" +
-                  trUtf8("Inyoka article + images") + " (*.inyzip);;" +
-                  trUtf8("All files") + " (*)"),
+    m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;" +
+                  tr("Inyoka article + images") + " (*.inyzip);;" +
+                  tr("All files") + " (*)"),
     m_bLoadPreview(false),
     m_bCloseApp(false),
     m_sUserDataDir(sUserDataDir),
@@ -107,7 +107,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   // Clear recent files list
   m_LastOpenedFilesAct.append(new QAction(this));
   m_LastOpenedFilesAct.last()->setSeparator(true);
-  m_pClearRecentFilesAct = new QAction(trUtf8("Clear list"), this);
+  m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
   m_LastOpenedFilesAct << m_pClearRecentFilesAct;
 
   connect(m_pClearRecentFilesAct, SIGNAL(triggered()),
@@ -130,7 +130,7 @@ void FileOperations::newFile() {
 void FileOperations::newFile(QString sFileName) {
   static quint8 nCntDocs = 0;
 
-  m_pCurrentEditor = new TextEditor(m_sListTplMacros, trUtf8("Template"),
+  m_pCurrentEditor = new TextEditor(m_sListTplMacros, tr("Template"),
                                     m_pParent);
   m_pListEditors << m_pCurrentEditor;
   m_pCurrentEditor->installEventFilter(m_pParent);
@@ -142,7 +142,7 @@ void FileOperations::newFile(QString sFileName) {
       m_bLoadPreview = true;
     }
     nCntDocs++;
-    sFileName = trUtf8("Untitled");
+    sFileName = tr("Untitled");
     if (nCntDocs > 1 && nCntDocs < 254) {
       sFileName += " (" + QString::number(nCntDocs) + ")";
     }
@@ -179,7 +179,7 @@ void FileOperations::newFile(QString sFileName) {
 void FileOperations::open() {
   // File dialog opens last used folder
   QString sFileName = QFileDialog::getOpenFileName(
-                        m_pParent, trUtf8("Open file"),
+                        m_pParent, tr("Open file"),
                         m_pSettings->getLastOpenedDir().absolutePath(),
                         m_sFileFilter);
   if (!sFileName.isEmpty()) {
@@ -201,7 +201,7 @@ void FileOperations::openRecentFile(const int nEntry) {
 
 bool FileOperations::save() {
   if (m_pCurrentEditor->getFileName().isEmpty() ||
-      m_pCurrentEditor->getFileName().contains(trUtf8("Untitled")) ||
+      m_pCurrentEditor->getFileName().contains(tr("Untitled")) ||
       !QFile::exists(m_pCurrentEditor->getFileName())) {
     return this->saveAs();
   } else {
@@ -213,7 +213,7 @@ bool FileOperations::save() {
 // ----------------------------------------------------------------------------
 
 bool FileOperations::saveAs() {
-  QString sCurFileName(trUtf8("Untitled"));
+  QString sCurFileName(tr("Untitled"));
   if (!m_pCurrentEditor->getFileName().isEmpty() &&
       !m_pCurrentEditor->getFileName().contains(sCurFileName)) {
     sCurFileName = m_pCurrentEditor->getFileName();
@@ -224,7 +224,7 @@ bool FileOperations::saveAs() {
   QFileDialog saveDialog(m_pParent);
   saveDialog.setDefaultSuffix("iny");
   QString sFileName = saveDialog.getSaveFileName(m_pParent,
-                                                 trUtf8("Save file"),
+                                                 tr("Save file"),
                                                  sCurFileName,
                                                  m_sFileFilter);
   if (sFileName.isEmpty()) {
@@ -246,16 +246,16 @@ bool FileOperations::maybeSave() {
     QMessageBox::StandardButton ret;
     QString sTempCurFileName;
     if (m_pCurrentEditor->getFileName().isEmpty()) {
-      sTempCurFileName = trUtf8("Untitled");
+      sTempCurFileName = tr("Untitled");
     } else {
       QFileInfo tempCurFile(m_pCurrentEditor->getFileName());
       sTempCurFileName = tempCurFile.fileName();
     }
 
     ret = QMessageBox::warning(m_pParent, qApp->applicationName(),
-                               trUtf8("The document \"%1\" has been modified.\n"
-                                      "Do you want to save your changes or "
-                                      "discard them?").arg(sTempCurFileName),
+                               tr("The document \"%1\" has been modified.\n"
+                                  "Do you want to save your changes or "
+                                  "discard them?").arg(sTempCurFileName),
                                QMessageBox::Save | QMessageBox::Discard
                                | QMessageBox::Cancel);
 
@@ -284,7 +284,7 @@ void FileOperations::loadFile(const QString &sFileName,
   // No permission to read
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("The file \"%1\" could not be opened:\n%2.")
+                         tr("The file \"%1\" could not be opened:\n%2.")
                          .arg(sTmpName)
                          .arg(file.errorString()));
     qWarning() << "File" << sTmpName << "could not be opened:"
@@ -335,7 +335,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 
   if (!mz_zip_reader_init_file(&archive, sArchive.toLatin1(), 0)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("The file \"%1\" could not be opened.")
+                         tr("The file \"%1\" could not be opened.")
                          .arg(sArchive));
     qWarning() << "mz_zip_reader_init_file() failed:" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
@@ -346,16 +346,14 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   if (0 == nFileCount) {
     mz_zip_reader_end(&archive);
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("The file \"%1\" is empty!")
-                         .arg(sArchive));
+                         tr("The file \"%1\" is empty!").arg(sArchive));
     qWarning() << "Archive is empty!";
     return;
   }
 
   if (!mz_zip_reader_file_stat(&archive, 0, &file_stat)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("Error reading \"%1\"")
-                         .arg(sArchive));
+                         tr("Error reading \"%1\"").arg(sArchive));
     qWarning() << "Error reading archive!" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     mz_zip_reader_end(&archive);
@@ -366,7 +364,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   for (int i = 0; i < nFileCount; i++) {
     if (!mz_zip_reader_file_stat(&archive, i, &file_stat)) {
       QMessageBox::critical(m_pParent, qApp->applicationName(),
-                            trUtf8("Something went wrong while reading \"%1\"")
+                            tr("Something went wrong while reading \"%1\"")
                             .arg(sArchive));
       qWarning() << "mz_zip_reader_file_stat() failed:" <<
                     mz_zip_get_error_string(mz_zip_get_last_error(&archive));
@@ -389,7 +387,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
     if (!mz_zip_reader_extract_to_file(&archive, i, sOutput.toLatin1(), 0)) {
       QMessageBox::critical(
             m_pParent, qApp->applicationName(),
-            trUtf8("Error while extracting \"%1\" from archive!")
+            tr("Error while extracting \"%1\" from archive!")
             .arg(file_stat.m_filename));
       qWarning() << "mz_zip_reader_extract_to_file() failed:" <<
                     mz_zip_get_error_string(mz_zip_get_last_error(&archive));
@@ -399,7 +397,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   // Close the archive, freeing any resources it was using
   if (!mz_zip_reader_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          trUtf8("Error while extracting archive!"));
+                          tr("Error while extracting archive!"));
     qWarning() << "mz_zip_reader_end() failed:" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
   }
@@ -430,7 +428,7 @@ bool FileOperations::saveFile(QString sFileName) {
   // No write permission
   if (!file.open(QFile::WriteOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("The file \"%1\" could not be saved:\n%2.")
+                         tr("The file \"%1\" could not be saved:\n%2.")
                          .arg(sFileName)
                          .arg(file.errorString()));
     qWarning() << "File" << sFileName << "could not be saved:"
@@ -483,7 +481,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
 
   if (!mz_zip_writer_init_file(&archive, sArchive.toLatin1(), 65537)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          trUtf8("Error while creating archive \"%1\"")
+                          tr("Error while creating archive \"%1\"")
                           .arg(sArchive));
     qWarning() << "mz_zip_writer_init_file() failed:" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
@@ -495,7 +493,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   // No permission to read
   if (!html.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("Error while packing image files:\n%1.")
+                         tr("Error while packing image files:\n%1.")
                          .arg(html.errorString()));
     qWarning() << "Error while packing image files:" << html.errorString();
     return false;
@@ -528,7 +526,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
                                   baComment, baComment.size(),
                                   MZ_BEST_COMPRESSION)) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),
-                              trUtf8("Error while adding \"%1\" to archive!")
+                              tr("Error while adding \"%1\" to archive!")
                               .arg(img.absoluteFilePath()));
         qWarning() << "Error while adding" <<
                       img.absoluteFilePath() << "to archive!:" <<
@@ -543,7 +541,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
                               baComment, baComment.size(),
                               MZ_BEST_COMPRESSION)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          trUtf8("Error while adding \"%1\" to archive!")
+                          tr("Error while adding \"%1\" to archive!")
                           .arg(sArticle));
     qWarning() << "Error while adding" <<
                   img.absoluteFilePath() << "to archive!:" <<
@@ -555,7 +553,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
     mz_zip_writer_end(&archive);
     QFile::remove(sArchive);
     QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          trUtf8("Error while finalizing archive!"));
+                          tr("Error while finalizing archive!"));
     qWarning() << "mz_zip_writer_finalize_archive() failed:" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
@@ -564,7 +562,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   // Close the archive, freeing any resources it was using
   if (!mz_zip_writer_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          trUtf8("Error while creating archive!"));
+                          tr("Error while creating archive!"));
     qWarning() << "mz_zip_writer_end() failed:" <<
                   mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
@@ -582,8 +580,7 @@ void FileOperations::saveDocumentAuto() {
     QFile fAutoSave;
     for (int i = 0; i < m_pListEditors.count(); i++) {
       if (NULL != m_pListEditors[i]) {
-        if (m_pListEditors[i]->getFileName().contains(
-              trUtf8("Untitled"))) {
+        if (m_pListEditors[i]->getFileName().contains(tr("Untitled"))) {
           fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
                                 QString::number(i) + ".bak~");
         } else if (m_pListEditors[i]->getFileName().endsWith(".inyzip")) {
@@ -628,7 +625,7 @@ void FileOperations::printPreview() {
   QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
   if (0 == listPrinters.size()) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("No supported printer found."));
+                         tr("No supported printer found."));
     return;
   } else {
     foreach (QPrinterInfo info, listPrinters) {
@@ -650,8 +647,8 @@ void FileOperations::printPreview() {
 #endif
 
   if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, trUtf8("Warning"),
-                         trUtf8("Could not open preview file for printing!"));
+    QMessageBox::warning(0, tr("Warning"),
+                         tr("Could not open preview file for printing!"));
     qWarning() << "Could not open text html preview file for printing:"
                << m_sPreviewFile;
     return;
@@ -702,7 +699,7 @@ void FileOperations::printPreview() {
 #if QT_VERSION < 0x050600
     previewWebView.print(&printer);
 #else
-    QMessageBox::warning(0, trUtf8("Warning"),
+    QMessageBox::warning(0, tr("Warning"),
                          "Printing currently not supported with Qt >= 5.6.0");
     qWarning() << "Printing currently not supported with Qt >= 5.6.0";
 #endif

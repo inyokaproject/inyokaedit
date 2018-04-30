@@ -73,10 +73,9 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
     } else if (')' == c || '}' == c || ']' == c) {
       if (listParenthesis.isEmpty() ||
           !SyntaxCheck::checkParenthesisPair(listParenthesis.last(), c)) {
-        QMessageBox::warning(NULL, trUtf8("Inyoka syntax check"),
-                             trUtf8("Syntax error detected - "
-                                    "closing parenthesis without "
-                                    "opening paraenthesis!"));
+        QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+                             tr("Syntax error detected - closing parenthesis "
+                                "without opening paraenthesis!"));
         return nCnt;
       } else {
         listParenthesis.pop_back();
@@ -87,8 +86,8 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   }
 
   if (!listParenthesis.isEmpty()) {
-    QMessageBox::warning(NULL, trUtf8("Inyoka syntax check"),
-                         trUtf8("Syntax error detected - open parenthesis!"));
+    QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+                         tr("Syntax error detected - open parenthesis!"));
     return listPos.last();
   }
   return -1;
@@ -161,9 +160,8 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
       }
 
       if (!sMacro.isEmpty()) {
-        QMessageBox::warning(NULL, trUtf8("Inyoka syntax check"),
-                             trUtf8("Found unknown template: %1")
-                             .arg(sMacro));
+        QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+                             tr("Found unknown template: %1").arg(sMacro));
         return nPos;
       }
 

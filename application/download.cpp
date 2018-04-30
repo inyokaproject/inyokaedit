@@ -68,8 +68,8 @@ void Download::downloadArticle(QString sUrl) {
   // Check for internet connection
   if (!Utils::getOnlineState()) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         trUtf8("Download not possible, no active internet "
-                                "connection found!"));
+                         tr("Download not possible, no active internet "
+                            "connection found!"));
     return;
   }
 
@@ -82,10 +82,10 @@ void Download::downloadArticle(QString sUrl) {
     // Show input dialog
     m_sSitename = QInputDialog::getText(
                     m_pParent, qApp->applicationName(),
-                    trUtf8("Please insert name of the article which "
-                           "should be downloaded:"),
+                    tr("Please insert name of the article which "
+                       "should be downloaded:"),
                     QLineEdit::Normal,
-                    m_sConstructionArea + "/" + trUtf8("Article"), &bOk);
+                    m_sConstructionArea + "/" + tr("Article"), &bOk);
 
     // Click on "cancel" or string is empty
     if (true != bOk || m_sSitename.isEmpty()) {
@@ -178,7 +178,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
         if (sTmpArticle.isEmpty()) {
           QMessageBox::information(
                 m_pParent, qApp->applicationName(),
-                trUtf8("Could not download the article."));
+                tr("Could not download the article."));
           return;
         }
 
@@ -192,7 +192,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
         // Site does not exist etc.
         if (sTmpArticle.isEmpty()) {
           QMessageBox::information(m_pParent, qApp->applicationName(),
-                                   trUtf8("Could not find meta data."));
+                                   tr("Could not find meta data."));
           return;
         }
 
@@ -224,9 +224,9 @@ void Download::replyFinished(QNetworkReply *pReply) {
           if (true != m_bAutomaticImageDownload) {
             iRet = QMessageBox::question(m_pParent,
                                          qApp->applicationName(),
-                                         trUtf8("Do you want to download "
-                                                "the images which are "
-                                                "attached to the article?"),
+                                         tr("Do you want to download "
+                                            "the images which are "
+                                            "attached to the article?"),
                                          QMessageBox::Yes
                                          | QMessageBox::No,
                                          QMessageBox::No);

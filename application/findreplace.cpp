@@ -107,13 +107,13 @@ void FindReplace::callReplace() {
 
 void FindReplace::toggleSearchReplace(bool bReplace) {
   if (!bReplace) {
-    this->setWindowTitle(trUtf8("Search"));
+    this->setWindowTitle(tr("Search"));
     m_pUi->lbl_Replace->setVisible(false);
     m_pUi->text_Replace->setVisible(false);
     m_pUi->button_Replace->setVisible(false);
     m_pUi->button_ReplaceAll->setVisible(false);
   } else {
-    this->setWindowTitle(trUtf8("Search / Replace"));
+    this->setWindowTitle(tr("Search / Replace"));
     m_pUi->lbl_Replace->setVisible(true);
     m_pUi->text_Replace->setVisible(true);
     m_pUi->button_Replace->setVisible(true);
@@ -221,7 +221,7 @@ void FindReplace::find(const bool bForward) {
   if (bResult) {
     m_pUi->lbl_Error->setText("");
   } else {
-    m_pUi->lbl_Error->setText(trUtf8("Could not find your expression"));
+    m_pUi->lbl_Error->setText(tr("Could not find your expression"));
     // Move to the beginning of the document for the next search cycle
     m_TextCursor.setPosition(0);
     m_pEditor->setTextCursor(m_TextCursor);
@@ -251,6 +251,5 @@ void FindReplace::replaceAll() {
     this->find();
     nReplaced++;
   }
-  m_pUi->lbl_Error->setText(
-        trUtf8("Replaced expressions: %1").arg(nReplaced));
+  m_pUi->lbl_Error->setText(tr("Replaced expressions: %1").arg(nReplaced));
 }

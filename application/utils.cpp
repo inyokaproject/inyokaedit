@@ -123,13 +123,13 @@ void Utils::replyFinished(QNetworkReply *pReply) {
             || nRevision2 > nRevision1) {
           QMessageBox *msgBox = new QMessageBox(
                                   QMessageBox::Question,
-                                  trUtf8("Update found"),
-                                  trUtf8("Found a new version of %1.<br>"
-                                         "Do you want to download the latest "
-                                         "version?")
+                                  tr("Update found"),
+                                  tr("Found a new version of %1.<br>"
+                                     "Do you want to download the latest "
+                                     "version?")
                                   .arg(qApp->applicationName()), 0, m_pParent);
           QPushButton *noDontAskAgainButton = msgBox->addButton(
-                                                trUtf8("No, don't ask again!"),
+                                                tr("No, don't ask again!"),
                                                 QMessageBox::NoRole);
           QPushButton *noButton = msgBox->addButton(QMessageBox::No);
           QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
@@ -167,7 +167,7 @@ void Utils::reportBug() {
 
 void Utils::showAbout() {
   QMessageBox::about(
-        m_pParent, trUtf8("About")+ " " + qApp->applicationName(),
+        m_pParent, tr("About")+ " " + qApp->applicationName(),
         QString("<big><b>%1 %2</b></big><br />"
                 "%3<br />"
                 "<small>%4</small><br /><br />"
@@ -177,18 +177,18 @@ void Utils::showAbout() {
                 "%8")
         .arg(qApp->applicationName())
         .arg(qApp->applicationVersion())
-        .arg(trUtf8("Editor for Inyoka-based portals"))
+        .arg(tr("Editor for Inyoka-based portals"))
         .arg(APP_COPY)
         .arg("URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
              "https://github.com/inyokaproject/inyokaedit</a>")
-        .arg(trUtf8("License") +
+        .arg(tr("License") +
              ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
              "GNU General Public License Version 3</a>")
-        .arg(trUtf8("This application uses icons from "
-                    "<a href=\"http://tango.freedesktop.org\">"
-                    "Tango project</a>."))
-        .arg(trUtf8("Special thanks to djcj, bubi97, Lasall, Vistaus, "
-                    "Shakesbier and all testers from "
-                    "<a href=\"http://ubuntuusers.de\"> "
-                    "ubuntuusers.de</a>.")));
+        .arg(tr("This application uses icons from "
+                "<a href=\"http://tango.freedesktop.org\">"
+                "Tango project</a>."))
+        .arg(tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
+                "Shakesbier and all testers from "
+                "<a href=\"http://ubuntuusers.de\"> "
+                "ubuntuusers.de</a>.")));
 }

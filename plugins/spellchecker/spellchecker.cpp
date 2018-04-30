@@ -113,7 +113,7 @@ void SpellChecker::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 QString SpellChecker::getCaption() const {
-  return trUtf8("Spell checker");
+  return tr("Spell checker");
 }
 QIcon SpellChecker::getIcon() const {
   return QIcon::fromTheme("tools-check-spelling",
@@ -374,7 +374,7 @@ void SpellChecker::callPlugin() {
 
   if (spellResult != SpellCheckDialog::AbortCheck) {
     QMessageBox::information(0, qApp->applicationName(),
-                             trUtf8("Spell check has finished."));
+                             tr("Spell check has finished."));
   }
 }
 
@@ -488,7 +488,7 @@ void SpellChecker::setEditorlist(QList<TextEditor *> listEditors) {
 
 void SpellChecker::showAbout() {
   QMessageBox aboutbox(NULL);
-  aboutbox.setWindowTitle(trUtf8("Info"));
+  aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
@@ -496,13 +496,13 @@ void SpellChecker::showAbout() {
                            "%4</p>"
                            "<p><i>%5</i></p>")
                    .arg(this->getCaption())
-                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
                    .arg(PLUGIN_COPY)
-                   .arg(trUtf8("Licence") + ": " +
+                   .arg(tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Spell checker based on "
-                               "<a href=\"http://hunspell.sourceforge.net/\">"
-                               "Hunspell</a>.")));
+                   .arg(tr("Spell checker based on "
+                           "<a href=\"http://hunspell.sourceforge.net/\">"
+                           "Hunspell</a>.")));
   aboutbox.exec();
 }

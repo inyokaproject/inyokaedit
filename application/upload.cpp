@@ -61,7 +61,7 @@ Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,
 
 void Upload::setEditor(QTextEdit *pEditor, const QString &sArticlename) {
   m_pEditor = pEditor;
-  m_sArticlename = trUtf8("Untitled");
+  m_sArticlename = tr("Untitled");
   if (!sArticlename.isEmpty() && !sArticlename.contains(m_sArticlename)) {
     m_sArticlename = sArticlename;
   }
@@ -75,31 +75,31 @@ void Upload::setEditor(QTextEdit *pEditor, const QString &sArticlename) {
 
 void Upload::clickUploadArticle() {
   if (m_sHash.isEmpty()) {
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Inyoka community hash not defined!"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Inyoka community hash not defined!"));
     return;
   }
 
   if (m_pEditor->toPlainText().trimmed().isEmpty()) {
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Please insert article text first!"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Please insert article text first!"));
     return;
   }
 
   // Check for internet connection
   if (!Utils::getOnlineState()) {
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Upload not possible, no active internet "
-                                "connection found!"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Upload not possible, no active internet "
+                            "connection found!"));
     return;
   }
 
   bool bOk = false;
   m_sSitename = QInputDialog::getText(
-                  m_pParent, trUtf8("Upload"),
-                  trUtf8("Please insert name of the article which should be "
-                         "uploaded.\nIt is only possible to upload into "
-                         "the \"%1\"!").arg(m_sConstructionArea),
+                  m_pParent, tr("Upload"),
+                  tr("Please insert name of the article which should be "
+                     "uploaded.\nIt is only possible to upload into "
+                     "the \"%1\"!").arg(m_sConstructionArea),
                   QLineEdit::Normal, m_sConstructionArea + "/" + m_sArticlename,
                   &bOk);
   m_sSitename = m_sSitename.trimmed();
@@ -198,16 +198,16 @@ void Upload::getTokenReply(QString sNWReply) {
     if (m_sToken.isEmpty()) {
       qWarning() << "Token request failed. No CSRFTOKEN received.";
       qWarning() << "COOKIES" << m_ListCookies;
-      QMessageBox::warning(m_pParent, trUtf8("Error"),
-                           trUtf8("Upload failed! No CSRFTOKEN received."));
+      QMessageBox::warning(m_pParent, tr("Error"),
+                           tr("Upload failed! No CSRFTOKEN received."));
       m_State = REQUTOKEN;
       return;
     } else if (sSessionCookie.isEmpty()) {
       qWarning() << "No session cookie received.";
       qWarning() << "COOKIES" << m_ListCookies;
       QMessageBox::warning(
-            m_pParent, trUtf8("Error"),
-            trUtf8("Upload failed! No session cookie received."));
+            m_pParent, tr("Error"),
+            tr("Upload failed! No session cookie received."));
       m_State = REQUTOKEN;
       return;
     } else {  // SUCCESS
@@ -219,8 +219,8 @@ void Upload::getTokenReply(QString sNWReply) {
   } else {
     qWarning() << "Calling login page failed! No cookies received.";
     qWarning() << "NW REPLY:" << sNWReply;
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Upload failed! No cookies received."));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Upload failed! No cookies received."));
     m_State = REQUTOKEN;
   }
 }
@@ -238,16 +238,16 @@ void Upload::requestLogin() {
   QString sPassword("");
 
   sUsername = QInputDialog::getText(
-                m_pParent, trUtf8("Login user"),
-                trUtf8("Please insert your Inyoka user name:"),
+                m_pParent, tr("Login user"),
+                tr("Please insert your Inyoka user name:"),
                 QLineEdit::Normal, "", &bOk).trimmed();
   if (true != bOk || sUsername.isEmpty()) {
     return;
   }
 
   sPassword = QInputDialog::getText(
-                m_pParent, trUtf8("Login password"),
-                trUtf8("Please insert your Inyoka password:"),
+                m_pParent, tr("Login password"),
+                tr("Please insert your Inyoka password:"),
                 QLineEdit::Password, "", &bOk).trimmed();
   if (true != bOk || sPassword.isEmpty()) {
     return;
@@ -288,8 +288,8 @@ void Upload::getLoginReply(QString sNWReply) {
   if (-1 != sNWReply.indexOf("$IS_LOGGED_IN = false")) {
     m_State = REQUTOKEN;
     qWarning() << "LOGIN FAILED! Wrong credentials?";
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Login at Inyoka failed. Wrong credentials?"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Login at Inyoka failed. Wrong credentials?"));
     return;
   } else {
     foreach (QNetworkCookie cookie, m_ListCookies) {
@@ -309,8 +309,8 @@ void Upload::getLoginReply(QString sNWReply) {
     if (RECLOGIN != m_State) {
       m_State = REQUTOKEN;
       qWarning() << "LOGIN FAILED! No success message cookie.";
-      QMessageBox::warning(m_pParent, trUtf8("Error"),
-                           trUtf8("Login at Inyoka failed."));
+      QMessageBox::warning(m_pParent, tr("Error"),
+                           tr("Login at Inyoka failed."));
       return;
     }
   }
@@ -353,8 +353,8 @@ void Upload::getRevisionReply(QString sNWReply) {
     qDebug() << "Last revision of" << m_sSitename << "=" << m_sRevision;
   } else {
     m_sRevision = "";
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Last article revision not found!"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Last article revision not found!"));
     qWarning() << "Article revision not found!";
     qDebug() << "Reply:" << sNWReply;
     return;
@@ -399,24 +399,24 @@ void Upload::requestUpload() {
   m_sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
   if (m_sToken.isEmpty()) {
     qWarning() << "Upload failed! Empty CSRFTOKEN.";
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("Upload failed! No CSRFTOKEN received."));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Upload failed! No CSRFTOKEN received."));
     return;
   }
   // qDebug() << "TOKEN:" << m_sToken;
 
   QString sNote("");
   bool bOk(false);
-  sNote = QInputDialog::getText(m_pParent, trUtf8("Change note"),
-                                trUtf8("Please insert a change message:"),
+  sNote = QInputDialog::getText(m_pParent, tr("Change note"),
+                                tr("Please insert a change message:"),
                                 QLineEdit::Normal, "", &bOk);
   sNote = sNote.trimmed();
   // Click on "cancel" or string is empty
   if (true != bOk || sNote.isEmpty()) {
     qWarning() << "Change note is empty.";
-    QMessageBox::warning(m_pParent, trUtf8("Error"),
-                         trUtf8("It is not allowed to upload an article "
-                                "without change message!"));
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("It is not allowed to upload an article "
+                            "without change message!"));
     return;
   }
 
@@ -470,17 +470,15 @@ void Upload::getUploadReply(QString sNWReply) {
 
   if (sNWReply.isEmpty()) {
     qDebug() << "UPLOAD SUCCESSFUL!";
-    QMessageBox::information(m_pParent, "Upload",
-                             trUtf8("Upload successful!"));
+    QMessageBox::information(m_pParent, "Upload", tr("Upload successful!"));
   } else {
     if (sNWReply.contains("Du hast die Seite nicht verändert.")) {
       qDebug() << "UPLOAD REPLY: Page was not changed.";
-      QMessageBox::warning(m_pParent, trUtf8("Upload failed"),
-                           trUtf8("The page content was not changed!"));
+      QMessageBox::warning(m_pParent, tr("Upload failed"),
+                           tr("The page content was not changed!"));
     } else {
       qDebug() << "UPLOAD REPLY:" << sNWReply;
-      QMessageBox::warning(m_pParent, trUtf8("Error"),
-                           trUtf8("Upload failed!"));
+      QMessageBox::warning(m_pParent, tr("Error"), tr("Upload failed!"));
     }
   }
 }

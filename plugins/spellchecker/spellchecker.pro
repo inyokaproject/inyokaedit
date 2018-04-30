@@ -34,6 +34,9 @@ RCC_DIR       = ./.rcc
 
 QT           += widgets
 
+DEFINES      += QT_DEPRECATED_WARNINGS
+DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
+
 HEADERS      += spellcheckdialog.h \
                 spellchecker.h
 

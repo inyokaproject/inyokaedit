@@ -127,7 +127,7 @@ void Highlighter::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 QString Highlighter::getCaption() const {
-  return trUtf8("Syntax highlighter");
+  return tr("Syntax highlighter");
 }
 QIcon Highlighter::getIcon() const {
   return QIcon();
@@ -198,7 +198,7 @@ void Highlighter::buildUi(QWidget *pParent) {
       sListStyleFiles << fi.fileName().remove(m_sExt);
     }
   }
-  sListStyleFiles.push_front(trUtf8("Create new style..."));
+  sListStyleFiles.push_front(tr("Create new style..."));
   m_pUi->styleFilesBox->addItems(sListStyleFiles);
   m_pUi->styleFilesBox->insertSeparator(1);
 
@@ -207,17 +207,17 @@ void Highlighter::buildUi(QWidget *pParent) {
   this->loadHighlighting(m_sStyleFile);
 
   QStringList sListHeader;
-  sListHeader << trUtf8("Color") << trUtf8("Bold")
-              << trUtf8("Italic") << trUtf8("Background");
+  sListHeader << tr("Color") << tr("Bold")
+              << tr("Italic") << tr("Background");
   m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
   sListHeader.clear();
-  sListHeader << trUtf8("Background") << trUtf8("Text color")
-              << trUtf8("Text formating") << trUtf8("Heading")
-              << trUtf8("Hyperlink") << trUtf8("InterWiki")
-              << trUtf8("Macro") << trUtf8("Parser") << trUtf8("List")
-              << trUtf8("Table line") << trUtf8("Table cell format")
-              << trUtf8("ImgMap") << trUtf8("Misc") << trUtf8("Comment")
-              << trUtf8("Syntax error");
+  sListHeader << tr("Background") << tr("Text color")
+              << tr("Text formating") << tr("Heading")
+              << tr("Hyperlink") << tr("InterWiki")
+              << tr("Macro") << tr("Parser") << tr("List")
+              << tr("Table line") << tr("Table cell format")
+              << tr("ImgMap") << tr("Misc") << tr("Comment")
+              << tr("Syntax error");
   m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 
   connect(m_pUi->styleFilesBox, SIGNAL(currentIndexChanged(int)),
@@ -639,9 +639,9 @@ void Highlighter::changedStyle(int nIndex) {
     bool bOk;
     QFileInfo fiStyle(m_pStyleSet->fileName());
 
-    sFileName = QInputDialog::getText(0, trUtf8("New style"),
-                                      trUtf8("Please insert name of "
-                                             "new style file:"),
+    sFileName = QInputDialog::getText(0, tr("New style"),
+                                      tr("Please insert name of "
+                                         "new style file:"),
                                       QLineEdit::Normal,
                                       "",
                                       &bOk);
@@ -660,8 +660,7 @@ void Highlighter::changedStyle(int nIndex) {
         m_pUi->styleFilesBox->setCurrentIndex(
               m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
-        QMessageBox::warning(0, trUtf8("Error"),
-                             trUtf8("File already exists."));
+        QMessageBox::warning(0, tr("Error"), tr("File already exists."));
         qWarning() << "Style file already exists:" << fileStyle.fileName();
         return;
       }
@@ -672,8 +671,7 @@ void Highlighter::changedStyle(int nIndex) {
         m_pUi->styleFilesBox->setCurrentIndex(
               m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
-        QMessageBox::warning(0, trUtf8("Error"),
-                             trUtf8("Could not create new style."));
+        QMessageBox::warning(0, tr("Error"), tr("Could not create new style."));
         qWarning() << "Could not create new style file:";
         qWarning() << "Org:" << fiStyle.absoluteFilePath();
         qWarning() << "Copy:" << fileStyle.fileName();
@@ -906,7 +904,7 @@ void Highlighter::rehighlightAll() {
 
 void Highlighter::showAbout() {
   QMessageBox aboutbox(NULL);
-  aboutbox.setWindowTitle(trUtf8("Info"));
+  aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/highlighter.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
@@ -914,11 +912,11 @@ void Highlighter::showAbout() {
                            "%4</p>"
                            "<p><i>%5</i></p>")
                    .arg(this->getCaption())
-                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
                    .arg(PLUGIN_COPY)
-                   .arg(trUtf8("Licence") + ": " +
+                   .arg(tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Inyoka markup syntax highlighter plugin.")));
+                   .arg(tr("Inyoka markup syntax highlighter plugin.")));
   aboutbox.exec();
 }

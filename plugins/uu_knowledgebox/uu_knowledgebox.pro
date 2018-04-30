@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = uu_knowledgebox
 DESTDIR       = ../
 
-VERSION       = 1.1.0
+VERSION       = 1.1.1
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de knowledge box selection plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2013-2018 - Thorsten Roth"
 
@@ -33,6 +33,9 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += widgets
+
+DEFINES      += QT_DEPRECATED_WARNINGS
+DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
 
 HEADERS      += uu_knowledgebox.h
 

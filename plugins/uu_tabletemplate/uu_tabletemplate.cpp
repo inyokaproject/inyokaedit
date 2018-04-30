@@ -170,7 +170,7 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 QString Uu_TableTemplate::getCaption() const {
-  return trUtf8("Ubuntuusers.de table generator");
+  return tr("Ubuntuusers.de table generator");
 }
 QIcon Uu_TableTemplate::getIcon() const {
   return QIcon(":/tabletemplate.png");
@@ -241,7 +241,7 @@ QString Uu_TableTemplate::generateTable() {
             .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
         .arg(m_sRowClassTitle)
         .arg(colsNum)
-        .arg(trUtf8("Title"));
+        .arg(tr("Title"));
   }
 
   // Create head if set
@@ -251,7 +251,7 @@ QString Uu_TableTemplate::generateTable() {
         .arg(m_sRowClassHead);
 
     for (int i = 0; i < colsNum; i++) {
-      sTab += QString(trUtf8("Head") + " %1 \n").arg(i + 1);
+      sTab += QString(tr("Head") + " %1 \n").arg(i + 1);
     }
 
     sTab += "+++\n";
@@ -387,7 +387,7 @@ void Uu_TableTemplate::setEditorlist(QList<TextEditor *> listEditors) {
 
 void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(NULL);
-  aboutbox.setWindowTitle(trUtf8("Info"));
+  aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
@@ -395,12 +395,12 @@ void Uu_TableTemplate::showAbout() {
                            "%4</p>"
                            "<p><i>%5</i></p>")
                    .arg(this->getCaption())
-                   .arg(trUtf8("Version") + ": " + PLUGIN_VERSION)
+                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
                    .arg(PLUGIN_COPY)
-                   .arg(trUtf8("Licence") + ": " +
+                   .arg(tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>")
-                   .arg(trUtf8("Plugin for generating ubuntuusers.de styled "
-                               "Inyoka tables.")));
+                   .arg(tr("Plugin for generating ubuntuusers.de styled "
+                           "Inyoka tables.")));
   aboutbox.exec();
 }
