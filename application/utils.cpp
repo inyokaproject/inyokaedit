@@ -175,19 +175,19 @@ void Utils::showAbout() {
                 "%6<br />"
                 "<small>%7</small><br /><br />"
                 "%8")
-        .arg(qApp->applicationName())
-        .arg(qApp->applicationVersion())
-        .arg(tr("Editor for Inyoka-based portals"))
-        .arg(APP_COPY)
-        .arg("URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
-             "https://github.com/inyokaproject/inyokaedit</a>")
-        .arg(tr("License") +
+        .arg(qApp->applicationName(),
+             qApp->applicationVersion(),
+             tr("Editor for Inyoka-based portals"),
+             APP_COPY,
+             "URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
+             "https://github.com/inyokaproject/inyokaedit</a>",
+             tr("License") +
              ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-             "GNU General Public License Version 3</a>")
-        .arg(tr("This application uses icons from "
+             "GNU General Public License Version 3</a>",
+             tr("This application uses icons from "
                 "<a href=\"http://tango.freedesktop.org\">"
-                "Tango project</a>."))
-        .arg(tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
+                "Tango project</a>."),
+             tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
                 "Shakesbier and all testers from "
                 "<a href=\"http://ubuntuusers.de\"> "
                 "ubuntuusers.de</a>.")));

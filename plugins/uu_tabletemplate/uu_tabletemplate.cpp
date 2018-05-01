@@ -238,17 +238,15 @@ QString Uu_TableTemplate::generateTable() {
   // Create title if set
   if (m_pUi->showTitleBox->isChecked()) {
     sTab += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
-            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
-        .arg(m_sRowClassTitle)
-        .arg(colsNum)
-        .arg(tr("Title"));
+            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+        m_sRowClassTitle, QString::number(colsNum), tr("Title"));
   }
 
   // Create head if set
   if (m_pUi->showHeadBox->isChecked()) {
     sTab += QString("<rowclass=\"%1%2\"> ")
-            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
-        .arg(m_sRowClassHead);
+            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+        m_sRowClassHead);
 
     for (int i = 0; i < colsNum; i++) {
       sTab += QString(tr("Head") + " %1 \n").arg(i + 1);
@@ -262,8 +260,8 @@ QString Uu_TableTemplate::generateTable() {
     if (m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2) {
       sTab += QString("<rowclass=\"%1%2\">")
               .arg(
-                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()])
-          .arg(m_sRowClassHighlight);
+                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+          m_sRowClassHighlight);
     }
     for (int j = 0; j < colsNum; j++) {
       sTab += "\n";
@@ -394,13 +392,13 @@ void Uu_TableTemplate::showAbout() {
                            "<p>%3<br />"
                            "%4</p>"
                            "<p><i>%5</i></p>")
-                   .arg(this->getCaption())
-                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
-                   .arg(PLUGIN_COPY)
-                   .arg(tr("Licence") + ": " +
+                   .arg(this->getCaption(),
+                        tr("Version") + ": " + PLUGIN_VERSION,
+                        PLUGIN_COPY,
+                        tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a>")
-                   .arg(tr("Plugin for generating ubuntuusers.de styled "
+                        "GNU General Public License Version 3</a>",
+                        tr("Plugin for generating ubuntuusers.de styled "
                            "Inyoka tables.")));
   aboutbox.exec();
 }

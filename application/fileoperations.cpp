@@ -92,7 +92,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
     if (i < m_pSettings->getRecentFiles().size()) {
       m_LastOpenedFilesAct << new QAction(
-                                m_pSettings->getRecentFiles()[i], this);
+                                m_pSettings->getRecentFiles().at(i), this);
     } else {
       m_LastOpenedFilesAct << new QAction("EMPTY", this);
       m_LastOpenedFilesAct[i]->setVisible(false);
@@ -193,7 +193,7 @@ void FileOperations::open() {
 // ----------------------------------------------------------------------------
 
 void FileOperations::openRecentFile(const int nEntry) {
-  this->loadFile(m_pSettings->getRecentFiles()[nEntry], true);
+  this->loadFile(m_pSettings->getRecentFiles().at(nEntry), true);
 }
 
 // ----------------------------------------------------------------------------
@@ -285,8 +285,7 @@ void FileOperations::loadFile(const QString &sFileName,
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("The file \"%1\" could not be opened:\n%2.")
-                         .arg(sTmpName)
-                         .arg(file.errorString()));
+                         .arg(sTmpName, file.errorString()));
     qWarning() << "File" << sTmpName << "could not be opened:"
                << file.errorString();
     return;
@@ -429,8 +428,7 @@ bool FileOperations::saveFile(QString sFileName) {
   if (!file.open(QFile::WriteOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("The file \"%1\" could not be saved:\n%2.")
-                         .arg(sFileName)
-                         .arg(file.errorString()));
+                         .arg(sFileName, file.errorString()));
     qWarning() << "File" << sFileName << "could not be saved:"
                << file.errorString();
     return false;

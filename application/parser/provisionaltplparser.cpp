@@ -391,29 +391,29 @@ QString ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg) {
         sOutput = QString::fromUtf8(
                     "<p>Beim [:Launchpad:]-Projekt [launchpad:%1:] werden "
                     "[launchpad:%2/+download:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1]).arg(sListArg[1]);
+                  .arg(sListArg[1], sListArg[1]);
       } else if (sListArg[0].toLower() == "sourceforge") {  // SOURCEFORGE
         sOutput = QString::fromUtf8(
                     "<p>Beim [wikipedia:SourceForge:]-Projekt [sourceforge:%1:]"
                     " werden [sourceforge:%2/files/:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1]).arg(sListArg[1]);
+                  .arg(sListArg[1], sListArg[1]);
       } else if (sListArg[0].toLower() == "googlecode") {  // GOOGLE CODE
         sOutput = QString::fromUtf8(
                     "<p>Beim [http://code.google.com/intl/de/ Google Code]"
                     " {de} -Projekt [googlecode:%1:] werden [googlecode:"
                     "%2/downloads/:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1]).arg(sListArg[1]);
+                  .arg(sListArg[1], sListArg[1]);
       }
     } else if (sListArg[1].startsWith("dl")) {
       // 2: [[Vorlage(Fremdpaket, "Anbieter", dl, URL, Ubuntuversion(en))]]
       sOutput = QString::fromUtf8("<p>Von %1 werden folgende DEB-Pakete "
                                   "angeboten:</p>\n * [%2] {dl}\n")
-                .arg(sListArg[0]).arg(sListArg[2]);
+                .arg(sListArg[0], sListArg[2]);
     } else {
       // 3: [[Vorlage(Fremdpaket, "Anbieter", URL, Ubuntuversion(en))]]
       sOutput = QString::fromUtf8("<p>Von %1 werden [%2 DEB-Pakete] {dl} "
                                   "angeboten. ")
-                .arg(sListArg[0]).arg(sListArg[1]);
+                .arg(sListArg[0], sListArg[1]);
     }
   }
 
@@ -1567,7 +1567,7 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
                 "Weitere Informationen sind der [[Bild(img/interwiki/ppa.png)]]"
                 " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
                 "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
-              .arg(sUser).arg(sPPA).arg(sUser);
+              .arg(sUser, sPPA, sUser);
   }
 
   return sOutsideBox + insertBox("box warning",

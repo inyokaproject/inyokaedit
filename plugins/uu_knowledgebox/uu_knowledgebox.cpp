@@ -391,12 +391,12 @@ void Uu_KnowledgeBox::showAbout() {
                 "<p>%3<br />"
                 "%4</p>"
                 "<p><i>%5</i></p>")
-        .arg(this->getCaption())
-        .arg(tr("Version") + ": " + PLUGIN_VERSION)
-        .arg(PLUGIN_COPY)
-        .arg(tr("Licence") + ": " +
+        .arg(this->getCaption(),
+             tr("Version") + ": " + PLUGIN_VERSION,
+             PLUGIN_COPY,
+             tr("Licence") + ": " +
              "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-             "GNU General Public License Version 3</a>")
-        .arg(tr("Plugin for choosing ubuntuusers.de knowledge box entries.")));
+             "GNU General Public License Version 3</a>",
+             tr("Plugin for choosing ubuntuusers.de knowledge box entries.")));
   aboutbox.exec();
 }

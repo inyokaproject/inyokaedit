@@ -605,27 +605,31 @@ void InyokaEdit::createXmlMenus() {
             for (int i = 0; i < xmlParser.getGroupNames().size(); i++) {
               // qDebug() << "GROUP:" << xmlParser.getGroupNames()[i];
               tmplListActions.clear();
-              for (int j = 0; j < xmlParser.getElementNames()[i].size(); j++) {
+              for (int j = 0;
+                   j < xmlParser.getElementNames().at(i).size();
+                   j++) {
                 // qDebug() << "ELEMENTS" << xmlParser.getElementNames()[i][j];
                 m_pXmlActions.append(
-                      new QAction(QIcon(sTmpPath + xmlParser.getPath() + "/" +
-                                        xmlParser.getElementIcons()[i][j]),
-                                  xmlParser.getElementNames()[i][j], this));
+                      new QAction(QIcon(
+                                    sTmpPath + xmlParser.getPath() + "/" +
+                                    xmlParser.getElementIcons().at(i).at(j)),
+                                  xmlParser.getElementNames().at(i).at(j),
+                                  this));
                 tmplListActions.append(m_pXmlActions.last());
 
                 if ("dropdown" == sObj) {
                   m_pXmlDropdowns.last()->addItem(
-                        xmlParser.getElementNames()[i][j],
+                        xmlParser.getElementNames().at(i).at(j),
                         QVariant::fromValue(m_pXmlActions.last()));
                 }
 
                 // qDebug() << "INSERT" << xmlParser.getElementInserts()[i][j];
-                if (xmlParser.getElementInserts()[i][j].endsWith(
+                if (xmlParser.getElementInserts().at(i).at(j).endsWith(
                       ".tpl", Qt::CaseInsensitive) ||
-                    xmlParser.getElementInserts()[i][j].endsWith(
+                    xmlParser.getElementInserts().at(i).at(j).endsWith(
                       ".macro", Qt::CaseInsensitive)) {
                   QFile tmp(sTmpPath + xmlParser.getPath() + "/" +
-                            xmlParser.getElementInserts()[i][j]);
+                            xmlParser.getElementInserts().at(i).at(j));
                   if (tmp.exists()) {
                     m_pSigMapXmlActions->setMapping(m_pXmlActions.last(),
                                                     tmp.fileName());
@@ -636,36 +640,37 @@ void InyokaEdit::createXmlMenus() {
                 } else {
                   m_pSigMapXmlActions->setMapping(
                         m_pXmlActions.last(),
-                        xmlParser.getElementInserts()[i][j]);
+                        xmlParser.getElementInserts().at(i).at(j));
                 }
                 connect(m_pXmlActions.last(), SIGNAL(triggered()),
                         m_pSigMapXmlActions, SLOT(map()));
               }
               if ("menu" == sObj) {
-                if (xmlParser.getGroupNames()[i].isEmpty()) {
+                if (xmlParser.getGroupNames().at(i).isEmpty()) {
                   m_pXmlMenus.last()->addActions(tmplListActions);
                 } else {
                   m_pXmlSubMenus.append(
-                        new QMenu(xmlParser.getGroupNames()[i], this));
+                        new QMenu(xmlParser.getGroupNames().at(i), this));
                   m_pXmlSubMenus.last()->setIcon(
                         QIcon(sTmpPath + xmlParser.getPath() +
-                              "/" + xmlParser.getGroupIcons()[i]));
+                              "/" + xmlParser.getGroupIcons().at(i)));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlMenus.last()->addMenu(m_pXmlSubMenus.last());
                 }
               }
               if ("toolbar" == sObj) {
-                if (xmlParser.getGroupNames()[i].isEmpty()) {
+                if (xmlParser.getGroupNames().at(i).isEmpty()) {
                   m_pXmlToolbars.last()->addActions(tmplListActions);
                 } else {
                   m_pXmlToolbuttons.append(new QToolButton(this));
                   m_pXmlToolbuttons.last()->setIcon(
                         QIcon(sTmpPath + xmlParser.getPath() +
-                              "/" + xmlParser.getGroupIcons()[i]));
+                              "/" + xmlParser.getGroupIcons().at(i)));
                   m_pXmlToolbuttons.last()->setPopupMode(
                         QToolButton::InstantPopup);
-                  m_pXmlSubMenus.append(new QMenu(xmlParser.getGroupNames()[i],
-                                                  this));
+                  m_pXmlSubMenus.append(new QMenu(
+                                          xmlParser.getGroupNames().at(i),
+                                          this));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlToolbuttons.last()->setMenu(m_pXmlSubMenus.last());
                   m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbuttons.last());
@@ -697,7 +702,7 @@ void InyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
     QAction *separator = new QAction(this);
     separator->setSeparator(true);
     MenueEntries << separator;
-    m_pUi->toolsMenu->insertActions(m_pUi->toolsMenu->actions().first(),
+    m_pUi->toolsMenu->insertActions(m_pUi->toolsMenu->actions().at(0),
                                     MenueEntries);
   } else {
     m_pUi->toolsMenu->addActions(MenueEntries);

@@ -431,12 +431,12 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   unsigned int nNoTranslate;
 
   for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
-    if (m_pTemplates->getListFormatHtmlStart()[i]
+    if (m_pTemplates->getListFormatHtmlStart().at(i)
         .contains("class=\"notranslate\"")) {
-      sListFormatStart << m_pTemplates->getListFormatStart()[i];
-      sListFormatEnd << m_pTemplates->getListFormatEnd()[i];
-      sListHtmlStart << m_pTemplates->getListFormatHtmlStart()[i];
-      sListHtmlEnd << m_pTemplates->getListFormatHtmlEnd()[i];
+      sListFormatStart << m_pTemplates->getListFormatStart().at(i);
+      sListFormatEnd << m_pTemplates->getListFormatEnd().at(i);
+      sListHtmlStart << m_pTemplates->getListFormatHtmlStart().at(i);
+      sListHtmlEnd << m_pTemplates->getListFormatHtmlEnd().at(i);
     }
   }
 

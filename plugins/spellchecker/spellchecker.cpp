@@ -290,8 +290,8 @@ void SpellChecker::callPlugin() {
   m_pCheckDialog = new SpellCheckDialog(this, 0);
 
   QTextCharFormat highlightFormat;
-  highlightFormat.setBackground(QBrush(QColor("#ff6060")));
-  highlightFormat.setForeground(QBrush(QColor("#000000")));
+  highlightFormat.setBackground(QBrush(QColor(255, 96, 96)));
+  highlightFormat.setForeground(QBrush(QColor(0, 0, 0)));
   // Alternative format
   // highlightFormat.setUnderlineColor(QColor("red"));
   // highlightFormat.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
@@ -495,13 +495,13 @@ void SpellChecker::showAbout() {
                            "<p>%3<br />"
                            "%4</p>"
                            "<p><i>%5</i></p>")
-                   .arg(this->getCaption())
-                   .arg(tr("Version") + ": " + PLUGIN_VERSION)
-                   .arg(PLUGIN_COPY)
-                   .arg(tr("Licence") + ": " +
+                   .arg(this->getCaption(),
+                        tr("Version") + ": " + PLUGIN_VERSION,
+                        PLUGIN_COPY,
+                        tr("Licence") + ": " +
                         "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a>")
-                   .arg(tr("Spell checker based on "
+                        "GNU General Public License Version 3</a>",
+                        tr("Spell checker based on "
                            "<a href=\"http://hunspell.sourceforge.net/\">"
                            "Hunspell</a>.")));
   aboutbox.exec();
