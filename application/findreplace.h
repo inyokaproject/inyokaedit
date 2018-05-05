@@ -58,7 +58,7 @@ class FindReplace : public QDialog {
 
   private slots:
     void textSearchChanged();
-    void find();
+    void find2();
     void replace();
     void replaceAll();
 

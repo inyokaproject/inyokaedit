@@ -116,14 +116,16 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   }
 
   m_bBaseToNew = false;
-  connect(m_pUi->BaseToNewButton, SIGNAL(pressed()),
-          this, SLOT(convertToNewTemplate()));
-  connect(m_pUi->NewToBaseButton, SIGNAL(pressed()),
-          this, SLOT(convertToBaseTemplate()));
-  connect(m_pUi->previewButton, SIGNAL(pressed()),
-          this, SLOT(preview()));
-  connect(m_pUi->buttonBox, SIGNAL(accepted()),
-          this, SLOT(accept()));
+  connect(m_pUi->BaseToNewButton, &QPushButton::pressed,
+          this, &Uu_TableTemplate::convertToNewTemplate);
+  connect(m_pUi->NewToBaseButton, &QPushButton::pressed,
+          this, &Uu_TableTemplate::convertToBaseTemplate);
+  connect(m_pUi->previewButton, &QPushButton::pressed,
+          this, &Uu_TableTemplate::preview);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
+          this, &Uu_TableTemplate::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
+          m_pDialog, &QDialog::reject);
 }
 
 // ----------------------------------------------------------------------------

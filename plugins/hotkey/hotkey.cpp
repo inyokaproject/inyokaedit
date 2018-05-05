@@ -59,10 +59,8 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->loadHotkeyEntries();
   this->buildUi(m_pParent);  // After loading hotkey entries
 
-  connect(m_pUi->buttonBox, SIGNAL(accepted()),
-          this, SLOT(accept()));
-  connect(m_pDialog, SIGNAL(rejected()),
-          this, SLOT(reject()));
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this, &Hotkey::accept);
+  connect(m_pDialog, &QDialog::rejected, this, &Hotkey::reject);
 }
 
 // ----------------------------------------------------------------------------
@@ -155,14 +153,15 @@ void Hotkey::buildUi(QWidget *pParent) {
     this->createRow(m_listSequenceEdit[nRow], m_sListEntries[nRow]);
   }
 
-  connect(m_pSigMapHotkey, SIGNAL(mapped(QString)),
-          this, SLOT(insertElement(QString)));
-  connect(m_pSigMapDeleteRow, SIGNAL(mapped(QWidget*)),
-          this, SLOT(deleteRow(QWidget*)));
+  connect(m_pSigMapHotkey,
+          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
+          this, &Hotkey::insertElement);
+  connect(m_pSigMapDeleteRow,
+          static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
+          this, &Hotkey::deleteRow);
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
                                              QIcon(":/list-add.png")));
-  connect(m_pUi->addButton, SIGNAL(pressed()),
-          this, SLOT(addRow()));
+  connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
 }
 
 // ----------------------------------------------------------------------------
@@ -269,8 +268,9 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 
   m_pSigMapDeleteRow->setMapping(m_listDelRowButtons.last(),
                                  m_listDelRowButtons.last());
-  connect(m_listDelRowButtons.last(), SIGNAL(pressed()),
-          m_pSigMapDeleteRow, SLOT(map()));
+  connect(m_listDelRowButtons.last(), &QPushButton::pressed,
+          m_pSigMapDeleteRow,
+          static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
 }
 
 // ----------------------------------------------------------------------------
@@ -307,8 +307,9 @@ void Hotkey::registerHotkeys() {
     m_listActions << new QAction(QString::number(i), m_pParent);
     m_listActions.last()->setShortcut(m_listSequenceEdit[i]->keySequence());
     m_pSigMapHotkey->setMapping(m_listActions.last(), QString::number(i));
-    connect(m_listActions.last(), SIGNAL(triggered()),
-            m_pSigMapHotkey, SLOT(map()));
+    connect(m_listActions.last(), &QAction::triggered,
+            m_pSigMapHotkey,
+            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
   }
 
   m_pParent->addActions(m_listActions);

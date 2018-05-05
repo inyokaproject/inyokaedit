@@ -81,22 +81,5 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>Uu_KnowledgeBoxClass</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>277</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

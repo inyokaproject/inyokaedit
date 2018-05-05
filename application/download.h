@@ -45,6 +45,7 @@ class Download : public QObject {
 
   public slots:
     void downloadArticle(QString sUrl = "");
+    void downloadArticle2();
     void showArticle();
     void updateSettings(const bool bCompleter,
                         const QString &sInyokaUrl,

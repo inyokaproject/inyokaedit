@@ -220,13 +220,16 @@ void Highlighter::buildUi(QWidget *pParent) {
               << tr("Syntax error");
   m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 
-  connect(m_pUi->styleFilesBox, SIGNAL(currentIndexChanged(int)),
-          this, SLOT(changedStyle(int)));
-  connect(m_pUi->styleTable, SIGNAL(cellDoubleClicked(int, int)),
-          this, SLOT(clickedStyleCell(int, int)));
+  connect(m_pUi->styleFilesBox,
+          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &Highlighter::changedStyle);
+  connect(m_pUi->styleTable, &QTableWidget::cellDoubleClicked,
+          this, &Highlighter::clickedStyleCell);
 
-  connect(m_pUi->buttonBox, SIGNAL(accepted()),
-          this, SLOT(accept()));
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
+          this, &Highlighter::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
+          m_pDialog, &QDialog::reject);
 }
 
 // ----------------------------------------------------------------------------

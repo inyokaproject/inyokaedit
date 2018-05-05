@@ -123,13 +123,14 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->proxyUserNameEdit->setText(m_pSettings->m_sProxyUserName);
   m_pUi->proxyPasswordEdit->setText(m_pSettings->m_sProxyPassword);
 
-  connect(m_pUi->CommunityCombo, SIGNAL(currentIndexChanged(QString)),
-          this, SLOT(changedCommunity(QString)));
+  connect(m_pUi->CommunityCombo,
+          static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+          this, &SettingsDialog::changedCommunity);
 
-  connect(m_pUi->buttonBox, SIGNAL(accepted()),
-          this, SLOT(accept()));
-  connect(m_pUi->buttonBox, SIGNAL(rejected()),
-          this, SLOT(reject()));
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
+          this, &SettingsDialog::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
+          this, &SettingsDialog::reject);
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -338,6 +339,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
                                      "preferences-system",
                                      QIcon(":/images/preferences-system.png")),
                                    "");
+      // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
       connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
               PluginObjList[nRow], SLOT(showSettings()));
 
@@ -355,6 +357,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
                                  QIcon::fromTheme(
                                    "help-about",
                                    QIcon(":/images/help-browser.png")), "");
+    // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
     connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
             PluginObjList[nRow], SLOT(showAbout()));
     m_pUi->pluginsTable->setCellWidget(nRow, 4,

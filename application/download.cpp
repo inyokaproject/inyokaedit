@@ -42,12 +42,12 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath) {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
-  connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(replyFinished(QNetworkReply*)));
+  connect(m_pNwManager, &QNetworkAccessManager::finished,
+          this, &Download::replyFinished);
 
   m_DlImages = new DownloadImg();
-  connect(m_DlImages, SIGNAL(finsihedImageDownload()),
-          this, SLOT(showArticle()));
+  connect(m_DlImages, &DownloadImg::finsihedImageDownload,
+          this, &Download::showArticle);
 }
 
 // ----------------------------------------------------------------------------
@@ -63,6 +63,10 @@ void Download::updateSettings(const bool bCompleter,
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
+
+void Download::downloadArticle2() {
+  this->downloadArticle(QStringLiteral(""));
+}
 
 void Download::downloadArticle(QString sUrl) {
   // Check for internet connection

@@ -32,8 +32,8 @@
 #include <QFileInfo>
 
 DownloadImg::DownloadImg() {
-  connect(&m_NwManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(downloadFinished(QNetworkReply*)));
+  connect(&m_NwManager, &QNetworkAccessManager::finished,
+          this, &DownloadImg::downloadFinished);
 }
 
 // ----------------------------------------------------------------------------
@@ -63,8 +63,8 @@ void DownloadImg::startDownloads() {
   m_pProgessDialog->setModal(true);
   m_pProgessDialog->setMaximumSize(m_pProgessDialog->size());
   m_pProgessDialog->setMinimumSize(m_pProgessDialog->size());
-  connect(m_pProgessDialog, SIGNAL(canceled()),
-          this, SLOT(cancelDownloads()));
+  connect(m_pProgessDialog, &QProgressDialog::canceled,
+          this, &DownloadImg::cancelDownloads);
 
   if (m_sListUrls.size() == m_sListSavePath.size()
       && m_sListUrls.size() > 0) {

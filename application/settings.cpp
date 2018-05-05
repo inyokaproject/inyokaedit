@@ -45,20 +45,18 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath) {
 
   m_pSettingsDialog = new SettingsDialog(this, sSharePath, pParent);
 
-  connect(this,
-          SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)),
-          m_pSettingsDialog,
-          SLOT(getAvailablePlugins(QList<IEditorPlugin*>, QList<QObject*>)));
+  connect(this, &Settings::availablePlugins,
+          m_pSettingsDialog, &SettingsDialog::getAvailablePlugins);
 
-  connect(this, SIGNAL(showSettingsDialog()),
-          m_pSettingsDialog, SLOT(show()));
+  connect(this, &Settings::showSettingsDialog,
+          m_pSettingsDialog, &SettingsDialog::show);
 
-  connect(m_pSettingsDialog, SIGNAL(changeLang(QString)),
-          this, SIGNAL(changeLang(QString)));
-  connect(this, SIGNAL(updateUiLang()),
-          m_pSettingsDialog, SLOT(updateUiLang()));
-  connect(m_pSettingsDialog, SIGNAL(updatedSettings()),
-          this, SIGNAL(updateEditorSettings()));
+  connect(m_pSettingsDialog, &SettingsDialog::changeLang,
+          this, &Settings::changeLang);
+  connect(this, &Settings::updateUiLang,
+          m_pSettingsDialog, &SettingsDialog::updateUiLang);
+  connect(m_pSettingsDialog, &SettingsDialog::updatedSettings,
+          this, &Settings::updateEditorSettings);
 }
 
 Settings::~Settings() {

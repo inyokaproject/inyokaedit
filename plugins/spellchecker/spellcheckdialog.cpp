@@ -47,26 +47,27 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
   this->setWindowFlags(this->windowFlags()
                        & ~Qt::WindowContextHelpButtonHint);
 
-  connect(m_pUi->listWidget, SIGNAL(currentTextChanged(QString)),
-          m_pUi->ledtReplaceWith, SLOT(setText(QString)));
+  connect(m_pUi->listWidget, &QListWidget::currentTextChanged,
+          m_pUi->ledtReplaceWith, &QLineEdit::setText);
 
-  connect(m_pUi->btnAddToDict, SIGNAL(clicked()),
-          this, SLOT(addToDict()));
-  connect(m_pUi->btnReplaceOnce, SIGNAL(clicked()),
-          this, SLOT(replaceOnce()));
-  connect(m_pUi->btnReplaceAll, SIGNAL(clicked()),
-          this, SLOT(replaceAll()));
-  connect(m_pUi->btnIgnoreOnce, SIGNAL(clicked()),
-          this, SLOT(ignoreOnce()));
-  connect(m_pUi->btnIgnoreAll, SIGNAL(clicked()),
-          this, SLOT(ignoreAll()));
-  connect(m_pUi->btnCancel, SIGNAL(clicked()),
-          this, SLOT(closeDialog()));
+  connect(m_pUi->btnAddToDict,&QPushButton::clicked,
+          this, &SpellCheckDialog::addToDict);
+  connect(m_pUi->btnReplaceOnce, &QPushButton::clicked,
+          this, &SpellCheckDialog::replaceOnce);
+  connect(m_pUi->btnReplaceAll, &QPushButton::clicked,
+          this, &SpellCheckDialog::replaceAll);
+  connect(m_pUi->btnIgnoreOnce, &QPushButton::clicked,
+          this, &SpellCheckDialog::ignoreOnce);
+  connect(m_pUi->btnIgnoreAll, &QPushButton::clicked,
+          this, &SpellCheckDialog::ignoreAll);
+  connect(m_pUi->btnCancel, &QPushButton::clicked,
+          this, &SpellCheckDialog::closeDialog);
 
   // Add items before connect(), otherwise indexChanged is emitted!
   m_pUi->comboBoxLang->addItems(m_pSpellChecker->m_sListDicts);
-  connect(m_pUi->comboBoxLang, SIGNAL(currentIndexChanged(QString)),
-          this, SLOT(changeLanguage(QString)));
+  connect(m_pUi->comboBoxLang,
+          static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+          this, &SpellCheckDialog::changeLanguage);
 
   if (-1 != m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang)) {
     m_pUi->comboBoxLang->setCurrentIndex(

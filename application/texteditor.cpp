@@ -76,8 +76,8 @@ TextEditor::TextEditor(QStringList sListTplMacros,
   this->setAcceptRichText(false);  // Paste plain text only
 
   // Text changed
-  connect(this->document(), SIGNAL(modificationChanged(bool)),
-          this, SIGNAL(documentChanged(bool)));
+  connect(this->document(), &QTextDocument::modificationChanged,
+          this, &TextEditor::documentChanged);
 }
 
 TextEditor::~TextEditor() {
@@ -106,8 +106,9 @@ void TextEditor::setCompleter(QCompleter *completer) {
   m_pCompleter->setCompletionMode(QCompleter::PopupCompletion);
   m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   m_pCompleter->setWrapAround(false);
-  QObject::connect(m_pCompleter, SIGNAL(activated(QString)),
-                   this, SLOT(insertCompletion(QString)));
+  connect(m_pCompleter,
+          static_cast<void(QCompleter::*)(const QString &)>(&QCompleter::activated),
+          this, &TextEditor::insertCompletion);
 }
 
 // ----------------------------------------------------------------------------

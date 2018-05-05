@@ -140,10 +140,10 @@ void InyokaEdit::createObjects() {
                              "the application."));
     exit(-2);
   }
-  connect(m_pSettings, SIGNAL(changeLang(QString)),
-         this, SLOT(loadLanguage(QString)));
-  connect(this, SIGNAL(updateUiLang()),
-          m_pSettings, SIGNAL(updateUiLang()));
+  connect(m_pSettings, &Settings::changeLang,
+          this, &InyokaEdit::loadLanguage);
+  connect(this, &InyokaEdit::updateUiLang,
+          m_pSettings, &Settings::updateUiLang);
   this->loadLanguage(m_pSettings->getGuiLanguage());
 
   // Has to be created before parser
@@ -159,8 +159,8 @@ void InyokaEdit::createObjects() {
                          m_pSettings->getCheckLinks(),
                          m_pTemplates,
                          m_pSettings->getInyokaCommunity());
-  connect(m_pParser, SIGNAL(hightlightSyntaxError(qint32)),
-          this, SLOT(highlightSyntaxError(qint32)));
+  connect(m_pParser, &Parser::hightlightSyntaxError,
+          this, &InyokaEdit::highlightSyntaxError);
 
   m_pDocumentTabs = new QTabWidget;
   m_pDocumentTabs->setTabPosition(QTabWidget::North);
@@ -175,45 +175,40 @@ void InyokaEdit::createObjects() {
                                          m_pTemplates->getListTplMacrosALL());
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
 
-  connect(m_pFileOperations, SIGNAL(callPreview()),
-          this, SLOT(previewInyokaPage()));
-  connect(m_pFileOperations, SIGNAL(modifiedDoc(bool)),
-          this, SLOT(setWindowModified(bool)));
-  connect(m_pFileOperations, SIGNAL(changedCurrentEditor()),
-          this, SLOT(setCurrentEditor()));
+  connect(m_pFileOperations, &FileOperations::callPreview,
+          this, &InyokaEdit::previewInyokaPage);
+  connect(m_pFileOperations, &FileOperations::modifiedDoc,
+          this, &InyokaEdit::setWindowModified);
+  connect(m_pFileOperations, &FileOperations::changedCurrentEditor,
+          this, &InyokaEdit::setCurrentEditor);
 
   m_pPlugins = new Plugins(this, m_pCurrentEditor,
                            m_pSettings->getDisabledPlugins(),
                            m_UserDataDir,
                            m_sSharePath);
-  connect(m_pSettings, SIGNAL(changeLang(QString)),
-          m_pPlugins, SLOT(changeLang(QString)));
-  connect(m_pPlugins,
-          SIGNAL(addMenuToolbarEntries(QList<QAction*>, QList<QAction*>)),
-          this,
-          SLOT(addPluginsButtons(QList<QAction*>, QList<QAction*>)));
-  connect(m_pPlugins,
-          SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)),
-          m_pSettings,
-          SIGNAL(availablePlugins(QList<IEditorPlugin*>, QList<QObject*>)));
+  connect(m_pSettings, &Settings::changeLang, m_pPlugins, &Plugins::changeLang);
+  connect(m_pPlugins, &Plugins::addMenuToolbarEntries,
+          this, &InyokaEdit::addPluginsButtons);
+  connect(m_pPlugins, &Plugins::availablePlugins,
+          m_pSettings, &Settings::availablePlugins);
 
   this->setCurrentEditor();
 
   // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   m_pWebview = new QWebView(this);
-  connect(m_pWebview->page(), SIGNAL(scrollRequested(int, int, QRect)),
-          this, SLOT(syncScrollbarsWebview()));
-  connect(m_pFileOperations, SIGNAL(movedEditorScrollbar()),
-          this, SLOT(syncScrollbarsEditor()));
+  connect(m_pWebview->page(), &QWebPage::scrollRequested,
+          this, &InyokaEdit::syncScrollbarsWebview);
+  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar,
+          this, &InyokaEdit::syncScrollbarsEditor);
 #else
   m_pWebview = new QWebEngineView(this);
 #endif
   m_pWebview->installEventFilter(this);
 
   m_pUtils = new Utils(this);
-  connect(m_pUtils, SIGNAL(setWindowsUpdateCheck(bool)),
-          m_pSettings, SLOT(setWindowsCheckUpdate(bool)));
+  connect(m_pUtils, &Utils::setWindowsUpdateCheck,
+          m_pSettings, &Settings::setWindowsCheckUpdate);
 }
 
 // ----------------------------------------------------------------------------
@@ -230,14 +225,14 @@ void InyokaEdit::setupEditor() {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   // Timed preview
-  connect(m_pPreviewTimer, SIGNAL(timeout()),
-          this, SLOT(previewInyokaPage()));
+  connect(m_pPreviewTimer, &QTimer::timeout,
+          this, &InyokaEdit::previewInyokaPage);
 
   m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
   m_pFrameLayout->addWidget(m_pWebview);
 
-  connect(m_pWebview, SIGNAL(loadFinished(bool)),
-          this, SLOT(loadPreviewFinished(bool)));
+  connect(m_pWebview, &QWebView::loadFinished,
+          this, &InyokaEdit::loadPreviewFinished);
 
   m_pWidgetSplitter = new QSplitter;
 
@@ -247,18 +242,18 @@ void InyokaEdit::setupEditor() {
   m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
   this->updateEditorSettings();
-  connect(m_pSettings, SIGNAL(updateEditorSettings()),
-          this, SLOT(updateEditorSettings()));
-  connect(m_pFileOperations, SIGNAL(newEditor()),
-          this, SLOT(updateEditorSettings()));
+  connect(m_pSettings, &Settings::updateEditorSettings,
+          this, &InyokaEdit::updateEditorSettings);
+  connect(m_pFileOperations, &FileOperations::newEditor,
+          this, &InyokaEdit::updateEditorSettings);
 
   // Show an empty website after start
   if (!m_bOpenFileAfterStart) {
     this->previewInyokaPage();
   }
 
-  connect(m_pDownloadModule, SIGNAL(sendArticleText(QString, QString)),
-          this, SLOT(displayArticleText(QString, QString)));
+  connect(m_pDownloadModule, &Download::sendArticleText,
+          this, &InyokaEdit::displayArticleText);
 
   // Restore window and toolbar settings
   // Settings have to be restored after toolbars are created!
@@ -270,22 +265,20 @@ void InyokaEdit::setupEditor() {
         m_pUi->aboutAct->text() + " " + qApp->applicationName());
 
   // Browser buttons
-  connect(m_pUi->goBackBrowserAct, SIGNAL(triggered()),
-          m_pWebview, SLOT(back()));
-  connect(m_pUi->goForwardBrowserAct, SIGNAL(triggered()),
-          m_pWebview, SLOT(forward()));
-  connect(m_pUi->reloadBrowserAct, SIGNAL(triggered()),
-          m_pWebview, SLOT(reload()));
+  connect(m_pUi->goBackBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebView::back);
+  connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebView::forward);
+  connect(m_pUi->reloadBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebView::reload);
 
-  connect(m_pWebview, SIGNAL(urlChanged(QUrl)),
-          this, SLOT(changedUrl()));
+  connect(m_pWebview, &QWebView::urlChanged, this, &InyokaEdit::changedUrl);
 
   // TODO(volunteer): Find solution for QWebEngineView
   // QWebEngineUrlRequestInterceptor ?
 #ifdef USEQTWEBKIT
   m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(m_pWebview, SIGNAL(linkClicked(QUrl)),
-          this, SLOT(clickedLink(QUrl)));
+  connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
 #endif
 }
 
@@ -299,24 +292,24 @@ void InyokaEdit::createActions() {
   // File menu
   // New file
   m_pUi->newAct->setShortcuts(QKeySequence::New);
-  connect(m_pUi->newAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(newFile()));
+  connect(m_pUi->newAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::newFile2);
   // Open file
   m_pUi->openAct->setShortcuts(QKeySequence::Open);
-  connect(m_pUi->openAct, SIGNAL(triggered()),
-          this, SLOT(openFile()));
+  connect(m_pUi->openAct, &QAction::triggered,
+          this, &InyokaEdit::openFile);
   // Save file
   m_pUi->saveAct->setShortcuts(QKeySequence::Save);
-  connect(m_pUi->saveAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(save()));
+  connect(m_pUi->saveAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::save);
   // Save file as...
   m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
-  connect(m_pUi->saveAsAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(saveAs()));
+  connect(m_pUi->saveAsAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::saveAs);
   // Print preview
   m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
-  connect(m_pUi->printPreviewAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(printPreview()));
+  connect(m_pUi->printPreviewAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::printPreview);
   // TODO(volunteer): Check print functionality again with Qt 5.7
 #if QT_VERSION >= 0x050600
   m_pUi->printPreviewAct->setEnabled(false);
@@ -324,66 +317,65 @@ void InyokaEdit::createActions() {
 
   // Exit application
   m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
-  connect(m_pUi->exitAct, SIGNAL(triggered()),
-          this, SLOT(close()));
+  connect(m_pUi->exitAct, &QAction::triggered, this, &InyokaEdit::close);
 
   // ------------------------------------------------------------------------
   // EDIT MENU
 
   // Find
   m_pUi->searchAct->setShortcuts(QKeySequence::Find);
-  connect(m_pUi->searchAct, SIGNAL(triggered()),
-          m_pFileOperations, SIGNAL(triggeredFind()));
+  connect(m_pUi->searchAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::triggeredFind);
   // Replace
   m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
-  connect(m_pUi->replaceAct, SIGNAL(triggered()),
-          m_pFileOperations, SIGNAL(triggeredReplace()));
+  connect(m_pUi->replaceAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::triggeredReplace);
   // Find next
   m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-  connect(m_pUi->findNextAct, SIGNAL(triggered()),
-          m_pFileOperations, SIGNAL(triggeredFindNext()));
+  connect(m_pUi->findNextAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::triggeredFindNext);
   // Find previous
   m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-  connect(m_pUi->findPreviousAct, SIGNAL(triggered()),
-          m_pFileOperations, SIGNAL(triggeredFindPrevious()));
+  connect(m_pUi->findPreviousAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::triggeredFindPrevious);
 
   // Cut
   m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-  connect(m_pUi->cutAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(cut()));
+  connect(m_pUi->cutAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::cut);
   // Copy
   m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-  connect(m_pUi->copyAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(copy()));
+  connect(m_pUi->copyAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::copy);
   // Paste
   m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-  connect(m_pUi->pasteAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(paste()));
+  connect(m_pUi->pasteAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::paste);
 
-  connect(m_pFileOperations, SIGNAL(copyAvailable(bool)),
-          m_pUi->cutAct, SLOT(setEnabled(bool)));
-  connect(m_pFileOperations, SIGNAL(copyAvailable(bool)),
-          m_pUi->copyAct, SLOT(setEnabled(bool)));
+  connect(m_pFileOperations, &FileOperations::copyAvailable,
+          m_pUi->cutAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::copyAvailable,
+          m_pUi->copyAct, &QAction::setEnabled);
   m_pUi->cutAct->setEnabled(false);
   m_pUi->copyAct->setEnabled(false);
 
   // Undo
   m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-  connect(m_pUi->undoAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(undo()));
+  connect(m_pUi->undoAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::undo);
   // Redo
   m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
-  connect(m_pUi->redoAct, SIGNAL(triggered()),
-          m_pFileOperations, SLOT(redo()));
+  connect(m_pUi->redoAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::redo);
 
-  connect(m_pFileOperations, SIGNAL(undoAvailable(bool)),
-          m_pUi->undoAct, SLOT(setEnabled(bool)));
-  connect(m_pFileOperations, SIGNAL(redoAvailable(bool)),
-          m_pUi->redoAct, SLOT(setEnabled(bool)));
-  connect(m_pFileOperations, SIGNAL(undoAvailable2(bool)),
-          m_pUi->undoAct, SLOT(setEnabled(bool)));
-  connect(m_pFileOperations, SIGNAL(redoAvailable2(bool)),
-          m_pUi->redoAct, SLOT(setEnabled(bool)));
+  connect(m_pFileOperations, &FileOperations::undoAvailable,
+          m_pUi->undoAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::redoAvailable,
+          m_pUi->redoAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::undoAvailable2,
+          m_pUi->undoAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::redoAvailable2,
+          m_pUi->redoAct, &QAction::setEnabled);
   m_pUi->undoAct->setEnabled(false);
   m_pUi->redoAct->setEnabled(false);
 
@@ -391,42 +383,41 @@ void InyokaEdit::createActions() {
   // TOOLS MENU
 
   // Clear temp. image download folder
-  connect(m_pUi->deleteTempImagesAct, SIGNAL(triggered()),
-          this, SLOT(deleteTempImages()));
+  connect(m_pUi->deleteTempImagesAct, &QAction::triggered,
+          this, &InyokaEdit::deleteTempImages);
 
   // Show settings dialog
-  connect(m_pUi->preferencesAct, SIGNAL(triggered()),
-          m_pSettings, SIGNAL(showSettingsDialog()));
+  connect(m_pUi->preferencesAct, &QAction::triggered,
+          m_pSettings, &Settings::showSettingsDialog);
 
   // ------------------------------------------------------------------------
 
   // Show html preview
   m_pUi->previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
-  connect(m_pUi->previewAct, SIGNAL(triggered()),
-          this, SLOT(previewInyokaPage()));
+  connect(m_pUi->previewAct, &QAction::triggered,
+          this, &InyokaEdit::previewInyokaPage);
 
   // Download Inyoka article
-  connect(m_pUi->downloadArticleAct, SIGNAL(triggered()),
-          m_pDownloadModule, SLOT(downloadArticle()));
+  connect(m_pUi->downloadArticleAct, &QAction::triggered,
+          m_pDownloadModule, &Download::downloadArticle2);
 
   // Upload Inyoka article
-  connect(m_pUi->uploadArticleAct, SIGNAL(triggered()),
-          m_pFileOperations, SIGNAL(triggeredUpload()));
+  connect(m_pUi->uploadArticleAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::triggeredUpload);
 
   // ------------------------------------------------------------------------
   // ABOUT MENU
 
   // Show syntax overview
-  connect(m_pUi->showSyntaxOverviewAct, SIGNAL(triggered()),
-          this, SLOT(showSyntaxOverview()));
+  connect(m_pUi->showSyntaxOverviewAct, &QAction::triggered,
+          this, &InyokaEdit::showSyntaxOverview);
 
   // Report a bug
-  connect(m_pUi->reportBugAct, SIGNAL(triggered()),
-          m_pUtils, SLOT(reportBug()));
+  connect(m_pUi->reportBugAct, &QAction::triggered,
+          m_pUtils, &Utils::reportBug);
 
   // Open about windwow
-  connect(m_pUi->aboutAct, SIGNAL(triggered()),
-          m_pUtils, SLOT(showAbout()));
+  connect(m_pUi->aboutAct, &QAction::triggered, m_pUtils, &Utils::showAbout);
 }
 
 // ----------------------------------------------------------------------------
@@ -465,8 +456,9 @@ void InyokaEdit::createMenus() {
                                         this);
         m_pSigMapOpenTemplate->setMapping(m_OpenTemplateFilesActions.last(),
                                           fi.absoluteFilePath());
-        connect(m_OpenTemplateFilesActions.last(), SIGNAL(triggered()),
-                m_pSigMapOpenTemplate, SLOT(map()));
+        connect(m_OpenTemplateFilesActions.last(), &QAction::triggered,
+                m_pSigMapOpenTemplate,
+                static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
       }
     }
 
@@ -479,8 +471,10 @@ void InyokaEdit::createMenus() {
   }
   m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
 
-  connect(m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
-          m_pFileOperations->m_pSigMapOpenTemplate, SIGNAL(mapped(QString)));
+  connect(m_pSigMapOpenTemplate,
+          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
+          m_pFileOperations->m_pSigMapOpenTemplate,
+          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped));
 
   if (0 == m_OpenTemplateFilesActions.size()) {
     m_pUi->fileMenuFromTemplate->setDisabled(true);
@@ -492,8 +486,8 @@ void InyokaEdit::createMenus() {
   if (0 == m_pSettings->getRecentFiles().size()) {
     m_pUi->fileMenuLastOpened->setEnabled(false);
   }
-  connect(m_pFileOperations, SIGNAL(setMenuLastOpenedEnabled(bool)),
-          m_pUi->fileMenuLastOpened, SLOT(setEnabled(bool)));
+  connect(m_pFileOperations, &FileOperations::setMenuLastOpenedEnabled,
+          m_pUi->fileMenuLastOpened, &QMenu::setEnabled);
 }
 
 // ----------------------------------------------------------------------------
@@ -593,8 +587,9 @@ void InyokaEdit::createXmlMenus() {
               m_pUi->samplesmacrosBar->addWidget(m_pXmlDropdowns.last());
               m_pXmlDropdowns.last()->addItem(xmlParser.getMenuName());
               m_pXmlDropdowns.last()->insertSeparator(1);
-              connect(m_pXmlDropdowns.last(), SIGNAL(currentIndexChanged(int)),
-                      this, SLOT(dropdownXmlChanged(int)));
+              connect(m_pXmlDropdowns.last(),
+                      static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                      this, &InyokaEdit::dropdownXmlChanged);
             } else if ("toolbar" == sObj) {
               m_pXmlToolbars.append(
                     new QToolBar(xmlParser.getMenuName(), this));
@@ -642,8 +637,9 @@ void InyokaEdit::createXmlMenus() {
                         m_pXmlActions.last(),
                         xmlParser.getElementInserts().at(i).at(j));
                 }
-                connect(m_pXmlActions.last(), SIGNAL(triggered()),
-                        m_pSigMapXmlActions, SLOT(map()));
+                connect(m_pXmlActions.last(), &QAction::triggered,
+                        m_pSigMapXmlActions,
+                        static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
               }
               if ("menu" == sObj) {
                 if (xmlParser.getGroupNames().at(i).isEmpty()) {
@@ -687,8 +683,9 @@ void InyokaEdit::createXmlMenus() {
       }
     }
   }
-  connect(m_pSigMapXmlActions, SIGNAL(mapped(QString)),
-          this, SLOT(insertMacro(QString)));
+  connect(m_pSigMapXmlActions,
+          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
+          this, &InyokaEdit::insertMacro);
 }
 
 // ----------------------------------------------------------------------------

@@ -43,16 +43,16 @@ FindReplace::FindReplace(QWidget *parent)
   m_pUi->lbl_Error->setStyleSheet("font-weight: bold; color: red;");
   m_pUi->lbl_Error->clear();
 
-  connect(m_pUi->button_Find, SIGNAL(clicked()),
-          this, SLOT(find()));
-  connect(m_pUi->text_Search, SIGNAL(textChanged(QString)),
-          this, SLOT(textSearchChanged()));
-  connect(m_pUi->button_Replace, SIGNAL(clicked()),
-          this, SLOT(replace()));
-  connect(m_pUi->button_ReplaceAll, SIGNAL(clicked()),
-          this, SLOT(replaceAll()));
-  connect(m_pUi->button_Cancel, SIGNAL(clicked()),
-          this, SLOT(close()));
+  connect(m_pUi->button_Find, &QPushButton::clicked,
+          this, &FindReplace::find2);
+  connect(m_pUi->text_Search, &QLineEdit::textChanged,
+          this, &FindReplace::textSearchChanged);
+  connect(m_pUi->button_Replace, &QPushButton::clicked,
+          this, &FindReplace::replace);
+  connect(m_pUi->button_ReplaceAll, &QPushButton::clicked,
+          this, &FindReplace::replaceAll);
+  connect(m_pUi->button_Cancel, &QPushButton::clicked,
+          this, &FindReplace::close);
 }
 
 FindReplace::~FindReplace() {
@@ -173,7 +173,7 @@ void FindReplace::textSearchChanged() {
 
 // ----------------------------------------------------------------------------
 
-void FindReplace::find() {
+void FindReplace::find2() {
   this->find(m_pUi->radio_Forward->isChecked());
 }
 
@@ -235,10 +235,10 @@ void FindReplace::find(const bool bForward) {
 
 void FindReplace::replace() {
   if (!m_pEditor->textCursor().hasSelection()) {
-    this->find();
+    this->find2();
   } else {
     m_pEditor->textCursor().insertText(m_pUi->text_Replace->text());
-    this->find();
+    this->find2();
   }
 }
 
@@ -248,7 +248,7 @@ void FindReplace::replaceAll() {
   quint32 nReplaced = 0;
   while (m_pEditor->textCursor().hasSelection()) {
     m_pEditor->textCursor().insertText(m_pUi->text_Replace->text());
-    this->find();
+    this->find2();
     nReplaced++;
   }
   m_pUi->lbl_Error->setText(tr("Replaced expressions: %1").arg(nReplaced));

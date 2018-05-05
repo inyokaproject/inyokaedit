@@ -149,8 +149,8 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));
             QEventLoop loop;  // Workaround getting synchron reply
-            connect(m_NWreply, SIGNAL(finished()),
-                    &loop, SLOT(quit()));
+            connect(m_NWreply, &QNetworkReply::finished,
+                    &loop, &QEventLoop::quit);
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {
@@ -176,8 +176,8 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));
             QEventLoop loop;
-            connect(m_NWreply, SIGNAL(finished()),
-                    &loop, SLOT(quit()));
+            connect(m_NWreply, &QNetworkReply::finished,
+                    &loop, &QEventLoop::quit);
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {

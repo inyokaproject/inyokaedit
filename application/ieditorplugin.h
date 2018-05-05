@@ -54,7 +54,7 @@ class IEditorPlugin {
     virtual void setEditorlist(QList<TextEditor *> listEditors) = 0;
 
   public slots:
-    virtual void callPlugin() = 0;     // Execute manually / call dialog
+    virtual void callPlugin() = 0;  // Execute manually
     virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
     virtual void showSettings() = 0;
     virtual void showAbout() = 0;

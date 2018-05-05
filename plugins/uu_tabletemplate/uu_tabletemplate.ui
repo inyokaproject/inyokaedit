@@ -203,22 +203,5 @@
   <include location="../../application/res/inyokaedit_resources.qrc"/>
   <include location="res/uu_tabletemplate_resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>Uu_TableTemplateClass</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>199</x>
-     <y>277</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -60,32 +60,32 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_sListTplMacros(sListTplMacros) {
     qDebug() << "Using miniz version:" << MZ_VERSION;
   m_pFindReplace = new FindReplace();
-  connect(this, SIGNAL(triggeredFind()),
-          m_pFindReplace, SLOT(callFind()));
-  connect(this, SIGNAL(triggeredReplace()),
-          m_pFindReplace, SLOT(callReplace()));
-  connect(this, SIGNAL(triggeredFindNext()),
-          m_pFindReplace, SLOT(findNext()));
-  connect(this, SIGNAL(triggeredFindPrevious()),
-          m_pFindReplace, SLOT(findPrevious()));
+  connect(this, &FileOperations::triggeredFind,
+          m_pFindReplace, &FindReplace::callFind);
+  connect(this, &FileOperations::triggeredReplace,
+          m_pFindReplace, &FindReplace::callReplace);
+  connect(this, &FileOperations::triggeredFindNext,
+          m_pFindReplace, &FindReplace::findNext);
+  connect(this, &FileOperations::triggeredFindPrevious,
+          m_pFindReplace, &FindReplace::findPrevious);
 
   m_pUploadModule = new Upload(m_pParent, m_pSettings->getInyokaUrl(),
                                m_pSettings->getInyokaConstructionArea(),
                                m_pSettings->getInyokaHash());
-  connect(this, SIGNAL(triggeredUpload()),
-          m_pUploadModule, SLOT(clickUploadArticle()));
+  connect(this, &FileOperations::triggeredUpload,
+          m_pUploadModule, &Upload::clickUploadArticle);
 
   // Install auto save timer
   m_pTimerAutosave = new QTimer(this);
-  connect(m_pTimerAutosave, SIGNAL(timeout()),
-          this, SLOT(saveDocumentAuto()));
+  connect(m_pTimerAutosave, &QTimer::timeout,
+          this, &FileOperations::saveDocumentAuto);
 
-  this->newFile();
+  this->newFile(QStringLiteral(""));
 
-  connect(m_pDocumentTabs, SIGNAL(currentChanged(int)),
-          this, SLOT(changedDocTab(int)));
-  connect(m_pDocumentTabs, SIGNAL(tabCloseRequested(int)),
-          this, SLOT(closeDocument(int)));
+  connect(m_pDocumentTabs, &QTabWidget::currentChanged,
+          this, &FileOperations::changedDocTab);
+  connect(m_pDocumentTabs, &QTabWidget::tabCloseRequested,
+          this, &FileOperations::closeDocument);
 
   // Generate recent files list
   m_pSigMapLastOpenedFiles = new QSignalMapper(this);
@@ -98,11 +98,13 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
       m_LastOpenedFilesAct[i]->setVisible(false);
     }
     m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
-    connect(m_LastOpenedFilesAct[i], SIGNAL(triggered()),
-            m_pSigMapLastOpenedFiles, SLOT(map()));
+    connect(m_LastOpenedFilesAct[i], &QAction::triggered,
+            m_pSigMapLastOpenedFiles,
+            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
   }
-  connect(m_pSigMapLastOpenedFiles, SIGNAL(mapped(int)),
-          this, SLOT(openRecentFile(int)));
+  connect(m_pSigMapLastOpenedFiles,
+          static_cast<void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
+          this, &FileOperations::openRecentFile);
 
   // Clear recent files list
   m_LastOpenedFilesAct.append(new QAction(this));
@@ -110,21 +112,23 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
   m_LastOpenedFilesAct << m_pClearRecentFilesAct;
 
-  connect(m_pClearRecentFilesAct, SIGNAL(triggered()),
-          this, SLOT(clearRecentFiles()));
+  connect(m_pClearRecentFilesAct, &QAction::triggered,
+          this, &FileOperations::clearRecentFiles);
 
   m_pSigMapOpenTemplate = new QSignalMapper(this);
-  connect(m_pSigMapOpenTemplate, SIGNAL(mapped(QString)),
-          this, SLOT(loadFile(QString)));
-  connect(m_pSettings, SIGNAL(updateEditorSettings()),
-          this, SLOT(updateEditorSettings()));
+  connect(m_pSigMapOpenTemplate,
+          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
+          this, &FileOperations::loadFromTpl);
+  connect(m_pSettings, &Settings::updateEditorSettings,
+          this, &FileOperations::updateEditorSettings);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void FileOperations::newFile() {
-  this->newFile("");
+void FileOperations::newFile2(bool b) {
+  Q_UNUSED(b);
+  this->newFile(QStringLiteral(""));
 }
 
 void FileOperations::newFile(QString sFileName) {
@@ -157,16 +161,16 @@ void FileOperations::newFile(QString sFileName) {
   m_pDocumentTabs->setTabToolTip(m_pDocumentTabs->count() - 1,
                                  m_pCurrentEditor->getFileName());
 
-  connect(m_pCurrentEditor, SIGNAL(documentChanged(bool)),
-          this, SIGNAL(modifiedDoc(bool)));
-  connect(m_pCurrentEditor, SIGNAL(copyAvailable(bool)),
-          this, SIGNAL(copyAvailable(bool)));
-  connect(m_pCurrentEditor, SIGNAL(undoAvailable(bool)),
-          this, SIGNAL(undoAvailable(bool)));
-  connect(m_pCurrentEditor, SIGNAL(redoAvailable(bool)),
-          this, SIGNAL(redoAvailable(bool)));
-  connect(m_pCurrentEditor->verticalScrollBar(), SIGNAL(valueChanged(int)),
-          this, SIGNAL(movedEditorScrollbar()));
+  connect(m_pCurrentEditor, &TextEditor::documentChanged,
+          this, &FileOperations::modifiedDoc);
+  connect(m_pCurrentEditor, &TextEditor::copyAvailable,
+          this, &FileOperations::copyAvailable);
+  connect(m_pCurrentEditor, &TextEditor::undoAvailable,
+          this, &FileOperations::undoAvailable);
+  connect(m_pCurrentEditor, &TextEditor::redoAvailable,
+          this, &FileOperations::redoAvailable);
+  connect(m_pCurrentEditor->verticalScrollBar(), &QScrollBar::valueChanged,
+          this, &FileOperations::movedEditorScrollbar);
 
   m_pDocumentTabs->setCurrentIndex(m_pDocumentTabs->count() - 1);
   this->updateEditorSettings();
@@ -270,6 +274,10 @@ bool FileOperations::maybeSave() {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
+
+void FileOperations::loadFromTpl(const QString &sFileName) {
+  this->loadFile(sFileName, false, false);
+}
 
 void FileOperations::loadFile(const QString &sFileName,
                               const bool bUpdateRecent,
@@ -841,7 +849,7 @@ bool FileOperations::closeDocument(int nIndex) {
         emit this->callPreview();
       }
     } else if (!m_bCloseApp) {
-      this->newFile();
+      this->newFile(QStringLiteral(""));
     }
   } else {
     return false;

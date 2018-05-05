@@ -50,8 +50,8 @@ Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,
     m_pEditor(NULL),
     m_sArticlename("") {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
-  connect(m_pNwManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(replyFinished(QNetworkReply*)));
+  connect(m_pNwManager, &QNetworkAccessManager::finished,
+          this, &Upload::replyFinished);
   m_pNwManager->setCookieJar(this);
   this->setParent(m_pParent);
 }

@@ -105,6 +105,7 @@ void Plugins::loadPlugins(const QString &sLang) {
       m_PluginMenuEntries << new QAction(m_listPlugins[i]->getIcon(),
                                          m_listPlugins[i]->getCaption(),
                                          m_pParent);
+      // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
       connect(m_PluginMenuEntries.last(), SIGNAL(triggered()),
               m_listPluginObjects[i], SLOT(callPlugin()));
     }
@@ -112,6 +113,7 @@ void Plugins::loadPlugins(const QString &sLang) {
       m_PluginToolbarEntries << new QAction(m_listPlugins[i]->getIcon(),
                                             m_listPlugins[i]->getCaption(),
                                             m_pParent);
+      // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
       connect(m_PluginToolbarEntries.last(), SIGNAL(triggered()),
               m_listPluginObjects[i], SLOT(callPlugin()));
     }

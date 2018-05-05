@@ -56,8 +56,10 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->loadTemplateEntries();
   this->buildUi(pParent);  // After loading template entries
 
-  connect(m_pUi->buttonBox, SIGNAL(accepted()),
-          this, SLOT(accept()));
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
+          this, &Uu_KnowledgeBox::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
+          m_pDialog, &QDialog::reject);
 }
 
 // ----------------------------------------------------------------------------
@@ -148,12 +150,13 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
     this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
   }
 
-  connect(m_pSigMapDeleteRow, SIGNAL(mapped(QWidget*)),
-          this, SLOT(deleteRow(QWidget*)));
+  connect(m_pSigMapDeleteRow,
+          static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
+          this, &Uu_KnowledgeBox::deleteRow);
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
                                              QIcon(":/list-add.png")));
-  connect(m_pUi->addButton, SIGNAL(pressed()),
-          this, SLOT(addRow()));
+  connect(m_pUi->addButton, &QPushButton::pressed,
+          this, &Uu_KnowledgeBox::addRow);
 }
 
 // ----------------------------------------------------------------------------
@@ -317,8 +320,9 @@ void Uu_KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
 
   m_pSigMapDeleteRow->setMapping(m_listDelRowButtons.last(),
                                  m_listDelRowButtons.last());
-  connect(m_listDelRowButtons.last(), SIGNAL(pressed()),
-          m_pSigMapDeleteRow, SLOT(map()));
+  connect(m_listDelRowButtons.last(), &QPushButton::pressed,
+          m_pSigMapDeleteRow,
+          static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
 }
 
 // ----------------------------------------------------------------------------

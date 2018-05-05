@@ -40,8 +40,8 @@
 Utils::Utils(QWidget *pParent)
   : m_pParent(pParent) {
   m_NwManager = new QNetworkAccessManager(this);
-  connect(m_NwManager, SIGNAL(finished(QNetworkReply*)),
-          this, SLOT(replyFinished(QNetworkReply*)));
+  connect(m_NwManager, &QNetworkAccessManager::finished,
+          this, &Utils::replyFinished);
 }
 
 // ----------------------------------------------------------------------------
