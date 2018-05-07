@@ -64,10 +64,6 @@ void Download::updateSettings(const bool bCompleter,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Download::downloadArticle2() {
-  this->downloadArticle(QStringLiteral(""));
-}
-
 void Download::downloadArticle(QString sUrl) {
   // Check for internet connection
   if (!Utils::getOnlineState()) {

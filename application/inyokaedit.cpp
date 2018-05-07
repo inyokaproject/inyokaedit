@@ -293,7 +293,8 @@ void InyokaEdit::createActions() {
   // New file
   m_pUi->newAct->setShortcuts(QKeySequence::New);
   connect(m_pUi->newAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::newFile2);
+          m_pFileOperations,
+          [this]() { m_pFileOperations->newFile(QStringLiteral("")); });
   // Open file
   m_pUi->openAct->setShortcuts(QKeySequence::Open);
   connect(m_pUi->openAct, &QAction::triggered,
@@ -399,7 +400,8 @@ void InyokaEdit::createActions() {
 
   // Download Inyoka article
   connect(m_pUi->downloadArticleAct, &QAction::triggered,
-          m_pDownloadModule, &Download::downloadArticle2);
+          m_pDownloadModule, [this] () {
+    m_pDownloadModule->downloadArticle(QStringLiteral("")); });
 
   // Upload Inyoka article
   connect(m_pUi->uploadArticleAct, &QAction::triggered,

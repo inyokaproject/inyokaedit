@@ -44,7 +44,7 @@ FindReplace::FindReplace(QWidget *parent)
   m_pUi->lbl_Error->clear();
 
   connect(m_pUi->button_Find, &QPushButton::clicked,
-          this, &FindReplace::find2);
+          this, [this]() { this->find(m_pUi->radio_Forward->isChecked()); });
   connect(m_pUi->text_Search, &QLineEdit::textChanged,
           this, &FindReplace::textSearchChanged);
   connect(m_pUi->button_Replace, &QPushButton::clicked,
@@ -173,10 +173,6 @@ void FindReplace::textSearchChanged() {
 
 // ----------------------------------------------------------------------------
 
-void FindReplace::find2() {
-  this->find(m_pUi->radio_Forward->isChecked());
-}
-
 void FindReplace::findNext() {
   this->find(true);
 }
@@ -235,10 +231,10 @@ void FindReplace::find(const bool bForward) {
 
 void FindReplace::replace() {
   if (!m_pEditor->textCursor().hasSelection()) {
-    this->find2();
+    this->find(m_pUi->radio_Forward->isChecked());
   } else {
     m_pEditor->textCursor().insertText(m_pUi->text_Replace->text());
-    this->find2();
+    this->find(m_pUi->radio_Forward->isChecked());
   }
 }
 
@@ -248,7 +244,7 @@ void FindReplace::replaceAll() {
   quint32 nReplaced = 0;
   while (m_pEditor->textCursor().hasSelection()) {
     m_pEditor->textCursor().insertText(m_pUi->text_Replace->text());
-    this->find2();
+    this->find(m_pUi->radio_Forward->isChecked());
     nReplaced++;
   }
   m_pUi->lbl_Error->setText(tr("Replaced expressions: %1").arg(nReplaced));

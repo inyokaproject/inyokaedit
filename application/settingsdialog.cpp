@@ -339,9 +339,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
                                      "preferences-system",
                                      QIcon(":/images/preferences-system.png")),
                                    "");
-      // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
-      connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-              PluginObjList[nRow], SLOT(showSettings()));
+      connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
+              PluginObjList[nRow], [=]() {
+        qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showSettings(); });
 
       m_pUi->pluginsTable->setCellWidget(nRow, 3,
                                          m_listPluginInfoButtons.last());
@@ -357,9 +357,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
                                  QIcon::fromTheme(
                                    "help-about",
                                    QIcon(":/images/help-browser.png")), "");
-    // TODO(volunteer): Convert to new Qt 5 signal/slot (cast QObject?)
-    connect(m_listPluginInfoButtons.last(), SIGNAL(pressed()),
-            PluginObjList[nRow], SLOT(showAbout()));
+    connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
+            PluginObjList[nRow], [=]() {
+      qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showAbout(); });
     m_pUi->pluginsTable->setCellWidget(nRow, 4,
                                        m_listPluginInfoButtons.last());
   }

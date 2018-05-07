@@ -118,18 +118,14 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   m_pSigMapOpenTemplate = new QSignalMapper(this);
   connect(m_pSigMapOpenTemplate,
           static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          this, &FileOperations::loadFromTpl);
+          this, [this](QString sFilename) { this->loadFile(sFilename); });
+
   connect(m_pSettings, &Settings::updateEditorSettings,
           this, &FileOperations::updateEditorSettings);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-
-void FileOperations::newFile2(bool b) {
-  Q_UNUSED(b);
-  this->newFile(QStringLiteral(""));
-}
 
 void FileOperations::newFile(QString sFileName) {
   static quint8 nCntDocs = 0;
@@ -274,10 +270,6 @@ bool FileOperations::maybeSave() {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-
-void FileOperations::loadFromTpl(const QString &sFileName) {
-  this->loadFile(sFileName, false, false);
-}
 
 void FileOperations::loadFile(const QString &sFileName,
                               const bool bUpdateRecent,

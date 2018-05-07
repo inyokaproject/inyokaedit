@@ -86,7 +86,6 @@ class FileOperations : public QObject {
   public slots:
     /** \brief Open an existing file */
     void open();
-    void newFile2(const bool b = false);
 
     /**
     * \brief Open recent opened file
@@ -112,7 +111,6 @@ class FileOperations : public QObject {
     */
     void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
                   const bool bArchive = false);
-    void loadFromTpl(const QString &sFileName);
 
     /**
     * \brief Load article from archive with images
