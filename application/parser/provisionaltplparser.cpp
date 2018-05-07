@@ -54,7 +54,7 @@ ProvisionalTplParser::ProvisionalTplParser(
 // ----------------------------------------------------------------------------
 
 QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
-                                       const QString sCurrentFile) {
+                                       const QString &sCurrentFile) {
   m_sCurrentFile = sCurrentFile;
 
   QStringList sArgs = sListArgs;
@@ -1459,6 +1459,7 @@ QString ProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs) {
   QStringList sListPackages;
+  sListPackages.reserve(sListArgs.length());
   QStringList sListPackagesTMP;
   QString sOutput("");
   QString sPackages("");

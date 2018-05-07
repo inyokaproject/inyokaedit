@@ -47,7 +47,7 @@ class SyntaxHighlighter : public QSyntaxHighlighter {
   public:
     explicit SyntaxHighlighter(QTextDocument *pDoc = 0);
     ~SyntaxHighlighter();
-    void setRules(QVector<HighlightingRule> rules);
+    void setRules(const QVector<HighlightingRule> &rules);
 
   protected:
     // Apply highlighting rules

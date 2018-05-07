@@ -36,7 +36,7 @@ SyntaxHighlighter::~SyntaxHighlighter() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SyntaxHighlighter::setRules(QVector<HighlightingRule> rules) {
+void SyntaxHighlighter::setRules(const QVector<HighlightingRule> &rules) {
   m_highlightingRules = rules;
 }
 

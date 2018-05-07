@@ -29,8 +29,8 @@
 #include <QDebug>
 
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
-                       const QStringList sListIWiki,
-                       const QStringList sListIWikiUrl,
+                       const QStringList &sListIWiki,
+                       const QStringList &sListIWikiUrl,
                        const bool bCheckLinks, QObject *pParent)
   : m_sWikiUrl(sUrlToWiki),
     m_sListInterwikiKey(sListIWiki),
@@ -44,7 +44,7 @@ ParseLinks::ParseLinks(const QString &sUrlToWiki,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void ParseLinks::updateSettings(const QString sUrlToWiki,
+void ParseLinks::updateSettings(const QString &sUrlToWiki,
                                 const bool bCheckLinks) {
   m_sWikiUrl = sUrlToWiki;
   m_bCheckLinks = bCheckLinks;

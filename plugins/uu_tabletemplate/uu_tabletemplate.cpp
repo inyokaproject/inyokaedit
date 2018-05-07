@@ -33,8 +33,8 @@
 #include "ui_uu_tabletemplate.h"
 
 void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                                  const QDir userDataDir,
-                                  const QString sSharePath) {
+                                  const QDir &userDataDir,
+                                  const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -378,7 +378,7 @@ void Uu_TableTemplate::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void Uu_TableTemplate::setEditorlist(QList<TextEditor *> listEditors) {
+void Uu_TableTemplate::setEditorlist(const QList<TextEditor *> &listEditors) {
   Q_UNUSED(listEditors);
 }
 

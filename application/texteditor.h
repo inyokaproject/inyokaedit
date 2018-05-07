@@ -55,11 +55,12 @@ class TextEditor : public QTextEdit {
   Q_OBJECT
 
   public:
-    TextEditor(QStringList sListTplMacros, const QString &sTransTemplate,
+    TextEditor(const QStringList &sListTplMacros,
+               const QString &sTransTemplate,
                QWidget *pParent = 0);
     ~TextEditor();
 
-    void setFileName(const QString sFileName);
+    void setFileName(const QString &sFileName);
     QString getFileName();
 
     bool isUndoAvailable();

@@ -34,11 +34,11 @@
 
 #include "ui_highlighter.h"
 
-const QString sSEPARATOR("|");
+const QString Highlighter::sSEPARATOR = QStringLiteral("|");
 
 void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                             const QDir userDataDir,
-                             const QString sSharePath) {
+                             const QDir &userDataDir,
+                             const QString &sSharePath) {
   Q_UNUSED(pEditor);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -866,7 +866,7 @@ void Highlighter::setCurrentEditor(TextEditor *pEditor) {
   Q_UNUSED(pEditor);
 }
 
-void Highlighter::setEditorlist(QList<TextEditor *> listEditors) {
+void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
   m_ListHighlighters.clear();
 
   foreach (TextEditor *pEd, listEditors) {

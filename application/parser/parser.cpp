@@ -85,7 +85,7 @@ void Parser::updateSettings(const QString &sInyokaUrl,
 
 QString Parser::genOutput(const QString &sActFile,
                           QTextDocument *pRawDocument,
-                          const bool &bSyntaxCheck) {
+                          const bool bSyntaxCheck) {
   qDebug() << "Parsing...";
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();

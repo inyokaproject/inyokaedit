@@ -34,8 +34,8 @@
 #include "ui_hotkey.h"
 
 void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                        const QDir userDataDir,
-                        const QString sSharePath) {
+                        const QDir &userDataDir,
+                        const QString &sSharePath) {
   Q_UNUSED(userDataDir);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -318,7 +318,7 @@ void Hotkey::registerHotkeys() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Hotkey::insertElement(QString sId) {
+void Hotkey::insertElement(const QString &sId) {
   QString sText(m_sListEntries[sId.toInt()]);
   sText.replace("\\n", "\n");
   int nPlaceholder1(sText.indexOf("%%"));
@@ -376,7 +376,7 @@ void Hotkey::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void Hotkey::setEditorlist(QList<TextEditor *> listEditors) {
+void Hotkey::setEditorlist(const QList<TextEditor *> &listEditors) {
   Q_UNUSED(listEditors);
 }
 

@@ -32,7 +32,7 @@
 
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,
-                 const QDir userDataDir, const QString &sSharePath)
+                 const QDir &userDataDir, const QString &sSharePath)
   : m_pParent(pParent),
     m_pEditor(pEditor),
     m_sListDisabledPlugins(sListDisabledPlugins),
@@ -143,7 +143,7 @@ void Plugins::setCurrentEditor(TextEditor *pEditor) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Plugins::setEditorlist(QList<TextEditor *> listEditors) {
+void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
   for (int i = 0; i < m_listPlugins.size(); i++) {
     if (!m_sListDisabledPlugins.contains(
           m_listPlugins[i]->getPluginName())) {

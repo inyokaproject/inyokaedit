@@ -33,8 +33,8 @@
 #include "ui_uu_knowledgebox.h"
 
 void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                                 const QDir userDataDir,
-                                 const QString sSharePath) {
+                                 const QDir &userDataDir,
+                                 const QString &sSharePath) {
   Q_UNUSED(userDataDir);
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -292,7 +292,7 @@ void Uu_KnowledgeBox::addRow() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_KnowledgeBox::createRow(const bool &bActive, const QString &sText) {
+void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -378,7 +378,7 @@ void Uu_KnowledgeBox::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void Uu_KnowledgeBox::setEditorlist(QList<TextEditor *> listEditors) {
+void Uu_KnowledgeBox::setEditorlist(const QList<TextEditor *> &listEditors) {
   Q_UNUSED(listEditors);
 }
 

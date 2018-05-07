@@ -73,8 +73,8 @@ class InyokaEdit : public QMainWindow {
   public slots:
     void displayArticleText(const QString &sArticleText,
                             const QString &sSitename);
-    void addPluginsButtons(QList<QAction *> ToolbarEntries,
-                           QList<QAction *> MenueEntries);
+    void addPluginsButtons(const QList<QAction *> &ToolbarEntries,
+                           QList<QAction *> &MenueEntries);
     void updateEditorSettings();
 
   protected:
@@ -99,7 +99,7 @@ class InyokaEdit : public QMainWindow {
     void previewInyokaPage();
     void loadPreviewFinished(const bool bSuccess);
     void changedUrl();
-    void clickedLink(QUrl newUrl);
+    void clickedLink(const QUrl &newUrl);
     void syncScrollbarsEditor();
     void syncScrollbarsWebview();
 

@@ -81,7 +81,7 @@ void DownloadImg::startDownloads() {
 
 void DownloadImg::doDownload(const QUrl &url,
                              const QString &sSavePath,
-                             const QString sBase) {
+                             const QString &sBase) {
   QNetworkRequest request(url);
   QNetworkReply *reply = m_NwManager.get(request);
 

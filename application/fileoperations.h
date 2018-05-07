@@ -54,7 +54,8 @@ class FileOperations : public QObject {
     */
     FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                    Settings *pSettings, const QString &sPreviewFile,
-                   QString sUserDataDir, QStringList sListTplMacros);
+                   const QString &sUserDataDir,
+                   const QStringList &sListTplMacros);
 
     void newFile(QString sFileName);
 

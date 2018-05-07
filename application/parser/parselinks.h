@@ -43,15 +43,15 @@ class ParseLinks : public QObject {
 
   public:
     ParseLinks(const QString &sUrlToWiki,
-               const QStringList sListIWiki,
-               const QStringList sListIWikiUrl,
+               const QStringList &sListIWiki,
+               const QStringList &sListIWikiUrl,
                const bool bCheckLinks,
                QObject *pParent = 0);
 
     void startParsing(QTextDocument *pRawDoc);
 
   public slots:
-    void updateSettings(const QString sUrlToWiki, const bool bCheckLinks);
+    void updateSettings(const QString &sUrlToWiki, const bool bCheckLinks);
 
   private:
     void replaceHyperlinks(QTextDocument *pRawDoc);

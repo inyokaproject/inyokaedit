@@ -261,7 +261,7 @@ bool SettingsDialog::eventFilter(QObject *obj, QEvent *event) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::changedCommunity(QString sCommunity) {
+void SettingsDialog::changedCommunity(const QString &sCommunity) {
   QFile communityFile(m_sSharePath + "/community/" +
                       sCommunity + "/community.conf");
 
@@ -294,8 +294,8 @@ void SettingsDialog::updateUiLang() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
-                                         const QList<QObject *> PluginObjList) {
+void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
+                                         const QList<QObject *> &PluginObjList) {
   m_listPLugins = Plugins;
   const quint8 nNUMCOLS = 5;
 

@@ -58,7 +58,7 @@ class Parser : public QObject {
 
     // Starts generating HTML-code
     QString genOutput(const QString &sActFile, QTextDocument *pRawDocument,
-                      const bool &bSyntaxCheck = false);
+                      const bool bSyntaxCheck = false);
 
   public slots:
     void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);

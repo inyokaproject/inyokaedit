@@ -39,20 +39,20 @@ class Plugins : public QObject {
 
   public:
     Plugins(QWidget *pParent, TextEditor *pEditor,
-            const QStringList &sListDisabledPlugins, const QDir userDataDir,
+            const QStringList &sListDisabledPlugins, const QDir &userDataDir,
             const QString &sSharePath);
     void loadPlugins(const QString &sLang);
     void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(QList<TextEditor *> listEditors);
+    void setEditorlist(const QList<TextEditor *> &listEditors);
 
   public slots:
     void changeLang(const QString &sLang);
 
   signals:
-    void availablePlugins(const QList<IEditorPlugin *> PluginList,
-                          const QList<QObject *> PluginObjList);
-    void addMenuToolbarEntries(const QList<QAction *> ToolbarEntries,
-                               const QList<QAction *> MenueEntries);
+    void availablePlugins(const QList<IEditorPlugin *> &PluginList,
+                          const QList<QObject *> &PluginObjList);
+    void addMenuToolbarEntries(const QList<QAction *> &ToolbarEntries,
+                               QList<QAction *> &MenueEntries);
 
   private:
     QWidget *m_pParent;

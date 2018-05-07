@@ -53,15 +53,15 @@ class Upload : public QNetworkCookieJar {
 
   private:
     void requestToken();
-    void getTokenReply(QString sNWReply);
+    void getTokenReply(const QString &sNWReply);
     void requestLogin();
-    void getLoginReply(QString sNWReply);
+    void getLoginReply(const QString &sNWReply);
     void requestRevision(QString sUrl = "");
-    void getRevisionReply(QString sNWReply);
+    void getRevisionReply(const QString &sNWReply);
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl);
     void requestUpload();
-    void getUploadReply(QString sNWReply);
+    void getUploadReply(const QString &sNWReply);
 
     enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN,
                        REQUREVISION, RECREVISION, REQUPLOAD, RECUPLOAD};

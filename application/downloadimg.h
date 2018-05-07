@@ -52,7 +52,7 @@ class DownloadImg : public QObject {
   private:
     void doDownload(const QUrl &url,
                     const QString &sSavePath,
-                    const QString sBase = "");
+                    const QString &sBase = "");
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl) const;
 

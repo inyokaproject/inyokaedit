@@ -55,7 +55,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
+                    const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     void installTranslator(const QString &sLang);
@@ -65,7 +65,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     bool includeToolbar() const;
     bool hasSettings() const;
     void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(QList<TextEditor *> listEditors);
+    void setEditorlist(const QList<TextEditor *> &listEditors);
 
   public slots:
     void callPlugin();
@@ -83,7 +83,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     void loadTemplateEntries();
     void buildUi(QWidget *pParent);
     void writeSettings();
-    void createRow(const bool &bActive, const QString &sText);
+    void createRow(const bool bActive, const QString &sText);
 
     Ui::Uu_KnowledgeBoxClass *m_pUi;
     QTranslator m_translator;

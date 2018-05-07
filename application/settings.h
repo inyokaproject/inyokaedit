@@ -49,8 +49,9 @@ class Settings : public QObject {
 
     // Load / save application settings
     void readSettings(const QString &sSharePath);
-    void writeSettings(const QByteArray WinGeometry, const QByteArray WinState,
-                       const QByteArray SplitterState = 0);
+    void writeSettings(const QByteArray &WinGeometry,
+                       const QByteArray &WinState,
+                       const QByteArray &SplitterState = 0);
 
     void setLastOpenedDir(const QDir &LastDir);
 
@@ -106,8 +107,8 @@ class Settings : public QObject {
     void changeLang(const QString &sLang);
     void updateUiLang();
     void updateEditorSettings();
-    void availablePlugins(const QList<IEditorPlugin *> PluginList,
-                          const QList<QObject *> PluginObjList);
+    void availablePlugins(const QList<IEditorPlugin *> &PluginList,
+                          const QList<QObject *> &PluginObjList);
 
   private:
     void removeObsolete();

@@ -213,9 +213,9 @@ void Settings::readSettings(const QString &sSharePath) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Settings::writeSettings(const QByteArray WinGeometry,
-                             const QByteArray WinState,
-                             const QByteArray SplitterState) {
+void Settings::writeSettings(const QByteArray &WinGeometry,
+                             const QByteArray &WinState,
+                             const QByteArray &SplitterState) {
   this->removeObsolete();
 
   // General settings

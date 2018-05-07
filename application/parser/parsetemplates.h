@@ -35,8 +35,8 @@
 
 class ParseTemplates {
   public:
-    ParseTemplates(QStringList sListTransTpl,
-                   QStringList sListTplNames,
+    ParseTemplates(const QStringList &sListTransTpl,
+                   const QStringList &sListTplNames,
                    const QStringList &sListHtmlStart,
                    const QString &sSharePath,
                    const QDir &tmpImgDir,

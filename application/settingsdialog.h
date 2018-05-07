@@ -53,8 +53,8 @@ class SettingsDialog : public QDialog {
     void accept();
     void reject();
     void updateUiLang();
-    void getAvailablePlugins(const QList<IEditorPlugin *> Plugins,
-                             const QList<QObject *> PluginObjList);
+    void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
+                             const QList<QObject *> &PluginObjList);
 
   signals:
     void changeLang(const QString &sLang);
@@ -64,7 +64,7 @@ class SettingsDialog : public QDialog {
     bool eventFilter(QObject *obj, QEvent *event);
 
   private slots:
-    void changedCommunity(QString sCommunity);
+    void changedCommunity(const QString &sCommunity);
 
   private:
     QStringList searchTranslations();

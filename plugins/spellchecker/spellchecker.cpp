@@ -41,8 +41,8 @@ SpellChecker::~SpellChecker() {
 }
 
 void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                              const QDir userDataDir,
-                              const QString sSharePath) {
+                              const QDir &userDataDir,
+                              const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
   Q_UNUSED(pParent);
 
@@ -301,6 +301,7 @@ void SpellChecker::callPlugin() {
 
   // Create a new cursor to walk through the text
   QTextCursor cursor(m_pEditor->document());
+  QList<QTextEdit::ExtraSelection> esList;
 
   SpellCheckDialog::SpellCheckAction spellResult = SpellCheckDialog::None;
 
@@ -328,13 +329,13 @@ void SpellChecker::callPlugin() {
       tmpCursor.setPosition(cursor.anchor());
       m_pEditor->setTextCursor(tmpCursor);
       m_pEditor->ensureCursorVisible();
+      esList.clear();
 
       // Highlight the unknown word
       QTextEdit::ExtraSelection es;
       es.cursor = cursor;
       es.format = highlightFormat;
 
-      QList<QTextEdit::ExtraSelection> esList;
       esList << es;
       m_pEditor->setExtraSelections(esList);
       QCoreApplication::processEvents();
@@ -395,30 +396,35 @@ bool SpellChecker::spell(const QString &sWord) {
 // ----------------------------------------------------------------------------
 
 QStringList SpellChecker::suggest(const QString &sWord) {
-  QStringList sListSuggestions;
   int nSuggestions = 0;
 
 #if defined(USE_NEW_HUNSPELL)  // Hunspell >= 1.5
+  QStringList sListSuggestions;
   std::vector<std::string> wordlist;
   wordlist = m_pHunspell->suggest(m_pCodec->fromUnicode(sWord).toStdString());
 
   nSuggestions = wordlist.size();
   if (nSuggestions > 0) {
+    sListSuggestions.reserve(nSuggestions);
     for (int i = 0; i < nSuggestions; i++) {
       sListSuggestions << m_pCodec->toUnicode(
                             QByteArray::fromStdString(wordlist[i]));
     }
   }
 #else
+  QStringList sListSuggestions;
   char **suggestWordList;
 
   // Encode from Unicode to the encoding used by current dictionary
   nSuggestions = m_pHunspell->suggest(&suggestWordList,
                                       m_pCodec->fromUnicode(sWord)
                                       .constData());
-  for (int i = 0; i < nSuggestions; ++i) {
-    sListSuggestions << m_pCodec->toUnicode(suggestWordList[i]);
-    free(suggestWordList[i]);
+  if (nSuggestions > 0) {
+    sListSuggestions.reserve(nSuggestions);
+    for (int i = 0; i < nSuggestions; ++i) {
+      sListSuggestions << m_pCodec->toUnicode(suggestWordList[i]);
+      free(suggestWordList[i]);
+    }
   }
 #endif
   return sListSuggestions;
@@ -479,7 +485,7 @@ void SpellChecker::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void SpellChecker::setEditorlist(QList<TextEditor *> listEditors) {
+void SpellChecker::setEditorlist(const QList<TextEditor *> &listEditors) {
   Q_UNUSED(listEditors);
 }
 

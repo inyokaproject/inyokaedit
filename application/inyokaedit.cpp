@@ -696,8 +696,8 @@ void InyokaEdit::createXmlMenus() {
 // ----------------------------------------------------------------------------
 
 // Add plugins to plugin toolbar and tools menu
-void InyokaEdit::addPluginsButtons(QList<QAction *> ToolbarEntries,
-                                   QList<QAction *> MenueEntries) {
+void InyokaEdit::addPluginsButtons(const QList<QAction *> &ToolbarEntries,
+                                   QList<QAction *> &MenueEntries) {
   m_pUi->pluginsBar->addActions(ToolbarEntries);
   if (m_pUi->toolsMenu->actions().size() > 0) {
     QAction *separator = new QAction(this);
@@ -971,7 +971,7 @@ void InyokaEdit::changedUrl() {
   m_pUi->goBackBrowserAct->setEnabled(false);
 }
 
-void InyokaEdit::clickedLink(QUrl newUrl) {
+void InyokaEdit::clickedLink(const QUrl &newUrl) {
   if (!newUrl.toString().contains(m_sPreviewFile)
       && newUrl.isLocalFile()) {
     qDebug() << "Trying to open file:" << newUrl;

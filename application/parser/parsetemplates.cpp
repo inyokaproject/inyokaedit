@@ -28,8 +28,8 @@
 
 #include <QDebug>
 
-ParseTemplates::ParseTemplates(QStringList sListTransTpl,
-                               QStringList sListTplNames,
+ParseTemplates::ParseTemplates(const QStringList &sListTransTpl,
+                               const QStringList &sListTplNames,
                                const QStringList &sListHtmlStart,
                                const QString &sSharePath,
                                const QDir &tmpImgDir,

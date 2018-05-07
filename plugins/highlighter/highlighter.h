@@ -54,7 +54,7 @@ class Highlighter : public QObject, IEditorPlugin {
 
   public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
+                    const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     void installTranslator(const QString &sLang);
@@ -64,7 +64,7 @@ class Highlighter : public QObject, IEditorPlugin {
     bool includeToolbar() const;
     bool hasSettings() const;
     void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(QList<TextEditor *> listEditors);
+    void setEditorlist(const QList<TextEditor *> &listEditors);
 
   public slots:
     void callPlugin();
@@ -126,6 +126,7 @@ class Highlighter : public QObject, IEditorPlugin {
     bool m_bSystemBackground;
     QColor m_colorForeground;
     QColor m_colorBackground;
+    static const QString sSEPARATOR;
 };
 
 #endif  // PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_

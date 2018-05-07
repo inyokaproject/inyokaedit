@@ -42,7 +42,7 @@ class ProvisionalTplParser {
                          const QStringList &sListTestedWithTouchStrings,
                          const QString &sCommunity);
 
-    QString parseTpl(const QStringList &sListArgs, const QString sCurrentFile);
+    QString parseTpl(const QStringList &sListArgs, const QString &sCurrentFile);
 
   private:
     QString parseAdvanced();

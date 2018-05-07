@@ -173,7 +173,7 @@ void Upload::requestToken() {
 
 // ----------------------------------------------------------------------------
 
-void Upload::getTokenReply(QString sNWReply) {
+void Upload::getTokenReply(const QString &sNWReply) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   QString sSessionCookie("");
@@ -283,7 +283,7 @@ void Upload::requestLogin() {
 
 // ----------------------------------------------------------------------------
 
-void Upload::getLoginReply(QString sNWReply) {
+void Upload::getLoginReply(const QString &sNWReply) {
   // If "$IS_LOGGED_IN = false" is found in reply --> login failed
   if (-1 != sNWReply.indexOf("$IS_LOGGED_IN = false")) {
     m_State = REQUTOKEN;
@@ -339,7 +339,7 @@ void Upload::requestRevision(QString sUrl) {
 
 // ----------------------------------------------------------------------------
 
-void Upload::getRevisionReply(QString sNWReply) {
+void Upload::getRevisionReply(const QString &sNWReply) {
   QString sURL(m_sInyokaUrl);
   sURL.remove("https://");
   sURL.remove("http://");
@@ -465,7 +465,7 @@ void Upload::requestUpload() {
 
 // ----------------------------------------------------------------------------
 
-void Upload::getUploadReply(QString sNWReply) {
+void Upload::getUploadReply(const QString &sNWReply) {
   m_State = RECUPLOAD;
 
   if (sNWReply.isEmpty()) {

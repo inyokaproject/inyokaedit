@@ -49,7 +49,7 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-TextEditor::TextEditor(QStringList sListTplMacros,
+TextEditor::TextEditor(const QStringList &sListTplMacros,
                        const QString &sTransTemplate,
                        QWidget *pParent)
   : QTextEdit(pParent),
@@ -225,7 +225,7 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void TextEditor::setFileName(const QString sFileName) {
+void TextEditor::setFileName(const QString &sFileName) {
   m_sFileName = sFileName;
 }
 QString TextEditor::getFileName() {

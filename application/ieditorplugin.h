@@ -40,8 +40,8 @@ class IEditorPlugin {
 
     // ALL FUNCTIONS PURE VIRTUAL !!!
     virtual void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                            const QDir userDataDir,
-                            const QString sSharePath) = 0;
+                            const QDir &userDataDir,
+                            const QString &sSharePath) = 0;
     virtual QString getPluginName() const = 0;
     virtual QString getPluginVersion() const = 0;
     virtual void installTranslator(const QString &sLang) = 0;
@@ -51,7 +51,7 @@ class IEditorPlugin {
     virtual bool includeToolbar() const = 0;
     virtual bool hasSettings() const = 0;
     virtual void setCurrentEditor(TextEditor *pEditor) = 0;
-    virtual void setEditorlist(QList<TextEditor *> listEditors) = 0;
+    virtual void setEditorlist(const QList<TextEditor *> &listEditors) = 0;
 
   public slots:
     virtual void callPlugin() = 0;  // Execute manually

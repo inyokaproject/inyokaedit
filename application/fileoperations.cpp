@@ -44,7 +44,8 @@
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                Settings *pSettings, const QString &sPreviewFile,
-                               QString sUserDataDir, QStringList sListTplMacros)
+                               const QString &sUserDataDir,
+                               const QStringList &sListTplMacros)
   : m_pParent(pParent),
     m_pDocumentTabs(pTabWidget),
     m_pCurrentEditor(NULL),
@@ -118,7 +119,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   m_pSigMapOpenTemplate = new QSignalMapper(this);
   connect(m_pSigMapOpenTemplate,
           static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          this, [this](QString sFilename) { this->loadFile(sFilename); });
+          this, [this](const QString &sFilename) { this->loadFile(sFilename); });
 
   connect(m_pSettings, &Settings::updateEditorSettings,
           this, &FileOperations::updateEditorSettings);

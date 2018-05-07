@@ -60,7 +60,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     ~SpellChecker();
 
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                    const QDir userDataDir, const QString sSharePath);
+                    const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
     QString getPluginVersion() const;
     void installTranslator(const QString &sLang);
@@ -70,7 +70,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     bool includeToolbar() const;
     bool hasSettings() const;
     void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(QList<TextEditor *> listEditors);
+    void setEditorlist(const QList<TextEditor *> &listEditors);
 
   public slots:
     void callPlugin();
