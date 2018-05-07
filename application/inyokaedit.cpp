@@ -416,7 +416,9 @@ void InyokaEdit::createActions() {
 
   // Report a bug
   connect(m_pUi->reportBugAct, &QAction::triggered,
-          m_pUtils, &Utils::reportBug);
+          this, []() {
+    QDesktopServices::openUrl(
+          QUrl("https://github.com/inyokaproject/inyokaedit/issues")); });
 
   // Open about windwow
   connect(m_pUi->aboutAct, &QAction::triggered, m_pUtils, &Utils::showAbout);

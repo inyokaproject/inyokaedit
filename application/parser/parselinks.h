@@ -45,7 +45,8 @@ class ParseLinks : public QObject {
     ParseLinks(const QString &sUrlToWiki,
                const QStringList sListIWiki,
                const QStringList sListIWikiUrl,
-               const bool bCheckLinks);
+               const bool bCheckLinks,
+               QObject *pParent = 0);
 
     void startParsing(QTextDocument *pRawDoc);
 

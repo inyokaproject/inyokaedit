@@ -36,13 +36,15 @@ Parser::Parser(const QString &sSharePath,
                const QString &sInyokaUrl,
                const bool bCheckLinks,
                Templates *pTemplates,
-               const QString &sCommunity)
+               const QString &sCommunity,
+               QObject *pParent)
   : m_pRawText(NULL),
     m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity) {
+  Q_UNUSED(pParent);
   m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
 
   m_pTemplateParser = new ParseTemplates(

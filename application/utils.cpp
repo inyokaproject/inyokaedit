@@ -37,8 +37,9 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-Utils::Utils(QWidget *pParent)
+Utils::Utils(QWidget *pParent, QObject *pParentObj)
   : m_pParent(pParent) {
+  Q_UNUSED(pParentObj);
   m_NwManager = new QNetworkAccessManager(this);
   connect(m_NwManager, &QNetworkAccessManager::finished,
           this, &Utils::replyFinished);
@@ -152,14 +153,6 @@ void Utils::replyFinished(QNetworkReply *pReply) {
       }
     }
   }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Utils::reportBug() {
-    QDesktopServices::openUrl(
-          QUrl("https://github.com/inyokaproject/inyokaedit/issues"));
 }
 
 // ----------------------------------------------------------------------------

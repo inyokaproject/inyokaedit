@@ -31,7 +31,8 @@
 #include <QMessageBox>
 #include <QFileInfo>
 
-DownloadImg::DownloadImg() {
+DownloadImg::DownloadImg(QObject *pParent) {
+  Q_UNUSED(pParent);
   connect(&m_NwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);
 }

@@ -35,7 +35,7 @@ class DownloadImg : public QObject {
   Q_OBJECT
 
   public:
-    explicit DownloadImg();
+    explicit DownloadImg(QObject *pParent = 0);
     void setDLs(const QStringList &sListUrls,
                 const QStringList &sListSavePath);
 

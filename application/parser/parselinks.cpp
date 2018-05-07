@@ -31,12 +31,13 @@
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
                        const QStringList sListIWiki,
                        const QStringList sListIWikiUrl,
-                       const bool bCheckLinks)
+                       const bool bCheckLinks, QObject *pParent)
   : m_sWikiUrl(sUrlToWiki),
     m_sListInterwikiKey(sListIWiki),
     m_sListInterwikiLink(sListIWikiUrl),
     m_bCheckLinks(bCheckLinks),
     m_NWreply(NULL) {
+  Q_UNUSED(pParent);
   m_NWAManager = new QNetworkAccessManager(this);
 }
 

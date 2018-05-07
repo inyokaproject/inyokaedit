@@ -28,7 +28,8 @@
 
 #include <QMessageBox>
 
-SyntaxCheck::SyntaxCheck() {
+SyntaxCheck::SyntaxCheck(QObject *pParent) {
+  Q_UNUSED(pParent);
 }
 
 // ----------------------------------------------------------------------------
