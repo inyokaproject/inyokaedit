@@ -132,13 +132,13 @@ void TextEditor::insertCompletion(const QString &sCompletion) {
   int nIndex(m_sListCompleter.indexOf(sCompletion));
   if (-1 != nIndex &&
       nIndex < m_listPosCompleter.length()) {
-    if ((m_listPosCompleter[nIndex].x() != m_listPosCompleter[nIndex].y()) &&
-        m_listPosCompleter[nIndex].x() >= 0 &&
-        m_listPosCompleter[nIndex].y() >= 0) {
+    if ((m_listPosCompleter.at(nIndex).x() != m_listPosCompleter.at(nIndex).y()) &&
+        m_listPosCompleter.at(nIndex).x() >= 0 &&
+        m_listPosCompleter.at(nIndex).y() >= 0) {
       tc.setPosition(
-            nCurrentPos - nPosInCompletion + m_listPosCompleter[nIndex].x());
+            nCurrentPos - nPosInCompletion + m_listPosCompleter.at(nIndex).x());
       tc.setPosition(
-            nCurrentPos - nPosInCompletion + m_listPosCompleter[nIndex].y() - 2,
+            nCurrentPos - nPosInCompletion + m_listPosCompleter.at(nIndex).y() - 2,
             QTextCursor::KeepAnchor);
       setTextCursor(tc);
     }

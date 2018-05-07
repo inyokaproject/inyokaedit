@@ -91,34 +91,34 @@ void Plugins::loadPlugins(const QString &sLang) {
 
   for (int i = 0; i < m_listPlugins.size(); i++) {
     qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-    if (m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
-      qDebug() << "Disabled plugin:" << m_listPlugins[i]->getPluginName();
+    if (m_sListDisabledPlugins.contains(m_listPlugins.at(i)->getPluginName())) {
+      qDebug() << "Disabled plugin:" << m_listPlugins.at(i)->getPluginName();
       continue;
     }
 
-    m_listPlugins[i]->initPlugin(m_pParent, m_pEditor,
-                                 m_userDataDir, m_sSharePath);
-    m_listPlugins[i]->installTranslator(sLang);
+    m_listPlugins.at(i)->initPlugin(m_pParent, m_pEditor,
+                                    m_userDataDir, m_sSharePath);
+    m_listPlugins.at(i)->installTranslator(sLang);
 
-    QString sMenu(m_listPlugins[i]->getCaption());
-    if (!sMenu.isEmpty() && m_listPlugins[i]->includeMenu()) {
-      m_PluginMenuEntries << new QAction(m_listPlugins[i]->getIcon(),
-                                         m_listPlugins[i]->getCaption(),
+    QString sMenu(m_listPlugins.at(i)->getCaption());
+    if (!sMenu.isEmpty() && m_listPlugins.at(i)->includeMenu()) {
+      m_PluginMenuEntries << new QAction(m_listPlugins.at(i)->getIcon(),
+                                         m_listPlugins.at(i)->getCaption(),
                                          m_pParent);
       connect(m_PluginMenuEntries.last(), &QAction::triggered,
-              m_listPluginObjects[i],  [=]() {
-        qobject_cast<IEditorPlugin *>(m_listPluginObjects[i])->callPlugin(); });
+              m_listPluginObjects.at(i), [=]() {
+        qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))->callPlugin(); });
     }
-    if (m_listPlugins[i]->includeToolbar()) {
-      m_PluginToolbarEntries << new QAction(m_listPlugins[i]->getIcon(),
-                                            m_listPlugins[i]->getCaption(),
+    if (m_listPlugins.at(i)->includeToolbar()) {
+      m_PluginToolbarEntries << new QAction(m_listPlugins.at(i)->getIcon(),
+                                            m_listPlugins.at(i)->getCaption(),
                                             m_pParent);
       connect(m_PluginToolbarEntries.last(), &QAction::triggered,
-              m_listPluginObjects[i],  [=]() {
-        qobject_cast<IEditorPlugin *>(m_listPluginObjects[i])->callPlugin(); });
+              m_listPluginObjects.at(i), [=]() {
+        qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))->callPlugin(); });
     }
 
-    m_listPlugins[i]->executePlugin();
+    m_listPlugins.at(i)->executePlugin();
 
     if (i == m_listPlugins.size() - 1) {
       qDebug() << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
@@ -134,8 +134,9 @@ void Plugins::loadPlugins(const QString &sLang) {
 
 void Plugins::setCurrentEditor(TextEditor *pEditor) {
   for (int i = 0; i < m_listPlugins.size(); i++) {
-    if (!m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
-      m_listPlugins[i]->setCurrentEditor(pEditor);
+    if (!m_sListDisabledPlugins.contains(
+          m_listPlugins.at(i)->getPluginName())) {
+      m_listPlugins.at(i)->setCurrentEditor(pEditor);
     }
   }
 }
@@ -146,8 +147,8 @@ void Plugins::setCurrentEditor(TextEditor *pEditor) {
 void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
   for (int i = 0; i < m_listPlugins.size(); i++) {
     if (!m_sListDisabledPlugins.contains(
-          m_listPlugins[i]->getPluginName())) {
-      m_listPlugins[i]->setEditorlist(listEditors);
+          m_listPlugins.at(i)->getPluginName())) {
+      m_listPlugins.at(i)->setEditorlist(listEditors);
     }
   }
 }
@@ -157,8 +158,9 @@ void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
 
 void Plugins::changeLang(const QString &sLang) {
   for (int i = 0; i < m_listPlugins.size(); i++) {
-    if (!m_sListDisabledPlugins.contains(m_listPlugins[i]->getPluginName())) {
-      m_listPlugins[i]->installTranslator(sLang);
+    if (!m_sListDisabledPlugins.contains(
+          m_listPlugins.at(i)->getPluginName())) {
+      m_listPlugins.at(i)->installTranslator(sLang);
     }
   }
 }

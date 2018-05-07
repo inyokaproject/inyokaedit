@@ -96,10 +96,10 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                 m_pSettings->getRecentFiles().at(i), this);
     } else {
       m_LastOpenedFilesAct << new QAction("EMPTY", this);
-      m_LastOpenedFilesAct[i]->setVisible(false);
+      m_LastOpenedFilesAct.at(i)->setVisible(false);
     }
-    m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct[i], i);
-    connect(m_LastOpenedFilesAct[i], &QAction::triggered,
+    m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct.at(i), i);
+    connect(m_LastOpenedFilesAct.at(i), &QAction::triggered,
             m_pSigMapLastOpenedFiles,
             static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
   }
@@ -578,17 +578,17 @@ void FileOperations::saveDocumentAuto() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     QFile fAutoSave;
     for (int i = 0; i < m_pListEditors.count(); i++) {
-      if (NULL != m_pListEditors[i]) {
-        if (m_pListEditors[i]->getFileName().contains(tr("Untitled"))) {
+      if (NULL != m_pListEditors.at(i)) {
+        if (m_pListEditors.at(i)->getFileName().contains(tr("Untitled"))) {
           fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
                                 QString::number(i) + ".bak~");
-        } else if (m_pListEditors[i]->getFileName().endsWith(".inyzip")) {
-          QString sName(m_pListEditors[i]->getFileName().replace(
+        } else if (m_pListEditors.at(i)->getFileName().endsWith(".inyzip")) {
+          QString sName(m_pListEditors.at(i)->getFileName().replace(
                           ".inyzip", ".iny.bak~"));
           fAutoSave.setFileName(sName);
         } else {
           fAutoSave.setFileName(
-                m_pListEditors[i]->getFileName() + ".bak~");
+                m_pListEditors.at(i)->getFileName() + ".bak~");
         }
         QTextStream outStream(&fAutoSave);
         outStream.setCodec("UTF-8");
@@ -736,10 +736,10 @@ void FileOperations::updateRecentFiles(const QString &sFileName) {
     for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
       // Set list menu entries
       if (i < sListTmp.size()) {
-        m_LastOpenedFilesAct[i]->setText(sListTmp[i]);
-        m_LastOpenedFilesAct[i]->setVisible(true);
+        m_LastOpenedFilesAct.at(i)->setText(sListTmp.at(i));
+        m_LastOpenedFilesAct.at(i)->setVisible(true);
       } else {
-        m_LastOpenedFilesAct[i]->setVisible(false);
+        m_LastOpenedFilesAct.at(i)->setVisible(false);
       }
     }
     if (sListTmp.size() > 0) {
@@ -765,7 +765,7 @@ void FileOperations::clearRecentFiles() {
 
 void FileOperations::changedDocTab(int nIndex) {
   if (nIndex < m_pListEditors.size() && nIndex >= 0) {
-    m_pCurrentEditor = m_pListEditors[nIndex];
+    m_pCurrentEditor = m_pListEditors.at(nIndex);
     this->setCurrentEditor();
 
     if (!m_bCloseApp && m_bLoadPreview) {
@@ -817,7 +817,7 @@ void FileOperations::updateEditorSettings() {
 
 bool FileOperations::closeDocument(int nIndex) {
   m_pDocumentTabs->setCurrentIndex(nIndex);
-  m_pCurrentEditor = m_pListEditors[nIndex];
+  m_pCurrentEditor = m_pListEditors.at(nIndex);
   m_bLoadPreview = false;
   this->setCurrentEditor();
 
@@ -830,7 +830,7 @@ bool FileOperations::closeDocument(int nIndex) {
       }
     }
     m_pDocumentTabs->removeTab(nIndex);
-    m_pListEditors[nIndex]->deleteLater();
+    m_pListEditors.at(nIndex)->deleteLater();
     m_pListEditors[nIndex] = NULL;
     m_pListEditors.removeAt(nIndex);
 

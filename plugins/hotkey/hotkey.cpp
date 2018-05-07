@@ -150,7 +150,7 @@ void Hotkey::buildUi(QWidget *pParent) {
     return;
   }
   for (int nRow = 0; nRow < m_sListEntries.size(); nRow++) {
-    this->createRow(m_listSequenceEdit[nRow], m_sListEntries[nRow]);
+    this->createRow(m_listSequenceEdit.at(nRow), m_sListEntries.at(nRow));
   }
 
   connect(m_pSigMapHotkey,
@@ -286,7 +286,7 @@ void Hotkey::deleteRow(QWidget *widget) {
       delete button;
       button = NULL;
       m_listDelRowButtons.removeAt(nIndex);
-      delete m_listSequenceEdit[nIndex];
+      delete m_listSequenceEdit.at(nIndex);
       m_listSequenceEdit.removeAt(nIndex);
       m_pUi->entriesTable->removeRow(nIndex);
     }
@@ -305,7 +305,7 @@ void Hotkey::registerHotkeys() {
   m_listActions.clear();
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_listActions << new QAction(QString::number(i), m_pParent);
-    m_listActions.last()->setShortcut(m_listSequenceEdit[i]->keySequence());
+    m_listActions.last()->setShortcut(m_listSequenceEdit.at(i)->keySequence());
     m_pSigMapHotkey->setMapping(m_listActions.last(), QString::number(i));
     connect(m_listActions.last(), &QAction::triggered,
             m_pSigMapHotkey,
@@ -352,7 +352,7 @@ void Hotkey::writeSettings() {
     m_pSettings->setValue("Entry_" + QString::number(i),
                           m_sListEntries[i]);
     m_pSettings->setValue("Key_" + QString::number(i),
-                          m_listSequenceEdit[i]->keySequence().toString());
+                          m_listSequenceEdit.at(i)->keySequence().toString());
   }
   m_pSettings->endGroup();
 }

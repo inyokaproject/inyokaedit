@@ -318,7 +318,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
     m_pUi->pluginsTable->item(nRow, 0)->setFlags(
           Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     if (m_pSettings->m_sListDisabledPlugins.contains(
-          m_listPLugins[nRow]->getPluginName())) {
+          m_listPLugins.at(nRow)->getPluginName())) {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Unchecked);
     } else {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Checked);
@@ -327,21 +327,21 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
     // Icon
     m_pUi->pluginsTable->setIconSize(QSize(22, 22));
     m_pUi->pluginsTable->item(nRow, 1)->setIcon(
-          m_listPLugins[nRow]->getIcon());
+          m_listPLugins.at(nRow)->getIcon());
     // Caption
     m_pUi->pluginsTable->item(nRow, 2)->setText(
-          m_listPLugins[nRow]->getCaption());
+          m_listPLugins.at(nRow)->getCaption());
 
     // Settings
-    if (m_listPLugins[nRow]->hasSettings()) {
+    if (m_listPLugins.at(nRow)->hasSettings()) {
       m_listPluginInfoButtons << new QPushButton(
                                    QIcon::fromTheme(
                                      "preferences-system",
                                      QIcon(":/images/preferences-system.png")),
                                    "");
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
-              PluginObjList[nRow], [=]() {
-        qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showSettings(); });
+              PluginObjList.at(nRow), [=]() {
+        qobject_cast<IEditorPlugin *>(PluginObjList.at(nRow))->showSettings(); });
 
       m_pUi->pluginsTable->setCellWidget(nRow, 3,
                                          m_listPluginInfoButtons.last());

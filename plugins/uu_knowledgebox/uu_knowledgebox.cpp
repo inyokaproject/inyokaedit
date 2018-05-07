@@ -261,8 +261,8 @@ void Uu_KnowledgeBox::accept() {
     QString sOutput = "{{{#!vorlage Wissen\n";
     if (m_sListEntries.size() == m_bListEntryActive.size()) {
       for (int i = 0; i < m_sListEntries.size(); i++) {
-        if (m_bListEntryActive[i]) {
-          sOutput += m_sListEntries[i] + "\n";
+        if (m_bListEntryActive.at(i)) {
+          sOutput += m_sListEntries.at(i) + "\n";
         }
       }
     } else {
