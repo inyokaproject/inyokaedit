@@ -82,6 +82,9 @@ Aardvark
 bionic
 Bionic
 Beaver
+cosmic
+Cosmic
+Cuttlefish
 Ubuntu
 Kubuntu
 Xubuntu
