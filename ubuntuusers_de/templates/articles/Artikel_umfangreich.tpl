@@ -10,7 +10,7 @@ Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, da
 [:Pakete installieren: Installation von Programmen]
 [:Programme_starten: Starten von Programmen]
 [:Terminal: Ein Terminal öffnen]
-[:sudo: Root-Rechte]
+[:mit Root-Rechten arbeiten:]
 }}}
 ## Wie es aussieht und Beschreibung siehe: http://wiki.ubuntuusers.de/Wiki/Textbausteine#Wissensblock
 

@@ -9,7 +9,7 @@
 [:Pakete installieren: Installation von Programmen]
 [:Programme_starten: Starten von Programmen]
 [:Terminal: Ein Terminal öffnen]
-[:sudo: Root-Rechte]
+[:mit Root-Rechten arbeiten:]
 }}}
 
 ## Eine vollständige Befehlsübersicht befindet sich im Wiki unter http://wiki.ubuntuusers.de/Wiki/Syntax
