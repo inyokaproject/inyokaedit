@@ -300,8 +300,13 @@ QString ProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
 
   return insertBox(
         "box warning", QString::fromUtf8("Achtung!"),
-        QString::fromUtf8("Diese Seite wird aktuell überarbeitet. Bitte hier "
-                          "keine Änderungen mehr vornehmen, sondern in %1!"))
+        QString::fromUtf8("Dieser Artikel wird aktuell in %1 überarbeitet. "
+                          "Daher kann es sein, dass diese Seite hier veraltete "
+                          "oder nicht (mehr) zutreffende Informationen enthält."
+                          " Vergleiche beide Versionen und wende dich im "
+                          "Zweifelsfall mit deinem konkreten Anliegen an das "
+                          "Support-Forum. Änderungen am Artikel bitte nur in "
+                          "%1!"))
       .arg("[:Baustelle/" + sLink.replace(" ", "_") + ":]");
 }
 
