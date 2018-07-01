@@ -62,9 +62,9 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
       m_sListCompleter[i].clear();
     }
     m_sListCompleter[i].replace("\\n", "\n");
-    m_sListCompleter[i].remove("%%");
     m_listPosCompleter << QPoint(m_sListCompleter[i].indexOf("%%"),
                                  m_sListCompleter[i].lastIndexOf("%%"));
+    m_sListCompleter[i].remove("%%");
   }
   m_sListCompleter.push_front("[[" + sTransTemplate + "(");
   m_sListCompleter.push_front("{{{#!" + sTransTemplate.toLower() + " ");

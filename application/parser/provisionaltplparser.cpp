@@ -163,6 +163,10 @@ QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return this->parsePackage(sArgs);
     } else if (sArgs[0].toLower() == QString::fromUtf8(
+                 "PipInstallation").toLower()) {
+      sArgs.removeFirst();
+      return this->parsePipInstall(sArgs);
+    } else if (sArgs[0].toLower() == QString::fromUtf8(
                  "Paketinstallation").toLower()) {
       sArgs.removeFirst();
       return this->parsePkgInstall(sArgs);
@@ -1457,6 +1461,26 @@ QString ProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
     sOutput += " " + s;
   }
   return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+QString ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs) {
+  QString sOutput(QString::fromUtf8(
+                    "Wer die neueste Version installieren möchte, kann das "
+                    "Programm über den Python-Paketmanager [:pip:] "
+                    "installieren:\n"
+                    "%1\n"
+                    "<div class=\"bash\">\n"
+                    "<div class=\"contents\">\n"
+                    "<pre>pip3 install --user")
+                  .arg(this->parseForeignWarning(QStringList() << "Software")));
+  foreach (QString s, sListArgs) {
+    sOutput += " " + s;
+  }
+  return sOutput + "     # Programm wird nur für den aktuellen Nutzer "
+                   "installiert</pre>\n</div>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------

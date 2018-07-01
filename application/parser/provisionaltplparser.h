@@ -74,6 +74,7 @@ class ProvisionalTplParser {
     QString parseOverview(const QStringList &sListArgs);
     QString parseOverview2(const QStringList &sListArgs);
     QString parsePackage(const QStringList &sListArgs);
+    QString parsePipInstall(const QStringList &sListArgs);
     QString parsePkgInstall(const QStringList &sListArgs);
     QString parsePkgInstallBut(const QStringList &sListArgs);
     QString parsePPA(const QStringList &sListArgs);
