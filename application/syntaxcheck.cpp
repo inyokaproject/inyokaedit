@@ -155,7 +155,7 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
           sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
         }
 
-        if (sListTplMacros.contains(sMacro)) {
+        if (sListTplMacros.contains(sMacro, Qt::CaseInsensitive)) {
           sMacro.clear();
         }
       }
