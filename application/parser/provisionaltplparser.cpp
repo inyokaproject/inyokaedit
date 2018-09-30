@@ -698,14 +698,17 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
     }
   }
 
+  if ("left" == sImageCollAlign.toLower()) {
+    sOutput = "<div style=\"overflow: auto;\">\n";
+  }
 
   if (sImageCollAlign.isEmpty()) {  // With word wrap
-    sOutput = "<div style=\"clear: both\">\n<div "
-              "class=\"contents\"> </div>\n</div>";
+    sOutput += "<div style=\"overflow: auto;\">\n<div "
+               "class=\"contents\"> </div>\n</div>";
   } else {  // In continuous text (sImageCollAlign = left | rigth)
-    sOutput = "<table style=\"float: " + sImageCollAlign
-              + "; clear: both; border: none\">\n<tbody>\n<tr "
-                "style=\"background-color: #E2C889\">\n";
+    sOutput += "<table style=\"float: " + sImageCollAlign
+               + "; border: none\">\n<tbody>\n<tr "
+                 "style=\"background-color: #E2C889\">\n";
   }
 
   for (int i = 0; i < sListArgs.length(); i++) {
@@ -767,7 +770,7 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
   }
 
   if (sImageCollAlign.isEmpty()) {  // With word wrap
-    sOutput += "<div style=\"clear: both\">\n<div class=\"contents\"> "
+    sOutput += "<div style=\"overflow: auto;\">\n<div class=\"contents\"> "
                "</div>\n</div>";
   } else {  // In continuous text (sImageCollAlign = left | rigth)
     sOutput += "</tr>\n<tr style=\"background-color: #F9EAAF\">";
@@ -797,6 +800,10 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
                  + sDescription + "</td>\n";
     }
     sOutput += "</tr></tbody>\n</table>\n";
+
+    if ("left" == sImageCollAlign.toLower()) {
+      sOutput += "</div>\n";
+    }
   }
 
   return sOutput;
