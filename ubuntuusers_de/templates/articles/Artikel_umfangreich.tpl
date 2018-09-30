@@ -1,6 +1,6 @@
 ## Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen. 
 [[Vorlage(Baustelle, 22.2.2222, Bearbeiter)]]
-Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "InArbeit"-Zeile herauslöschen.
+Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "Baustelle"-Zeile herauslöschen.
 ## Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
 [[Vorlage(Getestet, bionic, xenial,  trusty)]]
 

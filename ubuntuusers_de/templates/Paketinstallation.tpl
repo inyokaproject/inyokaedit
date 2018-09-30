@@ -7,14 +7,12 @@
 ## {{{#!vorlage Paketinstallation
 ## paket0
 ## paket1, main
-## paket2, restricted ab Karmic
-## paket3, universe, ab Lucid
-## paket4, multiverse ab Karmic, universe ab Lucid
-## paket5, security, ab hardy - sowas aber auch
+## paket2, restricted ab Xenial
+## paket3, universe, ab Trusty
+## paket4, multiverse ab Trusty, universe ab Xenial
+## paket5, security, ab Bionic - sowas aber auch
 ## paket6, ppa
-## paket7, playdeb
-## paket8, getdeb, ab karmic; hier noch weitere Angaben
-## paket9, partner ab karmic
+## paket7, partner ab Xenial
 ## }}}
 ##
 #############################################################
@@ -36,14 +34,10 @@
 <@ if $loop.index==2 @> (
 <@ endif @>
 <@ for $word in $col split_by ' '@>
-<@ if ['main','restricted','universe','multiverse','security','ppa','partner','getdeb','playdeb'] contains $word @>
+<@ if ['main','restricted','universe','multiverse','security','ppa','partner'] contains $word @>
 <@ if ['main','restricted','universe','multiverse','security','ppa'] contains $word @>''<@ $word @>''
 <@ endif @>
 <@ if ['partner'] contains $word @>''[:Canonical_Partner:]''
-<@ endif @>
-<@ if ['getdeb'] contains $word @>''[:GetDeb:]''
-<@ endif @>
-<@ if ['playdeb'] contains $word @>''[:PlayDeb:]''
 <@ endif @>
 <@ else @><@ $word @>
 <@ endif @>
