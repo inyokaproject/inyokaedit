@@ -1,9 +1,13 @@
 ## Macro=[[Vorlage(Bildersammlung, BILDHÖHE\n%%Bild1.jpg, "Beschreibung 1"\nBild2.png, "Beschreibung 2"%%\n)]]
 <@ if $arguments.0 as lowercase contains 'left' or  $arguments.0 as lowercase contains 'right' @>
 
+<@ if $arguments.0 as lowercase contains 'left' @>
+{{|<style="overflow: auto;">
+<@ endif @>
+
 ## (left|right, number): schwebende Tabelle mit Höhenangabe:
 
-||<tablestyle="float:<@ $arguments.0 @>; clear:both; border:none;" rowstyle="background-color: #E2C889;" cellstyle="border-width: 0 10px 0 0; border-color: #FFFFFF;" :> <@ if $arguments.1 matches_regex "\d+" @>
+||<tablestyle="float:<@ $arguments.0 @>; border:none;" rowstyle="background-color: #E2C889;" cellstyle="border-width: 0 10px 0 0; border-color: #FFFFFF;" :> <@ if $arguments.1 matches_regex "\d+" @>
 <@ for $arg in $arguments @>
 <@ if $loop.index > 2 @>
 <@ if $loop.index is odd @>
@@ -33,11 +37,16 @@
 <@ endif @>
 <@ endfor @>
 <@ endif @>
+
+<@ if $arguments.0 as lowercase contains 'left' @>
+|}}
+<@ endif @>
+
 <@ else @>
 
 ## ([number]): umbrechende Tabelle mit Höhenangabe, sonst Höhe = 140px:
 
-{{|<style="clear:both;">|}}
+{{|<style="overflow: auto;">
 
 <@ for $arg in $arguments @>
 <@ if $arguments.0 matches_regex "\d" @>
@@ -59,4 +68,4 @@
 <@ endif @>
 <@ endfor @>
 
-{{|<style="clear:both;">|}}<@ endif @>
+<@ endif @>
