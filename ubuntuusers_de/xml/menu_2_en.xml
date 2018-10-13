@@ -126,7 +126,6 @@
     <element name="Facebook" insert="[fb:%%Sitename%%:]" icon="fb.png" />
     <element name="Freenode Web IRC" insert="[freenode:%%IRC Name%%:]" icon="freenode.png" />
     <element name="Google" insert="[google:%%Search term%%:]" icon="" />
-    <element name="Google+" insert="[gplus:%%Sitename%%:]" icon="gplus.png" />
     <element name="heise online" insert="[heise:%%Sitename%%:]" icon="heise.png" />
     <element name="Identica" insert="[identica:%%Sitename%%:]" icon="identica.png" />
     <element name="Internet Wayback Machine" insert="[iawm:%%Sitename%%:]" icon="iawm.png" />

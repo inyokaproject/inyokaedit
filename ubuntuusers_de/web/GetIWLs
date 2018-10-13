@@ -117,7 +117,6 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/github.png 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gnome.png -O gnome.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gog.png -O gog.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/googlecode.png -O googlecode.png
-wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/gplus.png -O gplus.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/heise.png -O heise.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/holarse.png -O holarse.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/humble.png -O humble.png
