@@ -85,6 +85,9 @@ Beaver
 cosmic
 Cosmic
 Cuttlefish
+disco
+Disco
+Dingo
 Ubuntu
 Kubuntu
 Xubuntu
