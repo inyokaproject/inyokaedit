@@ -37,17 +37,17 @@
 <context>
     <name>DownloadImg</name>
     <message>
-        <location filename="../downloadimg.cpp" line="56"/>
+        <location filename="../downloadimg.cpp" line="57"/>
         <source>Downloading images...</source>
         <translation>Bezig met downloaden van afbeeldingen...</translation>
     </message>
     <message>
-        <location filename="../downloadimg.cpp" line="57"/>
+        <location filename="../downloadimg.cpp" line="58"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../downloadimg.cpp" line="174"/>
+        <location filename="../downloadimg.cpp" line="175"/>
         <source>Download error</source>
         <translation>Downloadfout</translation>
     </message>
@@ -55,49 +55,49 @@
 <context>
     <name>FileOperations</name>
     <message>
-        <location filename="../fileoperations.cpp" line="53"/>
+        <location filename="../fileoperations.cpp" line="54"/>
         <source>Inyoka article</source>
         <translation>Inyoka-artikel</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="54"/>
+        <location filename="../fileoperations.cpp" line="55"/>
         <source>Inyoka article + images</source>
         <translation>Inyoka-artikel + afbeeldingen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="55"/>
+        <location filename="../fileoperations.cpp" line="56"/>
         <source>All files</source>
         <translation>Alle bestanden</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="110"/>
+        <location filename="../fileoperations.cpp" line="113"/>
         <source>Clear list</source>
         <translation>Lijst wissen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="133"/>
+        <location filename="../fileoperations.cpp" line="134"/>
         <source>Template</source>
         <translation>Sjabloon</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="182"/>
+        <location filename="../fileoperations.cpp" line="183"/>
         <source>Open file</source>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="227"/>
+        <location filename="../fileoperations.cpp" line="228"/>
         <source>Save file</source>
         <translation>Bestand opslaan</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="256"/>
+        <location filename="../fileoperations.cpp" line="257"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Het document, &quot;%1&quot;, is gewijzigd.
 Wilt u de wijzigingen opslaan of verwerpen?</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="287"/>
+        <location filename="../fileoperations.cpp" line="288"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Het bestand &quot;%1&quot; kan niet worden geopend:
@@ -141,55 +141,55 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="484"/>
+        <location filename="../fileoperations.cpp" line="483"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fout bij het creëren van het archief &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="496"/>
+        <location filename="../fileoperations.cpp" line="495"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fout bij het inpakken van de afbeeldingsbestanden:
 %1.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="529"/>
-        <location filename="../fileoperations.cpp" line="544"/>
+        <location filename="../fileoperations.cpp" line="528"/>
+        <location filename="../fileoperations.cpp" line="543"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fout bij het toevoegen van &quot;%1&quot; aan het archief!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="556"/>
+        <location filename="../fileoperations.cpp" line="555"/>
         <source>Error while finalizing archive!</source>
         <translation>Fout tijdens het afronden van het archief!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="565"/>
+        <location filename="../fileoperations.cpp" line="564"/>
         <source>Error while creating archive!</source>
         <translation>Fout bij creëren van archief!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="628"/>
+        <location filename="../fileoperations.cpp" line="627"/>
         <source>No supported printer found.</source>
         <translation>Geen ondersteunde printer gevonden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="650"/>
-        <location filename="../fileoperations.cpp" line="702"/>
+        <location filename="../fileoperations.cpp" line="649"/>
+        <location filename="../fileoperations.cpp" line="701"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="651"/>
+        <location filename="../fileoperations.cpp" line="650"/>
         <source>Could not open preview file for printing!</source>
         <translation>Het voorbeeldbestand kan niet worden geopend voor afdrukken!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="145"/>
-        <location filename="../fileoperations.cpp" line="204"/>
-        <location filename="../fileoperations.cpp" line="216"/>
-        <location filename="../fileoperations.cpp" line="249"/>
-        <location filename="../fileoperations.cpp" line="583"/>
+        <location filename="../fileoperations.cpp" line="146"/>
+        <location filename="../fileoperations.cpp" line="205"/>
+        <location filename="../fileoperations.cpp" line="217"/>
+        <location filename="../fileoperations.cpp" line="250"/>
+        <location filename="../fileoperations.cpp" line="582"/>
         <source>Untitled</source>
         <translation>Naamloos</translation>
     </message>
@@ -273,12 +273,12 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
         <translation>Zoeken / Vervangen</translation>
     </message>
     <message>
-        <location filename="../findreplace.cpp" line="224"/>
+        <location filename="../findreplace.cpp" line="220"/>
         <source>Could not find your expression</source>
         <translation>Uw expressie kan niet worden gevonden</translation>
     </message>
     <message>
-        <location filename="../findreplace.cpp" line="254"/>
+        <location filename="../findreplace.cpp" line="250"/>
         <source>Replaced expressions: %1</source>
         <translation>Vervangen expressies: %1</translation>
     </message>
@@ -579,39 +579,47 @@ Please check your installation and restart the application.</source>
 Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="738"/>
+        <location filename="../inyokaedit.cpp" line="744"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kan geen tijdelijk HTML-bestand creëren!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="957"/>
+        <location filename="../inyokaedit.cpp" line="963"/>
         <source>Error while loading preview.</source>
         <translation>Fout tijdens laden van voorbeeld.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1073"/>
+        <location filename="../inyokaedit.cpp" line="1079"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Weet u zeker dat u alle tijdelijke artikelafbeeldingen wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1084"/>
+        <location filename="../inyokaedit.cpp" line="1090"/>
         <source>Could not delete file: </source>
         <translation>Bestand kan niet worden verwijderd: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1091"/>
+        <location filename="../inyokaedit.cpp" line="1097"/>
         <source>Images successfully deleted.</source>
         <translation>De afbeeldingen zijn succesvol verwijderd.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1231"/>
+        <location filename="../inyokaedit.cpp" line="1237"/>
         <source>Could not open syntax overview file!</source>
         <translation>Het syntax-overzichtsbestand kan niet worden geopend!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1248"/>
+        <location filename="../inyokaedit.cpp" line="1254"/>
         <source>Syntax overview</source>
         <translation>Syntax-overzicht</translation>
+    </message>
+</context>
+<context>
+    <name>ParseLinks</name>
+    <message>
+        <location filename="../parser/parselinks.cpp" line="152"/>
+        <source>Section</source>
+        <translation>Paragraaf</translation>
     </message>
 </context>
 <context>
@@ -762,27 +770,27 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <translation>Aantal items in recente bestanden-lijst</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="223"/>
+        <location filename="../settingsdialog.cpp" line="224"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Om de wijzigingen toe te passen, moet de bewerker opnieuw worden gestart.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="268"/>
+        <location filename="../settingsdialog.cpp" line="269"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="269"/>
+        <location filename="../settingsdialog.cpp" line="270"/>
         <source>Could not open/find community file!</source>
         <translation>Het gemeenschapsbestand kan niet worden geopend en/of gevonden!</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="280"/>
+        <location filename="../settingsdialog.cpp" line="281"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="280"/>
+        <location filename="../settingsdialog.cpp" line="281"/>
         <source>No community url defined!</source>
         <translation>Geen gemeenschaps-URL opgegeven!</translation>
     </message>
@@ -790,24 +798,24 @@ Controleer uw installatie en herstart de applicatie.</translation>
 <context>
     <name>SyntaxCheck</name>
     <message>
-        <location filename="../syntaxcheck.cpp" line="76"/>
-        <location filename="../syntaxcheck.cpp" line="89"/>
-        <location filename="../syntaxcheck.cpp" line="163"/>
+        <location filename="../syntaxcheck.cpp" line="77"/>
+        <location filename="../syntaxcheck.cpp" line="90"/>
+        <location filename="../syntaxcheck.cpp" line="164"/>
         <source>Inyoka syntax check</source>
         <translation>Inyoka-syntaxcontrole</translation>
     </message>
     <message>
-        <location filename="../syntaxcheck.cpp" line="77"/>
+        <location filename="../syntaxcheck.cpp" line="78"/>
         <source>Syntax error detected - closing parenthesis without opening paraenthesis!</source>
         <translation>Syntaxfout ontdekt - haakje sluiten is gebruikt zonder haakje openen!</translation>
     </message>
     <message>
-        <location filename="../syntaxcheck.cpp" line="90"/>
+        <location filename="../syntaxcheck.cpp" line="91"/>
         <source>Syntax error detected - open parenthesis!</source>
         <translation>Syntaxfout ontdekt - haakje openen!</translation>
     </message>
     <message>
-        <location filename="../syntaxcheck.cpp" line="164"/>
+        <location filename="../syntaxcheck.cpp" line="165"/>
         <source>Found unknown template: %1</source>
         <translation>Onbekend sjabloon gevonden: %1</translation>
     </message>
@@ -952,42 +960,42 @@ Het is alleen mogelijk om te uploaden naar &quot;%1&quot;!</translation>
 <context>
     <name>Utils</name>
     <message>
-        <location filename="../utils.cpp" line="126"/>
+        <location filename="../utils.cpp" line="127"/>
         <source>Update found</source>
         <translation>Update gevonden</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="127"/>
+        <location filename="../utils.cpp" line="128"/>
         <source>Found a new version of %1.&lt;br&gt;Do you want to download the latest version?</source>
         <translation>Er is een nieuwe versie beschikbaar van %1&lt;br&gt;Wilt u de nieuwste versie nu downloaden?</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="132"/>
+        <location filename="../utils.cpp" line="133"/>
         <source>No, don&apos;t ask again!</source>
         <translation>Nee, en niet opnieuw vragen!</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="184"/>
+        <location filename="../utils.cpp" line="177"/>
         <source>License</source>
         <translation>Licentie</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="190"/>
+        <location filename="../utils.cpp" line="183"/>
         <source>Special thanks to djcj, bubi97, Lasall, Vistaus, Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Veel dank aan djcj, bubi97, Lasall, Vistaus, Shakesbier en alle testers van &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="170"/>
+        <location filename="../utils.cpp" line="163"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="180"/>
+        <location filename="../utils.cpp" line="173"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Bewerker voor Inyoka-gebaseerde portals</translation>
     </message>
     <message>
-        <location filename="../utils.cpp" line="187"/>
+        <location filename="../utils.cpp" line="180"/>
         <source>This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
         <translation>Deze applicatie gebruikt pictogrammen van het &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango-project&lt;/a&gt;.</translation>
     </message>

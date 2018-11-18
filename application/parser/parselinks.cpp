@@ -138,11 +138,19 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
 
         // No description
         if (sLink.endsWith(":]")) {
+          QString sAnchor("");
           sLink.remove(":]");
           // qDebug() << sLink;
           QString sLink2 = sLink;
           sLink2.replace("_", " ");
           sLinkURL = m_sWikiUrl + "/" + sLink;
+
+          // Contains anchor link
+          if (sLink.contains('#')) {
+            sAnchor = sLink.mid(sLink.indexOf('#') + 1);
+            sLink2 = sLink2.remove("#" + sAnchor);
+            sAnchor = " (" + tr("Section") + " \"" + sAnchor + "\")";
+          }
 
           m_sLinkClassAddition = "";
           if (bIsOnline && m_bCheckLinks) {
@@ -164,7 +172,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                        "<a href=\"" + sLinkURL
                        + "\" class=\"internal"
                        + m_sLinkClassAddition + "\">"
-                       + sLink2 + "</a>");
+                       + sLink2 + sAnchor + "</a>");
         } else {
           sLink.remove("]");
           // qDebug() << sLink.mid(0, sLink.indexOf(":"))
