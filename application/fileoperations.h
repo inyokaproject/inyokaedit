@@ -35,7 +35,6 @@
 #include "./findreplace.h"
 #include "./settings.h"
 #include "./texteditor.h"
-#include "./upload.h"
 
 /**
  * \class FileOperations
@@ -154,7 +153,6 @@ class FileOperations : public QObject {
     void triggeredReplace();
     void triggeredFindNext();
     void triggeredFindPrevious();
-    void triggeredUpload();
     void copyAvailable(bool);
     void undoAvailable(bool);
     void redoAvailable(bool);
@@ -199,7 +197,6 @@ class FileOperations : public QObject {
     const QString m_sExtractDir;
 
     FindReplace *m_pFindReplace;
-    Upload *m_pUploadModule;
 
     QList<TextEditor *> m_pListEditors;
 

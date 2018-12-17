@@ -39,6 +39,7 @@
 #include "./settings.h"
 #include "./templates/templates.h"
 #include "./texteditor.h"
+#include "./upload.h"
 #include "./utils.h"
 
 // Qt classes
@@ -127,6 +128,7 @@ class InyokaEdit : public QMainWindow {
     Parser *m_pParser;
     Settings *m_pSettings;
     Download *m_pDownloadModule;
+    Upload *m_pUploadModule;
     Utils *m_pUtils;
     QSplitter *m_pWidgetSplitter;
     QBoxLayout *m_pFrameLayout;

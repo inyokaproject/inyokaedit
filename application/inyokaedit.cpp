@@ -154,6 +154,10 @@ void InyokaEdit::createObjects() {
                                    m_tmpPreviewImgDir.absolutePath(),
                                    m_sSharePath);
 
+  m_pUploadModule = new Upload(this, m_pSettings->getInyokaUrl(),
+                               m_pSettings->getInyokaConstructionArea(),
+                               m_pSettings->getInyokaHash());
+
   m_pParser = new Parser(m_sSharePath, m_tmpPreviewImgDir,
                          m_pSettings->getInyokaUrl(),
                          m_pSettings->getCheckLinks(),
@@ -216,6 +220,7 @@ void InyokaEdit::createObjects() {
 void InyokaEdit::setCurrentEditor() {
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
   m_pPlugins->setCurrentEditor(m_pCurrentEditor);
+  m_pUploadModule->setEditor(m_pCurrentEditor, m_pCurrentEditor->getFileName());
 }
 
 // ----------------------------------------------------------------------------
@@ -405,7 +410,7 @@ void InyokaEdit::createActions() {
 
   // Upload Inyoka article
   connect(m_pUi->uploadArticleAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::triggeredUpload);
+          m_pUploadModule, &Upload::clickUploadArticle);
 
   // ------------------------------------------------------------------------
   // ABOUT MENU

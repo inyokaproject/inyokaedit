@@ -96,7 +96,7 @@ class Settings : public QObject {
     // Plugins
     QStringList getDisabledPlugins() const;
 
-    // Allow CSettingsDialog to access private members
+    // Allow SettingsDialog to access private members
     friend class SettingsDialog;
 
   public slots:
