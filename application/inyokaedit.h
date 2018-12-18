@@ -36,6 +36,7 @@
 #include "./fileoperations.h"
 #include "./parser/parser.h"
 #include "./plugins.h"
+#include "./session.h"
 #include "./settings.h"
 #include "./templates/templates.h"
 #include "./texteditor.h"
@@ -127,6 +128,7 @@ class InyokaEdit : public QMainWindow {
     Plugins *m_pPlugins;
     Parser *m_pParser;
     Settings *m_pSettings;
+    Session *m_pSession;
     Download *m_pDownloadModule;
     Upload *m_pUploadModule;
     Utils *m_pUtils;

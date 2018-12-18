@@ -150,13 +150,15 @@ void InyokaEdit::createObjects() {
   m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(),
                                m_sSharePath, m_UserDataDir.absolutePath());
 
+  m_pSession = new Session(this, m_pSettings->getInyokaUrl(),
+                           m_pSettings->getInyokaHash());
+
   m_pDownloadModule = new Download(this, m_UserDataDir.absolutePath(),
                                    m_tmpPreviewImgDir.absolutePath(),
                                    m_sSharePath);
 
-  m_pUploadModule = new Upload(this, m_pSettings->getInyokaUrl(),
-                               m_pSettings->getInyokaConstructionArea(),
-                               m_pSettings->getInyokaHash());
+  m_pUploadModule = new Upload(this, m_pSession, m_pSettings->getInyokaUrl(),
+                               m_pSettings->getInyokaConstructionArea());
 
   m_pParser = new Parser(m_sSharePath, m_tmpPreviewImgDir,
                          m_pSettings->getInyokaUrl(),

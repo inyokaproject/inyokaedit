@@ -32,27 +32,23 @@
 #include <QHttpMultiPart>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QNetworkCookie>
 #include <QUrl>
 #include <QUrlQuery>
 
 #include "./utils.h"
 
-Upload::Upload(QWidget *pParent, const QString &sInyokaUrl,
-               const QString &sConstArea, const QString &sHash)
+Upload::Upload(QWidget *pParent, Session *pSession,
+               const QString &sInyokaUrl, const QString &sConstArea)
   : m_pParent(pParent),
+    m_pSession(pSession),
     m_sInyokaUrl(sInyokaUrl),
-    m_State(REQUTOKEN),
-    m_sToken(""),
-    m_sHash(sHash),
+    m_State(REQUREVISION),
     m_sSitename(""),
     m_sRevision(""),
     m_sConstructionArea(sConstArea),
     m_pEditor(NULL),
     m_sArticlename("") {
-  m_pNwManager = new QNetworkAccessManager(m_pParent);
-  connect(m_pNwManager, &QNetworkAccessManager::finished,
-          this, &Upload::replyFinished);
-  m_pNwManager->setCookieJar(this);
   this->setParent(m_pParent);
 }
 
@@ -74,12 +70,6 @@ void Upload::setEditor(QTextEdit *pEditor, const QString &sArticlename) {
 // ----------------------------------------------------------------------------
 
 void Upload::clickUploadArticle() {
-  if (m_sHash.isEmpty()) {
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Inyoka community hash not defined!"));
-    return;
-  }
-
   if (m_pEditor->toPlainText().trimmed().isEmpty()) {
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Please insert article text first!"));
@@ -121,19 +111,12 @@ void Upload::clickUploadArticle() {
   m_sSitename.replace(" ", "_");
   qDebug() << "UPLOAD site name:" << m_sSitename;
 
+  m_pSession->checkSession();
+  if (!m_pSession->isLoggedIn()) {
+    return;
+  }
+
   switch (m_State) {
-    case REQUTOKEN:
-      this->requestToken();
-      break;
-    case RECTOKEN:
-      this->requestLogin();
-      break;
-    case REQULOGIN:
-      this->requestLogin();
-      break;
-    case RECLOGIN:
-      this->requestRevision();
-      break;
     case REQUREVISION:
       this->requestRevision();
       break;
@@ -154,173 +137,6 @@ void Upload::clickUploadArticle() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Upload::requestToken() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-#ifndef QT_NO_CURSOR
-  QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
-
-  QString sLoginUrl(m_sInyokaUrl);
-  sLoginUrl = sLoginUrl.remove("wiki.") + "/login/";
-  QNetworkRequest request(sLoginUrl);
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
-
-  m_State = REQUTOKEN;
-  m_pReply = m_pNwManager->get(request);
-}
-
-// ----------------------------------------------------------------------------
-
-void Upload::getTokenReply(const QString &sNWReply) {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-
-  QString sSessionCookie("");
-
-  if (m_ListCookies.size() > 0) {
-    // qDebug() << "COOKIES:" << m_ListCookies;
-
-    QString sCookie("");
-    foreach (QNetworkCookie cookie, m_ListCookies) {
-      if (cookie.isSessionCookie()) {
-        sSessionCookie = cookie.toRawForm();
-        m_SessionCookie = cookie;
-      } else if (sCookie.isEmpty()) {  // Use first found cookie
-        sCookie = cookie.toRawForm();
-      }
-    }
-
-    m_sToken = "csrftoken=";
-    int nInd = sCookie.indexOf(m_sToken) + m_sToken.length();
-    m_sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
-
-    if (m_sToken.isEmpty()) {
-      qWarning() << "Token request failed. No CSRFTOKEN received.";
-      qWarning() << "COOKIES" << m_ListCookies;
-      QMessageBox::warning(m_pParent, tr("Error"),
-                           tr("Upload failed! No CSRFTOKEN received."));
-      m_State = REQUTOKEN;
-      return;
-    } else if (sSessionCookie.isEmpty()) {
-      qWarning() << "No session cookie received.";
-      qWarning() << "COOKIES" << m_ListCookies;
-      QMessageBox::warning(
-            m_pParent, tr("Error"),
-            tr("Upload failed! No session cookie received."));
-      m_State = REQUTOKEN;
-      return;
-    } else {  // SUCCESS
-      // qDebug() << "CSRFTOKEN:" << m_sToken;
-      // qDebug() << "SESSION COOKIE:" << sSessionCookie;
-      m_State = RECTOKEN;
-      this->requestLogin();
-    }
-  } else {
-    qWarning() << "Calling login page failed! No cookies received.";
-    qWarning() << "NW REPLY:" << sNWReply;
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Upload failed! No cookies received."));
-    m_State = REQUTOKEN;
-  }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Upload::requestLogin() {
-  qDebug() << "Calling" << Q_FUNC_INFO;
-  m_State = REQULOGIN;
-
-  QString sUrl(m_sInyokaUrl);
-  bool bOk = false;
-  QString sUsername("");
-  QString sPassword("");
-
-  sUsername = QInputDialog::getText(
-                m_pParent, tr("Login user"),
-                tr("Please insert your Inyoka user name:"),
-                QLineEdit::Normal, "", &bOk).trimmed();
-  if (true != bOk || sUsername.isEmpty()) {
-    return;
-  }
-
-  sPassword = QInputDialog::getText(
-                m_pParent, tr("Login password"),
-                tr("Please insert your Inyoka password:"),
-                QLineEdit::Password, "", &bOk).trimmed();
-  if (true != bOk || sPassword.isEmpty()) {
-    return;
-  }
-
-  sUrl = sUrl.remove("wiki.") + "/login/?next=" +
-         m_sInyokaUrl + "/" + m_sSitename;
-
-#ifndef QT_NO_CURSOR
-  QApplication::setOverrideCursor(Qt::WaitCursor);
-#endif
-  QNetworkRequest request(sUrl);
-  request.setHeader(QNetworkRequest::ContentTypeHeader,
-                    "application/x-www-form-urlencoded");
-  // Referer needed with POST request + https in Django
-  QString sReferer(m_sInyokaUrl);
-  sReferer = sReferer.remove("wiki.");
-  request.setRawHeader("Referer", sReferer.toLatin1());
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
-  m_State = REQULOGIN;
-
-  QUrlQuery params;
-  params.addQueryItem("csrfmiddlewaretoken", m_sToken);
-  params.addQueryItem("username", sUsername);
-  sPassword.replace(QChar('+'), QString("%2B"));
-  params.addQueryItem("password", sPassword);
-  params.addQueryItem("redirect", "");
-  m_pReply = m_pNwManager->post(request, params.query(
-                                  QUrl::FullyEncoded).toUtf8());
-}
-
-// ----------------------------------------------------------------------------
-
-void Upload::getLoginReply(const QString &sNWReply) {
-  // If "$IS_LOGGED_IN = false" is found in reply --> login failed
-  if (-1 != sNWReply.indexOf("$IS_LOGGED_IN = false")) {
-    m_State = REQUTOKEN;
-    qWarning() << "LOGIN FAILED! Wrong credentials?";
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Login at Inyoka failed. Wrong credentials?"));
-    return;
-  } else {
-    foreach (QNetworkCookie cookie, m_ListCookies) {
-      if (cookie.isSessionCookie()) {
-        // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
-        // --> "Du hast dich erfolgreich angemeldet"
-        // See raw debug output:
-        // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
-        if (cookie.toRawForm().contains(m_sHash.toLatin1())) {
-          m_State = RECLOGIN;
-          qDebug() << "LOGIN SUCCESSFUL!";
-          break;
-        }
-      }
-    }
-
-    if (RECLOGIN != m_State) {
-      m_State = REQUTOKEN;
-      qWarning() << "LOGIN FAILED! No success message cookie.";
-      QMessageBox::warning(m_pParent, tr("Error"),
-                           tr("Login at Inyoka failed."));
-      return;
-    }
-  }
-
-  this->requestRevision();
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
 void Upload::requestRevision(QString sUrl) {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_State = REQUREVISION;
@@ -334,7 +150,11 @@ void Upload::requestRevision(QString sUrl) {
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
                                + qApp->applicationVersion()).toLatin1());
-  m_pReply = m_pNwManager->get(request);
+  m_pReply = m_pSession->getNwManager()->get(request);
+  QEventLoop loop;
+  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
+  loop.exec();
+  this->replyFinished(m_pReply);
 }
 
 // ----------------------------------------------------------------------------
@@ -381,7 +201,7 @@ void Upload::requestUpload() {
   request.setUrl(QUrl(sUrl));
 
   QList<QNetworkCookie> listCookies;
-  listCookies << m_pNwManager->cookieJar()->cookiesForUrl(QUrl(sUrl));
+  listCookies << m_pSession->getNwManager()->cookieJar()->cookiesForUrl(QUrl(sUrl));
   // qDebug() << "COOKIES FOR URL:" << listCookies;
 
   QString sCookie("");
@@ -394,16 +214,15 @@ void Upload::requestUpload() {
   }
   // qDebug() << "COOKIE:" << sCookie;
 
-  m_sToken = "csrftoken=";
-  int nInd = sCookie.indexOf(m_sToken) + m_sToken.length();
-  m_sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
-  if (m_sToken.isEmpty()) {
+  QString sToken("csrftoken=");
+  int nInd = sCookie.indexOf(sToken) + sToken.length();
+  sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
+  if (sToken.isEmpty()) {
     qWarning() << "Upload failed! Empty CSRFTOKEN.";
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Upload failed! No CSRFTOKEN received."));
     return;
   }
-  // qDebug() << "TOKEN:" << m_sToken;
 
   QString sNote("");
   bool bOk(false);
@@ -411,6 +230,9 @@ void Upload::requestUpload() {
                                 tr("Please insert a change message:"),
                                 QLineEdit::Normal, "", &bOk);
   sNote = sNote.trimmed();
+  if (sNote.length() > 510) {  // Max length = 512 in Inyoka input form
+    sNote.resize(510);
+  }
   // Click on "cancel" or string is empty
   if (true != bOk || sNote.isEmpty()) {
     qWarning() << "Change note is empty.";
@@ -429,7 +251,7 @@ void Upload::requestUpload() {
   QHttpPart tokenPart;
   tokenPart.setHeader(QNetworkRequest::ContentDispositionHeader,
                       QVariant("form-data; name=\"csrfmiddlewaretoken\""));
-  tokenPart.setBody(m_sToken.toLatin1());
+  tokenPart.setBody(sToken.toLatin1());
 
   QHttpPart textPart;
   textPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -458,8 +280,13 @@ void Upload::requestUpload() {
   pMultiPart->append(timePart);
   pMultiPart->append(revPart);
 
-  m_State = REQUPLOAD;
-  m_pReply = m_pNwManager->post(request, pMultiPart);
+  m_State = REQUPLOAD; 
+  m_pReply = m_pSession->getNwManager()->post(request, pMultiPart);
+  QEventLoop loop;
+  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
+  loop.exec();
+  this->replyFinished(m_pReply);
+
   pMultiPart->setParent(m_pReply);
 }
 
@@ -511,7 +338,6 @@ void Upload::replyFinished(QNetworkReply *pReply) {
       qDebug() << "Redirected to: " + m_urlRedirectedTo.toString();
       this->requestRevision(m_urlRedirectedTo.toString() + "a/log/");
     } else {
-      m_ListCookies = this->allCookies();
       QString sReply = QString::fromUtf8(pData->readAll());
       sReply.replace("\r\r\n", "\n");
       m_pReply->deleteLater();
@@ -521,12 +347,6 @@ void Upload::replyFinished(QNetworkReply *pReply) {
       }
 
       switch (m_State) {
-        case REQUTOKEN:
-          this->getTokenReply(sReply);
-          break;
-        case REQULOGIN:
-          this->getLoginReply(sReply);
-          break;
         case REQUREVISION:
           this->getRevisionReply(sReply);
           break;
@@ -545,7 +365,7 @@ void Upload::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 
 QUrl Upload::redirectUrl(const QUrl &possibleRedirectUrl,
-                          const QUrl &oldRedirectUrl) {
+                         const QUrl &oldRedirectUrl) {
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl) {
     redirectUrl = possibleRedirectUrl;

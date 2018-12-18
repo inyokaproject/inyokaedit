@@ -1,5 +1,5 @@
 /**
- * \file upload.h
+ * \file session.h
  *
  * \section LICENSE
  *
@@ -21,58 +21,53 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for upload functions.
+ * Class definition for seesion functions.
  */
 
-#ifndef APPLICATION_UPLOAD_H_
-#define APPLICATION_UPLOAD_H_
+#ifndef APPLICATION_SESSION_H_
+#define APPLICATION_SESSION_H_
 
+#include <QNetworkCookie>
+#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QTextEdit>
 
-#include "./session.h"
-
 /**
- * \class Upload
- * \brief Upload an article to Inyoka
+ * \class Session
+ * \brief Login/session handling
  */
-class Upload : public QObject {
+class Session : public QNetworkCookieJar {
   Q_OBJECT
 
   public:
-    explicit Upload(QWidget *pParent, Session *pSession,
-                    const QString &sInyokaUrl, const QString &sConstArea);
+    explicit Session(QWidget *pParent, const QString &sInyokaUrl,
+                     const QString &sHash);
 
-    void setEditor(QTextEdit *pEditor, const QString &sArticlename);
-
-  public slots:
-    void clickUploadArticle();
+    void checkSession();
+    bool isLoggedIn() const;
+    QNetworkAccessManager* getNwManager();
 
   private slots:
     void replyFinished(QNetworkReply *pReply);
 
   private:
-    void requestRevision(QString sUrl = "");
-    void getRevisionReply(const QString &sNWReply);
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl);
-    void requestUpload();
-    void getUploadReply(const QString &sNWReply);
+    void requestToken();
+    void getTokenReply(const QString &sNWReply);
+    void requestLogin();
+    void getLoginReply(const QString &sNWReply);
 
-    enum REQUESTSTATE {REQUREVISION, RECREVISION, REQUPLOAD, RECUPLOAD};
+    enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN};
 
     QWidget *m_pParent;
-    Session *m_pSession;
     QString m_sInyokaUrl;
+    QNetworkAccessManager *m_pNwManager;
     QNetworkReply *m_pReply;
 
     REQUESTSTATE m_State;
-    QString m_sSitename;
-    QUrl m_urlRedirectedTo;
-    QString m_sRevision;
-    QString m_sConstructionArea;
-    QTextEdit *m_pEditor;
-    QString m_sArticlename;
+    QString m_sToken;
+    QString m_sHash;
+    QNetworkCookie m_SessionCookie;
+    QList<QNetworkCookie> m_ListCookies;
 };
 
-#endif  // APPLICATION_UPLOAD_H_
+#endif  // APPLICATION_SESSION_H_

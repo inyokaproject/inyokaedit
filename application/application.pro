@@ -65,6 +65,7 @@ HEADERS      += inyokaedit.h \
                 findreplace.h \
                 plugins.h \
                 texteditor.h \
+                session.h \
                 settings.h \
                 settingsdialog.h \
                 syntaxcheck.h \
@@ -81,6 +82,7 @@ SOURCES      += main.cpp \
                 findreplace.cpp \
                 plugins.cpp \
                 texteditor.cpp \
+                session.cpp \
                 settings.cpp \
                 settingsdialog.cpp \
                 syntaxcheck.cpp \
