@@ -244,8 +244,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
                                          tr("Do you want to download "
                                             "the images which are "
                                             "attached to the article?"),
-                                         QMessageBox::Yes
-                                         | QMessageBox::No,
+                                         QMessageBox::Yes | QMessageBox::No,
                                          QMessageBox::No);
           } else {
             iRet = QMessageBox::Yes;
@@ -254,7 +253,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
           if (iRet != QMessageBox::No) {
             qDebug() << "Starting image download...";
             m_DlImages->setDLs(sListMetadata, sListSaveFolder);
-            QTimer::singleShot(0, m_DlImages, SLOT(startDownloads()));
+            QTimer::singleShot(0, m_DlImages, &DownloadImg::startDownloads);
           } else {
             this->showArticle();
           }

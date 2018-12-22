@@ -153,7 +153,7 @@ void Upload::requestRevision(QString sUrl) {
                                + qApp->applicationVersion()).toLatin1());
   m_pReply = m_pSession->getNwManager()->get(request);
   QEventLoop loop;
-  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
+  connect(m_pReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
   loop.exec();
   this->replyFinished(m_pReply);
 }
@@ -284,7 +284,7 @@ void Upload::requestUpload() {
   m_State = REQUPLOAD; 
   m_pReply = m_pSession->getNwManager()->post(request, pMultiPart);
   QEventLoop loop;
-  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
+  connect(m_pReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
   loop.exec();
   this->replyFinished(m_pReply);
 

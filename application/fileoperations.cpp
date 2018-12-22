@@ -75,7 +75,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   connect(m_pTimerAutosave, &QTimer::timeout,
           this, &FileOperations::saveDocumentAuto);
 
-  this->newFile(QStringLiteral(""));
+  this->newFile(QString());
 
   connect(m_pDocumentTabs, &QTabWidget::currentChanged,
           this, &FileOperations::changedDocTab);
@@ -836,7 +836,7 @@ bool FileOperations::closeDocument(int nIndex) {
         emit this->callPreview();
       }
     } else if (!m_bCloseApp) {
-      this->newFile(QStringLiteral(""));
+      this->newFile(QString());
     }
   } else {
     return false;
