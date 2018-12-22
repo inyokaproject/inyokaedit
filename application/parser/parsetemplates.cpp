@@ -109,16 +109,16 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
           sListArguments.removeAll(" ");
 
           // In addition to ',' arguments can be separated by '\n'...
-          for (int i = 0; i < sListArguments.size(); i++) {
-            if (sListArguments[i].contains("\n")) {
-              QString sTmp = sListArguments[i];
+          for (int m = 0; m < sListArguments.size(); m++) {
+            if (sListArguments[m].contains("\n")) {
+              QString sTmp = sListArguments[m];
               QStringList tmpArgs;
               tmpArgs << sTmp.split(QRegExp("\\n"),
                                     QString::SkipEmptyParts);
               for (int j = 0; j < tmpArgs.size(); j++) {
-                sListArguments.insert(i + j + 1, tmpArgs[j]);
+                sListArguments.insert(m + j + 1, tmpArgs[j]);
               }
-              sListArguments.removeAt(i);
+              sListArguments.removeAt(m);
             }
           }
         } else if (sMacro.startsWith("{{{#!" + sListTrans[k] + " "
@@ -154,9 +154,9 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
             }
             if (sList.size() > 1) {
               sListArguments.removeFirst();
-              for (int i = sList.size() - 1; i >= 0; i--) {
-                if ("," != sList[i]) {
-                  sListArguments.push_front(sList[i]);
+              for (int n = sList.size() - 1; n >= 0; n--) {
+                if ("," != sList[n]) {
+                  sListArguments.push_front(sList[n]);
                 }
               }
             }
