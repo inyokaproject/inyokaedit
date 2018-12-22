@@ -113,6 +113,7 @@ void Upload::clickUploadArticle() {
 
   m_pSession->checkSession();
   if (!m_pSession->isLoggedIn()) {
+    qWarning() << "Upload failed - user not logged in!";
     return;
   }
 

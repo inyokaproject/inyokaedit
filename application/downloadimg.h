@@ -35,7 +35,7 @@ class DownloadImg : public QObject {
   Q_OBJECT
 
   public:
-    explicit DownloadImg(QObject *pParent = 0);
+    explicit DownloadImg(QObject *pParent, QNetworkAccessManager *pNwManager);
     void setDLs(const QStringList &sListUrls,
                 const QStringList &sListSavePath);
 
@@ -56,7 +56,7 @@ class DownloadImg : public QObject {
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl) const;
 
-    QNetworkAccessManager m_NwManager;
+    QNetworkAccessManager* m_pNwManager;
     QList<QNetworkReply *> m_listDownloadReplies;
 
     QProgressDialog *m_pProgessDialog;

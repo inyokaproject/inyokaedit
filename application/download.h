@@ -31,6 +31,7 @@
 
 #include "./inyokaedit.h"
 #include "./downloadimg.h"
+#include "./session.h"
 
 /**
  * \class Download
@@ -40,13 +41,13 @@ class Download : public QObject {
   Q_OBJECT
 
   public:
-    Download(QWidget *pParent, const QString &sStylesDir,
+    Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
              const QString &sImgDir, const QString &sSharePath);
 
   public slots:
     void downloadArticle(QString sUrl = "");
     void showArticle();
-    void updateSettings(const bool bCompleter,
+    void updateSettings(const bool bDownloadImages,
                         const QString &sInyokaUrl,
                         const QString &sConstArea);
 
@@ -62,10 +63,10 @@ class Download : public QObject {
     void downloadImages();
 
     QWidget *m_pParent;
+    Session *m_pSession;
     const QString m_sStylesDir;
     const QString m_sImgDir;
 
-    QNetworkAccessManager *m_pNwManager;
     QList<QNetworkReply *> m_listDownloadReplies;
     QUrl m_urlRedirectedTo;
     QString m_sArticleText;

@@ -31,9 +31,10 @@
 #include <QMessageBox>
 #include <QFileInfo>
 
-DownloadImg::DownloadImg(QObject *pParent) {
+DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
+  : m_pNwManager(pNwManager) {
   Q_UNUSED(pParent);
-  connect(&m_NwManager, &QNetworkAccessManager::finished,
+  connect(m_pNwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);
 }
 
@@ -83,7 +84,8 @@ void DownloadImg::doDownload(const QUrl &url,
                              const QString &sSavePath,
                              const QString &sBase) {
   QNetworkRequest request(url);
-  QNetworkReply *reply = m_NwManager.get(request);
+  request.setOriginatingObject(this);
+  QNetworkReply *reply = m_pNwManager->get(request);
 
   m_listDownloadReplies.append(reply);
   m_sListRepliesPath.append(sSavePath);
@@ -94,6 +96,11 @@ void DownloadImg::doDownload(const QUrl &url,
 // ----------------------------------------------------------------------------
 
 void DownloadImg::downloadFinished(QNetworkReply *pReply) {
+  if (this != pReply->request().originatingObject()) {
+    // Handle only requests from Download class
+    return;
+  }
+
   QIODevice *pData(pReply);
   int nIndex = m_listDownloadReplies.indexOf(pReply);
   m_pProgessDialog->setValue(m_nProgress);

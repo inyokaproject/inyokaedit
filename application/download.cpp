@@ -32,20 +32,21 @@
 
 #include "./utils.h"
 
-Download::Download(QWidget *pParent, const QString &sStylesDir,
-                   const QString &sImgDir, const QString &sSharePath)
+Download::Download(QWidget *pParent, Session *pSession,
+                   const QString &sStylesDir, const QString &sImgDir,
+                   const QString &sSharePath)
   : m_pParent(pParent),
+    m_pSession(pSession),
     m_sStylesDir(sStylesDir),
     m_sImgDir(sImgDir),
     m_sInyokaUrl("https://wiki.ubuntuusers.de"),
     m_sConstructionArea(""),
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath) {
-  m_pNwManager = new QNetworkAccessManager(m_pParent);
-  connect(m_pNwManager, &QNetworkAccessManager::finished,
+  connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished,
           this, &Download::replyFinished);
 
-  m_DlImages = new DownloadImg();
+  m_DlImages = new DownloadImg(0, m_pSession->getNwManager());
   connect(m_DlImages, &DownloadImg::finsihedImageDownload,
           this, &Download::showArticle);
 }
@@ -53,10 +54,10 @@ Download::Download(QWidget *pParent, const QString &sStylesDir,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Download::updateSettings(const bool bCompleter,
+void Download::updateSettings(const bool bDownloadImages,
                               const QString &sInyokaUrl,
                               const QString &sConstArea) {
-  m_bAutomaticImageDownload = bCompleter;
+  m_bAutomaticImageDownload = bDownloadImages;
   m_sInyokaUrl = sInyokaUrl;
   m_sConstructionArea = sConstArea;
 }
@@ -86,6 +87,7 @@ void Download::downloadArticle(QString sUrl) {
                        "should be downloaded:"),
                     QLineEdit::Normal,
                     m_sConstructionArea + "/" + tr("Article"), &bOk);
+    m_sSitename = m_sSitename.trimmed();
 
     // Click on "cancel" or string is empty
     if (true != bOk || m_sSitename.isEmpty()) {
@@ -104,6 +106,16 @@ void Download::downloadArticle(QString sUrl) {
                          m_sSitename.length());
       m_sRevision = m_sRevision + "/";
     }
+
+    // Login needed for accessing ContructionArea
+    if (m_sSitename.startsWith(m_sConstructionArea)) {
+      m_pSession->checkSession();
+      if (!m_pSession->isLoggedIn()) {
+        qWarning() << "Download failed - user not logged in!";
+        return;
+      }
+    }
+
     sUrl = m_sInyokaUrl + "/" + m_sSitename + "/a/export/raw/" + m_sRevision;
   }
 
@@ -114,14 +126,14 @@ void Download::downloadArticle(QString sUrl) {
   m_bDownloadArticle = true;
   qDebug() << "DOWNLOADING article:" << sUrl;
   QNetworkRequest request(sUrl);
+  request.setOriginatingObject(this);
   m_urlRedirectedTo = sUrl;
-  QNetworkReply *reply = m_pNwManager->get(request);
+  QNetworkReply *reply = m_pSession->getNwManager()->get(request);
   m_listDownloadReplies.append(reply);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-// DOWNLOAD IN ARTICLES INCLUDED IMAGES
 
 void Download::downloadImages() {
   m_bDownloadArticle = false;
@@ -129,8 +141,9 @@ void Download::downloadImages() {
   QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta/");
   qDebug() << "DOWNLOADING meta data:" << sUrl;
   QNetworkRequest request(sUrl);
+  request.setOriginatingObject(this);
   m_urlRedirectedTo = sUrl;
-  QNetworkReply *reply = m_pNwManager->get(request);
+  QNetworkReply *reply = m_pSession->getNwManager()->get(request);
   m_listDownloadReplies.append(reply);
 }
 
@@ -138,6 +151,11 @@ void Download::downloadImages() {
 // ----------------------------------------------------------------------------
 
 void Download::replyFinished(QNetworkReply *pReply) {
+  if (this != pReply->request().originatingObject()) {
+    // Handle only requests from Download class
+    return;
+  }
+
 #ifndef QT_NO_CURSOR
   QApplication::restoreOverrideCursor();
 #endif
@@ -176,9 +194,8 @@ void Download::replyFinished(QNetworkReply *pReply) {
 
         // Site does not exist etc.
         if (sTmpArticle.isEmpty()) {
-          QMessageBox::information(
-                m_pParent, qApp->applicationName(),
-                tr("Could not download the article."));
+          QMessageBox::information(m_pParent, qApp->applicationName(),
+                                   tr("Could not download the article."));
           return;
         }
 

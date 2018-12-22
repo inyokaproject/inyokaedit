@@ -48,7 +48,6 @@ Session::Session(QWidget *pParent, const QString &sInyokaUrl,
   if (m_sHash.isEmpty()) {
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Inyoka community hash not defined!"));
-    return;
   }
 }
 
@@ -88,24 +87,15 @@ void Session::requestToken() {
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
                                + qApp->applicationVersion()).toLatin1());
+  request.setAttribute(QNetworkRequest::User, QVariant("ReqestToken"));
 
   m_State = REQUTOKEN;
-  m_pReply = m_pNwManager->get(request);
-
-  QTimer timer;
-  timer.setSingleShot(true);
+  QNetworkReply *pReply = m_pNwManager->get(request);
   QEventLoop loop;
-  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
-  connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
-  timer.start(10000);
+  connect(m_pNwManager, &QNetworkAccessManager::finished,
+          &loop, &QEventLoop::quit);
   loop.exec();
-  if (timer.isActive()) {
-      this->replyFinished(m_pReply);
-  } else {
-    qDebug() << "Timeout during token request!";
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Login request ran into timeout!"));
-  }
+  this->replyFinished(pReply);
 }
 
 // ----------------------------------------------------------------------------
@@ -205,6 +195,7 @@ void Session::requestLogin() {
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
                                + qApp->applicationVersion()).toLatin1());
+  request.setAttribute(QNetworkRequest::User, QVariant("ReqestLogin"));
   m_State = REQULOGIN;
 
   QUrlQuery params;
@@ -213,23 +204,14 @@ void Session::requestLogin() {
   sPassword.replace(QChar('+'), QString("%2B"));
   params.addQueryItem("password", sPassword);
   params.addQueryItem("redirect", "");
-  m_pReply = m_pNwManager->post(request, params.query(
-                                  QUrl::FullyEncoded).toUtf8());
 
-  QTimer timer;
-  timer.setSingleShot(true);
+  QNetworkReply *pReply = m_pNwManager->post(
+                            request, params.query(QUrl::FullyEncoded).toUtf8());
   QEventLoop loop;
-  connect(m_pReply, SIGNAL(finished()), &loop, SLOT(quit()));
-  connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
-  timer.start(10000);
+  connect(m_pNwManager, &QNetworkAccessManager::finished,
+          &loop, &QEventLoop::quit);
   loop.exec();
-  if (timer.isActive()) {
-    this->replyFinished(m_pReply);
-  } else {
-    qDebug() << "Timeout during login request!";
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Login request ran into timeout!"));
-  }
+  this->replyFinished(pReply);
 }
 
 // ----------------------------------------------------------------------------
@@ -282,29 +264,32 @@ void Session::replyFinished(QNetworkReply *pReply) {
     qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
                 << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
+    pReply->close();
+    pReply->deleteLater();
     return;
   } else {
     m_ListCookies = this->allCookies();
     QString sReply = QString::fromUtf8(pData->readAll());
     sReply.replace("\r\r\n", "\n");
-    m_pReply->deleteLater();
 
     if (sReply.isEmpty()) {
       qDebug() << "Upload NW reply is empty.";
     }
 
-    switch (m_State) {
-      case REQUTOKEN:
-        this->getTokenReply(sReply);
-        break;
-      case REQULOGIN:
-        this->getLoginReply(sReply);
-        break;
-      default:
-        qWarning() << "Ran into unexpected state:" << m_State;
+    QString sAttribute(pReply->request().attribute(
+                         QNetworkRequest::User).toString());
+    if (sAttribute.contains("ReqestToken")) {
+      this->getTokenReply(sReply);
+    } else if (sAttribute.contains("ReqestLogin")) {
+      this->getLoginReply(sReply);
+    } else {
+        qWarning() << "Ran into unexpected state!";
         qWarning() << "REPLY:" << sReply;
     }
   }
+
+  pReply->close();
+  pReply->deleteLater();
 }
 
 // ----------------------------------------------------------------------------

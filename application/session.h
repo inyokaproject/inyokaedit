@@ -30,7 +30,6 @@
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
-#include <QTextEdit>
 
 /**
  * \class Session
@@ -47,21 +46,18 @@ class Session : public QNetworkCookieJar {
     bool isLoggedIn() const;
     QNetworkAccessManager* getNwManager();
 
-  private slots:
-    void replyFinished(QNetworkReply *pReply);
-
   private:
     void requestToken();
     void getTokenReply(const QString &sNWReply);
     void requestLogin();
     void getLoginReply(const QString &sNWReply);
+    void replyFinished(QNetworkReply *pReply);
 
     enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN};
 
     QWidget *m_pParent;
     QString m_sInyokaUrl;
     QNetworkAccessManager *m_pNwManager;
-    QNetworkReply *m_pReply;
 
     REQUESTSTATE m_State;
     QString m_sToken;

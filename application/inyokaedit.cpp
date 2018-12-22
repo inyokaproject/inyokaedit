@@ -153,7 +153,8 @@ void InyokaEdit::createObjects() {
   m_pSession = new Session(this, m_pSettings->getInyokaUrl(),
                            m_pSettings->getInyokaHash());
 
-  m_pDownloadModule = new Download(this, m_UserDataDir.absolutePath(),
+  m_pDownloadModule = new Download(this, m_pSession,
+                                   m_UserDataDir.absolutePath(),
                                    m_tmpPreviewImgDir.absolutePath(),
                                    m_sSharePath);
 

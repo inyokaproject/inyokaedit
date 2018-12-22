@@ -48,9 +48,6 @@ class Upload : public QObject {
   public slots:
     void clickUploadArticle();
 
-  private slots:
-    void replyFinished(QNetworkReply *pReply);
-
   private:
     void requestRevision(QString sUrl = "");
     void getRevisionReply(const QString &sNWReply);
@@ -58,6 +55,7 @@ class Upload : public QObject {
                      const QUrl& oldRedirectUrl);
     void requestUpload();
     void getUploadReply(const QString &sNWReply);
+    void replyFinished(QNetworkReply *pReply);
 
     enum REQUESTSTATE {REQUREVISION, RECREVISION, REQUPLOAD, RECUPLOAD};
 
