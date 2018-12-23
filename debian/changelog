@@ -1,4 +1,4 @@
-inyokaedit (0.22.0-0) xenial; urgency=low
+inyokaedit (0.22.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Login needed for accessing Baustelle (#99) / added session handling.
@@ -9,9 +9,10 @@ inyokaedit (0.22.0-0) xenial; urgency=low
   * TPL: Removed IM, updated Copy/PipInstall/Archived/Imgage collection.
   * Minor IWL updates.
   * Converted to Qt5 signal/slots.
+  * Qt >= 5.4 required for building (= dropped support for Ubuntu 14.04).
   * Code reconstructions (using Clazy code checks).
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 22 Dec 2018 17:47:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 23 Dec 2018 17:53:00 +0200
 
 inyokaedit (0.21.0-2) xenial; urgency=low
 
