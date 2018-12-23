@@ -3,6 +3,7 @@ inyokaedit (0.22.0-0) xenial; urgency=low
   [ Thorsten Roth ]
   * Login needed for accessing Baustelle (#99) / added session handling.
   * Implement new anchor rendering (#98)
+  * Readded print support for most Qt version / QWeb(Engine)View combinations.
   * Support for Hunspell >= v1.5
   * Updated Miniz to v2.0.8
   * TPL: Removed IM, updated Copy/PipInstall/Archived/Imgage collection.
