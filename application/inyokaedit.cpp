@@ -239,8 +239,13 @@ void InyokaEdit::setupEditor() {
   m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
   m_pFrameLayout->addWidget(m_pWebview);
 
+#ifdef USEQTWEBKIT
   connect(m_pWebview, &QWebView::loadFinished,
           this, &InyokaEdit::loadPreviewFinished);
+#else
+  connect(m_pWebview, &QWebEngineView::loadFinished,
+          this, &InyokaEdit::loadPreviewFinished);
+#endif
 
   m_pWidgetSplitter = new QSplitter;
 
@@ -272,7 +277,7 @@ void InyokaEdit::setupEditor() {
   m_pUi->aboutAct->setText(
         m_pUi->aboutAct->text() + " " + qApp->applicationName());
 
-  // Browser buttons
+#ifdef USEQTWEBKIT
   connect(m_pUi->goBackBrowserAct, &QAction::triggered,
           m_pWebview, &QWebView::back);
   connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
@@ -282,11 +287,22 @@ void InyokaEdit::setupEditor() {
 
   connect(m_pWebview, &QWebView::urlChanged, this, &InyokaEdit::changedUrl);
 
-  // TODO(volunteer): Find solution for QWebEngineView
-  // QWebEngineUrlRequestInterceptor ?
-#ifdef USEQTWEBKIT
   m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
+#else
+  connect(m_pUi->goBackBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebEngineView::back);
+  connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebEngineView::forward);
+  connect(m_pUi->reloadBrowserAct, &QAction::triggered,
+          m_pWebview, &QWebEngineView::reload);
+
+  connect(m_pWebview, &QWebEngineView::urlChanged, this, &InyokaEdit::changedUrl);
+
+  // TODO(volunteer): Find solution for QWebEngineView
+  // QWebEngineUrlRequestInterceptor ?
+  // m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+  // connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
 #endif
 }
 
