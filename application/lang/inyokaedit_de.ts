@@ -175,7 +175,7 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
         <location filename="../fileoperations.cpp" line="643"/>
-        <location filename="../fileoperations.cpp" line="695"/>
+        <location filename="../fileoperations.cpp" line="697"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -574,37 +574,37 @@ Please check your installation and restart the application.</source>
 Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="752"/>
+        <location filename="../inyokaedit.cpp" line="771"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="971"/>
+        <location filename="../inyokaedit.cpp" line="990"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1087"/>
+        <location filename="../inyokaedit.cpp" line="1106"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1098"/>
+        <location filename="../inyokaedit.cpp" line="1117"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1105"/>
+        <location filename="../inyokaedit.cpp" line="1124"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1245"/>
+        <location filename="../inyokaedit.cpp" line="1264"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1262"/>
+        <location filename="../inyokaedit.cpp" line="1281"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
@@ -636,18 +636,18 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="129"/>
-        <source>Upload failed! No CSRFTOKEN received.</source>
-        <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
+        <source>Login failed! No CSRFTOKEN received.</source>
+        <translation>Login fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="137"/>
-        <source>Upload failed! No session cookie received.</source>
-        <translation>Upload fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
+        <source>Login failed! No session cookie received.</source>
+        <translation>Login fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="150"/>
-        <source>Upload failed! No cookies received.</source>
-        <translation>Upload fehlgeschlagen! Kein Cookie empfangen.</translation>
+        <source>Login failed! No cookies received.</source>
+        <translation>Login fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="168"/>
@@ -881,84 +881,84 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
 <context>
     <name>Upload</name>
     <message>
-        <location filename="../upload.cpp" line="60"/>
+        <location filename="../upload.cpp" line="61"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="74"/>
-        <location filename="../upload.cpp" line="81"/>
-        <location filename="../upload.cpp" line="177"/>
-        <location filename="../upload.cpp" line="223"/>
-        <location filename="../upload.cpp" line="240"/>
-        <location filename="../upload.cpp" line="309"/>
+        <location filename="../upload.cpp" line="75"/>
+        <location filename="../upload.cpp" line="82"/>
+        <location filename="../upload.cpp" line="178"/>
+        <location filename="../upload.cpp" line="224"/>
+        <location filename="../upload.cpp" line="241"/>
+        <location filename="../upload.cpp" line="310"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="75"/>
+        <location filename="../upload.cpp" line="76"/>
         <source>Please insert article text first!</source>
         <translation>Bitte zuerst einen Artikel schreiben!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="82"/>
+        <location filename="../upload.cpp" line="83"/>
         <source>Upload not possible, no active internet connection found!</source>
         <translation>Upload nicht möglich. Keine aktive Internetverbindung gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="89"/>
+        <location filename="../upload.cpp" line="90"/>
         <source>Upload</source>
         <translation>Upload</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="90"/>
+        <location filename="../upload.cpp" line="91"/>
         <source>Please insert name of the article which should be uploaded.
 It is only possible to upload into the &quot;%1&quot;!</source>
         <translation>Bitte den Namen des Artikels eintragen, der hochgeladen werden soll.
 Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="224"/>
+        <location filename="../upload.cpp" line="225"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Upload fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="305"/>
+        <location filename="../upload.cpp" line="306"/>
         <source>Upload failed</source>
         <translation>Upload fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="306"/>
+        <location filename="../upload.cpp" line="307"/>
         <source>The page content was not changed!</source>
         <translation>Die Seite wurde nicht verändert!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="309"/>
+        <location filename="../upload.cpp" line="310"/>
         <source>Upload failed!</source>
         <translation>Upload fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="230"/>
+        <location filename="../upload.cpp" line="231"/>
         <source>Change note</source>
         <translation>Änderungskommentar</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="178"/>
+        <location filename="../upload.cpp" line="179"/>
         <source>Last article revision not found!</source>
         <translation>Die letzte Artikelversion wurde nicht gefunden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="231"/>
+        <location filename="../upload.cpp" line="232"/>
         <source>Please insert a change message:</source>
         <translation>Bitte einen Änderungskommentar eintragen:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="241"/>
+        <location filename="../upload.cpp" line="242"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Es ist nicht erlaubt einen Artikel ohne Änderungskommentar hochzuladen!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="301"/>
+        <location filename="../upload.cpp" line="302"/>
         <source>Upload successful!</source>
         <translation>Upload erfolgreich!</translation>
     </message>

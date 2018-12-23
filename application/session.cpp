@@ -126,7 +126,7 @@ void Session::getTokenReply(const QString &sNWReply) {
       qWarning() << "Token request failed. No CSRFTOKEN received.";
       qWarning() << "COOKIES" << m_ListCookies;
       QMessageBox::warning(m_pParent, tr("Error"),
-                           tr("Upload failed! No CSRFTOKEN received."));
+                           tr("Login failed! No CSRFTOKEN received."));
       m_State = REQUTOKEN;
       return;
     } else if (sSessionCookie.isEmpty()) {
@@ -134,7 +134,7 @@ void Session::getTokenReply(const QString &sNWReply) {
       qWarning() << "COOKIES" << m_ListCookies;
       QMessageBox::warning(
             m_pParent, tr("Error"),
-            tr("Upload failed! No session cookie received."));
+            tr("Login failed! No session cookie received."));
       m_State = REQUTOKEN;
       return;
     } else {  // SUCCESS
@@ -147,7 +147,7 @@ void Session::getTokenReply(const QString &sNWReply) {
     qWarning() << "Calling login page failed! No cookies received.";
     qWarning() << "NW REPLY:" << sNWReply;
     QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Upload failed! No cookies received."));
+                         tr("Login failed! No cookies received."));
     m_State = REQUTOKEN;
   }
 }
@@ -273,7 +273,7 @@ void Session::replyFinished(QNetworkReply *pReply) {
     sReply.replace("\r\r\n", "\n");
 
     if (sReply.isEmpty()) {
-      qDebug() << "Upload NW reply is empty.";
+      qDebug() << "Login NW reply is empty.";
     }
 
     QString sAttribute(pReply->request().attribute(

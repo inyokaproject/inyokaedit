@@ -175,7 +175,7 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
     </message>
     <message>
         <location filename="../fileoperations.cpp" line="643"/>
-        <location filename="../fileoperations.cpp" line="695"/>
+        <location filename="../fileoperations.cpp" line="697"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
@@ -574,37 +574,37 @@ Please check your installation and restart the application.</source>
 Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="752"/>
+        <location filename="../inyokaedit.cpp" line="771"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kan geen tijdelijk HTML-bestand creëren!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="971"/>
+        <location filename="../inyokaedit.cpp" line="990"/>
         <source>Error while loading preview.</source>
         <translation>Fout tijdens laden van voorbeeld.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1087"/>
+        <location filename="../inyokaedit.cpp" line="1106"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Weet u zeker dat u alle tijdelijke artikelafbeeldingen wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1098"/>
+        <location filename="../inyokaedit.cpp" line="1117"/>
         <source>Could not delete file: </source>
         <translation>Bestand kan niet worden verwijderd: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1105"/>
+        <location filename="../inyokaedit.cpp" line="1124"/>
         <source>Images successfully deleted.</source>
         <translation>De afbeeldingen zijn succesvol verwijderd.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1245"/>
+        <location filename="../inyokaedit.cpp" line="1264"/>
         <source>Could not open syntax overview file!</source>
         <translation>Het syntax-overzichtsbestand kan niet worden geopend!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1262"/>
+        <location filename="../inyokaedit.cpp" line="1281"/>
         <source>Syntax overview</source>
         <translation>Syntax-overzicht</translation>
     </message>
@@ -636,18 +636,18 @@ Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="129"/>
-        <source>Upload failed! No CSRFTOKEN received.</source>
-        <translation>Uploaden mislukt! Geen CSRFTOKEN ontvangen.</translation>
+        <source>Login failed! No CSRFTOKEN received.</source>
+        <translation>Inloggen mislukt! Geen CSRFTOKEN ontvangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="137"/>
-        <source>Upload failed! No session cookie received.</source>
-        <translation>Uploaden mislukt! Geen sessiecookie ontvangen.</translation>
+        <source>Login failed! No session cookie received.</source>
+        <translation>Inloggen mislukt! Geen sessiecookie ontvangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="150"/>
-        <source>Upload failed! No cookies received.</source>
-        <translation>Uploaden mislukt! Geen cookies ontvangen.</translation>
+        <source>Login failed! No cookies received.</source>
+        <translation>Inloggen mislukt! Geen cookies ontvangen.</translation>
     </message>
     <message>
         <location filename="../session.cpp" line="168"/>
@@ -881,84 +881,84 @@ Controleer uw installatie en herstart de applicatie.</translation>
 <context>
     <name>Upload</name>
     <message>
-        <location filename="../upload.cpp" line="60"/>
+        <location filename="../upload.cpp" line="61"/>
         <source>Untitled</source>
         <translation>Naamloos</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="74"/>
-        <location filename="../upload.cpp" line="81"/>
-        <location filename="../upload.cpp" line="177"/>
-        <location filename="../upload.cpp" line="223"/>
-        <location filename="../upload.cpp" line="240"/>
-        <location filename="../upload.cpp" line="309"/>
+        <location filename="../upload.cpp" line="75"/>
+        <location filename="../upload.cpp" line="82"/>
+        <location filename="../upload.cpp" line="178"/>
+        <location filename="../upload.cpp" line="224"/>
+        <location filename="../upload.cpp" line="241"/>
+        <location filename="../upload.cpp" line="310"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="75"/>
+        <location filename="../upload.cpp" line="76"/>
         <source>Please insert article text first!</source>
         <translation>Voer eerst artikeltekst in!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="82"/>
+        <location filename="../upload.cpp" line="83"/>
         <source>Upload not possible, no active internet connection found!</source>
         <translation>Het uploaden is niet mogelijk omdat er geen internetverbinding is!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="89"/>
+        <location filename="../upload.cpp" line="90"/>
         <source>Upload</source>
         <translation>Uploaden</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="90"/>
+        <location filename="../upload.cpp" line="91"/>
         <source>Please insert name of the article which should be uploaded.
 It is only possible to upload into the &quot;%1&quot;!</source>
         <translation>Voer de naam in van het te uploaden artikel.
 Het is alleen mogelijk om te uploaden naar &quot;%1&quot;!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="224"/>
+        <location filename="../upload.cpp" line="225"/>
         <source>Upload failed! No CSRFTOKEN received.</source>
         <translation>Uploaden mislukt! Geen CSRFTOKEN ontvangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="305"/>
+        <location filename="../upload.cpp" line="306"/>
         <source>Upload failed</source>
         <translation>Uploaden mislukt</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="306"/>
+        <location filename="../upload.cpp" line="307"/>
         <source>The page content was not changed!</source>
         <translation>De pagina-inhoud is niet gewijzigd!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="309"/>
+        <location filename="../upload.cpp" line="310"/>
         <source>Upload failed!</source>
         <translation>Uploaden mislukt!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="230"/>
+        <location filename="../upload.cpp" line="231"/>
         <source>Change note</source>
         <translation>Wijzigingsopmerking</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="178"/>
+        <location filename="../upload.cpp" line="179"/>
         <source>Last article revision not found!</source>
         <translation>De laatste artikelrevisie kan niet worden gevonden!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="231"/>
+        <location filename="../upload.cpp" line="232"/>
         <source>Please insert a change message:</source>
         <translation>Voer een wijzigingsbericht in:</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="241"/>
+        <location filename="../upload.cpp" line="242"/>
         <source>It is not allowed to upload an article without change message!</source>
         <translation>Het uploaden van een artikel zonder wijzigingsbericht is niet toegestaan!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="301"/>
+        <location filename="../upload.cpp" line="302"/>
         <source>Upload successful!</source>
         <translation>Uploaden voltooid!</translation>
     </message>
