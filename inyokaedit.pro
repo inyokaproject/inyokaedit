@@ -15,7 +15,10 @@
 #  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
 
 lessThan(QT_MAJOR_VERSION, 5) {
-  error("InyokaEdit requires Qt 5.0 or greater")
+  error("InyokaEdit requires Qt 5.4 or greater")
+}
+equals(QT_MAJOR_VERSION, 5):lessThan(QT_MINOR_VERSION, 4) {
+  error("InyokaEdit requires Qt 5.4 or greater")
 }
 
 TEMPLATE = subdirs
