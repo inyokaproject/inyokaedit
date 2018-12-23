@@ -688,13 +688,16 @@ void FileOperations::printPreview() {
 
   QPrintDialog printDialog(&printer);
   if (QDialog::Accepted == printDialog.exec()) {
-    // TODO(volunteer): Check print functionality again with Qt 5.7
-#if QT_VERSION < 0x050600
+#ifdef USEQTWEBKIT
     previewWebView.print(&printer);
 #else
+  #if QT_VERSION >= 0x050800
+    previewWebView.page()->print(&printer, [=](bool){});
+  #else
     QMessageBox::warning(0, tr("Warning"),
-                         "Printing currently not supported with Qt >= 5.6.0");
-    qWarning() << "Printing currently not supported with Qt >= 5.6.0";
+                         "Printing not supported with Qt < 5.8.0 and QWebEngineView.");
+    qWarning() << "Printing not supported with Qt < 5.8.0 and QWebEngineView.";
+  #endif
 #endif
   }
 }

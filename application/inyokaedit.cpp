@@ -319,10 +319,13 @@ void InyokaEdit::createActions() {
   m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
   connect(m_pUi->printPreviewAct, &QAction::triggered,
           m_pFileOperations, &FileOperations::printPreview);
-  // TODO(volunteer): Check print functionality again with Qt 5.7
-#if QT_VERSION >= 0x050600
-  m_pUi->printPreviewAct->setEnabled(false);
-#endif
+  #ifndef USEQTWEBKIT
+    m_pUi->printPreviewAct->setEnabled(false);
+    // If QWebEngineView is used, Qt >= 5.8 is needed for printing
+    #if QT_VERSION >= 0x050800
+      m_pUi->printPreviewAct->setEnabled(true);
+    #endif
+  #endif
 
   // Exit application
   m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
