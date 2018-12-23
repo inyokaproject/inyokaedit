@@ -28,7 +28,7 @@ sudo apt-get install inyokaedit inyokaedit-data-ubuntuusersde inyokaedit-plugins
 Build for Windows: https://github.com/inyokaproject/inyokaedit/releases
 
 ## Compiling
-* InyokaEdit can be compiled with Qt 5 (including webkitwidgets or webenginewidgets)
+* InyokaEdit can be compiled with Qt >= 5.4 (including webkitwidgets or webenginewidgets)
 * For compiling spell checker plugin, libhunspell-dev is needed.
 
 ### Manual installation
