@@ -35,7 +35,7 @@
 class SpellChecker;
 
 namespace Ui {
-  class SpellCheckDialog;
+class SpellCheckDialog;
 }
 
 /**
@@ -45,7 +45,7 @@ namespace Ui {
 class SpellCheckDialog : public QDialog {
   Q_OBJECT
 
-  public:
+ public:
     enum SpellCheckAction {
       None, AbortCheck, IgnoreOnce, IgnoreAll,
       ReplaceOnce, ReplaceAll, AddToDict
@@ -57,21 +57,21 @@ class SpellCheckDialog : public QDialog {
 
     QString replacement() const;
 
-  public slots:
+ public slots:
     SpellCheckAction checkWord(const QString &sWord);
 
-  protected slots:
+ protected slots:
     void ignoreOnce();
     void ignoreAll();
     void replaceOnce();
     void replaceAll();
     void addToDict();
 
-  private slots:
+ private slots:
     void changeLanguage(const QString &sLanguage);
     void closeDialog();
 
-  private:
+ private:
     Ui::SpellCheckDialog *m_pUi;
     SpellChecker *m_pSpellChecker;
     QString m_sUnkownWord;

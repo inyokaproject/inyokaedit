@@ -36,7 +36,7 @@
 class XmlParser {
   class Handler;
 
-  public:
+ public:
     XmlParser();
     bool parseXml(const QString &sXmlFile);
 
@@ -48,7 +48,7 @@ class XmlParser {
     QList<QStringList> getElementInserts() const;
     QList<QStringList> getElementIcons() const;
 
-  private:
+ private:
     QXmlInputSource *m_pXmlSource;  /**< Pointer to xml input source file */
     Handler *m_pHandler;  /**< Handle to xml parser module */
 
@@ -70,7 +70,7 @@ class XmlParser {
 class XmlParser::Handler : public QXmlDefaultHandler {
   friend class XmlParser;
 
-  public:
+ public:
     /**
     * \brief Called at document start
     * \return True
@@ -93,7 +93,7 @@ class XmlParser::Handler : public QXmlDefaultHandler {
     bool startElement(const QString&, const QString&, const QString &name,
                       const QXmlAttributes &attrs);
 
-  private:
+ private:
     bool m_bInElement;
 
     QString m_tmpMenuName;

@@ -39,7 +39,7 @@
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class HighlighterDialog;
+class HighlighterDialog;
 }
 class QSettings;
 
@@ -52,7 +52,7 @@ class Highlighter : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.highlighter")
 
-  public:
+ public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
@@ -66,18 +66,18 @@ class Highlighter : public QObject, IEditorPlugin {
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
-  public slots:
+ public slots:
     void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();
 
-  private slots:
+ private slots:
     void changedStyle(int nIndex);
     void clickedStyleCell(int nRow, int nCol);
     void accept();
 
-  private:
+ private:
     void copyDefaultStyles();
     void buildUi(QWidget *pParent);
     void loadHighlighting(const QString &sStyleFile);

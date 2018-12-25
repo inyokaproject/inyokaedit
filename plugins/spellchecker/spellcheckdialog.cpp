@@ -50,7 +50,7 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
   connect(m_pUi->listWidget, &QListWidget::currentTextChanged,
           m_pUi->ledtReplaceWith, &QLineEdit::setText);
 
-  connect(m_pUi->btnAddToDict,&QPushButton::clicked,
+  connect(m_pUi->btnAddToDict, &QPushButton::clicked,
           this, &SpellCheckDialog::addToDict);
   connect(m_pUi->btnReplaceOnce, &QPushButton::clicked,
           this, &SpellCheckDialog::replaceOnce);

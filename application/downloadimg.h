@@ -34,22 +34,22 @@
 class DownloadImg : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     explicit DownloadImg(QObject *pParent, QNetworkAccessManager *pNwManager);
     void setDLs(const QStringList &sListUrls,
                 const QStringList &sListSavePath);
 
-  public slots:
+ public slots:
     void startDownloads();
 
-  private slots:
+ private slots:
     void downloadFinished(QNetworkReply *reply);
     void cancelDownloads();
 
-  signals:
+ signals:
     void finsihedImageDownload();
 
-  private:
+ private:
     void doDownload(const QUrl &url,
                     const QString &sSavePath,
                     const QString &sBase = "");

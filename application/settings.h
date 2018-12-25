@@ -43,7 +43,7 @@ class SettingsDialog;
 class Settings : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     Settings(QWidget *pParent, const QString &sSharePath);
     ~Settings();
 
@@ -99,10 +99,10 @@ class Settings : public QObject {
     // Allow SettingsDialog to access private members
     friend class SettingsDialog;
 
-  public slots:
+ public slots:
     void setWindowsCheckUpdate(const bool bValue);
 
-  signals:
+ signals:
     void showSettingsDialog();
     void changeLang(const QString &sLang);
     void updateUiLang();
@@ -110,7 +110,7 @@ class Settings : public QObject {
     void availablePlugins(const QList<IEditorPlugin *> &PluginList,
                           const QList<QObject *> &PluginObjList);
 
-  private:
+ private:
     void removeObsolete();
 
     QSettings *m_pSettings;

@@ -33,7 +33,7 @@
 class Utils : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     explicit Utils(QWidget *pParent, QObject *pParentObj = 0);
 
     static bool getOnlineState();
@@ -41,16 +41,16 @@ class Utils : public QObject {
                          const QString &sUser, const QString &sPassword);
     void checkWindowsUpdate();
 
-  public slots:
+ public slots:
     void showAbout();
 
-  private slots:
+ private slots:
     void replyFinished(QNetworkReply *pReply);
 
-  signals:
+ signals:
     void setWindowsUpdateCheck(const bool);
 
-  private:
+ private:
     QWidget *m_pParent;
     QNetworkAccessManager *m_NwManager;
 };

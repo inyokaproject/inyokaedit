@@ -35,7 +35,7 @@
 class TextEditor;
 
 class IEditorPlugin {
-  public:
+ public:
     virtual ~IEditorPlugin() {}
 
     // ALL FUNCTIONS PURE VIRTUAL !!!
@@ -53,7 +53,7 @@ class IEditorPlugin {
     virtual void setCurrentEditor(TextEditor *pEditor) = 0;
     virtual void setEditorlist(const QList<TextEditor *> &listEditors) = 0;
 
-  public slots:
+ public slots:
     virtual void callPlugin() = 0;  // Execute manually
     virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
     virtual void showSettings() = 0;

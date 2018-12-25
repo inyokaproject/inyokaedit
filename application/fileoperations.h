@@ -43,7 +43,7 @@
 class FileOperations : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     /**
     * \brief Constructor
     * \param pParent Pointer to parent window
@@ -83,7 +83,7 @@ class FileOperations : public QObject {
 
     bool closeAllmaybeSave();
 
-  public slots:
+ public slots:
     /** \brief Open an existing file */
     void open();
 
@@ -138,7 +138,7 @@ class FileOperations : public QObject {
     void undo();
     void redo();
 
-  signals:
+ signals:
     /**
     * \brief Signal for sending state of recent files menu entry
     */
@@ -159,7 +159,7 @@ class FileOperations : public QObject {
     void undoAvailable2(bool);
     void redoAvailable2(bool);
 
-  private slots:
+ private slots:
     /** \brief Clear recent files list in file menu */
     void clearRecentFiles();
 
@@ -169,7 +169,7 @@ class FileOperations : public QObject {
     void updateEditorSettings();
     void saveDocumentAuto();
 
-  private:
+ private:
     /**
     * \brief Update list of recent opened files
     * \param sFileName Path and name of a newly opened file

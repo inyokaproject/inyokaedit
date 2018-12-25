@@ -40,7 +40,7 @@
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class HotkeyClass;
+class HotkeyClass;
 }
 class QDir;
 class QTextDocument;
@@ -54,7 +54,7 @@ class Hotkey : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.hotkey")
 
-  public:
+ public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
@@ -68,20 +68,20 @@ class Hotkey : public QObject, IEditorPlugin {
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
-  public slots:
+ public slots:
     void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();
 
-  private slots:
+ private slots:
     void accept();
     void reject();
     void addRow();
     void deleteRow(QWidget *widget);
     void insertElement(const QString &sId);
 
-  private:
+ private:
     void loadHotkeyEntries();
     void buildUi(QWidget *pParent);
     void registerHotkeys();

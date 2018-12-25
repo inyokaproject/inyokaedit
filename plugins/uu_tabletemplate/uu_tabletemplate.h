@@ -45,7 +45,7 @@
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class Uu_TableTemplateClass;
+class Uu_TableTemplateClass;
 }
 class QDir;
 class QTextDocument;
@@ -59,7 +59,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.uutabletemplate")
 
-  public:
+ public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
@@ -73,13 +73,13 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
-  public slots:
+ public slots:
     void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();
 
-  private slots:
+ private slots:
     /** \brief Show preview */
     void preview();
 
@@ -92,7 +92,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     /** \brief Dialog finished */
     void accept();
 
-  private:
+ private:
     /**
     * \brief Generate specific table
     * \return String including the generated table code

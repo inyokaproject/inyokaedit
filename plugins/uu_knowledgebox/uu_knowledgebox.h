@@ -39,7 +39,7 @@
 #include "../../application/ieditorplugin.h"
 
 namespace Ui {
-  class Uu_KnowledgeBoxClass;
+class Uu_KnowledgeBoxClass;
 }
 class QDir;
 class QTextDocument;
@@ -53,7 +53,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.uuknowledgebox")
 
-  public:
+ public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
     QString getPluginName() const;
@@ -67,18 +67,18 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
-  public slots:
+ public slots:
     void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();
 
-  private slots:
+ private slots:
     void accept();
     void addRow();
     void deleteRow(QWidget *widget);
 
-  private:
+ private:
     void loadTemplateDefaults();
     void loadTemplateEntries();
     void buildUi(QWidget *pParent);

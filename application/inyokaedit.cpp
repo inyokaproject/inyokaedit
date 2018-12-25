@@ -297,12 +297,14 @@ void InyokaEdit::setupEditor() {
   connect(m_pUi->reloadBrowserAct, &QAction::triggered,
           m_pWebview, &QWebEngineView::reload);
 
-  connect(m_pWebview, &QWebEngineView::urlChanged, this, &InyokaEdit::changedUrl);
+  connect(m_pWebview, &QWebEngineView::urlChanged,
+          this, &InyokaEdit::changedUrl);
 
   // TODO(volunteer): Find solution for QWebEngineView
   // QWebEngineUrlRequestInterceptor ?
   // m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  // connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
+  // connect(m_pWebview, &QWebView::linkClicked,
+  //         this, &InyokaEdit::clickedLink);
 #endif
 }
 

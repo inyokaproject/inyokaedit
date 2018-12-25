@@ -57,7 +57,7 @@ class QWebEngineView;
 class Download;
 
 namespace Ui {
-  class InyokaEdit;
+class InyokaEdit;
 }
 
 /**
@@ -67,27 +67,27 @@ namespace Ui {
 class InyokaEdit : public QMainWindow {
   Q_OBJECT
 
-  public:
+ public:
     explicit InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
                         QWidget *parent = 0);
     ~InyokaEdit();
 
-  public slots:
+ public slots:
     void displayArticleText(const QString &sArticleText,
                             const QString &sSitename);
     void addPluginsButtons(const QList<QAction *> &ToolbarEntries,
                            QList<QAction *> &MenueEntries);
     void updateEditorSettings();
 
-  protected:
+ protected:
     void changeEvent(QEvent *pEvent);
     void closeEvent(QCloseEvent *pEvent);
     bool eventFilter(QObject *pObj, QEvent *pEvent);
 
-  signals:
+ signals:
     void updateUiLang();
 
-  private slots:
+ private slots:
     void loadLanguage(const QString &sLang);
     void showSyntaxOverview();
     void openFile();
@@ -105,7 +105,7 @@ class InyokaEdit : public QMainWindow {
     void syncScrollbarsEditor();
     void syncScrollbarsWebview();
 
-  private:
+ private:
     void createObjects();
     void createActions();
     void createMenus();

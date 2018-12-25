@@ -54,7 +54,7 @@
 class TextEditor : public QTextEdit {
   Q_OBJECT
 
-  public:
+ public:
     TextEditor(const QStringList &sListTplMacros,
                const QString &sTransTemplate,
                QWidget *pParent = 0);
@@ -66,20 +66,20 @@ class TextEditor : public QTextEdit {
     bool isUndoAvailable();
     bool isRedoAvailable();
 
-  signals:
+ signals:
     void documentChanged(bool);
 
-  protected:
+ protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
 
-  public slots:
+ public slots:
     void updateTextEditorSettings(const bool bCompleter);
 
-  private slots:
+ private slots:
     void insertCompletion(const QString &sCompletion);
 
-  private:
+ private:
     QString getLineUnderCursor();
     void setCompleter(QCompleter *c);
 

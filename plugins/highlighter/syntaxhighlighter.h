@@ -44,16 +44,16 @@ class QTextDocument;
 class SyntaxHighlighter : public QSyntaxHighlighter {
   Q_OBJECT
 
-  public:
+ public:
     explicit SyntaxHighlighter(QTextDocument *pDoc = 0);
     ~SyntaxHighlighter();
     void setRules(const QVector<HighlightingRule> &rules);
 
-  protected:
+ protected:
     // Apply highlighting rules
     void highlightBlock(const QString &sText);
 
-  private:
+ private:
     QVector<HighlightingRule> m_highlightingRules;
 };
 

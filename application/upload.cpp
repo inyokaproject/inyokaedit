@@ -282,7 +282,7 @@ void Upload::requestUpload() {
   pMultiPart->append(timePart);
   pMultiPart->append(revPart);
 
-  m_State = REQUPLOAD; 
+  m_State = REQUPLOAD;
   m_pReply = m_pSession->getNwManager()->post(request, pMultiPart);
   QEventLoop loop;
   connect(m_pReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);

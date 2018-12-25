@@ -56,7 +56,7 @@ class SpellChecker : public QObject, IEditorPlugin {
   Q_INTERFACES(IEditorPlugin)
   Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 
-  public:
+ public:
     ~SpellChecker();
 
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -72,13 +72,13 @@ class SpellChecker : public QObject, IEditorPlugin {
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
-  public slots:
+ public slots:
     void callPlugin();
     void executePlugin();
     void showSettings();
     void showAbout();
 
-  private:
+ private:
     friend class SpellCheckDialog;
 
     void setDictPath();

@@ -39,16 +39,16 @@
 class Upload : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     explicit Upload(QWidget *pParent, Session *pSession,
                     const QString &sInyokaUrl, const QString &sConstArea);
 
     void setEditor(QTextEdit *pEditor, const QString &sArticlename);
 
-  public slots:
+ public slots:
     void clickUploadArticle();
 
-  private:
+ private:
     void requestRevision(QString sUrl = "");
     void getRevisionReply(const QString &sNWReply);
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,

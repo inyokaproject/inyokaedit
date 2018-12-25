@@ -34,34 +34,34 @@
 #include <QTextEdit>
 
 namespace Ui {
-  class FindReplace;
+class FindReplace;
 }
 
 class FindReplace : public QDialog {
   Q_OBJECT
 
-  public:
+ public:
     explicit FindReplace(QWidget *parent = 0);
     ~FindReplace();
 
     void setEditor(QTextEdit *pEditor);
 
-  public slots:
+ public slots:
     void callFind();
     void callReplace();
     void findNext();
     void findPrevious();
 
-  protected:
+ protected:
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
 
-  private slots:
+ private slots:
     void textSearchChanged();
     void replace();
     void replaceAll();
 
-  private:
+ private:
     void find(const bool bForward);
     void toggleSearchReplace(bool bReplace);
 

@@ -44,29 +44,29 @@ class Settings;
 class SettingsDialog : public QDialog {
   Q_OBJECT
 
-  public:
+ public:
     SettingsDialog(Settings *pSettings, const QString &sSharePath,
                    QWidget *pParent = 0);
     virtual ~SettingsDialog();
 
-  public slots:
+ public slots:
     void accept();
     void reject();
     void updateUiLang();
     void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                              const QList<QObject *> &PluginObjList);
 
-  signals:
+ signals:
     void changeLang(const QString &sLang);
     void updatedSettings();
 
-  protected:
+ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
-  private slots:
+ private slots:
     void changedCommunity(const QString &sCommunity);
 
-  private:
+ private:
     QStringList searchTranslations();
 
     Ui::SettingsDialog *m_pUi;

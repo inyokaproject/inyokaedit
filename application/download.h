@@ -40,24 +40,24 @@
 class Download : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
              const QString &sImgDir, const QString &sSharePath);
 
-  public slots:
+ public slots:
     void downloadArticle(QString sUrl = "");
     void showArticle();
     void updateSettings(const bool bDownloadImages,
                         const QString &sInyokaUrl,
                         const QString &sConstArea);
 
-  private slots:
+ private slots:
     void replyFinished(QNetworkReply *pReply);
 
-  signals:
+ signals:
     void sendArticleText(const QString &, const QString &);
 
-  private:
+ private:
     QUrl redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl);
     void downloadImages();

@@ -33,7 +33,7 @@
 class SyntaxCheck : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     explicit SyntaxCheck(QObject *pParent = 0);
 
     static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
@@ -41,7 +41,7 @@ class SyntaxCheck : public QObject {
                                     const QStringList &sListSmilies,
                                     const QStringList &sListTplTrans);
 
-  private:
+ private:
     static qint32 checkParenthesis(const QTextDocument *pRawDoc,
                                    const QStringList &sListSmilies);
     static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
