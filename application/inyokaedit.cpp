@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2018 The InyokaEdit developers
+ * Copyright (C) 2011-2019 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -1049,6 +1049,19 @@ void InyokaEdit::updateEditorSettings() {
 bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
   if (pObj == m_pCurrentEditor && pEvent->type() == QEvent::KeyPress) {
     QKeyEvent *keyEvent = static_cast<QKeyEvent*>(pEvent);
+
+    if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
+      QString sBlock = m_pCurrentEditor->textCursor().block().text();
+      if (sBlock.startsWith(" * ") && sBlock.length() > 3) {
+        m_pCurrentEditor->textCursor().insertText("\n * ");
+        return true;
+      } else if (sBlock.startsWith(" * ") && 3 == sBlock.length()) {
+        m_pCurrentEditor->textCursor().deletePreviousChar();
+        m_pCurrentEditor->textCursor().deletePreviousChar();
+        m_pCurrentEditor->textCursor().deletePreviousChar();
+        // return true;
+      }
+    }
 
     // Bug fix for LP: #922808
     Qt::KeyboardModifiers keyMod = QApplication::keyboardModifiers();
