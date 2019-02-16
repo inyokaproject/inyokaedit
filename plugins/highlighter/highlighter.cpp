@@ -729,7 +729,8 @@ void Highlighter::defineRules() {
 
   // InterWiki-Links
   sListRegExpPatterns.clear();
-  foreach (QString tmpStr, m_pTemplates->getListIWLs()) {
+  QList<QString> keys = m_pTemplates->getIwlMap().keys();
+  foreach (QString tmpStr, keys) {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
   foreach (const QString &sPattern, sListRegExpPatterns) {
@@ -789,12 +790,14 @@ void Highlighter::defineRules() {
 
   // Image map elements (flags, smilies, etc.)
   sListRegExpPatterns.clear();
-  foreach (QString tmpStr, m_pTemplates->getListFlags()) {
+  keys = m_pTemplates->getFlagMap().keys();
+  foreach (QString tmpStr, keys) {
     sListRegExpPatterns << QRegExp::escape(tmpStr);
   }
   // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
-  foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
-    sListRegExpPatterns << QRegExp::escape(tmpStr) + "\\s+";
+  keys = m_pTemplates->getSmileyMap().keys();
+  foreach (QString tmpStr, keys) {
+    sListRegExpPatterns << QRegExp::escape(tmpStr);
   }
   foreach (const QString &sPattern, sListRegExpPatterns) {
     rule.format = m_imgMapFormat;

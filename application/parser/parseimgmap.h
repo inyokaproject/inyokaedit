@@ -33,8 +33,7 @@ class ParseImgMap {
   public:
     ParseImgMap();
     static void startParsing(QTextDocument *pRawDoc,
-                             QStringList sListElements,
-                             QStringList sListImages,
+                             QMap<QString, QString> map,
                              const QString &sSharePath,
                              const QString &sCommunity);
 };

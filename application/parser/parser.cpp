@@ -52,15 +52,12 @@ Parser::Parser(const QString &sSharePath,
                         m_pTemplates->getListTplNamesINY(),
                         m_pTemplates->getListFormatHtmlStart(),
                         m_sSharePath, m_tmpImgDir,
-                        m_pTemplates->getListTestedWith(),
-                        m_pTemplates->getListTestedWithStrings(),
-                        m_pTemplates->getListTestedWithTouch(),
-                        m_pTemplates->getListTestedWithTouchStrings(),
+                        m_pTemplates->getTestedWithMap(),
+                        m_pTemplates->getTestedWithTouchMap(),
                         m_sCommunity);
 
   m_pLinkParser = new ParseLinks(m_sInyokaUrl,
-                                 m_pTemplates->getListIWLs(),
-                                 m_pTemplates->getListIWLUrls(),
+                                 m_pTemplates->getIwlMap(),
                                  bCheckLinks);
 }
 
@@ -99,7 +96,7 @@ QString Parser::genOutput(const QString &sActFile,
     qint32 nRet = SyntaxCheck::checkInyokaSyntax(
                     m_pRawText,
                     m_pTemplates->getListTplNamesINY(),
-                    m_pTemplates->getListSmilies(),
+                    m_pTemplates->getSmileyMap().keys(),
                     m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(nRet);
   }
@@ -117,16 +114,14 @@ QString Parser::genOutput(const QString &sActFile,
 
   // Replace flags
   ParseImgMap::startParsing(m_pRawText,
-                            m_pTemplates->getListFlags(),
-                            m_pTemplates->getListFlagsImg(),
+                            m_pTemplates->getFlagMap(),
                             m_sSharePath,
                             m_sCommunity);
   // this->replaceFlags(m_pRawText);
 
   // Replace smilies
   ParseImgMap::startParsing(m_pRawText,
-                            m_pTemplates->getListSmilies(),
-                            m_pTemplates->getListSmiliesImg(),
+                            m_pTemplates->getSmileyMap(),
                             m_sSharePath,
                             m_sCommunity);
 

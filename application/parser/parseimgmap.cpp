@@ -33,20 +33,20 @@ ParseImgMap::ParseImgMap() {
 }
 
 void ParseImgMap::startParsing(QTextDocument *pRawDoc,
-                               QStringList sListElements,
-                               QStringList sListImages,
+                               QMap<QString, QString> map,
                                const QString &sSharePath,
                                const QString &sCommunity) {
   QString sDoc(pRawDoc->toPlainText());
 
-  for (int i = 0; i < sListElements.size(); i++) {
-    if (0 == i && "error" == sListElements[0].toLower()) {
+  QMap<QString, QString>::iterator i;
+  for (i = map.begin(); i != map.end(); ++i) {
+    if (i == map.begin() && "error" == i.key().toLower()) {
       qCritical() << "Error while parsing image map.";
       break;
     }
-    sDoc.replace(sListElements[i],
+    sDoc.replace(i.key(),
                  "<img src=\"" + sSharePath + "/community/" + sCommunity +
-                 "/web/" + sListImages[i] + "\" />");
+                 "/web/" + i.value() + "\" />");
   }
 
   // Replace raw document with new replaced doc

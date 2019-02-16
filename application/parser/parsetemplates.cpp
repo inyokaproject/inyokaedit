@@ -33,20 +33,16 @@ ParseTemplates::ParseTemplates(const QStringList &sListTransTpl,
                                const QStringList &sListHtmlStart,
                                const QString &sSharePath,
                                const QDir &tmpImgDir,
-                               const QStringList &sListTestedWith,
-                               const QStringList &sListTestedWithStrings,
-                               const QStringList &sListTestedWithTouch,
-                               const QStringList &sListTestedWithTouchStrings,
+                               const QMap<QString, QString> &mapTestedWith,
+                               const QMap<QString, QString> &mapTestedWithTouch,
                                const QString &sCommunity)
   : m_sListTransTpl(sListTransTpl),
     m_sListTplNames(sListTplNames) {
   m_pProvTplTarser = new ProvisionalTplParser(sListHtmlStart,
                                               sSharePath,
                                               tmpImgDir,
-                                              sListTestedWith,
-                                              sListTestedWithStrings,
-                                              sListTestedWithTouch,
-                                              sListTestedWithTouchStrings,
+                                              mapTestedWith,
+                                              mapTestedWithTouch,
                                               sCommunity);
 }
 
