@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="%folder%/styles/highlight.css" />
     <link rel="stylesheet" type="text/css" href="%folder%/styles/markup.css" />
     <style type="text/css">
-      div.wrap{min-width:0px;}
+      div.wrap{min-width:0px;background-image:none;}
       div.body{padding-bottom:0px;}
       div.content{padding:0px;}
     </style>

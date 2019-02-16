@@ -1,207 +1,15 @@
-/* Tabellenstyles */
-/*----------------*/
-tr.titel {
-    font-weight: bold;
-    background: #E2C890;
-    color: #000000;
-    text-align: center;
+a.ikhaya {
+  background-image: url(../img/interwiki/ikhaya.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
 }
 
-tr.kopf {
-    font-weight: bold;
-    background: #F9EAAF;
-    color: #000000;
+a.paste {
+  background-image: url(../img/interwiki/paste.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
 }
 
-tr.normal {
-    background: #F9EAAF;
-    color: #000000;
-}
-
-tr.trennzeile {
-    background: #DDDDDD;
-    color: #000000;
-}
-
-tr.highlight {
-    background: #EEEEEE;
-    color: #000000;
-}
-
-tr.verlauf {
-    font-weight: bold;
-    color: #000000;
-    background-image: url(../img/wiki/heading.png);
-    background-size: 100% 100%;
-    text-align: center;
-}
-
-tr.kde-titel {
-    font-weight: bold;
-    background: #0057AE;
-    color: white;
-    text-align: center;
-}
-
-tr.kde-kopf {
-    font-weight: bold;
-    background: #418DD4;
-    color: white;
-}
-
-tr.kde-normal {
-    background: #418DD4;
-    color: white;
-}
-
-tr.kde-highlight {
-    background: #C0DAFF;
-    color: #000000;
-}
-
-tr.xfce-titel {
-    font-weight: bold;
-    background: #B3DEFD;
-    color:#000000;
-    text-align: center;
-}
-
-tr.xfce-kopf {
-    font-weight: bold;
-    background: #EFEFEF;
-    color: #000000;
-}
-
-tr.xfce-normal {
-    background: #EFEFEF;
-    color: #000000;
-}
-
-tr.xfce-highlight {
-    background: #EFEFEF;
-    color: #000000;
-}
-
-tr.lxde-titel {
-    font-weight: bold;
-    background: #212121;
-    color: white;
-    text-align: center;
-}
-
-tr.lxde-kopf {
-    font-weight: bold;
-    background: #0b60a3;
-    color: white;
-}
-
-tr.lxde-normal {
-    background: #0b60a3;
-    color: white;
-}
-
-tr.lxde-highlight {
-    background: #474747;
-    color: white;
-}
-
-tr.edu-titel {
-    font-weight: bold;
-    background: #9c0000;
-    color: white;
-    text-align: center;
-}
-
-tr.edu-kopf {
-    font-weight: bold;
-    background: #d39528;
-    color: white;
-}
-
-tr.edu-normal {
-    background: #e1dac6f;
-    color: white;
-}
-
-tr.edu-highlight {
-    background: #f4f2e7;
-    color: #000000;
-}
-
-tr.studio-titel {
-    font-weight: bold;
-    background: #171717;
-    color:#009bf9;
-    text-align: center;
-}
-
-tr.studio-kopf {
-    font-weight: bold;
-    background: #525252;
-    color:#009bf9;
-}
-
-tr.studio-normal {
-    font-weight: bold;
-    background: #525252;
-    color:#009bf9;
-}
-
-tr.studio-highlight {
-    background: #171717;
-    color:#FFFFFF;
-}
-
-/* Klasse für einen Befehl in Zelle */
-/*----------------------------------*/
-td.befehl{
-    background: #464646;
-    color: #FFFFFF;
-    font-family: monospace;
-}
-
-td.gruen{
-    background: #CCFF99;
-    font-weight: bold;
-    color: #000000;
-    text-align: center;
-}
-
-td.grau{
-    background: #eeeeee;
-    color: #000000;
-    text-align: center;
-}
-
-td.gelb{
-    background: #FFFF99;
-    color: #000000;
-    text-align: center;
-}
-
-td.rot{
-    background: #FFCC99;
-    color: #000000;
-    text-align: center;
-}
-
-/* Klasse für die Award Box */
-/*--------------------------*/
-div.award {
-  border: 1px solid #ffcc00;
-}
-
-div.award h3 {
-  background-color: #ffcc00;
-}
-
-div.ut_box {
-  border: 1px solid #DD4814;
-}
-
-div.ut_box h3 {
-  background-color: #DD4814;
-}
 
 /* Bilder für InterWiki */
 /*----------------------*/
@@ -349,7 +157,13 @@ a.interwiki-freecode {
   padding-left: 20px;
 }
 
-a.interwiki-freedesktop, a.interwiki-freedesktop-software {
+a.interwiki-freedesktop {
+  background-image: url(../img/interwiki/freedesktop.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+a.interwiki-freedesktop-software {
   background-image: url(../img/interwiki/freedesktop.png);
   background-repeat: no-repeat;
   padding-left: 20px;
@@ -421,20 +235,8 @@ a.interwiki-googlecode {
   padding-left: 20px;
 }
 
-a.interwiki-googlecode {
-  background-image: url(../img/interwiki/googlecode.png);
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
 a.interwiki-gnomelook {
   background-image: url(../img/interwiki/gnomelook.png);
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-a.interwiki-gplus {
-  background-image: url(../img/interwiki/gplus.png);
   background-repeat: no-repeat;
   padding-left: 20px;
 }
@@ -465,12 +267,6 @@ a.interwiki-iawm {
 
 a.interwiki-identica {
   background-image: url(../img/interwiki/identica.png);
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-a.ikhaya {
-  background-image: url(../img/interwiki/ikhaya.png);
   background-repeat: no-repeat;
   padding-left: 20px;
 }
@@ -540,7 +336,6 @@ a.interwiki-launchpad_answers {
   background-repeat: no-repeat;
   padding-left: 20px;
 }
-
 
 a.interwiki-lgdb {
   background-image: url(../img/interwiki/lgdb.png);
@@ -634,12 +429,6 @@ a.interwiki-omgubuntu {
 
 a.interwiki-packages {
   background-image: url(../img/interwiki/packages.png);
-  background-repeat: no-repeat;
-  padding-left: 20px;
-}
-
-a.paste {
-  background-image: url(../img/interwiki/paste.png);
   background-repeat: no-repeat;
   padding-left: 20px;
 }

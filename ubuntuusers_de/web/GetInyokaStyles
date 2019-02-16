@@ -33,7 +33,6 @@ if [ ! -d ${PROJECT} ]
     echo "Creating styles main folder..."
     mkdir -p ${PROJECT}
 fi
-
 cd ${PROJECT}
 
 echo "Calling IWL script..."
@@ -45,7 +44,6 @@ if [ ! -d img ]
     echo "Creating folder \"img\"..."
     mkdir img
 fi
-
 cd img
 
 echo "Downloading images..."
@@ -76,7 +74,6 @@ if [ -d flags ]
     echo "Removing obsolete folder \"flags\"..."
     rm -r flags/
 fi
-
 cd ..
 
 
@@ -85,7 +82,6 @@ if [ ! -d Wiki ]
     echo "Creating folder \"Wiki\"..."
     mkdir Wiki
 fi
-
 cd Wiki
 
 if [ ! -d FlaggenMap ]
@@ -93,7 +89,6 @@ if [ ! -d FlaggenMap ]
     echo "Creating folder \"Wiki\FlaggenMap\"..."
     mkdir FlaggenMap
 fi
-
 cd FlaggenMap
 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/FlaggenMap/ar.png -O ar.png
@@ -157,7 +152,6 @@ if [ ! -d Smilies ]
     echo "Creating folder \"Wiki\Smilies\"..."
     mkdir Smilies
 fi
-
 cd Smilies
 
 
@@ -218,7 +212,6 @@ if [ ! -d Icons ]
     echo "Creating folder \"Wiki\Icons\"..."
     mkdir Icons
 fi
-
 cd Icons
 
 # Linux
@@ -366,7 +359,6 @@ if [ ! -d Protokolle ]
     echo "Creating folder \"Wiki\Icons\Protokolle\"..."
     mkdir Protokolle
 fi
-
 cd Protokolle
 
 # Protokolle
@@ -424,7 +416,6 @@ if [ ! -d Tango ]
     echo "Creating folder \"Wiki\Icons\Tango\"..."
     mkdir Tango
 fi
-
 cd Tango
 
 # Tango - Dokument
@@ -567,7 +558,6 @@ if [ ! -d Oxygen ]
     echo "Creating folder \"Wiki\Icons\Oxygen\"..."
     mkdir Oxygen
 fi
-
 cd Oxygen
 
 # Oxygen - Dokument
@@ -791,7 +781,6 @@ if [ ! -d Breeze ]
     echo "Creating folder \"Wiki\Icons\Breeze\"..."
     mkdir Breeze
 fi
-
 cd Breeze
 
 # Breeze - Dokument
@@ -995,7 +984,6 @@ if [ ! -d Portal ]
     echo "Creating folder \"Wiki\Icons\Portal\"..."
     mkdir Portal
 fi
-
 cd Portal
 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/portal.png -O portal.png
@@ -1031,7 +1019,6 @@ if [ ! -d Vorlagen ]
     echo "Creating folder \"Wiki\Vorlagen\"..."
     mkdir Vorlagen
 fi
-
 cd Vorlagen
 
 if [ ! -d StatusIcon ]
@@ -1039,7 +1026,6 @@ if [ ! -d StatusIcon ]
     echo "Creating folder \"Wiki\Vorlagen\StatusIcon\"..."
     mkdir StatusIcon
 fi
-
 cd StatusIcon
 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/ja.png -O ja.png
@@ -1050,6 +1036,15 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/bugg
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/nein.png -O nein.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/unbekannt.png -O unbekannt.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/StatusIcon/manuell.png -O manuell.png
+
+cd ..
+if [ ! -d PPA ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\PPA\"..."
+    mkdir PPA
+fi
+cd PPA
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Vorlagen/PPA/ppa.png -O ppa.png
 
 cd ${PROJECT}
 

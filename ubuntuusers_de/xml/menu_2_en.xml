@@ -18,11 +18,11 @@
     <element name="Post" insert="[post:%%Post%%:]" icon="" />
     <element name="User" insert="[user:%%uu-user%%:]" icon="user.png" />
     <element name="Ikhaya" insert="[ikhaya:%%Ikhaya article%%:]" icon="ikhaya.png" />
-    <element name="Calendar" insert="[calendar:%%Calender%%:]" icon="office-calendar.png" />
+    <element name="Calendar" insert="[calendar:%%Calender%%:]" icon="calendar.png" />
     <element name="Inyoka-Ticket" insert="[ticket:%%Ticket%%:]" icon="ticket.png" />
     <element name="Wiki Tag" insert="[tag:%%Wiki-Tag%%:]" icon="" />
     <element name="Behind Ubuntuusers" insert="[behind:%%Behind%%:]" icon="favicon.ico" />
-    <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="edit-select-all.png" />
+    <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="paste.png" />
     <element name="Planet" insert="[planet:%%Article%%:]" icon="internet.png" />
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
@@ -45,7 +45,7 @@
     <element name="OpenStore 2 (unofficial)" insert="[openstore2:%%App name%%:]" icon="openstore2.png" />
     <element name="Ubuntu Scopes" insert="[scope:%%Sitename%%:]" icon="scope.png" />
     <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
-    <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="[omgubuntu.png" />
+    <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="omgubuntu.png" />
     <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
     <element name="Ubuntuforums.org Thread" insert="[uf_thread:%%Thread%%:]" icon="uf_thread.png" />
     <element name="Ubuntuforums.org Member" insert="[uf_member:%%uf-user%%:]" icon="uf_member.png" />

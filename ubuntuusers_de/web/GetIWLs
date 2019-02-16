@@ -31,7 +31,6 @@ if [ ! -d ${PROJECT} ]
     echo "Creating styles main folder..."
     mkdir -p ${PROJECT}
 fi
-
 cd ${PROJECT}
 
 if [ ! -d styles ]
@@ -39,7 +38,6 @@ if [ ! -d styles ]
     echo "Creating folder \"styles\"..."
     mkdir styles
 fi
-
 cd styles
 
 echo "Downloading css files..."
@@ -58,25 +56,107 @@ wget -nv https://ubuntuusers.de/markup.css
 
 echo "Replace static paths..."
 ## Paths
-_r1="//static-cdn.ubuntu-de.org"
-_r2="//media-cdn.ubuntu-de.org/wiki/attachments/[0-9][0-9]/[0-9][0-9]"
-_r3="../img/interwiki"
+_r1="//media-cdn.ubuntu-de.org/wiki/attachments/[0-9][0-9]/[0-9][0-9]"
+_r2="../img/interwiki"
 ## Escape path for sed using bash find and replace
 _r1="${_r1//\//\\/}"
 _r2="${_r2//\//\\/}"
-_r3="${_r3//\//\\/}"
 ## Replace paths
-sed -e "s/${_r1}/../g" -i markup.css
-sed -e "s/${_r2}/${_r3}/g" -i markup.css
+sed -e "s/${_r1}/${_r2}/g" -i markup.css
 
 cd ..
 
+if [ ! -d font ]
+  then
+    echo "Creating folder \"font\"..."
+    mkdir font
+fi
+cd font
+
+if [ ! -d Liberation_webkit_macroman ]
+  then
+    mkdir Liberation_webkit_macroman
+fi
+cd Liberation_webkit_macroman
+
+if [ ! -d Sans ]
+  then
+    mkdir Sans
+fi
+cd Sans
+
+if [ ! -d Regular ]
+  then
+    mkdir Regular
+fi
+cd Regular
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Regular/LiberationSans-Regular-webfont.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Regular/LiberationSans-Regular-webfont.ttf
+
+cd ..
+if [ ! -d Italic ]
+  then
+    mkdir Italic
+fi
+cd Italic
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Italic/LiberationSans-Italic-webfont.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Italic/LiberationSans-Italic-webfont.ttf
+
+cd ..
+if [ ! -d Bold ]
+  then
+    mkdir Bold
+fi
+cd Bold
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Bold/LiberationSans-Bold-webfont.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/Bold/LiberationSans-Bold-webfont.ttf
+
+cd ..
+if [ ! -d BoldItalic ]
+  then
+    mkdir BoldItalic
+fi
+cd BoldItalic
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/BoldItalic/LiberationSans-BoldItalic-webfont.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Sans/BoldItalic/LiberationSans-BoldItalic-webfont.ttf
+
+cd ..
+cd ..
+if [ ! -d Mono ]
+  then
+    mkdir Mono
+fi
+cd Mono
+if [ ! -d Regular ]
+  then
+    mkdir Regular
+fi
+cd Regular
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Mono/Regular/LiberationMono-Regular-webfont.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/Liberation_webkit_macroman/Mono/Regular/LiberationMono-Regular-webfont.ttf
+
+cd ..
+cd ..
+cd ..
+if [ ! -d uude-font-0.83 ]
+  then
+    mkdir uude-font-0.83
+fi
+cd uude-font-0.83
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-bold.woff2
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-bold.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-bold.ttf
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-light.woff2
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-light.woff
+wget -nv https://static-cdn.ubuntu-de.org/font/uude-font-0.83/ubuntu_derivative_uude-light.ttf
+
+cd ..
+cd ..
 if [ ! -d img ]
   then
     echo "Creating folder \"img\"..."
     mkdir img
 fi
-
 cd img
 
 if [ ! -d interwiki ]
@@ -84,7 +164,6 @@ if [ ! -d interwiki ]
     echo "Creating folder \"interwiki\"..."
     mkdir interwiki
 fi
-
 cd interwiki
 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/archwiki.png -O archwiki.png
@@ -93,6 +172,7 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bitbucket.p
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/blogspot.png -O blogspot.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/box.png -O box.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/bug.png -O bug.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/calendar.png -O calendar.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonical.png -O canonical.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonicalblog.png -O canonicalblog.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/canonicalvoices.png -O canonicalvoices.png
@@ -151,6 +231,8 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/openstore2.
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/opensuse.jpg -O opensuse.jpg
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/osm.png -O osm.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/packages.png -O packages.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/paste.png -O paste.png
+wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ppa.png -O ppa.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/pdf.png -O pdf.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/playdeb.png -O playdeb.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/prolinux.png -O prolinux.png
