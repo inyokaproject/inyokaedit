@@ -256,6 +256,8 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
             sClass = "crosslink user";
           } else if (sListLink[0] == "ikhaya") {
             sClass = "crosslink ikhaya";
+          } else if (sListLink[0] == "paste") {
+            sClass = "crosslink paste";
           } else {
             sClass = "interwiki interwiki-" + sListLink[0];
           }
