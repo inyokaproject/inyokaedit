@@ -121,6 +121,8 @@ QString Parser::genOutput(const QString &sActFile,
                             m_pTemplates->getListFlagsImg(),
                             m_sSharePath,
                             m_sCommunity);
+  // this->replaceFlags(m_pRawText);
+
   // Replace smilies
   ParseImgMap::startParsing(m_pRawText,
                             m_pTemplates->getListSmilies(),
@@ -543,6 +545,40 @@ QString Parser::generateTags(QTextDocument *pRawDoc) {
   pRawDoc->setPlainText(sDoc);
   return sTags;
 }
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// TODO(volunteer): Not working correctly with webkitwidgets
+/*
+void Parser::replaceFlags(QTextDocument *pRawDoc) {
+  QRegExp findFlag("\\{([a-z]{2}|[A-Z]{2})\\}");
+  QString sDoc(pRawDoc->toPlainText());
+  QString sCountry("");
+  QString sHtml("");
+  int nIndex;
+  int nLength(4);
+
+  nIndex = findFlag.indexIn(sDoc);
+  while (nIndex >= 0) {
+    sHtml.clear();
+    sCountry = findFlag.cap(1);
+    sCountry = sCountry.toLower();
+    if ("en" == sCountry) {
+      sCountry = "gb";
+    }
+    foreach(QChar ch, sCountry) {
+      // Unicode char - (Unicode 'a' 97) + (Unicode reg. indicator 'a' 127462)
+      // qDebug() << (int)ch.unicode() - 97 + 127462;
+      sHtml += "&#" + QString::number((int)ch.unicode() - 97 + 127462) + ";";
+    }
+
+    sDoc.replace(nIndex, nLength, sHtml);
+    nIndex = findFlag.indexIn(sDoc, nIndex + nLength);
+  }
+
+  pRawDoc->setPlainText(sDoc);
+}
+*/
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

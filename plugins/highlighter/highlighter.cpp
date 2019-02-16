@@ -792,6 +792,7 @@ void Highlighter::defineRules() {
   foreach (QString tmpStr, m_pTemplates->getListFlags()) {
     sListRegExpPatterns << QRegExp::escape(tmpStr);
   }
+  // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
   foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
     sListRegExpPatterns << QRegExp::escape(tmpStr) + "\\s+";
   }

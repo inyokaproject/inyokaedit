@@ -212,6 +212,7 @@ void InyokaEdit::createObjects() {
   m_pWebview = new QWebEngineView(this);
 #endif
   m_pWebview->installEventFilter(this);
+  m_pWebview->settings()->setDefaultTextEncoding("utf-8");
 
   m_pUtils = new Utils(this);
   connect(m_pUtils, &Utils::setWindowsUpdateCheck,
