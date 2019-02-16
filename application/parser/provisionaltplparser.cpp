@@ -1598,7 +1598,7 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
                                 "System gefährden.");
     sRemark = QString::fromUtf8(
                 "Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. "
-                "Weitere Informationen sind der [[Bild(img/interwiki/ppa.png)]]"
+                "Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]]"
                 " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
                 "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
               .arg(sUser, sPPA, sUser);
