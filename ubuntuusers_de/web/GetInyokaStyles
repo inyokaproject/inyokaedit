@@ -48,6 +48,7 @@ cd img
 
 echo "Downloading images..."
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/Icons/Portal/anchor.png -O anchor.png
+wget -nv https://static-cdn.ubuntu-de.org/img/icon-sprite.png -O icon-sprite.png
 
 if [ ! -d wiki ]
   then
