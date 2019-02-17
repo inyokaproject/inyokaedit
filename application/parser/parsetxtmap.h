@@ -1,5 +1,5 @@
 /**
- * \file parseimgmap.h
+ * \file parsetxtmap.h
  *
  * \section LICENSE
  *
@@ -21,22 +21,20 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for image map parser.
+ * Class definition for text map parser.
  */
 
-#ifndef APPLICATION_PARSER_PARSEIMGMAP_H_
-#define APPLICATION_PARSER_PARSEIMGMAP_H_
+#ifndef APPLICATION_PARSER_PARSETXTMAP_H_
+#define APPLICATION_PARSER_PARSETXTMAP_H_
 
 #include <QTextDocument>
 
-class ParseImgMap {
+class ParseTxtMap {
   public:
-    ParseImgMap();
+    ParseTxtMap();
     static void startParsing(QTextDocument *pRawDoc,
                              QStringList sListElements,
-                             QStringList sListImages,
-                             const QString &sSharePath,
-                             const QString &sCommunity);
+                             QStringList sListText);
 };
 
-#endif  // APPLICATION_PARSER_PARSEIMGMAP_H_
+#endif  // APPLICATION_PARSER_PARSETXTMAP_H_

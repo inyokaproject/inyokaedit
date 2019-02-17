@@ -34,14 +34,18 @@
 ProvisionalTplParser::ProvisionalTplParser(const QStringList &sListHtmlStart,
     const QString &sSharePath,
     const QDir &tmpImgDir,
-    const QMap<QString, QString> &mapTestedWith,
-    const QMap<QString, QString> &mapTestedWithTouch,
+    const QStringList &sListTestedWith,
+    const QStringList &sListTestedWithStrings,
+    const QStringList &sListTestedWithTouch,
+    const QStringList &sListTestedWithTouchStrings,
     const QString &sCommunity)
   : m_sListHtmlStart(sListHtmlStart),
     m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
-    m_mapTestedWith(mapTestedWith),
-    m_mapTestedWithTouch(mapTestedWithTouch),
+    m_sListTestedWith(sListTestedWith),
+    m_sListTestedWithStrings(sListTestedWithStrings),
+    m_sListTestedWithTouch(sListTestedWithTouch),
+    m_sListTestedWithTouchStrings(sListTestedWithTouchStrings),
     m_sCommunity(sCommunity) {
 }
 
@@ -1978,6 +1982,7 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
   QString sOutput("");
+  qint32 nIndex(-1);
   if (sListArgs.size() >= 1) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
@@ -1987,8 +1992,9 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
       sListTmp = sListArgs;
       sListTmp.sort();
       for (int i = sListArgs.size()-1; i >= 0; i--) {
-        if (m_mapTestedWith.contains(sListTmp[i].toLower())) {
-          sOutput += "\n * " + m_mapTestedWith.value(sListTmp[i].toLower());
+        nIndex = m_sListTestedWith.indexOf(sListTmp[i].toLower());
+        if (-1 != nIndex && nIndex < m_sListTestedWithStrings.size()) {
+          sOutput += "\n * " + m_sListTestedWithStrings[nIndex];
         }
       }
       if (sOutput.isEmpty()) {
@@ -2018,6 +2024,7 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
   QString sOutput("");
+  qint32 nIndex(-1);
   if (sListArgs.size() >= 1) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
@@ -2025,8 +2032,9 @@ QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
     } else {  // Article tested with Ubuntu versions
       for (int i = 0; i < sListArgs.size(); i++) {
         sOutput += "\n * ";
-        if (m_mapTestedWithTouch.contains(sListArgs[i].toLower())) {
-          sOutput += m_mapTestedWithTouch.value(sListArgs[i].toLower());
+        nIndex = m_sListTestedWithTouch.indexOf(sListArgs[i].toLower());
+        if (-1 != nIndex && nIndex < m_sListTestedWithTouchStrings.size()) {
+          sOutput += m_sListTestedWithTouchStrings[nIndex];
         } else {
           sOutput += sListArgs[i];
         }

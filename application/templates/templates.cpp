@@ -37,30 +37,40 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   QString sPath(sSharePath + "/community/" + sCommunity);
   this->initTemplates(sPath + "/templates");
   this->initHtmlTpl(sPath + "/Preview.tpl");
-  m_mapIwl.clear();
-  this->initMappings(sPath + "/InterWikiMap.conf", m_mapIwl);
-  m_mapFlag.clear();
-  this->initMappings(sPath + "/FlagsMap.conf", m_mapFlag);
-  m_mapSmiley.clear();
-  this->initMappings(sPath + "/SmiliesMap.conf", m_mapSmiley);
+  m_sListIWLs.clear();
+  m_sListIWLUrls.clear();
+  this->initMappings(sPath + "/InterWikiMap.conf",
+                     m_sListIWLs, m_sListIWLUrls);
+  m_sListFlags.clear();
+  m_sListFlagsImg.clear();
+  this->initMappings(sPath + "/FlagsMap.conf",
+                     m_sListFlags, m_sListFlagsImg);
+  m_sListSmilies.clear();
+  m_sListSmiliesImg.clear();
+  this->initMappings(sPath + "/SmileysMap.conf",
+                     m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
 
   sPath = "/community/" + sCommunity;
 
-  m_mapTestedWith.clear();
+  m_sListTestedWith.clear();
+  m_sListTestedWithStrings.clear();
   this->initMappings(sSharePath + sPath + "/templates/TestedWith.conf",
-                     m_mapTestedWith);
+                     m_sListTestedWith, m_sListTestedWithStrings);
   QFile tmpFile(sUserDataDir + sPath + "/templates/TestedWith.conf");
   if (tmpFile.exists()) {
-    this->initMappings(tmpFile.fileName(), m_mapTestedWith);
+    this->initMappings(tmpFile.fileName(),
+                       m_sListTestedWith, m_sListTestedWithStrings);
   }
 
-  m_mapTestedWithTouch.clear();
+  m_sListTestedWithTouch.clear();
+  m_sListTestedWithTouchStrings.clear();
   this->initMappings(sSharePath + sPath + "/templates/TestedWithTouch.conf",
-                     m_mapTestedWithTouch);
+                     m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
   tmpFile.setFileName(sUserDataDir + sPath + "/templates/TestedWithTouch.conf");
   if (tmpFile.exists()) {
-    this->initMappings(tmpFile.fileName(), m_mapTestedWithTouch);
+    this->initMappings(tmpFile.fileName(),
+                       m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
   }
 }
 
@@ -177,27 +187,30 @@ void Templates::initHtmlTpl(const QString &sTplFile) {
 // ----------------------------------------------------------------------------
 
 void Templates::initMappings(const QString &sFileName,
-                             QMap<QString, QString> &map) {
+                             QStringList &sListElements,
+                             QStringList &sListMapping) {
   QFile MapFile(sFileName);
   if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(0, "Warning", "Could not open mapping file!");
     qWarning() << "Could not open mapping config file:"
                << MapFile.fileName();
-    map.insert("ERROR", "ERROR");
+    sListElements << "ERROR";
+    sListMapping << "ERROR";
   } else {
     QTextStream in(&MapFile);
     in.setCodec("UTF-8");
     QString tmpLine;
-    QString sKey;
-    QString sValue;
+    QString sElement;
+    QString sMapping;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
-        sKey = tmpLine.section('=', 0, 0);  // Split only first '='
-        sValue = tmpLine.section('=', 1);     // Second part after first '='
-        if (!sKey.isEmpty() && !sValue.isEmpty() &&
-            !map.contains(sKey.trimmed())) {
-          map.insert(sKey.trimmed(), sValue.trimmed());
+        sElement = tmpLine.section('=', 0, 0);  // Split only first '='
+        sMapping = tmpLine.section('=', 1);     // Second part after first '='
+        if (!sElement.isEmpty() && !sMapping.isEmpty() &&
+            !sListElements.contains(sElement.trimmed())) {
+          sListElements << sElement.trimmed();
+          sListMapping << sMapping.trimmed();
         }
       }
     }
@@ -281,22 +294,37 @@ QStringList Templates::getListFormatHtmlEnd() const {
 // ----------------------------------------------------------------------------
 // Mappings
 
-QMap<QString, QString> Templates::getIwlMap() const {
-  return m_mapIwl;
+QStringList Templates::getListIWLs() const {
+  return m_sListIWLs;
+}
+QStringList Templates::getListIWLUrls() const {
+  return m_sListIWLUrls;
 }
 
-QMap<QString, QString> Templates::getFlagMap() const {
-  return m_mapFlag;
+QStringList Templates::getListFlags() const {
+  return m_sListFlags;
+}
+QStringList Templates::getListFlagsImg() const {
+  return m_sListFlagsImg;
 }
 
-QMap<QString, QString> Templates::getSmileyMap() const {
-  return m_mapSmiley;
+QStringList Templates::getListSmilies() const {
+  return m_sListSmilies;
+}
+QStringList Templates::getListSmiliesImg() const {
+  return m_sListSmiliesImg;
 }
 
-QMap<QString, QString> Templates::getTestedWithMap() const {
-  return m_mapTestedWith;
+QStringList Templates::getListTestedWith() const {
+  return m_sListTestedWith;
+}
+QStringList Templates::getListTestedWithStrings() const {
+  return m_sListTestedWithStrings;
 }
 
-QMap<QString, QString> Templates::getTestedWithTouchMap() const {
-  return m_mapTestedWithTouch;
+QStringList Templates::getListTestedWithTouch() const {
+  return m_sListTestedWithTouch;
+}
+QStringList Templates::getListTestedWithTouchStrings() const {
+  return m_sListTestedWithTouchStrings;
 }

@@ -27,11 +27,11 @@
 #ifndef PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
 #define PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
 
-#include <QHash>
 #include <QtPlugin>
 #include <QSettings>
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
+#include <QVector>
 
 #include "./syntaxhighlighter.h"
 #include "../../application/templates/templates.h"

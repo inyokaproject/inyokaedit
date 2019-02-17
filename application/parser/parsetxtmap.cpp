@@ -1,5 +1,5 @@
 /**
- * \file parseimgmap.cpp
+ * \file parsetxtmap.cpp
  *
  * \section LICENSE
  *
@@ -21,32 +21,33 @@
  * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Parse all image mapped elements (simple replacement).
+ * Parse all text mapped elements (simple replacement).
  */
 
-#include "./parseimgmap.h"
+#include "./parsetxtmap.h"
 
 #include <QDebug>
-#include <QStringList>
 
-ParseImgMap::ParseImgMap() {
+ParseTxtMap::ParseTxtMap() {
 }
 
-void ParseImgMap::startParsing(QTextDocument *pRawDoc,
+void ParseTxtMap::startParsing(QTextDocument *pRawDoc,
                                QStringList sListElements,
-                               QStringList sListImages,
-                               const QString &sSharePath,
-                               const QString &sCommunity) {
+                               QStringList sListText) {
   QString sDoc(pRawDoc->toPlainText());
+  QString sReplace("");
 
   for (int i = 0; i < sListElements.size(); i++) {
     if (0 == i && "error" == sListElements[0].toLower()) {
-      qCritical() << "Error while parsing image map.";
+      qCritical() << "Error while parsing text map.";
       break;
     }
-    sDoc.replace(sListElements[i],
-                 "<img src=\"" + sSharePath + "/community/" + sCommunity +
-                 "/web/" + sListImages[i] + "\" />");
+    sReplace = sListText[i];
+    if (sReplace.startsWith("css-class:")) {
+      sReplace = sReplace.remove("css-class:");
+      sReplace = "<span class=\"" + sReplace + "\"></span>";
+    }
+    sDoc.replace(sListElements[i], sReplace);
   }
 
   // Replace raw document with new replaced doc

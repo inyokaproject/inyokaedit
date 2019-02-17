@@ -40,8 +40,10 @@ class ParseTemplates {
                    const QStringList &sListHtmlStart,
                    const QString &sSharePath,
                    const QDir &tmpImgDir,
-                   const QMap<QString, QString> &mapTestedWith,
-                   const QMap<QString, QString> &mapTestedWithTouch,
+                   const QStringList &sListTestedWith,
+                   const QStringList &sListTestedWithStrings,
+                   const QStringList &sListTestedWithTouch,
+                   const QStringList &sListTestedWithTouchStrings,
                    const QString &sCommunity);
 
     void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);

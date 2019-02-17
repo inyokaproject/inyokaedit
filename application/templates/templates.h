@@ -27,7 +27,6 @@
 #ifndef APPLICATION_TEMPLATES_TEMPLATES_H_
 #define APPLICATION_TEMPLATES_TEMPLATES_H_
 
-#include <QMap>
 #include <QString>
 #include <QStringList>
 
@@ -49,16 +48,23 @@ class Templates {
     QStringList getListFormatHtmlEnd() const;
 
     // Mappings
-    QMap<QString, QString> getIwlMap() const;
-    QMap<QString, QString> getFlagMap() const;
-    QMap<QString, QString> getSmileyMap() const;
-    QMap<QString, QString> getTestedWithMap() const;
-    QMap<QString, QString> getTestedWithTouchMap() const;
+    QStringList getListIWLs() const;
+    QStringList getListIWLUrls() const;
+    QStringList getListFlags() const;
+    QStringList getListFlagsImg() const;
+    QStringList getListSmilies() const;
+    QStringList getListSmiliesImg() const;
+    QStringList getListTestedWith() const;
+    QStringList getListTestedWithStrings() const;
+    QStringList getListTestedWithTouch() const;
+    QStringList getListTestedWithTouchStrings() const;
 
   private:
     void initTemplates(const QString &sTplPath);
     void initHtmlTpl(const QString &sFileName);
-    void initMappings(const QString &sFileName, QMap<QString, QString> &map);
+    void initMappings(const QString &sFileName,
+                      QStringList &sListElements,
+                      QStringList &sListMapping);
     void initTextformats(const QString &sFileName);
 
     QString m_sPreviewTemplate;
@@ -77,11 +83,16 @@ class Templates {
     QStringList m_sListFormatHtmlEnd;
 
     // Mappings
-    QMap<QString, QString> m_mapIwl;
-    QMap<QString, QString> m_mapFlag;
-    QMap<QString, QString> m_mapSmiley;
-    QMap<QString, QString> m_mapTestedWith;
-    QMap<QString, QString> m_mapTestedWithTouch;
+    QStringList m_sListIWLs;
+    QStringList m_sListIWLUrls;
+    QStringList m_sListFlags;
+    QStringList m_sListFlagsImg;
+    QStringList m_sListSmilies;
+    QStringList m_sListSmiliesImg;
+    QStringList m_sListTestedWith;
+    QStringList m_sListTestedWithStrings;
+    QStringList m_sListTestedWithTouch;
+    QStringList m_sListTestedWithTouchStrings;
 };
 
 #endif  // APPLICATION_TEMPLATES_TEMPLATES_H_

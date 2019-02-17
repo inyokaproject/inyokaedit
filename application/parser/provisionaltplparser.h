@@ -28,7 +28,6 @@
 #define APPLICATION_PARSER_PROVISIONALTPLPARSER_H_
 
 #include <QDir>
-#include <QMap>
 #include <QString>
 #include <QStringList>
 
@@ -37,8 +36,10 @@ class ProvisionalTplParser {
     ProvisionalTplParser(const QStringList &sListHtmlStart,
                          const QString &sSharePath,
                          const QDir &tmpImgDir,
-                         const QMap<QString, QString> &mapTestedWith,
-                         const QMap<QString, QString> &mapTestedWithTouch,
+                         const QStringList &sListTestedWith,
+                         const QStringList &sListTestedWithStrings,
+                         const QStringList &sListTestedWithTouch,
+                         const QStringList &sListTestedWithTouchStrings,
                          const QString &sCommunity);
 
     QString parseTpl(const QStringList &sListArgs, const QString &sCurrentFile);
@@ -94,8 +95,10 @@ class ProvisionalTplParser {
     QString m_sCurrentFile;
     const QString m_sSharePath;
     QDir m_tmpImgDir;
-    QMap<QString, QString> m_mapTestedWith;
-    QMap<QString, QString> m_mapTestedWithTouch;
+    QStringList m_sListTestedWith;
+    QStringList m_sListTestedWithStrings;
+    QStringList m_sListTestedWithTouch;
+    QStringList m_sListTestedWithTouchStrings;
     const QString m_sCommunity;
 };
 

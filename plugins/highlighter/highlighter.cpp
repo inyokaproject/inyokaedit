@@ -727,10 +727,24 @@ void Highlighter::defineRules() {
   rule.pattern = QRegExp("\\|\\|");
   m_highlightingRules.append(rule);
 
+  // Image map elements (flags, smilies, etc.)
+  sListRegExpPatterns.clear();
+  foreach (QString tmpStr, m_pTemplates->getListFlags()) {
+    sListRegExpPatterns << QRegExp::escape(tmpStr);
+  }
+  // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
+  foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
+    sListRegExpPatterns << QRegExp::escape(tmpStr);
+  }
+  foreach (const QString &sPattern, sListRegExpPatterns) {
+    rule.format = m_imgMapFormat;
+    rule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+    m_highlightingRules.append(rule);
+  }
+
   // InterWiki-Links
   sListRegExpPatterns.clear();
-  QList<QString> keys = m_pTemplates->getIwlMap().keys();
-  foreach (QString tmpStr, keys) {
+  foreach (QString tmpStr, m_pTemplates->getListIWLs()) {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
   foreach (const QString &sPattern, sListRegExpPatterns) {
@@ -787,23 +801,6 @@ void Highlighter::defineRules() {
   rule.format = m_commentFormat;
   rule.pattern = QRegExp("^##.*$");
   m_highlightingRules.append(rule);
-
-  // Image map elements (flags, smilies, etc.)
-  sListRegExpPatterns.clear();
-  keys = m_pTemplates->getFlagMap().keys();
-  foreach (QString tmpStr, keys) {
-    sListRegExpPatterns << QRegExp::escape(tmpStr);
-  }
-  // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
-  keys = m_pTemplates->getSmileyMap().keys();
-  foreach (QString tmpStr, keys) {
-    sListRegExpPatterns << QRegExp::escape(tmpStr);
-  }
-  foreach (const QString &sPattern, sListRegExpPatterns) {
-    rule.format = m_imgMapFormat;
-    rule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
-    m_highlightingRules.append(rule);
-  }
 
   // List
   rule.format = m_listFormat;

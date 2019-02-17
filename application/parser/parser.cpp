@@ -29,6 +29,7 @@
 #include "./parselist.h"
 #include "./parsetable.h"
 #include "./parsetextformats.h"
+#include "./parsetxtmap.h"
 #include "../syntaxcheck.h"
 
 Parser::Parser(const QString &sSharePath,
@@ -52,12 +53,15 @@ Parser::Parser(const QString &sSharePath,
                         m_pTemplates->getListTplNamesINY(),
                         m_pTemplates->getListFormatHtmlStart(),
                         m_sSharePath, m_tmpImgDir,
-                        m_pTemplates->getTestedWithMap(),
-                        m_pTemplates->getTestedWithTouchMap(),
+                        m_pTemplates->getListTestedWith(),
+                        m_pTemplates->getListTestedWithStrings(),
+                        m_pTemplates->getListTestedWithTouch(),
+                        m_pTemplates->getListTestedWithTouchStrings(),
                         m_sCommunity);
 
   m_pLinkParser = new ParseLinks(m_sInyokaUrl,
-                                 m_pTemplates->getIwlMap(),
+                                 m_pTemplates->getListIWLs(),
+                                 m_pTemplates->getListIWLUrls(),
                                  bCheckLinks);
 }
 
@@ -96,7 +100,7 @@ QString Parser::genOutput(const QString &sActFile,
     qint32 nRet = SyntaxCheck::checkInyokaSyntax(
                     m_pRawText,
                     m_pTemplates->getListTplNamesINY(),
-                    m_pTemplates->getSmileyMap().keys(),
+                    m_pTemplates->getListSmilies(),
                     m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(nRet);
   }
@@ -114,16 +118,16 @@ QString Parser::genOutput(const QString &sActFile,
 
   // Replace flags
   ParseImgMap::startParsing(m_pRawText,
-                            m_pTemplates->getFlagMap(),
+                            m_pTemplates->getListFlags(),
+                            m_pTemplates->getListFlagsImg(),
                             m_sSharePath,
                             m_sCommunity);
   // this->replaceFlags(m_pRawText);
 
   // Replace smilies
-  ParseImgMap::startParsing(m_pRawText,
-                            m_pTemplates->getSmileyMap(),
-                            m_sSharePath,
-                            m_sCommunity);
+  ParseTxtMap::startParsing(m_pRawText,
+                            m_pTemplates->getListSmilies(),
+                            m_pTemplates->getListSmiliesImg());
 
   ParseTextformats::startParsing(m_pRawText,
                                  m_pTemplates->getListFormatStart(),

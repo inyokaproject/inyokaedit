@@ -43,7 +43,8 @@ class ParseLinks : public QObject {
 
   public:
     ParseLinks(const QString &sUrlToWiki,
-               const QMap<QString, QString> &mapIwl,
+               const QStringList &sListIWiki,
+               const QStringList &sListIWikiUrl,
                const bool bCheckLinks,
                QObject *pParent = 0);
 
@@ -60,7 +61,8 @@ class ParseLinks : public QObject {
     void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
 
     QString m_sWikiUrl;   // Inyoka wiki url
-    QMap<QString, QString> m_mapIwl;
+    QStringList m_sListInterwikiKey;   // Interwiki link keywords
+    QStringList m_sListInterwikiLink;  // Interwiki link urls
 
     bool m_bCheckLinks;
     QString m_sLinkClassAddition;

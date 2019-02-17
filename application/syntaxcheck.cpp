@@ -40,7 +40,6 @@ qint32 SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
                                       const QStringList &sListSmilies,
                                       const QStringList &sListTplTrans) {
   qint32 nRet(-1);
-
   nRet = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == nRet) {
     nRet = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros,
