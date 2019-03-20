@@ -31,7 +31,8 @@
 #include <QFileInfo>
 #include <QImage>
 
-ProvisionalTplParser::ProvisionalTplParser(const QStringList &sListHtmlStart,
+ProvisionalTplParser::ProvisionalTplParser(
+    const QStringList &sListHtmlStart,
     const QString &sSharePath,
     const QDir &tmpImgDir,
     const QStringList &sListTestedWith,
@@ -2000,16 +2001,18 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
       if (sOutput.isEmpty()) {
         sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                     "unterstützten Ubuntu-Version getestet! "
-                                    "Bitte diesen Artikel testen und das "
-                                    "Getestet-Tag entsprechend anpassen.");
+                                    "Bitte hilf mit, indem du diesen Artikel "
+                                    "testest. [:Wiki/FAQ_-_häufig_gestellte_"
+                                    "Fragen/#Wikiartikel-testen:]");
       }
       sOutput += "\n";
     }
   } else {
     sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                 "unterstützten Ubuntu-Version getestet! "
-                                "Bitte diesen Artikel testen und das "
-                                "Getestet-Tag entsprechend anpassen.");
+                                "Bitte hilf mit, indem du diesen Artikel "
+                                "testest. [:Wiki/FAQ_-_häufig_gestellte_"
+                                "Fragen/#Wikiartikel-testen:]");
   }
 
   return this->insertBox("box tested_for",
