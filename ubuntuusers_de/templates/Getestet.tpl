@@ -16,7 +16,7 @@ Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ endif @>
 <@ endif @>
 <@ else @>
-Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte diesen Artikel testen und das Getestet-Tag entsprechend anpassen.
+Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte hilf mit, indem du diesen Artikel testest. [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:].
 #tag: ungetestet
 <@ endif @>
 |}}
