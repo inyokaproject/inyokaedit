@@ -1,11 +1,13 @@
 ## Macro=[[Vorlage(Getestet, %%Ubuntuversion%%)]]
 {{|<title="Dieser Artikel wurde für die folgenden
 Ubuntu-Versionen getestet:" class="box tested_for">
-<@ if ['general', 'cosmic', 'bionic', 'xenial', 'trusty' ] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase)@> 
+<@ if ['general', 'disco', 'cosmic', 'bionic', 'xenial', 'trusty' ] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
-<@ if $arguments as lowercase contain 'cosmic' @>
+<@ if $arguments as lowercase contain 'disco' @>
+  * [:Disco_Dingo:Ubuntu 19.04] Disco Dingo
+<@ endif @><@ if $arguments as lowercase contain 'cosmic' @>
   * [:Cosmic_Cuttlefish:Ubuntu 18.10] Cosmic Cuttlefish
 <@ endif @><@ if $arguments as lowercase contain 'bionic' @>
   * [:Bionic_Beaver:Ubuntu 18.04] Bionic  Beaver
@@ -20,10 +22,13 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #tag: ungetestet
 <@ endif @>
 |}}
-<@ if ['general', 'cosmic', 'bionic', 'xenial', 'trusty'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase)@> 
+<@ if ['general', 'disco', 'cosmic', 'bionic', 'xenial', 'trusty'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 #getestet: general
 <@ else @>
+<@ if $arguments as lowercase contain 'disco' @>
+#getestet: cosmic
+<@ endif @>
 <@ if $arguments as lowercase contain 'cosmic' @>
 #getestet: cosmic
 <@ endif @>
