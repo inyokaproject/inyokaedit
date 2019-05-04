@@ -2,12 +2,12 @@
 #############################################################
 ## Eingabemöglichkeiten:
 ##  mind. 2 Argumente
-##  [[Vorlage(Fremdpaket, sourceforge, projektname, trusty)]]
-##  [[Vorlage(Fremdpaket, launchpad, projektname, trusty, precise)]]
-##  [[Vorlage(Fremdpaket, googlecode, projektname, trusty, precise)]]
-##  [[Vorlage(Fremdpaket, "Anbieter", URLzurDL-Übersicht, trusty, precise)]]
+##  [[Vorlage(Fremdpaket, sourceforge, projektname, xenial)]]
+##  [[Vorlage(Fremdpaket, launchpad, projektname, xenial, bionic)]]
+##  [[Vorlage(Fremdpaket, googlecode, projektname, xenial, bionic)]]
+##  [[Vorlage(Fremdpaket, "Anbieter", URLzurDL-Übersicht, xenial, bionic)]]
 ##  mind. 3 Argumente
-##  [[Vorlage(Fremdpaket, "Anbieter", dl, URLzumDL1, URLzumDL2, URLzumDL3, trusty, precise)]]
+##  [[Vorlage(Fremdpaket, "Anbieter", dl, URLzumDL1, URLzumDL2, URLzumDL3, xenial, bionic)]]
 #############################################################
 ## Der folgende Block unterscheidet obige Eingabemöglichkeiten.
 #############################################################
@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['disco', 'cosmic', 'bionic', 'xenial', 'trusty'] contains $arg @>
+<@ if $loop.index < 3 or ['disco', 'cosmic', 'bionic', 'xenial'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,15 +39,14 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'disco' or $arguments contain 'cosmic' or $arguments contain 'bionic' or $arguments contain 'xenial' or $arguments contain 'trusty' @>
+<@ if $arguments contain 'disco' or $arguments contain 'cosmic' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['disco', 'cosmic', 'bionic', 'xenial', 'trusty'] contains $arg @>
+<@ if ['disco', 'cosmic', 'bionic', 'xenial'] contains $arg @>
 <@ if $arg == 'disco' @>[:Disco_Dingo: Ubuntu 19.04]<@ endif @>
 <@ if $arg == 'cosmic' @>[:Cosmic_Cuttlefish: Ubuntu 18.10]<@ endif @>
 <@ if $arg == 'bionic' @>[:Bionic_Beaver: Ubuntu 18.04]<@ endif @>
 <@ if $arg == 'xenial' @>[:Xenial_Xerus: Ubuntu 16.04]<@ endif @>
-<@ if $arg == 'trusty' @>[:Trusty_Tahr: Ubuntu 14.04]<@ endif @>
 <@ if $loop.revindex > 2 @>, <@ endif @>
 <@ if $loop.revindex == 2 @> und <@ endif @>
 <@ endif @>

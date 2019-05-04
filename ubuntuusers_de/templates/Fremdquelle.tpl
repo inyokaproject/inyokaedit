@@ -3,14 +3,11 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ if $arguments as lowercase contain 'disco' or
       $arguments as lowercase contain 'cosmic' or
       $arguments as lowercase contain 'bionic' or
-      $arguments as lowercase contain 'xenial' or
-      $arguments as lowercase contain 'trusty' @> die folgenden [:Paketquellen freischalten:]:
+      $arguments as lowercase contain 'xenial' @> die folgenden [:Paketquellen freischalten:]:
 [[Vorlage(Fremd, Quelle)]] 
 
 
 {{|<class="thirdpartyrepo-outer
-<@if $arguments as lowercase contain 'trusty' @> thirdpartyrepo-version-trusty
-<@ endif @>
 <@if $arguments as lowercase contain 'xenial' @> thirdpartyrepo-version-xenial
 <@ endif @>
 <@if $arguments as lowercase contain 'bionic' @> thirdpartyrepo-version-bionic
@@ -24,7 +21,7 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['disco', 'cosmic', 'bionic', 'xenial', 'trusty'] contains $arg @>
+<@ if ['disco', 'cosmic', 'bionic', 'xenial'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
