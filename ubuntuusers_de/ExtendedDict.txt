@@ -88,6 +88,9 @@ Cuttlefish
 disco
 Disco
 Dingo
+eoan
+Eoan
+Ermine
 Ubuntu
 Kubuntu
 Xubuntu
