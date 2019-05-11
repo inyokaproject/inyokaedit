@@ -58,7 +58,7 @@ class SpellCheckDialog : public QDialog {
     QString replacement() const;
 
  public slots:
-    SpellCheckAction checkWord(const QString &sWord);
+    SpellCheckDialog::SpellCheckAction checkWord(const QString &sWord);
 
  protected slots:
     void ignoreOnce();
