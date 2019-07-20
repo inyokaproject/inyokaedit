@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['disco', 'cosmic', 'bionic', 'xenial'] contains $arg @>
+<@ if $loop.index < 3 or ['disco', 'bionic', 'xenial'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,12 +39,11 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'disco' or $arguments contain 'cosmic' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
+<@ if $arguments contain 'disco' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['disco', 'cosmic', 'bionic', 'xenial'] contains $arg @>
+<@ if ['disco', 'bionic', 'xenial'] contains $arg @>
 <@ if $arg == 'disco' @>[:Disco_Dingo: Ubuntu 19.04]<@ endif @>
-<@ if $arg == 'cosmic' @>[:Cosmic_Cuttlefish: Ubuntu 18.10]<@ endif @>
 <@ if $arg == 'bionic' @>[:Bionic_Beaver: Ubuntu 18.04]<@ endif @>
 <@ if $arg == 'xenial' @>[:Xenial_Xerus: Ubuntu 16.04]<@ endif @>
 <@ if $loop.revindex > 2 @>, <@ endif @>

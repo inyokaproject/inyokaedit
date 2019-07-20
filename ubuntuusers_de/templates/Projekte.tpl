@@ -15,7 +15,7 @@
 <@ for $arg in $arguments split_by '+++
 ' @>
 <@ if $loop.first @>
-||<tablestyle="width: 96%; margin-left: 1em;" -2 rowclass="verlauf"><@ $arguments.0 @>||
+||<-2 rowclass="verlauf"><@ $arguments.0 @>||
 <@ else @>
 <@ for $attr in $arg split_by '
 ' @>
