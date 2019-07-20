@@ -154,6 +154,9 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
           sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
         }
 
+        sMacro = sMacro.remove(',');
+        sMacro = sMacro.trimmed();
+
         if (sListTplMacros.contains(sMacro, Qt::CaseInsensitive)) {
           sMacro.clear();
         }

@@ -1624,7 +1624,7 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
 QString ProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
   QList <QStringList> sListList;
   QStringList sListTmp;
-  QString sOutput("<table style=\"width: 96%; margin-left: 1em\">\n<tbody>");
+  QString sOutput("<table>\n<tbody>");
   QString sImage("");
   QString sTitle("");
   QString sText("");
