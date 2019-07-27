@@ -379,7 +379,7 @@ QString ProvisionalTplParser::parseForeignAuth(const QStringList &sListArgs) {
                   "</p>\n").arg(sArgs[0]);
       sOutput += "<div class=\"bash\">\n"
                  "<div class=\"contents\">\n"
-                 "<pre>wget -q " + sArgs[0] + " -O- | sudo "
+                 "<pre>wget -q -O \"-\" " + sArgs[0] + " | sudo "
                                               "apt-key add - </pre>\n"
                                               "</div>\n"
                                               "</div>\n";
