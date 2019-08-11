@@ -52,7 +52,7 @@ class SpellCheckDialog : public QDialog {
     };
 
     explicit SpellCheckDialog(SpellChecker *pSpellChecker,
-                              QWidget *pParent = 0);
+                              QWidget *pParent = nullptr);
     ~SpellCheckDialog();
 
     QString replacement() const;

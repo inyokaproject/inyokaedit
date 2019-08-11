@@ -44,7 +44,7 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir &userDataDir,
                               const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
-  Q_UNUSED(pParent);
+  Q_UNUSED(pParent)
 
 #if defined _WIN32
   m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
@@ -56,7 +56,7 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               qApp->applicationName().toLower());
 #endif
 
-  m_pHunspell = NULL;
+  m_pHunspell = nullptr;
   m_pEditor = pEditor;
   m_UserDataDir = userDataDir;
   m_sSharePath = sSharePath;
@@ -174,7 +174,7 @@ bool SpellChecker::initDictionaries() {
       || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
     qWarning() << "Spell checker dictionary file does not exist:"
                << m_sDictPath + m_sDictLang << "*.dic *.aff";
-    QMessageBox::warning(0, qApp->applicationName(),
+    QMessageBox::warning(nullptr, qApp->applicationName(),
                          "Spell checker dictionary file does not exist!\n"
                          "Trying to load fallback dictionary.");
 
@@ -189,7 +189,7 @@ bool SpellChecker::initDictionaries() {
           || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
         qWarning() << "Spell checker fallback does not exist:"
                    << m_sDictPath + m_sDictLang << "*.dic *.aff";
-        QMessageBox::warning(0, qApp->applicationName(),
+        QMessageBox::warning(nullptr, qApp->applicationName(),
                              "Spell checker fallback "
                              + m_sDictLang + " doesn't exist as well.");
         return false;
@@ -205,7 +205,7 @@ bool SpellChecker::initDictionaries() {
     if (userDictFile.open(QIODevice::WriteOnly)) {
       userDictFile.close();
     } else {
-      QMessageBox::warning(0, qApp->applicationName(),
+      QMessageBox::warning(nullptr, qApp->applicationName(),
                            "User dictionary file couldn't be opened.");
       qWarning() << "User dictionary file could not be opened/created:"
                  << m_sUserDict;
@@ -237,7 +237,7 @@ bool SpellChecker::initDictionaries() {
     }
     _affixFile.close();
   } else {
-    QMessageBox::warning(0, qApp->applicationName(),
+    QMessageBox::warning(nullptr, qApp->applicationName(),
                          "Dictionary could not be opened.");
     qWarning() << "Dictionary could not be opened:" << sAffixFile;
     return false;
@@ -245,10 +245,10 @@ bool SpellChecker::initDictionaries() {
   m_pCodec = QTextCodec::codecForName(
                this->m_sEncoding.toLatin1().constData());
 
-  if (m_pHunspell != NULL) {
+  if (m_pHunspell != nullptr) {
     delete m_pHunspell;
   }
-  m_pHunspell = NULL;
+  m_pHunspell = nullptr;
   m_pHunspell = new Hunspell(affixFilePathBA.constData(),
                              dictFilePathBA.constData());
 
@@ -287,7 +287,7 @@ void SpellChecker::callPlugin() {
     return;
   }
 
-  m_pCheckDialog = new SpellCheckDialog(this, 0);
+  m_pCheckDialog = new SpellCheckDialog(this, nullptr);
 
   QTextCharFormat highlightFormat;
   highlightFormat.setBackground(QBrush(QColor(255, 96, 96)));
@@ -365,16 +365,16 @@ void SpellChecker::callPlugin() {
     cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
   }
 
-  if (m_pCheckDialog != NULL) {
+  if (m_pCheckDialog != nullptr) {
     delete m_pCheckDialog;
   }
-  m_pCheckDialog = NULL;
+  m_pCheckDialog = nullptr;
 
   // cursor.endEditBlock();
   m_pEditor->setTextCursor(m_oldCursor);
 
   if (spellResult != SpellCheckDialog::AbortCheck) {
-    QMessageBox::information(0, qApp->applicationName(),
+    QMessageBox::information(nullptr, qApp->applicationName(),
                              tr("Spell check has finished."));
   }
 }
@@ -403,7 +403,7 @@ QStringList SpellChecker::suggest(const QString &sWord) {
   std::vector<std::string> wordlist;
   wordlist = m_pHunspell->suggest(m_pCodec->fromUnicode(sWord).toStdString());
 
-  nSuggestions = wordlist.size();
+  nSuggestions = static_cast<int>(wordlist.size());
   if (nSuggestions > 0) {
     sListSuggestions.reserve(nSuggestions);
     for (int i = 0; i < nSuggestions; i++) {
@@ -456,7 +456,7 @@ void SpellChecker::addToUserWordlist(const QString &sWord) {
       stream << sWord << "\n";
       userDictonaryFile.close();
     } else {
-      QMessageBox::warning(0, "Spell checker",
+      QMessageBox::warning(nullptr, "Spell checker",
                            "User dictionary " + m_sUserDict
                            + " could not be opened for appending a "
                              "new word.");
@@ -486,14 +486,14 @@ void SpellChecker::setCurrentEditor(TextEditor *pEditor) {
 }
 
 void SpellChecker::setEditorlist(const QList<TextEditor *> &listEditors) {
-  Q_UNUSED(listEditors);
+  Q_UNUSED(listEditors)
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void SpellChecker::showAbout() {
-  QMessageBox aboutbox(NULL);
+  QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"

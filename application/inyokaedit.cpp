@@ -47,7 +47,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
     m_sCurrLang(""),
-    m_pSigMapXmlActions(NULL),
+    m_pSigMapXmlActions(nullptr),
     m_sSharePath(sharePath.absolutePath()),
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
@@ -64,7 +64,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   m_pUi->setupUi(this);
 
   if (!sharePath.exists()) {
-    QMessageBox::warning(0, "Warning", "App share folder not found!");
+    QMessageBox::warning(nullptr, "Warning", "App share folder not found!");
     qWarning() << "Share folder does not exist:" << m_sSharePath;
     exit(-1);
   }
@@ -116,10 +116,10 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 }
 
 InyokaEdit::~InyokaEdit() {
-  if (NULL != m_pUi) {
+  if (nullptr != m_pUi) {
     delete m_pUi;
   }
-  m_pUi = NULL;
+  m_pUi = nullptr;
 }
 
 // ----------------------------------------------------------------------------
@@ -528,8 +528,8 @@ void InyokaEdit::createMenus() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::clearXmlMenus() {
-  if (NULL != m_pSigMapXmlActions) {
-    disconnect(m_pSigMapXmlActions, 0, 0, 0);
+  if (nullptr != m_pSigMapXmlActions) {
+    disconnect(m_pSigMapXmlActions, nullptr, nullptr, nullptr);
     foreach (QMenu *m, m_pXmlSubMenus) {
       m->clear();
     }
@@ -564,7 +564,7 @@ void InyokaEdit::clearXmlMenus() {
     m_pXmlToolbuttons.clear();
     delete m_pSigMapXmlActions;
   }
-  m_pSigMapXmlActions = NULL;
+  m_pSigMapXmlActions = nullptr;
 }
 
 // ----------------------------------------------------------------------------
@@ -860,7 +860,7 @@ QColor InyokaEdit::getHighlightErrorColor() {
 
 void InyokaEdit::dropdownXmlChanged(int nIndex) {
   QComboBox *tmpCombo = qobject_cast<QComboBox *>(sender());
-  if (tmpCombo != NULL) {
+  if (tmpCombo != nullptr) {
     QAction *action = tmpCombo->itemData(nIndex,
                                           Qt::UserRole).value<QAction *>();
     if (action) {
@@ -1026,7 +1026,8 @@ void InyokaEdit::updateEditorSettings() {
 
   m_pPreviewTimer->stop();
   if (m_pSettings->getTimedPreview() != 0) {
-    m_pPreviewTimer->start(m_pSettings->getTimedPreview() * 1000);
+    m_pPreviewTimer->start(static_cast<int>(
+                             m_pSettings->getTimedPreview() * 1000));
   }
 
   m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
@@ -1175,8 +1176,8 @@ void InyokaEdit::syncScrollbarsEditor() {
 
     m_bEditorScrolling = true;
     m_pWebview->page()->mainFrame()->setScrollPosition(
-          QPoint(0,
-                 m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR));
+          QPoint(0, static_cast<int>(
+                   m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
     m_bEditorScrolling = false;
   }
 #endif
@@ -1194,8 +1195,8 @@ void InyokaEdit::syncScrollbarsWebview() {
     float nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
     m_bWebviewScrolling = true;
-    m_pCurrentEditor->verticalScrollBar()->setSliderPosition(
-          m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio);
+    m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
+          m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio));
     m_bWebviewScrolling = false;
   }
 #endif
@@ -1246,7 +1247,7 @@ bool InyokaEdit::switchTranslator(QTranslator *translator,
 // ---------------------------------------------------------------------------
 
 void InyokaEdit::changeEvent(QEvent *pEvent) {
-  if (0 != pEvent) {
+  if (nullptr != pEvent) {
     if (QEvent::LanguageChange == pEvent->type()) {
       m_pUi->retranslateUi(this);
       this->createXmlMenus();
@@ -1276,7 +1277,7 @@ void InyokaEdit::showSyntaxOverview() {
 
   QTextStream in(&OverviewFile);
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, "Warning",
+    QMessageBox::warning(nullptr, "Warning",
                          tr("Could not open syntax overview file!"));
     qWarning() << "Could not open syntax overview file:"
                << OverviewFile.fileName();

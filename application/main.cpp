@@ -44,8 +44,8 @@
 
 #include "./inyokaedit.h"
 
-QFile logfile;
-QTextStream out(&logfile);
+static QFile logfile;
+static QTextStream out(&logfile);
 
 void setupLogger(const QString &sDebugFilePath);
 void LoggingHandler(QtMsgType type,
@@ -159,7 +159,6 @@ void LoggingHandler(QtMsgType type,
       out.flush();
       logfile.close();
       abort();
-      break;
     default:
       out << sTime << " OTHER INFO: " << sContext << "\n";
       out.flush();

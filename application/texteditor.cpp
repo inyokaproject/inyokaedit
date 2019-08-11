@@ -95,7 +95,7 @@ void TextEditor::updateTextEditorSettings(const bool bCompleter) {
 
 void TextEditor::setCompleter(QCompleter *completer) {
   if (m_pCompleter) {
-    QObject::disconnect(m_pCompleter, 0, this, 0);
+    QObject::disconnect(m_pCompleter, nullptr, this, nullptr);
   }
   m_pCompleter = completer;
   if (!m_pCompleter) {

@@ -34,7 +34,7 @@ class SyntaxCheck : public QObject {
   Q_OBJECT
 
  public:
-    explicit SyntaxCheck(QObject *pParent = 0);
+    explicit SyntaxCheck(QObject *pParent = nullptr);
 
     static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,

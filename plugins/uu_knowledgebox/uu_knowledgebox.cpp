@@ -35,7 +35,7 @@
 void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                  const QDir &userDataDir,
                                  const QString &sSharePath) {
-  Q_UNUSED(userDataDir);
+  Q_UNUSED(userDataDir)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -197,7 +197,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
 
   if (!fiDefault.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open uu_knowledgebox.default";
-    QMessageBox::warning(NULL, tr("Error"), tr("Could not open %1")
+    QMessageBox::warning(nullptr, tr("Error"), tr("Could not open %1")
                          .arg("uu_knowledgebox.default"));
   } else {
     QTextStream in(&fiDefault);
@@ -219,9 +219,8 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
 
   if (0 == m_sListEntries.size()) {
     qWarning() << "Knowledgebox defaults are empty!";
-    QMessageBox::warning(
-          NULL, tr("Error"),
-          tr("ubuntuusers.de knowledgebox defaults are empty!"));
+    QMessageBox::warning(nullptr, tr("Error"),
+                         tr("ubuntuusers.de knowledgebox defaults are empty!"));
   }
 
   this->writeSettings();
@@ -330,14 +329,14 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
 
 void Uu_KnowledgeBox::deleteRow(QWidget *widget) {
   QPushButton *button = reinterpret_cast<QPushButton*>(widget);
-  if (button != NULL) {
+  if (button != nullptr) {
     int nIndex = m_listDelRowButtons.indexOf(button);
     // qDebug() << "DELETE ROW:" << nIndex;
     if (nIndex >= 0 && nIndex < m_sListEntries.size()) {
       m_sListEntries.removeAt(nIndex);
       m_bListEntryActive.removeAt(nIndex);
       delete button;
-      button = NULL;
+      button = nullptr;
       m_listDelRowButtons.removeAt(nIndex);
       m_pUi->entriesTable->removeRow(nIndex);
     }
@@ -379,14 +378,14 @@ void Uu_KnowledgeBox::setCurrentEditor(TextEditor *pEditor) {
 }
 
 void Uu_KnowledgeBox::setEditorlist(const QList<TextEditor *> &listEditors) {
-  Q_UNUSED(listEditors);
+  Q_UNUSED(listEditors)
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::showAbout() {
-  QMessageBox aboutbox(NULL);
+  QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
   aboutbox.setText(

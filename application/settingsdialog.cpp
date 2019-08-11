@@ -63,10 +63,11 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->articleImageDownloadCheck->setChecked(
         m_pSettings->m_bAutomaticImageDownload);
   m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
-  m_pUi->autosaveEdit->setValue(m_pSettings->m_nAutosave);
+  m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->reloadPreviewKeyEdit->setText(
         "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
-  m_pUi->timedPreviewsEdit->setValue(m_pSettings->m_nTimedPreview);
+  m_pUi->timedPreviewsEdit->setValue(
+        static_cast<int>(m_pSettings->m_nTimedPreview));
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
 #ifndef USEQTWEBKIT
   m_pUi->scrollbarSyncCheck->setEnabled(false);
@@ -92,9 +93,9 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   // Recent files
   m_pUi->numberRecentFilesEdit->setValue(
-        (quint16)m_pSettings->m_nMaxLastOpenedFiles);
+        static_cast<quint16>(m_pSettings->m_nMaxLastOpenedFiles));
   m_pUi->numberRecentFilesEdit->setMaximum(
-        (quint16)m_pSettings->m_cMAXFILES);
+        static_cast<quint16>(m_pSettings->m_cMAXFILES));
 
   QStringList sListCommunities;
   QDir extendedShareDir(m_sSharePath + "/community");
@@ -136,7 +137,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 SettingsDialog::~SettingsDialog() {
   if (m_pUi) {
     delete m_pUi;
-    m_pUi = NULL;
+    m_pUi = nullptr;
   }
 }
 
@@ -159,9 +160,10 @@ void SettingsDialog::accept() {
   m_pSettings->m_bAutomaticImageDownload =
       m_pUi->articleImageDownloadCheck->isChecked();
   m_pSettings->m_bCheckLinks = m_pUi->linkCheckingCheck->isChecked();
-  m_pSettings->m_nAutosave = m_pUi->autosaveEdit->value();
+  m_pSettings->m_nAutosave = static_cast<quint32>(m_pUi->autosaveEdit->value());
   m_pSettings->m_sReloadPreviewKey = tmpReloadPreviewKey;
-  m_pSettings->m_nTimedPreview = m_pUi->timedPreviewsEdit->value();
+  m_pSettings->m_nTimedPreview =
+      static_cast<quint32>(m_pUi->timedPreviewsEdit->value());
   m_pSettings->m_bSyncScrollbars = m_pUi->scrollbarSyncCheck->isChecked();
   m_pSettings->m_bWinCheckUpdate = m_pUi->WindowsUpdateCheck->isChecked();
   m_pSettings->m_sGuiLanguage = m_pUi->GuiLangCombo->currentText();
@@ -177,7 +179,8 @@ void SettingsDialog::accept() {
 
   // Proxy
   m_pSettings->m_sProxyHostName = m_pUi->proxyHostNameEdit->text();
-  m_pSettings->m_nProxyPort = m_pUi->proxyPortSpinBox->value();
+  m_pSettings->m_nProxyPort =
+      static_cast<quint16>(m_pUi->proxyPortSpinBox->value());
   m_pSettings->m_sProxyUserName = m_pUi->proxyUserNameEdit->text();
   m_pSettings->m_sProxyPassword = m_pUi->proxyPasswordEdit->text();
 
@@ -220,7 +223,7 @@ void SettingsDialog::accept() {
       m_pSettings->m_sInyokaHash = sValue;
     }
 
-    QMessageBox::information(0, this->windowTitle(),
+    QMessageBox::information(nullptr, this->windowTitle(),
                              tr("The editor has to be restarted for "
                                 "applying the changes."));
   }
@@ -266,7 +269,7 @@ void SettingsDialog::changedCommunity(const QString &sCommunity) {
                       sCommunity + "/community.conf");
 
   if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::critical(0, tr("Error"),
+    QMessageBox::critical(nullptr, tr("Error"),
                           tr("Could not open/find community file!"));
     qCritical() << "Could not open/find community file:"
                 << communityFile.fileName();
@@ -278,7 +281,8 @@ void SettingsDialog::changedCommunity(const QString &sCommunity) {
   QString sUrl(communityConfig.value("InyokaUrl", "").toString());
   if (sUrl.isEmpty()) {
     qWarning() << "Community Url not found!";
-    QMessageBox::warning(0, tr("Warning"), tr("No community url defined!"));
+    QMessageBox::warning(nullptr, tr("Warning"),
+                         tr("No community url defined!"));
   } else {
     m_pUi->inyokaUrlEdit->setText(sUrl);
   }

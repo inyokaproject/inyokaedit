@@ -40,7 +40,7 @@ bool XmlParser::parseXml(const QString &sXmlFile) {
   // Check if file exist and it's readable
   if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
     qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
-    QMessageBox::critical(0, "Error",
+    QMessageBox::critical(nullptr, "Error",
                           "Can not open \"" + XmlFile.fileName() + "\".");
     return false;
   }
@@ -55,7 +55,7 @@ bool XmlParser::parseXml(const QString &sXmlFile) {
   bool bOk = xmlReader.parse(m_pXmlSource);
   if (!bOk) {
     qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
-    QMessageBox::critical(0, "Error",
+    QMessageBox::critical(nullptr, "Error",
                           "Error while parsing \""
                           + XmlFile.fileName() + "\".");
     return false;
@@ -69,14 +69,14 @@ bool XmlParser::parseXml(const QString &sXmlFile) {
   m_sListInserts = m_pHandler->m_sListInserts_2;
   m_sListIcons = m_pHandler->m_sListIcons_2;
 
-  if (NULL != m_pXmlSource) {
+  if (nullptr != m_pXmlSource) {
     delete m_pXmlSource;
   }
-  m_pXmlSource = NULL;
-  if (NULL != m_pHandler) {
+  m_pXmlSource = nullptr;
+  if (nullptr != m_pHandler) {
     delete m_pHandler;
   }
-  m_pHandler = NULL;
+  m_pHandler = nullptr;
 
   return true;
 }

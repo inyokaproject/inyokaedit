@@ -379,14 +379,14 @@ void Uu_TableTemplate::setCurrentEditor(TextEditor *pEditor) {
 }
 
 void Uu_TableTemplate::setEditorlist(const QList<TextEditor *> &listEditors) {
-  Q_UNUSED(listEditors);
+  Q_UNUSED(listEditors)
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void Uu_TableTemplate::showAbout() {
-  QMessageBox aboutbox(NULL);
+  QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"

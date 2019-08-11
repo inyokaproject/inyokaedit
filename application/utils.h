@@ -34,7 +34,7 @@ class Utils : public QObject {
   Q_OBJECT
 
  public:
-    explicit Utils(QWidget *pParent, QObject *pParentObj = 0);
+    explicit Utils(QWidget *pParent, QObject *pParentObj = nullptr);
 
     static bool getOnlineState();
     static void setProxy(const QString &sHostName, const quint16 nPort,

@@ -39,7 +39,7 @@ const QString Highlighter::sSEPARATOR = QStringLiteral("|");
 void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
                              const QDir &userDataDir,
                              const QString &sSharePath) {
-  Q_UNUSED(pEditor);
+  Q_UNUSED(pEditor)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -71,7 +71,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pSettings->setValue("Style", m_sStyleFile);
   m_pSettings->endGroup();
 
-  m_pStyleSet = NULL;
+  m_pStyleSet = nullptr;
   m_pTemplates = new Templates(
                    m_pSettings->value(
                      "InyokaCommunity", "ubuntuusers_de").toString(),
@@ -242,10 +242,10 @@ void Highlighter::readStyle(const QString &sStyle) {
   QString sTmpKey;
   QColor tmpColor;
 
-  if (NULL != m_pStyleSet) {
+  if (nullptr != m_pStyleSet) {
     delete m_pStyleSet;
   }
-  m_pStyleSet = NULL;
+  m_pStyleSet = nullptr;
 
 #if defined _WIN32
   m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
@@ -264,7 +264,7 @@ void Highlighter::readStyle(const QString &sStyle) {
   sTmpKey = m_pStyleSet->value("Foreground", "System")
             .toString();
   if (sTmpKey.toLower() != "system") {
-    tmpColor.setRgb(sTmpKey.toInt(&bOk, 16));
+    tmpColor.setRgb(sTmpKey.toUInt(&bOk, 16));
     if (bOk) {
       m_colorForeground = tmpColor;
     }
@@ -276,7 +276,7 @@ void Highlighter::readStyle(const QString &sStyle) {
   sTmpKey = m_pStyleSet->value("Background", "System")
             .toString();
   if (sTmpKey.toLower() != "system") {
-    tmpColor.setRgb(sTmpKey.toInt(&bOk, 16));
+    tmpColor.setRgb(sTmpKey.toUInt(&bOk, 16));
     if (bOk) {
       m_colorBackground = tmpColor;
     }
@@ -341,7 +341,7 @@ void Highlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
   // Foreground color
   if (sListTmp.size() > 0) {
     if ("---" != sListTmp[0].trimmed()) {
-      tmpColor.setRgb(sListTmp[0].trimmed().toInt(&bOk, 16));
+      tmpColor.setRgb(sListTmp[0].trimmed().toUInt(&bOk, 16));
       if (bOk) {
         tmpBrush.setColor(tmpColor);
         charFormat.setForeground(tmpBrush);
@@ -364,7 +364,7 @@ void Highlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
         // Background
         if (sListTmp.size() > 3) {
           if ("---" != sListTmp[3].trimmed()) {
-            tmpColor.setRgb(sListTmp[3].trimmed().toInt(&bOk, 16));
+            tmpColor.setRgb(sListTmp[3].trimmed().toUInt(&bOk, 16));
             if (bOk) {
               tmpBrush.setColor(tmpColor);
               charFormat.setBackground(tmpBrush);
@@ -453,7 +453,7 @@ void Highlighter::getTranslations() {
   QFile fiMacros(":/macros.conf");
   if (!fiMacros.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open macros.conf";
-    QMessageBox::warning(NULL, "Error",
+    QMessageBox::warning(nullptr, "Error",
                          "Could not open macros.conf");
   } else {
     QTextStream in(&fiMacros);
@@ -642,7 +642,7 @@ void Highlighter::changedStyle(int nIndex) {
     bool bOk;
     QFileInfo fiStyle(m_pStyleSet->fileName());
 
-    sFileName = QInputDialog::getText(0, tr("New style"),
+    sFileName = QInputDialog::getText(nullptr, tr("New style"),
                                       tr("Please insert name of "
                                          "new style file:"),
                                       QLineEdit::Normal,
@@ -663,7 +663,7 @@ void Highlighter::changedStyle(int nIndex) {
         m_pUi->styleFilesBox->setCurrentIndex(
               m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
-        QMessageBox::warning(0, tr("Error"), tr("File already exists."));
+        QMessageBox::warning(nullptr, tr("Error"), tr("File already exists."));
         qWarning() << "Style file already exists:" << fileStyle.fileName();
         return;
       }
@@ -674,7 +674,8 @@ void Highlighter::changedStyle(int nIndex) {
         m_pUi->styleFilesBox->setCurrentIndex(
               m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
-        QMessageBox::warning(0, tr("Error"), tr("Could not create new style."));
+        QMessageBox::warning(nullptr, tr("Error"),
+                             tr("Could not create new style."));
         qWarning() << "Could not create new style file:";
         qWarning() << "Org:" << fiStyle.absoluteFilePath();
         qWarning() << "Copy:" << fileStyle.fileName();
@@ -864,7 +865,7 @@ void Highlighter::showSettings() {
 // ----------------------------------------------------------------------------
 
 void Highlighter::setCurrentEditor(TextEditor *pEditor) {
-  Q_UNUSED(pEditor);
+  Q_UNUSED(pEditor)
 }
 
 void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
@@ -907,7 +908,7 @@ void Highlighter::rehighlightAll() {
 // ----------------------------------------------------------------------------
 
 void Highlighter::showAbout() {
-  QMessageBox aboutbox(NULL);
+  QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/highlighter.png"));
   aboutbox.setText(QString("<p><b>%1</b><br />"

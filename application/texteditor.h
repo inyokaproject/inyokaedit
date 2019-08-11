@@ -57,7 +57,7 @@ class TextEditor : public QTextEdit {
  public:
     TextEditor(const QStringList &sListTplMacros,
                const QString &sTransTemplate,
-               QWidget *pParent = 0);
+               QWidget *pParent = nullptr);
     ~TextEditor();
 
     void setFileName(const QString &sFileName);

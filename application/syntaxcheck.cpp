@@ -29,7 +29,7 @@
 #include <QMessageBox>
 
 SyntaxCheck::SyntaxCheck(QObject *pParent) {
-  Q_UNUSED(pParent);
+  Q_UNUSED(pParent)
 }
 
 // ----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
     } else if (')' == c || '}' == c || ']' == c) {
       if (listParenthesis.isEmpty() ||
           !SyntaxCheck::checkParenthesisPair(listParenthesis.last(), c)) {
-        QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+        QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
                              tr("Syntax error detected - closing parenthesis "
                                 "without opening paraenthesis!"));
         return nCnt;
@@ -86,7 +86,7 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   }
 
   if (!listParenthesis.isEmpty()) {
-    QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+    QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
                          tr("Syntax error detected - open parenthesis!"));
     return listPos.last();
   }
@@ -163,7 +163,7 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
       }
 
       if (!sMacro.isEmpty()) {
-        QMessageBox::warning(NULL, tr("Inyoka syntax check"),
+        QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
                              tr("Found unknown template: %1").arg(sMacro));
         return nPos;
       }

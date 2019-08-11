@@ -46,7 +46,7 @@ Download::Download(QWidget *pParent, Session *pSession,
   connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished,
           this, &Download::replyFinished);
 
-  m_DlImages = new DownloadImg(0, m_pSession->getNwManager());
+  m_DlImages = new DownloadImg(nullptr, m_pSession->getNwManager());
   connect(m_DlImages, &DownloadImg::finsihedImageDownload,
           this, &Download::showArticle);
 }

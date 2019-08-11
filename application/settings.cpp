@@ -60,14 +60,14 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath) {
 }
 
 Settings::~Settings() {
-  if (NULL != m_pSettingsDialog) {
+  if (nullptr != m_pSettingsDialog) {
     delete m_pSettingsDialog;
   }
-  m_pSettingsDialog = NULL;
+  m_pSettingsDialog = nullptr;
 
-  if (NULL != m_pSettings) {
+  if (nullptr != m_pSettings) {
     delete m_pSettings;
-    m_pSettings = NULL;
+    m_pSettings = nullptr;
   }
 }
 
@@ -128,8 +128,8 @@ void Settings::readSettings(const QString &sSharePath) {
     qCritical() << "Error while getting documents standard path.";
     sListPaths << "";
   }
-  m_LastOpenedDir = m_pSettings->value("LastOpenedDir",
-                                       sListPaths[0]).toString();
+  m_LastOpenedDir.setPath(m_pSettings->value("LastOpenedDir",
+                                             sListPaths[0]).toString());
 
   m_bAutomaticImageDownload = m_pSettings->value("AutomaticImageDownload",
                                                  false).toBool();
@@ -156,7 +156,7 @@ void Settings::readSettings(const QString &sSharePath) {
                                      "Monospace").toString();
   // Used string for font size because float isn't saved human readable...
   m_nFontsize = m_pSettings->value("FontSize",
-                                   "10.5").toFloat();
+                                   "10.5").toReal();
   if (m_nFontsize <= 0) {
     m_nFontsize = 10.5;
   }
@@ -191,7 +191,7 @@ void Settings::readSettings(const QString &sSharePath) {
   // Proxy
   m_pSettings->beginGroup("Proxy");
   m_sProxyHostName = m_pSettings->value("HostName", "").toString();
-  m_nProxyPort = m_pSettings->value("Port", "").toUInt();
+  m_nProxyPort = static_cast<quint16>(m_pSettings->value("Port", "").toUInt());
   m_sProxyUserName = m_pSettings->value("UserName", "").toString();
   m_sProxyPassword = m_pSettings->value("Password", "").toString();
   m_pSettings->endGroup();
@@ -376,7 +376,7 @@ quint32 Settings::getAutoSave() const {
 
 qint32 Settings::getReloadPreviewKey() const {
   QString sTmp = m_sReloadPreviewKey;
-  return sTmp.remove("0x", Qt::CaseInsensitive).toInt(0, 16);
+  return sTmp.remove("0x", Qt::CaseInsensitive).toInt(nullptr, 16);
 }
 
 quint32 Settings::getTimedPreview() const {
@@ -396,11 +396,11 @@ QFont Settings::getEditorFont() const {
 // ----------------------------------------------------
 
 quint16 Settings::getNumOfRecentFiles() const {
-  return (quint16)m_nMaxLastOpenedFiles;
+  return static_cast<quint16>(m_nMaxLastOpenedFiles);
 }
 
 quint16 Settings::getMaxNumOfRecentFiles() const {
-  return (quint16)m_cMAXFILES;
+  return static_cast<quint16>(m_cMAXFILES);
 }
 
 QStringList Settings::getRecentFiles() const {
@@ -412,7 +412,7 @@ void Settings::setRecentFiles(const QStringList &sListNewRecent) {
   if (sListNewRecent.size() > m_cMAXFILES) {
     iCnt = m_cMAXFILES;
   } else {
-    iCnt = sListNewRecent.size();
+    iCnt = static_cast<quint16>(sListNewRecent.size());
   }
 
   m_sListRecentFiles.clear();

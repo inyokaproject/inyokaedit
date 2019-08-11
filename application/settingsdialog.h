@@ -46,7 +46,7 @@ class SettingsDialog : public QDialog {
 
  public:
     SettingsDialog(Settings *pSettings, const QString &sSharePath,
-                   QWidget *pParent = 0);
+                   QWidget *pParent = nullptr);
     virtual ~SettingsDialog();
 
  public slots:

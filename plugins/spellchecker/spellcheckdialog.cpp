@@ -77,10 +77,10 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
 }
 
 SpellCheckDialog::~SpellCheckDialog() {
-  if (NULL != m_pUi) {
+  if (nullptr != m_pUi) {
     delete m_pUi;
   }
-  m_pUi = NULL;
+  m_pUi = nullptr;
 }
 
 // ----------------------------------------------------------------------------

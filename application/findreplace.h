@@ -41,7 +41,7 @@ class FindReplace : public QDialog {
   Q_OBJECT
 
  public:
-    explicit FindReplace(QWidget *parent = 0);
+    explicit FindReplace(QWidget *parent = nullptr);
     ~FindReplace();
 
     void setEditor(QTextEdit *pEditor);

@@ -39,7 +39,7 @@
 
 Utils::Utils(QWidget *pParent, QObject *pParentObj)
   : m_pParent(pParent) {
-  Q_UNUSED(pParentObj);
+  Q_UNUSED(pParentObj)
   m_NwManager = new QNetworkAccessManager(this);
   connect(m_NwManager, &QNetworkAccessManager::finished,
           this, &Utils::replyFinished);
@@ -112,12 +112,12 @@ void Utils::replyFinished(QNetworkReply *pReply) {
       sListLatestVer = sLatestVersion.split(".");
 
       if (sListCurrentVer.size() > 2 && sListLatestVer.size() > 2) {
-        quint8 nMainVer1 = sListCurrentVer[0].toUInt();
-        quint8 nMinorVer1 = sListCurrentVer[1].toUInt();
-        quint8 nRevision1 = sListCurrentVer[2].toUInt();
-        quint8 nMainVer2 = sListLatestVer[0].toUInt();
-        quint8 nMinorVer2 = sListLatestVer[1].toUInt();
-        quint8 nRevision2 = sListLatestVer[2].toUInt();
+        quint8 nMainVer1 = static_cast<quint8>(sListCurrentVer[0].toUInt());
+        quint8 nMinorVer1 = static_cast<quint8>(sListCurrentVer[1].toUInt());
+        quint8 nRevision1 = static_cast<quint8>(sListCurrentVer[2].toUInt());
+        quint8 nMainVer2 = static_cast<quint8>(sListLatestVer[0].toUInt());
+        quint8 nMinorVer2 = static_cast<quint8>(sListLatestVer[1].toUInt());
+        quint8 nRevision2 = static_cast<quint8>(sListLatestVer[2].toUInt());
 
         if (nMainVer2 > nMainVer1
             ||nMinorVer2 > nMinorVer1
@@ -128,7 +128,8 @@ void Utils::replyFinished(QNetworkReply *pReply) {
                                   tr("Found a new version of %1.<br>"
                                      "Do you want to download the latest "
                                      "version?")
-                                  .arg(qApp->applicationName()), 0, m_pParent);
+                                  .arg(qApp->applicationName()),
+                                  nullptr, m_pParent);
           QPushButton *noDontAskAgainButton = msgBox->addButton(
                                                 tr("No, don't ask again!"),
                                                 QMessageBox::NoRole);

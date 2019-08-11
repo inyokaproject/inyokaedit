@@ -39,13 +39,13 @@ Parser::Parser(const QString &sSharePath,
                Templates *pTemplates,
                const QString &sCommunity,
                QObject *pParent)
-  : m_pRawText(NULL),
+  : m_pRawText(nullptr),
     m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity) {
-  Q_UNUSED(pParent);
+  Q_UNUSED(pParent)
   m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
 
   m_pTemplateParser = new ParseTemplates(
@@ -66,9 +66,9 @@ Parser::Parser(const QString &sSharePath,
 }
 
 Parser::~Parser() {
-  if (NULL != m_pLinkParser) {
+  if (nullptr != m_pLinkParser) {
     delete m_pLinkParser;
-    m_pLinkParser = NULL;
+    m_pLinkParser = nullptr;
   }
 }
 
@@ -323,7 +323,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
                           "</table>\n</div>";
       }
 
-      unsigned int nNoTranslate = m_sListNoTranslate.size();
+      unsigned int nNoTranslate =
+          static_cast<unsigned int>(m_sListNoTranslate.size());
       m_sListNoTranslate << sMacro;  // Save code block
       sMacro = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
 
@@ -350,14 +351,14 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
     procEcho.setStandardOutputProcess(&procPygmentize);
     procEcho.start("echo", QStringList() << sCode);
     if (!procEcho.waitForStarted()) {
-      QMessageBox::critical(0, "Pygments error",
+      QMessageBox::critical(nullptr, "Pygments error",
                             "Could not start echo.");
       qCritical() << "Pygments error: Could not start echo.";
       procEcho.kill();
       return sCode;
     }
     if (!procEcho.waitForFinished()) {
-      QMessageBox::critical(0, "Pygments error",
+      QMessageBox::critical(nullptr, "Pygments error",
                             "Error while using echo.");
       qCritical() << "Pygments error: While using echo.";
       procEcho.kill();
@@ -371,14 +372,14 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
                          << "-O" << "noclasses");
 
     if (!procPygmentize.waitForStarted()) {
-      QMessageBox::critical(0, "Pygments error",
+      QMessageBox::critical(nullptr, "Pygments error",
                             "Could not start pygmentize.");
       qCritical() << "Error while starting pygmentize - waitForStarted";
       procPygmentize.kill();
       return sCode;
     }
     if (!procPygmentize.waitForFinished()) {
-      QMessageBox::critical(0, "Pygments error",
+      QMessageBox::critical(nullptr, "Pygments error",
                             "Error while using pygmentize.");
       qCritical() << "Error while executing pygmentize - waitForFinished";
       procPygmentize.kill();
@@ -409,7 +410,7 @@ void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
     sEscChar = pattern.cap(0);
     if ("\\\\" != sEscChar) {
       sEscChar.remove(0, 1);  // Remove escape char
-      nNoTranslate = m_sListNoTranslate.size();
+      nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
       m_sListNoTranslate << sEscChar;
 
       sDoc.replace(nPos, pattern.matchedLength(), "%%NO_TRANSLATE_" +
@@ -451,7 +452,7 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
 
   sDoc = pRawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
   // qDebug() << "\n\n" << sDoc << "\n\n";
-  nNoTranslate = m_sListNoTranslate.size();
+  nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
   for (int i = 0; i < sListHtmlStart.size(); i++) {
     patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
     int nIndex = patternFormat.indexIn(sDoc);
@@ -593,7 +594,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
        block = block.next()) {
     if (block.text().startsWith(">")) {
       sLine = block.text().trimmed();
-      nQuotes = sLine.count(">");
+      nQuotes = static_cast<quint16>(sLine.count(">"));
       sLine.remove(QRegExp("^>*"));
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
@@ -671,7 +672,7 @@ QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
       } else if (sLine.trimmed().startsWith(sTmp)
                  && sLine.trimmed().endsWith(sTmp)
                  && sLine.trimmed().length() > (i*2)) {
-        nHeadlineLevel = i;
+        nHeadlineLevel = static_cast<quint16>(i);
       } else {
         continue;
       }

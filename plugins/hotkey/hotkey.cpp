@@ -36,7 +36,7 @@
 void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
                         const QDir &userDataDir,
                         const QString &sSharePath) {
-  Q_UNUSED(userDataDir);
+  Q_UNUSED(userDataDir)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined _WIN32
@@ -278,13 +278,13 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 
 void Hotkey::deleteRow(QWidget *widget) {
   QPushButton *button = reinterpret_cast<QPushButton*>(widget);
-  if (button != NULL) {
+  if (button != nullptr) {
     int nIndex = m_listDelRowButtons.indexOf(button);
     // qDebug() << "DELETE ROW:" << nIndex;
     if (nIndex >= 0 && nIndex < m_sListEntries.size()) {
       m_sListEntries.removeAt(nIndex);
       delete button;
-      button = NULL;
+      button = nullptr;
       m_listDelRowButtons.removeAt(nIndex);
       delete m_listSequenceEdit.at(nIndex);
       m_listSequenceEdit.removeAt(nIndex);
@@ -377,14 +377,14 @@ void Hotkey::setCurrentEditor(TextEditor *pEditor) {
 }
 
 void Hotkey::setEditorlist(const QList<TextEditor *> &listEditors) {
-  Q_UNUSED(listEditors);
+  Q_UNUSED(listEditors)
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void Hotkey::showAbout() {
-  QMessageBox aboutbox(NULL);
+  QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(
         QPixmap(":/preferences-desktop-keyboard-shortcuts.png"));

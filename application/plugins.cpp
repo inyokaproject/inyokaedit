@@ -46,13 +46,13 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
     listPluginsDir << pluginsDir;
   }
   // Plugins in app folder (Windows and debugging)
-  pluginsDir = qApp->applicationDirPath();
+  pluginsDir.setPath(qApp->applicationDirPath());
   if (pluginsDir.cd("plugins")) {
     listPluginsDir << pluginsDir;
   }
   // Plugins in standard installation folder (Linux)
-  pluginsDir = qApp->applicationDirPath() + "/../lib/"
-               + qApp->applicationName().toLower();
+  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/"
+                     + qApp->applicationName().toLower());
   if (pluginsDir.cd("plugins")) {
     listPluginsDir << pluginsDir;
   }

@@ -35,7 +35,7 @@
 FindReplace::FindReplace(QWidget *parent)
   : QDialog(parent),
     m_pUi(new Ui::FindReplace),
-    m_pEditor(NULL) {
+    m_pEditor(nullptr) {
   m_pUi->setupUi(this);
   this->setWindowFlags(this->windowFlags()
                        & ~Qt::WindowContextHelpButtonHint);
@@ -76,7 +76,7 @@ void FindReplace::showEvent(QShowEvent *event) {
 
   // Check if editor was set before
   if (!m_pEditor) {
-    QMessageBox::warning(0, "Warning", "Couldn't access editor object.");
+    QMessageBox::warning(nullptr, "Warning", "Couldn't access editor object.");
     qWarning() << Q_FUNC_INFO << "- m_pEditor = NULL";
     event->ignore();
     this->close();

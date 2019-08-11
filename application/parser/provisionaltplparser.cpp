@@ -690,7 +690,7 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
     if (0 == i || 1 == i) {
       if ("left" == sListArgs[i] || "right" == sListArgs[i]) {
         sImageCollAlign = sListArgs[i];
-      } else if (0 != sListArgs[i].toFloat()) {
+      } else if (0.0 != sListArgs[i].toDouble()) {
         sColHeight = sListArgs[i];
       }
     } else {
@@ -719,7 +719,7 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
     if (0 == i || 1 == i) {
       if ("left" == sListArgs[i] || "right" == sListArgs[i]) {
         continue;
-      } else if (0 != sListArgs[i].toFloat()) {
+      } else if (0.0 != sListArgs[i].toDouble()) {
         continue;
       }
     }
@@ -783,7 +783,7 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
       if (0 == i || 1 == i) {
         if ("left" == sListArgs[i] || "right" == sListArgs[i]) {
           continue;
-        } else if (0 != sListArgs[i].toFloat()) {
+        } else if (0.0 != sListArgs[i].toDouble()) {
           continue;
         }
       }

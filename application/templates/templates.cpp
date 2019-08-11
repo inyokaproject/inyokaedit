@@ -122,7 +122,7 @@ void Templates::initTemplates(const QString &sTplPath) {
         }
         TplFile.close();
       } else {
-        QMessageBox::warning(0, "Warning",
+        QMessageBox::warning(nullptr, "Warning",
                              "Could not open template file: \n" +
                              fi.absoluteFilePath());
         qWarning() << "Could not open template file:"
@@ -141,7 +141,7 @@ void Templates::initTemplates(const QString &sTplPath) {
         }
         TplFile.close();
       } else {
-        QMessageBox::warning(0, "Warning",
+        QMessageBox::warning(nullptr, "Warning",
                              "Could not open macro file: \n" +
                              fi.absoluteFilePath());
         qWarning() << "Could not open macro file:"
@@ -154,7 +154,7 @@ void Templates::initTemplates(const QString &sTplPath) {
   m_sListTplNamesALL.append(m_sListTplNamesINY);
 
   if (m_sListTplNamesINY.isEmpty()) {
-    QMessageBox::warning(0, "Warning",
+    QMessageBox::warning(nullptr, "Warning",
                          "Could not find any markup template files!");
     qWarning() << "Could not find any template files in:"
                << TplDir.absolutePath();
@@ -169,7 +169,7 @@ void Templates::initTemplates(const QString &sTplPath) {
 void Templates::initHtmlTpl(const QString &sTplFile) {
   QFile HTMLTplFile(sTplFile);
   if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, "Warning",
+    QMessageBox::warning(nullptr, "Warning",
                          "Could not open preview template file!");
     qWarning() << "Could not open preview template file:"
                << HTMLTplFile.fileName();
@@ -191,7 +191,7 @@ void Templates::initMappings(const QString &sFileName,
                              QStringList &sListMapping) {
   QFile MapFile(sFileName);
   if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, "Warning", "Could not open mapping file!");
+    QMessageBox::warning(nullptr, "Warning", "Could not open mapping file!");
     qWarning() << "Could not open mapping config file:"
                << MapFile.fileName();
     sListElements << "ERROR";
@@ -226,7 +226,8 @@ void Templates::initTextformats(const QString &sFilename) {
   QStringList sListInput;
 
   if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, "Warning", "Could not open text formats file!");
+    QMessageBox::warning(nullptr,
+                         "Warning", "Could not open text formats file!");
     qWarning() << "Could not open text formats config file:"
                << formatsFile.fileName();
     // Initialize possible text formats

@@ -43,12 +43,12 @@ Upload::Upload(QWidget *pParent, Session *pSession,
   : m_pParent(pParent),
     m_pSession(pSession),
     m_sInyokaUrl(sInyokaUrl),
-    m_pReply(NULL),
+    m_pReply(nullptr),
     m_State(REQUREVISION),
     m_sSitename(""),
     m_sRevision(""),
     m_sConstructionArea(sConstArea),
-    m_pEditor(NULL),
+    m_pEditor(nullptr),
     m_sArticlename("") {
   this->setParent(m_pParent);
 }

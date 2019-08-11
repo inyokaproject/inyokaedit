@@ -39,7 +39,7 @@ Macros::Macros(const QString &sSharePath,
   QFile fiMacros(":/macros.conf");
   if (!fiMacros.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open macros.conf";
-    QMessageBox::warning(NULL, "Error",
+    QMessageBox::warning(nullptr, "Error",
                          "Could not open macros.conf");
   } else {
     QTextStream in(&fiMacros);
@@ -309,7 +309,7 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
     }
 
     // No size given
-    if (0 == tmpH && 0 == tmpW) {
+    if (0.0 == tmpH && 0.0 == tmpW) {
       iImgHeight = QImage(sImageUrl).height();
       tmpH = iImgHeight;
       iImgWidth = QImage(sImageUrl).width();

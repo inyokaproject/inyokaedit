@@ -48,7 +48,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                const QStringList &sListTplMacros)
   : m_pParent(pParent),
     m_pDocumentTabs(pTabWidget),
-    m_pCurrentEditor(NULL),
+    m_pCurrentEditor(nullptr),
     m_pSettings(pSettings),
     m_sPreviewFile(sPreviewFile),
     m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;" +
@@ -356,7 +356,8 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 
   // Go through each file from archive
   for (int i = 0; i < nFileCount; i++) {
-    if (!mz_zip_reader_file_stat(&archive, i, &file_stat)) {
+    if (!mz_zip_reader_file_stat(
+          &archive, static_cast<mz_uint>(i), &file_stat)) {
       QMessageBox::critical(m_pParent, qApp->applicationName(),
                             tr("Something went wrong while reading \"%1\"")
                             .arg(sArchive));
@@ -378,7 +379,8 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
       sOutput = m_sExtractDir + "/" + sOutput;
     }
 
-    if (!mz_zip_reader_extract_to_file(&archive, i, sOutput.toLatin1(), 0)) {
+    if (!mz_zip_reader_extract_to_file(
+          &archive, static_cast<mz_uint>(i), sOutput.toLatin1(), 0)) {
       QMessageBox::critical(
             m_pParent, qApp->applicationName(),
             tr("Error while extracting \"%1\" from archive!")
@@ -516,7 +518,8 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
 
       if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
                                   img.absoluteFilePath().toLatin1(),
-                                  baComment, baComment.size(),
+                                  baComment,
+                                  static_cast<mz_uint16>(baComment.size()),
                                   MZ_BEST_COMPRESSION)) {
         QMessageBox::critical(m_pParent, qApp->applicationName(),
                               tr("Error while adding \"%1\" to archive!")
@@ -531,7 +534,8 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   if (!mz_zip_writer_add_file(&archive, sArticle.toLatin1(),
                               QString(file.absolutePath() + "/" +
                                       sArticle.toLatin1()).toLatin1(),
-                              baComment, baComment.size(),
+                              baComment,
+                              static_cast<mz_uint16>(baComment.size()),
                               MZ_BEST_COMPRESSION)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           tr("Error while adding \"%1\" to archive!")
@@ -572,7 +576,7 @@ void FileOperations::saveDocumentAuto() {
     qDebug() << "Calling" << Q_FUNC_INFO;
     QFile fAutoSave;
     for (int i = 0; i < m_pListEditors.count(); i++) {
-      if (NULL != m_pListEditors.at(i)) {
+      if (nullptr != m_pListEditors.at(i)) {
         if (m_pListEditors.at(i)->getFileName().contains(tr("Untitled"))) {
           fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
                                 QString::number(i) + ".bak~");
@@ -640,7 +644,7 @@ void FileOperations::printPreview() {
 #endif
 
   if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(0, tr("Warning"),
+    QMessageBox::warning(nullptr, tr("Warning"),
                          tr("Could not open preview file for printing!"));
     qWarning() << "Could not open text html preview file for printing:"
                << m_sPreviewFile;
@@ -804,7 +808,8 @@ void FileOperations::updateEditorSettings() {
 
   m_pTimerAutosave->stop();
   if (0 != m_pSettings->getAutoSave()) {
-    m_pTimerAutosave->setInterval(m_pSettings->getAutoSave() * 1000);
+    m_pTimerAutosave->setInterval(
+          static_cast<int>(m_pSettings->getAutoSave() * 1000));
     m_pTimerAutosave->start();
   }
 }
@@ -828,7 +833,7 @@ bool FileOperations::closeDocument(int nIndex) {
     }
     m_pDocumentTabs->removeTab(nIndex);
     m_pListEditors.at(nIndex)->deleteLater();
-    m_pListEditors[nIndex] = NULL;
+    m_pListEditors[nIndex] = nullptr;
     m_pListEditors.removeAt(nIndex);
 
     if (m_pDocumentTabs->count() > 0) {

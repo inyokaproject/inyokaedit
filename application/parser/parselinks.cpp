@@ -36,8 +36,8 @@ ParseLinks::ParseLinks(const QString &sUrlToWiki,
     m_sListInterwikiKey(sListIWiki),
     m_sListInterwikiLink(sListIWikiUrl),
     m_bCheckLinks(bCheckLinks),
-    m_NWreply(NULL) {
-  Q_UNUSED(pParent);
+    m_NWreply(nullptr) {
+  Q_UNUSED(pParent)
   m_NWAManager = new QNetworkAccessManager(this);
 }
 

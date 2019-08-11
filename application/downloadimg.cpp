@@ -33,7 +33,7 @@
 
 DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
   : m_pNwManager(pNwManager) {
-  Q_UNUSED(pParent);
+  Q_UNUSED(pParent)
   connect(m_pNwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);
 }
@@ -57,7 +57,7 @@ void DownloadImg::startDownloads() {
   // Create progress dialog
   m_pProgessDialog = new QProgressDialog(tr("Downloading images..."),
                                          tr("Cancel"), m_nProgress,
-                                         m_sListUrls.size(), 0,
+                                         m_sListUrls.size(), nullptr,
                                          Qt::WindowTitleHint
                                          | Qt::WindowSystemMenuHint);
   m_pProgessDialog->setWindowTitle(qApp->applicationName());
@@ -179,7 +179,7 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
 
     // Show error messages
     if (!m_sDownloadError.isEmpty()) {
-      QMessageBox::warning(0, tr("Download error"), m_sDownloadError);
+      QMessageBox::warning(nullptr, tr("Download error"), m_sDownloadError);
     }
 
     emit finsihedImageDownload();
