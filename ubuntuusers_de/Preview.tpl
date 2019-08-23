@@ -11,6 +11,7 @@
     <style type="text/css">
       div.wrap{min-width:0px;background-image:none;}
       div.body{padding-bottom:0px;}
+      div.page_content{margin-left:20px;}
       div.content{padding:0px;}
     </style>
   </head>
@@ -25,8 +26,7 @@
           </div>
           <p class="meta">
             Diese Revision wurde am %date% um %time% Uhr erstellt.
-            <br />
-            Dieser Seite wurden die folgenden Begriffe zugeordnet: %tags%
+            <br />Die folgenden Schlagworte wurden dem Artikel zugewiesen: %tags%
           </p>
         </div>
       </div>
