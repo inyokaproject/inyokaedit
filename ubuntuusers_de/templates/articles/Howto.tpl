@@ -1,5 +1,5 @@
 ## Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen.
-[[Vorlage(Baustelle, 31.12.2017, Verfasser)]]
+[[Vorlage(Baustelle, 31.12.2035, Verfasser)]]
 
 ## Diese Warnung ist Bestandteil jedes Howtos und darf nicht entfernt werden.
 {{{#!vorlage Warnung
@@ -20,7 +20,7 @@ Diese Howto-Anleitung wurde zuletzt von [user:Bearbeiter:] am TT.MM.JJJJ unter '
 = Links =
 ## Weiterführende Linksammlung
  * ...
- * [:Howto:] {Übersicht} - Übersicht aller Howto-Artikel
+ * [tag:Howto:Howto-Liste] {Übersicht} - Übersicht aller Howto-Artikel
 
 ## Nach der Fertigstellung des Howtos bitte die Aufnahme in die Howto-Sammlung über die Schaltfläche "Diskussion" mitteilen. Weitere [:Wiki/Tag:Tags] sind nicht gestattet!
 ##tag: Howto
