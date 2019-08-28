@@ -233,7 +233,6 @@ wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/osm.png -O 
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/packages.png -O packages.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/paste.png -O paste.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/ppa.png -O ppa.png
-wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/pdf.png -O pdf.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/playdeb.png -O playdeb.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/prolinux.png -O prolinux.png
 wget -nv https://wiki.ubuntuusers.de/_image?target=Wiki/InterwikiMap/quakenet.png -O quakenet.png
