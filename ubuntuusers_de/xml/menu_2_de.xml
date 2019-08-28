@@ -133,7 +133,6 @@
     <element name="Ixquick" insert="[ixquick:%%Suchbegriff%%:]" icon="ixquick.png" />
     <element name="Last.fm" insert="[lastfm:%%Seitenname%%:]" icon="lastfm.png" />
     <element name="OpenStreetMap" insert="[osm:%%Seitenname%%:]" icon="osm.png" />
-    <element name="PDF Datei" insert="[pdf:%%PDF%%:]" icon="pdf.png" />
     <element name="QuakeNet IRC" insert="[quakenet:%%Seitenname%%:]" icon="quakenet.png" />
     <element name="Stack Overflow" insert="[stackoverflow:%%Seitenname%%:]" icon="stackoverflow.png" />
     <element name="Startpage Suche" insert="[startpage:%%Suchbegriff%%:]" icon="startpage.png" />
