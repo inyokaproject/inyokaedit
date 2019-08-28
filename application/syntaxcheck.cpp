@@ -136,6 +136,8 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         sMacro = sMacro.trimmed();
         sMacro.remove(0, 1);  // Remove (
         sMacro = sMacro.left(sMacro.indexOf(",")).trimmed();
+        sMacro.remove(")]]");  // Needed if no "," is used
+        sMacro = sMacro.trimmed();
 
         if (sListTplMacros.contains(sMacro)) {
           sMacro.clear();

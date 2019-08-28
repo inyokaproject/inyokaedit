@@ -342,8 +342,20 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
-#ifndef _WIN32
-  if (QFile("/usr/bin/pygmentize").exists()) {
+  static bool bChecked(false);
+  static bool bPygmentize(false);
+  if (!bChecked) {
+    bChecked = true;
+    //TODO(volunteer): Configurable pygmentize path/command
+    if (QFile("/usr/bin/pygmentize").exists()) {
+      bPygmentize = true;
+      qDebug() << "Pygmentize installed!";
+    } else {
+      qDebug() << "Pygmentize NOT installed!";
+    }
+  }
+
+  if (bPygmentize) {
     QProcess procPygmentize;
     QProcess procEcho;
 
@@ -390,10 +402,6 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
   } else {
     return sCode;
   }
-#else
-  Q_UNUSED(sLanguage);
-  return sCode;
-#endif
 }
 
 // ----------------------------------------------------------------------------
