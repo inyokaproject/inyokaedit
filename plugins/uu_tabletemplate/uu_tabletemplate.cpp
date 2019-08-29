@@ -57,7 +57,8 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                    m_sSharePath, m_dirPreview.absolutePath());
   m_pParser = new Parser(m_sSharePath, QDir(""), "", false, m_pTemplates,
                          m_pSettings->value("InyokaCommunity",
-                                            "ubuntuusers_de").toString());
+                                            "ubuntuusers_de").toString(),
+                         m_pSettings->value("Pygmentize", "").toString());
 
   // Build UI
   m_pDialog = new QDialog(pParent);

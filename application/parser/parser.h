@@ -53,7 +53,7 @@ class Parser : public QObject {
     Parser(const QString &sSharePath, const QDir &tmpImgDir,
            const QString &sInyokaUrl, const bool bCheckLinks,
            Templates *pTemplates, const QString &sCommunity,
-           QObject *pParent = nullptr);
+           const QString &sPygmentize, QObject *pParent = nullptr);
     ~Parser();
 
     // Starts generating HTML-code
@@ -100,6 +100,7 @@ class Parser : public QObject {
     Templates *m_pTemplates;
     Macros *m_pMacros;
     const QString m_sCommunity;
+    const QString m_sPygmentize;
 };
 
 #endif  // APPLICATION_PARSER_PARSER_H_

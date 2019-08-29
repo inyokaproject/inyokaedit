@@ -72,6 +72,7 @@ class Settings : public QObject {
     quint32 getTimedPreview() const;
     bool getSyncScrollbars() const;
     bool getWindowsCheckUpdate() const;
+    QString getPygmentize() const;
 
     // Font
     QFont getEditorFont() const;
@@ -133,6 +134,7 @@ class Settings : public QObject {
     quint32 m_nTimedPreview;
     bool m_bSyncScrollbars;
     bool m_bWinCheckUpdate;
+    QString m_sPygmentize;
 
     // Font
     QFont m_EditorFont;

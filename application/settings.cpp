@@ -150,6 +150,9 @@ void Settings::readSettings(const QString &sSharePath) {
   m_bWinCheckUpdate = m_pSettings->value("WindowsCheckForUpdate",
                                          false).toBool();
 
+  m_sPygmentize = m_pSettings->value("Pygmentize",
+                                     "/usr/bin/pygmentize").toString();
+
   // Font settings
   m_pSettings->beginGroup("Font");
   m_sFontFamily = m_pSettings->value("FontFamily",
@@ -237,6 +240,7 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
 #if defined _WIN32
   m_pSettings->setValue("WindowsCheckForUpdate", m_bWinCheckUpdate);
 #endif
+  m_pSettings->setValue("Pygmentize", m_sPygmentize);
 
   // Font settings
   m_pSettings->beginGroup("Font");
@@ -385,6 +389,10 @@ quint32 Settings::getTimedPreview() const {
 
 bool Settings::getSyncScrollbars() const {
   return m_bSyncScrollbars;
+}
+
+QString Settings::getPygmentize() const {
+  return m_sPygmentize;
 }
 
 // ----------------------------------------------------

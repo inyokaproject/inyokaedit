@@ -165,7 +165,8 @@ void InyokaEdit::createObjects() {
                          m_pSettings->getInyokaUrl(),
                          m_pSettings->getCheckLinks(),
                          m_pTemplates,
-                         m_pSettings->getInyokaCommunity());
+                         m_pSettings->getInyokaCommunity(),
+                         m_pSettings->getPygmentize());
   connect(m_pParser, &Parser::hightlightSyntaxError,
           this, &InyokaEdit::highlightSyntaxError);
 

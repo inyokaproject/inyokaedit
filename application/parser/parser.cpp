@@ -38,13 +38,15 @@ Parser::Parser(const QString &sSharePath,
                const bool bCheckLinks,
                Templates *pTemplates,
                const QString &sCommunity,
+               const QString &sPygmentize,
                QObject *pParent)
   : m_pRawText(nullptr),
     m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
-    m_sCommunity(sCommunity) {
+    m_sCommunity(sCommunity),
+    m_sPygmentize(sPygmentize) {
   Q_UNUSED(pParent)
   m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
 
@@ -344,14 +346,14 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
   static bool bChecked(false);
   static bool bPygmentize(false);
+  static QFile sPygmentize(m_sPygmentize);
   if (!bChecked) {
     bChecked = true;
-    //TODO(volunteer): Configurable pygmentize path/command
-    if (QFile("/usr/bin/pygmentize").exists()) {
+    if (sPygmentize.exists()) {
       bPygmentize = true;
-      qDebug() << "Pygmentize installed!";
+      qDebug() << "Pygmentize found:" << sPygmentize.fileName();
     } else {
-      qDebug() << "Pygmentize NOT installed!";
+      qDebug() << "Pygmentize NOT found:" << sPygmentize.fileName();
     }
   }
 
@@ -377,7 +379,7 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
       return sCode;
     }
 
-    procPygmentize.start("pygmentize", QStringList() << "-l"
+    procPygmentize.start(sPygmentize.fileName(), QStringList() << "-l"
                          << sLanguage
                          << "-f" << "html"
                          << "-O" << "nowrap"
