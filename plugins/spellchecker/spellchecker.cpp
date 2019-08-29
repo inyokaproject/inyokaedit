@@ -356,7 +356,10 @@ void SpellChecker::callPlugin() {
         case SpellCheckDialog::ReplaceOnce:
           cursor.insertText(m_pCheckDialog->replacement());
           break;
-
+        case SpellCheckDialog::ReplaceAll:
+          this->replaceAll(cursor.position(), sWord,
+                           m_pCheckDialog->replacement());
+          break;
         default:
           break;
       }
@@ -428,6 +431,36 @@ QStringList SpellChecker::suggest(const QString &sWord) {
   }
 #endif
   return sListSuggestions;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void SpellChecker::replaceAll(const int nPos, const QString &sOld,
+                              const QString &sNew) {
+  QTextCursor cursor(m_pEditor->document());
+  cursor.setPosition(nPos-sOld.length(), QTextCursor::MoveAnchor);
+
+  while(!cursor.atEnd()) {
+    QCoreApplication::processEvents();
+    cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+    QString word = cursor.selectedText();
+
+    while(!word.isEmpty()
+          && !word.at(0).isLetter()
+          && cursor.anchor() < cursor.position()) {
+      int cursorPos = cursor.position();
+      cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
+      cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
+      word = cursor.selectedText();
+    }
+
+    if(word == sOld) {
+      cursor.insertText(sNew);
+      QCoreApplication::processEvents();
+    }
+    cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
+  }
 }
 
 // ----------------------------------------------------------------------------

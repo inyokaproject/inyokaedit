@@ -90,6 +90,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     void ignoreWord(const QString &sWord);
     void addToUserWordlist(const QString &sWord);
     void putWord(const QString &sWord);
+    void replaceAll(const int nPos, const QString &sOld, const QString &sNew);
 
     Hunspell *m_pHunspell;
     TextEditor *m_pEditor;
