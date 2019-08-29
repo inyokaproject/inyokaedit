@@ -4,25 +4,34 @@ Upstream-Contact: Thorsten Roth <elthoro@gmx.de>
 Source: https://github.com/inyokaproject/inyokaedit
 
 Files: *
-Copyright: 2011-2018 The InyokaEdit developers
-           2011-2018 Thorsten Roth <elthoro@gmx.de>
+Copyright: 2011-2019 The InyokaEdit developers
+           2011-2019 Thorsten Roth <elthoro@gmx.de>
            2014-2015 djcj <djcj@gmx.de>
 License: GPL-3+
 
 Files: debian/*
-Copyright: 2011-2018 Thorsten Roth <elthoro@gmx.de>
+Copyright: 2011-2019 Thorsten Roth <elthoro@gmx.de>
            2012-2015 Dominique Lasserre <lasserre.d@gmail.com>
            2014-2015 djcj <djcj@gmx.de>
 License: GPL-3+
 
-Files: plugins/tabletemplate/CTableTemplate.cpp
-       plugins/tabletemplate/CTableTemplate.h
-       plugins/tabletemplate/CTableTemplate.ui
-       application/CSettingsDialog.cpp
-       application/CSettingsDialog.h
-       application/CSettingsDialog.ui
+Files: plugins/spellchecker/spellcheckdialog.cpp
+       plugins/spellchecker/spellcheckdialog.h
+       plugins/spellchecker/spellcheckdialog.ui
+       plugins/spellchecker/spellchecker.cpp
+       plugins/spellchecker/spellchecker.h
+Copyright: 2011 Volker Götz
+           2014-2019 Thorsten Roth <elthoro@gmx.de>
+License: GPL-3+ and BSD-2-clause
+
+Files: plugins/uu_tabletemplate/uu_tabletemplate.cpp
+       plugins/uu_tabletemplate/uu_tabletemplate.h
+       plugins/uu_tabletemplate/uu_tabletemplate.ui
+       application/settingsdialog.cpp
+       application/settingsdialog.h
+       application/settingsdialog.ui
 Copyright: 2012-2015 Christian Schaerf <code.c.schaerf@t-online.de>
-           2012-2018 Thorsten Roth <elthoro@gmx.de>
+           2012-2019 Thorsten Roth <elthoro@gmx.de>
 License: GPL-3+
 
 Files: community/ubuntuusers_de/web/Wiki/Icons/Breeze/*
@@ -131,3 +140,24 @@ License: LGPL-3+
  .
  On Debian systems, the complete text of the GNU Lesser General
  Public License version 3 can be found in "/usr/share/common-licenses/LGPL-3".
+
+License: BSD-2-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
