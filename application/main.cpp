@@ -65,6 +65,11 @@ int main(int argc, char *argv[]) {
   cmdparser.addVersionOption();
   QCommandLineOption enableDebug("debug", "Enable debug mode");
   cmdparser.addOption(enableDebug);
+  QCommandLineOption cmdShare(QStringList() << "s" << "share",
+                              "User defined share folder (folder containing "
+                              "community files, plugins, etc.)",
+                              "Path to folder");
+  cmdparser.addOption(cmdShare);
   cmdparser.addPositionalArgument("file", "File to be opened");
   cmdparser.process(app);
 
@@ -82,7 +87,9 @@ int main(int argc, char *argv[]) {
   // Standard installation path (Linux)
   QDir tmpDir(app.applicationDirPath() + "/../share/"
               + app.applicationName().toLower());
-  if (!cmdparser.isSet(enableDebug) && tmpDir.exists()) {
+  if (cmdparser.isSet(cmdShare)) {  // -s overwrites debug path (app folder)
+    sSharePath = cmdparser.value(cmdShare);
+  } else if (!cmdparser.isSet(enableDebug) && tmpDir.exists()) {
     sSharePath = app.applicationDirPath() + "/../share/"
                  + app.applicationName().toLower();
   }
@@ -93,7 +100,9 @@ int main(int argc, char *argv[]) {
     userDataDir.mkpath(userDataDir.absolutePath());
   }
   setupLogger(userDataDir.absolutePath() + "/" + sDebugFile);
-  if (cmdparser.isSet(enableDebug)) {
+  if (cmdparser.isSet(cmdShare)) {
+    qDebug() << "User defined share:" << cmdparser.value(cmdShare);
+  } else if (cmdparser.isSet(enableDebug)) {  // -s overwrites debug path!
     qWarning() << "DEBUG is enabled!";
   }
 
