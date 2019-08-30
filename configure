@@ -11,6 +11,9 @@ options:
                            [/usr/local]
   --docdir=DIR             install documents in DIR [DATAROOT/docs/inyokaedit]
   --mandir=DIR             install manpage in DIR [DATAROOT/man]
+  --community=COMMUNITY    install specified Inyoka community [ubuntuusers_de]
+                           for installation without any community files,
+                           define --community=none
 EOF
 exit 1
 fi
@@ -27,6 +30,9 @@ for opt; do
         --mandir=*)
             mandir="$optarg"
             ;;
+        --community=*)
+            community="$optarg"
+            ;;
         *)
             ;;
     esac
@@ -35,6 +41,20 @@ done
 test -n "$prefix" || prefix="/usr/local"
 test -n "$docdir" || docdir='${dataroot}/docs/inyokaedit'
 test -n "$mandir" || mandir='${dataroot}/man'
+test -n "$community" || community='ubuntuusers_de'
+
+if [ "$community" != "none" ]; then
+  community="community/$community"
+
+  if [ ! -d $community ]; then
+    echo ""
+    echo "ERROR: Community folder \"$community\" not found!"
+    echo "Please clone or download community branch: https://github.com/inyokaproject/inyokaedit/tree/community"
+    echo "Or define different community option. See: ./configure -h"
+    echo ""
+    exit 2
+  fi
+fi
 
 echo ""
 echo "generate config.mak ..."
@@ -45,6 +65,7 @@ cat >> config.mak << EOF
 prefix = $prefix
 docdir = $docdir
 mandir = $mandir
+community = $community
 EOF
 
 cat config.mak

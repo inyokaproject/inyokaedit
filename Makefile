@@ -67,8 +67,10 @@ install-plugins:
 	$(INSTALL_FILE) plugins/libuu_tabletemplate.so $(DESTDIR)$(libdir)/inyokaedit/plugins
 
 install-data-ubuntuusersde:
+ifeq ($(community),community/ubuntuusers_de)
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/inyokaedit/community
 	$(CP) community/ubuntuusers_de $(DESTDIR)$(dataroot)/inyokaedit/community
+endif
 
 install-hook:
 	$(GZIP) $(DESTDIR)$(mandir)/man1/inyokaedit.1
