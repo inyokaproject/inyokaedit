@@ -11,19 +11,25 @@
 .\" Sun Nov  6 17:13:29 CEST 2011  ElThoro <elthoro@gmx.de>
 .\" Wed Feb 29 23:16:00 CEST 2012  Jakob Kramer <jakob.kramer@gmx.de>
 .\"
-.TH INYOKAEDIT 1 "2012-03-02" "Thorsten Roth" "InyokaEdit-Handbuchseite"
+.TH INYOKAEDIT 1 "2019-08-30" "Thorsten Roth" "InyokaEdit-Handbuchseite"
 .SH NAME
 InyokaEdit \- Editor für Inyoka-basierende Portale
 .SH SYNOPSIS
-\fBinyokaedit\fP [\fIOption\fP] oder [\fIDatei\fP]
+\fBinyokaedit\fR [\fIOption\fR] oder [\fIDatei\fR]
 .SH BESCHREIBUNG
-\fPinyokaedit\fP ist ein Editor für Artikel von Inyoka-basierenden Portalen.
+InyokaEdit ist ein Editor für Artikel von Inyoka-basierenden Portalen.
 Neben Syntaxhervorhebung für das Wiki-Markup, vielen Textbausteinen und
 Vorlagen bietet das Programm eine Vorschaufunktion.
-.SS Optionen
+.SH Optionen
 .TP
-\fB\--version\fP
-Versionsnummer ausgeben.
+\fB\-\-debug\fR
+Startet InyokaEdit im Debugmodus.
+.TP
+\fB\-s\fR, \fB\-\-share\fR \fIPfad\fR
+Benutzerdefiniertes share Verzeichnis (für Community-Dateien, Plugins, etc.).
+.TP
+\fB\fIfile\fR\fR
+Zu öffnende Datei.
 .SH DATEIEN
 .TP
 .I ~/.local/share/data/inyokaedit

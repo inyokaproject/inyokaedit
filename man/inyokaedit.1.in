@@ -11,18 +11,24 @@
 .\" Sun Nov  6 17:13:29 CEST 2011  ElThoro <elthoro@gmx.de>
 .\" Wed Feb 29 23:14:00 CEST 2012  Jakob Kramer <jakob.kramer@gmx.de>
 .\"
-.TH INYOKAEDIT 1 "2012-03-02" "Thorsten Roth" "InyokaEdit Manual"
+.TH INYOKAEDIT 1 "2019-08-30" "Thorsten Roth" "InyokaEdit Manual"
 .SH NAME
 InyokaEdit \- editor for Inyoka based portals
 .SH SYNOPSIS
-\fBinyokaedit\fP [\fIOption\fP] or [\fIFile\fP]
+\fBinyokaedit\fR [\fIOption\fR] or [\fIFile\fR]
 .SH DESCRIPTION
-\fPinyokaedit\fP is a markup editor for articles for Inyoka-based portals.
+InyokaEdit is a markup editor for articles for Inyoka-based portals.
 It inludes syntax highlighting, all Inyoka text samples and an offline preview.
-.SS Options
+.SH Options
 .TP
-\fB\--version\fP
-Print out version.
+\fB\-\-debug\fR
+Starts InyokaEdit in debug mode.
+.TP
+\fB\-s\fR, \fB\-\-share\fR \fIpath\fR
+User defined share folder (folder containing community files, plugins, etc.).
+.TP
+\fB\fIfile\fR\fR
+File to be opened.
 .SH FILES
 .TP
 .I ~/.local/share/data/inyokaedit
