@@ -43,7 +43,7 @@
 #include "ui_inyokaedit.h"
 
 InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
-                       QWidget *parent)
+                       const QString &sArg, QWidget *parent)
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
     m_sCurrLang(""),
@@ -57,10 +57,6 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_bEditorScrolling(false),
     m_bWebviewScrolling(false),
     m_bReloadPreviewBlocked(false) {
-  if (qApp->arguments().contains("--debug")) {
-    qWarning() << "DEBUG is enabled!";
-  }
-
   m_pUi->setupUi(this);
 
   if (!sharePath.exists()) {
@@ -75,15 +71,8 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());
   }
 
-  QString sFile("");
-  if (qApp->arguments().size() > 1) {
-    for (int i = 1; i < qApp->arguments().size(); i++) {
-      if (!qApp->arguments()[i].startsWith('-')) {
-        m_bOpenFileAfterStart = true;  // Checked in setupEditor()
-        sFile = qApp->arguments()[i];
-        break;
-      }
-    }
+  if (!sArg.isEmpty()) {
+    m_bOpenFileAfterStart = true;  // Checked in setupEditor()
   }
 
   // After definition of StylesAndImagesDir AND m_tmpPreviewImgDir!
@@ -106,7 +95,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 
   // Load file via command line
   if (m_bOpenFileAfterStart) {
-    m_pFileOperations->loadFile(sFile, true);
+    m_pFileOperations->loadFile(sArg, true);
   }
 
   m_pPlugins->loadPlugins(m_pSettings->getGuiLanguage());

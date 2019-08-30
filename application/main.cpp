@@ -59,12 +59,14 @@ int main(int argc, char *argv[]) {
   app.setApplicationName(APP_NAME);
   app.setApplicationVersion(APP_VERSION);
 
-  if (app.arguments().contains("-v") ||
-      app.arguments().contains("--version")) {
-    qDebug() << app.arguments().at(0) << "\t" <<
-                app.applicationVersion() << "\n";
-    exit(0);
-  }
+  QCommandLineParser cmdparser;
+  cmdparser.setApplicationDescription(APP_DESC);
+  cmdparser.addHelpOption();
+  cmdparser.addVersionOption();
+  QCommandLineOption enableDebug("debug", "Enable debug mode");
+  cmdparser.addOption(enableDebug);
+  cmdparser.addPositionalArgument("file", "File to be opened");
+  cmdparser.process(app);
 
   // User data directory
   QStringList sListPaths = QStandardPaths::standardLocations(
@@ -80,7 +82,7 @@ int main(int argc, char *argv[]) {
   // Standard installation path (Linux)
   QDir tmpDir(app.applicationDirPath() + "/../share/"
               + app.applicationName().toLower());
-  if (!app.arguments().contains("--debug") && tmpDir.exists()) {
+  if (!cmdparser.isSet(enableDebug) && tmpDir.exists()) {
     sSharePath = app.applicationDirPath() + "/../share/"
                  + app.applicationName().toLower();
   }
@@ -91,8 +93,17 @@ int main(int argc, char *argv[]) {
     userDataDir.mkpath(userDataDir.absolutePath());
   }
   setupLogger(userDataDir.absolutePath() + "/" + sDebugFile);
+  if (cmdparser.isSet(enableDebug)) {
+    qWarning() << "DEBUG is enabled!";
+  }
 
-  InyokaEdit myInyokaEdit(userDataDir, sSharePath);
+  const QStringList sListArgs = cmdparser.positionalArguments();
+  QString sArg("");
+  if (sListArgs.size() > 0) {
+    sArg = sListArgs.at(0);
+  }
+
+  InyokaEdit myInyokaEdit(userDataDir, sSharePath, sArg);
   myInyokaEdit.show();
   int nRet = app.exec();
 

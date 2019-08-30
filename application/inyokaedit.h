@@ -69,7 +69,7 @@ class InyokaEdit : public QMainWindow {
 
  public:
     explicit InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
-                        QWidget *parent = nullptr);
+                        const QString &sArg = "", QWidget *parent = nullptr);
     ~InyokaEdit();
 
  public slots:

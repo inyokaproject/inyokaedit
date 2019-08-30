@@ -31,7 +31,8 @@ QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2019 The InyokaEdit developers"
 
 DEFINES      += APP_NAME=\"\\\"$$QMAKE_TARGET_PRODUCT\\\"\" \
                 APP_VERSION=\"\\\"$$VERSION\\\"\" \
-                APP_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\"
+                APP_COPY=\"\\\"$$QMAKE_TARGET_COPYRIGHT\\\"\" \
+                APP_DESC=\"\\\"$$QMAKE_TARGET_DESCRIPTION\\\"\"
 
 MOC_DIR       = ./.moc
 OBJECTS_DIR   = ./.objs
