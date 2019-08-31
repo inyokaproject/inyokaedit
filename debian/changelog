@@ -1,4 +1,4 @@
-inyokaedit (0.23.0-0) xenial; urgency=low
+inyokaedit (0.23.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
   * Add new element when pressing return in unsorted list.
@@ -9,9 +9,11 @@ inyokaedit (0.23.0-0) xenial; urgency=low
   * Code improvements (fixed compiler warnings)
   * Configurable pygmentize path
   * Fixed spell checker ReplaceAll function (#100)
+  * Extended cmd line arguments (user defined share folder)
   * Updated to latest ubuntuusers style.
+  * Improved configure/makefile
 
- -- Thorsten Roth <elthoro@gmx.de>  Thu, 29 Aug 2019 22:12:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 31 Aug 2019 15:35:00 +0200
 
 inyokaedit (0.22.0-1) xenial; urgency=low
 
