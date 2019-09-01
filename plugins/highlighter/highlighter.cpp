@@ -158,19 +158,23 @@ void Highlighter::executePlugin() {
 
 void Highlighter::copyDefaultStyles() {
   QFileInfo fi(m_pSettings->fileName());
+  QDir confDir(fi.absolutePath());
+  if (!confDir.exists()) {
+    confDir.mkpath(confDir.absolutePath());
+  }
 
-  QFile stylefile(fi.absolutePath() + "/standard-style" + m_sExt);
+  QFile stylefile(confDir.absolutePath() + "/standard-style" + m_sExt);
   if (!stylefile.exists()) {
     if (!QFile::copy(":/standard-style.conf",
-                     fi.absolutePath() + "/standard-style" + m_sExt)) {
+                     confDir.absolutePath() + "/standard-style" + m_sExt)) {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
   }
 
-  stylefile.setFileName(fi.absolutePath() + "/dark-style" + m_sExt);
+  stylefile.setFileName(confDir.absolutePath() + "/dark-style" + m_sExt);
   if (!stylefile.exists()) {
     if (!QFile::copy(":/dark-style.conf",
-                     fi.absolutePath() + "/dark-style" + m_sExt)) {
+                     confDir.absolutePath() + "/dark-style" + m_sExt)) {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
   }
