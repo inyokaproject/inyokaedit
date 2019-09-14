@@ -30,7 +30,6 @@
     <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
     <element name="Canonical Voises" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
-    <element name="Apt" insert="[apt:%%Package name%%:]" icon="" />
     <element name="Ubuntu Wiki" insert="[ubuntu:%%Sitename%%:]" icon="ubuntu.png" />
     <element name="Ubuntu.com sub page" insert="[ubuntusub:%%Sitename%%:]" icon="ubuntusub.png" />
     <element name="Ubuntu Help" insert="[ubuntu_doc:%%Sitename%%:]" icon="ubuntu_doc.png" />
@@ -42,8 +41,6 @@
     <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%App name%%:]" icon="ubuntuapps.png" />
     <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%App name%%:]" icon="uappexplorer.png" />
     <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="openstore.png" />
-    <element name="OpenStore 2 (unofficial)" insert="[openstore2:%%App name%%:]" icon="openstore2.png" />
-    <element name="Ubuntu Scopes" insert="[scope:%%Sitename%%:]" icon="scope.png" />
     <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
     <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="omgubuntu.png" />
     <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
@@ -134,6 +131,7 @@
     <element name="Last.fm" insert="[lastfm:%%Sitename%%:]" icon="lastfm.png" />
     <element name="OpenStreetMap" insert="[osm:%%Sitename%%:]" icon="osm.png" />
     <element name="QuakeNet IRC" insert="[quakenet:%%Sitename%%:]" icon="quakenet.png" />
+    <element name="SELFHTML Wiki" insert="[selfhtmlwiki:%%Sitename%%:]" icon="selfhtmlwiki.png" />
     <element name="Stack Overflow" insert="[stackoverflow:%%Sitename%%:]" icon="stackoverflow.png" />
     <element name="Startpage search" insert="[startpage:%%Search term%%:]" icon="startpage.png" />
     <element name="Twitter" insert="[twitter:%%Sitename%%:]" icon="twitter.png" />

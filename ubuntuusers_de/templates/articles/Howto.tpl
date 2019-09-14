@@ -22,5 +22,5 @@ Diese Howto-Anleitung wurde zuletzt von [user:Bearbeiter:] am TT.MM.JJJJ unter '
  * ...
  * [tag:Howto:Howto-Liste] {Übersicht} - Übersicht aller Howto-Artikel
 
-## Nach der Fertigstellung des Howtos bitte die Aufnahme in die Howto-Sammlung über die Schaltfläche "Diskussion" mitteilen. Weitere [:Wiki/Tag:Tags] sind nicht gestattet!
+## Nach der Fertigstellung des Howtos bitte die Aufnahme in die Howto-Sammlung über die Schaltfläche "Diskussion" mitteilen. Weitere [https://wiki.ubuntuusers.de/Wiki/Tag/ Tags] sind nicht gestattet!
 ##tag: Howto

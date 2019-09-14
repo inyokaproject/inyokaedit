@@ -457,6 +457,12 @@ a.interwiki-quakenet {
   padding-left: 20px;
 }
 
+a.interwiki-selfhtmlwiki {
+  background-image: url(../img/interwiki/selfhtmlwiki.png);
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
 a.interwiki-scope {
   background-image: url(../img/interwiki/scope.png);
   background-repeat: no-repeat;
@@ -666,4 +672,4 @@ a.interwiki-youtube {
   background-image: url(../img/interwiki/youtube.png);
   background-repeat: no-repeat;
   padding-left: 20px;
-}
+} 
