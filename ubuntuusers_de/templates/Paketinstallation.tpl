@@ -7,12 +7,14 @@
 ## {{{#!vorlage Paketinstallation
 ## paket0
 ## paket1, main
-## paket2, restricted ab Xenial
-## paket3, universe, ab Trusty
-## paket4, multiverse ab Trusty, universe ab Xenial
-## paket5, security, ab Bionic - sowas aber auch
+## paket2, restricted ab Karmic
+## paket3, universe, ab Lucid
+## paket4, multiverse ab Karmic, universe ab Lucid
+## paket5, security, ab hardy - sowas aber auch
 ## paket6, ppa
-## paket7, partner ab Xenial
+## paket7, playdeb
+## paket8, getdeb, ab karmic; hier noch weitere Angaben
+## paket9, partner ab karmic
 ## }}}
 ##
 #############################################################
@@ -52,19 +54,6 @@
 <@ endfor @>
 <@ endfor @>
 ##
-## Jetzt Installieren - Button
-##
-[[Vorlage(Installbutton,<@ for $row in $arguments split_by '
-' @>
-<@ for $col in $row split_by "," @>
-<@ if $loop.first @><@ $col @>
-<@ endif @>
-<@ endfor @>
-<@ if $loop.revindex > 1 @>,
-<@ endif @>
-<@ endfor @>)]]
-mit [:apturl:]
-##
 ## Paketmakro bei mehr als N Paketen, N=0:
 ##
 <@ for $row in $arguments split_by '
@@ -77,7 +66,6 @@ mit [:apturl:]
 ## das Makro Paketinstallation benutzen.
 ## Das könnte man später wieder ändern, der Übersicht wegen.
 ######
-{{|<class="package-list">
 Paketliste zum Kopieren:
 [[Vorlage(Wiki/Vorlagen/Befehl, 'sudo apt-get install<@ for $row in $arguments split_by '
 ' @> 
@@ -86,14 +74,18 @@ Paketliste zum Kopieren:
 <@ endif @>
 <@ endfor @>
 <@ endfor @>')]]
-[[Vorlage(Wiki/Vorlagen/Befehl, 'sudo aptitude install<@ for $row in $arguments split_by '
-' @> 
+<@ endif @>
+<@ endif @>
+<@ endfor @>
+##
+## Jetzt Installieren - Button
+##
+Oder mit [:apturl:] die Pakete installieren. Link: [apt://<@ for $row in $arguments split_by '
+' @>
 <@ for $col in $row split_by "," @>
 <@ if $loop.first @><@ $col @>
 <@ endif @>
 <@ endfor @>
-<@ endfor @>')]]
-|}}
+<@ if $loop.revindex > 1 @>,
 <@ endif @>
-<@ endif @>
-<@ endfor @>
+<@ endfor @>]
