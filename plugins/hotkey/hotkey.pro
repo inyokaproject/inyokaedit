@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = hotkey
 DESTDIR       = ../
 
-VERSION       = 1.2.1
+VERSION       = 1.2.2
 QMAKE_TARGET_DESCRIPTION = "Hotkey plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2015-2019 - Thorsten Roth"
 
@@ -33,10 +33,13 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += widgets
+CONFIG       += c++11
 
-CONFIG       += warn_on c++11
-DEFINES      += QT_DEPRECATED_WARNINGS
-DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
+CONFIG(debug, debug|release) {
+  CONFIG     += warn_on
+  DEFINES    += QT_DEPRECATED_WARNINGS
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051300
+}
 
 HEADERS      += hotkey.h
 

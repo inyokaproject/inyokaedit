@@ -24,7 +24,7 @@ unix: !macx {
 
 DESTDIR       = ../
 
-VERSION       = 0.23.0
+VERSION       = 0.24.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2019 The InyokaEdit developers"
@@ -40,10 +40,13 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += core gui widgets network printsupport xml
+CONFIG       += c++11
 
-CONFIG       += warn_on c++11
-DEFINES      += QT_DEPRECATED_WARNINGS
-DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
+CONFIG(debug, debug|release) {
+  CONFIG     += warn_on
+  DEFINES    += QT_DEPRECATED_WARNINGS
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x050900
+}
 
 qtHaveModule(webkitwidgets) {
   QT         += webkitwidgets

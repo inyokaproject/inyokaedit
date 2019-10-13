@@ -78,7 +78,7 @@ class Hotkey : public QObject, IEditorPlugin {
     void accept();
     void reject();
     void addRow();
-    void deleteRow(QWidget *widget);
+    void deleteRow();
     void insertElement(const QString &sId);
 
  private:
@@ -100,8 +100,6 @@ class Hotkey : public QObject, IEditorPlugin {
     QStringList m_sListEntries;
     QList<QAction *> m_listActions;
     QList<QAction *> m_listActionsOld;
-    QSignalMapper *m_pSigMapHotkey;
-    QSignalMapper *m_pSigMapDeleteRow;
     QList<QPushButton *> m_listDelRowButtons;
 };
 

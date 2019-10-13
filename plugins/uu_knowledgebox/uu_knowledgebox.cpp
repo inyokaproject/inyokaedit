@@ -131,8 +131,6 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
 
-  m_pSigMapDeleteRow = new QSignalMapper(this);
-
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);
   m_pUi->entriesTable->setColumnWidth(0, 40);
@@ -150,9 +148,6 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
     this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
   }
 
-  connect(m_pSigMapDeleteRow,
-          static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
-          this, &Uu_KnowledgeBox::deleteRow);
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
                                              QIcon(":/list-add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed,
@@ -317,26 +312,24 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
                                             QIcon(":/list-remove.png")), "");
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
-  m_pSigMapDeleteRow->setMapping(m_listDelRowButtons.last(),
-                                 m_listDelRowButtons.last());
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,
-          m_pSigMapDeleteRow,
-          static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+          this, &Uu_KnowledgeBox::deleteRow);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_KnowledgeBox::deleteRow(QWidget *widget) {
-  QPushButton *button = reinterpret_cast<QPushButton*>(widget);
-  if (button != nullptr) {
-    int nIndex = m_listDelRowButtons.indexOf(button);
+void Uu_KnowledgeBox::deleteRow() {
+  QObject* pObj = sender();
+  QPushButton *pButton = reinterpret_cast<QPushButton*>(pObj);
+  if (pButton != nullptr) {
+    int nIndex = m_listDelRowButtons.indexOf(pButton);
     // qDebug() << "DELETE ROW:" << nIndex;
     if (nIndex >= 0 && nIndex < m_sListEntries.size()) {
       m_sListEntries.removeAt(nIndex);
       m_bListEntryActive.removeAt(nIndex);
-      delete button;
-      button = nullptr;
+      delete pButton;
+      pButton = nullptr;
       m_listDelRowButtons.removeAt(nIndex);
       m_pUi->entriesTable->removeRow(nIndex);
     }

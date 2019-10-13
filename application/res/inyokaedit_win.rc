@@ -6,20 +6,20 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 IDI_ICON1               ICON    DISCARDABLE     "images/inyokaedit.ico"
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION    0,23,0,0
-PRODUCTVERSION 0,23,0,0
+FILEVERSION    0,24,0,0
+PRODUCTVERSION 0,24,0,0
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
         BLOCK "040904E4"
         BEGIN
             VALUE "FileDescription",    "Editor for Inyoka based portals\0"
-            VALUE "FileVersion",        "0.23.0\0"
+            VALUE "FileVersion",        "0.24.0\0"
             VALUE "InternalName",       "InyokaEdit\0"
             VALUE "LegalCopyright",     "Copyright (c) 2011-2019 The InyokaEdit developers\0"
             VALUE "OriginalFilename",   "InyokaEdit.exe\0"
             VALUE "ProductName",        "InyokaEdit\0"
-            VALUE "ProductVersion",     "0.23.0\0"
+            VALUE "ProductVersion",     "0.24.0\0"
         END
     END
 

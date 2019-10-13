@@ -131,9 +131,6 @@ void Hotkey::buildUi(QWidget *pParent) {
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
 
-  m_pSigMapHotkey = new QSignalMapper(this);
-  m_pSigMapDeleteRow = new QSignalMapper(this);
-
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);
 
@@ -153,12 +150,6 @@ void Hotkey::buildUi(QWidget *pParent) {
     this->createRow(m_listSequenceEdit.at(nRow), m_sListEntries.at(nRow));
   }
 
-  connect(m_pSigMapHotkey,
-          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          this, &Hotkey::insertElement);
-  connect(m_pSigMapDeleteRow,
-          static_cast<void(QSignalMapper::*)(QWidget *)>(&QSignalMapper::mapped),
-          this, &Hotkey::deleteRow);
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
                                              QIcon(":/list-add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
@@ -266,25 +257,23 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
                                             QIcon(":/list-remove.png")), "");
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
-  m_pSigMapDeleteRow->setMapping(m_listDelRowButtons.last(),
-                                 m_listDelRowButtons.last());
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,
-          m_pSigMapDeleteRow,
-          static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+          this, &Hotkey::deleteRow);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Hotkey::deleteRow(QWidget *widget) {
-  QPushButton *button = reinterpret_cast<QPushButton*>(widget);
-  if (button != nullptr) {
-    int nIndex = m_listDelRowButtons.indexOf(button);
+void Hotkey::deleteRow() {
+  QObject* pObj = sender();
+  QPushButton *pButton = reinterpret_cast<QPushButton*>(pObj);
+  if (pButton != nullptr) {
+    int nIndex = m_listDelRowButtons.indexOf(pButton);
     // qDebug() << "DELETE ROW:" << nIndex;
     if (nIndex >= 0 && nIndex < m_sListEntries.size()) {
       m_sListEntries.removeAt(nIndex);
-      delete button;
-      button = nullptr;
+      delete pButton;
+      pButton = nullptr;
       m_listDelRowButtons.removeAt(nIndex);
       delete m_listSequenceEdit.at(nIndex);
       m_listSequenceEdit.removeAt(nIndex);
@@ -306,10 +295,8 @@ void Hotkey::registerHotkeys() {
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_listActions << new QAction(QString::number(i), m_pParent);
     m_listActions.last()->setShortcut(m_listSequenceEdit.at(i)->keySequence());
-    m_pSigMapHotkey->setMapping(m_listActions.last(), QString::number(i));
     connect(m_listActions.last(), &QAction::triggered,
-            m_pSigMapHotkey,
-            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+            this, [this, i]() { insertElement(QString::number(i)); });
   }
 
   m_pParent->addActions(m_listActions);

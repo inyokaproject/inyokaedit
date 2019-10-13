@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.2.3
+VERSION       = 1.2.4
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2019 - Thorsten Roth"
 
@@ -34,9 +34,13 @@ RCC_DIR       = ./.rcc
 
 include(../../application/templates/templates.pri)
 
-CONFIG       += warn_on c++11
-DEFINES      += QT_DEPRECATED_WARNINGS
-DEFINES      += QT_DISABLE_DEPRECATED_BEFORE=0x050900
+CONFIG       += c++11
+
+CONFIG(debug, debug|release) {
+  CONFIG     += warn_on
+  DEFINES    += QT_DEPRECATED_WARNINGS
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051300
+}
 
 HEADERS      += highlighter.h \
                 syntaxhighlighter.h

@@ -76,7 +76,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
  private slots:
     void accept();
     void addRow();
-    void deleteRow(QWidget *widget);
+    void deleteRow();
 
  private:
     void loadTemplateDefaults();
@@ -94,7 +94,6 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     TextEditor *m_pEditor;
     QList<bool> m_bListEntryActive;
     QStringList m_sListEntries;
-    QSignalMapper *m_pSigMapDeleteRow;
     QList<QPushButton *> m_listDelRowButtons;
     bool m_bCalledSettings;
 };
