@@ -1461,15 +1461,13 @@ QString ProvisionalTplParser::parseOverview2(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
   QString sOutput(QString::fromUtf8(
-                    "<div class=\"package-list\">\n<div class=\"contents\">\n"
-                    "<p>Paketliste zum Kopieren: '''[#dummy apt-get]''' "
-                    "[#dummy aptitude]</p>\n<div class=\"bash\">"
-                    "<div class=\"contents\">\n<pre class=\"notranslate\"> "
+                    "<p>Paketliste zum Kopieren:</p>\n"
+                    "<div class=\"bash\">\n<pre class=\"notranslate\"> "
                     "sudo apt-get install"));
   foreach (QString s, sListArgs) {
     sOutput += " " + s;
   }
-  return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+  return sOutput + "</pre>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------
@@ -1520,22 +1518,18 @@ QString ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs) {
       sPackages += ",";
     }
   }
-  sOutput += QString::fromUtf8("\n[[Vorlage(Installbutton,%1)]]")
-             .arg(sPackages);
 
-  // Copy console output
-  sOutput += "<div class=\"package-list\">\n"
-             "<div class=\"contents\">\n"
-             "<p>";
-  sOutput += QString::fromUtf8("Paketliste zum Kopieren:");
-  sOutput += " '''[#dummy apt-get]''' [#dummy aptitude]</p>\n"
-             "<div class=\"bash\">"
-             "<div class=\"contents\">\n"
+  sOutput += "\n<p>" + QString::fromUtf8("Paketliste zum Kopieren:") + "</p>\n";
+  sOutput += "<div class=\"bash\">\n"
              "<pre class=\"notranslate\"> sudo apt-get install";
-  for (int i = 0; i < sListPackages.size(); i++) {
-    sOutput += " " + sListPackages[i].trimmed();
+  foreach (QString s, sListPackages) {
+    sOutput += " " + s.trimmed();
   }
-  return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+  sOutput += "</pre>\n</div>\n";
+  sOutput += "<p>" + QString::fromUtf8("Oder mit [:apturl:] die Pakete "
+                                       "installieren. Link: [apt://");
+  sOutput += sPackages;
+  return sOutput + "]</p>\n";
 }
 
 // ----------------------------------------------------------------------------
