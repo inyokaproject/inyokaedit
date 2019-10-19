@@ -91,6 +91,9 @@ Dingo
 eoan
 Eoan
 Ermine
+focal
+Focal
+Fossa
 Ubuntu
 Kubuntu
 Xubuntu

@@ -1,8 +1,7 @@
 ## Macro=[[Vorlage(Getestet, %%Ubuntuversion%%)]]
-
 {{|<title="Dieser Artikel wurde für die folgenden
 Ubuntu-Versionen getestet:" class="box tested_for">
-<@ if ['general', 'disco', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
+<@ if ['general', 'eoan', 'disco', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
