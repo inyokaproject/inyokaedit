@@ -468,8 +468,6 @@ void InyokaEdit::createMenus() {
     listTplDirs << userArticleTemplateDir;
   }
 
-  m_pSigMapOpenTemplate = new QSignalMapper(this);
-
   bool bFirstLoop(true);
   foreach (QDir tplDir, listTplDirs) {
     QFileInfoList fiListFiles = tplDir.entryInfoList(
@@ -479,11 +477,8 @@ void InyokaEdit::createMenus() {
         m_OpenTemplateFilesActions << new QAction(
                                         fi.baseName().replace("_", " "),
                                         this);
-        m_pSigMapOpenTemplate->setMapping(m_OpenTemplateFilesActions.last(),
-                                          fi.absoluteFilePath());
         connect(m_OpenTemplateFilesActions.last(), &QAction::triggered,
-                m_pSigMapOpenTemplate,
-                static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+                this, [this, fi]() { m_pFileOperations->loadFile(fi.absoluteFilePath()); });
       }
     }
 
@@ -495,11 +490,6 @@ void InyokaEdit::createMenus() {
     }
   }
   m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
-
-  connect(m_pSigMapOpenTemplate,
-          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          m_pFileOperations->m_pSigMapOpenTemplate,
-          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped));
 
   if (0 == m_OpenTemplateFilesActions.size()) {
     m_pUi->fileMenuFromTemplate->setDisabled(true);

@@ -83,7 +83,6 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
           this, &FileOperations::closeDocument);
 
   // Generate recent files list
-  m_pSigMapLastOpenedFiles = new QSignalMapper(this);
   for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
     if (i < m_pSettings->getRecentFiles().size()) {
       m_LastOpenedFilesAct << new QAction(
@@ -92,14 +91,9 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
       m_LastOpenedFilesAct << new QAction("EMPTY", this);
       m_LastOpenedFilesAct.at(i)->setVisible(false);
     }
-    m_pSigMapLastOpenedFiles->setMapping(m_LastOpenedFilesAct.at(i), i);
     connect(m_LastOpenedFilesAct.at(i), &QAction::triggered,
-            m_pSigMapLastOpenedFiles,
-            static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+            this, [this, i]() { openRecentFile(i); });
   }
-  connect(m_pSigMapLastOpenedFiles,
-          static_cast<void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
-          this, &FileOperations::openRecentFile);
 
   // Clear recent files list
   m_LastOpenedFilesAct.append(new QAction(this));
@@ -109,11 +103,6 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
 
   connect(m_pClearRecentFilesAct, &QAction::triggered,
           this, &FileOperations::clearRecentFiles);
-
-  m_pSigMapOpenTemplate = new QSignalMapper(this);
-  connect(m_pSigMapOpenTemplate,
-          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          this, [this](const QString &sFilename) { this->loadFile(sFilename); });
 
   connect(m_pSettings, &Settings::updateEditorSettings,
           this, &FileOperations::updateEditorSettings);

@@ -28,7 +28,6 @@
 #define APPLICATION_FILEOPERATIONS_H_
 
 #include <QAction>
-#include <QSignalMapper>
 #include <QTabWidget>
 #include <QTimer>
 
@@ -57,8 +56,6 @@ class FileOperations : public QObject {
                    const QStringList &sListTplMacros);
 
     void newFile(QString sFileName);
-
-    QSignalMapper *m_pSigMapOpenTemplate;
 
     TextEditor *getCurrentEditor();
     QList<TextEditor *> getEditors() const;
@@ -177,8 +174,6 @@ class FileOperations : public QObject {
     void updateRecentFiles(const QString &sFileName);
 
     void setCurrentEditor();
-
-    QSignalMapper *m_pSigMapLastOpenedFiles;  /**< Actions open recent files */
 
     QWidget *m_pParent;      /**< Pointer to parent window */
     QTabWidget *m_pDocumentTabs;

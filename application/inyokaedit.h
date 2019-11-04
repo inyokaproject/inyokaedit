@@ -143,7 +143,6 @@ class InyokaEdit : public QMainWindow {
 #endif
 
     QList<QAction *> m_OpenTemplateFilesActions;
-    QSignalMapper *m_pSigMapOpenTemplate;
 
     // Dynamically created menus/dropdowns/toolbuttons via XML file
     QList<QMenu *> m_pXmlMenus;

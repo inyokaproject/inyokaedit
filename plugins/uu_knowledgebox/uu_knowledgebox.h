@@ -32,7 +32,6 @@
 #include <QtPlugin>
 #include <QPushButton>
 #include <QSettings>
-#include <QSignalMapper>
 #include <QString>
 
 #include "../../application/texteditor.h"

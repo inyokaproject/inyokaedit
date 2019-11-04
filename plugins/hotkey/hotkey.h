@@ -33,7 +33,6 @@
 #include <QPushButton>
 #include <QShortcut>
 #include <QSettings>
-#include <QSignalMapper>
 #include <QString>
 
 #include "../../application/texteditor.h"
