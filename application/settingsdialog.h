@@ -33,7 +33,7 @@
 #include "./ieditorplugin.h"
 
 namespace Ui {
-  class SettingsDialog;
+class SettingsDialog;
 }
 class Settings;
 

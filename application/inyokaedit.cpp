@@ -47,7 +47,6 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
     m_sCurrLang(""),
-    m_pSigMapXmlActions(nullptr),
     m_sSharePath(sharePath.absolutePath()),
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
@@ -478,7 +477,9 @@ void InyokaEdit::createMenus() {
                                         fi.baseName().replace("_", " "),
                                         this);
         connect(m_OpenTemplateFilesActions.last(), &QAction::triggered,
-                this, [this, fi]() { m_pFileOperations->loadFile(fi.absoluteFilePath()); });
+                this, [this, fi]() {
+          m_pFileOperations->loadFile(fi.absoluteFilePath());
+        });
       }
     }
 
@@ -509,43 +510,38 @@ void InyokaEdit::createMenus() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::clearXmlMenus() {
-  if (nullptr != m_pSigMapXmlActions) {
-    disconnect(m_pSigMapXmlActions, nullptr, nullptr, nullptr);
-    foreach (QMenu *m, m_pXmlSubMenus) {
-      m->clear();
-    }
-    foreach (QMenu *m, m_pXmlMenus) {
-      m->clear();
-      m->deleteLater();
-    }
-    foreach (QComboBox *q, m_pXmlDropdowns) {
-      q->clear();
-    }
-
-    foreach (QToolBar *t, m_pXmlToolbars) {
-      t->clear();
-    }
-
-    foreach (QAction *a, m_pXmlActions) {
-      m_pUi->inyokaeditorBar->removeAction(a);
-      m_pUi->menuBar->removeAction(a);
-      m_pUi->samplesmacrosBar->removeAction(a);
-      foreach (QToolButton *b, m_pXmlToolbuttons) {
-        b->removeAction(a);
-      }
-      a->deleteLater();
-    }
-    m_pUi->inyokaeditorBar->clear();
-    m_pUi->samplesmacrosBar->clear();
-
-    m_pXmlActions.clear();
-    m_pXmlSubMenus.clear();
-    m_pXmlMenus.clear();
-    m_pXmlDropdowns.clear();
-    m_pXmlToolbuttons.clear();
-    delete m_pSigMapXmlActions;
+  foreach (QMenu *m, m_pXmlSubMenus) {
+    m->clear();
   }
-  m_pSigMapXmlActions = nullptr;
+  foreach (QMenu *m, m_pXmlMenus) {
+    m->clear();
+    m->deleteLater();
+  }
+  foreach (QComboBox *q, m_pXmlDropdowns) {
+    q->clear();
+  }
+
+  foreach (QToolBar *t, m_pXmlToolbars) {
+    t->clear();
+  }
+
+  foreach (QAction *a, m_pXmlActions) {
+    m_pUi->inyokaeditorBar->removeAction(a);
+    m_pUi->menuBar->removeAction(a);
+    m_pUi->samplesmacrosBar->removeAction(a);
+    foreach (QToolButton *b, m_pXmlToolbuttons) {
+      b->removeAction(a);
+    }
+    a->deleteLater();
+  }
+  m_pUi->inyokaeditorBar->clear();
+  m_pUi->samplesmacrosBar->clear();
+
+  m_pXmlActions.clear();
+  m_pXmlSubMenus.clear();
+  m_pXmlMenus.clear();
+  m_pXmlDropdowns.clear();
+  m_pXmlToolbuttons.clear();
 }
 
 // ----------------------------------------------------------------------------
@@ -562,8 +558,6 @@ void InyokaEdit::createXmlMenus() {
   sListObjects << "menu" << "dropdown" << "toolbar";
 
   this->clearXmlMenus();
-
-  m_pSigMapXmlActions = new QSignalMapper(this);
 
   // Check share and user path
   foreach (QString sPath, sListFolders) {
@@ -641,20 +635,18 @@ void InyokaEdit::createXmlMenus() {
                   QFile tmp(sTmpPath + xmlParser.getPath() + "/" +
                             xmlParser.getElementInserts().at(i).at(j));
                   if (tmp.exists()) {
-                    m_pSigMapXmlActions->setMapping(m_pXmlActions.last(),
-                                                    tmp.fileName());
+                    QString s(tmp.fileName());
+                    connect (m_pXmlActions.last(), &QAction::triggered,
+                             this, [this, s]() { insertMacro(s); });
                   } else {
                     qWarning() << "Tpl/Macro file not found for XML menu:" <<
                                   tmp.fileName();
                   }
                 } else {
-                  m_pSigMapXmlActions->setMapping(
-                        m_pXmlActions.last(),
-                        xmlParser.getElementInserts().at(i).at(j));
+                  QString s(xmlParser.getElementInserts().at(i).at(j));
+                  connect (m_pXmlActions.last(), &QAction::triggered,
+                           this, [this, s]() { insertMacro(s); });
                 }
-                connect(m_pXmlActions.last(), &QAction::triggered,
-                        m_pSigMapXmlActions,
-                        static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
               }
               if ("menu" == sObj) {
                 if (xmlParser.getGroupNames().at(i).isEmpty()) {
@@ -698,9 +690,6 @@ void InyokaEdit::createXmlMenus() {
       }
     }
   }
-  connect(m_pSigMapXmlActions,
-          static_cast<void(QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped),
-          this, &InyokaEdit::insertMacro);
 }
 
 // ----------------------------------------------------------------------------
@@ -1273,7 +1262,7 @@ void InyokaEdit::showSyntaxOverview() {
   sRet.replace("</style>", "#page table{margin:0px;}</style>");
   pTextDocument->setPlainText(sRet);
 
-  layout->setMargin(2);
+  layout->setContentsMargins(2, 2, 2, 2);
   layout->setSpacing(0);
   layout->addWidget(webview);
   dialog->setWindowTitle(tr("Syntax overview"));

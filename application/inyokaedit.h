@@ -45,7 +45,6 @@
 
 // Qt classes
 class QComboBox;
-class QSignalMapper;
 class QFile;
 class QDir;
 #ifdef USEQTWEBKIT
@@ -151,7 +150,6 @@ class InyokaEdit : public QMainWindow {
     QList<QToolBar *> m_pXmlToolbars;
     QList<QToolButton *> m_pXmlToolbuttons;
     QList<QAction *> m_pXmlActions;
-    QSignalMapper *m_pSigMapXmlActions;
 
     const QString m_sSharePath;
     const QDir m_UserDataDir;
