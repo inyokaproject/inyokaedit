@@ -40,21 +40,36 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
     m_sSharePath(sSharePath) {
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
+
+  // If share folder start parameter is used
+  QDir pluginsDir = sSharePath;
+  if (qApp->arguments().contains("-s") ||
+      qApp->arguments().contains("--share")) {
+    if (pluginsDir.cd("plugins")) {
+      listPluginsDir << pluginsDir;
+    }
+  }
   // Plugins in user folder
-  QDir pluginsDir = m_userDataDir;
+  pluginsDir = m_userDataDir;
   if (pluginsDir.cd("plugins")) {
-    listPluginsDir << pluginsDir;
+    if (!listPluginsDir.contains(pluginsDir)) {
+      listPluginsDir << pluginsDir;
+    }
   }
   // Plugins in app folder (Windows and debugging)
   pluginsDir.setPath(qApp->applicationDirPath());
   if (pluginsDir.cd("plugins")) {
-    listPluginsDir << pluginsDir;
+    if (!listPluginsDir.contains(pluginsDir)) {
+      listPluginsDir << pluginsDir;
+    }
   }
   // Plugins in standard installation folder (Linux)
   pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/"
                      + qApp->applicationName().toLower());
   if (pluginsDir.cd("plugins")) {
-    listPluginsDir << pluginsDir;
+    if (!listPluginsDir.contains(pluginsDir)) {
+      listPluginsDir << pluginsDir;
+    }
   }
 
   // Look for available plugins
@@ -71,12 +86,17 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
         if (piPlugin) {
           // Check for duplicates
           if (sListAvailablePlugins.contains(piPlugin->getPluginName())) {
+            qDebug() << "             ... skipping duplicate file!";
             continue;
           }
           sListAvailablePlugins << piPlugin->getPluginName();
           m_listPlugins << piPlugin;
           m_listPluginObjects << pPlugin;
+        } else {
+          qWarning() << "           ... invalid IEditorPlugin file!";
         }
+      } else {
+        qWarning() << "           ... plugin cannot be loaded!";
       }
     }
   }
