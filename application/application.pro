@@ -102,5 +102,10 @@ RESOURCES     = res/inyokaedit_resources.qrc \
                 res/translations.qrc
 win32:RC_FILE = res/inyokaedit_win.rc
 
+macx {
+    ICON             = res/images/icon.icns
+    QMAKE_INFO_PLIST = res/Info.plist
+}
+
 TRANSLATIONS += lang/inyokaedit_de.ts \
                 lang/inyokaedit_nl.ts
