@@ -37,12 +37,12 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                   const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
-#if defined _WIN32
-  m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+#if defined __linux__
+  m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
 #else
-  m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+  m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
 #endif

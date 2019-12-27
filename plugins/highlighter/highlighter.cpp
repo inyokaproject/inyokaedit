@@ -42,16 +42,16 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   Q_UNUSED(pEditor)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
-#if defined _WIN32
-  m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
-                              qApp->applicationName().toLower(),
-                              qApp->applicationName().toLower());
-  m_sExt = ".ini";
-#else
+#if defined __linux__
   m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
   m_sExt = ".conf";
+#else
+  m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+                              qApp->applicationName().toLower(),
+                              qApp->applicationName().toLower());
+  m_sExt = ".ini";
 #endif
   m_sSharePath = sSharePath;
 
@@ -251,11 +251,11 @@ void Highlighter::readStyle(const QString &sStyle) {
   }
   m_pStyleSet = nullptr;
 
-#if defined _WIN32
-  m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+#if defined __linux__
+  m_pStyleSet = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(), sStyle);
 #else
-  m_pStyleSet = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
+  m_pStyleSet = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(), sStyle);
 #endif
 

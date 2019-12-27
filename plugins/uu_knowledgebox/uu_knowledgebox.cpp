@@ -38,13 +38,13 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
   Q_UNUSED(userDataDir)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
-#if defined _WIN32
-  m_pSettings = new QSettings(QSettings::IniFormat,
+#if defined __linux__
+  m_pSettings = new QSettings(QSettings::NativeFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               PLUGIN_NAME);
 #else
-  m_pSettings = new QSettings(QSettings::NativeFormat,
+  m_pSettings = new QSettings(QSettings::IniFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               PLUGIN_NAME);

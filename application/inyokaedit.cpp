@@ -796,23 +796,23 @@ void InyokaEdit::highlightSyntaxError(const qint32 nPos) {
 // ----------------------------------------------------------------------------
 
 QColor InyokaEdit::getHighlightErrorColor() {
-#if defined _WIN32
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+#if defined __linux__
+  QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(),
                      qApp->applicationName().toLower());
 #else
-  QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(),
                      qApp->applicationName().toLower());
 #endif
   QString sStyle = settings.value("Plugin_highlighter/Style",
                                   "standard-style").toString();
 
-#if defined _WIN32
-  QSettings styleset(QSettings::IniFormat, QSettings::UserScope,
+#if defined __linux__
+  QSettings styleset(QSettings::NativeFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(), sStyle);
 #else
-  QSettings styleset(QSettings::NativeFormat, QSettings::UserScope,
+  QSettings styleset(QSettings::IniFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(), sStyle);
 #endif
   sStyle = styleset.value("Style/SyntaxError",
