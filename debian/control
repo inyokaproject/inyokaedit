@@ -63,7 +63,7 @@ Depends:
    ${shlibs:Depends},
    ${misc:Depends},
    inyokaedit (= ${binary:Version})
-Description: uu.de community files for Inyokaedit
+Description: ubuntuusers.de community files for InyokaEdit
  InyokaEdit provides offline support for Inyoka based portals like
  ubuntuusers.de.
  .
