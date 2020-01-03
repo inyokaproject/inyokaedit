@@ -529,8 +529,8 @@ QString Parser::generateTags(QTextDocument *pRawDoc) {
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
-    if (block.text().trimmed().startsWith("#tag:")
-        || block.text().trimmed().startsWith("# tag:")) {
+    if (block.text().trimmed().startsWith("#tag:") ||
+        block.text().trimmed().startsWith("# tag:")) {
       sLine = block.text();
       sTags = block.text().trimmed();
       sTags.remove("#tag:");
@@ -634,8 +634,9 @@ void Parser::generateParagraphs(QTextDocument *pRawDoc) {
       sDoc += block.text() + "\n";
     }
   }
+  sDoc += "</p>";
 
-  pRawDoc->setPlainText(sDoc + "</p>");
+  pRawDoc->setPlainText(sDoc.remove("<p>\n</p>\n"));
 }
 
 // ----------------------------------------------------------------------------
