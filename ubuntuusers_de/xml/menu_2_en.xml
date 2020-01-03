@@ -11,7 +11,7 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="InterWiki-Links" path="../iWikiLinks">
+<menu name="InterWiki-Links" path="../linkmap/icons">
   <group name="Inyoka" icon="user.png">
     <element name="Forum" insert="[forum:%%Forum%%:]" icon="" />
     <element name="Topic" insert="[topic:%%Topic%%:]" icon="" />
@@ -21,12 +21,12 @@
     <element name="Calendar" insert="[calendar:%%Calender%%:]" icon="calendar.png" />
     <element name="Inyoka-Ticket" insert="[ticket:%%Ticket%%:]" icon="ticket.png" />
     <element name="Wiki Tag" insert="[tag:%%Wiki-Tag%%:]" icon="" />
-    <element name="Behind Ubuntuusers" insert="[behind:%%Behind%%:]" icon="favicon.ico" />
-    <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="paste.png" />
-    <element name="Planet" insert="[planet:%%Article%%:]" icon="internet.png" />
+    <element name="Behind Ubuntuusers" insert="[behind:%%Behind%%:]" icon="" />
+    <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="favicon.ico" />
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
     <element name="Canonical" insert="[canonical:%%Sitename%%:]" icon="canonical.png" />
+    <element name="Canonical (subdomain)" insert="[canonicalsubdomain:%%Seitenname%%:]" icon="canonicalsubdomain_.png" />
     <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
     <element name="Canonical Voises" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
@@ -40,7 +40,7 @@
     <element name="Ubuntu Resources" insert="[ubunturesources:%%Sitename%%:]" icon="ubunturesources.png" />
     <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%App name%%:]" icon="ubuntuapps.png" />
     <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%App name%%:]" icon="uappexplorer.png" />
-    <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="openstore.png" />
+    <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="" />
     <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
     <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="omgubuntu.png" />
     <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
@@ -52,7 +52,7 @@
   <group name="Ubuntu derivatives" icon="kubuntu.png">
     <element name="Edubuntu" insert="[edubuntu:%%Sitename%%:]" icon="edubuntu.png" />
     <element name="Kubuntu" insert="[kubuntu:%%Sitename%%:]" icon="kubuntu.png" />
-    <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Sitename%%:]" icon="kubuntu_doc.png" />
+    <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Sitename%%:]" icon="kubuntu.png" />
     <element name="German Kubuntuwiki" insert="[kubuntu-de:%%Sitename%%:]" icon="kubuntu-de.png" />
     <element name="Lubuntu" insert="[lubuntu:%%Sitename%%:]" icon="lubuntu.png" />
     <element name="Mythbuntu" insert="[mythbuntu:%%Sitename%%:]" icon="mythbuntu.png" />
@@ -105,7 +105,7 @@
     <element name="Holarse" insert="[holarse:%%Sitename%%:]" icon="holarse.png" />
     <element name="Humble Bundle Store" insert="[humble:%%Sitename%%:]" icon="humble.png" />
     <element name="Indie DB Video Games" insert="[indiedb:%%Sitename%%:]" icon="indiedb.png" />
-    <element name="Linux Installers" insert="[liflg:%%Sitename%%:]" icon="liflg.png" />
+    <element name="Linux Installers" insert="[liflg:%%Sitename%%:]" icon="liflg.jpg" />
     <element name="Linux game database" insert="[lgdb:%%Sitename%%:]" icon="lgdb.png" />
     <element name="Linux Gaming" insert="[linuxgaming:%%Sitename%%:]" icon="linuxgaming.png" />
     <element name="Moby Games" insert="[moby:%%Sitename%%:]" icon="moby.png" />
@@ -114,7 +114,7 @@
   </group>
   <group name="Misc" icon="youtube.png">
     <element name="Blogspot" insert="[blogspot:%%Sitename%%:]" icon="blogspot.png" />
-    <element name="box.com" insert="[box:%%Sitename%%:]" icon="box.png" />
+    <element name="box.com" insert="[box:%%Sitename%%:]" icon="" />
     <element name="derStandard" insert="[derstandard:%%Sitename%%:]" icon="derstandard.png" />
     <element name="Diaspora" insert="[diaspora:%%Sitename%%:]" icon="diaspora.png" />
     <element name="DuckDuckGo" insert="[duckduckgo:%%Search term%%:]" icon="duckduckgo.png" />
@@ -122,7 +122,7 @@
     <element name="EAN" insert="[ean:%%EAN%%:]" icon="ean.png" />
     <element name="Facebook" insert="[fb:%%Sitename%%:]" icon="fb.png" />
     <element name="Freenode Web IRC" insert="[freenode:%%IRC Name%%:]" icon="freenode.png" />
-    <element name="Google" insert="[google:%%Search term%%:]" icon="" />
+    <element name="Google" insert="[google:%%Search term%%:]" icon="google.png" />
     <element name="heise online" insert="[heise:%%Sitename%%:]" icon="heise.png" />
     <element name="Identica" insert="[identica:%%Sitename%%:]" icon="identica.png" />
     <element name="Internet Wayback Machine" insert="[iawm:%%Sitename%%:]" icon="iawm.png" />
