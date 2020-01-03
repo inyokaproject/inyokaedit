@@ -50,7 +50,7 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
                      m_sListFlags, m_sListFlagsImg);
   m_sListSmilies.clear();
   m_sListSmiliesImg.clear();
-  this->initMappings(sPath + "/SmileysMap.conf", '=',
+  this->initMappings(sPath + "/SmileysMap.csv", ',',
                      m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
 
