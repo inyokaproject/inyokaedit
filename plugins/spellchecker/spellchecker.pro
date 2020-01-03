@@ -65,7 +65,7 @@ CONFIG       += c++11
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
   DEFINES    += QT_DEPRECATED_WARNINGS
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051300
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051400
 }
 
 HEADERS      += spellcheckdialog.h \

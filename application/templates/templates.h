@@ -63,6 +63,7 @@ class Templates {
     void initTemplates(const QString &sTplPath);
     void initHtmlTpl(const QString &sFileName);
     void initMappings(const QString &sFileName,
+                      const QChar &cSplit,
                       QStringList &sListElements,
                       QStringList &sListMapping);
     void initTextformats(const QString &sFileName);

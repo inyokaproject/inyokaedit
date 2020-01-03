@@ -266,10 +266,10 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
             QString sTmpUrl(
                   m_sListInterwikiLink[m_sListInterwikiKey.indexOf(
                   sListLink[0])]);
-            // Check for iWikilink with $Page
-            if (sTmpUrl.contains("$Page", Qt::CaseInsensitive)) {
-              sTmpUrl.replace("$Page", sListLink[1],
-                  Qt::CaseInsensitive);
+            // Check for iWikilink with PAGE
+            if (sTmpUrl.contains("PAGE", Qt::CaseSensitive)) {
+              sTmpUrl.replace("PAGE", sListLink[1],
+                  Qt::CaseSensitive);
             } else {
               sTmpUrl.append(sListLink[1]);
             }
