@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2012-2019 The InyokaEdit developers
+#  Copyright (C) 2012-2020 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ DESTDIR       = ../
 
 VERSION       = 1.3.2
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2019 - Christian Schärf, Thorsten Roth"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2020 - Christian Schärf, Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \
