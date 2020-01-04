@@ -46,7 +46,7 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
 
   m_sListFlags.clear();
   m_sListFlagsImg.clear();
-  this->initMappings(sPath + "/FlagsMap.conf", '=',
+  this->initMappings(sPath + "/flagmap/flagmap.csv", ',',
                      m_sListFlags, m_sListFlagsImg);
   m_sListSmilies.clear();
   m_sListSmiliesImg.clear();

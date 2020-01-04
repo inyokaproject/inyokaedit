@@ -46,7 +46,7 @@ void ParseImgMap::startParsing(QTextDocument *pRawDoc,
     }
     sDoc.replace(sListElements[i],
                  "<img src=\"" + sSharePath + "/community/" + sCommunity +
-                 "/web/" + sListImages[i] + "\" />");
+                 "/" + sListImages[i] + "\" />");
   }
 
   // Replace raw document with new replaced doc
