@@ -1170,17 +1170,17 @@ QString ProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
     } else if (sListTmpKeys[i] == "lmt"
                || sListTmpKeys[i] == "lmb") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/mouse_left.png,"
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_left.png,"
                  "alt=\"linke Maustaste\")]]";
     } else if (sListTmpKeys[i] == "rmt"
                || sListTmpKeys[i] == "rmb") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/mouse_right.png, "
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_right.png, "
                  "alt=\"rechte Maustaste\")]]";
     } else if (sListTmpKeys[i] == "mmt"
                || sListTmpKeys[i] == "mmb") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/mouse_midd.png, "
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_midd.png, "
                  "alt=\"mittlere Maustaste\")]]";
     } else if (sListTmpKeys[i] == "pfeiltasten") {
       bImage = true;
@@ -1193,17 +1193,17 @@ QString ProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
     } else if (sListTmpKeys[i] == "menue"
                || sListTmpKeys[i] == "menue-taste") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/menu.png, alt=\"Menü\")]]";
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/menu.png, alt=\"Menü\")]]";
     } else if (sListTmpKeys[i] == "power"
                || sListTmpKeys[i] == "an") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/power.png, alt=\"Power\")]]";
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/power.png, alt=\"Power\")]]";
     } else if (sListTmpKeys[i] == "tux") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/tux.png, alt=\"Tux\")]]";
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/tux.png, alt=\"Tux\")]]";
     } else if (sListTmpKeys[i] == "ubuntu") {
       bImage = true;
-      sTmpKey += "[[Bild(img/wiki/ubuntu.png, alt=\"Ubuntu\")]]";
+      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/ubuntu.png, alt=\"Ubuntu\")]]";
     } else if (sListTmpKeys[i] == "at") {
       sTmpKeyCode = "&#64;";
     } else if (sListTmpKeys[i] == "cherry"
@@ -1553,7 +1553,7 @@ QString ProvisionalTplParser::parsePkgInstallBut(const QStringList &sListArgs) {
 
   sOutput += "\" rel=\"nofollow\" class=\"external\">"
              "<img src=\"" + m_sSharePath + "/community/" +
-             m_sCommunity + "/web" + "/img/wiki/button.png\" "
+             m_sCommunity + "/web/Wiki/Vorlagen/Installbutton/button.png\" "
              "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
              "mit [:apturl:]</p>";
 

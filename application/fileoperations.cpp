@@ -498,8 +498,7 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
       nOffset += imgTagRegex.matchedLength();
       img.setFile(imgTagRegex.cap(1).remove("file:///"));  // (Windows file:///)
       if (sListFiles.contains(img.fileName()) ||
-          img.absoluteFilePath().contains("/web/Wiki/", Qt::CaseInsensitive) ||
-          img.absoluteFilePath().contains("/web/img/", Qt::CaseInsensitive)) {
+          img.absoluteFilePath().contains("/community/", Qt::CaseInsensitive)) {
         continue;  // Filter duplicates or community images
       } else {
         sListFiles << img.fileName();
