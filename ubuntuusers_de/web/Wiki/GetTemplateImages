@@ -1,0 +1,84 @@
+#!/bin/bash
+# GetTemplateImages from ubuntuusers.de
+# this file is part of InyokaEdit
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+# MA 02110-1301, USA.
+#
+
+baseurl="https://wiki.ubuntuusers.de/"
+
+if [ ! -d Vorlagen ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\"..."
+    mkdir Vorlagen
+fi
+cd Vorlagen
+
+
+if [ ! -d Installbutton ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\Installbutton\"..."
+    mkdir Installbutton
+fi
+cd Installbutton
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Installbutton/button.png" -O button.png
+cd ..
+
+
+if [ ! -d PPA ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\PPA\"..."
+    mkdir PPA
+fi
+cd PPA
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/PPA/ppa.png" -O ppa.png
+cd ..
+
+
+if [ ! -d StatusIcon ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\StatusIcon\"..."
+    mkdir StatusIcon
+fi
+cd StatusIcon
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/ja.png" -O ja.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/alpha.png" -O alpha.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/bedingt.png" -O bedingt.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/plugin.png" -O plugin.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/buggy.png" -O buggy.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/nein.png" -O nein.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/unbekannt.png" -O unbekannt.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/manuell.png" -O manuell.png
+cd ..
+
+
+if [ ! -d Tasten ]
+  then
+    echo "Creating folder \"Wiki\Vorlagen\Tasten\"..."
+    mkdir Tasten
+fi
+cd Tasten
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_left.png" -O mouse_left.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_midd.png" -O mouse_midd.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_right.png" -O mouse_right.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/menu.png" -O menu.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/power.png" -O power.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/tux.png" -O tux.png
+wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/ubuntu.png" -O ubuntu.png
+cd ..
+cd ..
+
+echo "DOWNLOAD OF WIKI TEMPLATE IMAGES FINISHED"
