@@ -80,6 +80,7 @@ QString ParseTable::createTable(const QStringList &sListLines) {
   QString sTmpStyle("");
 
   QRegExp formatPattern("\\<{1,1}.+\\>{1,1}");
+  QRegExp tableClassPattern("tableclass=\\\"[\\w\\s:;%#-=]+\\\"");
   QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-=]+\\\"");
   QRegExp rowClassPattern("rowclass=\\\"[\\w.%-]+\\\"");
   QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-=]+\\\"");
@@ -110,13 +111,17 @@ QString ParseTable::createTable(const QStringList &sListLines) {
 
       if (0 == nCell) {
         if (0 == nLine) {
+          QString sTmpClass("");
+          if (tableClassPattern.indexIn(sFormating) >= 0) {
+            sTmpClass = tableClassPattern.cap();
+            sTmpClass = " class=" + sTmpClass.remove("tableclass=");
+          }
+          sTmpStyle.clear();
           if (tableStylePattern.indexIn(sFormating) >= 0) {
             sTmpStyle = tableStylePattern.cap();
-            sRet = "<table style=" +sTmpStyle.remove("tablestyle=")
-                   + ">\n<tbody>\n";
-          } else {
-            sRet = "<table>\n<tbody>\n";
+            sTmpStyle = " style=" + sTmpStyle.remove("tablestyle=");
           }
+          sRet = "<table" + sTmpClass + sTmpStyle + ">\n<tbody>\n";
         }
 
         // New row

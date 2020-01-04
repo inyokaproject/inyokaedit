@@ -1787,6 +1787,7 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
   QRegExp connectRows("\\|\\d{1,2}");
   QRegExp rowclassPattern("rowclass=\\\"[\\w.%-]+\\\"");
   QRegExp cellclassPattern("cellclass=\\\"[\\w.%-]+\\\"");
+  QRegExp tableClassPattern("tableclass=\\\"[\\w\\s:;%#-]+\\\"");
 
   QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-]+\\\"");
   QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-]+\\\"");
@@ -1796,13 +1797,17 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
   QString sTmpCellStyle, sStyleInfo, sTmpTD;
 
   if (sArgs.length() >= 2) {
+    QString sTmpClass("");
+    if (tableClassPattern.indexIn(sArgs[1]) >= 0) {
+      sTmpClass = tableClassPattern.cap();
+      sTmpClass = " class=" + sTmpClass.remove("tableclass=");
+    }
+    sTmpCellStyle.clear();
     if (tableStylePattern.indexIn(sArgs[1]) >= 0) {
       sTmpCellStyle = tableStylePattern.cap();
-      sOutput = "<table style=" + sTmpCellStyle.remove("tablestyle=")
-                + ">\n<tbody>\n";
-    } else {
-      sOutput = "<table>\n<tbody>\n";
+      sTmpCellStyle = " style=" + sTmpCellStyle.remove("tablestyle=");
     }
+    sOutput = "<table" + sTmpClass + sTmpCellStyle + ">\n<tbody>\n";
   } else {
     sOutput = "<table>\n<tbody>\n";
   }
