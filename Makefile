@@ -16,10 +16,11 @@ MAKE := make
 
 ICON_SIZES = 16 24 32 48 64 96 128 256 512
 
-MAKEFILE = inyokaedit.mk
-INFILES = \
-	man/inyokaedit.1 \
-	man/de/inyokaedit.1
+MAKEFILE  = inyokaedit.mk
+MAKEFILE2 = plugins.mk
+INFILES   = \
+	  man/inyokaedit.1 \
+	  man/de/inyokaedit.1
 
 exec_prefix = $(prefix)
 bindir = $(prefix)/bin
@@ -27,10 +28,16 @@ libdir = $(prefix)/lib
 dataroot = $(prefix)/share
 
 
-all:
-	$(QMAKE) -o $(MAKEFILE)
-	$(MAKE) -f $(MAKEFILE)
+all:	app allplugins
+
+app:
+	$(QMAKE) application/application.pro -o application/$(MAKEFILE)
+	$(MAKE) -C application -f $(MAKEFILE)
 	$(LRELEASE) application/lang/*.ts
+
+allplugins:
+	$(QMAKE) plugins/plugins.pro -o plugins/$(MAKEFILE2)
+	$(MAKE) -C plugins -f $(MAKEFILE2)
 	$(LRELEASE) plugins/highlighter/lang/*.ts
 	$(LRELEASE) plugins/hotkey/lang/*.ts
 	$(LRELEASE) plugins/spellchecker/lang/*.ts
@@ -89,10 +96,12 @@ uninstall:
 	$(foreach SIZE,$(ICON_SIZES),$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/$(SIZE)x$(SIZE)/apps/inyokaedit.png ;)
 
 clean:
-	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) clean
+	[ ! -f application/$(MAKEFILE) ] || $(MAKE) -C application -f $(MAKEFILE) clean
+	[ ! -f plugins/$(MAKEFILE2) ] || $(MAKE) -C plugins -f $(MAKEFILE2) clean
 	$(RM) $(INFILES)
 	$(RM) plugins/*.so
 
 distclean: clean
-	[ ! -f $(MAKEFILE) ] || $(MAKE) -f $(MAKEFILE) distclean
+	[ ! -f application/$(MAKEFILE) ] || $(MAKE) -C application -f $(MAKEFILE) distclean
+	[ ! -f plugins/$(MAKEFILE2) ] || $(MAKE) -C plugins -f $(MAKEFILE2) distclean
 	$(RM) config.mak
