@@ -86,6 +86,9 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   // Load table styles
   m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
+  m_sListTableClasses << "zebra" << "zebra_start2" << "zebra_start3";
+  m_sListTableClasses = m_pSettings->value("TableClasses",
+                                           m_sListTableClasses).toStringList();
   m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
                      << "Ubuntu Studio" << "Lubuntu";
   m_sListTableStyles = m_pSettings->value("TableStyles",
@@ -100,6 +103,7 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_sRowClassHighlight = m_pSettings->value(
                            "RowClassHighlight", "highlight").toString();
 
+  m_pSettings->setValue("TableClasses", m_sListTableClasses);
   m_pSettings->setValue("TableStyles", m_sListTableStyles);
   m_pSettings->setValue("TableStylesPrefix", m_sListTableStylesPrefix);
   m_pSettings->setValue("RowClassTitle", m_sRowClassTitle);
@@ -235,21 +239,43 @@ void Uu_TableTemplate::preview() {
 
 QString Uu_TableTemplate::generateTable() {
   QString sTab("{{{#!vorlage Tabelle\n");
+  QString sTableClass("");
   int colsNum = m_pUi->colsNum->value();
   int rowsNum = m_pUi->rowsNum->value();
 
+  if (m_pUi->HighlightSecondBox->isChecked() &&
+      // Use only, if default style is used; otherwiese highlight every second.
+      0 == m_pUi->tableStyleBox->currentIndex()) {
+    if (m_pUi->showTitleBox->isChecked() && m_pUi->showHeadBox->isChecked()) {
+      sTableClass = "tableclass=\"" + m_sListTableClasses[2] + "\" ";
+    } else if ((m_pUi->showTitleBox->isChecked() &&
+               !m_pUi->showHeadBox->isChecked()) ||
+               (!m_pUi->showTitleBox->isChecked() &&
+                m_pUi->showHeadBox->isChecked())) {
+      sTableClass = "tableclass=\"" + m_sListTableClasses[1] + "\" ";
+    } else {
+      sTab += "<tableclass=\"" + m_sListTableClasses[0] + "\">";
+    }
+  }
+
   // Create title if set
   if (m_pUi->showTitleBox->isChecked()) {
-    sTab += QString("<rowclass=\"%1%2\"-%3> %4\n+++\n")
+    sTab += QString("<" + sTableClass + "rowclass=\"%1%2\"-%3> %4\n+++\n")
             .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
         m_sRowClassTitle, QString::number(colsNum), tr("Title"));
   }
 
   // Create head if set
   if (m_pUi->showHeadBox->isChecked()) {
-    sTab += QString("<rowclass=\"%1%2\"> ")
-            .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
-        m_sRowClassHead);
+    if (m_pUi->showTitleBox->isChecked()) {
+      sTab += QString("<rowclass=\"%1%2\"> ")
+              .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+          m_sRowClassHead);
+    } else {
+      sTab += QString("<" + sTableClass + "rowclass=\"%1%2\"> ")
+              .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+          m_sRowClassHead);
+    }
 
     for (int i = 0; i < colsNum; i++) {
       sTab += QString(tr("Head") + " %1 \n").arg(i + 1);
@@ -260,9 +286,11 @@ QString Uu_TableTemplate::generateTable() {
 
   // Create body
   for (int i = 0; i < rowsNum; i++) {
-    if (m_pUi->HighlightSecondBox->isChecked() && 1 == i % 2) {
-      sTab += QString("<rowclass=\"%1%2\">")
-              .arg(
+    if (m_pUi->HighlightSecondBox->isChecked() &&
+        // Use only, if non-default style is used; otherwiese use "zebra" class.
+        0 != m_pUi->tableStyleBox->currentIndex() &&
+        1 == i % 2) {
+      sTab += QString("<rowclass=\"%1%2\">").arg(
                 m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
           m_sRowClassHighlight);
     }

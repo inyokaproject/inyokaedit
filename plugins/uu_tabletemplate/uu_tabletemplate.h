@@ -115,6 +115,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
 
     QTranslator m_translator;
     QString m_sSharePath;
+    QStringList m_sListTableClasses;
     QStringList m_sListTableStyles;
     QStringList m_sListTableStylesPrefix;
     QString m_sRowClassTitle;
