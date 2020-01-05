@@ -84,7 +84,6 @@
     <element name="Debian Bugs" insert="[debianbug:%%Bug%%:]" icon="debianbug.png" />
     <element name="Freshmeat" insert="[freshmeat:%%Sitename%%:]" icon="freshmeat.png" />
     <element name="Freedesktop Bugs" insert="[freedesktop:%%Sitename%%:]" icon="freedesktop.png" />
-    <element name="GetDeb" insert="[getdeb:%%Sitename%%:]" icon="getdeb.png" />
     <element name="GitHub" insert="[github:%%Sitename%%:]" icon="github.png" />
     <element name="Gnome Bugs" insert="[gnome:%%Sitename%%:]" icon="gnome.png" />
     <element name="Google Code" insert="[googlecode:%%Sitename%%:]" icon="googlecode.png" />
@@ -95,7 +94,6 @@
     <element name="Bug (Launchpad)" insert="[bug:%%LP-Bug number%%:]" icon="bug.png" />
     <element name="Launchpad Answers" insert="[launchpad_answers:%%Sitename%%:]" icon="launchpad.png" />
     <element name="Launchpad User" insert="[lpuser:%%LP-user%%:]" icon="lpuser.png" />
-    <element name="PlayDeb" insert="[playdeb:%%Sitename%%:]" icon="playdeb.png" />
     <element name="Sourceforge" insert="[sourceforge:%%Sitename%%:]" icon="sourceforge.png" />
     <element name="Sourceforge 2" insert="[sourceforge2:%%Sitename%%:]" icon="sourceforge2.png" />
   </group>
