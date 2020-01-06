@@ -98,7 +98,6 @@
     <element name="Sourceforge 2" insert="[sourceforge2:%%Seitenname%%:]" icon="sourceforge2.png" />
   </group>
   <group name="Spiele" icon="holarse.png">
-    <element name="Desura" insert="[desura:%%Seitenname%%:]" icon="desura.png" />
     <element name="GOG.com Games catalogue" insert="[gog:%%Seitenname%%:]" icon="gog.png" />
     <element name="Holarse" insert="[holarse:%%Seitenname%%:]" icon="holarse.png" />
     <element name="Humble Bundle Store" insert="[humble:%%Seitenname%%:]" icon="humble.png" />
