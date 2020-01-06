@@ -4,7 +4,7 @@ branches:
   - master
 image: Visual Studio 2017
 install:
-- ps: (Get-Content inyokaedit.pro).replace("plugins/spellchecker ", '') | Set-Content inyokaedit.pro
+- ps: (Get-Content plugins/plugins.pro).replace("spellchecker ", '') | Set-Content plugins/plugins.pro
 build_script:
 - cmd: >-
     git clone -b windows_files --single-branch https://github.com/inyokaproject/inyokaedit.git windows_files
@@ -42,6 +42,8 @@ build_script:
     copy README.md InyokaEdit\
 
     copy windows_files\OpenSSL_x64\* InyokaEdit\
+
+    echo n | copy /-y windows_files\bearer\qnativewifibearer.dll InyokaEdit\bearer\
 
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
