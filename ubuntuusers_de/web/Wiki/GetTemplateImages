@@ -19,66 +19,36 @@
 #
 
 baseurl="https://wiki.ubuntuusers.de/"
+midurl="Wiki/Vorlagen/"
+metaurl="/a/export/meta"
+imgurl="_image?target="
+tpl_array=(Installbutton PPA StatusIcon Tasten)
 
 if [ ! -d Vorlagen ]
   then
-    echo "Creating folder \"Wiki\Vorlagen\"..."
+    echo "Creating folder \"Vorlagen\"..."
     mkdir Vorlagen
 fi
+rm -r ./Vorlagen/*
 cd Vorlagen
 
+for tpl in "${tpl_array[@]}"
+do
+  if [ ! -d ${tpl} ]
+    then
+      echo "Creating folder \"${tpl}\"..."
+      mkdir ${tpl}
+  fi
+  cd ${tpl}
 
-if [ ! -d Installbutton ]
-  then
-    echo "Creating folder \"Wiki\Vorlagen\Installbutton\"..."
-    mkdir Installbutton
-fi
-cd Installbutton
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Installbutton/button.png" -O button.png
+  xattach=($(wget -qO- "${baseurl}${midurl}${tpl}${metaurl}" | grep -Eo "${midurl}${tpl}/[0-9a-zA-Z._-]*\.(jpe?g|png|bmp|gif|svg|tiff|tif)"))
+  for i in "${xattach[@]}"
+  do
+    basename="${i##*/}"
+    wget -nv "${baseurl}${imgurl}${i}" -O $basename
+  done
+  cd ..
+done
+
 cd ..
-
-
-if [ ! -d PPA ]
-  then
-    echo "Creating folder \"Wiki\Vorlagen\PPA\"..."
-    mkdir PPA
-fi
-cd PPA
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/PPA/ppa.png" -O ppa.png
-cd ..
-
-
-if [ ! -d StatusIcon ]
-  then
-    echo "Creating folder \"Wiki\Vorlagen\StatusIcon\"..."
-    mkdir StatusIcon
-fi
-cd StatusIcon
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/ja.png" -O ja.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/alpha.png" -O alpha.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/bedingt.png" -O bedingt.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/plugin.png" -O plugin.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/buggy.png" -O buggy.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/nein.png" -O nein.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/unbekannt.png" -O unbekannt.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/StatusIcon/manuell.png" -O manuell.png
-cd ..
-
-
-if [ ! -d Tasten ]
-  then
-    echo "Creating folder \"Wiki\Vorlagen\Tasten\"..."
-    mkdir Tasten
-fi
-cd Tasten
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_left.png" -O mouse_left.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_midd.png" -O mouse_midd.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/mouse_right.png" -O mouse_right.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/menu.png" -O menu.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/power.png" -O power.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/tux.png" -O tux.png
-wget -nv "${baseurl}_image?target=Wiki/Vorlagen/Tasten/ubuntu.png" -O ubuntu.png
-cd ..
-cd ..
-
 echo "DOWNLOAD OF WIKI TEMPLATE IMAGES FINISHED"
