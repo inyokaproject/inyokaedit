@@ -126,6 +126,7 @@ QString Parser::genOutput(const QString &sActFile,
                             m_sCommunity);
   // this->replaceFlags(m_pRawText);
 
+  this->replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
   // Replace smilies
   ParseTxtMap::startParsing(m_pRawText,
                             m_pTemplates->getListSmilies(),
@@ -138,7 +139,6 @@ QString Parser::genOutput(const QString &sActFile,
                                  m_pTemplates->getListFormatHtmlEnd());
 
   this->replaceQuotes(m_pRawText);
-  this->replaceHorLines(m_pRawText);
   this->generateParagraphs(m_pRawText);
   this->replaceFootnotes(m_pRawText);
 

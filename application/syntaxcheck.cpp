@@ -139,7 +139,7 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         sMacro.remove(")]]");  // Needed if no "," is used
         sMacro = sMacro.trimmed();
 
-        if (sListTplMacros.contains(sMacro)) {
+        if (sListTplMacros.contains(sMacro, Qt::CaseInsensitive)) {
           sMacro.clear();
         }
       } else if (sMacro.startsWith("{{{#!" + sListTrans[i] + " ",
