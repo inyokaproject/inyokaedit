@@ -27,12 +27,13 @@
 #ifndef PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_
 #define PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_
 
+#include <QRegularExpression>
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QVector>
 
 struct HighlightingRule {
-  QRegExp pattern;
+  QRegularExpression regexp;
   QTextCharFormat format;
 };
 class QTextDocument;

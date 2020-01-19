@@ -706,44 +706,54 @@ void Highlighter::defineRules() {
   m_highlightingRules.clear();
 
   // Headings (= Heading =)
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_headingsFormat;
   for (int i = 5; i > 0; i--) {
-    rule.pattern = QRegExp("^\\s*={" + QString::number(i) + "}[^=]+={" +
-                           QString::number(i) + "}\\s*$");
+    rule.regexp = QRegularExpression("^\\s*={" + QString::number(i) +
+                                     "}[^=]+={" + QString::number(i) +
+                                     "}\\s*$");
     m_highlightingRules.append(rule);
   }
 
   // Links - everything between [...]
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_linksFormat;
-  rule.pattern = QRegExp("\\[{1,1}.+\\]{1,1}");
+  rule.regexp = QRegularExpression("\\[{1,1}.+\\]{1,1}");
   m_highlightingRules.append(rule);
 
   // Cell style in tables
   rule.format = m_tablecellsFormat;
-  rule.pattern = QRegExp("^\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+  rule.regexp = QRegularExpression(
+                  "^[<]{1,1}.*[>]{1,1}",
+                  QRegularExpression::MultilineOption |
+                  QRegularExpression::DotMatchesEverythingOption);
   m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("\\|\\|\\s*\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
+  rule.regexp = QRegularExpression(
+                  "[|][|] *[<]{1,1}.*[>]{1,1}",
+                  QRegularExpression::DotMatchesEverythingOption);
   m_highlightingRules.append(rule);
 
   // New table line
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_newTableLineFormat;
-  rule.pattern = QRegExp("^\\+{3}$");
+  rule.regexp = QRegularExpression("^\\+{3}$");
   m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("\\|\\|");
+  rule.regexp = QRegularExpression("\\|\\|");
   m_highlightingRules.append(rule);
 
   // Image map elements (flags, smilies, etc.)
   sListRegExpPatterns.clear();
   foreach (QString tmpStr, m_pTemplates->getListFlags()) {
-    sListRegExpPatterns << QRegExp::escape(tmpStr);
+    sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
   // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
   foreach (QString tmpStr, m_pTemplates->getListSmilies()) {
-    sListRegExpPatterns << QRegExp::escape(tmpStr);
+    sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   foreach (const QString &sPattern, sListRegExpPatterns) {
     rule.format = m_imgMapFormat;
-    rule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+    rule.regexp = QRegularExpression(sPattern);
     m_highlightingRules.append(rule);
   }
 
@@ -752,37 +762,37 @@ void Highlighter::defineRules() {
   foreach (QString tmpStr, m_pTemplates->getListIWLs()) {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   foreach (const QString &sPattern, sListRegExpPatterns) {
     rule.format = m_interwikiLinksFormat;
-    rule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+    rule.regexp = QRegularExpression(sPattern);
     m_highlightingRules.append(rule);
   }
 
   // Macros ([[Vorlage(...) etc.)
   sListRegExpPatterns.clear();
   foreach (QString tmpStr, m_sListMacroKeywords) {
-    sListRegExpPatterns << QRegExp::escape("[[" + tmpStr + "(");
+    sListRegExpPatterns << "\\[\\[" + tmpStr + "\\ *\\(";
   }
-  // Bad workaround for space between keyword and (
-  foreach (QString tmpStr, m_sListMacroKeywords) {
-    sListRegExpPatterns << QRegExp::escape("[[" + tmpStr + " (");
-  }
-  sListRegExpPatterns << QRegExp::escape(")]]");
+  sListRegExpPatterns << "\\)\\]\\]";
+  rule.regexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   foreach (const QString &sPattern, sListRegExpPatterns) {
     rule.format = m_macrosFormat;
-    rule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
+    rule.regexp.setPattern(sPattern);
     m_highlightingRules.append(rule);
   }
 
   // Parser ({{{#!code etc.)
   sListRegExpPatterns.clear();
   foreach (QString tmpStr, m_sListParserKeywords) {
-    sListRegExpPatterns << QRegExp::escape("{{{#!" + tmpStr);
+    sListRegExpPatterns << QRegularExpression::escape("{{{#!" + tmpStr);
   }
-  sListRegExpPatterns << QRegExp::escape("{{{") << QRegExp::escape("}}}");
+  sListRegExpPatterns << QRegularExpression::escape("{{{") <<
+                         QRegularExpression::escape("}}}");
+  rule.regexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   foreach (const QString &sPattern, sListRegExpPatterns) {
     rule.format = m_parserFormat;
-    rule.pattern = QRegExp(sPattern, Qt::CaseInsensitive);
+    rule.regexp.setPattern(sPattern);
     m_highlightingRules.append(rule);
   }
 
@@ -791,54 +801,49 @@ void Highlighter::defineRules() {
   sListRegExpPatterns.append(m_pTemplates->getListFormatStart());
   sListRegExpPatterns.append(m_pTemplates->getListFormatEnd());
   sListRegExpPatterns.removeDuplicates();
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   foreach (QString sPattern, sListRegExpPatterns) {
     rule.format = m_textformatFormat;
     if (sPattern.startsWith("RegExp=")) {
       sTmpRegExp = sPattern.remove("RegExp=");
     } else {
-      sTmpRegExp = QRegExp::escape(sPattern);
+      sTmpRegExp = QRegularExpression::escape(sPattern);
     }
-    rule.pattern = QRegExp(sTmpRegExp, Qt::CaseSensitive);
+    rule.regexp = QRegularExpression(sTmpRegExp);
     m_highlightingRules.append(rule);
   }
 
   // Comments (## comment)
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_commentFormat;
-  rule.pattern = QRegExp("^##.*$");
+  rule.regexp = QRegularExpression("^##.*$");
   m_highlightingRules.append(rule);
 
   // List
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_listFormat;
-  rule.pattern = QRegExp("^\\s+\\*\\s+");
+  rule.regexp = QRegularExpression("^\\s+\\*\\s+");
   m_highlightingRules.append(rule);
   rule.format = m_listFormat;
-  rule.pattern = QRegExp("^\\s+1\\.\\s+");
-  m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^\\s+a\\.\\s+");
-  m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^\\s+A\\.\\s+");
-  m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^\\s+i\\.\\s+");
-  m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^\\s+I\\.\\s+");
+  rule.regexp = QRegularExpression("^\\s+[1aAiI]\\.\\s+");
   m_highlightingRules.append(rule);
 
   // Misc
   sListRegExpPatterns.clear();
-  sListRegExpPatterns << QRegExp::escape("[[BR]]") << QRegExp::escape("\\\\");
+  sListRegExpPatterns << QRegularExpression::escape("[[BR]]") <<
+                         QRegularExpression::escape("\\\\");
+  rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   foreach (const QString &sPattern, sListRegExpPatterns) {
-    rule.pattern = QRegExp(sPattern, Qt::CaseSensitive);
+    rule.regexp = QRegularExpression(sPattern);
     rule.format = m_miscFormat;
     m_highlightingRules.append(rule);
   }
   rule.format = m_miscFormat;
-  rule.pattern = QRegExp("^#tag:");
+  rule.regexp = QRegularExpression("^# *tag:");
   m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^# tag:");
+  rule.regexp = QRegularExpression("^----$");
   m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^----$");
-  m_highlightingRules.append(rule);
-  rule.pattern = QRegExp("^>+");
+  rule.regexp = QRegularExpression("^>+");
   m_highlightingRules.append(rule);
 }
 

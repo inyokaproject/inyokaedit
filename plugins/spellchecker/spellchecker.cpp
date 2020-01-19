@@ -62,6 +62,7 @@
 #include <QTextCodec>
 #include <QTextStream>
 #include <QStringList>
+#include <QRegularExpression>
 
 SpellChecker::~SpellChecker() {
 }
@@ -250,14 +251,17 @@ bool SpellChecker::initDictionaries() {
   QFile _affixFile(sAffixFile);
   if (_affixFile.open(QIODevice::ReadOnly)) {
     QTextStream stream(&_affixFile);
-    QRegExp enc_detector("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*",
-                         Qt::CaseInsensitive);
-    for (QString sLine = stream.readLine();
-         !sLine.isEmpty();
-         sLine = stream.readLine()) {
-      if (enc_detector.indexIn(sLine) > -1) {
-        m_sEncoding = enc_detector.cap(1);
-        // qDebug() << QString("Encoding set to ") + _encoding;
+    QRegularExpression enc_detector("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*",
+                                    QRegularExpression::CaseInsensitiveOption);
+    QString sLine("");
+    QRegularExpressionMatch match;
+    while (!stream.atEnd()) {
+      sLine = stream.readLine();
+      if (sLine.isEmpty()) { continue; }
+      match = enc_detector.match(sLine);
+      if (match.hasMatch()) {
+        m_sEncoding = match.captured(1);
+        // qDebug() << QString("Encoding set to ") + m_sEncoding;
         break;
       }
     }

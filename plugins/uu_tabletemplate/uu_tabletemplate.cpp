@@ -225,8 +225,12 @@ void Uu_TableTemplate::preview() {
 
   QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
   // Remove for preview useless elements
-  sRetHtml.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
-  sRetHtml.remove(QRegExp("<p class=\"meta\">.*</p>"));
+  sRetHtml.remove(
+        QRegularExpression("<h1 class=\"pagetitle\">.*</h1>",
+                           QRegularExpression::DotMatchesEverythingOption));
+  sRetHtml.remove(
+        QRegularExpression("<p class=\"meta\">.*</p>",
+                           QRegularExpression::DotMatchesEverythingOption));
   sRetHtml.replace("</style>", "#page table{margin:0px;}</style>");
 
   m_pPreviewWebview->setHtml(sRetHtml,
@@ -350,7 +354,7 @@ void Uu_TableTemplate::convertToNewTemplate() {
   QStringList sListRow;
 
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-                  QRegExp("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
+                  QRegularExpression("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
 
   for (int i = 0; i < sListInput.size(); i++) {
     sListInput[i] = sListInput[i].trimmed();
