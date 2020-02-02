@@ -13,14 +13,14 @@
 -->
 <menu name="Toolbar" path="../toolbar">
   <group name="">
-    <element name="Bold - files, folders, packages, formatnames" insert="&apos;&apos;&apos;%%Bold%%&apos;&apos;&apos;" icon="format-text-bold.png" />
-    <element name="Italic - menus, buttons" insert="&apos;&apos;%%Italic%%&apos;&apos;" icon="format-text-italic.png" />
+    <element name="Bold - files, folders, packages, formatnames" insert="&apos;&apos;&apos;%%Bold%%&apos;&apos;&apos;" icon="bold.png" />
+    <element name="Italic - menus, buttons" insert="&apos;&apos;%%Italic%%&apos;&apos;" icon="italic.png" />
     <element name="Monotype - commands und options, terminal output, users/groups" insert="`%%Monotype%%`" icon="monotype.png" />
     <element name="Unsorted list" insert=" * %%List%%" icon="list-unsorted.png" />
     <element name="Sorted list" insert=" 1. %%List%%" icon="list-sorted.png" />
-    <element name="Link to Inyoka-Wiki" insert="[:%%Sitename%%:]" icon="go-next.png" />
-    <element name="Link to external website" insert="[%%http://www.example.org/%%]  {en}" icon="internet-web-browser.png" />
-    <element name="Insert image" insert="[[Bild(%%image.png%%)]]" icon="image-x-generic.png" />
+    <element name="Link to Inyoka-Wiki" insert="[:%%Sitename%%:]" icon="interwiki.png" />
+    <element name="Link to external website" insert="[%%http://www.example.org/%%] {en}" icon="link.png" />
+    <element name="Insert image" insert="[[Bild(%%image.png%%)]]" icon="image.png" />
   </group>
   <group name="Code block" icon="code.png">
     <element name="Raw text" insert="{{{\n%%Code%%\n}}}\n" icon="" />
