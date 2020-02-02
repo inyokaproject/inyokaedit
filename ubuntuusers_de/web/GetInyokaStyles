@@ -89,18 +89,24 @@ url="https://${url}/"
 echo "Downloading images ..."
 wget -nv "${url}../img/anchor.png" -O anchor.png
 wget -nv "${url}../img/icon-sprite.png" -O icon-sprite.png
-wget -nv "${url}../img/table-header.png" -O table-header.png
+wget -nv "${url}../img/favicon.ico" -O favicon.ico
 
 
-if [ ! -d wiki ]
+if [ ! -d icons ]
   then
-    echo "Creating folder \"wiki\" ..."
-    mkdir wiki
+    echo "Creating folder \"icons\" ..."
+    mkdir icons
 fi
-cd wiki
-wget -nv "${url}../img/wiki/toc.png" -O toc.png
+cd icons
+if [ ! -d small ]
+  then
+    echo "Creating folder \"small\" ..."
+    mkdir small
+fi
+cd small
+wget -nv "${url}../img/icons/small/ikhaya.png" -O ikhaya.png
 cd ..
-
+cd ..
 
 if [ ! -d interwiki ]
   then
@@ -108,9 +114,10 @@ if [ ! -d interwiki ]
     mkdir interwiki
 fi
 cd interwiki
+wget -nv "${url}../img/interwiki/search.png" -O search.png
+wget -nv "${url}../img/interwiki/team.png" -O team.png
 wget -nv "${url}../img/interwiki/user.png" -O user.png
 cd ..
-
 cd ..
 
 if [ ! -d font ]
