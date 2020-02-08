@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>list-add.png</file>
-        <file>list-remove.png</file>
-        <file>preferences-desktop-keyboard-shortcuts.png</file>
+        <file>hotkey.png</file>
+        <file>add.png</file>
+        <file>remove.png</file>
     </qresource>
 </RCC>

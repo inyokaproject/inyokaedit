@@ -157,8 +157,9 @@
             <string>Base to ubuntuusers.de</string>
            </property>
            <property name="icon">
-            <iconset resource="../../application/res/inyokaedit_resources.qrc">
-             <normaloff>:/images/go-down.png</normaloff>:/images/go-down.png</iconset>
+            <iconset theme="go-down">
+             <normalon>:/keyboard_arrow_down.png</normalon>
+            </iconset>
            </property>
           </widget>
          </item>
@@ -168,8 +169,9 @@
             <string>ubuntuusers.de to base</string>
            </property>
            <property name="icon">
-            <iconset resource="../../application/res/inyokaedit_resources.qrc">
-             <normaloff>:/images/go-up.png</normaloff>:/images/go-up.png</iconset>
+            <iconset theme="go-up">
+             <normalon>:/keyboard_arrow_up.png</normalon>
+            </iconset>
            </property>
           </widget>
          </item>
@@ -200,7 +202,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../application/res/inyokaedit_resources.qrc"/>
   <include location="res/uu_tabletemplate_resources.qrc"/>
  </resources>
  <connections/>

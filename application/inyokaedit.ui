@@ -405,7 +405,7 @@
   <action name="previewAct">
    <property name="icon">
     <iconset>
-     <normalon>:/images/x-office-document.png</normalon>
+     <normalon>:/images/preview.png</normalon>
     </iconset>
    </property>
    <property name="text">

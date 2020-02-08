@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>tabletemplate.png</file>
+        <file>keyboard_arrow_down.png</file>
+        <file>keyboard_arrow_up.png</file>
     </qresource>
 </RCC>

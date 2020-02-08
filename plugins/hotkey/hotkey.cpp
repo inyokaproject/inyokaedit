@@ -110,7 +110,7 @@ QString Hotkey::getCaption() const {
   return tr("Hotkey selector");
 }
 QIcon Hotkey::getIcon() const {
-  return QIcon(":/preferences-desktop-keyboard-shortcuts.png");
+  return QIcon(":/hotkey.png");
 }
 
 bool Hotkey::includeMenu() const {
@@ -151,7 +151,7 @@ void Hotkey::buildUi(QWidget *pParent) {
   }
 
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
-                                             QIcon(":/list-add.png")));
+                                             QIcon(":/add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
 }
 
@@ -254,7 +254,7 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
   // Delete row button
   m_listDelRowButtons << new QPushButton(
                            QIcon::fromTheme("list-remove",
-                                            QIcon(":/list-remove.png")), "");
+                                            QIcon(":/remove.png")), "");
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,

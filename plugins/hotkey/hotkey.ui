@@ -32,8 +32,9 @@
    <string>Hotkeys</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="res/hotkey_resources.qrc">
-    <normaloff>:/preferences-desktop-keyboard-shortcuts.png</normaloff>:/preferences-desktop-keyboard-shortcuts.png</iconset>
+   <iconset>
+    <normalon>:/hotkey.png</normalon>
+   </iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
@@ -84,8 +85,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="res/hotkey_resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

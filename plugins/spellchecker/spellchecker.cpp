@@ -143,8 +143,7 @@ QString SpellChecker::getCaption() const {
   return tr("Spell checker");
 }
 QIcon SpellChecker::getIcon() const {
-  return QIcon::fromTheme("tools-check-spelling",
-                          QIcon(":/spellchecker.png"));
+  return QIcon(":/spellchecker.png");
 }
 
 bool SpellChecker::includeMenu() const {

@@ -9,7 +9,6 @@
         <file>images/edit-paste.png</file>
         <file>images/edit-redo.png</file>
         <file>images/edit-undo.png</file>
-        <file>images/x-office-document.png</file>
         <file>images/go-next.png</file>
         <file>images/edit-find-replace.png</file>
         <file>images/edit-find.png</file>
@@ -22,10 +21,11 @@
         <file>images/go-previous.png</file>
         <file>images/document-print.png</file>
         <file>images/preferences-system.png</file>
-        <file>images/upload.png</file>
-        <file>images/download.png</file>
         <file>images/uu.ico</file>
         <file>images/document-save-as.png</file>
         <file>images/help-browser.png</file>
+        <file>images/preview.png</file>
+        <file>images/upload.png</file>
+        <file>images/download.png</file>
     </qresource>
 </RCC>
