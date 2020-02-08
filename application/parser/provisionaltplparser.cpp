@@ -630,7 +630,7 @@ QString ProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs) {
 QString ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
   QString sImage("");
   QString sText("");
-  QString sStyle("width: auto; float: left; margin-right: 1em");
+  QString sStyle("float:left; margin-right:1em;");
 
   if (sListArgs.size() > 1) {
     sImage = sListArgs[0].trimmed();
@@ -638,16 +638,16 @@ QString ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
     if (sImage.contains("right") || sText.contains("right")) {
       sImage = sImage.remove("right").trimmed();
       sText = sText.remove("right").trimmed();
-      sStyle = "width: auto; clear:right; float: right; margin-left: 1em";
+      sStyle = "clear:right; float:right; margin-left:1em;";
     }
   }
 
-  return "<table style=\"" +
-      sStyle + "\">\n<tbody>\n<tr>\n<td style=\"text-align: center; "
-               "background-color: #F2F2F2\">\n<img src=\"" + sImage +
+  return "<table style=\"" + sStyle +
+      "\">\n<tbody>\n<tr class=\"title\">\n"
+      "<td style=\"text-align: center\">\n"
+      "<img class=\"image-default\" src=\"" + sImage +
       "\" alt=\"" + sImage +
-      "\" class=\"image-default\"></td>\n</tr><tr>\n<td style=\"text-align: "
-      "center; background-color: #F9EAAF\">" + sText +
+      "\" >\n</td>\n</tr>\n<tr>\n<td>" + sText +
       "</td>\n</tr>\n</tbody></table\n";
 }
 
