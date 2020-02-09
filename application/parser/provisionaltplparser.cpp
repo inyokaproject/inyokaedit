@@ -933,9 +933,8 @@ QString ProvisionalTplParser::parseInfobox(const QStringList &sListArgs) {
   }
 
   if (sList.size() >= 3) {
-    sOutput = "||<-2 tablestyle=\"table-layout:fixed; float:right; "
-              "clear:right; margin-top: 1em; margin-left: 1.5em;\""
-              " rowclass=\"verlauf\">" + sList[0] + "||\n";
+    sOutput = "||<-2 tablestyle=\"float:right; clear:right; margin-top: 1em; "
+              "margin-left: 1.5em;\" rowclass=\"verlauf\">" + sList[0] + "||\n";
     sOutput += "||<-2 cellstyle=\"text-align: center; line-height: 2.2em;\">"
                " " + sList[1];
     if (sList[2].endsWith("png") || sList[2].endsWith("jpg")) {
@@ -945,14 +944,13 @@ QString ProvisionalTplParser::parseInfobox(const QStringList &sListArgs) {
 
     for (int i = 4; i < sList.size(); i++) {
       if (0 == i % 2) {
-        sOutput += "||<cellstyle=\"width: 120px\">" + sList[i] +
-                   ": ||<cellstyle=\"width: 140px\">";
+        sOutput += "||" + sList[i] + ": ||";
       } else {
         sOutput += sList[i] + "||\n";
       }
     }
 
-    sOutput += "||<-3 rowstyle=\"background-color: #F9EAAF;\">||\n"
+    sOutput += "||<-3 rowclass=\"highlight\">||\n"
                "||Installation: ||" + sList[3] + "||";
   }
 
