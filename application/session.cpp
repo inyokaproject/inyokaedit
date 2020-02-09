@@ -67,8 +67,6 @@ void Session::checkSession() {
       break;
     case RECLOGIN:
       break;
-    default:
-      qWarning() << "Ran into unexpected state at session check:" << m_State;
   }
 }
 

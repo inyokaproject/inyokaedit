@@ -36,6 +36,7 @@
 #include <QPushButton>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QRegularExpression>
 
 Utils::Utils(QWidget *pParent, QObject *pParentObj)
   : m_pParent(pParent) {
@@ -94,18 +95,15 @@ void Utils::replyFinished(QNetworkReply *pReply) {
     qWarning() << "Error (#" << pReply->error() << ")while update check:"
                << pData->errorString();
   } else {
-    QRegExp regExp("\\bInyokaEdit-\\d+.\\d+.\\d+-\\d+-Windows_x64.zip\\b");
+    QRegularExpression regExp(
+          "\\bInyokaEdit-(\\d+.\\d+.\\d+)-\\d+-Windows_x64.zip\\b");
     QString sReply = QString::fromUtf8(pData->readAll());
+    QRegularExpressionMatch match = regExp.match(sReply);
 
-    int nIndex = regExp.indexIn(sReply);
-    if (nIndex >= 0) {
+    if (match.hasMatch()) {
       QStringList sListCurrentVer;
       QStringList sListLatestVer;
-      QString sLatestVersion(regExp.cap());
-      sLatestVersion.remove("InyokaEdit-");
-      sLatestVersion.remove("-Windows_x64.zip");
-      sLatestVersion = sLatestVersion.left(sLatestVersion.lastIndexOf("-"));
-      sLatestVersion = sLatestVersion.trimmed();
+      QString sLatestVersion(match.captured(1));
       qDebug() << "Latest version on server:" << sLatestVersion;
 
       sListCurrentVer = qApp->applicationVersion().split(".");

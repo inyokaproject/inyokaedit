@@ -1257,8 +1257,12 @@ void InyokaEdit::showSyntaxOverview() {
   OverviewFile.close();
 
   QString sRet(m_pParser->genOutput("", pTextDocument));
-  sRet.remove(QRegExp("<h1 class=\"pagetitle\">.*</h1>"));
-  sRet.remove(QRegExp("<p class=\"meta\">.*</p>"));
+  sRet.remove(
+        QRegularExpression("<h1 class=\"pagetitle\">.*</h1>",
+                           QRegularExpression::DotMatchesEverythingOption));
+  sRet.remove(
+        QRegularExpression("<p class=\"meta\">.*</p>",
+                           QRegularExpression::DotMatchesEverythingOption));
   sRet.replace("</style>", "#page table{margin:0px;}</style>");
   pTextDocument->setPlainText(sRet);
 

@@ -32,6 +32,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>
+#include <QRegularExpression>
 #include <QScrollBar>
 
 #ifdef USEQTWEBKIT
@@ -488,35 +489,39 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
   in.setAutoDetectUnicode(true);
   QString sHtml(in.readAll());
 
-  QRegExp imgTagRegex("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>",
-                      Qt::CaseInsensitive);
-  imgTagRegex.setMinimal(true);
-  int nOffset = 0;
+  QRegularExpression imgTagRegex(
+        "\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>",
+        QRegularExpression::InvertedGreedinessOption |
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
+  QRegularExpressionMatchIterator it = imgTagRegex.globalMatch(sHtml);
+
   QFileInfo img;
   QStringList sListFiles;
-  while (-1 != (nOffset = imgTagRegex.indexIn(sHtml, nOffset))) {
-      nOffset += imgTagRegex.matchedLength();
-      img.setFile(imgTagRegex.cap(1).remove("file:///"));  // (Windows file:///)
-      if (sListFiles.contains(img.fileName()) ||
-          img.absoluteFilePath().contains("/community/", Qt::CaseInsensitive)) {
-        continue;  // Filter duplicates or community images
-      } else {
-        sListFiles << img.fileName();
-      }
 
-      if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
-                                  img.absoluteFilePath().toLatin1(),
-                                  baComment,
-                                  static_cast<mz_uint16>(baComment.size()),
-                                  MZ_BEST_COMPRESSION)) {
-        QMessageBox::critical(m_pParent, qApp->applicationName(),
-                              tr("Error while adding \"%1\" to archive!")
-                              .arg(img.absoluteFilePath()));
-        qWarning() << "Error while adding" <<
-                      img.absoluteFilePath() << "to archive!:" <<
-                      mz_zip_get_error_string(mz_zip_get_last_error(&archive));
-        return false;
-      }
+  while (it.hasNext()) {
+    QRegularExpressionMatch match = it.next();
+    img.setFile(match.captured(1).remove("file:///"));  // (Windows file:///)
+    if (sListFiles.contains(img.fileName()) ||
+        img.absoluteFilePath().contains("/community/", Qt::CaseInsensitive)) {
+      continue;  // Filter duplicates or community images
+    } else {
+      sListFiles << img.fileName();
+    }
+
+    if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
+                                img.absoluteFilePath().toLatin1(),
+                                baComment,
+                                static_cast<mz_uint16>(baComment.size()),
+                                MZ_BEST_COMPRESSION)) {
+      QMessageBox::critical(m_pParent, qApp->applicationName(),
+                            tr("Error while adding \"%1\" to archive!")
+                            .arg(img.absoluteFilePath()));
+      qWarning() << "Error while adding" <<
+                    img.absoluteFilePath() << "to archive!:" <<
+                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+      return false;
+    }
   }
 
   if (!mz_zip_writer_add_file(&archive, sArticle.toLatin1(),

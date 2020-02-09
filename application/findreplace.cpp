@@ -28,6 +28,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include <QTextDocument>
 
 #include "ui_findreplace.h"
@@ -159,9 +160,11 @@ void FindReplace::textSearchChanged() {
   // Check regular expression syntax
   if (m_pUi->check_Regexp->isChecked() &&
       m_pUi->text_Search->text().size() > 0) {
-    QRegExp regexp(m_pUi->text_Search->text(),
-                   m_pUi->check_Case->isChecked()
-                   ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    QRegularExpression regexp(
+          m_pUi->text_Search->text(),
+          m_pUi->check_Case->isChecked() ?
+            QRegularExpression::NoPatternOption :
+            QRegularExpression::CaseInsensitiveOption);
 
     if (!regexp.isValid()) {
       m_pUi->lbl_Error->setText(regexp.errorString());
@@ -202,9 +205,11 @@ void FindReplace::find(const bool bForward) {
   }
 
   if (bUseRegexp) {
-    QRegExp searchExp(
+    QRegularExpression searchExp(
           sSearched,
-          (bCaseSens ? Qt::CaseSensitive : Qt::CaseInsensitive));
+          (bCaseSens ?
+             QRegularExpression::NoPatternOption :
+             QRegularExpression::CaseInsensitiveOption));
 
     m_TextCursor = m_pEditor->document()->find(searchExp, m_TextCursor,
                                                searchFlags);

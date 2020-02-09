@@ -27,6 +27,7 @@
 #include "./syntaxcheck.h"
 
 #include <QMessageBox>
+#include <QRegularExpression>
 
 SyntaxCheck::SyntaxCheck(QObject *pParent) {
   Q_UNUSED(pParent)
@@ -124,12 +125,16 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
   QString sDoc(pRawDoc->toPlainText());
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
-    QRegExp findTemplate(sListTplRegExp[i], Qt::CaseInsensitive);
-    findTemplate.setMinimal(true);
-    int nPos = 0;
+    QRegularExpression findTemplate(
+          sListTplRegExp[i],
+          QRegularExpression::InvertedGreedinessOption |
+          QRegularExpression::DotMatchesEverythingOption |
+          QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatchIterator it = findTemplate.globalMatch(sDoc);
 
-    while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-      QString sMacro = findTemplate.cap(0);
+    while (it.hasNext()) {
+      QRegularExpressionMatch match = it.next();
+      QString sMacro = match.captured(0);
       if (sMacro.startsWith("[[" + sListTrans[i],
                             Qt::CaseInsensitive)) {
         sMacro.remove("[[" + sListTrans[i], Qt::CaseInsensitive);
@@ -147,11 +152,11 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         sMacro.remove("{{{#!" + sListTrans[i] + " ", Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
         if (-1 != sMacro.indexOf(" ") && -1 != sMacro.indexOf("\n")) {
-            if (sMacro.indexOf(" ") < sMacro.indexOf("\n")) {
-              sMacro = sMacro.left(sMacro.indexOf(" ")).trimmed();
-            } else {
-              sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
-            }
+          if (sMacro.indexOf(" ") < sMacro.indexOf("\n")) {
+            sMacro = sMacro.left(sMacro.indexOf(" ")).trimmed();
+          } else {
+            sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+          }
         } else {
           sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
         }
@@ -167,11 +172,8 @@ qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
       if (!sMacro.isEmpty()) {
         QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
                              tr("Found unknown template: %1").arg(sMacro));
-        return nPos;
+        return match.capturedStart();
       }
-
-      // Proceed with next position
-      nPos += findTemplate.cap(0).length();
     }
   }
 

@@ -33,6 +33,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QNetworkCookie>
+#include <QRegularExpression>
 #include <QUrl>
 #include <QUrlQuery>
 
@@ -131,8 +132,6 @@ void Upload::clickUploadArticle() {
     case RECUPLOAD:
       this->requestRevision();
       break;
-    default:
-      qWarning() << "Ran into unexpected state at upload:" << m_State;
   }
 }
 
@@ -165,12 +164,12 @@ void Upload::getRevisionReply(const QString &sNWReply) {
   QString sURL(m_sInyokaUrl);
   sURL.remove("https://");
   sURL.remove("http://");
-  QRegExp findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+",
-                       Qt::CaseInsensitive);
+  QRegularExpression findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+",
+                                  QRegularExpression::CaseInsensitiveOption);
+  QRegularExpressionMatch match = findRevision.match(sNWReply);
 
-  int nPos = findRevision.indexIn(sNWReply);
-  if (nPos > -1) {
-    m_sRevision = findRevision.cap();
+  if (match.hasMatch()) {
+    m_sRevision = match.captured(0);
     m_sRevision.remove(0, m_sRevision.lastIndexOf('/') + 1);
     qDebug() << "Last revision of" << m_sSitename << "=" << m_sRevision;
   } else {
