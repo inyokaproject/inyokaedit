@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>list-add.png</file>
-        <file>list-remove.png</file>
         <file>uu_knowledgebox.default</file>
+        <file>add.png</file>
+        <file>list_alt.png</file>
+        <file>remove.png</file>
     </qresource>
 </RCC>

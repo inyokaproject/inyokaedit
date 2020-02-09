@@ -109,15 +109,14 @@ QString Uu_KnowledgeBox::getCaption() const {
   return tr("Ubuntuusers.de knowledge box");
 }
 QIcon Uu_KnowledgeBox::getIcon() const {
-  return QIcon();
-  // return QIcon(":/knowledgebox.png");
+  return QIcon(":/list_alt.png");
 }
 
 bool Uu_KnowledgeBox::includeMenu() const {
   return true;
 }
 bool Uu_KnowledgeBox::includeToolbar() const {
-  return false;
+  return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -149,7 +148,7 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
   }
 
   m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
-                                             QIcon(":/list-add.png")));
+                                             QIcon(":/add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed,
           this, &Uu_KnowledgeBox::addRow);
 }
@@ -309,7 +308,7 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
   // Delete row button
   m_listDelRowButtons << new QPushButton(
                            QIcon::fromTheme("list-remove",
-                                            QIcon(":/list-remove.png")), "");
+                                            QIcon(":/remove.png")), "");
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,
