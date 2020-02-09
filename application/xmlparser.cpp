@@ -29,8 +29,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-XmlParser::XmlParser() {
-}
+XmlParser::XmlParser() = default;
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -69,13 +68,9 @@ bool XmlParser::parseXml(const QString &sXmlFile) {
   m_sListInserts = m_pHandler->m_sListInserts_2;
   m_sListIcons = m_pHandler->m_sListIcons_2;
 
-  if (nullptr != m_pXmlSource) {
-    delete m_pXmlSource;
-  }
+  delete m_pXmlSource;
   m_pXmlSource = nullptr;
-  if (nullptr != m_pHandler) {
-    delete m_pHandler;
-  }
+  delete m_pHandler;
   m_pHandler = nullptr;
 
   return true;

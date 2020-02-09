@@ -28,8 +28,7 @@
 
 #include <QDebug>
 
-ParseTxtMap::ParseTxtMap() {
-}
+ParseTxtMap::ParseTxtMap() = default;
 
 void ParseTxtMap::startParsing(QTextDocument *pRawDoc,
                                QStringList sListElements,

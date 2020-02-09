@@ -60,8 +60,6 @@ void Session::checkSession() {
       this->requestToken();
       break;
     case RECTOKEN:
-      this->requestLogin();
-      break;
     case REQULOGIN:
       this->requestLogin();
       break;
@@ -103,7 +101,7 @@ void Session::getTokenReply(const QString &sNWReply) {
 
   QString sSessionCookie("");
 
-  if (m_ListCookies.size() > 0) {
+  if (!m_ListCookies.isEmpty()) {
     // qDebug() << "COOKIES:" << m_ListCookies;
 
     QString sCookie("");
@@ -127,7 +125,8 @@ void Session::getTokenReply(const QString &sNWReply) {
                            tr("Login failed! No CSRFTOKEN received."));
       m_State = REQUTOKEN;
       return;
-    } else if (sSessionCookie.isEmpty()) {
+    }
+    if (sSessionCookie.isEmpty()) {
       qWarning() << "No session cookie received.";
       qWarning() << "COOKIES" << m_ListCookies;
       QMessageBox::warning(
@@ -135,12 +134,13 @@ void Session::getTokenReply(const QString &sNWReply) {
             tr("Login failed! No session cookie received."));
       m_State = REQUTOKEN;
       return;
-    } else {  // SUCCESS
-      // qDebug() << "CSRFTOKEN:" << m_sToken;
-      // qDebug() << "SESSION COOKIE:" << sSessionCookie;
-      m_State = RECTOKEN;
-      this->requestLogin();
     }
+
+    // SUCCESS
+    // qDebug() << "CSRFTOKEN:" << m_sToken;
+    // qDebug() << "SESSION COOKIE:" << sSessionCookie;
+    m_State = RECTOKEN;
+    this->requestLogin();
   } else {
     qWarning() << "Calling login page failed! No cookies received.";
     qWarning() << "NW REPLY:" << sNWReply;
@@ -166,7 +166,7 @@ void Session::requestLogin() {
                 m_pParent, tr("Login user"),
                 tr("Please insert your Inyoka user name:"),
                 QLineEdit::Normal, "", &bOk).trimmed();
-  if (true != bOk || sUsername.isEmpty()) {
+  if (!bOk || sUsername.isEmpty()) {
     return;
   }
 
@@ -174,7 +174,7 @@ void Session::requestLogin() {
                 m_pParent, tr("Login password"),
                 tr("Please insert your Inyoka password:"),
                 QLineEdit::Password, "", &bOk).trimmed();
-  if (true != bOk || sPassword.isEmpty()) {
+  if (!bOk || sPassword.isEmpty()) {
     return;
   }
 
@@ -222,28 +222,28 @@ void Session::getLoginReply(const QString &sNWReply) {
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Login at Inyoka failed. Wrong credentials?"));
     return;
-  } else {
-    foreach (QNetworkCookie cookie, m_ListCookies) {
-      if (cookie.isSessionCookie()) {
-        // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
-        // --> "Du hast dich erfolgreich angemeldet"
-        // See raw debug output:
-        // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
-        if (cookie.toRawForm().contains(m_sHash.toLatin1())) {
-          m_State = RECLOGIN;
-          qDebug() << "LOGIN SUCCESSFUL!";
-          break;
-        }
+  }
+
+  foreach (QNetworkCookie cookie, m_ListCookies) {
+    if (cookie.isSessionCookie()) {
+      // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
+      // --> "Du hast dich erfolgreich angemeldet"
+      // See raw debug output:
+      // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
+      if (cookie.toRawForm().contains(m_sHash.toLatin1())) {
+        m_State = RECLOGIN;
+        qDebug() << "LOGIN SUCCESSFUL!";
+        break;
       }
     }
+  }
 
-    if (RECLOGIN != m_State) {
-      m_State = REQUTOKEN;
-      qWarning() << "LOGIN FAILED! No success message cookie.";
-      QMessageBox::warning(m_pParent, tr("Error"),
-                           tr("Login at Inyoka failed."));
-      return;
-    }
+  if (RECLOGIN != m_State) {
+    m_State = REQUTOKEN;
+    qWarning() << "LOGIN FAILED! No success message cookie.";
+    QMessageBox::warning(m_pParent, tr("Error"),
+                         tr("Login at Inyoka failed."));
+    return;
   }
 }
 
@@ -265,25 +265,25 @@ void Session::replyFinished(QNetworkReply *pReply) {
     pReply->close();
     pReply->deleteLater();
     return;
+  }
+
+  m_ListCookies = this->allCookies();
+  QString sReply = QString::fromUtf8(pData->readAll());
+  sReply.replace("\r\r\n", "\n");
+
+  if (sReply.isEmpty()) {
+    qDebug() << "Login NW reply is empty.";
+  }
+
+  QString sAttribute(pReply->request().attribute(
+                       QNetworkRequest::User).toString());
+  if (sAttribute.contains("ReqestToken")) {
+    this->getTokenReply(sReply);
+  } else if (sAttribute.contains("ReqestLogin")) {
+    this->getLoginReply(sReply);
   } else {
-    m_ListCookies = this->allCookies();
-    QString sReply = QString::fromUtf8(pData->readAll());
-    sReply.replace("\r\r\n", "\n");
-
-    if (sReply.isEmpty()) {
-      qDebug() << "Login NW reply is empty.";
-    }
-
-    QString sAttribute(pReply->request().attribute(
-                         QNetworkRequest::User).toString());
-    if (sAttribute.contains("ReqestToken")) {
-      this->getTokenReply(sReply);
-    } else if (sAttribute.contains("ReqestLogin")) {
-      this->getLoginReply(sReply);
-    } else {
-        qWarning() << "Ran into unexpected state!";
-        qWarning() << "REPLY:" << sReply;
-    }
+    qWarning() << "Ran into unexpected state!";
+    qWarning() << "REPLY:" << sReply;
   }
 
   pReply->close();
@@ -294,10 +294,7 @@ void Session::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 
 bool Session::isLoggedIn() const {
-  if (RECLOGIN == m_State) {
-    return true;
-  }
-  return false;
+  return (RECLOGIN == m_State);
 }
 
 // ----------------------------------------------------------------------------

@@ -104,9 +104,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
 }
 
 InyokaEdit::~InyokaEdit() {
-  if (nullptr != m_pUi) {
-    delete m_pUi;
-  }
+  delete m_pUi;
   m_pUi = nullptr;
 }
 
@@ -492,15 +490,15 @@ void InyokaEdit::createMenus() {
   }
   m_pUi->fileMenuFromTemplate->addActions(m_OpenTemplateFilesActions);
 
-  if (0 == m_OpenTemplateFilesActions.size()) {
+  if (m_OpenTemplateFilesActions.isEmpty()) {
     m_pUi->fileMenuFromTemplate->setDisabled(true);
   }
 
   // File menu (recent opened files)
   m_pUi->fileMenuLastOpened->addActions(
         m_pFileOperations->getLastOpenedFiles());
-  if (0 == m_pSettings->getRecentFiles().size()) {
-    m_pUi->fileMenuLastOpened->setEnabled(false);
+  if (m_pSettings->getRecentFiles().isEmpty()) {
+    m_pUi->fileMenuLastOpened->setDisabled(true);
   }
   connect(m_pFileOperations, &FileOperations::setMenuLastOpenedEnabled,
           m_pUi->fileMenuLastOpened, &QMenu::setEnabled);
@@ -556,6 +554,7 @@ void InyokaEdit::createXmlMenus() {
   sListFolders << m_sSharePath << m_UserDataDir.absolutePath();
   QStringList sListObjects;
   sListObjects << "menu" << "dropdown" << "toolbar";
+  const int MAXFILES = 9;
 
   this->clearXmlMenus();
 
@@ -564,7 +563,7 @@ void InyokaEdit::createXmlMenus() {
     // Search for menu/dropdown/toolbar
     foreach (QString sObj, sListObjects) {
       // Search for max 9 files
-      for (int n = 1; n < 9; n++) {
+      for (int n = 1; n < MAXFILES; n++) {
         sTmpPath = sPath + "/community/" +
                    m_pSettings->getInyokaCommunity() + "/xml/";
         // File name e.g. menu_1_de.xml
@@ -699,7 +698,7 @@ void InyokaEdit::createXmlMenus() {
 void InyokaEdit::addPluginsButtons(const QList<QAction *> &ToolbarEntries,
                                    QList<QAction *> &MenueEntries) {
   m_pUi->pluginsBar->addActions(ToolbarEntries);
-  if (m_pUi->toolsMenu->actions().size() > 0) {
+  if (!m_pUi->toolsMenu->actions().isEmpty()) {
     QAction *separator = new QAction(this);
     separator->setSeparator(true);
     MenueEntries << separator;
@@ -1006,7 +1005,7 @@ void InyokaEdit::updateEditorSettings() {
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 
-  m_colorSyntaxError = this->getHighlightErrorColor();
+  m_colorSyntaxError = InyokaEdit::getHighlightErrorColor();
 
   // Setting proxy if available
   Utils::setProxy(m_pSettings->getProxyHostName(),
@@ -1027,7 +1026,8 @@ bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
       if (sBlock.startsWith(" * ") && sBlock.length() > 3) {
         m_pCurrentEditor->textCursor().insertText("\n * ");
         return true;
-      } else if (sBlock.startsWith(" * ") && 3 == sBlock.length()) {
+      }
+      if (sBlock.startsWith(" * ") && 3 == sBlock.length()) {
         m_pCurrentEditor->textCursor().deletePreviousChar();
         m_pCurrentEditor->textCursor().deletePreviousChar();
         m_pCurrentEditor->textCursor().deletePreviousChar();
@@ -1047,24 +1047,28 @@ bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
       cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Right && !bShift && bCtrl) {
+    }
+    if (keyEvent->key() == Qt::Key_Right && !bShift && bCtrl) {
       // CTRL + arrow right
       m_pCurrentEditor->moveCursor(QTextCursor::Right);
       m_pCurrentEditor->moveCursor(QTextCursor::EndOfWord);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Up && bShift && bCtrl) {
+    }
+    if (keyEvent->key() == Qt::Key_Up && bShift && bCtrl) {
       // CTRL + SHIFT arrow down (Bug fix for LP: #889321)
       QTextCursor cursor(m_pCurrentEditor->textCursor());
       cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    } else if (keyEvent->key() == Qt::Key_Down && bShift && bCtrl) {
+    }
+    if (keyEvent->key() == Qt::Key_Down && bShift && bCtrl) {
       // CTRL + SHIFT arrow down (Bug fix for LP: #889321)
       QTextCursor cursor(m_pCurrentEditor->textCursor());
       cursor.movePosition(QTextCursor::Down, QTextCursor::KeepAnchor);
       m_pCurrentEditor->setTextCursor(cursor);
       return true;
-    } else if ((Qt::Key_F5 == keyEvent->key() ||
+    }
+    if ((Qt::Key_F5 == keyEvent->key() ||
                 m_pSettings->getReloadPreviewKey() == keyEvent->key()) &&
                !m_bReloadPreviewBlocked) {  // Preview F5 or defined button
       m_bReloadPreviewBlocked = true;
@@ -1138,7 +1142,7 @@ void InyokaEdit::deleteAutoSaveBackups() {
 void InyokaEdit::syncScrollbarsEditor() {
   // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
-  if (!m_bWebviewScrolling && true == m_pSettings->getSyncScrollbars()) {
+  if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                             Qt::Vertical);
@@ -1158,7 +1162,7 @@ void InyokaEdit::syncScrollbarsEditor() {
 void InyokaEdit::syncScrollbarsWebview() {
   // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
-  if (!m_bEditorScrolling && true == m_pSettings->getSyncScrollbars()) {
+  if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                             Qt::Vertical);
@@ -1178,17 +1182,17 @@ void InyokaEdit::syncScrollbarsWebview() {
 void InyokaEdit::loadLanguage(const QString &sLang) {
   if (m_sCurrLang != sLang) {
     m_sCurrLang = sLang;
-    if (!this->switchTranslator(&m_translatorQt, "qt_" + sLang,
-                                QLibraryInfo::location(
-                                  QLibraryInfo::TranslationsPath))) {
-      this->switchTranslator(&m_translatorQt, "qt_" + sLang,
-                             m_sSharePath + "/lang");
+    if (!InyokaEdit::switchTranslator(&m_translatorQt, "qt_" + sLang,
+                                      QLibraryInfo::location(
+                                        QLibraryInfo::TranslationsPath))) {
+      InyokaEdit::switchTranslator(&m_translatorQt, "qt_" + sLang,
+                                   m_sSharePath + "/lang");
     }
 
-    if (!this->switchTranslator(
+    if (!InyokaEdit::switchTranslator(
           &m_translator,
           ":/" + qApp->applicationName().toLower() + "_" + sLang + ".qm")) {
-      this->switchTranslator(
+      InyokaEdit::switchTranslator(
             &m_translator, qApp->applicationName().toLower() + "_" + sLang,
             m_sSharePath + "/lang");
     }

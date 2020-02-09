@@ -42,7 +42,8 @@ Download::Download(QWidget *pParent, Session *pSession,
     m_sInyokaUrl("https://wiki.ubuntuusers.de"),
     m_sConstructionArea(""),
     m_bAutomaticImageDownload(false),
-    m_sSharePath(sSharePath) {
+    m_sSharePath(sSharePath),
+    m_bDownloadArticle(true) {
   connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished,
           this, &Download::replyFinished);
 
@@ -76,8 +77,6 @@ void Download::downloadArticle(QString sUrl) {
 
   if (sUrl.isEmpty()) {
     m_sRevision = "";
-    // Buttons of input dialog (click on "OK" -> ok = true,
-    // click on "Cancel" -> ok = false)
     bool bOk;
 
     // Show input dialog
@@ -89,8 +88,7 @@ void Download::downloadArticle(QString sUrl) {
                     m_sConstructionArea + "/" + tr("Article"), &bOk);
     m_sSitename = m_sSitename.trimmed();
 
-    // Click on "cancel" or string is empty
-    if (true != bOk || m_sSitename.isEmpty()) {
+    if (!bOk || m_sSitename.isEmpty()) {
       return;
     }
     m_sSitename.replace(" ", "_");
@@ -174,92 +172,94 @@ void Download::replyFinished(QNetworkReply *pReply) {
                    ") while NW reply:" << pData->errorString();
     // qDebug() << "Reply content:" << pReply->readAll();
     return;
+  }
+
+  // No error
+  QUrl url = pReply->url();
+  // qDebug() << "Downloading URL: " << url.toString();
+
+  // If the URL is not empty, we're being redirected
+  if (!m_urlRedirectedTo.isEmpty()) {
+    url = m_urlRedirectedTo;
+    qDebug() << "Redirected to: " + url.toString();
+    this->downloadArticle(url.toString() + "a/export/raw/" + m_sRevision);
   } else {
-    // No error
-    QUrl url = pReply->url();
-    // qDebug() << "Downloading URL: " << url.toString();
+    m_urlRedirectedTo.clear();
+    QString sTmpArticle = QString::fromUtf8(pData->readAll());
 
-    // If the URL is not empty, we're being redirected
-    if (!m_urlRedirectedTo.isEmpty()) {
-      url = m_urlRedirectedTo;
-      qDebug() << "Redirected to: " + url.toString();
-      this->downloadArticle(url.toString() + "a/export/raw/" + m_sRevision);
+    if (m_bDownloadArticle) {
+      // Replace windows specific newlines
+      sTmpArticle.replace("\r\r\n", "\n");
+
+      // Site does not exist etc.
+      if (sTmpArticle.isEmpty()) {
+        QMessageBox::information(m_pParent, qApp->applicationName(),
+                                 tr("Could not download the article."));
+        return;
+      }
+
+      m_sArticleText = sTmpArticle;
+      downloadImages();
+      // --------------------------------------------------------------------
     } else {
-      m_urlRedirectedTo.clear();
-      QString sTmpArticle = QString::fromUtf8(pData->readAll());
+      // Download article images metadata
+      QStringList sListTmp;
+      QStringList sListMetadata;
+      QStringList sListSaveFolder;
 
-      if (m_bDownloadArticle) {
-        // Replace windows specific newlines
-        sTmpArticle.replace("\r\r\n", "\n");
+      // Site does not exist etc.
+      if (sTmpArticle.isEmpty()) {
+        QMessageBox::information(m_pParent, qApp->applicationName(),
+                                 tr("Could not find meta data."));
+        return;
+      }
 
-        // Site does not exist etc.
-        if (sTmpArticle.isEmpty()) {
-          QMessageBox::information(m_pParent, qApp->applicationName(),
-                                   tr("Could not download the article."));
-          return;
+      // Copy metadata line by line in list
+      sListTmp << sTmpArticle.split("\n");
+      // qDebug() << "META files:" << sListTmp;
+
+      // Get only attachments article metadata
+      for (int i = 0; i < sListTmp.size(); i++) {
+        if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
+                                   Qt::CaseInsensitive)) {
+          // Remove "X-Attach: "
+          sListMetadata << sListTmp[i].remove("X-Attach: ");
+          // Remove windows specific newline \r
+          sListMetadata.last().remove("\r");
+          sListMetadata.last() = m_sInyokaUrl + "/_image?target="
+                                 + sListMetadata.last();
+          sListSaveFolder << m_sImgDir;
+
+          // qDebug() << sListMetadata.last();
+        }
+      }
+
+      // If attachments exist
+      if (!sListMetadata.isEmpty()) {
+        int iRet = 0;
+        // Ask if images should be downloaded,
+        // if not enabled by default in settings
+        if (!m_bAutomaticImageDownload) {
+          iRet = QMessageBox::question(m_pParent,
+                                       qApp->applicationName(),
+                                       tr("Do you want to download "
+                                          "the images which are "
+                                          "attached to the article?"),
+                                       QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No);
+        } else {
+          iRet = QMessageBox::Yes;
         }
 
-        m_sArticleText = sTmpArticle;
-        downloadImages();
-        // --------------------------------------------------------------------
-      } else {
-        // Download article images metadata
-        QStringList sListTmp, sListMetadata, sListSaveFolder;
-
-        // Site does not exist etc.
-        if (sTmpArticle.isEmpty()) {
-          QMessageBox::information(m_pParent, qApp->applicationName(),
-                                   tr("Could not find meta data."));
-          return;
-        }
-
-        // Copy metadata line by line in list
-        sListTmp << sTmpArticle.split("\n");
-        // qDebug() << "META files:" << sListTmp;
-
-        // Get only attachments article metadata
-        for (int i = 0; i < sListTmp.size(); i++) {
-          if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
-                                     Qt::CaseInsensitive)) {
-            // Remove "X-Attach: "
-            sListMetadata << sListTmp[i].remove("X-Attach: ");
-            // Remove windows specific newline \r
-            sListMetadata.last().remove("\r");
-            sListMetadata.last() = m_sInyokaUrl + "/_image?target="
-                                   + sListMetadata.last();
-            sListSaveFolder << m_sImgDir;
-
-            // qDebug() << sListMetadata.last();
-          }
-        }
-
-        // If attachments exist
-        if (sListMetadata.size() > 0) {
-          int iRet = 0;
-          // Ask if images should be downloaded,
-          // if not enabled by default in settings
-          if (true != m_bAutomaticImageDownload) {
-            iRet = QMessageBox::question(m_pParent,
-                                         qApp->applicationName(),
-                                         tr("Do you want to download "
-                                            "the images which are "
-                                            "attached to the article?"),
-                                         QMessageBox::Yes | QMessageBox::No,
-                                         QMessageBox::No);
-          } else {
-            iRet = QMessageBox::Yes;
-          }
-
-          if (iRet != QMessageBox::No) {
-            qDebug() << "Starting image download...";
-            m_DlImages->setDLs(sListMetadata, sListSaveFolder);
-            QTimer::singleShot(0, m_DlImages, &DownloadImg::startDownloads);
-          } else {
-            this->showArticle();
-          }
+        if (iRet != QMessageBox::No) {
+          qDebug() << "Starting image download...";
+          m_DlImages->setDLs(sListMetadata, sListSaveFolder);
+          QTimer::singleShot(0, m_DlImages, &DownloadImg::startDownloads);
         } else {
           this->showArticle();
         }
+      } else {
+        this->showArticle();
       }
     }
   }

@@ -53,8 +53,8 @@ class DownloadImg : public QObject {
     void doDownload(const QUrl &url,
                     const QString &sSavePath,
                     const QString &sBase = "");
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl) const;
+    static QUrl redirectUrl(const QUrl& possibleRedirectUrl,
+                            const QUrl& oldRedirectUrl);
 
     QNetworkAccessManager* m_pNwManager;
     QList<QNetworkReply *> m_listDownloadReplies;

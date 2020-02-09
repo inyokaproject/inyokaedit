@@ -74,14 +74,14 @@ class Parser : public QObject {
     void replaceCodeblocks(QTextDocument *pRawDoc);
     void reinstertNoTranslate(QTextDocument *pRawDoc);
 
-    void removeComments(QTextDocument *pRawDoc);
-    void generateParagraphs(QTextDocument *pRawDoc);
+    static void removeComments(QTextDocument *pRawDoc);
+    static void generateParagraphs(QTextDocument *pRawDoc);
 
     // void replaceFlags(QTextDocument *pRawDoc);
-    void replaceQuotes(QTextDocument *pRawDoc);
-    void replaceHorLines(QTextDocument *pRawDoc);
-    QStringList replaceHeadlines(QTextDocument *pRawDoc);
-    void replaceFootnotes(QTextDocument *pRawDoc);
+    static void replaceQuotes(QTextDocument *pRawDoc);
+    static void replaceHorLines(QTextDocument *pRawDoc);
+    static QStringList replaceHeadlines(QTextDocument *pRawDoc);
+    static void replaceFootnotes(QTextDocument *pRawDoc);
     QString generateTags(QTextDocument *pRawDoc);
     QString highlightCode(const QString &sLanguage, const QString &sCode);
 

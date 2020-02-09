@@ -60,15 +60,10 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath) {
 }
 
 Settings::~Settings() {
-  if (nullptr != m_pSettingsDialog) {
-    delete m_pSettingsDialog;
-  }
+  delete m_pSettingsDialog;
   m_pSettingsDialog = nullptr;
-
-  if (nullptr != m_pSettings) {
-    delete m_pSettings;
-    m_pSettings = nullptr;
-  }
+  delete m_pSettings;
+  m_pSettings = nullptr;
 }
 
 // ----------------------------------------------------------------------------
@@ -328,9 +323,8 @@ QString Settings::getGuiLanguage() const {
 #endif
     sLang = QLocale::system().name();
     return sLang.mid(0, sLang.indexOf('_'));
-  } else {
-    return m_sGuiLanguage;
   }
+  return m_sGuiLanguage;
 }
 
 QString Settings::getInyokaCommunity() const {

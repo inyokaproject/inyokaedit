@@ -96,8 +96,7 @@ void Upload::clickUploadArticle() {
                   &bOk);
   m_sSitename = m_sSitename.trimmed();
 
-  // Click on "cancel" or string is empty
-  if (true != bOk || m_sSitename.isEmpty()) {
+  if (!bOk || m_sSitename.isEmpty()) {
     return;
   }
 
@@ -120,15 +119,11 @@ void Upload::clickUploadArticle() {
   }
 
   switch (m_State) {
-    case REQUREVISION:
-      this->requestRevision();
-      break;
     case RECREVISION:
       this->requestUpload();
       break;
+    case REQUREVISION:
     case REQUPLOAD:
-      this->requestRevision();
-      break;
     case RECUPLOAD:
       this->requestRevision();
       break;
@@ -189,6 +184,7 @@ void Upload::getRevisionReply(const QString &sNWReply) {
 // ----------------------------------------------------------------------------
 
 void Upload::requestUpload() {
+  const int nMAXINPUT = 510;  // Max length = 512 in Inyoka input form
   m_State = REQUPLOAD;
 
   QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/edit/");
@@ -231,11 +227,10 @@ void Upload::requestUpload() {
                                 tr("Please insert a change message:"),
                                 QLineEdit::Normal, "", &bOk);
   sNote = sNote.trimmed();
-  if (sNote.length() > 510) {  // Max length = 512 in Inyoka input form
-    sNote.resize(510);
+  if (sNote.length() > nMAXINPUT) {
+    sNote.resize(nMAXINPUT);
   }
-  // Click on "cancel" or string is empty
-  if (true != bOk || sNote.isEmpty()) {
+  if (!bOk || sNote.isEmpty()) {
     qWarning() << "Change note is empty.";
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("It is not allowed to upload an article "
@@ -327,37 +322,37 @@ void Upload::replyFinished(QNetworkReply *pReply) {
                 << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
     return;
+  }
+
+  if (m_State == REQUREVISION) {
+    // Check for redirection
+    QVariant varRedirectUrl = pReply->attribute(
+                                QNetworkRequest::RedirectionTargetAttribute);
+    m_urlRedirectedTo = this->redirectUrl(varRedirectUrl.toUrl(),
+                                          m_urlRedirectedTo);
+  }
+  if (!m_urlRedirectedTo.isEmpty() && m_State == REQUREVISION) {
+    qDebug() << "Redirected to: " + m_urlRedirectedTo.toString();
+    this->requestRevision(m_urlRedirectedTo.toString() + "a/log/");
   } else {
-    if (m_State == REQUREVISION) {
-      // Check for redirection
-      QVariant varRedirectUrl = pReply->attribute(
-                                  QNetworkRequest::RedirectionTargetAttribute);
-      m_urlRedirectedTo = this->redirectUrl(varRedirectUrl.toUrl(),
-                                            m_urlRedirectedTo);
+    QString sReply = QString::fromUtf8(pData->readAll());
+    sReply.replace("\r\r\n", "\n");
+    m_pReply->deleteLater();
+
+    if (sReply.isEmpty()) {
+      qDebug() << "Upload NW reply is empty.";
     }
-    if (!m_urlRedirectedTo.isEmpty() && m_State == REQUREVISION) {
-      qDebug() << "Redirected to: " + m_urlRedirectedTo.toString();
-      this->requestRevision(m_urlRedirectedTo.toString() + "a/log/");
-    } else {
-      QString sReply = QString::fromUtf8(pData->readAll());
-      sReply.replace("\r\r\n", "\n");
-      m_pReply->deleteLater();
 
-      if (sReply.isEmpty()) {
-        qDebug() << "Upload NW reply is empty.";
-      }
-
-      switch (m_State) {
-        case REQUREVISION:
-          this->getRevisionReply(sReply);
-          break;
-        case REQUPLOAD:
-          this->getUploadReply(sReply);
-          break;
-        default:
-          qWarning() << "Ran into unexpected state:" << m_State;
-          qWarning() << "REPLY:" << sReply;
-      }
+    switch (m_State) {
+      case REQUREVISION:
+        this->getRevisionReply(sReply);
+        break;
+      case REQUPLOAD:
+        this->getUploadReply(sReply);
+        break;
+      default:
+        qWarning() << "Ran into unexpected state:" << m_State;
+        qWarning() << "REPLY:" << sReply;
     }
   }
 }

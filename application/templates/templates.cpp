@@ -39,41 +39,43 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   this->initHtmlTpl(sPath + "/Preview.tpl");
   m_sListIWLs.clear();
   m_sListIWLUrls.clear();
-  this->initMappings(sPath + "/linkmap/linkmap.csv", ',',
-                     m_sListIWLs, m_sListIWLUrls);
+  Templates::initMappings(sPath + "/linkmap/linkmap.csv", ',',
+                          m_sListIWLs, m_sListIWLUrls);
   m_sListIWLs << "user";      // "Build-in" IWL
   m_sListIWLUrls << "user/";  // TODO(): Minor; add community URL?
 
   m_sListFlags.clear();
   m_sListFlagsImg.clear();
-  this->initMappings(sPath + "/flagmap/flagmap.csv", ',',
-                     m_sListFlags, m_sListFlagsImg);
+  Templates::initMappings(sPath + "/flagmap/flagmap.csv", ',',
+                          m_sListFlags, m_sListFlagsImg);
   m_sListSmilies.clear();
   m_sListSmiliesImg.clear();
-  this->initMappings(sPath + "/SmileysMap.csv", ',',
-                     m_sListSmilies, m_sListSmiliesImg);
+  Templates::initMappings(sPath + "/SmileysMap.csv", ',',
+                          m_sListSmilies, m_sListSmiliesImg);
   this->initTextformats(sPath + "/Textformats.conf");
 
   sPath = "/community/" + sCommunity;
 
   m_sListTestedWith.clear();
   m_sListTestedWithStrings.clear();
-  this->initMappings(sSharePath + sPath + "/templates/TestedWith.conf", '=',
-                     m_sListTestedWith, m_sListTestedWithStrings);
+  Templates::initMappings(sSharePath + sPath + "/templates/TestedWith.conf",
+                          '=', m_sListTestedWith, m_sListTestedWithStrings);
   QFile tmpFile(sUserDataDir + sPath + "/templates/TestedWith.conf");
   if (tmpFile.exists()) {
-    this->initMappings(tmpFile.fileName(), '=',
-                       m_sListTestedWith, m_sListTestedWithStrings);
+    Templates::initMappings(tmpFile.fileName(), '=',
+                            m_sListTestedWith, m_sListTestedWithStrings);
   }
 
   m_sListTestedWithTouch.clear();
   m_sListTestedWithTouchStrings.clear();
-  this->initMappings(sSharePath + sPath + "/templates/TestedWithTouch.conf", '=',
-                     m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
+  Templates::initMappings(sSharePath + sPath + "/templates/TestedWithTouch.conf",
+                          '=', m_sListTestedWithTouch,
+                          m_sListTestedWithTouchStrings);
   tmpFile.setFileName(sUserDataDir + sPath + "/templates/TestedWithTouch.conf");
   if (tmpFile.exists()) {
-    this->initMappings(tmpFile.fileName(), '=',
-                       m_sListTestedWithTouch, m_sListTestedWithTouchStrings);
+    Templates::initMappings(tmpFile.fileName(), '=',
+                            m_sListTestedWithTouch,
+                            m_sListTestedWithTouchStrings);
   }
 }
 
@@ -109,8 +111,7 @@ void Templates::initTemplates(const QString &sTplPath) {
           if (!tmpLine.startsWith("#")) {
             bFoundTpl = true;
             sTempTplText += tmpLine + "\n";
-          } else if (tmpLine.startsWith("## Macro=")
-                     && false == bFoundMacro) {
+          } else if (tmpLine.startsWith("## Macro=") && !bFoundMacro) {
             bFoundMacro = true;
             tmpLine = tmpLine.remove("## Macro=");
             sTempMacro = tmpLine.trimmed();
@@ -190,7 +191,7 @@ void Templates::initHtmlTpl(const QString &sTplFile) {
 // ----------------------------------------------------------------------------
 
 void Templates::initMappings(const QString &sFileName,
-                             const QChar &cSplit,
+                             const QChar cSplit,
                              QStringList &sListElements,
                              QStringList &sListMapping) {
   QFile MapFile(sFileName);

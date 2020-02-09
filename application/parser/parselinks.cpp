@@ -54,11 +54,11 @@ void ParseLinks::updateSettings(const QString &sUrlToWiki,
 // ----------------------------------------------------------------------------
 
 void ParseLinks::startParsing(QTextDocument *pRawDoc) {
-  this->replaceHyperlinks(pRawDoc);
+  ParseLinks::replaceHyperlinks(pRawDoc);
   this->replaceInyokaWikiLinks(pRawDoc);
   this->replaceInterwikiLinks(pRawDoc);
-  this->replaceAnchorLinks(pRawDoc);
-  this->replaceKnowledgeBoxLinks(pRawDoc);
+  ParseLinks::replaceAnchorLinks(pRawDoc);
+  ParseLinks::replaceKnowledgeBoxLinks(pRawDoc);
 }
 
 // ----------------------------------------------------------------------------

@@ -28,8 +28,7 @@
 
 #include <QTextBlock>
 
-ParseList::ParseList() {
-}
+ParseList::ParseList() = default;
 
 void ParseList::startParsing(QTextDocument *pRawDoc) {
   QString sDoc("");
@@ -63,7 +62,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
             bArrayListType << false;
           } else {  // Close previous tag and maybe create new
             if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
+              if (!bArrayListType.last()) {
                 sDoc += "</ul>\n";
               } else {
                 sDoc += "</ol>\n";
@@ -72,7 +71,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
             }
 
             if (!bArrayListType.isEmpty()) {
-              if (true == bArrayListType.last()) {
+              if (bArrayListType.last()) {
                 sDoc += "</ol>\n<ul>\n";
                 bArrayListType.removeLast();
                 bArrayListType << false;
@@ -123,7 +122,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
             bArrayListType << true;
           } else {  // Close previous tag and maybe create new
             if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
+              if (!bArrayListType.last()) {
                 sDoc += "</ul>\n";
               } else {
                 sDoc += "</ol>\n";
@@ -132,7 +131,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
             }
 
             if (!bArrayListType.isEmpty()) {
-              if (false == bArrayListType.last()) {
+              if (!bArrayListType.last()) {
                 sDoc += "</ul>\n<ol class=\"" + sClass + "\">\n";
                 bArrayListType.removeLast();
                 bArrayListType << true;
@@ -145,7 +144,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
       } else {  // Not a list element
         // Close all open tags
         while (!bArrayListType.isEmpty()) {
-          if (false == bArrayListType.last()) {
+          if (!bArrayListType.last()) {
             sDoc += "</ul>\n";
           } else {
             sDoc += "</ol>\n";
@@ -161,7 +160,7 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
     } else {  // Everything else
       // Close all open tags
       while (!bArrayListType.isEmpty()) {
-        if (false == bArrayListType.last()) {
+        if (!bArrayListType.last()) {
           sDoc += "</ul>\n";
         } else {
           sDoc += "</ol>\n";

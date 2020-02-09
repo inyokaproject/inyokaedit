@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 
   const QStringList sListArgs = cmdparser.positionalArguments();
   QString sArg("");
-  if (sListArgs.size() > 0) {
+  if (!sListArgs.isEmpty()) {
     sArg = sListArgs.at(0);
   }
 
@@ -155,7 +155,6 @@ void setupLogger(const QString &sDebugFilePath) {
 void LoggingHandler(QtMsgType type,
                     const QMessageLogContext &context,
                     const QString &sMsg) {
-  QString sMsg2(sMsg);
   QString sContext = sMsg + " (" + QString(context.file) + ":"
                      + QString::number(context.line) + ", "
                      + QString(context.function) + ")";
@@ -163,7 +162,7 @@ void LoggingHandler(QtMsgType type,
 
   switch (type) {
     case QtDebugMsg:
-      out << sTime << " Debug: " << sMsg2 << "\n";
+      out << sTime << " Debug: " << sMsg << "\n";
       out.flush();
       break;
     case QtWarningMsg:

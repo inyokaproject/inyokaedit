@@ -988,7 +988,7 @@ Es ist nur möglich in die &quot;%1&quot; hochzuladen!</translation>
     <message>
         <location filename="../utils.cpp" line="183"/>
         <source>Special thanks to djcj, bubi97, Lasall, Vistaus, Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
-        <translation>Besonderen Dank an djcj, bubi97, Lasall, Vistaus, Shakesbier and all testers from &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
+        <translation>Besonderen Dank an djcj, bubi97, Lasall, Vistaus, Shakesbier und allen Testenden von &lt;a href=&quot;http://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../utils.cpp" line="163"/>

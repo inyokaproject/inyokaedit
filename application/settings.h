@@ -51,7 +51,7 @@ class Settings : public QObject {
     void readSettings(const QString &sSharePath);
     void writeSettings(const QByteArray &WinGeometry,
                        const QByteArray &WinState,
-                       const QByteArray &SplitterState = 0);
+                       const QByteArray &SplitterState = nullptr);
 
     void setLastOpenedDir(const QDir &LastDir);
 

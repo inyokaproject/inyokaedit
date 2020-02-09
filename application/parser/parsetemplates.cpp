@@ -135,7 +135,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
           // Extract arguments
           sListArguments = sMacro.split(QRegExp("\\n"));
 
-          if (sListArguments.size() > 0) {
+          if (!sListArguments.isEmpty()) {
             // Split by ' ' - don't split quoted strings with space
             QStringList sList;
             QStringList sL = sListArguments[0].split(QRegExp("\""));

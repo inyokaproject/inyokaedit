@@ -51,10 +51,7 @@ Utils::Utils(QWidget *pParent, QObject *pParentObj)
 
 bool Utils::getOnlineState() {
   QNetworkConfigurationManager mgr;
-  if (!mgr.isOnline()) {
-    return false;
-  }
-  return true;
+  return mgr.isOnline();
 }
 
 // ----------------------------------------------------------------------------
@@ -141,7 +138,8 @@ void Utils::replyFinished(QNetworkReply *pReply) {
             qDebug() << "Don't want to download an update and DON'T ASK AGAIN!";
             emit this->setWindowsUpdateCheck(false);
             return;
-          } else if (msgBox->clickedButton() == yesButton) {
+          }
+          if (msgBox->clickedButton() == yesButton) {
             qDebug() << "Calling download page.";
             QDesktopServices::openUrl(
                   QUrl("https://github.com/inyokaproject/inyokaedit/releases"));

@@ -32,7 +32,9 @@
 #include <QFileInfo>
 
 DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
-  : m_pNwManager(pNwManager) {
+  : m_pNwManager(pNwManager),
+    m_pProgessDialog(nullptr),
+    m_nProgress(0){
   Q_UNUSED(pParent)
   connect(m_pNwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);
@@ -51,6 +53,7 @@ void DownloadImg::setDLs(const QStringList &sListUrls,
 // ----------------------------------------------------------------------------
 
 void DownloadImg::startDownloads() {
+  const int MINDURATION = 100;
   m_nProgress = 0;
   m_sDownloadError.clear();
 
@@ -58,18 +61,17 @@ void DownloadImg::startDownloads() {
   m_pProgessDialog = new QProgressDialog(tr("Downloading images..."),
                                          tr("Cancel"), m_nProgress,
                                          m_sListUrls.size(), nullptr,
-                                         Qt::WindowTitleHint
-                                         | Qt::WindowSystemMenuHint);
+                                         Qt::WindowTitleHint |
+                                         Qt::WindowSystemMenuHint);
   m_pProgessDialog->setWindowTitle(qApp->applicationName());
-  m_pProgessDialog->setMinimumDuration(100);
+  m_pProgessDialog->setMinimumDuration(MINDURATION);
   m_pProgessDialog->setModal(true);
   m_pProgessDialog->setMaximumSize(m_pProgessDialog->size());
   m_pProgessDialog->setMinimumSize(m_pProgessDialog->size());
   connect(m_pProgessDialog, &QProgressDialog::canceled,
           this, &DownloadImg::cancelDownloads);
 
-  if (m_sListUrls.size() == m_sListSavePath.size()
-      && m_sListUrls.size() > 0) {
+  if (m_sListUrls.size() == m_sListSavePath.size() && !m_sListUrls.isEmpty()) {
     for (int i = 0; i < m_sListUrls.size(); i++) {
       QUrl url = QUrl::fromEncoded(m_sListUrls[i].toLocal8Bit());
       this->doDownload(url, m_sListSavePath[i]);
@@ -108,8 +110,8 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
   // Check for redirection
   QVariant possibleRedirectUrl = pReply->attribute(
                                    QNetworkRequest::RedirectionTargetAttribute);
-  m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
-                                        m_urlRedirectedTo);
+  m_urlRedirectedTo = DownloadImg::redirectUrl(possibleRedirectUrl.toUrl(),
+                                               m_urlRedirectedTo);
 
   // Error
   if (QNetworkReply::NoError != pReply->error()) {
@@ -190,7 +192,7 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 
 QUrl DownloadImg::redirectUrl(const QUrl &possibleRedirectUrl,
-                              const QUrl &oldRedirectUrl) const {
+                              const QUrl &oldRedirectUrl) {
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty()
       && possibleRedirectUrl != oldRedirectUrl) {

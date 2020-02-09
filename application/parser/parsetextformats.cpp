@@ -29,8 +29,7 @@
 #include <QRegExp>
 #include <QStringList>
 
-ParseTextformats::ParseTextformats() {
-}
+ParseTextformats::ParseTextformats() = default;
 
 void ParseTextformats::startParsing(QTextDocument *pRawDoc,
                                     const QStringList &sListFormatStart,

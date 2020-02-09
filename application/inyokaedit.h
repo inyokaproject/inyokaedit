@@ -95,7 +95,7 @@ class InyokaEdit : public QMainWindow {
     void dropdownXmlChanged(int nIndex);
     void deleteTempImages();
     void highlightSyntaxError(const qint32 nPos);
-    QColor getHighlightErrorColor();
+    static QColor getHighlightErrorColor();
     // Preview
     void previewInyokaPage();
     void loadPreviewFinished(const bool bSuccess);
@@ -114,8 +114,8 @@ class InyokaEdit : public QMainWindow {
     void deleteAutoSaveBackups();
     void readSettings();
     void writeSettings();
-    bool switchTranslator(QTranslator *translator, const QString &sFile,
-                          const QString &sPath = "");
+    static bool switchTranslator(QTranslator *translator, const QString &sFile,
+                                 const QString &sPath = "");
 
     Ui::InyokaEdit *m_pUi;
     QTranslator m_translator;  // App translations

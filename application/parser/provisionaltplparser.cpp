@@ -58,158 +58,178 @@ QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
   m_sCurrentFile = sCurrentFile;
 
   QStringList sArgs = sListArgs;
-  if (sArgs.size() >= 1) {
+  if (!sArgs.isEmpty()) {
     if (sArgs[0].toLower() == QString::fromUtf8("Fortgeschritten").toLower()) {
-      return this->parseAdvanced();
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Archiviert").toLower()) {
+      return ProvisionalTplParser::parseAdvanced();
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Archiviert").toLower()) {
       sArgs.removeFirst();
-      return this->parseArchived(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Befehl").toLower()) {
+      return ProvisionalTplParser::parseArchived(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Befehl").toLower()) {
       sArgs.removeFirst();
-      return this->parseBash(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Builddeps").toLower()) {
+      return ProvisionalTplParser::parseBash(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Builddeps").toLower()) {
       sArgs.removeFirst();
-      return this->parseBuilddeps(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Code").toLower()) {
+      return ProvisionalTplParser::parseBuilddeps(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Code").toLower()) {
       sArgs.removeFirst();
-      return this->parseCode(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Kopie").toLower()) {
+      return ProvisionalTplParser::parseCode(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Kopie").toLower()) {
       sArgs.removeFirst();
-      return this->parseCopy(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Experten").toLower()) {
+      return ProvisionalTplParser::parseCopy(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Experten").toLower()) {
       sArgs.removeFirst();
-      return this->parseExperts(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Fehlerhaft").toLower()) {
+      return ProvisionalTplParser::parseExperts(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Fehlerhaft").toLower()) {
       sArgs.removeFirst();
-      return this->parseFixme(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Fremdquelle-auth").toLower()) {
+      return ProvisionalTplParser::parseFixme(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Fremdquelle-auth").toLower()) {
       sArgs.removeFirst();
-      return this->parseForeignAuth(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Fremdquelle").toLower()) {
+      return ProvisionalTplParser::parseForeignAuth(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Fremdquelle").toLower()) {
       sArgs.removeFirst();
-      return this->parseForeignSource(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Fremdpaket").toLower()) {
+      return ProvisionalTplParser::parseForeignSource(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Fremdpaket").toLower()) {
       sArgs.removeFirst();
-      return this->parseForeignPackage(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Fremd").toLower()) {
+      return ProvisionalTplParser::parseForeignPackage(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Fremd").toLower()) {
       sArgs.removeFirst();
-      return this->parseForeignWarning(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Icon-Übersicht").toLower()) {
+      return ProvisionalTplParser::parseForeignWarning(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Icon-Übersicht").toLower()) {
       sArgs.removeFirst();
-      return this->parseIconOverview(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "IkhayaAutor").toLower()) {
+      return ProvisionalTplParser::parseIconOverview(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("IkhayaAutor").toLower()) {
       sArgs.removeFirst();
-      return this->parseIkhayaAuthor(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Ikhaya-Award").toLower()) {
+      return ProvisionalTplParser::parseIkhayaAuthor(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Ikhaya-Award").toLower()) {
       sArgs.removeFirst();
-      return this->parseIkhayaAward(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Ikhayabild").toLower()) {
+      return ProvisionalTplParser::parseIkhayaAward(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Ikhayabild").toLower()) {
       sArgs.removeFirst();
-      return this->parseIkhayaImage(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
+      return ProvisionalTplParser::parseIkhayaImage(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8(
                  "Ikhaya-Projektvorstellung").toLower()) {
       sArgs.removeFirst();
-      return this->parseIkhayaProjectPresentation();
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Bildersammlung").toLower()) {
+      return ProvisionalTplParser::parseIkhayaProjectPresentation();
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Bildersammlung").toLower()) {
       sArgs.removeFirst();
       return this->parseImageCollect(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Bildunterschrift").toLower()) {
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Bildunterschrift").toLower()) {
       sArgs.removeFirst();
       return this->parseImageSub(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Ausbaufähig").toLower()) {
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Ausbaufähig").toLower()) {
       sArgs.removeFirst();
-      return this->parseImprovable(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Infobox").toLower()) {
+      return ProvisionalTplParser::parseImprovable(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Infobox").toLower()) {
       sArgs.removeFirst();
-      return this->parseInfobox(sArgs);
-    } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-                 "Tasten").toLower()) {
+      return ProvisionalTplParser::parseInfobox(sArgs);
+    }
+    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Tasten").toLower()) {
       sArgs.removeFirst();
-      return this->parseKeys(sArgs);
-    } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-                 "Wissen").toLower()) {
+      return ProvisionalTplParser::parseKeys(sArgs);
+    }
+    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Wissen").toLower()) {
       sArgs.removeFirst();
-      return this->parseKnowledge(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Verlassen").toLower()) {
+      return ProvisionalTplParser::parseKnowledge(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Verlassen").toLower()) {
       sArgs.removeFirst();
-      return this->parseLeft(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
+      return ProvisionalTplParser::parseLeft(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
       sArgs.removeFirst();
-      return this->parseNotice(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("OBS").toLower()) {
+      return ProvisionalTplParser::parseNotice(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("OBS").toLower()) {
       sArgs.removeFirst();
-      return this->parseOBS(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
+      return ProvisionalTplParser::parseOBS(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8(
                  "Uebersicht").toLower()) {
       sArgs.removeFirst();
-      return this->parseOverview(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Uebersicht2").toLower()) {
+      return ProvisionalTplParser::parseOverview(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht2").toLower()) {
       sArgs.removeFirst();
-      return this->parseOverview2(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Pakete").toLower()) {
+      return ProvisionalTplParser::parseOverview2(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Pakete").toLower()) {
       sArgs.removeFirst();
-      return this->parsePackage(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "PipInstallation").toLower()) {
+      return ProvisionalTplParser::parsePackage(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("PipInstallation").toLower()) {
       sArgs.removeFirst();
       return this->parsePipInstall(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8(
                  "Paketinstallation").toLower()) {
       sArgs.removeFirst();
-      return this->parsePkgInstall(sArgs);
-    } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
+      return ProvisionalTplParser::parsePkgInstall(sArgs);
+    }
+    if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
                  "Installbutton").toLower()) {
       sArgs.removeFirst();
       return this->parsePkgInstallBut(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("PPA").toLower()) {
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("PPA").toLower()) {
       sArgs.removeFirst();
-      return this->parsePPA(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Projekte").toLower()) {
+      return ProvisionalTplParser::parsePPA(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Projekte").toLower()) {
       sArgs.removeFirst();
-      return this->parseProjects(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Seitenleiste").toLower()) {
+      return ProvisionalTplParser::parseProjects(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Seitenleiste").toLower()) {
       sArgs.removeFirst();
-      return this->parseSidebar(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "StatusIcon").toLower()) {
+      return ProvisionalTplParser::parseSidebar(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("StatusIcon").toLower()) {
       sArgs.removeFirst();
-      return this->parseStatusIcon(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
+      return ProvisionalTplParser::parseStatusIcon(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
       sArgs.removeFirst();
       return this->parseTable(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Getestet").toLower()) {
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Getestet").toLower()) {
       sArgs.removeFirst();
       return this->parseTested(sArgs);
-    } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-                 "UT").toLower()) {
+    }
+    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("UT").toLower()) {
       sArgs.removeFirst();
       return this->parseTestedUT(sArgs);
-    } else if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-                 "Baustelle").toLower()) {
+    }
+    if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
+          "Baustelle").toLower()) {
       sArgs.removeFirst();
-      return this->parseUnderConst(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8("Warnung").toLower()) {
+      return ProvisionalTplParser::parseUnderConst(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Warnung").toLower()) {
       sArgs.removeFirst();
-      return this->parseWarning(sArgs);
-    } else if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Überarbeitung").toLower()) {
+      return ProvisionalTplParser::parseWarning(sArgs);
+    }
+    if (sArgs[0].toLower() == QString::fromUtf8("Überarbeitung").toLower()) {
       sArgs.removeFirst();
-      return this->parseWorkInProgr(sArgs);
+      return ProvisionalTplParser::parseWorkInProgr(sArgs);
     }
   }
   return "";
@@ -219,7 +239,7 @@ QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
 // ----------------------------------------------------------------------------
 
 QString ProvisionalTplParser::parseAdvanced() {
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box advanced",
         QString::fromUtf8("Artikel für fortgeschrittene Anwender"),
         QString::fromUtf8("Dieser Artikel erfordert mehr Erfahrung im Umgang "
@@ -232,13 +252,11 @@ QString ProvisionalTplParser::parseAdvanced() {
 
 QString ProvisionalTplParser::parseArchived(const QStringList &sListArgs) {
   QString sRemark("");
-
-  // Remark available?
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box improvable", QString::fromUtf8("Archivierte Anleitung"),
         QString::fromUtf8("Dieser Artikel wurde archiviert. Das bedeutet, dass "
                           "er nicht mehr auf Richtigkeit überprüft oder "
@@ -300,11 +318,11 @@ QString ProvisionalTplParser::parseCode(const QStringList &sListArgs) {
 QString ProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
   QString sLink("");
 
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sLink = sListArgs[0];
   }
 
-  return insertBox(
+  return ProvisionalTplParser::insertBox(
         "box warning", QString::fromUtf8("Achtung!"),
         QString::fromUtf8("Dieser Artikel wird aktuell in %1 überarbeitet. "
                           "Daher kann es sein, dass diese Seite hier veraltete "
@@ -324,7 +342,9 @@ QString ProvisionalTplParser::parseExperts(const QStringList &sListArgs) {
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
   }
-  return insertBox("box experts", QString::fromUtf8("Experten-Info:"), sOutput);
+  return ProvisionalTplParser::insertBox("box experts",
+                                         QString::fromUtf8("Experten-Info:"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -332,13 +352,11 @@ QString ProvisionalTplParser::parseExperts(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseFixme(const QStringList &sListArgs) {
   QString sRemark("");
-
-  // Remark available?
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box fixme", QString::fromUtf8("Fehlerhafte Anleitung"),
         QString::fromUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie "
                           "du sie ausbessern kannst, nimm dir bitte die Zeit "
@@ -352,7 +370,7 @@ QString ProvisionalTplParser::parseForeignAuth(const QStringList &sListArgs) {
   QStringList sArgs(sListArgs);
   QString sOutput("");
 
-  if (sArgs.size() >= 1) {
+  if (!sArgs.isEmpty()) {
     // Key
     if (sArgs[0].startsWith("key")) {
       sArgs[0].remove("key");
@@ -457,10 +475,11 @@ QString ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg) {
                                "installiert werden].</p>\n");
 
   // Warning box
-  sOutput += insertBox("box warning",
-                       QString::fromUtf8("Hinweis!"),
-                       QString::fromUtf8("[:Fremdquellen:Fremdpakete] können "
-                                         "das System gefährden."));
+  sOutput += ProvisionalTplParser::insertBox("box warning",
+                                             QString::fromUtf8("Hinweis!"),
+                                             QString::fromUtf8(
+                                               "[:Fremdquellen:Fremdpakete] "
+                                               "können das System gefährden."));
   return sOutput;
 }
 
@@ -477,10 +496,11 @@ QString ProvisionalTplParser::parseForeignSource(const QStringList &sListArgs) {
                               "Ubuntu-Version die folgende "
                               "[:Paketquellen_freischalten:]:</p>\n");
 
-  sOutput += insertBox("box warning",
-                       QString::fromUtf8("Hinweis!"),
-                       QString::fromUtf8("Zusätzliche [:Fremdquellen:] können "
-                                         "das System gefährden."));
+  sOutput += ProvisionalTplParser::insertBox("box warning",
+                                             QString::fromUtf8("Hinweis!"),
+                                             QString::fromUtf8(
+                                               "Zusätzliche [:Fremdquellen:] "
+                                               "können das System gefährden."));
 
   if (sArgs.size() >= 2) {
     sListVersions = sArgs[1].split(" ", QString::SkipEmptyParts);
@@ -521,7 +541,7 @@ QString ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg) {
   QString sRemark("");
   QString sOutput("");
 
-  if (sListArg.size() >= 1) {
+  if (!sListArg.isEmpty()) {
     // Package
     if (sListArg[0].toLower() == QString::fromUtf8("Paket").toLower()) {
       sOutput = QString::fromUtf8("<p>[:Fremdquellen:Fremdpakete] können "
@@ -543,8 +563,9 @@ QString ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg) {
     }
   }
 
-  return insertBox("box warning", QString::fromUtf8("Hinweis!"),
-                   sOutput, sRemark);
+  return ProvisionalTplParser::insertBox("box warning",
+                                         QString::fromUtf8("Hinweis!"),
+                                         sOutput, sRemark);
 }
 
 // ----------------------------------------------------------------------------
@@ -555,7 +576,7 @@ QString ProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
   QStringList sListTitle;
   QString sStyle("");
 
-  if (sListArgs.size() > 0) {
+  if (!sListArgs.isEmpty()) {
     sListTitle << sListArgs[0].split("/");
     if (sListTitle.size() > 1) {
       sStyle = sListTitle[1].trimmed() + "-";
@@ -599,14 +620,13 @@ QString ProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs) {
   QString sOutput("");
-
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
   }
 
-  return this->insertBox("box tested_for",
-                         QString::fromUtf8("Über den Autor"),
-                         sOutput);
+  return ProvisionalTplParser::insertBox("box tested_for",
+                                         QString::fromUtf8("Über den Autor"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -614,14 +634,13 @@ QString ProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs) {
   QString sOutput("");
-
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
   }
 
-  return this->insertBox("box award",
-                         QString::fromUtf8("Award:"),
-                         sOutput);
+  return ProvisionalTplParser::insertBox("box award",
+                                         QString::fromUtf8("Award:"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -655,7 +674,7 @@ QString ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 
 QString ProvisionalTplParser::parseIkhayaProjectPresentation() {
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box notice", QString::fromUtf8("Hinweis"),
         QString::fromUtf8("Dieser Artikel gehört zur Reihe der "
                           "Projektvorstellungen, die in unregelmäßigen "
@@ -676,7 +695,8 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
   QString sDescription("");
   QString sColHeight("140");
   QString sImageCollAlign("");
-  double iImgHeight, iImgWidth;
+  double iImgHeight;
+  double iImgWidth;
   bool bContinue(false);
 
   QString sImagePath("");
@@ -719,7 +739,8 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
     if (0 == i || 1 == i) {
       if ("left" == sListArgs[i] || "right" == sListArgs[i]) {
         continue;
-      } else if (0.0 != sListArgs[i].toDouble()) {
+      }
+      if (0.0 != sListArgs[i].toDouble()) {
         continue;
       }
     }
@@ -783,7 +804,8 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
       if (0 == i || 1 == i) {
         if ("left" == sListArgs[i] || "right" == sListArgs[i]) {
           continue;
-        } else if (0.0 != sListArgs[i].toDouble()) {
+        }
+        if (0.0 != sListArgs[i].toDouble()) {
           continue;
         }
       }
@@ -819,7 +841,8 @@ QString ProvisionalTplParser::parseImageSub(const QStringList &sListArgs) {
   QString sImageDescription("");
   QString sImageAlign("left");
   QString sImageStyle("");
-  double iImgHeight, iImgWidth;
+  double iImgHeight;
+  double iImgWidth;
 
   QString sImagePath("");
   if (!m_sCurrentFile.isEmpty()) {
@@ -905,13 +928,11 @@ QString ProvisionalTplParser::parseImageSub(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseImprovable(const QStringList &sListArgs) {
   QString sRemark("");
-
-  // Remark available?
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box improvable", QString::fromUtf8("Ausbaufähige Anleitung"),
         QString::fromUtf8("Dieser Anleitung fehlen noch einige Informationen. "
                           "Wenn Du etwas verbessern kannst, dann editiere den "
@@ -965,7 +986,7 @@ QString ProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
   QString sTmpKeyCode("");
   QStringList sListTmpKeys;
 
-  if (sListArgs.size() > 0) {
+  if (!sListArgs.isEmpty()) {
     sTmpKey = sListArgs[0];
   }
 
@@ -1258,10 +1279,11 @@ QString ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs) {
     }
   }
 
-  return insertBox("box knowledge",
-                   QString::fromUtf8("Zum Verständnis dieses Artikels sind "
-                                     "folgende Seiten hilfreich:"),
-                   sOutput);
+  return ProvisionalTplParser::insertBox(
+        "box knowledge",
+        QString::fromUtf8("Zum Verständnis dieses Artikels sind "
+                          "folgende Seiten hilfreich:"),
+        sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -1269,13 +1291,11 @@ QString ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs) {
 
 QString ProvisionalTplParser::parseLeft(const QStringList &sListArgs) {
   QString sRemark("");
-
-  // Remark available?
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
-  return this->insertBox(
+  return ProvisionalTplParser::insertBox(
         "box left", QString::fromUtf8("Verlassene Anleitung"),
         QString::fromUtf8("Dieser Artikel wurde von seinem Ersteller verlassen "
                           "und wird nicht mehr weiter von ihm gepflegt. Wenn "
@@ -1291,7 +1311,9 @@ QString ProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
   }
-  return insertBox("box notice", QString::fromUtf8("Hinweis:"), sOutput);
+  return ProvisionalTplParser::insertBox("box notice",
+                                         QString::fromUtf8("Hinweis:"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -1307,7 +1329,7 @@ QString ProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
                               " Befehl mit [:sudo:root-Rechten] im "
                               "[:Terminal:] ausführt: </p>\n");
 
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sOutput += "<div class=\"thirdpartyrepo-outer "
                "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
                "</p><div class=\"bash\"><div class=\"contents\"><pre "
@@ -1316,10 +1338,11 @@ QString ProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
         "/xUbuntu_VERSION/ /'</pre></div></div><p></p></div></div>";
   }
 
-  sOutput += insertBox("box warning",
-                       QString::fromUtf8("Hinweis!"),
-                       QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
-                                         " das System gefährden."));
+  sOutput += ProvisionalTplParser::insertBox(
+               "box warning",
+               QString::fromUtf8("Hinweis!"),
+               QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
+                                 " das System gefährden."));
 
   sOutput += QString::fromUtf8("<p>Anschließend sollte die [:Fremdquelle:] "
                                "authentifiziert werden. Dazu lädt man sich "
@@ -1327,7 +1350,7 @@ QString ProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
                                "Schlüssel herunter und fügt diesen dem "
                                "Schlüsselbund hinzu:</p>");
 
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     sOutput += "<div class=\"thirdpartyrepo-outer "
                "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
                "</p><div class=\"bash\"><div class=\"contents\"><pre "
@@ -1367,7 +1390,7 @@ QString ProvisionalTplParser::parseOverview(const QStringList &sListArgs) {
   for (int i = 0; i < sListList.size(); i++) {
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k && 0 == i) {
-        if (sListList[i].size() >= 1) {
+        if (!sListList[i].isEmpty()) {
           sOutput += "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
                      "background-color: #E2C889; font-size: 1.1em; "
                      "border-width: 0 10px 0 0; border-color: #FFFFFF\">"
@@ -1424,7 +1447,7 @@ QString ProvisionalTplParser::parseOverview2(const QStringList &sListArgs) {
   for (int i = 0; i < sListList.size(); i++) {
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k && 0 == i) {
-        if (sListList[i].size() >= 1) {
+        if (!sListList[i].isEmpty()) {
           sOutput += "<tr>\n<td colspan=\"6\" style=\"text-align: center; "
                      "background-color: #E2C889; font-size: 1.1em; "
                      "border-width: 0 10px 10px 0; border-color: #FFFFFF\">"
@@ -1569,7 +1592,7 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
   QString sPPA("");
   QString sOutput("");
 
-  if (sArgs.size() >= 1) {
+  if (!sArgs.isEmpty()) {
     sArgs[0].replace(" ", "_");  // Replace possible spaces
     if (sArgs[0].contains('/')) {
       QStringList sList;
@@ -1601,10 +1624,9 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
               .arg(sUser, sPPA, sUser);
   }
 
-  return sOutsideBox + insertBox("box warning",
-                                 QString::fromUtf8("Hinweis!"),
-                                 sOutput, sRemark)
-      + QString::fromUtf8("<p>Damit Pakete aus dem PPA genutzt werden "
+  return sOutsideBox + ProvisionalTplParser::insertBox(
+        "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark) +
+      QString::fromUtf8("<p>Damit Pakete aus dem PPA genutzt werden "
                           "können, müssen die Paketquellen neu "
                           "[:apt/apt-get#apt-get-update:eingelesen] "
                           "werden.</p>");
@@ -1639,7 +1661,7 @@ QString ProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
 
   for (int i = 0; i < sListList.size(); i++) {
     if (0 == i) {
-      if (sListList[i].size() >= 1) {
+      if (!sListList[i].isEmpty()) {
         sOutput += "<tr class=\"verlauf\">\n<td colspan=\"2\">"
                    + sListList[i][0] + "</td>\n</tr>";
       }
@@ -1700,7 +1722,7 @@ QString ProvisionalTplParser::parseSidebar(const QStringList &sListArgs) {
   for (int i = 0; i < sListList.size(); i++) {
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k) {
-        if (sListList[i].size() >= 1) {
+        if (!sListList[i].isEmpty()) {
           sOutput += "<tr>\n<td style=\"text-align: center; "
                      "background-color: #E2C889; font-size: 1.1em; "
                      "border: none\">" + sListList[i][k].trimmed() +
@@ -1792,7 +1814,9 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
   QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-]+\\\"");
 
   int nLength;
-  QString sTmpCellStyle, sStyleInfo, sTmpTD;
+  QString sTmpCellStyle;
+  QString sStyleInfo;
+  QString sTmpTD;
 
   if (sArgs.length() >= 2) {
     QString sTmpClass("");
@@ -1981,7 +2005,7 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
 QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
   QString sOutput("");
   qint32 nIndex(-1);
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
                                   "alle Ubuntu-Versionen gültig.");
@@ -2012,11 +2036,11 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
                                 "Fragen/#Wikiartikel-testen:]");
   }
 
-  return this->insertBox("box tested_for",
-                         QString::fromUtf8("Dieser Artikel wurde für die "
-                                           "folgenden Ubuntu-Versionen "
-                                           "getestet:"),
-                         sOutput);
+  return ProvisionalTplParser::insertBox(
+        "box tested_for",
+        QString::fromUtf8("Dieser Artikel wurde für die folgenden "
+                          "Ubuntu-Versionen getestet:"),
+        sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -2025,7 +2049,7 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
 QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
   QString sOutput("");
   qint32 nIndex(-1);
-  if (sListArgs.size() >= 1) {
+  if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
                                   "Versionen von Ubuntu Touch.");
@@ -2047,12 +2071,12 @@ QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
                                 "getestet! Bitte diesen Artikel testen!");
   }
 
-  return this->insertBox("box ut_box",
-                         QString::fromUtf8("Dieser Artikel bezieht sich auf "
-                                           "Ubuntu Touch, die Variante von "
-                                           "Ubuntu für mobile Geräte mit "
-                                           "Touchscreen."),
-                         sOutput);
+  return ProvisionalTplParser::insertBox(
+        "box ut_box",
+        QString::fromUtf8("Dieser Artikel bezieht sich auf Ubuntu Touch, die "
+                          "Variante von Ubuntu für mobile Geräte mit "
+                          "Touchscreen."),
+        sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -2063,7 +2087,7 @@ QString ProvisionalTplParser::parseUnderConst(const QStringList &sListArgs) {
   QString sOutput("");
   // Get and check date
   QString sDate("");
-  if (sArgs.size() >= 1) {
+  if (!sArgs.isEmpty()) {
     // Extract date
     QStringList sListDate = sArgs[0].split(".");
     // Wrong date format
@@ -2133,16 +2157,14 @@ QString ProvisionalTplParser::parseUnderConst(const QStringList &sListArgs) {
                                 "vorgehst.");
   }
 
-  return this->insertBox("box workinprogress",
-                         QString::fromUtf8("Artikel in Arbeit"),
-                         sOutput,
-                         QString::fromUtf8("Insbesondere heißt das, dass "
-                                           "dieser Artikel noch nicht fertig "
-                                           "ist und dass wichtige Teile fehlen,"
-                                           " oder sogar falsch sein können. "
-                                           "Bitte diesen Artikel nicht als "
-                                           "Anleitung für Problemlösungen "
-                                           "benutzen."));
+  return ProvisionalTplParser::insertBox(
+        "box workinprogress",
+        QString::fromUtf8("Artikel in Arbeit"),
+        sOutput,
+        QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
+                          "nicht fertig ist und dass wichtige Teile fehlen, "
+                          "oder sogar falsch sein können. Bitte diesen Artikel "
+                          "nicht als Anleitung für Problemlösungen benutzen."));
 }
 
 // ----------------------------------------------------------------------------
@@ -2153,7 +2175,9 @@ QString ProvisionalTplParser::parseWarning(const QStringList &sListArgs) {
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
   }
-  return insertBox("box warning", QString::fromUtf8("Achtung!"), sOutput);
+  return ProvisionalTplParser::insertBox("box warning",
+                                         QString::fromUtf8("Achtung!"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -2195,15 +2219,14 @@ QString ProvisionalTplParser::parseWorkInProgr(const QStringList &sListArgs) {
                                  "wie du weiter vorgehst.</p>\n").arg(sArgs[1]);
   }
 
-  return insertBox("box workinprogress",
-                   QString::fromUtf8("Artikel wird überarbeitet"),
-                   sOutput,
-                   QString::fromUtf8("Insbesondere heißt das, dass dieser "
-                                     "Artikel noch nicht fertig ist und dass "
-                                     "wichtige Teile fehlen oder sogar falsch "
-                                     "sein können. Bitte diesen Artikel nicht "
-                                     "als Anleitung für Problemlösungen "
-                                     "benutzen!"));
+  return ProvisionalTplParser::insertBox(
+        "box workinprogress",
+        QString::fromUtf8("Artikel wird überarbeitet"),
+        sOutput,
+        QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
+                          "nicht fertig ist und dass wichtige Teile fehlen "
+                          "oder sogar falsch sein können. Bitte diesen Artikel "
+                          "nicht als Anleitung für Problemlösungen benutzen!"));
 }
 
 // ----------------------------------------------------------------------------

@@ -80,8 +80,7 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
           this, &TextEditor::documentChanged);
 }
 
-TextEditor::~TextEditor() {
-}
+TextEditor::~TextEditor() = default;
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -200,13 +199,14 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
   bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
   QString completionPrefix = this->getLineUnderCursor();
 
-  if (false == m_bCodeCompletion) {
+  if (!m_bCodeCompletion) {
     m_pCompleter->popup()->hide();
     return;
-  } else if (!isShortcut && (hasModifier ||
-                             e->text().isEmpty() ||
-                             completionPrefix.length() < 3 ||
-                             eow.contains(e->text().right(1)))) {
+  }
+  if (!isShortcut && (hasModifier ||
+                      e->text().isEmpty() ||
+                      completionPrefix.length() < 3 ||
+                      eow.contains(e->text().right(1)))) {
     m_pCompleter->popup()->hide();
     return;
   }

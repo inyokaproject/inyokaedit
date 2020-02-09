@@ -78,10 +78,9 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
                              tr("Syntax error detected - closing parenthesis "
                                 "without opening paraenthesis!"));
         return nCnt;
-      } else {
-        listParenthesis.pop_back();
-        listPos.pop_back();
       }
+      listParenthesis.pop_back();
+      listPos.pop_back();
     }
     nCnt++;
   }
@@ -101,9 +100,11 @@ bool SyntaxCheck::checkParenthesisPair(const QChar cLeft,
                                        const QChar cRight) {
   if ('[' == cLeft && ']' == cRight) {
     return true;
-  } else if ('(' == cLeft && ')' == cRight) {
+  }
+  if ('(' == cLeft && ')' == cRight) {
     return true;
-  } else if ('{' == cLeft && '}' == cRight) {
+  }
+  if ('{' == cLeft && '}' == cRight) {
     return true;
   }
   return false;

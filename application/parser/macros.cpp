@@ -85,19 +85,19 @@ void Macros::startParsing(QTextDocument *pRawDoc,
   foreach (MACRO macro, m_listMacros) {
     foreach (QString s, macro.translations) {
       if ("Anchor" == macro.name) {
-        this->replaceAnchors(pRawDoc, s);
+        Macros::replaceAnchors(pRawDoc, s);
       } else if ("Attachment" == macro.name) {
-        this->replaceAttachments(pRawDoc, s);
+        Macros::replaceAttachments(pRawDoc, s);
       } else if ("Date" == macro.name) {
-        this->replaceDates(pRawDoc, s);
+        Macros::replaceDates(pRawDoc, s);
       } else if ("Newline" == macro.name) {
-        this->replaceNewline(pRawDoc, s);
+        Macros::replaceNewline(pRawDoc, s);
       } else if ("Picture" == macro.name) {
         this->replacePictures(pRawDoc, s, sCurrentFile, sCommunity);
       } else if ("TableOfContents" == macro.name) {
-        this->replaceTableOfContents(pRawDoc, s, sListHeadlines);
+        Macros::replaceTableOfContents(pRawDoc, s, sListHeadlines);
       } else if ("Span" == macro.name) {
-        this->replaceSpan(pRawDoc, s);
+        Macros::replaceSpan(pRawDoc, s);
       } else {
         qWarning() << "Unknown macro:" << macro.name;
       }
@@ -452,7 +452,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
     sArgs.removeAll(" ");
 
     sMacro.clear();
-    if (sArgs.size() >= 1) {
+    if (!sArgs.isEmpty()) {
       sMacro = sArgs[0];
     }
     if (sArgs.size() > 1) {

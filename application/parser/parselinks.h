@@ -54,11 +54,11 @@ class ParseLinks : public QObject {
     void updateSettings(const QString &sUrlToWiki, const bool bCheckLinks);
 
   private:
-    void replaceHyperlinks(QTextDocument *pRawDoc);
+    static void replaceHyperlinks(QTextDocument *pRawDoc);
     void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
     void replaceInterwikiLinks(QTextDocument *pRawDoc);
-    void replaceAnchorLinks(QTextDocument *pRawDoc);
-    void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
+    static void replaceAnchorLinks(QTextDocument *pRawDoc);
+    static void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
 
     QString m_sWikiUrl;   // Inyoka wiki url
     QStringList m_sListInterwikiKey;   // Interwiki link keywords

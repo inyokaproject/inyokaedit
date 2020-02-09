@@ -64,8 +64,7 @@
 #include <QStringList>
 #include <QRegularExpression>
 
-SpellChecker::~SpellChecker() {
-}
+SpellChecker::~SpellChecker() = default;
 
 void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir &userDataDir,
@@ -274,9 +273,7 @@ bool SpellChecker::initDictionaries() {
   m_pCodec = QTextCodec::codecForName(
                this->m_sEncoding.toLatin1().constData());
 
-  if (m_pHunspell != nullptr) {
-    delete m_pHunspell;
-  }
+  delete m_pHunspell;
   m_pHunspell = nullptr;
   m_pHunspell = new Hunspell(affixFilePathBA.constData(),
                              dictFilePathBA.constData());
@@ -397,9 +394,7 @@ void SpellChecker::callPlugin() {
     cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor, 1);
   }
 
-  if (m_pCheckDialog != nullptr) {
-    delete m_pCheckDialog;
-  }
+  delete m_pCheckDialog;
   m_pCheckDialog = nullptr;
 
   // cursor.endEditBlock();

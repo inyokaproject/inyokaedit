@@ -90,7 +90,7 @@ class XmlParser::Handler : public QXmlDefaultHandler {
     * \param attrs Attribute name
     * \return True
     */
-    bool startElement(const QString&, const QString&, const QString &name,
+    bool startElement(const QString&, const QString&, const QString &sElement,
                       const QXmlAttributes &attrs);
 
  private:

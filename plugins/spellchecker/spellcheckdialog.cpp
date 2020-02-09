@@ -64,7 +64,8 @@
 SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
                                    QWidget *pParent)
   : QDialog(pParent),
-    m_pUi(new Ui::SpellCheckDialog) {
+    m_pUi(new Ui::SpellCheckDialog),
+    m_returnCode(None) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_pUi->setupUi(this);
@@ -103,9 +104,7 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
 }
 
 SpellCheckDialog::~SpellCheckDialog() {
-  if (nullptr != m_pUi) {
-    delete m_pUi;
-  }
+  delete m_pUi;
   m_pUi = nullptr;
 }
 

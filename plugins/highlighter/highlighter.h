@@ -89,7 +89,7 @@ class Highlighter : public QObject, IEditorPlugin {
     void getTranslations();
     void defineRules();
     void writeFormat(const QString &sKey, const QTextCharFormat &charFormat);
-    void evalKey(const QString &sKey, QTextCharFormat &charFormat);
+    static void evalKey(const QString &sKey, QTextCharFormat &charFormat);
     void rehighlightAll();
 
     Ui::HighlighterDialog *m_pUi;

@@ -30,8 +30,7 @@
 #include <QStringList>
 #include <QTextBlock>
 
-ParseTable::ParseTable() {
-}
+ParseTable::ParseTable() = default;
 
 void ParseTable::startParsing(QTextDocument *pRawDoc) {
   QString sDoc("");

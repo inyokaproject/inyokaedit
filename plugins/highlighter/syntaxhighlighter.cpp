@@ -30,8 +30,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *pDoc)
   : QSyntaxHighlighter(pDoc) {
 }
 
-SyntaxHighlighter::~SyntaxHighlighter() {
-}
+SyntaxHighlighter::~SyntaxHighlighter() = default;
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

@@ -121,11 +121,8 @@ void FileOperations::newFile(QString sFileName) {
   m_pCurrentEditor->installEventFilter(m_pParent);
 
   if (sFileName.isEmpty() || "!_TPL_!" == sFileName) {
-    if ("!_TPL_!" == sFileName) {
-      m_bLoadPreview = false;
-    } else {
-      m_bLoadPreview = true;
-    }
+    m_bLoadPreview = ("!_TPL_!" != sFileName);
+
     nCntDocs++;
     sFileName = tr("Untitled");
     if (nCntDocs > 1 && nCntDocs < 254) {
@@ -189,9 +186,8 @@ bool FileOperations::save() {
       m_pCurrentEditor->getFileName().contains(tr("Untitled")) ||
       !QFile::exists(m_pCurrentEditor->getFileName())) {
     return this->saveAs();
-  } else {
-    return this->saveFile(m_pCurrentEditor->getFileName());
   }
+  return this->saveFile(m_pCurrentEditor->getFileName());
 }
 
 // ----------------------------------------------------------------------------
@@ -246,7 +242,8 @@ bool FileOperations::maybeSave() {
 
     if (QMessageBox::Save == ret) {
       return save();
-    } else if (QMessageBox::Cancel == ret) {
+    }
+    if (QMessageBox::Cancel == ret) {
       return false;
     }
   }
@@ -505,9 +502,8 @@ bool FileOperations::saveInyArchive(const QString &sArchive) {
     if (sListFiles.contains(img.fileName()) ||
         img.absoluteFilePath().contains("/community/", Qt::CaseInsensitive)) {
       continue;  // Filter duplicates or community images
-    } else {
-      sListFiles << img.fileName();
     }
+    sListFiles << img.fileName();
 
     if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
                                 img.absoluteFilePath().toLatin1(),
@@ -613,14 +609,14 @@ void FileOperations::printPreview() {
   QString sHtml("");
 
   QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
-  if (0 == listPrinters.size()) {
+  if (listPrinters.isEmpty()) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("No supported printer found."));
     return;
-  } else {
-    foreach (QPrinterInfo info, listPrinters) {
+  }
+
+  foreach (QPrinterInfo info, listPrinters) {
       qDebug() << "Found printers" << info.printerName();
-    }
   }
 
   // Configure printer: format A4, PDF
@@ -642,24 +638,24 @@ void FileOperations::printPreview() {
     qWarning() << "Could not open text html preview file for printing:"
                << m_sPreviewFile;
     return;
-  } else {
-    QTextStream in(&previewFile);
-    QString sTmpLine1("");
-    QString sTmpLine2("");
-    while (!in.atEnd()) {
-      sTmpLine1 = in.readLine() + "\n";
-      sTmpLine2 = in.readLine() + "\n";
-      // If line == </body> skip previous line
-      // See below: <div class=\"wrap\">...</div>\n</body>)
-      if ("</body>" == sTmpLine2.trimmed()) {
-        sHtml += sTmpLine2;
-      } else {
-        sHtml += sTmpLine1;
-        sHtml += sTmpLine2;
-      }
-    }
-    previewFile.close();
   }
+
+  QTextStream in(&previewFile);
+  QString sTmpLine1("");
+  QString sTmpLine2("");
+  while (!in.atEnd()) {
+    sTmpLine1 = in.readLine() + "\n";
+    sTmpLine2 = in.readLine() + "\n";
+    // If line == </body> skip previous line
+    // See below: <div class=\"wrap\">...</div>\n</body>)
+    if ("</body>" == sTmpLine2.trimmed()) {
+      sHtml += sTmpLine2;
+    } else {
+      sHtml += sTmpLine1;
+      sHtml += sTmpLine2;
+    }
+  }
+  previewFile.close();
 
   /*
   // Load preview from url
@@ -736,7 +732,7 @@ void FileOperations::updateRecentFiles(const QString &sFileName) {
         m_LastOpenedFilesAct.at(i)->setVisible(false);
       }
     }
-    if (sListTmp.size() > 0) {
+    if (!sListTmp.isEmpty()) {
       emit this->setMenuLastOpenedEnabled(true);
     }
   } else {

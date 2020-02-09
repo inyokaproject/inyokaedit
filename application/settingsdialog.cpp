@@ -111,7 +111,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
         m_pSettings->getInyokaCommunity())) {
     m_pUi->CommunityCombo->setCurrentIndex(
           m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity()));
-  } else if (sListCommunities.size() > 0) {
+  } else if (!sListCommunities.isEmpty()) {
     m_pUi->CommunityCombo->setCurrentIndex(0);
   }
   m_sCommunity = m_pUi->CommunityCombo->currentText();
@@ -253,9 +253,8 @@ bool SettingsDialog::eventFilter(QObject *obj, QEvent *event) {
         m_pUi->reloadPreviewKeyEdit->setText(
               "0x" + QString::number(keyEvent->key(), 16));
         return true;
-      } else {
-        m_pUi->reloadPreviewKeyEdit->setText("0x0");
       }
+      m_pUi->reloadPreviewKeyEdit->setText("0x0");
     }
   }
   return QObject::eventFilter(obj, event);
@@ -302,16 +301,17 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                                          const QList<QObject *> &PluginObjList) {
   m_listPLugins = Plugins;
   const quint8 nNUMCOLS = 5;
+  const quint8 nWIDTH = 40;
 
   m_pUi->pluginsTable->setColumnCount(nNUMCOLS);
   m_pUi->pluginsTable->setRowCount(m_listPLugins.size());
 
-  m_pUi->pluginsTable->setColumnWidth(0, 40);
-  m_pUi->pluginsTable->setColumnWidth(1, 40);
+  m_pUi->pluginsTable->setColumnWidth(0, nWIDTH);
+  m_pUi->pluginsTable->setColumnWidth(1, nWIDTH);
   m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(
         2, QHeaderView::Stretch);
-  m_pUi->pluginsTable->setColumnWidth(3, 40);
-  m_pUi->pluginsTable->setColumnWidth(4, 40);
+  m_pUi->pluginsTable->setColumnWidth(3, nWIDTH);
+  m_pUi->pluginsTable->setColumnWidth(4, nWIDTH);
 
   for (int nRow = 0; nRow < m_listPLugins.size(); nRow++) {
     for (int nCol = 0; nCol < nNUMCOLS; nCol++) {

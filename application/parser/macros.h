@@ -45,17 +45,19 @@ class Macros {
     QStringList getTplTranslations() const;
 
   private:
-    void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
-    void replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans);
-    void replaceDates(QTextDocument *pRawDoc, const QString &sTrans);
-    void replaceNewline(QTextDocument *pRawDoc, const QString &sTrans);
+    static void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
+    static void replaceAttachments(QTextDocument *pRawDoc,
+                                   const QString &sTrans);
+    static void replaceDates(QTextDocument *pRawDoc, const QString &sTrans);
+    static void replaceNewline(QTextDocument *pRawDoc, const QString &sTrans);
     void replacePictures(QTextDocument *pRawDoc,
                          const QString &sTrans,
                          const QString &sCurrentFile,
                          const QString &sCommunity);
-    void replaceTableOfContents(QTextDocument *pRawDoc, const QString &sTrans,
-                                QStringList &sListHeadlines);
-    void replaceSpan(QTextDocument *pRawDoc, const QString &sTrans);
+    static void replaceTableOfContents(QTextDocument *pRawDoc,
+                                       const QString &sTrans,
+                                       QStringList &sListHeadlines);
+    static void replaceSpan(QTextDocument *pRawDoc, const QString &sTrans);
 
     const QString m_sSharePath;
     const QDir m_tmpImgDir;

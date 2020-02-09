@@ -29,8 +29,7 @@
 #include <QDebug>
 #include <QStringList>
 
-ParseImgMap::ParseImgMap() {
-}
+ParseImgMap::ParseImgMap() = default;
 
 void ParseImgMap::startParsing(QTextDocument *pRawDoc,
                                QStringList sListElements,

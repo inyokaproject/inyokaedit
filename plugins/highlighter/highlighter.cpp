@@ -246,9 +246,7 @@ void Highlighter::readStyle(const QString &sStyle) {
   QString sTmpKey;
   QColor tmpColor;
 
-  if (nullptr != m_pStyleSet) {
-    delete m_pStyleSet;
-  }
+  delete m_pStyleSet;
   m_pStyleSet = nullptr;
 
 #if defined __linux__
@@ -291,34 +289,34 @@ void Highlighter::readStyle(const QString &sStyle) {
   m_pStyleSet->beginGroup("Style");
   sTmpKey = m_pStyleSet->value("Heading", "0x008000" + sSEPARATOR + "true")
             .toString();
-  this->evalKey(sTmpKey, m_headingsFormat);
+  Highlighter::evalKey(sTmpKey, m_headingsFormat);
   sTmpKey = m_pStyleSet->value("Hyperlink", "0x000080").toString();
-  this->evalKey(sTmpKey, m_linksFormat);
+  Highlighter::evalKey(sTmpKey, m_linksFormat);
   sTmpKey = m_pStyleSet->value("InterWiki", "0x0000ff").toString();
-  this->evalKey(sTmpKey, m_interwikiLinksFormat);
+  Highlighter::evalKey(sTmpKey, m_interwikiLinksFormat);
   sTmpKey = m_pStyleSet->value("Macro", "0x008080").toString();
-  this->evalKey(sTmpKey, m_macrosFormat);
+  Highlighter::evalKey(sTmpKey, m_macrosFormat);
   sTmpKey = m_pStyleSet->value("Parser", "0x800000" + sSEPARATOR + "true")
             .toString();
-  this->evalKey(sTmpKey, m_parserFormat);
+  Highlighter::evalKey(sTmpKey, m_parserFormat);
   sTmpKey = m_pStyleSet->value("Comment", "0xa0a0a4").toString();
-  this->evalKey(sTmpKey, m_commentFormat);
+  Highlighter::evalKey(sTmpKey, m_commentFormat);
   sTmpKey = m_pStyleSet->value("ImgMap", "0x808000").toString();
-  this->evalKey(sTmpKey, m_imgMapFormat);
+  Highlighter::evalKey(sTmpKey, m_imgMapFormat);
   sTmpKey = m_pStyleSet->value("TableCellFormating", "0x800080").toString();
-  this->evalKey(sTmpKey, m_tablecellsFormat);
+  Highlighter::evalKey(sTmpKey, m_tablecellsFormat);
   sTmpKey = m_pStyleSet->value("TextFormating", "0xff0000").toString();
-  this->evalKey(sTmpKey, m_textformatFormat);
+  Highlighter::evalKey(sTmpKey, m_textformatFormat);
   sTmpKey = m_pStyleSet->value("List", "0xff0000").toString();
-  this->evalKey(sTmpKey, m_listFormat);
+  Highlighter::evalKey(sTmpKey, m_listFormat);
   sTmpKey = m_pStyleSet->value("NewTableLine", "0xff0000").toString();
-  this->evalKey(sTmpKey, m_newTableLineFormat);
+  Highlighter::evalKey(sTmpKey, m_newTableLineFormat);
   sTmpKey = m_pStyleSet->value("Misc", "0xff0000").toString();
-  this->evalKey(sTmpKey, m_miscFormat);
+  Highlighter::evalKey(sTmpKey, m_miscFormat);
   sTmpKey = m_pStyleSet->value(
               "SyntaxError", "---" + sSEPARATOR + "---" + sSEPARATOR + "---" +
               sSEPARATOR + "0xffff00").toString();
-  this->evalKey(sTmpKey, m_syntaxErrorFormat);
+  Highlighter::evalKey(sTmpKey, m_syntaxErrorFormat);
   m_pStyleSet->endGroup();
 }
 
@@ -343,7 +341,7 @@ void Highlighter::evalKey(const QString &sKey, QTextCharFormat &charFormat) {
   QStringList sListTmp = sKey.split(sSEPARATOR);
 
   // Foreground color
-  if (sListTmp.size() > 0) {
+  if (!sListTmp.isEmpty()) {
     if ("---" != sListTmp[0].trimmed()) {
       tmpColor.setRgb(sListTmp[0].trimmed().toUInt(&bOk, 16));
       if (bOk) {
@@ -559,9 +557,8 @@ void Highlighter::readValue(const quint16 nRow,
 
 void Highlighter::clickedStyleCell(int nRow, int nCol) {
   if (0 == nCol || 3 == nCol) {
-    QColorDialog colorDialog;
     QColor initialColor(m_pUi->styleTable->item(nRow, nCol)->text());
-    QColor newColor = colorDialog.getColor(initialColor);
+    QColor newColor = QColorDialog::getColor(initialColor);
     if (newColor.isValid()) {
       m_pUi->styleTable->item(nRow, nCol)->setText(newColor.name());
     } else if (newColor.name().isEmpty()) {
@@ -592,19 +589,19 @@ void Highlighter::saveHighlighting() {
     m_colorForeground.setNamedColor(m_pUi->styleTable->item(1, 0)->text());
   }
 
-  this->evalKey(this->createValues(2), m_textformatFormat);
-  this->evalKey(this->createValues(3), m_headingsFormat);
-  this->evalKey(this->createValues(4), m_linksFormat);
-  this->evalKey(this->createValues(5), m_interwikiLinksFormat);
-  this->evalKey(this->createValues(6), m_macrosFormat);
-  this->evalKey(this->createValues(7), m_parserFormat);
-  this->evalKey(this->createValues(8), m_listFormat);
-  this->evalKey(this->createValues(9), m_newTableLineFormat);
-  this->evalKey(this->createValues(10), m_tablecellsFormat);
-  this->evalKey(this->createValues(11), m_imgMapFormat);
-  this->evalKey(this->createValues(12), m_miscFormat);
-  this->evalKey(this->createValues(13), m_commentFormat);
-  this->evalKey(this->createValues(14), m_syntaxErrorFormat);
+  Highlighter::evalKey(this->createValues(2), m_textformatFormat);
+  Highlighter::evalKey(this->createValues(3), m_headingsFormat);
+  Highlighter::evalKey(this->createValues(4), m_linksFormat);
+  Highlighter::evalKey(this->createValues(5), m_interwikiLinksFormat);
+  Highlighter::evalKey(this->createValues(6), m_macrosFormat);
+  Highlighter::evalKey(this->createValues(7), m_parserFormat);
+  Highlighter::evalKey(this->createValues(8), m_listFormat);
+  Highlighter::evalKey(this->createValues(9), m_newTableLineFormat);
+  Highlighter::evalKey(this->createValues(10), m_tablecellsFormat);
+  Highlighter::evalKey(this->createValues(11), m_imgMapFormat);
+  Highlighter::evalKey(this->createValues(12), m_miscFormat);
+  Highlighter::evalKey(this->createValues(13), m_commentFormat);
+  Highlighter::evalKey(this->createValues(14), m_syntaxErrorFormat);
 
   this->saveStyle();
   this->readStyle(m_pUi->styleFilesBox->currentText());
@@ -652,43 +649,42 @@ void Highlighter::changedStyle(int nIndex) {
                                       QLineEdit::Normal,
                                       "",
                                       &bOk);
-    // Click on "cancel" or string is empty
-    if (true != bOk || sFileName.isEmpty()) {
+    if (!bOk || sFileName.isEmpty()) {
       // Reset selection
       m_pUi->styleFilesBox->setCurrentIndex(
             m_pUi->styleFilesBox->findText(fiStyle.baseName()));
       return;
-    } else {
-      sFileName = sFileName + "-style";
-      QFile fileStyle(fiStyle.absolutePath() + "/" + sFileName + m_sExt);
-
-      if (fileStyle.exists()) {
-        // Reset selection
-        m_pUi->styleFilesBox->setCurrentIndex(
-              m_pUi->styleFilesBox->findText(fiStyle.baseName()));
-
-        QMessageBox::warning(nullptr, tr("Error"), tr("File already exists."));
-        qWarning() << "Style file already exists:" << fileStyle.fileName();
-        return;
-      }
-      bOk = fileStyle.copy(fiStyle.absoluteFilePath(),
-                           fileStyle.fileName());
-      if (true != bOk) {
-        // Reset selection
-        m_pUi->styleFilesBox->setCurrentIndex(
-              m_pUi->styleFilesBox->findText(fiStyle.baseName()));
-
-        QMessageBox::warning(nullptr, tr("Error"),
-                             tr("Could not create new style."));
-        qWarning() << "Could not create new style file:";
-        qWarning() << "Org:" << fiStyle.absoluteFilePath();
-        qWarning() << "Copy:" << fileStyle.fileName();
-        return;
-      }
-      m_pUi->styleFilesBox->addItem(sFileName);
-      m_pUi->styleFilesBox->setCurrentIndex(
-            m_pUi->styleFilesBox->findText(sFileName));
     }
+
+    sFileName = sFileName + "-style";
+    QFile fileStyle(fiStyle.absolutePath() + "/" + sFileName + m_sExt);
+
+    if (fileStyle.exists()) {
+      // Reset selection
+      m_pUi->styleFilesBox->setCurrentIndex(
+            m_pUi->styleFilesBox->findText(fiStyle.baseName()));
+
+      QMessageBox::warning(nullptr, tr("Error"), tr("File already exists."));
+      qWarning() << "Style file already exists:" << fileStyle.fileName();
+      return;
+    }
+    bOk = fileStyle.copy(fiStyle.absoluteFilePath(),
+                         fileStyle.fileName());
+    if (!bOk) {
+      // Reset selection
+      m_pUi->styleFilesBox->setCurrentIndex(
+            m_pUi->styleFilesBox->findText(fiStyle.baseName()));
+
+      QMessageBox::warning(nullptr, tr("Error"),
+                           tr("Could not create new style."));
+      qWarning() << "Could not create new style file:";
+      qWarning() << "Org:" << fiStyle.absoluteFilePath();
+      qWarning() << "Copy:" << fileStyle.fileName();
+      return;
+    }
+    m_pUi->styleFilesBox->addItem(sFileName);
+    m_pUi->styleFilesBox->setCurrentIndex(
+          m_pUi->styleFilesBox->findText(sFileName));
   } else {  // Load existing style file
     sFileName = m_pUi->styleFilesBox->currentText();
   }

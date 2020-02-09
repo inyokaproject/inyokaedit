@@ -93,7 +93,7 @@ QString Parser::genOutput(const QString &sActFile,
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
   m_sCurrentFile = sActFile;
-  this->removeComments(m_pRawText);
+  Parser::removeComments(m_pRawText);
 
   m_sListNoTranslate.clear();
   this->filterEscapedChars(m_pRawText);  // Before everything
@@ -111,7 +111,7 @@ QString Parser::genOutput(const QString &sActFile,
   m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);
 
   QStringList sListHeadlines;
-  sListHeadlines = this->replaceHeadlines(m_pRawText);  // Returns list for TOC
+  sListHeadlines = Parser::replaceHeadlines(m_pRawText);  // Returns TOC list
   ParseTable::startParsing(m_pRawText);
   m_pMacros->startParsing(m_pRawText, m_sCurrentFile,
                           m_sCommunity, sListHeadlines);
@@ -126,7 +126,7 @@ QString Parser::genOutput(const QString &sActFile,
                             m_sCommunity);
   // this->replaceFlags(m_pRawText);
 
-  this->replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
+  Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
   // Replace smilies
   ParseTxtMap::startParsing(m_pRawText,
                             m_pTemplates->getListSmilies(),
@@ -138,9 +138,9 @@ QString Parser::genOutput(const QString &sActFile,
                                  m_pTemplates->getListFormatHtmlStart(),
                                  m_pTemplates->getListFormatHtmlEnd());
 
-  this->replaceQuotes(m_pRawText);
-  this->generateParagraphs(m_pRawText);
-  this->replaceFootnotes(m_pRawText);
+  Parser::replaceQuotes(m_pRawText);
+  Parser::generateParagraphs(m_pRawText);
+  Parser::replaceFootnotes(m_pRawText);
 
   this->reinstertNoTranslate(m_pRawText);
 
@@ -316,7 +316,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
         }
 
         // Syntax highlighting (with pygments if available)
-        if (sListLines.size() > 0) {
+        if (!sListLines.isEmpty()) {
           if (!sListLines[0].trimmed().isEmpty()) {
             sCode = this->highlightCode(sListLines[0], sCode);
           }
@@ -401,9 +401,9 @@ QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
     }
 
     return procPygmentize.readAll();
-  } else {
-    return sCode;
   }
+
+  return sCode;
 }
 
 // ----------------------------------------------------------------------------
@@ -680,9 +680,10 @@ QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
       if (0 == i) {
         sDoc += sLine + "\n";
         break;
-      } else if (sLine.trimmed().startsWith(sTmp)
-                 && sLine.trimmed().endsWith(sTmp)
-                 && sLine.trimmed().length() > (i*2)) {
+      }
+      if (sLine.trimmed().startsWith(sTmp) &&
+          sLine.trimmed().endsWith(sTmp) &&
+          sLine.trimmed().length() > (i*2)) {
         nHeadlineLevel = static_cast<quint16>(i);
       } else {
         continue;

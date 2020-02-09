@@ -211,7 +211,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
     m_bListEntryActive << true;
   }
 
-  if (0 == m_sListEntries.size()) {
+  if (m_sListEntries.isEmpty()) {
     qWarning() << "Knowledgebox defaults are empty!";
     QMessageBox::warning(nullptr, tr("Error"),
                          tr("ubuntuusers.de knowledgebox defaults are empty!"));
@@ -296,7 +296,7 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
   // Checkbox
   m_pUi->entriesTable->item(nRow, 0)->setFlags(
         Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-  if (false == bActive) {
+  if (!bActive) {
     m_pUi->entriesTable->item(nRow, 0)->setCheckState(Qt::Unchecked);
   } else {
     m_pUi->entriesTable->item(nRow, 0)->setCheckState(Qt::Checked);
