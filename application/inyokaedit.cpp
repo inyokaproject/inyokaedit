@@ -699,7 +699,7 @@ void InyokaEdit::addPluginsButtons(const QList<QAction *> &ToolbarEntries,
                                    QList<QAction *> &MenueEntries) {
   m_pUi->pluginsBar->addActions(ToolbarEntries);
   if (!m_pUi->toolsMenu->actions().isEmpty()) {
-    QAction *separator = new QAction(this);
+    auto *separator = new QAction(this);
     separator->setSeparator(true);
     MenueEntries << separator;
     m_pUi->toolsMenu->insertActions(m_pUi->toolsMenu->actions().at(0),
@@ -794,7 +794,7 @@ void InyokaEdit::highlightSyntaxError(const qint32 nPos) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QColor InyokaEdit::getHighlightErrorColor() {
+auto InyokaEdit::getHighlightErrorColor() -> QColor {
 #if defined __linux__
   QSettings settings(QSettings::NativeFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(),
@@ -828,9 +828,9 @@ QColor InyokaEdit::getHighlightErrorColor() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::dropdownXmlChanged(int nIndex) {
-  QComboBox *tmpCombo = qobject_cast<QComboBox *>(sender());
+  auto *tmpCombo = qobject_cast<QComboBox *>(sender());
   if (tmpCombo != nullptr) {
-    QAction *action = tmpCombo->itemData(nIndex,
+    auto *action = tmpCombo->itemData(nIndex,
                                           Qt::UserRole).value<QAction *>();
     if (action) {
       action->trigger();  // Triggering insertMacro() slot
@@ -1017,9 +1017,9 @@ void InyokaEdit::updateEditorSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
+auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
   if (pObj == m_pCurrentEditor && pEvent->type() == QEvent::KeyPress) {
-    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(pEvent);
+    auto *keyEvent = static_cast<QKeyEvent*>(pEvent);
 
     if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
       QString sBlock = m_pCurrentEditor->textCursor().block().text();
@@ -1076,7 +1076,7 @@ bool InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) {
     }
   } else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
     // Forward / backward mouse button
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(pEvent);
+    auto *mouseEvent = static_cast<QMouseEvent*>(pEvent);
 
     if (Qt::XButton1 == mouseEvent->button()) {
       m_pWebview->back();
@@ -1146,7 +1146,7 @@ void InyokaEdit::syncScrollbarsEditor() {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                             Qt::Vertical);
-    float nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
+    auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
 
     m_bEditorScrolling = true;
     m_pWebview->page()->mainFrame()->setScrollPosition(
@@ -1166,7 +1166,7 @@ void InyokaEdit::syncScrollbarsWebview() {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
     int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
                             Qt::Vertical);
-    float nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
+    auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
     m_bWebviewScrolling = true;
     m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
@@ -1202,8 +1202,9 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 
-bool InyokaEdit::switchTranslator(QTranslator *translator,
-                                  const QString &sFile, const QString &sPath) {
+auto InyokaEdit::switchTranslator(QTranslator *translator,
+                                  const QString &sFile,
+                                  const QString &sPath) -> bool {
   qApp->removeTranslator(translator);
   if (translator->load(sFile, sPath)) {
     qApp->installTranslator(translator);
@@ -1235,15 +1236,15 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::showSyntaxOverview() {
-  QDialog* dialog = new QDialog(this, this->windowFlags()
-                                & ~Qt::WindowContextHelpButtonHint);
-  QGridLayout* layout = new QGridLayout(dialog);
+  auto *dialog = new QDialog(this, this->windowFlags()
+                             & ~Qt::WindowContextHelpButtonHint);
+  auto *layout = new QGridLayout(dialog);
 #ifdef USEQTWEBKIT
-  QWebView* webview = new QWebView();
+  auto *webview = new QWebView();
 #else
-  QWebEngineView* webview = new QWebEngineView();
+  auto *webview = new QWebEngineView();
 #endif
-  QTextDocument* pTextDocument = new QTextDocument(this);
+  auto *pTextDocument = new QTextDocument(this);
 
   QFile OverviewFile(m_sSharePath + "/community/" +
                      m_pSettings->getInyokaCommunity() +

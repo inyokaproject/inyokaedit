@@ -61,10 +61,10 @@ class TextEditor : public QTextEdit {
     ~TextEditor();
 
     void setFileName(const QString &sFileName);
-    QString getFileName();
+    auto getFileName() -> QString;
 
-    bool isUndoAvailable();
-    bool isRedoAvailable();
+    auto isUndoAvailable() -> bool;
+    auto isRedoAvailable() -> bool;
 
  signals:
     void documentChanged(bool);
@@ -80,7 +80,7 @@ class TextEditor : public QTextEdit {
     void insertCompletion(const QString &sCompletion);
 
  private:
-    QString getLineUnderCursor();
+    auto getLineUnderCursor() -> QString;
     void setCompleter(QCompleter *c);
 
     QString m_sFileName;

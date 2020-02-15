@@ -191,8 +191,8 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QUrl DownloadImg::redirectUrl(const QUrl &possibleRedirectUrl,
-                              const QUrl &oldRedirectUrl) {
+auto DownloadImg::redirectUrl(const QUrl &possibleRedirectUrl,
+                              const QUrl &oldRedirectUrl) -> QUrl {
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty()
       && possibleRedirectUrl != oldRedirectUrl) {

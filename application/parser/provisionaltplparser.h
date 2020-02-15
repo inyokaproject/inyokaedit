@@ -42,56 +42,57 @@ class ProvisionalTplParser {
                          const QStringList &sListTestedWithTouchStrings,
                          const QString &sCommunity);
 
-    QString parseTpl(const QStringList &sListArgs, const QString &sCurrentFile);
+    auto parseTpl(const QStringList &sListArgs,
+                  const QString &sCurrentFile) -> QString;
 
   private:
-    static QString parseAdvanced();
-    static QString parseArchived(const QStringList &sListArgs);
-    static QString parseBash(const QStringList &sListArgs);
-    static QString parseBuilddeps(const QStringList &sListArgs);
-    static QString parseCode(const QStringList &sListArgs);
-    static QString parseCopy(const QStringList &sListArgs);
-    static QString parseExperts(const QStringList &sListArgs);
-    static QString parseFixme(const QStringList &sListArgs);
-    static QString parseForeignAuth(const QStringList &sListArgs);
-    static QString parseForeignPackage(const QStringList &sListArg);
-    static QString parseForeignSource(const QStringList &sListArgs);
-    static QString parseForeignWarning(const QStringList &sListArg);
-    static QString parseIconOverview(const QStringList &sListArgs);
-    static QString parseIkhayaAuthor(const QStringList &sListArgs);
-    static QString parseIkhayaAward(const QStringList &sListArgs);
-    static QString parseIkhayaImage(const QStringList &sListArgs);
-    static QString parseIkhayaProjectPresentation();
-    QString parseImageCollect(const QStringList &sListArgs);
-    QString parseImageSub(const QStringList &sListArgs);
-    static QString parseImprovable(const QStringList &sListArgs);
-    static QString parseInfobox(const QStringList &sListArgs);
-    static QString parseKeys(const QStringList &sListArgs);
-    static QString parseKnowledge(const QStringList &sListArgs);
-    static QString parseLeft(const QStringList &sListArgs);
-    static QString parseNotice(const QStringList &sListArgs);
-    static QString parseOBS(const QStringList &sListArgs);
-    static QString parseOverview(const QStringList &sListArgs);
-    static QString parseOverview2(const QStringList &sListArgs);
-    static QString parsePackage(const QStringList &sListArgs);
-    QString parsePipInstall(const QStringList &sListArgs);
-    static QString parsePkgInstall(const QStringList &sListArgs);
-    QString parsePkgInstallBut(const QStringList &sListArgs);
-    static QString parsePPA(const QStringList &sListArgs);
-    static QString parseProjects(const QStringList &sListArgs);
-    static QString parseSidebar(const QStringList &sListArgs);
-    static QString parseStatusIcon(const QStringList &sListArgs);
-    QString parseTable(const QStringList &sListArgs);
-    QString parseTested(const QStringList &sListArgs);
-    QString parseTestedUT(const QStringList &sListArgs);
-    static QString parseUnderConst(const QStringList &sListArgs);
-    static QString parseWarning(const QStringList &sListArgs);
-    static QString parseWorkInProgr(const QStringList &sListArgs);
+    static auto parseAdvanced() -> QString;
+    static auto parseArchived(const QStringList &sListArgs) -> QString;
+    static auto parseBash(const QStringList &sListArgs) -> QString;
+    static auto parseBuilddeps(const QStringList &sListArgs) -> QString;
+    static auto parseCode(const QStringList &sListArgs) -> QString;
+    static auto parseCopy(const QStringList &sListArgs) -> QString;
+    static auto parseExperts(const QStringList &sListArgs) -> QString;
+    static auto parseFixme(const QStringList &sListArgs) -> QString;
+    static auto parseForeignAuth(const QStringList &sListArgs) -> QString;
+    static auto parseForeignPackage(const QStringList &sListArg) -> QString;
+    static auto parseForeignSource(const QStringList &sListArgs) -> QString;
+    static auto parseForeignWarning(const QStringList &sListArg) -> QString;
+    static auto parseIconOverview(const QStringList &sListArgs) -> QString;
+    static auto parseIkhayaAuthor(const QStringList &sListArgs) -> QString;
+    static auto parseIkhayaAward(const QStringList &sListArgs) -> QString;
+    static auto parseIkhayaImage(const QStringList &sListArgs) -> QString;
+    static auto parseIkhayaProjectPresentation() -> QString;
+    auto parseImageCollect(const QStringList &sListArgs) -> QString;
+    auto parseImageSub(const QStringList &sListArgs) -> QString;
+    static auto parseImprovable(const QStringList &sListArgs) -> QString;
+    static auto parseInfobox(const QStringList &sListArgs) -> QString;
+    static auto parseKeys(const QStringList &sListArgs) -> QString;
+    static auto parseKnowledge(const QStringList &sListArgs) -> QString;
+    static auto parseLeft(const QStringList &sListArgs) -> QString;
+    static auto parseNotice(const QStringList &sListArgs) -> QString;
+    static auto parseOBS(const QStringList &sListArgs) -> QString;
+    static auto parseOverview(const QStringList &sListArgs) -> QString;
+    static auto parseOverview2(const QStringList &sListArgs) -> QString;
+    static auto parsePackage(const QStringList &sListArgs) -> QString;
+    auto parsePipInstall(const QStringList &sListArgs) -> QString;
+    static auto parsePkgInstall(const QStringList &sListArgs) -> QString;
+    auto parsePkgInstallBut(const QStringList &sListArgs) -> QString;
+    static auto parsePPA(const QStringList &sListArgs) -> QString;
+    static auto parseProjects(const QStringList &sListArgs) -> QString;
+    static auto parseSidebar(const QStringList &sListArgs) -> QString;
+    static auto parseStatusIcon(const QStringList &sListArgs) -> QString;
+    auto parseTable(const QStringList &sListArgs) -> QString;
+    auto parseTested(const QStringList &sListArgs) -> QString;
+    auto parseTestedUT(const QStringList &sListArgs) -> QString;
+    static auto parseUnderConst(const QStringList &sListArgs) -> QString;
+    static auto parseWarning(const QStringList &sListArgs) -> QString;
+    static auto parseWorkInProgr(const QStringList &sListArgs) -> QString;
 
-    static QString insertBox(const QString &sClass,
-                             const QString &sHeadline,
-                             const QString &sContents,
-                             const QString &sRemark = "");
+    static auto insertBox(const QString &sClass,
+                          const QString &sHeadline,
+                          const QString &sContents,
+                          const QString &sRemark = "") -> QString;
 
     QStringList m_sListHtmlStart;
     QString m_sCurrentFile;

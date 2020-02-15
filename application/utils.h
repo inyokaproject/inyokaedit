@@ -36,7 +36,7 @@ class Utils : public QObject {
  public:
     explicit Utils(QWidget *pParent, QObject *pParentObj = nullptr);
 
-    static bool getOnlineState();
+    static auto getOnlineState() -> bool;
     static void setProxy(const QString &sHostName, const quint16 nPort,
                          const QString &sUser, const QString &sPassword);
     void checkWindowsUpdate();

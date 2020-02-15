@@ -80,10 +80,11 @@ class Parser : public QObject {
     // void replaceFlags(QTextDocument *pRawDoc);
     static void replaceQuotes(QTextDocument *pRawDoc);
     static void replaceHorLines(QTextDocument *pRawDoc);
-    static QStringList replaceHeadlines(QTextDocument *pRawDoc);
+    static auto replaceHeadlines(QTextDocument *pRawDoc) -> QStringList;
     static void replaceFootnotes(QTextDocument *pRawDoc);
-    QString generateTags(QTextDocument *pRawDoc);
-    QString highlightCode(const QString &sLanguage, const QString &sCode);
+    auto generateTags(QTextDocument *pRawDoc) -> QString;
+    auto highlightCode(const QString &sLanguage,
+                       const QString &sCode) -> QString;
 
     // Text from editor
     QTextDocument *m_pRawText;

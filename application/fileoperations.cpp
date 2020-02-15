@@ -181,7 +181,7 @@ void FileOperations::openRecentFile(const int nEntry) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::save() {
+auto FileOperations::save() -> bool {
   if (m_pCurrentEditor->getFileName().isEmpty() ||
       m_pCurrentEditor->getFileName().contains(tr("Untitled")) ||
       !QFile::exists(m_pCurrentEditor->getFileName())) {
@@ -193,7 +193,7 @@ bool FileOperations::save() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::saveAs() {
+auto FileOperations::saveAs() -> bool {
   QString sCurFileName(tr("Untitled"));
   if (!m_pCurrentEditor->getFileName().isEmpty() &&
       !m_pCurrentEditor->getFileName().contains(sCurFileName)) {
@@ -222,7 +222,7 @@ bool FileOperations::saveAs() {
 // ----------------------------------------------------------------------------
 
 // Handle unsaved files
-bool FileOperations::maybeSave() {
+auto FileOperations::maybeSave() -> bool {
   if (m_pCurrentEditor->document()->isModified()) {
     QMessageBox::StandardButton ret;
     QString sTempCurFileName;
@@ -391,7 +391,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::saveFile(QString sFileName) {
+auto FileOperations::saveFile(QString sFileName) -> bool {
   QFile file;
   if (sFileName.endsWith(".inyzip")) {
     // Special characters not allowed for miniz achives
@@ -453,7 +453,7 @@ bool FileOperations::saveFile(QString sFileName) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::saveInyArchive(const QString &sArchive) {
+auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   QFileInfo file(sArchive);
   QString sArticle(file.baseName() + ".iny");
   QByteArray baComment("");
@@ -698,7 +698,7 @@ void FileOperations::printPreview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QList<QAction *> FileOperations::getLastOpenedFiles() const {
+auto FileOperations::getLastOpenedFiles() const -> QList<QAction *>{
   return m_LastOpenedFilesAct;
 }
 
@@ -806,7 +806,7 @@ void FileOperations::updateEditorSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::closeDocument(int nIndex) {
+auto FileOperations::closeDocument(int nIndex) -> bool {
   m_pDocumentTabs->setCurrentIndex(nIndex);
   m_pCurrentEditor = m_pListEditors.at(nIndex);
   m_bLoadPreview = false;
@@ -844,7 +844,7 @@ bool FileOperations::closeDocument(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool FileOperations::closeAllmaybeSave() {
+auto FileOperations::closeAllmaybeSave() -> bool {
   m_bCloseApp = true;
   for (int i = m_pDocumentTabs->count() - 1; i >= 0; i--) {
     if (!this->closeDocument(i)) {
@@ -859,7 +859,7 @@ bool FileOperations::closeAllmaybeSave() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString FileOperations::getCurrentFile() const {
+auto FileOperations::getCurrentFile() const -> QString {
   QFileInfo file(m_pCurrentEditor->getFileName());
   return file.absoluteFilePath();
 }
@@ -871,10 +871,10 @@ void FileOperations::setCurrentEditor() {
   m_pFindReplace->setEditor(m_pCurrentEditor);
 }
 
-TextEditor* FileOperations::getCurrentEditor() {
+auto FileOperations::getCurrentEditor() -> TextEditor* {
   return m_pCurrentEditor;
 }
 
-QList<TextEditor *> FileOperations::getEditors() const {
+auto FileOperations::getEditors() const -> QList<TextEditor *> {
   return m_pListEditors;
 }

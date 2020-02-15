@@ -293,12 +293,12 @@ void Session::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Session::isLoggedIn() const {
+auto Session::isLoggedIn() const -> bool {
   return (RECLOGIN == m_State);
 }
 
 // ----------------------------------------------------------------------------
 
-QNetworkAccessManager* Session::getNwManager() {
+auto Session::getNwManager() -> QNetworkAccessManager* {
   return m_pNwManager;
 }

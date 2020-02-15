@@ -35,7 +35,7 @@ class ParseTable {
     static void startParsing(QTextDocument *pRawDoc);
 
   private:
-    static QString createTable(const QStringList &sListLines);
+    static auto createTable(const QStringList &sListLines) -> QString;
 };
 
 #endif  // APPLICATION_PARSER_PARSETABLE_H_

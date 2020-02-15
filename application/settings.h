@@ -56,46 +56,46 @@ class Settings : public QObject {
     void setLastOpenedDir(const QDir &LastDir);
 
     // General
-    QString getGuiLanguage() const;
-    bool getCodeCompletion() const;
-    bool getSyntaxCheck() const;
-    QString getInyokaUrl() const;
-    QString getInyokaCommunity() const;
-    QString getInyokaConstructionArea() const;
-    QString getInyokaHash() const;
-    bool getAutomaticImageDownload() const;
-    bool getPreviewHorizontal() const;
-    QDir getLastOpenedDir() const;
-    bool getCheckLinks() const;
-    quint32 getAutoSave() const;
-    qint32 getReloadPreviewKey() const;
-    quint32 getTimedPreview() const;
-    bool getSyncScrollbars() const;
-    bool getWindowsCheckUpdate() const;
-    QString getPygmentize() const;
+    auto getGuiLanguage() const -> QString;
+    auto getCodeCompletion() const -> bool;
+    auto getSyntaxCheck() const -> bool;
+    auto getInyokaUrl() const-> QString;
+    auto getInyokaCommunity() const-> QString;
+    auto getInyokaConstructionArea() const-> QString;
+    auto getInyokaHash() const-> QString;
+    auto getAutomaticImageDownload() const -> bool;
+    auto getPreviewHorizontal() const -> bool;
+    auto getLastOpenedDir() const -> QDir;
+    auto getCheckLinks() const -> bool;
+    auto getAutoSave() const -> quint32 ;
+    auto getReloadPreviewKey() const -> qint32;
+    auto getTimedPreview() const -> quint32;
+    auto getSyncScrollbars() const -> bool;
+    auto getWindowsCheckUpdate() const -> bool;
+    auto getPygmentize() const -> QString;
 
     // Font
-    QFont getEditorFont() const;
+    auto getEditorFont() const -> QFont;
 
     // Window state
-    QByteArray getWindowState() const;
-    QByteArray getWindowGeometry() const;
-    QByteArray getSplitterState() const;
+    auto getWindowState() const -> QByteArray;
+    auto getWindowGeometry() const -> QByteArray;
+    auto getSplitterState() const -> QByteArray;
 
     // Recent files
-    quint16 getNumOfRecentFiles() const;
-    quint16 getMaxNumOfRecentFiles() const;
-    QStringList getRecentFiles() const;
+    auto getNumOfRecentFiles() const -> quint16;
+    static auto getMaxNumOfRecentFiles() -> quint16;
+    auto getRecentFiles() const -> QStringList;
     void setRecentFiles(const QStringList &sListNewRecent);
 
     // Proxy
-    QString getProxyHostName() const;
-    quint16 getProxyPort() const;
-    QString getProxyUserName() const;
-    QString getProxyPassword() const;
+    auto getProxyHostName() const -> QString;
+    auto getProxyPort() const -> quint16;
+    auto getProxyUserName() const -> QString;
+    auto getProxyPassword() const -> QString;
 
     // Plugins
-    QStringList getDisabledPlugins() const;
+    auto getDisabledPlugins() const -> QStringList;
 
     // Allow SettingsDialog to access private members
     friend class SettingsDialog;
@@ -119,27 +119,27 @@ class Settings : public QObject {
 
     // General
     QString m_sGuiLanguage;
-    bool m_bCodeCompletion;   // Enable / disable code completion
-    bool m_bSyntaxCheck;
-    bool m_bPreviewSplitHorizontal;
+    bool m_bCodeCompletion{};   // Enable / disable code completion
+    bool m_bSyntaxCheck{};
+    bool m_bPreviewSplitHorizontal{};
     QString m_sInyokaCommunity;
     QString m_sInyokaUrl;     // Url to inyoka
     QString m_sInyokaConstArea;
     QString m_sInyokaHash;
     QDir m_LastOpenedDir;
-    bool m_bAutomaticImageDownload;  // Enable/disable download article images
-    bool m_bCheckLinks;
-    quint32 m_nAutosave;
+    bool m_bAutomaticImageDownload{};  // Enable/disable download article images
+    bool m_bCheckLinks{};
+    quint32 m_nAutosave{};
     QString m_sReloadPreviewKey;
-    quint32 m_nTimedPreview;
-    bool m_bSyncScrollbars;
-    bool m_bWinCheckUpdate;
+    quint32 m_nTimedPreview{};
+    bool m_bSyncScrollbars{};
+    bool m_bWinCheckUpdate{};
     QString m_sPygmentize;
 
     // Font
     QFont m_EditorFont;
     QString m_sFontFamily;
-    qreal m_nFontsize;
+    qreal m_nFontsize{};
 
     // Window state
     QByteArray m_aWindowState;
@@ -148,12 +148,12 @@ class Settings : public QObject {
 
     // Last opened
     static const quint16 m_cMAXFILES = 10;
-    qint32 m_nMaxLastOpenedFiles;
+    qint32 m_nMaxLastOpenedFiles{};
     QStringList m_sListRecentFiles;
 
     // Proxy
     QString m_sProxyHostName;
-    quint16 m_nProxyPort;
+    quint16 m_nProxyPort{};
     QString m_sProxyUserName;
     QString m_sProxyPassword;
 

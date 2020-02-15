@@ -147,7 +147,7 @@ void TextEditor::insertCompletion(const QString &sCompletion) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString TextEditor::getLineUnderCursor() {
+auto TextEditor::getLineUnderCursor() -> QString {
   QTextCursor tc = textCursor();
   tc.select(QTextCursor::LineUnderCursor);
   return tc.selectedText();
@@ -228,13 +228,13 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
 void TextEditor::setFileName(const QString &sFileName) {
   m_sFileName = sFileName;
 }
-QString TextEditor::getFileName() {
+auto TextEditor::getFileName() -> QString {
   return m_sFileName;
 }
 
-bool TextEditor::isUndoAvailable() {
+auto TextEditor::isUndoAvailable() -> bool {
   return this->document()->isUndoAvailable();
 }
-bool TextEditor::isRedoAvailable() {
+auto TextEditor::isRedoAvailable() -> bool {
   return this->document()->isRedoAvailable();
 }

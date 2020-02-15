@@ -108,7 +108,7 @@ void Macros::startParsing(QTextDocument *pRawDoc,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QStringList Macros::getTplTranslations() const {
+auto Macros::getTplTranslations() const -> QStringList {
   return m_sListTplTranslations;
 }
 

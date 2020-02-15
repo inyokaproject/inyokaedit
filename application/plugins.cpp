@@ -153,10 +153,9 @@ void Plugins::loadPlugins(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 void Plugins::setCurrentEditor(TextEditor *pEditor) {
-  for (int i = 0; i < m_listPlugins.size(); i++) {
-    if (!m_sListDisabledPlugins.contains(
-          m_listPlugins.at(i)->getPluginName())) {
-      m_listPlugins.at(i)->setCurrentEditor(pEditor);
+  for (auto &plugin : m_listPlugins) {
+    if (!m_sListDisabledPlugins.contains(plugin->getPluginName())) {
+      plugin->setCurrentEditor(pEditor);
     }
   }
 }
@@ -165,10 +164,9 @@ void Plugins::setCurrentEditor(TextEditor *pEditor) {
 // ----------------------------------------------------------------------------
 
 void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
-  for (int i = 0; i < m_listPlugins.size(); i++) {
-    if (!m_sListDisabledPlugins.contains(
-          m_listPlugins.at(i)->getPluginName())) {
-      m_listPlugins.at(i)->setEditorlist(listEditors);
+  for (auto &plugin : m_listPlugins) {
+    if (!m_sListDisabledPlugins.contains(plugin->getPluginName())) {
+      plugin->setEditorlist(listEditors);
     }
   }
 }
@@ -177,10 +175,9 @@ void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
 // ----------------------------------------------------------------------------
 
 void Plugins::changeLang(const QString &sLang) {
-  for (int i = 0; i < m_listPlugins.size(); i++) {
-    if (!m_sListDisabledPlugins.contains(
-          m_listPlugins.at(i)->getPluginName())) {
-      m_listPlugins.at(i)->installTranslator(sLang);
+  for (auto &plugin : m_listPlugins) {
+    if (!m_sListDisabledPlugins.contains(plugin->getPluginName())) {
+      plugin->installTranslator(sLang);
     }
   }
 }

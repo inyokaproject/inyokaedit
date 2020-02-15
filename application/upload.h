@@ -51,8 +51,8 @@ class Upload : public QObject {
  private:
     void requestRevision(QString sUrl = "");
     void getRevisionReply(const QString &sNWReply);
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl);
+    auto redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl) -> QUrl;
     void requestUpload();
     void getUploadReply(const QString &sNWReply);
     void replyFinished(QNetworkReply *pReply);

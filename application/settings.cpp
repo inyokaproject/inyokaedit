@@ -311,7 +311,7 @@ void Settings::removeObsolete() {
 // ----------------------------------------------------------------------------
 // Get / set methods
 
-QString Settings::getGuiLanguage() const {
+auto Settings::getGuiLanguage() const -> QString {
   QString sLang;
   if ("auto" == m_sGuiLanguage) {
 #ifdef Q_OS_UNIX
@@ -327,36 +327,36 @@ QString Settings::getGuiLanguage() const {
   return m_sGuiLanguage;
 }
 
-QString Settings::getInyokaCommunity() const {
+auto Settings::getInyokaCommunity() const -> QString {
   return m_sInyokaCommunity;
 }
-QString Settings::getInyokaUrl() const {
+auto Settings::getInyokaUrl() const -> QString {
   return m_sInyokaUrl;
 }
-QString Settings::getInyokaConstructionArea() const {
+auto Settings::getInyokaConstructionArea() const -> QString {
   return m_sInyokaConstArea;
 }
-QString Settings::getInyokaHash() const {
+auto Settings::getInyokaHash() const -> QString {
   return m_sInyokaHash;
 }
 
-bool Settings::getCodeCompletion() const {
+auto Settings::getCodeCompletion() const -> bool {
   return m_bCodeCompletion;
 }
 
-bool Settings::getSyntaxCheck() const {
+auto Settings::getSyntaxCheck() const -> bool {
   return m_bSyntaxCheck;
 }
 
-bool Settings::getAutomaticImageDownload() const {
+auto Settings::getAutomaticImageDownload() const -> bool {
   return m_bAutomaticImageDownload;
 }
 
-bool Settings::getPreviewHorizontal() const {
+auto Settings::getPreviewHorizontal() const -> bool {
   return m_bPreviewSplitHorizontal;
 }
 
-QDir Settings::getLastOpenedDir() const {
+auto Settings::getLastOpenedDir() const -> QDir {
   return m_LastOpenedDir;
 }
 
@@ -364,48 +364,48 @@ void Settings::setLastOpenedDir(const QDir &LastDir) {
   m_LastOpenedDir = LastDir;
 }
 
-bool Settings::getCheckLinks() const {
+auto Settings::getCheckLinks() const -> bool {
   return m_bCheckLinks;
 }
 
-quint32 Settings::getAutoSave() const {
+auto Settings::getAutoSave() const -> quint32 {
   return m_nAutosave;
 }
 
-qint32 Settings::getReloadPreviewKey() const {
+auto Settings::getReloadPreviewKey() const -> qint32 {
   QString sTmp = m_sReloadPreviewKey;
   return sTmp.remove("0x", Qt::CaseInsensitive).toInt(nullptr, 16);
 }
 
-quint32 Settings::getTimedPreview() const {
+auto Settings::getTimedPreview() const -> quint32 {
   return m_nTimedPreview;
 }
 
-bool Settings::getSyncScrollbars() const {
+auto Settings::getSyncScrollbars() const -> bool {
   return m_bSyncScrollbars;
 }
 
-QString Settings::getPygmentize() const {
+auto Settings::getPygmentize() const -> QString {
   return m_sPygmentize;
 }
 
 // ----------------------------------------------------
 
-QFont Settings::getEditorFont() const {
+auto Settings::getEditorFont() const -> QFont {
   return m_EditorFont;
 }
 
 // ----------------------------------------------------
 
-quint16 Settings::getNumOfRecentFiles() const {
+auto Settings::getNumOfRecentFiles() const -> quint16 {
   return static_cast<quint16>(m_nMaxLastOpenedFiles);
 }
 
-quint16 Settings::getMaxNumOfRecentFiles() const {
+auto Settings::getMaxNumOfRecentFiles() -> quint16 {
   return static_cast<quint16>(m_cMAXFILES);
 }
 
-QStringList Settings::getRecentFiles() const {
+auto Settings::getRecentFiles() const -> QStringList {
   return m_sListRecentFiles;
 }
 
@@ -425,7 +425,7 @@ void Settings::setRecentFiles(const QStringList &sListNewRecent) {
 
 // ----------------------------------------------------
 
-bool Settings::getWindowsCheckUpdate() const {
+auto Settings::getWindowsCheckUpdate() const -> bool {
   return m_bWinCheckUpdate;
 }
 void Settings::setWindowsCheckUpdate(const bool bValue) {
@@ -434,33 +434,33 @@ void Settings::setWindowsCheckUpdate(const bool bValue) {
 
 // ----------------------------------------------------
 
-QByteArray Settings::getWindowGeometry() const {
+auto Settings::getWindowGeometry() const -> QByteArray {
   return m_aWindowGeometry;
 }
-QByteArray Settings::getWindowState() const {
+auto Settings::getWindowState() const -> QByteArray {
   return m_aWindowState;
 }
-QByteArray Settings::getSplitterState() const {
+auto Settings::getSplitterState() const -> QByteArray {
   return m_aSplitterState;
 }
 
 // ----------------------------------------------------
 
-QString Settings::getProxyHostName() const {
+auto Settings::getProxyHostName() const -> QString {
   return m_sProxyHostName;
 }
-quint16 Settings::getProxyPort() const {
+auto Settings::getProxyPort() const -> quint16 {
   return m_nProxyPort;
 }
-QString Settings::getProxyUserName() const {
+auto Settings::getProxyUserName() const -> QString {
   return m_sProxyUserName;
 }
-QString Settings::getProxyPassword() const {
+auto Settings::getProxyPassword() const -> QString {
   return m_sProxyPassword;
 }
 
 // ----------------------------------------------------
 
-QStringList Settings::getDisabledPlugins() const {
+auto Settings::getDisabledPlugins() const -> QStringList {
   return m_sListDisabledPlugins;
 }

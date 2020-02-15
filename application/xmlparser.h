@@ -38,19 +38,19 @@ class XmlParser {
 
  public:
     XmlParser();
-    bool parseXml(const QString &sXmlFile);
+    auto parseXml(const QString &sXmlFile) -> bool;
 
-    QString getMenuName() const;
-    QString getPath() const;
-    QStringList getGroupNames() const;
-    QStringList getGroupIcons() const;
-    QList<QStringList> getElementNames() const;
-    QList<QStringList> getElementInserts() const;
-    QList<QStringList> getElementIcons() const;
+    auto getMenuName() const -> QString;
+    auto getPath() const -> QString;
+    auto getGroupNames() const -> QStringList;
+    auto getGroupIcons() const -> QStringList;
+    auto getElementNames() const -> QList<QStringList> ;
+    auto getElementInserts() const -> QList<QStringList> ;
+    auto getElementIcons() const -> QList<QStringList> ;
 
  private:
-    QXmlInputSource *m_pXmlSource;  /**< Pointer to xml input source file */
-    Handler *m_pHandler;  /**< Handle to xml parser module */
+    QXmlInputSource *m_pXmlSource{};  /**< Pointer to xml input source file */
+    Handler *m_pHandler{};  /**< Handle to xml parser module */
 
     QString m_sMenuName;
     QString m_sPath;
@@ -75,14 +75,16 @@ class XmlParser::Handler : public QXmlDefaultHandler {
     * \brief Called at document start
     * \return True
     */
-    bool startDocument();
+    auto startDocument() -> bool;
 
     /**
     * \brief Found end of a xml element
     * \param name Element name
     * \return True
     */
-    bool endElement(const QString&, const QString&, const QString &name);
+    auto endElement(const QString&,
+                    const QString&,
+                    const QString &name) -> bool;
 
     /**
     * \brief Found start of a xml element
@@ -90,8 +92,10 @@ class XmlParser::Handler : public QXmlDefaultHandler {
     * \param attrs Attribute name
     * \return True
     */
-    bool startElement(const QString&, const QString&, const QString &sElement,
-                      const QXmlAttributes &attrs);
+    auto startElement(const QString&,
+                      const QString&,
+                      const QString &sElement,
+                      const QXmlAttributes &attrs) -> bool;
 
  private:
     bool m_bInElement;

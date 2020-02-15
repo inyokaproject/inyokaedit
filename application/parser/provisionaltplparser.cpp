@@ -53,8 +53,8 @@ ProvisionalTplParser::ProvisionalTplParser(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
-                                       const QString &sCurrentFile) {
+auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
+                                   const QString &sCurrentFile) -> QString{
   m_sCurrentFile = sCurrentFile;
 
   QStringList sArgs = sListArgs;
@@ -238,7 +238,7 @@ QString ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseAdvanced() {
+auto ProvisionalTplParser::parseAdvanced() -> QString {
   return ProvisionalTplParser::insertBox(
         "box advanced",
         QString::fromUtf8("Artikel für fortgeschrittene Anwender"),
@@ -250,7 +250,8 @@ QString ProvisionalTplParser::parseAdvanced() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseArchived(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseArchived(
+    const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
@@ -271,7 +272,7 @@ QString ProvisionalTplParser::parseArchived(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseBash(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseBash(const QStringList &sListArgs) -> QString {
   QString sOutput("<div class=\"bash\">\n"
                   "<div class=\"contents\">\n"
                   "<pre>");
@@ -284,7 +285,8 @@ QString ProvisionalTplParser::parseBash(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseBuilddeps(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseBuilddeps(
+    const QStringList &sListArgs) -> QString {
   QString sOutput(
         QString::fromUtf8("<div class=\"package-list\">\n"
                           "<div class=\"contents\">\n"
@@ -304,7 +306,7 @@ QString ProvisionalTplParser::parseBuilddeps(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseCode(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseCode(const QStringList &sListArgs) -> QString {
   QString sOutput("<pre>");
   foreach (QString s, sListArgs) {
     sOutput += s + "\n";
@@ -315,7 +317,7 @@ QString ProvisionalTplParser::parseCode(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
   QString sLink("");
 
   if (!sListArgs.isEmpty()) {
@@ -337,7 +339,8 @@ QString ProvisionalTplParser::parseCopy(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseExperts(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseExperts(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
@@ -350,7 +353,7 @@ QString ProvisionalTplParser::parseExperts(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseFixme(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseFixme(const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
@@ -366,7 +369,8 @@ QString ProvisionalTplParser::parseFixme(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseForeignAuth(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseForeignAuth(
+    const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput("");
 
@@ -409,7 +413,8 @@ QString ProvisionalTplParser::parseForeignAuth(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg) {
+auto ProvisionalTplParser::parseForeignPackage(
+    const QStringList &sListArg) -> QString {
   QString sOutput("");
 
   if (sListArg.size() >= 2) {
@@ -486,7 +491,8 @@ QString ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseForeignSource(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseForeignSource(
+    const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput("");
   QStringList sListVersions;
@@ -537,7 +543,8 @@ QString ProvisionalTplParser::parseForeignSource(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg) {
+auto ProvisionalTplParser::parseForeignWarning(
+    const QStringList &sListArg) -> QString {
   QString sRemark("");
   QString sOutput("");
 
@@ -571,7 +578,8 @@ QString ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseIconOverview(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("<table style=\"width:95%\">\n<tbody>\n");
   QStringList sListTitle;
   QString sStyle("");
@@ -618,7 +626,8 @@ QString ProvisionalTplParser::parseIconOverview(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseIkhayaAuthor(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
@@ -632,7 +641,8 @@ QString ProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseIkhayaAward(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
@@ -646,7 +656,8 @@ QString ProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseIkhayaImage(
+    const QStringList &sListArgs) -> QString {
   QString sImage("");
   QString sText("");
   QString sStyle("float:left; margin-right:1em;");
@@ -673,7 +684,7 @@ QString ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseIkhayaProjectPresentation() {
+auto ProvisionalTplParser::parseIkhayaProjectPresentation() -> QString {
   return ProvisionalTplParser::insertBox(
         "box notice", QString::fromUtf8("Hinweis"),
         QString::fromUtf8("Dieser Artikel gehört zur Reihe der "
@@ -689,7 +700,8 @@ QString ProvisionalTplParser::parseIkhayaProjectPresentation() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseImageCollect(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QString sImageUrl("");
   QString sDescription("");
@@ -834,7 +846,8 @@ QString ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseImageSub(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseImageSub(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QString sImageUrl("");
   QString sImageWidth("");
@@ -926,7 +939,8 @@ QString ProvisionalTplParser::parseImageSub(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseImprovable(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseImprovable(
+    const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
@@ -943,7 +957,8 @@ QString ProvisionalTplParser::parseImprovable(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseInfobox(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseInfobox(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
 
   QStringList sList;
@@ -981,7 +996,7 @@ QString ProvisionalTplParser::parseInfobox(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
   QString sTmpKey("");
   QString sTmpKeyCode("");
   QStringList sListTmpKeys;
@@ -1264,7 +1279,8 @@ QString ProvisionalTplParser::parseKeys(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseKnowledge(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QString sTmp("");
   for (int i = 0; i < sListArgs.length(); i++) {
@@ -1289,7 +1305,7 @@ QString ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseLeft(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseLeft(const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
@@ -1306,7 +1322,8 @@ QString ProvisionalTplParser::parseLeft(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseNotice(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
@@ -1319,7 +1336,7 @@ QString ProvisionalTplParser::parseNotice(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
   QString sOutput("");
   sOutput = QString::fromUtf8("<p>Um das Paket aus einer vom "
                               "[:Open_Build_Service:Open Build Service] "
@@ -1366,7 +1383,8 @@ QString ProvisionalTplParser::parseOBS(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseOverview(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseOverview(
+    const QStringList &sListArgs) -> QString {
   QList <QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table style=\"border: none; margin-top: 0; "
@@ -1423,7 +1441,8 @@ QString ProvisionalTplParser::parseOverview(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseOverview2(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseOverview2(
+    const QStringList &sListArgs) -> QString {
   QList <QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table style=\"width: 98%; border: none;\">\n<tbody>");
@@ -1480,7 +1499,8 @@ QString ProvisionalTplParser::parseOverview2(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parsePackage(
+    const QStringList &sListArgs) -> QString {
   QString sOutput(QString::fromUtf8(
                     "<p>Paketliste zum Kopieren:</p>\n"
                     "<div class=\"bash\">\n<pre class=\"notranslate\"> "
@@ -1494,7 +1514,8 @@ QString ProvisionalTplParser::parsePackage(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parsePipInstall(
+    const QStringList &sListArgs) -> QString {
   QString sOutput(QString::fromUtf8(
                     "Wer die neueste Version installieren möchte, kann das "
                     "Programm über den Python-Paketmanager [:pip:] "
@@ -1514,7 +1535,8 @@ QString ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parsePkgInstall(
+    const QStringList &sListArgs) -> QString {
   QStringList sListPackages;
   sListPackages.reserve(sListArgs.length());
   QStringList sListPackagesTMP;
@@ -1556,7 +1578,8 @@ QString ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parsePkgInstallBut(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parsePkgInstallBut(
+    const QStringList &sListArgs) -> QString {
   QString sTmp("");
   QString sOutput("");
 
@@ -1584,7 +1607,7 @@ QString ProvisionalTplParser::parsePkgInstallBut(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutsideBox("");
   QString sRemark("");
@@ -1635,7 +1658,8 @@ QString ProvisionalTplParser::parsePPA(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseProjects(
+    const QStringList &sListArgs) -> QString {
   QList <QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table>\n<tbody>");
@@ -1699,7 +1723,8 @@ QString ProvisionalTplParser::parseProjects(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseSidebar(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseSidebar(
+    const QStringList &sListArgs) -> QString {
   QList <QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table style=\"float: right; clear: right; border: none; "
@@ -1750,7 +1775,8 @@ QString ProvisionalTplParser::parseSidebar(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseStatusIcon(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseStatusIcon(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QString sTmp("");
   for (int i = 0; i < sListArgs.size(); i++) {
@@ -1798,7 +1824,7 @@ QString ProvisionalTplParser::parseStatusIcon(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QStringList sArgs(sListArgs);
   sArgs.prepend("DUMMY");  // "Needed" because of usage i-1 !!!
@@ -2002,7 +2028,8 @@ QString ProvisionalTplParser::parseTable(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseTested(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   qint32 nIndex(-1);
   if (!sListArgs.isEmpty()) {
@@ -2046,7 +2073,8 @@ QString ProvisionalTplParser::parseTested(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseTestedUT(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   qint32 nIndex(-1);
   if (!sListArgs.isEmpty()) {
@@ -2082,7 +2110,8 @@ QString ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseUnderConst(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseUnderConst(
+    const QStringList &sListArgs) -> QString {
   QStringList sArgs = sListArgs;
   QString sOutput("");
   // Get and check date
@@ -2170,7 +2199,8 @@ QString ProvisionalTplParser::parseUnderConst(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseWarning(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseWarning(
+    const QStringList &sListArgs) -> QString {
   QString sOutput("");
   foreach (QString s, sListArgs) {
     sOutput += s + " ";
@@ -2183,7 +2213,8 @@ QString ProvisionalTplParser::parseWarning(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString ProvisionalTplParser::parseWorkInProgr(const QStringList &sListArgs) {
+auto ProvisionalTplParser::parseWorkInProgr(
+    const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput = QString::fromUtf8(
                       "Dieser Artikel wird momentan überarbeitet.");
@@ -2233,10 +2264,10 @@ QString ProvisionalTplParser::parseWorkInProgr(const QStringList &sListArgs) {
 // ----------------------------------------------------------------------------
 
 // Insert box
-QString ProvisionalTplParser::insertBox(const QString &sClass,
-                                        const QString &sHeadline,
-                                        const QString &sContents,
-                                        const QString &sRemark) {
+auto ProvisionalTplParser::insertBox(const QString &sClass,
+                                     const QString &sHeadline,
+                                     const QString &sContents,
+                                     const QString &sRemark) -> QString {
   QString sReturn("");
 
   // Generate output

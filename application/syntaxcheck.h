@@ -36,15 +36,16 @@ class SyntaxCheck : public QObject {
  public:
     explicit SyntaxCheck(QObject *pParent = nullptr);
 
-    static qint32 checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                    const QStringList &sListTplMacros,
-                                    const QStringList &sListSmilies,
-                                    const QStringList &sListTplTrans);
+    static auto checkInyokaSyntax(const QTextDocument *pRawDoc,
+                                  const QStringList &sListTplMacros,
+                                  const QStringList &sListSmilies,
+                                  const QStringList &sListTplTrans) -> qint32;
 
  private:
-    static qint32 checkParenthesis(const QTextDocument *pRawDoc,
-                                   const QStringList &sListSmilies);
-    static bool checkParenthesisPair(const QChar cLeft, const QChar cRight);
+    static auto checkParenthesis(const QTextDocument *pRawDoc,
+                                 const QStringList &sListSmilies) -> qint32;
+    static auto checkParenthesisPair(const QChar cLeft,
+                                     const QChar cRight) -> bool;
     static qint32 checkKnownTemplates(const QTextDocument *pRawDoc,
                                       const QStringList &sListTplMacros,
                                       const QStringList &sListTplTrans);

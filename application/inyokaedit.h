@@ -81,7 +81,7 @@ class InyokaEdit : public QMainWindow {
  protected:
     void changeEvent(QEvent *pEvent);
     void closeEvent(QCloseEvent *pEvent);
-    bool eventFilter(QObject *pObj, QEvent *pEvent);
+    auto eventFilter(QObject *pObj, QEvent *pEvent) -> bool;
 
  signals:
     void updateUiLang();
@@ -114,31 +114,32 @@ class InyokaEdit : public QMainWindow {
     void deleteAutoSaveBackups();
     void readSettings();
     void writeSettings();
-    static bool switchTranslator(QTranslator *translator, const QString &sFile,
-                                 const QString &sPath = "");
+    static auto switchTranslator(QTranslator *translator,
+                                 const QString &sFile,
+                                 const QString &sPath = "") -> bool;
 
     Ui::InyokaEdit *m_pUi;
     QTranslator m_translator;  // App translations
     QTranslator m_translatorQt;  // Qt translations
     QString m_sCurrLang;
-    Templates *m_pTemplates;
-    FileOperations *m_pFileOperations;
-    TextEditor *m_pCurrentEditor;
-    Plugins *m_pPlugins;
-    Parser *m_pParser;
-    Settings *m_pSettings;
-    Session *m_pSession;
-    Download *m_pDownloadModule;
-    Upload *m_pUploadModule;
-    Utils *m_pUtils;
-    QSplitter *m_pWidgetSplitter;
-    QBoxLayout *m_pFrameLayout;
-    QTabWidget *m_pDocumentTabs;
+    Templates *m_pTemplates{};
+    FileOperations *m_pFileOperations{};
+    TextEditor *m_pCurrentEditor{};
+    Plugins *m_pPlugins{};
+    Parser *m_pParser{};
+    Settings *m_pSettings{};
+    Session *m_pSession{};
+    Download *m_pDownloadModule{};
+    Upload *m_pUploadModule{};
+    Utils *m_pUtils{};
+    QSplitter *m_pWidgetSplitter{};
+    QBoxLayout *m_pFrameLayout{};
+    QTabWidget *m_pDocumentTabs{};
     QPoint m_WebviewScrollPosition;
 #ifdef USEQTWEBKIT
-    QWebView *m_pWebview;
+    QWebView *m_pWebview{};
 #else
-    QWebEngineView *m_pWebview;
+    QWebEngineView *m_pWebview{};
 #endif
 
     QList<QAction *> m_OpenTemplateFilesActions;

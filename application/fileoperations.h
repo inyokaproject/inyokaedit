@@ -57,28 +57,28 @@ class FileOperations : public QObject {
 
     void newFile(QString sFileName);
 
-    TextEditor *getCurrentEditor();
-    QList<TextEditor *> getEditors() const;
+    auto getCurrentEditor() -> TextEditor*;
+    auto getEditors() const -> QList<TextEditor *>;
 
     /**
     * \brief Get current file name
     * \return File name of currently opened file
     */
-    QString getCurrentFile() const;
+    auto getCurrentFile() const -> QString;
 
     /**
     * \brief Check if current file is saved or not
     * \return True or false if current file is saved or not
     */
-    bool maybeSave();
+    auto maybeSave() -> bool;
 
     /**
     * \brief Get list of recent opened files
     * \return List of last opened files
     */
-    QList<QAction *> getLastOpenedFiles() const;
+    auto getLastOpenedFiles() const -> QList<QAction *>;
 
-    bool closeAllmaybeSave();
+    auto closeAllmaybeSave() -> bool;
 
  public slots:
     /** \brief Open an existing file */

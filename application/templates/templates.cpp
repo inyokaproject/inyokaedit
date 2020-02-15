@@ -264,73 +264,73 @@ void Templates::initTextformats(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Templates::getPreviewTemplate() const {
+auto Templates::getPreviewTemplate() const -> QString {
   return m_sPreviewTemplate;
 }
 
-QStringList Templates::getListTplNamesINY() const {
+auto Templates::getListTplNamesINY() const -> QStringList {
   return m_sListTplNamesINY;
 }
-QStringList Templates::getListTemplatesINY() const {
+auto Templates::getListTemplatesINY() const -> QStringList {
   return m_sListTemplatesINY;
 }
-QStringList Templates::getListTplMacrosINY() const {
+auto Templates::getListTplMacrosINY() const -> QStringList {
   return m_sListTplMacrosINY;
 }
-QStringList Templates::getListTplNamesALL() const {
+auto Templates::getListTplNamesALL() const -> QStringList {
   return m_sListTplNamesALL;
 }
-QStringList Templates::getListTplMacrosALL() const {
+auto Templates::getListTplMacrosALL() const -> QStringList {
   return m_sListTplMacrosALL;
 }
 
-QStringList Templates::getListFormatStart() const {
+auto Templates::getListFormatStart() const -> QStringList {
   return m_sListFormatStart;
 }
-QStringList Templates::getListFormatEnd() const {
+auto Templates::getListFormatEnd() const -> QStringList {
   return m_sListFormatEnd;
 }
-QStringList Templates::getListFormatHtmlStart() const {
+auto Templates::getListFormatHtmlStart() const -> QStringList {
   return m_sListFormatHtmlStart;
 }
-QStringList Templates::getListFormatHtmlEnd() const {
+auto Templates::getListFormatHtmlEnd() const -> QStringList {
   return m_sListFormatHtmlEnd;
 }
 
 // ----------------------------------------------------------------------------
 // Mappings
 
-QStringList Templates::getListIWLs() const {
+auto Templates::getListIWLs() const -> QStringList {
   return m_sListIWLs;
 }
-QStringList Templates::getListIWLUrls() const {
+auto Templates::getListIWLUrls() const -> QStringList {
   return m_sListIWLUrls;
 }
 
-QStringList Templates::getListFlags() const {
+auto Templates::getListFlags() const -> QStringList {
   return m_sListFlags;
 }
-QStringList Templates::getListFlagsImg() const {
+auto Templates::getListFlagsImg() const -> QStringList {
   return m_sListFlagsImg;
 }
 
-QStringList Templates::getListSmilies() const {
+auto Templates::getListSmilies() const -> QStringList {
   return m_sListSmilies;
 }
-QStringList Templates::getListSmiliesImg() const {
+auto Templates::getListSmiliesImg() const -> QStringList {
   return m_sListSmiliesImg;
 }
 
-QStringList Templates::getListTestedWith() const {
+auto Templates::getListTestedWith() const -> QStringList {
   return m_sListTestedWith;
 }
-QStringList Templates::getListTestedWithStrings() const {
+auto Templates::getListTestedWithStrings() const -> QStringList {
   return m_sListTestedWithStrings;
 }
 
-QStringList Templates::getListTestedWithTouch() const {
+auto Templates::getListTestedWithTouch() const -> QStringList {
   return m_sListTestedWithTouch;
 }
-QStringList Templates::getListTestedWithTouchStrings() const {
+auto Templates::getListTestedWithTouchStrings() const -> QStringList {
   return m_sListTestedWithTouchStrings;
 }

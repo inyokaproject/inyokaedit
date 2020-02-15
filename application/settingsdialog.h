@@ -61,13 +61,13 @@ class SettingsDialog : public QDialog {
     void updatedSettings();
 
  protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    auto eventFilter(QObject *obj, QEvent *event) -> bool;
 
  private slots:
     void changedCommunity(const QString &sCommunity);
 
  private:
-    QStringList searchTranslations();
+    auto searchTranslations() -> QStringList;
 
     Ui::SettingsDialog *m_pUi;
     Settings *m_pSettings;

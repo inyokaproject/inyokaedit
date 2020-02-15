@@ -42,7 +42,7 @@ class Macros {
                       const QString &sCurrentFile,
                       const QString &sCommunity,
                       QStringList &sListHeadlines);
-    QStringList getTplTranslations() const;
+    auto getTplTranslations() const -> QStringList;
 
   private:
     static void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);

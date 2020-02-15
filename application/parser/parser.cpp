@@ -86,9 +86,9 @@ void Parser::updateSettings(const QString &sInyokaUrl,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Parser::genOutput(const QString &sActFile,
-                          QTextDocument *pRawDocument,
-                          const bool bSyntaxCheck) {
+auto Parser::genOutput(const QString &sActFile,
+                       QTextDocument *pRawDocument,
+                       const bool bSyntaxCheck) -> QString {
   qDebug() << "Parsing...";
   // Need a copy otherwise text in editor will be changed
   m_pRawText = pRawDocument->clone();
@@ -325,8 +325,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
                           "</table>\n</div>";
       }
 
-      unsigned int nNoTranslate =
-          static_cast<unsigned int>(m_sListNoTranslate.size());
+      auto nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
       m_sListNoTranslate << sMacro;  // Save code block
       sMacro = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
 
@@ -343,7 +342,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Parser::highlightCode(const QString &sLanguage, const QString &sCode) {
+auto Parser::highlightCode(const QString &sLanguage,
+                           const QString &sCode) -> QString {
   static bool bChecked(false);
   static bool bPygmentize(false);
   static QFile sPygmentize(m_sPygmentize);
@@ -519,7 +519,7 @@ void Parser::replaceHorLines(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Parser::generateTags(QTextDocument *pRawDoc) {
+auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
   QString sDoc(pRawDoc->toPlainText());
   QString sLine("");
   QString sTags("");
@@ -660,12 +660,13 @@ void Parser::removeComments(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
+auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
+  static const quint8 MAXHEAD = 5;
   QString sDoc("");
   QString sLine("");
   QString sTmp("");
   QString sLink("");
-  quint16 nHeadlineLevel = 5;
+  quint8 nHeadlineLevel = MAXHEAD;
   QStringList slistHeadlines;
 
   // Go through each text block
@@ -673,7 +674,7 @@ QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     // Order is important! First level 5, 4, 3, 2, 1
-    for (int i = 5; i >= 0; i--) {
+    for (int i = MAXHEAD; i >= 0; i--) {
       sLine = block.text();
       sTmp.fill('=', i);
       nHeadlineLevel = 0;  // Always reset for each line
@@ -684,7 +685,7 @@ QStringList Parser::replaceHeadlines(QTextDocument *pRawDoc) {
       if (sLine.trimmed().startsWith(sTmp) &&
           sLine.trimmed().endsWith(sTmp) &&
           sLine.trimmed().length() > (i*2)) {
-        nHeadlineLevel = static_cast<quint16>(i);
+        nHeadlineLevel = static_cast<quint8>(i);
       } else {
         continue;
       }

@@ -35,29 +35,29 @@ class Templates {
     Templates(const QString &sCommunity, const QString &sSharePath,
               const QString &sUserDataDir);
 
-    QString getPreviewTemplate() const;
-    QStringList getListTplNamesINY() const;
-    QStringList getListTemplatesINY() const;
-    QStringList getListTplMacrosINY() const;
-    QStringList getListTplNamesALL() const;
-    QStringList getListTplMacrosALL() const;
+    auto getPreviewTemplate() const -> QString;
+    auto getListTplNamesINY() const -> QStringList;
+    auto getListTemplatesINY() const -> QStringList;
+    auto getListTplMacrosINY() const -> QStringList;
+    auto getListTplNamesALL() const -> QStringList;
+    auto getListTplMacrosALL() const -> QStringList;
 
-    QStringList getListFormatStart() const;
-    QStringList getListFormatEnd() const;
-    QStringList getListFormatHtmlStart() const;
-    QStringList getListFormatHtmlEnd() const;
+    auto getListFormatStart() const -> QStringList;
+    auto getListFormatEnd() const -> QStringList;
+    auto getListFormatHtmlStart() const -> QStringList;
+    auto getListFormatHtmlEnd() const -> QStringList;
 
     // Mappings
-    QStringList getListIWLs() const;
-    QStringList getListIWLUrls() const;
-    QStringList getListFlags() const;
-    QStringList getListFlagsImg() const;
-    QStringList getListSmilies() const;
-    QStringList getListSmiliesImg() const;
-    QStringList getListTestedWith() const;
-    QStringList getListTestedWithStrings() const;
-    QStringList getListTestedWithTouch() const;
-    QStringList getListTestedWithTouchStrings() const;
+    auto getListIWLs() const -> QStringList;
+    auto getListIWLUrls() const -> QStringList;
+    auto getListFlags() const -> QStringList;
+    auto getListFlagsImg() const -> QStringList;
+    auto getListSmilies() const -> QStringList;
+    auto getListSmiliesImg() const -> QStringList;
+    auto getListTestedWith() const -> QStringList;
+    auto getListTestedWithStrings() const -> QStringList;
+    auto getListTestedWithTouch() const -> QStringList;
+    auto getListTestedWithTouchStrings() const -> QStringList;
 
   private:
     void initTemplates(const QString &sTplPath);

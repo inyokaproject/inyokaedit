@@ -43,8 +43,8 @@ class Session : public QNetworkCookieJar {
                      const QString &sHash);
 
     void checkSession();
-    bool isLoggedIn() const;
-    QNetworkAccessManager* getNwManager();
+    auto isLoggedIn() const -> bool;
+    auto getNwManager() -> QNetworkAccessManager*;
 
  private:
     void requestToken();

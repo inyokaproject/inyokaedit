@@ -58,8 +58,8 @@ class Download : public QObject {
     void sendArticleText(const QString &, const QString &);
 
  private:
-    QUrl redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl);
+    auto redirectUrl(const QUrl& possibleRedirectUrl,
+                     const QUrl& oldRedirectUrl) -> QUrl;
     void downloadImages();
 
     QWidget *m_pParent;

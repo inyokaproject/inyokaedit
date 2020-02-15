@@ -34,7 +34,7 @@ XmlParser::XmlParser() = default;
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool XmlParser::parseXml(const QString &sXmlFile) {
+auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
   QFile XmlFile(sXmlFile);
   // Check if file exist and it's readable
   if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
@@ -79,34 +79,34 @@ bool XmlParser::parseXml(const QString &sXmlFile) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString XmlParser::getMenuName() const {
+auto XmlParser::getMenuName() const -> QString {
   return m_sMenuName;
 }
-QString XmlParser::getPath() const {
+auto XmlParser::getPath() const -> QString {
   return m_sPath;
 }
 
-QStringList XmlParser::getGroupNames() const {
+auto XmlParser::getGroupNames() const -> QStringList {
   return m_sListGroups;
 }
-QStringList XmlParser::getGroupIcons() const {
+auto XmlParser::getGroupIcons() const -> QStringList {
   return m_sListGroupIcons;
 }
 
-QList<QStringList> XmlParser::getElementNames() const {
+auto XmlParser::getElementNames() const -> QList<QStringList> {
   return m_sListNames;
 }
-QList<QStringList> XmlParser::getElementInserts() const {
+auto XmlParser::getElementInserts() const -> QList<QStringList> {
   return m_sListInserts;
 }
-QList<QStringList> XmlParser::getElementIcons() const {
+auto XmlParser::getElementIcons() const -> QList<QStringList> {
   return m_sListIcons;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool XmlParser::Handler::startDocument() {
+auto XmlParser::Handler::startDocument() -> bool {
   m_bInElement = false;
   return true;
 }
@@ -114,8 +114,8 @@ bool XmlParser::Handler::startDocument() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool XmlParser::Handler::endElement(const QString&, const QString&,
-                                    const QString &sName) {
+auto XmlParser::Handler::endElement(const QString&, const QString&,
+                                    const QString &sName) -> bool {
   if ("menu" == sName) {
     m_bInElement = false;
     m_sMenuName_2 = m_tmpMenuName;
@@ -132,9 +132,9 @@ bool XmlParser::Handler::endElement(const QString&, const QString&,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool XmlParser::Handler::startElement(const QString&, const QString&,
+auto XmlParser::Handler::startElement(const QString&, const QString&,
                                       const QString &sElement,
-                                      const QXmlAttributes &attrs) {
+                                      const QXmlAttributes &attrs) -> bool {
   QString sMenuName("");
   QString sPath("");
   QString sGroupName("");

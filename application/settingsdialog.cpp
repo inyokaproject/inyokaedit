@@ -243,11 +243,11 @@ void SettingsDialog::reject() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool SettingsDialog::eventFilter(QObject *obj, QEvent *event) {
+auto SettingsDialog::eventFilter(QObject *obj, QEvent *event) -> bool {
   // Enter Qt keycode automatically in text box
   if (m_pUi->reloadPreviewKeyEdit == obj) {
     if (QEvent::KeyPress == event->type()) {
-      QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+      auto *keyEvent = static_cast<QKeyEvent*>(event);
       // Remove key with DEL
       if (Qt::Key_Delete != keyEvent->key()) {
         m_pUi->reloadPreviewKeyEdit->setText(
@@ -372,7 +372,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QStringList SettingsDialog::searchTranslations() {
+auto SettingsDialog::searchTranslations() -> QStringList {
   QStringList sList;
   QString sTmp;
 

@@ -49,7 +49,7 @@ Utils::Utils(QWidget *pParent, QObject *pParentObj)
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Utils::getOnlineState() {
+auto Utils::getOnlineState() -> bool {
   QNetworkConfigurationManager mgr;
   return mgr.isOnline();
 }
@@ -107,24 +107,23 @@ void Utils::replyFinished(QNetworkReply *pReply) {
       sListLatestVer = sLatestVersion.split(".");
 
       if (sListCurrentVer.size() > 2 && sListLatestVer.size() > 2) {
-        quint8 nMainVer1 = static_cast<quint8>(sListCurrentVer[0].toUInt());
-        quint8 nMinorVer1 = static_cast<quint8>(sListCurrentVer[1].toUInt());
-        quint8 nRevision1 = static_cast<quint8>(sListCurrentVer[2].toUInt());
-        quint8 nMainVer2 = static_cast<quint8>(sListLatestVer[0].toUInt());
-        quint8 nMinorVer2 = static_cast<quint8>(sListLatestVer[1].toUInt());
-        quint8 nRevision2 = static_cast<quint8>(sListLatestVer[2].toUInt());
+        auto nMainVer1 = static_cast<quint8>(sListCurrentVer[0].toUInt());
+        auto nMinorVer1 = static_cast<quint8>(sListCurrentVer[1].toUInt());
+        auto nRevision1 = static_cast<quint8>(sListCurrentVer[2].toUInt());
+        auto nMainVer2 = static_cast<quint8>(sListLatestVer[0].toUInt());
+        auto nMinorVer2 = static_cast<quint8>(sListLatestVer[1].toUInt());
+        auto nRevision2 = static_cast<quint8>(sListLatestVer[2].toUInt());
 
         if (nMainVer2 > nMainVer1
             ||nMinorVer2 > nMinorVer1
             || nRevision2 > nRevision1) {
-          QMessageBox *msgBox = new QMessageBox(
-                                  QMessageBox::Question,
-                                  tr("Update found"),
-                                  tr("Found a new version of %1.<br>"
-                                     "Do you want to download the latest "
-                                     "version?")
-                                  .arg(qApp->applicationName()),
-                                  nullptr, m_pParent);
+          auto *msgBox = new QMessageBox(
+                           QMessageBox::Question,
+                           tr("Update found"),
+                           tr("Found a new version of %1.<br>"
+                           "Do you want to download the latest version?")
+                           .arg(qApp->applicationName()),
+                           nullptr, m_pParent);
           QPushButton *noDontAskAgainButton = msgBox->addButton(
                                                 tr("No, don't ask again!"),
                                                 QMessageBox::NoRole);

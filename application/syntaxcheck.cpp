@@ -36,10 +36,10 @@ SyntaxCheck::SyntaxCheck(QObject *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-qint32 SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                      const QStringList &sListTplMacros,
-                                      const QStringList &sListSmilies,
-                                      const QStringList &sListTplTrans) {
+auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
+                                    const QStringList &sListTplMacros,
+                                    const QStringList &sListSmilies,
+                                    const QStringList &sListTplTrans) -> qint32 {
   qint32 nRet(-1);
   nRet = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == nRet) {
@@ -53,8 +53,8 @@ qint32 SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
-                                     const QStringList &sListSmilies) {
+auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
+                                   const QStringList &sListSmilies) -> qint32 {
   QList<QChar> listParenthesis;
   QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
@@ -96,8 +96,8 @@ qint32 SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool SyntaxCheck::checkParenthesisPair(const QChar cLeft,
-                                       const QChar cRight) {
+auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
+                                       const QChar cRight) -> bool {
   if ('[' == cLeft && ']' == cRight) {
     return true;
   }
@@ -113,9 +113,9 @@ bool SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-qint32 SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
-                                        const QStringList &sListTplMacros,
-                                        const QStringList &sListTplTrans) {
+auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
+                                      const QStringList &sListTplMacros,
+                                      const QStringList &sListTplTrans) -> qint32{
   QStringList sListTplRegExp;
   QStringList sListTrans;
   foreach (QString s, sListTplTrans) {

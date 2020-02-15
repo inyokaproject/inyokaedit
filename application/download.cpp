@@ -269,8 +269,8 @@ void Download::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QUrl Download::redirectUrl(const QUrl &possibleRedirectUrl,
-                           const QUrl &oldRedirectUrl) {
+auto Download::redirectUrl(const QUrl &possibleRedirectUrl,
+                           const QUrl &oldRedirectUrl) -> QUrl {
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty()
       && possibleRedirectUrl != oldRedirectUrl) {

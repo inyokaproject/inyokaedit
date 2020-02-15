@@ -242,7 +242,7 @@ void Upload::requestUpload() {
   QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
 
-  QHttpMultiPart *pMultiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+  auto *pMultiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
   QHttpPart tokenPart;
   tokenPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -360,8 +360,8 @@ void Upload::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QUrl Upload::redirectUrl(const QUrl &possibleRedirectUrl,
-                         const QUrl &oldRedirectUrl) {
+auto Upload::redirectUrl(const QUrl &possibleRedirectUrl,
+                         const QUrl &oldRedirectUrl) -> QUrl {
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl) {
     redirectUrl = possibleRedirectUrl;
