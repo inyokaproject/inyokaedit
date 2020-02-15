@@ -100,11 +100,11 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString SpellChecker::getPluginName() const {
+auto SpellChecker::getPluginName() const -> QString {
   return PLUGIN_NAME;
 }
 
-QString SpellChecker::getPluginVersion() const {
+auto SpellChecker::getPluginVersion() const -> QString {
   return PLUGIN_VERSION;
 }
 
@@ -138,17 +138,17 @@ void SpellChecker::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString SpellChecker::getCaption() const {
+auto SpellChecker::getCaption() const -> QString {
   return tr("Spell checker");
 }
-QIcon SpellChecker::getIcon() const {
+auto SpellChecker::getIcon() const -> QIcon {
   return QIcon(":/spellchecker.png");
 }
 
-bool SpellChecker::includeMenu() const {
+auto SpellChecker::includeMenu() const -> bool{
   return true;
 }
-bool SpellChecker::includeToolbar() const {
+auto SpellChecker::includeToolbar() const -> bool {
   return true;
 }
 
@@ -194,7 +194,7 @@ void SpellChecker::setDictPath() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool SpellChecker::initDictionaries() {
+auto SpellChecker::initDictionaries() -> bool {
   if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
       || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
     qWarning() << "Spell checker dictionary file does not exist:"
@@ -411,7 +411,7 @@ void SpellChecker::executePlugin() {}
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool SpellChecker::spell(const QString &sWord) {
+auto SpellChecker::spell(const QString &sWord) -> bool {
 #if defined(USE_NEW_HUNSPELL)  // Hunspell >= 1.5
   return m_pHunspell->spell(m_pCodec->fromUnicode(sWord).toStdString());
 #else
@@ -422,7 +422,7 @@ bool SpellChecker::spell(const QString &sWord) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QStringList SpellChecker::suggest(const QString &sWord) {
+auto SpellChecker::suggest(const QString &sWord) -> QStringList {
   int nSuggestions = 0;
 
 #if defined(USE_NEW_HUNSPELL)  // Hunspell >= 1.5
@@ -528,7 +528,7 @@ void SpellChecker::addToUserWordlist(const QString &sWord) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool SpellChecker::hasSettings() const {
+auto SpellChecker::hasSettings() const -> bool {
   return false;
 }
 

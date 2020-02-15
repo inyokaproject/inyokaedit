@@ -87,13 +87,13 @@ class SpellChecker : public QObject, IEditorPlugin {
 
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
-    QString getPluginName() const;
-    QString getPluginVersion() const;
+    auto getPluginName() const -> QString;
+    auto getPluginVersion() const -> QString;
     void installTranslator(const QString &sLang);
-    QString getCaption() const;
-    QIcon getIcon() const;
-    bool includeMenu() const;
-    bool includeToolbar() const;
+    auto getCaption() const -> QString;
+    auto getIcon() const -> QIcon;
+    auto includeMenu() const -> bool;
+    auto includeToolbar() const -> bool;
     bool hasSettings() const;
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
@@ -108,11 +108,11 @@ class SpellChecker : public QObject, IEditorPlugin {
     friend class SpellCheckDialog;
 
     void setDictPath();
-    bool initDictionaries();
+    auto initDictionaries() -> bool;
     void loadAdditionalDict(const QString &sFilename);
 
-    bool spell(const QString &sWord);
-    QStringList suggest(const QString &sWord);
+    auto spell(const QString &sWord) -> bool;
+    auto suggest(const QString &sWord) -> QStringList;
     void ignoreWord(const QString &sWord);
     void addToUserWordlist(const QString &sWord);
     void putWord(const QString &sWord);

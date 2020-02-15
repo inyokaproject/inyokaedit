@@ -134,7 +134,7 @@ SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString SpellCheckDialog::replacement() const {
+auto SpellCheckDialog::replacement() const -> QString {
   return m_pUi->ledtReplaceWith->text();
 }
 

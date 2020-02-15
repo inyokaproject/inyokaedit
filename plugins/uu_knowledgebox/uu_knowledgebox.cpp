@@ -65,11 +65,11 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Uu_KnowledgeBox::getPluginName() const {
+auto Uu_KnowledgeBox::getPluginName() const -> QString {
   return PLUGIN_NAME;
 }
 
-QString Uu_KnowledgeBox::getPluginVersion() const {
+auto Uu_KnowledgeBox::getPluginVersion() const -> QString {
   return PLUGIN_VERSION;
 }
 
@@ -105,17 +105,17 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Uu_KnowledgeBox::getCaption() const {
+auto Uu_KnowledgeBox::getCaption() const -> QString {
   return tr("Ubuntuusers.de knowledge box");
 }
-QIcon Uu_KnowledgeBox::getIcon() const {
+auto Uu_KnowledgeBox::getIcon() const -> QIcon {
   return QIcon(":/list_alt.png");
 }
 
-bool Uu_KnowledgeBox::includeMenu() const {
+auto Uu_KnowledgeBox::includeMenu() const -> bool {
   return true;
 }
-bool Uu_KnowledgeBox::includeToolbar() const {
+auto Uu_KnowledgeBox::includeToolbar() const -> bool {
   return true;
 }
 
@@ -320,7 +320,7 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
 
 void Uu_KnowledgeBox::deleteRow() {
   QObject* pObj = sender();
-  QPushButton *pButton = reinterpret_cast<QPushButton*>(pObj);
+  auto *pButton = reinterpret_cast<QPushButton*>(pObj);
   if (pButton != nullptr) {
     int nIndex = m_listDelRowButtons.indexOf(pButton);
     // qDebug() << "DELETE ROW:" << nIndex;
@@ -352,7 +352,7 @@ void Uu_KnowledgeBox::writeSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Uu_KnowledgeBox::hasSettings() const {
+auto Uu_KnowledgeBox::hasSettings() const -> bool {
   return true;
 }
 

@@ -136,11 +136,11 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Uu_TableTemplate::getPluginName() const {
+auto Uu_TableTemplate::getPluginName() const -> QString {
   return PLUGIN_NAME;
 }
 
-QString Uu_TableTemplate::getPluginVersion() const {
+auto Uu_TableTemplate::getPluginVersion() const -> QString {
   return PLUGIN_VERSION;
 }
 
@@ -176,17 +176,17 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Uu_TableTemplate::getCaption() const {
+auto Uu_TableTemplate::getCaption() const -> QString{
   return tr("Ubuntuusers.de table generator");
 }
-QIcon Uu_TableTemplate::getIcon() const {
+auto Uu_TableTemplate::getIcon() const -> QIcon{
   return QIcon(":/tabletemplate.png");
 }
 
-bool Uu_TableTemplate::includeMenu() const {
+auto Uu_TableTemplate::includeMenu() const -> bool {
   return true;
 }
-bool Uu_TableTemplate::includeToolbar() const {
+auto Uu_TableTemplate::includeToolbar() const -> bool {
   return true;
 }
 
@@ -241,7 +241,7 @@ void Uu_TableTemplate::preview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Uu_TableTemplate::generateTable() {
+auto Uu_TableTemplate::generateTable() -> QString {
   QString sTab("{{{#!vorlage Tabelle\n");
   QString sTableClass("");
   int colsNum = m_pUi->colsNum->value();
@@ -397,7 +397,7 @@ void Uu_TableTemplate::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Uu_TableTemplate::hasSettings() const {
+auto Uu_TableTemplate::hasSettings() const -> bool {
   return false;
 }
 

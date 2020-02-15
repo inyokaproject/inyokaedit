@@ -86,11 +86,11 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Highlighter::getPluginName() const {
+auto Highlighter::getPluginName() const -> QString{
   return PLUGIN_NAME;
 }
 
-QString Highlighter::getPluginVersion() const {
+auto Highlighter::getPluginVersion() const -> QString {
   return PLUGIN_VERSION;
 }
 
@@ -126,18 +126,18 @@ void Highlighter::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Highlighter::getCaption() const {
+auto Highlighter::getCaption() const -> QString {
   return tr("Syntax highlighter");
 }
-QIcon Highlighter::getIcon() const {
+auto Highlighter::getIcon() const -> QIcon {
   return QIcon();
   // return QIcon(":/highlighter.png");
 }
 
-bool Highlighter::includeMenu() const {
+auto Highlighter::includeMenu() const -> bool {
   return false;
 }
-bool Highlighter::includeToolbar() const {
+auto Highlighter::includeToolbar() const -> bool {
   return false;
 }
 
@@ -473,9 +473,8 @@ void Highlighter::getTranslations() {
           foreach (QString s, tmpList2) {
             m_sListMacroKeywords << s.trimmed();
 
-            if ("Template" == tmpList[0].trimmed()) {
-              m_sListParserKeywords << s.trimmed().toLower();
-            } else if ("Code" == tmpList[0].trimmed()) {
+            if ("Template" == tmpList[0].trimmed() ||
+                "Code" == tmpList[0].trimmed()) {
               m_sListParserKeywords << s.trimmed().toLower();
             }
           }
@@ -614,7 +613,7 @@ void Highlighter::saveHighlighting() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Highlighter::createValues(const quint16 nRow) {
+auto Highlighter::createValues(const quint16 nRow) -> QString {
   QString sReturn("");
   QString sTmp("");
   sTmp = m_pUi->styleTable->item(nRow, 0)->text();
@@ -668,8 +667,8 @@ void Highlighter::changedStyle(int nIndex) {
       qWarning() << "Style file already exists:" << fileStyle.fileName();
       return;
     }
-    bOk = fileStyle.copy(fiStyle.absoluteFilePath(),
-                         fileStyle.fileName());
+    bOk = QFile::copy(fiStyle.absoluteFilePath(),
+                      fileStyle.fileName());
     if (!bOk) {
       // Reset selection
       m_pUi->styleFilesBox->setCurrentIndex(
@@ -857,7 +856,7 @@ void Highlighter::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Highlighter::hasSettings() const {
+auto Highlighter::hasSettings() const -> bool {
   return true;
 }
 

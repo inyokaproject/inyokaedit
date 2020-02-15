@@ -81,7 +81,7 @@ class SpellCheckDialog : public QDialog {
                               QWidget *pParent = nullptr);
     ~SpellCheckDialog();
 
-    QString replacement() const;
+    auto replacement() const -> QString;
 
  public slots:
     SpellCheckDialog::SpellCheckAction checkWord(const QString &sWord);

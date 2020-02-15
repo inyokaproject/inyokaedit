@@ -55,14 +55,14 @@ class Highlighter : public QObject, IEditorPlugin {
  public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir, const QString &sSharePath);
-    QString getPluginName() const;
-    QString getPluginVersion() const;
+    auto getPluginName() const -> QString;
+    auto getPluginVersion() const -> QString;
     void installTranslator(const QString &sLang);
-    QString getCaption() const;
-    QIcon getIcon() const;
-    bool includeMenu() const;
-    bool includeToolbar() const;
-    bool hasSettings() const;
+    auto getCaption() const -> QString;
+    auto getIcon() const -> QIcon;
+    auto includeMenu() const -> bool;
+    auto includeToolbar() const -> bool;
+    auto hasSettings() const -> bool;
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);
 
@@ -83,7 +83,7 @@ class Highlighter : public QObject, IEditorPlugin {
     void loadHighlighting(const QString &sStyleFile);
     void readValue(const quint16 nRow, const QTextCharFormat &charFormat);
     void saveHighlighting();
-    QString createValues(const quint16 nRow);
+    auto createValues(const quint16 nRow) -> QString;
     void saveStyle();
     void readStyle(const QString &sStyle);
     void getTranslations();

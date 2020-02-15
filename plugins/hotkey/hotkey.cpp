@@ -66,11 +66,11 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Hotkey::getPluginName() const {
+auto Hotkey::getPluginName() const -> QString {
   return PLUGIN_NAME;
 }
 
-QString Hotkey::getPluginVersion() const {
+auto Hotkey::getPluginVersion() const -> QString {
   return PLUGIN_VERSION;
 }
 
@@ -106,17 +106,17 @@ void Hotkey::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-QString Hotkey::getCaption() const {
+auto Hotkey::getCaption() const -> QString {
   return tr("Hotkey selector");
 }
-QIcon Hotkey::getIcon() const {
+auto Hotkey::getIcon() const -> QIcon {
   return QIcon(":/hotkey.png");
 }
 
-bool Hotkey::includeMenu() const {
+auto Hotkey::includeMenu() const -> bool {
   return true;
 }
-bool Hotkey::includeToolbar() const {
+auto Hotkey::includeToolbar() const -> bool {
   return false;
 }
 
@@ -266,7 +266,7 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 
 void Hotkey::deleteRow() {
   QObject* pObj = sender();
-  QPushButton *pButton = reinterpret_cast<QPushButton*>(pObj);
+  auto *pButton = reinterpret_cast<QPushButton*>(pObj);
   if (pButton != nullptr) {
     int nIndex = m_listDelRowButtons.indexOf(pButton);
     // qDebug() << "DELETE ROW:" << nIndex;
@@ -347,7 +347,7 @@ void Hotkey::writeSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-bool Hotkey::hasSettings() const {
+auto Hotkey::hasSettings() const -> bool {
   return true;
 }
 
