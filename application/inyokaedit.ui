@@ -418,7 +418,7 @@
   <action name="downloadArticleAct">
    <property name="icon">
     <iconset>
-     <normalon>:/images/download.png</normalon>
+     <normalon>:/images/cloud_download.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -505,7 +505,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normalon>:/images/upload.png</normalon>
+     <normalon>:/images/cloud_upload.png</normalon>
     </iconset>
    </property>
    <property name="text">

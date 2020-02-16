@@ -25,7 +25,7 @@
         <file>images/document-save-as.png</file>
         <file>images/help-browser.png</file>
         <file>images/preview.png</file>
-        <file>images/upload.png</file>
-        <file>images/download.png</file>
+        <file>images/cloud_download.png</file>
+        <file>images/cloud_upload.png</file>
     </qresource>
 </RCC>
