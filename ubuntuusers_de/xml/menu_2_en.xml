@@ -26,7 +26,7 @@
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
     <element name="Canonical" insert="[canonical:%%Sitename%%:]" icon="canonical.png" />
-    <element name="Canonical (subdomain)" insert="[canonicalsubdomain:%%Seitenname%%:]" icon="canonicalsubdomain_.png" />
+    <element name="Canonical (subdomain)" insert="[canonicalsubdomain:%%Sitename%%:]" icon="canonicalsubdomain_.png" />
     <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
     <element name="Canonical Voises" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
@@ -85,6 +85,7 @@
     <element name="Freshmeat" insert="[freshmeat:%%Sitename%%:]" icon="freshmeat.png" />
     <element name="Freedesktop Bugs" insert="[freedesktop:%%Sitename%%:]" icon="freedesktop.png" />
     <element name="GitHub" insert="[github:%%Sitename%%:]" icon="github.png" />
+    <element name="GitLab" insert="[gitlab:%%Sitename%%:]" icon="gitlab.png" />
     <element name="Gnome Bugs" insert="[gnome:%%Sitename%%:]" icon="gnome.png" />
     <element name="Google Code" insert="[googlecode:%%Sitename%%:]" icon="googlecode.png" />
     <element name="KDE Bugs" insert="[kdebugs:%%Bug%%:]" icon="kdebugs.png" />

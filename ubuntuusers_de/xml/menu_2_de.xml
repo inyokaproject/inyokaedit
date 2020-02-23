@@ -85,6 +85,7 @@
     <element name="Freshmeat" insert="[freshmeat:%%Seitenname%%:]" icon="freshmeat.png" />
     <element name="Freedesktop Bugs" insert="[freedesktop:%%Seitenname%%:]" icon="freedesktop.png" />
     <element name="GitHub" insert="[github:%%Seitenname%%:]" icon="github.png" />
+    <element name="GitLab" insert="[gitlab:%%Seitenname%%:]" icon="gitlab.png" />
     <element name="Gnome Bugs" insert="[gnome:%%Seitenname%%:]" icon="gnome.png" />
     <element name="Google Code" insert="[googlecode:%%Seitenname%%:]" icon="googlecode.png" />
     <element name="KDE Bugs" insert="[kdebugs:%%Bug%%:]" icon="kdebugs.png" />
