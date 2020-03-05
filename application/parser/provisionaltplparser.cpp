@@ -1569,8 +1569,8 @@ auto ProvisionalTplParser::parsePkgInstall(
     sOutput += " " + s.trimmed();
   }
   sOutput += "</pre>\n</div>\n";
-  sOutput += "<p>" + QString::fromUtf8("Oder mit [:apturl:] die Pakete "
-                                       "installieren. Link: [apt://");
+  sOutput += "<p>" + QString::fromUtf8("Oder mit [:apturl:] installieren, "
+                                       "Link: [apt://");
   sOutput += sPackages;
   return sOutput + "]</p>\n";
 }
