@@ -40,7 +40,7 @@
     <element name="Ubuntu Resources" insert="[ubunturesources:%%Sitename%%:]" icon="ubunturesources.png" />
     <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%App name%%:]" icon="ubuntuapps.png" />
     <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%App name%%:]" icon="uappexplorer.png" />
-    <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="" />
+    <element name="OpenStore (unofficial)" insert="[openstore:%%App name%%:]" icon="OpenStore.png" />
     <element name="Ask Ubuntu" insert="[askubuntu:%%Sitename%%:]" icon="askubuntu.png" /> 
     <element name="OMG! Ubuntu!" insert="[omgubuntu:%%Sitename%%:]" icon="omgubuntu.png" />
     <element name="Ubuntuforums.org Forum" insert="[uf_forum:%%Forum%%:]" icon="uf_forum.png" />
@@ -130,11 +130,11 @@
     <element name="OpenStreetMap" insert="[osm:%%Sitename%%:]" icon="osm.png" />
     <element name="QuakeNet IRC" insert="[quakenet:%%Sitename%%:]" icon="quakenet.png" />
     <element name="SELFHTML Wiki" insert="[selfhtmlwiki:%%Sitename%%:]" icon="selfhtmlwiki.png" />
-    <element name="Stack Overflow" insert="[stackoverflow:%%Sitename%%:]" icon="stackoverflow.png" />
-    <element name="Startpage search" insert="[startpage:%%Search term%%:]" icon="startpage.png" />
+    <element name="Stack Overflow" insert="[stackoverflow:%%Sitename%%:]" icon="stackoverflow_sw_1.png" />
+    <element name="Startpage search" insert="[startpage:%%Search term%%:]" icon="startpage_1.png" />
     <element name="Twitter" insert="[twitter:%%Sitename%%:]" icon="twitter.png" />
     <element name="Vimeo" insert="[vimeo:%%Sitename%%:]" icon="vimeo.png" />
     <element name="Wordpress" insert="[wordpress:%%Sitename%%:]" icon="wordpress.png" />
-    <element name="Youtube" insert="[youtube:%%Sitename%%:]" icon="youtube.png" />
+    <element name="Youtube" insert="[youtube:%%Sitename%%:]" icon="youtube_1.png" />
   </group>
 </menu>

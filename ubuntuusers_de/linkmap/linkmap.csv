@@ -64,7 +64,6 @@ moddb,https://www.moddb.com/
 mythbuntu,http://www.mythbuntu.org/
 omgubuntu,https://www.omgubuntu.co.uk/
 opensuse,https://de.opensuse.org/
-openstore,https://open-store.io/app/
 osm,https://wiki.openstreetmap.org/wiki/
 packages,https://packages.ubuntu.com/
 paste,https://paste.ubuntuusers.de/
@@ -73,9 +72,9 @@ prolinux,https://www.pro-linux.de/
 quakenet,https://webchat.quakenet.org/?channels=
 sourceforge,https://sourceforge.net/projects/
 sourceforge2,http://PAGE.sourceforge.net
-stackoverflow,https://stackoverflow.com/questions/
 freenode,https://webchat.freenode.net/?channels=
-startpage,https://startpage.com/do/search?cat=web&language=deutsch&query=PAGE&ff=
+stackoverflow,https://stackoverflow.com/questions/
+openstore,https://open-store.io/app/
 steam,https://store.steampowered.com/PAGE?l=german
 tag,https://wiki.ubuntuusers.de/wiki/tags/
 ticket,https://trac.ubuntuusers.de/ticket/
@@ -105,6 +104,7 @@ wikipedia_en,https://en.wikipedia.org/wiki/
 wordpress,https://PAGE.wordpress.com/
 xfcedocs,https://docs.xfce.org/
 xubuntu,https://www.xubuntu.org/
-youtube,https://www.youtube.com/watch?v=
 selfhtmlwiki,https://wiki.selfhtml.org/wiki/
 gitlab,https://gitlab.com/
+startpage,https://startpage.com/do/search?cat=web&language=deutsch&query=PAGE&ff=
+youtube,https://www.youtube.com/watch?v=
