@@ -1,3 +1,20 @@
+inyokaedit (0.24.0-1) xenial; urgency=low
+
+  [ Thorsten Roth ]
+  * Use new linkmap for IWLs
+  * Update to latest ubuntuusers.de styles.
+  * Support for table classes (e.g. zebra).
+  * Add new arrow smileys and all available flags.
+  * Use ini files for configs for all non-Linux operating systems.
+  * Search in share folder (start parameter -s) for plugins.
+  * Internal code: Remove deprecated QSignalMapper.
+  * Internal code: Replace QRegExp with QRegularExpression for all plugins.
+  * Internal code: Some Clang-Tidy and Clazy improvements.
+  * Compilation: Split make all/app/allplugins.
+  * Fix: Create highlighter plugin conf folder, if not existing.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 22 Mar 2020 14:23:00 +0200
+
 inyokaedit (0.23.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
