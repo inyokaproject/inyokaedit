@@ -110,7 +110,7 @@
     <element name="Mod DB" insert="[moddb:%%Sitename%%:]" icon="moddb.png" />
     <element name="Steam" insert="[steam:%%Sitename%%:]" icon="steam.png" />
   </group>
-  <group name="Misc" icon="youtube.png">
+  <group name="Misc" icon="youtube_2.png">
     <element name="Blogspot" insert="[blogspot:%%Sitename%%:]" icon="blogspot.png" />
     <element name="box.com" insert="[box:%%Sitename%%:]" icon="" />
     <element name="derStandard" insert="[derstandard:%%Sitename%%:]" icon="derstandard.png" />
@@ -135,6 +135,6 @@
     <element name="Twitter" insert="[twitter:%%Sitename%%:]" icon="twitter.png" />
     <element name="Vimeo" insert="[vimeo:%%Sitename%%:]" icon="vimeo.png" />
     <element name="Wordpress" insert="[wordpress:%%Sitename%%:]" icon="wordpress.png" />
-    <element name="Youtube" insert="[youtube:%%Sitename%%:]" icon="youtube_1.png" />
+    <element name="Youtube" insert="[youtube:%%Sitename%%:]" icon="youtube_2.png" />
   </group>
 </menu>
