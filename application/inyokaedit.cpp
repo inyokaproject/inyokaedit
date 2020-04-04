@@ -225,9 +225,6 @@ void InyokaEdit::setupEditor() {
   connect(m_pPreviewTimer, &QTimer::timeout,
           this, &InyokaEdit::previewInyokaPage);
 
-  m_pFrameLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-  m_pFrameLayout->addWidget(m_pWebview);
-
 #ifdef USEQTWEBKIT
   connect(m_pWebview, &QWebView::loadFinished,
           this, &InyokaEdit::loadPreviewFinished);

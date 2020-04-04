@@ -3,6 +3,12 @@ branches:
   only:
   - master
 image: Visual Studio 2017
+environment:
+  matrix:
+  - BUILD: x86
+    QTDIR: C:\Qt\5.12\msvc2017
+  - BUILD: x64
+    QTDIR: C:\Qt\5.12\msvc2017_64
 install:
 - ps: (Get-Content plugins/plugins.pro).replace("spellchecker ", '') | Set-Content plugins/plugins.pro
 build_script:
@@ -11,9 +17,9 @@ build_script:
 
     git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
 
-    set PATH=C:\Qt\5.12\msvc2017_64\bin;%PATH%
+    set PATH=%QTDIR%\bin;%PATH%
 
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %BUILD%
 
     qmake inyokaedit.pro
 
@@ -41,7 +47,7 @@ build_script:
 
     copy README.md InyokaEdit\
 
-    copy windows_files\OpenSSL_x64\* InyokaEdit\
+    copy windows_files\OpenSSL_%BUILD%\* InyokaEdit\
 
     echo n | copy /-y windows_files\bearer\qnativewifibearer.dll InyokaEdit\bearer\
 
@@ -55,6 +61,6 @@ build_script:
 
     rmdir /S /Q InyokaEdit\position
 
-    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_x64.zip .\InyokaEdit\
+    7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip .\InyokaEdit\
 artifacts:
-- path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_x64.zip
+- path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip

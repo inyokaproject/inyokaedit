@@ -133,7 +133,6 @@ class InyokaEdit : public QMainWindow {
     Upload *m_pUploadModule{};
     Utils *m_pUtils{};
     QSplitter *m_pWidgetSplitter{};
-    QBoxLayout *m_pFrameLayout{};
     QTabWidget *m_pDocumentTabs{};
     QPoint m_WebviewScrollPosition;
 #ifdef USEQTWEBKIT
