@@ -1,6 +1,7 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'eoan' or
+<@ if $arguments as lowercase contain 'focal' or
+      $arguments as lowercase contain 'eoan' or
       $arguments as lowercase contain 'bionic' or
       $arguments as lowercase contain 'xenial' @> die folgenden [:Paketquellen freischalten:]:
 [[Vorlage(Fremd, Quelle)]] 
@@ -13,12 +14,14 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ endif @>
 <@if $arguments as lowercase contain 'eoan' @> thirdpartyrepo-version-eoan
 <@ endif @>
+<@if $arguments as lowercase contain 'focal' @> thirdpartyrepo-version-focal
+<@ endif @>
 ">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['eoan', 'bionic', 'xenial'] contains $arg @>
+<@ if ['focal', 'eoan', 'bionic', 'xenial'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>

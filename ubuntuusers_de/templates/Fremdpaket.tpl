@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['eoan', 'bionic', 'xenial'] contains $arg @>
+<@ if $loop.index < 3 or ['focal', 'eoan', 'bionic', 'xenial'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,10 +39,11 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'eoan' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
+<@ if $arguments contain 'focal' or $arguments contain 'eoan' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['eoan', 'bionic', 'xenial'] contains $arg @>
+<@ if ['focal', 'eoan', 'bionic', 'xenial'] contains $arg @>
+<@ if $arg == 'focal' @>[:Focal_Fossa: Ubuntu 20.04]<@ endif @>
 <@ if $arg == 'eoan' @>[:Eoan_Ermine: Ubuntu 19.10]<@ endif @>
 <@ if $arg == 'bionic' @>[:Bionic_Beaver: Ubuntu 18.04]<@ endif @>
 <@ if $arg == 'xenial' @>[:Xenial_Xerus: Ubuntu 16.04]<@ endif @>
