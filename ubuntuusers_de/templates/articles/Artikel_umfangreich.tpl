@@ -1,5 +1,5 @@
 ## Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen. 
-[[Vorlage(Baustelle, 22.22.2222, Bearbeiter)]]
+[[Vorlage(Baustelle, 22.02.2222, Bearbeiter)]]
 Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "Baustelle"-Zeile herauslöschen.
 ## Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
 [[Vorlage(Getestet, focal, bionic, xenial)]]
