@@ -94,6 +94,9 @@ Ermine
 focal
 Focal
 Fossa
+groovy
+Groovy
+Gorilla
 Ubuntu
 Kubuntu
 Xubuntu
