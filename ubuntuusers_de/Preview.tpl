@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="%folder%/style/wiki.css" />
     <link rel="stylesheet" type="text/css" href="%folder%/style/highlight.css" />
     <link rel="stylesheet" type="text/css" href="%folder%/../linkmap/linkmap.css" />
+    <style type="text/css">
+      body{display:inline;}
+    </style>
     <meta name="theme-color" content="#2b2929" />
   </head>
   <body>
