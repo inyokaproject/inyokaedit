@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Main application generation (gui, object creation etc.).
@@ -1233,13 +1233,13 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::showSyntaxOverview() {
-  auto *dialog = new QDialog(this, this->windowFlags()
-                             & ~Qt::WindowContextHelpButtonHint);
-  auto *layout = new QGridLayout(dialog);
+  auto *pDialog = new QDialog(this, this->windowFlags()
+                              & ~Qt::WindowContextHelpButtonHint);
+  auto *pLayout = new QGridLayout(pDialog);
 #ifdef USEQTWEBKIT
-  auto *webview = new QWebView();
+  auto *pWebview = new QWebView();
 #else
-  auto *webview = new QWebEngineView();
+  auto *pWebview = new QWebEngineView();
 #endif
   auto *pTextDocument = new QTextDocument(this);
 
@@ -1253,6 +1253,12 @@ void InyokaEdit::showSyntaxOverview() {
                          tr("Could not open syntax overview file!"));
     qWarning() << "Could not open syntax overview file:"
                << OverviewFile.fileName();
+    delete pLayout;
+    pLayout = nullptr;
+    delete pWebview;
+    pWebview = nullptr;
+    delete pTextDocument;
+    pTextDocument = nullptr;
     return;
   }
   pTextDocument->setPlainText(in.readAll());
@@ -1268,14 +1274,14 @@ void InyokaEdit::showSyntaxOverview() {
   sRet.replace("</style>", "#page table{margin:0px;}</style>");
   pTextDocument->setPlainText(sRet);
 
-  layout->setContentsMargins(2, 2, 2, 2);
-  layout->setSpacing(0);
-  layout->addWidget(webview);
-  dialog->setWindowTitle(tr("Syntax overview"));
+  pLayout->setContentsMargins(2, 2, 2, 2);
+  pLayout->setSpacing(0);
+  pLayout->addWidget(pWebview);
+  pDialog->setWindowTitle(tr("Syntax overview"));
 
-  webview->setHtml(pTextDocument->toPlainText(),
-                   QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
-  dialog->show();
+  pWebview->setHtml(pTextDocument->toPlainText(),
+                    QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
+  pDialog->show();
 }
 
 // ----------------------------------------------------------------------------

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Parsing templates.
@@ -100,9 +100,13 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               sListArguments.append(s);
             } else {
               // If 's' is outside quotes, get the splitted string
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
               sListArguments.append(
-                    s.split(QRegExp(",+"),
-                            QString::SkipEmptyParts));
+                    s.split(QRegExp(",+"), QString::SkipEmptyParts));
+#else
+              sListArguments.append(
+                    s.split(QRegExp(",+"), Qt::SkipEmptyParts));
+#endif
             }
             bInside = !bInside;
           }
@@ -113,8 +117,11 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
             if (sListArguments[m].contains("\n")) {
               QString sTmp = sListArguments[m];
               QStringList tmpArgs;
-              tmpArgs << sTmp.split(QRegExp("\\n"),
-                                    QString::SkipEmptyParts);
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+              tmpArgs << sTmp.split(QRegExp("\\n"), QString::SkipEmptyParts);
+#else
+              tmpArgs << sTmp.split(QRegExp("\\n"), Qt::SkipEmptyParts);
+#endif
               for (int j = 0; j < tmpArgs.size(); j++) {
                 sListArguments.insert(m + j + 1, tmpArgs[j]);
               }
@@ -146,9 +153,11 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
                 sList.append(s);
               } else {
                 // If 's' is outside quotes, get splitted string
-                sList.append(s.split(
-                               QRegExp("\\s+"),
-                               QString::SkipEmptyParts));
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+                sList.append(s.split(QRegExp("\\s+"), QString::SkipEmptyParts));
+#else
+                sList.append(s.split(QRegExp("\\s+"), Qt::SkipEmptyParts));
+#endif
               }
               bInside = !bInside;
             }

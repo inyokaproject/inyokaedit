@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Utile functions, which can be used by different classes.
@@ -50,8 +50,21 @@ Utils::Utils(QWidget *pParent, QObject *pParentObj)
 // ----------------------------------------------------------------------------
 
 auto Utils::getOnlineState() -> bool {
-  QNetworkConfigurationManager mgr;
-  return mgr.isOnline();
+  QNetworkAccessManager nam;
+  QNetworkRequest req(QUrl("https://github.com/inyokaproject/inyokaedit"));
+  QNetworkReply *reply = nam.get(req);
+  QEventLoop loop;
+  connect(reply, &QNetworkReply::readyRead, &loop, &QEventLoop::quit);
+  connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+  if (!reply->isFinished()) {
+    loop.exec();
+  }
+  if (reply->bytesAvailable()) {
+    return true;
+  } else {
+    qDebug() << "NO internet connection available!";
+    return false;
+  }
 }
 
 // ----------------------------------------------------------------------------
@@ -123,7 +136,7 @@ void Utils::replyFinished(QNetworkReply *pReply) {
                            tr("Found a new version of %1.<br>"
                            "Do you want to download the latest version?")
                            .arg(qApp->applicationName()),
-                           nullptr, m_pParent);
+                           QMessageBox::NoButton, m_pParent);
           QPushButton *noDontAskAgainButton = msgBox->addButton(
                                                 tr("No, don't ask again!"),
                                                 QMessageBox::NoRole);
@@ -171,13 +184,13 @@ void Utils::showAbout() {
              "URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
              "https://github.com/inyokaproject/inyokaedit</a>",
              tr("License") +
-             ": <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+             ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
              "GNU General Public License Version 3</a>",
              tr("This application uses icons from "
                 "<a href=\"http://tango.freedesktop.org\">"
                 "Tango project</a>."),
              tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
                 "Shakesbier and all testers from "
-                "<a href=\"http://ubuntuusers.de\"> "
+                "<a href=\"https://ubuntuusers.de\"> "
                 "ubuntuusers.de</a>.")));
 }

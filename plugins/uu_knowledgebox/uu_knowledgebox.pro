@@ -12,7 +12,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+#  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 TEMPLATE      = lib
 CONFIG       += plugin
@@ -38,7 +38,7 @@ CONFIG       += c++11
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
   DEFINES    += QT_DEPRECATED_WARNINGS
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051500
 }
 
 HEADERS      += uu_knowledgebox.h

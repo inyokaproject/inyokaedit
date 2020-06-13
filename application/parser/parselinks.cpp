@@ -18,13 +18,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Parse all kind of links (external, InterWiki, etc.)
  */
 
 #include "./parselinks.h"
+#include "../utils.h"
 
 #include <QDebug>
 
@@ -64,7 +65,7 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// External links [http://www.ubuntu.com]
+// External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   QRegExp findHyperlink("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
                         "|git|dict|nntp|irc|rsync|smb|apt)\\b://");
@@ -123,8 +124,6 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   int nLength = 0;
   QString sLink("");
   QString sLinkURL("");
-  QNetworkConfigurationManager mgr;
-  bool bIsOnline(mgr.isOnline());
 
   nIndex = findInyokaWikiLink.indexIn(sDoc);
   while (nIndex >= 0) {
@@ -153,7 +152,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           }
 
           m_sLinkClassAddition = "";
-          if (bIsOnline && m_bCheckLinks) {
+          if (Utils::getOnlineState() && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));
@@ -180,7 +179,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           //          << sLink.mid(sLink.indexOf(":") + 1, nLength);
           sLinkURL = m_sWikiUrl + "/"
                      + sLink.mid(0, sLink.indexOf(":"));
-          if (bIsOnline && m_bCheckLinks) {
+          if (Utils::getOnlineState() && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));

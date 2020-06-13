@@ -93,7 +93,7 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
   // Add items before connect(), otherwise indexChanged is emitted!
   m_pUi->comboBoxLang->addItems(m_pSpellChecker->m_sListDicts);
   connect(m_pUi->comboBoxLang,
-          static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &SpellCheckDialog::changeLanguage);
 
   if (-1 != m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang)) {
@@ -171,8 +171,9 @@ void SpellCheckDialog::closeDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellCheckDialog::changeLanguage(const QString &sLanguage) {
-  m_pSpellChecker->m_sDictLang = sLanguage;  // Before initDictionaries() !
+void SpellCheckDialog::changeLanguage(int nIndex) {
+  // Before initDictionaries() !
+  m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->itemText(nIndex);
   m_pSpellChecker->initDictionaries();
 }
 

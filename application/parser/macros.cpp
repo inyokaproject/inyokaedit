@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Handle build-in macros.
@@ -208,7 +208,7 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
     }
 
     if (bConversionOk && datetime.isValid()) {
-      sMacro = datetime.toString(Qt::SystemLocaleShortDate);
+      sMacro = QLocale::system().toString(datetime, QLocale::ShortFormat);
     } else {
       sMacro = "Invalid date";
     }
@@ -445,7 +445,11 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
         sArgs.append(s);
       } else {
         // If 's' is outside quotes, get the splitted string
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         sArgs.append(s.split(QRegExp(",+"), QString::SkipEmptyParts));
+#else
+        sArgs.append(s.split(QRegExp(",+"), Qt::SkipEmptyParts));
+#endif
       }
       bInside = !bInside;
     }

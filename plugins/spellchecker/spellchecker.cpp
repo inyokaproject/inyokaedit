@@ -465,12 +465,12 @@ void SpellChecker::replaceAll(const int nPos, const QString &sOld,
   QTextCursor cursor(m_pEditor->document());
   cursor.setPosition(nPos-sOld.length(), QTextCursor::MoveAnchor);
 
-  while(!cursor.atEnd()) {
+  while (!cursor.atEnd()) {
     QCoreApplication::processEvents();
     cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
     QString word = cursor.selectedText();
 
-    while(!word.isEmpty()
+    while (!word.isEmpty()
           && !word.at(0).isLetter()
           && cursor.anchor() < cursor.position()) {
       int cursorPos = cursor.position();
@@ -479,7 +479,7 @@ void SpellChecker::replaceAll(const int nPos, const QString &sOld,
       word = cursor.selectedText();
     }
 
-    if(word == sOld) {
+    if (word == sOld) {
       cursor.insertText(sNew);
       QCoreApplication::processEvents();
     }
@@ -568,7 +568,7 @@ void SpellChecker::showAbout() {
                         "https://opensource.org/licenses/BSD-2-Clause\">"
                         "2-Clause BSD License</a>",
                         tr("Spell checker based on "
-                           "<a href=\"http://hunspell.sourceforge.net/\">"
+                           "<a href=\"https://hunspell.github.io//\">"
                            "Hunspell</a>.")));
   aboutbox.exec();
 }

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Class definition.
@@ -27,14 +27,13 @@
 #ifndef APPLICATION_XMLPARSER_H_
 #define APPLICATION_XMLPARSER_H_
 
-#include <QXmlSimpleReader>
+#include <QXmlStreamReader>
 
 /**
  * \class XmlParser
  * \brief Delivering menu structure from xml file.
  */
 class XmlParser {
-  class Handler;
 
  public:
     XmlParser();
@@ -44,75 +43,30 @@ class XmlParser {
     auto getPath() const -> QString;
     auto getGroupNames() const -> QStringList;
     auto getGroupIcons() const -> QStringList;
-    auto getElementNames() const -> QList<QStringList> ;
-    auto getElementInserts() const -> QList<QStringList> ;
-    auto getElementIcons() const -> QList<QStringList> ;
+    auto getElementNames() const -> QList<QStringList>;
+    auto getElementInserts() const -> QList<QStringList>;
+    auto getElementIcons() const -> QList<QStringList>;
 
  private:
-    QXmlInputSource *m_pXmlSource{};  /**< Pointer to xml input source file */
-    Handler *m_pHandler{};  /**< Handle to xml parser module */
+    auto parseMenu() -> bool;
+    auto parseGroup() -> bool;
+    auto parseElement() -> bool;
 
+    QXmlStreamReader *m_pXmlReader;
+    bool m_bInMenu;
+    bool m_bInGroup;
     QString m_sMenuName;
     QString m_sPath;
     QStringList m_sListGroups;
+    QString m_sTmpGroupName;
     QStringList m_sListGroupIcons;
+    QString m_sTmpGroupIcon;
     QList<QStringList> m_sListNames;
+    QStringList m_sListTmpNames;
     QList<QStringList> m_sListInserts;
+    QStringList m_sListTmpInserts;
     QList<QStringList> m_sListIcons;
-};
-
-// ----------------------------------------------------------------------------
-
-/**
- * \class XmlParser::Handler
- * \brief Reading definitions from xml file.
- */
-class XmlParser::Handler : public QXmlDefaultHandler {
-  friend class XmlParser;
-
- public:
-    /**
-    * \brief Called at document start
-    * \return True
-    */
-    auto startDocument() -> bool;
-
-    /**
-    * \brief Found end of a xml element
-    * \param name Element name
-    * \return True
-    */
-    auto endElement(const QString&,
-                    const QString&,
-                    const QString &name) -> bool;
-
-    /**
-    * \brief Found start of a xml element
-    * \param name Element name
-    * \param attrs Attribute name
-    * \return True
-    */
-    auto startElement(const QString&,
-                      const QString&,
-                      const QString &sElement,
-                      const QXmlAttributes &attrs) -> bool;
-
- private:
-    bool m_bInElement;
-
-    QString m_tmpMenuName;
-    QString m_tmpPath;
-    QStringList m_tmpListNames;
-    QStringList m_tmpListInserts;
-    QStringList m_tmpListIcons;
-
-    QString m_sMenuName_2;
-    QString m_sPath_2;
-    QStringList m_sListGroups_2;
-    QStringList m_sListGroupIcons_2;
-    QList<QStringList> m_sListNames_2;
-    QList<QStringList> m_sListInserts_2;
-    QList<QStringList> m_sListIcons_2;
+    QStringList m_sListTmpIcons;
 };
 
 #endif  // APPLICATION_XMLPARSER_H_

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Download manager for images.
@@ -34,7 +34,7 @@
 DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
   : m_pNwManager(pNwManager),
     m_pProgessDialog(nullptr),
-    m_nProgress(0){
+    m_nProgress(0) {
   Q_UNUSED(pParent)
   connect(m_pNwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Shows a modal window for ubuntuusers.de knowledge box entry selection.
@@ -390,7 +390,7 @@ void Uu_KnowledgeBox::showAbout() {
              tr("Version") + ": " + PLUGIN_VERSION,
              PLUGIN_COPY,
              tr("Licence") + ": " +
-             "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+             "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
              "GNU General Public License Version 3</a>",
              tr("Plugin for choosing ubuntuusers.de knowledge box entries.")));
   aboutbox.exec();

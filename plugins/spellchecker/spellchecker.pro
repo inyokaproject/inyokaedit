@@ -46,7 +46,7 @@ CONFIG       += plugin
 TARGET        = spellchecker
 DESTDIR       = ../
 
-VERSION       = 1.2.1
+VERSION       = 1.2.2
 QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-2020 - Thorsten Roth"
 
@@ -65,7 +65,7 @@ CONFIG       += c++11
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
   DEFINES    += QT_DEPRECATED_WARNINGS
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051500
 }
 
 HEADERS      += spellcheckdialog.h \

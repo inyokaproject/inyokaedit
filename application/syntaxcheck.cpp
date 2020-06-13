@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Inyoka syntax checks.
@@ -115,7 +115,7 @@ auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 
 auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                                       const QStringList &sListTplMacros,
-                                      const QStringList &sListTplTrans) -> qint32{
+                                      const QStringList &sListTplTrans) -> qint32 {
   QStringList sListTplRegExp;
   QStringList sListTrans;
   foreach (QString s, sListTplTrans) {

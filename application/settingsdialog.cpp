@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Settings gui.
@@ -125,7 +125,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->proxyPasswordEdit->setText(m_pSettings->m_sProxyPassword);
 
   connect(m_pUi->CommunityCombo,
-          static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
+          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &SettingsDialog::changedCommunity);
 
   connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
@@ -263,9 +263,10 @@ auto SettingsDialog::eventFilter(QObject *obj, QEvent *event) -> bool {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::changedCommunity(const QString &sCommunity) {
+void SettingsDialog::changedCommunity(int nIndex) {
   QFile communityFile(m_sSharePath + "/community/" +
-                      sCommunity + "/community.conf");
+                      m_pUi->CommunityCombo->itemText(nIndex) +
+                      "/community.conf");
 
   if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::critical(nullptr, tr("Error"),

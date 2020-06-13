@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Provisional template parser. Only used as long as complete inyoka parsing
@@ -509,7 +509,11 @@ auto ProvisionalTplParser::parseForeignSource(
                                                "können das System gefährden."));
 
   if (sArgs.size() >= 2) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     sListVersions = sArgs[1].split(" ", QString::SkipEmptyParts);
+#else
+    sListVersions = sArgs[1].split(" ", Qt::SkipEmptyParts);
+#endif
     QString sVersions("");
     foreach (QString s, sListVersions) {
       s = s.toLower();
@@ -1755,7 +1759,11 @@ auto ProvisionalTplParser::parseSidebar(
         }
       } else if (sListList[i][k].contains("[[BR]]")
                  || k == sListList[i].size() - 1) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         sListTmp = sListList[i][k].split("[[BR]]", QString::SkipEmptyParts);
+#else
+        sListTmp = sListList[i][k].split("[[BR]]", Qt::SkipEmptyParts);
+#endif
         foreach (QString s, sListTmp) {
           sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
                      "border-width: 0 0 10px 0; border-color: #FFFFFF\">"

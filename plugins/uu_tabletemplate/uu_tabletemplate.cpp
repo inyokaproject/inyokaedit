@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Shows a modal window for ubuntuusers.de table templates.
@@ -176,10 +176,10 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Uu_TableTemplate::getCaption() const -> QString{
+auto Uu_TableTemplate::getCaption() const -> QString {
   return tr("Ubuntuusers.de table generator");
 }
-auto Uu_TableTemplate::getIcon() const -> QIcon{
+auto Uu_TableTemplate::getIcon() const -> QIcon {
   return QIcon(":/tabletemplate.png");
 }
 
@@ -273,11 +273,13 @@ auto Uu_TableTemplate::generateTable() -> QString {
   if (m_pUi->showHeadBox->isChecked()) {
     if (m_pUi->showTitleBox->isChecked()) {
       sTab += QString("<rowclass=\"%1%2\"> ")
-              .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+              .arg(
+                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
           m_sRowClassHead);
     } else {
       sTab += QString("<" + sTableClass + "rowclass=\"%1%2\"> ")
-              .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
+              .arg(
+                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
           m_sRowClassHead);
     }
 
@@ -353,8 +355,13 @@ void Uu_TableTemplate::convertToNewTemplate() {
   QStringList sListInput;
   QStringList sListRow;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
                   QRegularExpression("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
+#else
+  sListInput << m_pUi->baseTextEdit->toPlainText().split(
+                  QRegularExpression("\\|\\|\\s*\\n"), Qt::SkipEmptyParts);
+#endif
 
   for (int i = 0; i < sListInput.size(); i++) {
     sListInput[i] = sListInput[i].trimmed();
@@ -431,7 +438,7 @@ void Uu_TableTemplate::showAbout() {
                         tr("Version") + ": " + PLUGIN_VERSION,
                         PLUGIN_COPY,
                         tr("Licence") + ": " +
-                        "<a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">"
+                        "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
                         "GNU General Public License Version 3</a>",
                         tr("Plugin for generating ubuntuusers.de styled "
                            "Inyoka tables.")));

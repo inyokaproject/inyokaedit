@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Main function, start application, loading translation.
@@ -27,7 +27,7 @@
 /** \mainpage
  * \section Introduction
  * InyokaEdit is a small markup editor for Inyoka articles
- * (http://ubuntuusers.de/inyoka/).<br /><br />Some features:<br />
+ * (https://ubuntuusers.de/inyoka/).<br /><br />Some features:<br />
  * \li Syntax highlighting
  * \li Offline preview
  * \li Downloading raw text of existing articles and corresponding images.

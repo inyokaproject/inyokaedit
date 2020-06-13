@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Xml parser for importing menus/dropdown/toolbars.
@@ -27,6 +27,7 @@
 #include "./xmlparser.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QMessageBox>
 
 XmlParser::XmlParser() = default;
@@ -35,43 +36,171 @@ XmlParser::XmlParser() = default;
 // ----------------------------------------------------------------------------
 
 auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
-  QFile XmlFile(sXmlFile);
+  QFile xmlFile(sXmlFile);
   // Check if file exist and it's readable
-  if (!XmlFile.open(QFile::ReadOnly | QFile::Text)) {
-    qCritical() << "ERROR: Can not open \"" << XmlFile.fileName() << "\".";
+  if (!xmlFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qCritical() << "ERROR: Can not open \"" << xmlFile.fileName() << "\".";
     QMessageBox::critical(nullptr, "Error",
-                          "Can not open \"" + XmlFile.fileName() + "\".");
+                          "Can not open \"" + xmlFile.fileName() + "\".");
     return false;
   }
 
-  QXmlSimpleReader xmlReader;
-  m_pXmlSource = new QXmlInputSource(&XmlFile);
-  m_pHandler = new Handler;
+  m_bInMenu = false;
+  m_bInGroup = false;
+  m_sMenuName = "";
+  m_sListGroups.clear();
+  m_sListGroupIcons.clear();
+  m_sTmpGroupName = "";
+  m_sTmpGroupIcon = "";
+  m_sListNames.clear();
+  m_sListInserts.clear();
+  m_sListIcons.clear();
+  m_sListTmpNames.clear();
+  m_sListTmpInserts.clear();
+  m_sListTmpIcons.clear();
+  m_pXmlReader = new QXmlStreamReader(&xmlFile);
 
-  xmlReader.setContentHandler(m_pHandler);
-  xmlReader.setErrorHandler(m_pHandler);
+  while (!m_pXmlReader->atEnd() && !m_pXmlReader->hasError()) {
+    QXmlStreamReader::TokenType token = m_pXmlReader->readNext();
+    if (token == QXmlStreamReader::StartDocument) {
+      continue;  // Just StartDocument - go to next
+    }
 
-  bool bOk = xmlReader.parse(m_pXmlSource);
-  if (!bOk) {
-    qCritical() << "ERROR: Parsing \"" << XmlFile.fileName() << "\"failed.";
+    if (token == QXmlStreamReader::StartElement) {
+      if (m_pXmlReader->name() == "menu") {
+        if (!this->parseMenu()) {
+          qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
+          qCritical() << "XML contains multiple \"menu\" entries! Line:" <<
+                         m_pXmlReader->lineNumber();
+          QMessageBox::critical(nullptr, "Error",
+                                "Error while parsing \""
+                                + xmlFile.fileName() + "\".");
+          return false;
+        }
+        m_bInMenu = true;
+        continue;
+      }
+
+      if (m_pXmlReader->name() == "group") {
+        if (!this->parseGroup()) {
+          qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
+          qCritical() << "Found \"group\" outside of \"menu\" or" <<
+                         "\"group\" inside \"group\"! Line:" <<
+                         m_pXmlReader->lineNumber();
+          QMessageBox::critical(nullptr, "Error",
+                                "Error while parsing \""
+                                + xmlFile.fileName() + "\".");
+          return false;
+        }
+        m_bInGroup = true;
+        continue;
+      }
+
+      if (m_pXmlReader->name() == "element") {
+        if (!this->parseElement()) {
+          qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
+          qCritical() << "Found \"element\" outside of \"menu\" or" <<
+                         "\"group\"! Line:" << m_pXmlReader->lineNumber();
+          QMessageBox::critical(nullptr, "Error",
+                                "Error while parsing \""
+                                + xmlFile.fileName() + "\".");
+          return false;
+        }
+        continue;
+      }
+    }
+
+    if (token == QXmlStreamReader::EndElement) {
+      if (m_pXmlReader->name() == "menu") {
+        m_bInMenu = false;
+      }
+
+      if (m_pXmlReader->name() == "group") {
+        m_sListGroups << m_sTmpGroupName;
+        m_sListGroupIcons << m_sTmpGroupIcon;
+        m_sTmpGroupName = "";
+        m_sTmpGroupIcon = "";
+        m_sListNames << m_sListTmpNames;
+        m_sListInserts << m_sListTmpInserts;
+        m_sListIcons << m_sListTmpIcons;
+        m_sListTmpNames.clear();
+        m_sListTmpInserts.clear();
+        m_sListTmpIcons.clear();
+        m_bInGroup = false;
+      }
+    }
+  }
+
+  if (m_pXmlReader->hasError()) {
+    qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
+    qCritical() << "Line:" << m_pXmlReader->lineNumber() <<
+                   "Column:" <<  m_pXmlReader->columnNumber();
+    qCritical() << m_pXmlReader->errorString();
     QMessageBox::critical(nullptr, "Error",
                           "Error while parsing \""
-                          + XmlFile.fileName() + "\".");
+                          + xmlFile.fileName() + "\".");
     return false;
   }
 
-  m_sMenuName = m_pHandler->m_sMenuName_2;
-  m_sPath = m_pHandler->m_sPath_2;
-  m_sListGroups = m_pHandler->m_sListGroups_2;
-  m_sListGroupIcons = m_pHandler->m_sListGroupIcons_2;
-  m_sListNames = m_pHandler->m_sListNames_2;
-  m_sListInserts = m_pHandler->m_sListInserts_2;
-  m_sListIcons = m_pHandler->m_sListIcons_2;
+  m_pXmlReader->clear();
+  delete m_pXmlReader;
+  m_pXmlReader = nullptr;
+  xmlFile.close();
+  return true;
+}
 
-  delete m_pXmlSource;
-  m_pXmlSource = nullptr;
-  delete m_pHandler;
-  m_pHandler = nullptr;
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto XmlParser::parseMenu() -> bool {
+  if (m_bInMenu || !m_sMenuName.isEmpty()) {
+    return false;
+  }
+
+  m_sMenuName = m_pXmlReader->attributes().value("name").toString();
+  if (m_sMenuName.isEmpty()) {
+    m_sMenuName = "Unnamed";
+  }
+  m_sPath = m_pXmlReader->attributes().value("path").toString();
+
+  return true;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto XmlParser::parseGroup() -> bool {
+  if (!m_bInMenu || m_bInGroup ||
+      !m_sTmpGroupName.isEmpty() || !m_sTmpGroupIcon.isEmpty()) {
+    return false;
+  }
+
+  m_sTmpGroupName = m_pXmlReader->attributes().value("name").toString();
+  m_sTmpGroupIcon = m_pXmlReader->attributes().value("icon").toString();
+
+  return true;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto XmlParser::parseElement() -> bool {
+  if (!m_bInMenu || !m_bInGroup) {
+    return false;
+  }
+
+  m_sListTmpNames << m_pXmlReader->attributes().value("name").toString();
+  if (m_sListTmpNames.last().isEmpty()) {
+    m_sListTmpNames.last() = "NAME NOT FOUND";
+  }
+  m_sListTmpInserts << m_pXmlReader->attributes().value("insert").toString();
+  if (m_sListTmpInserts.last().isEmpty()) {
+    m_sListTmpInserts.last() = "INSERT NOT FOUND";
+  }
+  m_sListTmpIcons << m_pXmlReader->attributes().value("icon").toString();
+  if (m_sListTmpIcons.last().isEmpty()) {
+    m_sListTmpIcons.last() = "ICON NOT FOUND";
+  }
 
   return true;
 }
@@ -101,99 +230,4 @@ auto XmlParser::getElementInserts() const -> QList<QStringList> {
 }
 auto XmlParser::getElementIcons() const -> QList<QStringList> {
   return m_sListIcons;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto XmlParser::Handler::startDocument() -> bool {
-  m_bInElement = false;
-  return true;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto XmlParser::Handler::endElement(const QString&, const QString&,
-                                    const QString &sName) -> bool {
-  if ("menu" == sName) {
-    m_bInElement = false;
-    m_sMenuName_2 = m_tmpMenuName;
-    m_sPath_2 = m_tmpPath;
-  } else if ("group" == sName) {
-    m_sListNames_2 << m_tmpListNames;
-    m_sListInserts_2 << m_tmpListInserts;
-    m_sListIcons_2 << m_tmpListIcons;
-  }
-
-  return true;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto XmlParser::Handler::startElement(const QString&, const QString&,
-                                      const QString &sElement,
-                                      const QXmlAttributes &attrs) -> bool {
-  QString sMenuName("");
-  QString sPath("");
-  QString sGroupName("");
-  QString sGroupIcon("");
-  QString sName("");
-  QString sInsert("");
-  QString sIcon("");
-
-  // Found group
-  if (m_bInElement && "group" == sElement) {
-    m_tmpListNames.clear();
-    m_tmpListInserts.clear();
-    m_tmpListIcons.clear();
-
-    sGroupName = "GROUPNAME NOT FOUND";
-    sGroupIcon = "NO ICON";
-
-    for (int i = 0; i < attrs.count(); i++) {
-      if ("name" == attrs.localName(i)) {
-        sGroupName = attrs.value(i);
-      } else if ("icon"== attrs.localName(i)) {
-        sGroupIcon = attrs.value(i);
-      }
-    }
-    m_sListGroups_2 << sGroupName;
-    m_sListGroupIcons_2 << sGroupIcon;
-  } else if (m_bInElement && "element" == sElement) {  // Found element
-    sName = "NAME NOT FOUND";
-    sInsert = "INSERT NOT FOUND";
-    sIcon = "ICON NOT FOUND";
-
-    for (int i = 0; i < attrs.count(); i++) {
-      if ("name" == attrs.localName(i)) {
-        sName = attrs.value(i);
-      } else if ("insert" == attrs.localName(i)) {
-        sInsert = attrs.value(i);
-      } else if ("icon" == attrs.localName(i)) {
-        sIcon = attrs.value(i);
-      }
-    }
-
-    m_tmpListNames << sName;
-    m_tmpListInserts << sInsert;
-    m_tmpListIcons << sIcon;
-  } else if ("menu" == sElement) {  // Found start of document
-    m_bInElement = true;
-
-    sMenuName = "Unnamed";
-    sPath = "";
-    for (int i = 0; i < attrs.count(); i++) {
-      if ("name" == attrs.localName(i)) {
-        sMenuName = attrs.value(i);
-      } else if ("path" == attrs.localName(i)) {
-        sPath = attrs.value(i);
-      }
-    }
-    m_tmpMenuName = sMenuName;
-    m_tmpPath = sPath;
-  }
-
-  return true;
 }

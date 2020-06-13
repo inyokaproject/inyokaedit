@@ -12,7 +12,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+#  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 TEMPLATE      = app
 
@@ -24,7 +24,7 @@ unix: !macx {
 
 DESTDIR       = ../
 
-VERSION       = 0.24.0
+VERSION       = 0.25.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2020 The InyokaEdit developers"
@@ -45,7 +45,7 @@ CONFIG       += c++11
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
   DEFINES    += QT_DEPRECATED_WARNINGS
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051500
 }
 
 qtHaveModule(webkitwidgets) {

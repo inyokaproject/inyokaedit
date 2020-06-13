@@ -94,7 +94,7 @@ class SpellCheckDialog : public QDialog {
     void addToDict();
 
  private slots:
-    void changeLanguage(const QString &sLanguage);
+    void changeLanguage(int nIndex);
     void closeDialog();
 
  private:

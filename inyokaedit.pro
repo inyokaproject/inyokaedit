@@ -12,7 +12,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+#  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 lessThan(QT_MAJOR_VERSION, 5) {
   error("InyokaEdit requires Qt 5.4 or greater")

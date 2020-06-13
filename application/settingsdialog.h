@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <http://www.gnu.org/licenses/>.
+ * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
  * Class definition of settings gui.
@@ -64,7 +64,7 @@ class SettingsDialog : public QDialog {
     auto eventFilter(QObject *obj, QEvent *event) -> bool;
 
  private slots:
-    void changedCommunity(const QString &sCommunity);
+    void changedCommunity(int nIndex);
 
  private:
     auto searchTranslations() -> QStringList;
