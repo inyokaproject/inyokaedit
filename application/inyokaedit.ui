@@ -31,7 +31,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -405,7 +405,7 @@
   <action name="previewAct">
    <property name="icon">
     <iconset>
-     <normalon>:/images/preview.png</normalon>
+     <normalon>:/images/toolbar/light/preview.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -418,7 +418,7 @@
   <action name="downloadArticleAct">
    <property name="icon">
     <iconset>
-     <normalon>:/images/cloud_download.png</normalon>
+     <normalon>:/images/toolbar/light/cloud_download.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -505,7 +505,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normalon>:/images/cloud_upload.png</normalon>
+     <normalon>:/images/toolbar/light/cloud_upload.png</normalon>
     </iconset>
    </property>
    <property name="text">

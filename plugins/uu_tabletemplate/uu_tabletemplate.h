@@ -99,6 +99,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     */
     auto generateTable() -> QString;
 
+    QWidget *m_pParent;
     Ui::Uu_TableTemplateClass *m_pUi;
     QDialog *m_pDialog;
     QSettings *m_pSettings;

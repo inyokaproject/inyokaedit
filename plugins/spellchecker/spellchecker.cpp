@@ -70,7 +70,6 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir &userDataDir,
                               const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
-  Q_UNUSED(pParent)
 
 #if defined __linux__
   m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
@@ -84,6 +83,7 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   m_pHunspell = nullptr;
   m_pEditor = pEditor;
+  m_pParent = pParent;
   m_UserDataDir = userDataDir;
   m_sSharePath = sSharePath;
 
@@ -142,6 +142,9 @@ auto SpellChecker::getCaption() const -> QString {
   return tr("Spell checker");
 }
 auto SpellChecker::getIcon() const -> QIcon {
+  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
+    return QIcon(":/spellchecker_dark.png");
+  }
   return QIcon(":/spellchecker.png");
 }
 
@@ -314,6 +317,7 @@ void SpellChecker::callPlugin() {
   }
 
   m_pCheckDialog = new SpellCheckDialog(this, nullptr);
+  m_pCheckDialog->setWindowIcon(this->getIcon());
 
   QTextCharFormat highlightFormat;
   highlightFormat.setBackground(QBrush(QColor(255, 96, 96)));

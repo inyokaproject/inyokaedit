@@ -24,8 +24,11 @@
         <file>images/uu.ico</file>
         <file>images/document-save-as.png</file>
         <file>images/help-browser.png</file>
-        <file>images/preview.png</file>
-        <file>images/cloud_download.png</file>
-        <file>images/cloud_upload.png</file>
+        <file>images/toolbar/dark/cloud_download.png</file>
+        <file>images/toolbar/dark/cloud_upload.png</file>
+        <file>images/toolbar/dark/preview.png</file>
+        <file>images/toolbar/light/cloud_download.png</file>
+        <file>images/toolbar/light/cloud_upload.png</file>
+        <file>images/toolbar/light/preview.png</file>
     </qresource>
 </RCC>

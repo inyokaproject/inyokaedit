@@ -3,5 +3,6 @@
         <file>hotkey.png</file>
         <file>add.png</file>
         <file>remove.png</file>
+        <file>hotkey_dark.png</file>
     </qresource>
 </RCC>

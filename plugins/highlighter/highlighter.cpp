@@ -190,6 +190,7 @@ void Highlighter::buildUi(QWidget *pParent) {
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
+  // m_pDialog->setWindowIcon(this->getIcon());
   m_pUi->styleTable->horizontalHeader()->setSectionResizeMode(
         QHeaderView::Stretch);
 

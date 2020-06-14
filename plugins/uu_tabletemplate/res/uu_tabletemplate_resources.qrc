@@ -3,5 +3,6 @@
         <file>tabletemplate.png</file>
         <file>keyboard_arrow_down.png</file>
         <file>keyboard_arrow_up.png</file>
+        <file>tabletemplate_dark.png</file>
     </qresource>
 </RCC>

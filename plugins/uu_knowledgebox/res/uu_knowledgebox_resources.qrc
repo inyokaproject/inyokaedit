@@ -4,5 +4,6 @@
         <file>add.png</file>
         <file>list_alt.png</file>
         <file>remove.png</file>
+        <file>list_alt_dark.png</file>
     </qresource>
 </RCC>

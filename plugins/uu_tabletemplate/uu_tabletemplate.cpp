@@ -47,6 +47,7 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               qApp->applicationName().toLower());
 #endif
 
+  m_pParent = pParent;
   m_pEditor = pEditor;
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
@@ -61,12 +62,13 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                          m_pSettings->value("Pygmentize", "").toString());
 
   // Build UI
-  m_pDialog = new QDialog(pParent);
+  m_pDialog = new QDialog(m_pParent);
   m_pUi = new Ui::Uu_TableTemplateClass();
   m_pUi->setupUi(m_pDialog);
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
+  m_pDialog->setWindowIcon(this->getIcon());
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
 
 #ifdef USEQTWEBKIT
@@ -180,6 +182,9 @@ auto Uu_TableTemplate::getCaption() const -> QString {
   return tr("Ubuntuusers.de table generator");
 }
 auto Uu_TableTemplate::getIcon() const -> QIcon {
+  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
+    return QIcon(":/tabletemplate_dark.png");
+  }
   return QIcon(":/tabletemplate.png");
 }
 

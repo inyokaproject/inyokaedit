@@ -110,6 +110,9 @@ auto Hotkey::getCaption() const -> QString {
   return tr("Hotkey selector");
 }
 auto Hotkey::getIcon() const -> QIcon {
+  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
+    return QIcon(":/hotkey_dark.png");
+  }
   return QIcon(":/hotkey.png");
 }
 
@@ -130,6 +133,7 @@ void Hotkey::buildUi(QWidget *pParent) {
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
+  m_pDialog->setWindowIcon(this->getIcon());
 
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);

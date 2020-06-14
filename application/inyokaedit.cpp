@@ -422,6 +422,15 @@ void InyokaEdit::createActions() {
   connect(m_pUi->uploadArticleAct, &QAction::triggered,
           m_pUploadModule, &Upload::clickUploadArticle);
 
+  if (this->window()->palette().window().color().lightnessF() < 0.5) {
+    m_pUi->previewAct->setIcon(
+          QIcon(":/images/toolbar/dark/preview.png"));
+    m_pUi->downloadArticleAct->setIcon(
+          QIcon(":/images/toolbar/dark/cloud_download.png"));
+    m_pUi->uploadArticleAct->setIcon(
+          QIcon(":/images/toolbar/dark/cloud_upload.png"));
+  }
+
   // ------------------------------------------------------------------------
   // ABOUT MENU
 
@@ -583,6 +592,12 @@ void InyokaEdit::createXmlMenus() {
         if (xmlFile.exists()) {
           // qDebug() << "Read XML" << xmlFile.fileName();
           if (xmlParser.parseXml(xmlFile.fileName())) {
+            QString sIconPath(xmlParser.getPath());
+            if (this->window()->palette().window().color().lightnessF() < 0.5 &&
+                sIconPath.contains("light")) {
+              sIconPath.replace("light", "dark", Qt::CaseInsensitive);
+            }
+
             if ("menu" == sObj) {
               m_pXmlMenus.append(new QMenu(xmlParser.getMenuName(), this));
               m_pUi->menuBar->insertMenu(m_pUi->toolsMenu->menuAction(),
@@ -611,7 +626,7 @@ void InyokaEdit::createXmlMenus() {
                 // qDebug() << "ELEMENTS" << xmlParser.getElementNames()[i][j];
                 m_pXmlActions.append(
                       new QAction(QIcon(
-                                    sTmpPath + xmlParser.getPath() + "/" +
+                                    sTmpPath + sIconPath + "/" +
                                     xmlParser.getElementIcons().at(i).at(j)),
                                   xmlParser.getElementNames().at(i).at(j),
                                   this));
@@ -651,8 +666,8 @@ void InyokaEdit::createXmlMenus() {
                   m_pXmlSubMenus.append(
                         new QMenu(xmlParser.getGroupNames().at(i), this));
                   m_pXmlSubMenus.last()->setIcon(
-                        QIcon(sTmpPath + xmlParser.getPath() +
-                              "/" + xmlParser.getGroupIcons().at(i)));
+                        QIcon(sTmpPath + sIconPath + "/" +
+                              xmlParser.getGroupIcons().at(i)));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlMenus.last()->addMenu(m_pXmlSubMenus.last());
                 }
@@ -663,8 +678,8 @@ void InyokaEdit::createXmlMenus() {
                 } else {
                   m_pXmlToolbuttons.append(new QToolButton(this));
                   m_pXmlToolbuttons.last()->setIcon(
-                        QIcon(sTmpPath + xmlParser.getPath() +
-                              "/" + xmlParser.getGroupIcons().at(i)));
+                        QIcon(sTmpPath + sIconPath + "/" +
+                              xmlParser.getGroupIcons().at(i)));
                   m_pXmlToolbuttons.last()->setPopupMode(
                         QToolButton::InstantPopup);
                   m_pXmlSubMenus.append(new QMenu(

@@ -123,6 +123,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     QAction *m_pExecuteAct;
     SpellCheckDialog *m_pCheckDialog;
     QSettings *m_pSettings;
+    QWidget *m_pParent;
     QTextCursor m_oldCursor;
     QString m_sDictPath;
     QStringList m_sListDicts;

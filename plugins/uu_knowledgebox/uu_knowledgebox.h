@@ -84,6 +84,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     void writeSettings();
     void createRow(const bool bActive, const QString &sText);
 
+    QWidget *m_pParent;
     Ui::Uu_KnowledgeBoxClass *m_pUi;
     QTranslator m_translator;
     QString m_sSharePath;

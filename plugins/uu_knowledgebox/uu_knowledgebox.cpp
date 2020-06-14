@@ -50,11 +50,12 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               PLUGIN_NAME);
 #endif
   m_pSettings->setIniCodec("UTF-8");
+  m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;
 
   this->loadTemplateEntries();
-  this->buildUi(pParent);  // After loading template entries
+  this->buildUi(m_pParent);  // After loading template entries
 
   connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
           this, &Uu_KnowledgeBox::accept);
@@ -109,6 +110,9 @@ auto Uu_KnowledgeBox::getCaption() const -> QString {
   return tr("Ubuntuusers.de knowledge box");
 }
 auto Uu_KnowledgeBox::getIcon() const -> QIcon {
+  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
+    return QIcon(":/list_alt_dark.png");
+  }
   return QIcon(":/list_alt.png");
 }
 
@@ -129,6 +133,7 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
   m_pDialog->setWindowFlags(m_pDialog->windowFlags()
                             & ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
+  m_pDialog->setWindowIcon(this->getIcon());
 
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);
