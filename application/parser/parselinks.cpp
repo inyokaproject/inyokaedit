@@ -124,6 +124,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   int nLength = 0;
   QString sLink("");
   QString sLinkURL("");
+  bool bIsOnline(Utils::getOnlineState());
 
   nIndex = findInyokaWikiLink.indexIn(sDoc);
   while (nIndex >= 0) {
@@ -152,7 +153,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           }
 
           m_sLinkClassAddition = "";
-          if (Utils::getOnlineState() && m_bCheckLinks) {
+          if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));
@@ -179,7 +180,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           //          << sLink.mid(sLink.indexOf(":") + 1, nLength);
           sLinkURL = m_sWikiUrl + "/"
                      + sLink.mid(0, sLink.indexOf(":"));
-          if (Utils::getOnlineState() && m_bCheckLinks) {
+          if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
                             QUrl(sLinkURL + "/a/export/meta/")));
