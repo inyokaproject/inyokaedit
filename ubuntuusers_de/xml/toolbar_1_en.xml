@@ -11,7 +11,7 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="Toolbar" path="../toolbar">
+<menu name="Toolbar" path="../toolbar/light">
   <group name="">
     <element name="Bold - files, folders, packages, formatnames" insert="&apos;&apos;&apos;%%Bold%%&apos;&apos;&apos;" icon="bold.png" />
     <element name="Italic - menus, buttons" insert="&apos;&apos;%%Italic%%&apos;&apos;" icon="italic.png" />

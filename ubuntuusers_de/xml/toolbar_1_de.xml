@@ -11,7 +11,7 @@
    * ' -> &apos;
    * " -> &quot;
 -->
-<menu name="Toolbar" path="../toolbar">
+<menu name="Toolbar" path="../toolbar/light">
   <group name="">
     <element name="Fett - Dateinamen, Verzeichnisse, Paketnamen, Formatnamen" insert="&apos;&apos;&apos;%%Fett%%&apos;&apos;&apos;" icon="bold.png" />
     <element name="Kursiv - Menüelemente, Schaltflächen" insert="&apos;&apos;%%Kursiv%%&apos;&apos;" icon="italic.png" />
