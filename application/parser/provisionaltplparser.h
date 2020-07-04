@@ -92,7 +92,7 @@ class ProvisionalTplParser {
     static auto insertBox(const QString &sClass,
                           const QString &sHeadline,
                           const QString &sContents,
-                          const QString &sRemark = "") -> QString;
+                          const QString &sRemark = QLatin1String("")) -> QString;
 
     QStringList m_sListHtmlStart;
     QString m_sCurrentFile;

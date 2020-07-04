@@ -43,12 +43,12 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pSettings = new QSettings(QSettings::NativeFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
-                              PLUGIN_NAME);
+                              QStringLiteral(PLUGIN_NAME));
 #else
   m_pSettings = new QSettings(QSettings::IniFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
-                              PLUGIN_NAME);
+                              QStringLiteral(PLUGIN_NAME));
 #endif
   m_pSettings->setIniCodec("UTF-8");
   m_pParent = pParent;
@@ -67,11 +67,11 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 
 auto Hotkey::getPluginName() const -> QString {
-  return PLUGIN_NAME;
+  return QStringLiteral(PLUGIN_NAME);
 }
 
 auto Hotkey::getPluginVersion() const -> QString {
-  return PLUGIN_VERSION;
+  return QStringLiteral(PLUGIN_VERSION);
 }
 
 // ----------------------------------------------------------------------------
@@ -83,15 +83,16 @@ void Hotkey::installTranslator(const QString &sLang) {
     return;
   }
 
-  if (!m_translator.load(":/" + QString(PLUGIN_NAME).toLower() +
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
     qWarning() << "Could not load translation" <<
-                  ":/" + QString(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
-    if (!m_translator.load(QString(PLUGIN_NAME).toLower() + "_" + sLang,
+                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
+                  "_" + sLang + ".qm";
+    if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
       qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" + QString(PLUGIN_NAME).toLower() +
-                    "_" + sLang + ".qm";
+                    m_sSharePath + "/lang/" +
+                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
       return;
     }
   }
@@ -154,7 +155,7 @@ void Hotkey::buildUi(QWidget *pParent) {
     this->createRow(m_listSequenceEdit.at(nRow), m_sListEntries.at(nRow));
   }
 
-  m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
+  m_pUi->addButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add"),
                                              QIcon(":/add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
 }
@@ -166,20 +167,20 @@ void Hotkey::loadHotkeyEntries() {
   // Load entries from default template or config file
   m_listSequenceEdit.clear();
   m_sListEntries.clear();
-  uint nNumOfEntries = m_pSettings->value("Hotkey/NumOfEntries",
+  uint nNumOfEntries = m_pSettings->value(QStringLiteral("Hotkey/NumOfEntries"),
                                           0).toUInt();
   if (0 == nNumOfEntries) {
     m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
-    m_sListEntries << "'''Bold'''";
+    m_sListEntries << QStringLiteral("'''Bold'''");
     m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_I);
-    m_sListEntries << "''Italic''";
+    m_sListEntries << QStringLiteral("''Italic''");
     m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_L);
-    m_sListEntries << "Text %%Selected%%";
+    m_sListEntries << QStringLiteral("Text %%Selected%%");
     this->writeSettings();
   } else {
     qDebug() << "Reading hotkey entries from config file";
-    QString sTmpEntry("");
-    m_pSettings->beginGroup("Hotkey");
+    QString sTmpEntry;
+    m_pSettings->beginGroup(QStringLiteral("Hotkey"));
     for (uint i = 0; i < nNumOfEntries; i++) {
       sTmpEntry = m_pSettings->value(
                     "Entry_" + QString::number(i), "").toString();
@@ -257,8 +258,9 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 
   // Delete row button
   m_listDelRowButtons << new QPushButton(
-                           QIcon::fromTheme("list-remove",
-                                            QIcon(":/remove.png")), "");
+                           QIcon::fromTheme(QStringLiteral("list-remove"),
+                                            QIcon(":/remove.png")),
+                           QLatin1String(""));
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,
@@ -311,12 +313,12 @@ void Hotkey::registerHotkeys() {
 
 void Hotkey::insertElement(const QString &sId) {
   QString sText(m_sListEntries[sId.toInt()]);
-  sText.replace("\\n", "\n");
-  int nPlaceholder1(sText.indexOf("%%"));
-  int nPlaceholder2(sText.lastIndexOf("%%"));
+  sText.replace(QLatin1String("\\n"), QLatin1String("\n"));
+  int nPlaceholder1(sText.indexOf(QLatin1String("%%")));
+  int nPlaceholder2(sText.lastIndexOf(QLatin1String("%%")));
   int nCurrentPos = m_pEditor->textCursor().position();
 
-  sText.remove("%%");  // Remove placeholder
+  sText.remove(QStringLiteral("%%"));  // Remove placeholder
   m_pEditor->insertPlainText(sText);
 
   // Select placeholder
@@ -336,9 +338,9 @@ void Hotkey::insertElement(const QString &sId) {
 // ----------------------------------------------------------------------------
 
 void Hotkey::writeSettings() {
-  m_pSettings->remove("Hotkey");
-  m_pSettings->beginGroup("Hotkey");
-  m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
+  m_pSettings->remove(QStringLiteral("Hotkey"));
+  m_pSettings->beginGroup(QStringLiteral("Hotkey"));
+  m_pSettings->setValue(QStringLiteral("NumOfEntries"), m_sListEntries.size());
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_pSettings->setValue("Entry_" + QString::number(i),
                           m_sListEntries[i]);
@@ -378,7 +380,8 @@ void Hotkey::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(
-        QPixmap(":/preferences-desktop-keyboard-shortcuts.png"));
+        QPixmap(
+          QStringLiteral(":/preferences-desktop-keyboard-shortcuts.png")));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
                            "<p>%3<br />"

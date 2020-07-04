@@ -42,12 +42,12 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pSettings = new QSettings(QSettings::NativeFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
-                              PLUGIN_NAME);
+                              QStringLiteral(PLUGIN_NAME));
 #else
   m_pSettings = new QSettings(QSettings::IniFormat,
                               QSettings::UserScope,
                               qApp->applicationName().toLower(),
-                              PLUGIN_NAME);
+                              QStringLiteral(PLUGIN_NAME));
 #endif
   m_pSettings->setIniCodec("UTF-8");
   m_pParent = pParent;
@@ -67,11 +67,11 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 
 auto Uu_KnowledgeBox::getPluginName() const -> QString {
-  return PLUGIN_NAME;
+  return QStringLiteral(PLUGIN_NAME);
 }
 
 auto Uu_KnowledgeBox::getPluginVersion() const -> QString {
-  return PLUGIN_VERSION;
+  return QStringLiteral(PLUGIN_VERSION);
 }
 
 // ----------------------------------------------------------------------------
@@ -83,15 +83,16 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
     return;
   }
 
-  if (!m_translator.load(":/" + QString(PLUGIN_NAME).toLower() +
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
     qWarning() << "Could not load translation" <<
-                  ":/" + QString(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
-    if (!m_translator.load(QString(PLUGIN_NAME).toLower() + "_" + sLang,
+                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
+                  "_" + sLang + ".qm";
+    if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
       qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" + QString(PLUGIN_NAME).toLower() +
-                    "_" + sLang + ".qm";
+                    m_sSharePath + "/lang/" +
+                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
       return;
     }
   }
@@ -152,7 +153,7 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
     this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
   }
 
-  m_pUi->addButton->setIcon(QIcon::fromTheme("list-add",
+  m_pUi->addButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add"),
                                              QIcon(":/add.png")));
   connect(m_pUi->addButton, &QPushButton::pressed,
           this, &Uu_KnowledgeBox::addRow);
@@ -165,13 +166,14 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
   // Load entries from default template or config file
   m_bListEntryActive.clear();
   m_sListEntries.clear();
-  uint nNumOfEntries = m_pSettings->value("NumOfEntries", 0).toUInt();
+  uint nNumOfEntries = m_pSettings->value(QStringLiteral("NumOfEntries"),
+                                          0).toUInt();
 
   if (0 == nNumOfEntries) {
     this->loadTemplateDefaults();
   } else {
     qDebug() << "Reading knowledge box entries from config file";
-    QString sTmpEntry("");
+    QString sTmpEntry;
     for (uint i = 0; i < nNumOfEntries; i++) {
       sTmpEntry = m_pSettings->value(
                     "Entry_" + QString::number(i), "").toString();
@@ -190,18 +192,18 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
 
 void Uu_KnowledgeBox::loadTemplateDefaults() {
   qDebug() << Q_FUNC_INFO;
-  QFile fiDefault(":/uu_knowledgebox.default");
+  QFile fiDefault(QStringLiteral(":/uu_knowledgebox.default"));
   m_bListEntryActive.clear();
   m_sListEntries.clear();
 
   if (!fiDefault.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open uu_knowledgebox.default";
     QMessageBox::warning(nullptr, tr("Error"), tr("Could not open %1")
-                         .arg("uu_knowledgebox.default"));
+                         .arg(QStringLiteral("uu_knowledgebox.default")));
   } else {
     QTextStream in(&fiDefault);
     in.setCodec("UTF-8");
-    QString tmpLine("");
+    QString tmpLine;
 
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
@@ -256,7 +258,7 @@ void Uu_KnowledgeBox::accept() {
   }
 
   if (!m_bCalledSettings) {
-    QString sOutput = "{{{#!vorlage Wissen\n";
+    QString sOutput = QStringLiteral("{{{#!vorlage Wissen\n");
     if (m_sListEntries.size() == m_bListEntryActive.size()) {
       for (int i = 0; i < m_sListEntries.size(); i++) {
         if (m_bListEntryActive.at(i)) {
@@ -264,10 +266,10 @@ void Uu_KnowledgeBox::accept() {
         }
       }
     } else {
-      sOutput += "ERROR";
+      sOutput += QLatin1String("ERROR");
       qCritical() << "Error executing knowledge box template.";
     }
-    sOutput += "}}}\n";
+    sOutput += QLatin1String("}}}\n");
     m_pEditor->insertPlainText(sOutput);
   }
 
@@ -312,8 +314,9 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
 
   // Delete row button
   m_listDelRowButtons << new QPushButton(
-                           QIcon::fromTheme("list-remove",
-                                            QIcon(":/remove.png")), "");
+                           QIcon::fromTheme(QStringLiteral("list-remove"),
+                                            QIcon(":/remove.png")),
+                           QLatin1String(""));
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed,
@@ -344,8 +347,8 @@ void Uu_KnowledgeBox::deleteRow() {
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::writeSettings() {
-  m_pSettings->remove("General");
-  m_pSettings->setValue("NumOfEntries", m_sListEntries.size());
+  m_pSettings->remove(QStringLiteral("General"));
+  m_pSettings->setValue(QStringLiteral("NumOfEntries"), m_sListEntries.size());
   for (int i = 0; i < m_sListEntries.size(); i++) {
     m_pSettings->setValue("Entry_" + QString::number(i),
                           m_sListEntries[i]);

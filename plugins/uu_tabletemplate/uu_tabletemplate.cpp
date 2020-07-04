@@ -53,13 +53,15 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pTextDocument = new QTextDocument(this);
   m_sSharePath = sSharePath;
   m_pTemplates = new Templates(
-                   m_pSettings->value(
-                     "InyokaCommunity", "ubuntuusers_de").toString(),
+                   m_pSettings->value(QStringLiteral("InyokaCommunity"),
+                                      "ubuntuusers_de").toString(),
                    m_sSharePath, m_dirPreview.absolutePath());
-  m_pParser = new Parser(m_sSharePath, QDir(""), "", false, m_pTemplates,
-                         m_pSettings->value("InyokaCommunity",
+  m_pParser = new Parser(m_sSharePath, QDir(QLatin1String("")),
+                         QLatin1String(""), false, m_pTemplates,
+                         m_pSettings->value(QStringLiteral("InyokaCommunity"),
                                             "ubuntuusers_de").toString(),
-                         m_pSettings->value("Pygmentize", "").toString());
+                         m_pSettings->value(QStringLiteral("Pygmentize"),
+                                            "").toString());
 
   // Build UI
   m_pDialog = new QDialog(m_pParent);
@@ -79,38 +81,50 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pUi->generatorTab->layout()->addWidget(m_pPreviewWebview);
   m_pPreviewWebview->setContextMenuPolicy(Qt::NoContextMenu);
   m_pPreviewWebview->setAcceptDrops(false);
-  m_pPreviewWebview->setUrl(QUrl("about:blank"));
+  m_pPreviewWebview->setUrl(QUrl(QStringLiteral("about:blank")));
 
   // Remove old obsoleteconf entry
-  m_pSettings->beginGroup("Plugin_tabletemplate");
-  m_pSettings->remove("");
+  m_pSettings->beginGroup(QStringLiteral("Plugin_tabletemplate"));
+  m_pSettings->remove(QLatin1String(""));
   m_pSettings->endGroup();
 
   // Load table styles
-  m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
-  m_sListTableClasses << "zebra" << "zebra_start2" << "zebra_start3";
-  m_sListTableClasses = m_pSettings->value("TableClasses",
+  m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
+  m_sListTableClasses << QStringLiteral("zebra") <<
+                         QStringLiteral("zebra_start2") <<
+                         QStringLiteral("zebra_start3");
+  m_sListTableClasses = m_pSettings->value(QStringLiteral("TableClasses"),
                                            m_sListTableClasses).toStringList();
-  m_sListTableStyles << "Human" << "KDE" << "Xfce" << "Edubuntu"
-                     << "Ubuntu Studio" << "Lubuntu";
-  m_sListTableStyles = m_pSettings->value("TableStyles",
+  m_sListTableStyles << QStringLiteral("Human") << QStringLiteral("KDE") <<
+                        QStringLiteral("Xfce") << QStringLiteral("Edubuntu") <<
+                        QStringLiteral("Ubuntu Studio") <<
+                        QStringLiteral("Lubuntu");
+  m_sListTableStyles = m_pSettings->value(QStringLiteral("TableStyles"),
                                           m_sListTableStyles).toStringList();
-  m_sListTableStylesPrefix << "" << "kde-" << "xfce-" << "edu-"
-                           << "studio-" << "lxde-";
+  m_sListTableStylesPrefix << QLatin1String("") << QStringLiteral("kde-") <<
+                              QStringLiteral("xfce-") <<
+                              QStringLiteral("edu-") <<
+                              QStringLiteral("studio-") <<
+                              QStringLiteral("lxde-");
   m_sListTableStylesPrefix = m_pSettings->value(
-                               "TableStylesPrefix",
+                               QStringLiteral("TableStylesPrefix"),
                                m_sListTableStylesPrefix).toStringList();
-  m_sRowClassTitle = m_pSettings->value("RowClassTitle", "titel").toString();
-  m_sRowClassHead = m_pSettings->value("RowClassHead", "kopf").toString();
+  m_sRowClassTitle = m_pSettings->value(QStringLiteral("RowClassTitle"),
+                                        "titel").toString();
+  m_sRowClassHead = m_pSettings->value(QStringLiteral("RowClassHead"),
+                                       "kopf").toString();
   m_sRowClassHighlight = m_pSettings->value(
-                           "RowClassHighlight", "highlight").toString();
+                           QStringLiteral("RowClassHighlight"),
+                           "highlight").toString();
 
-  m_pSettings->setValue("TableClasses", m_sListTableClasses);
-  m_pSettings->setValue("TableStyles", m_sListTableStyles);
-  m_pSettings->setValue("TableStylesPrefix", m_sListTableStylesPrefix);
-  m_pSettings->setValue("RowClassTitle", m_sRowClassTitle);
-  m_pSettings->setValue("RowClassHead", m_sRowClassHead);
-  m_pSettings->setValue("RowClassHighlight", m_sRowClassHighlight);
+  m_pSettings->setValue(QStringLiteral("TableClasses"), m_sListTableClasses);
+  m_pSettings->setValue(QStringLiteral("TableStyles"), m_sListTableStyles);
+  m_pSettings->setValue(QStringLiteral("TableStylesPrefix"),
+                        m_sListTableStylesPrefix);
+  m_pSettings->setValue(QStringLiteral("RowClassTitle"), m_sRowClassTitle);
+  m_pSettings->setValue(QStringLiteral("RowClassHead"), m_sRowClassHead);
+  m_pSettings->setValue(QStringLiteral("RowClassHighlight"),
+                        m_sRowClassHighlight);
   m_pSettings->endGroup();
 
   if (m_sListTableStyles.size() != m_sListTableStylesPrefix.size()) {
@@ -139,11 +153,11 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 
 auto Uu_TableTemplate::getPluginName() const -> QString {
-  return PLUGIN_NAME;
+  return QStringLiteral(PLUGIN_NAME);
 }
 
 auto Uu_TableTemplate::getPluginVersion() const -> QString {
-  return PLUGIN_VERSION;
+  return QStringLiteral(PLUGIN_VERSION);
 }
 
 // ----------------------------------------------------------------------------
@@ -155,15 +169,16 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
     return;
   }
 
-  if (!m_translator.load(":/" + QString(PLUGIN_NAME).toLower() +
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
     qWarning() << "Could not load translation" <<
-                  ":/" + QString(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
-    if (!m_translator.load(QString(PLUGIN_NAME).toLower() + "_" + sLang,
+                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
+                  "_" + sLang + ".qm";
+    if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
       qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" + QString(PLUGIN_NAME).toLower() +
-                    "_" + sLang + ".qm";
+                    m_sSharePath + "/lang/" +
+                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
       return;
     }
   }
@@ -206,10 +221,11 @@ void Uu_TableTemplate::callPlugin() {
   m_pUi->HighlightSecondBox->setChecked(false);
   m_pUi->colsNum->setValue(2);
   m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
-  m_pPreviewWebview->setHtml("");
+  m_pPreviewWebview->setHtml(QLatin1String(""));
   m_pUi->baseTextEdit->clear();
   m_pUi->newTextEdit->clear();
-  if (m_pEditor->textCursor().selectedText().startsWith("{{{#!")) {
+  if (m_pEditor->textCursor().selectedText().startsWith(
+        QLatin1String("{{{#!"))) {
     m_pUi->newTextEdit->insertPlainText(
           m_pEditor->textCursor().selectedText());
   } else {
@@ -228,15 +244,16 @@ void Uu_TableTemplate::executePlugin() {}
 void Uu_TableTemplate::preview() {
   m_pTextDocument->setPlainText(this->generateTable());
 
-  QString sRetHtml(m_pParser->genOutput("", m_pTextDocument));
+  QString sRetHtml(m_pParser->genOutput(QLatin1String(""), m_pTextDocument));
   // Remove for preview useless elements
   sRetHtml.remove(
-        QRegularExpression("<h1 class=\"pagetitle\">.*</h1>",
+        QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
                            QRegularExpression::DotMatchesEverythingOption));
   sRetHtml.remove(
-        QRegularExpression("<p class=\"meta\">.*</p>",
+        QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
                            QRegularExpression::DotMatchesEverythingOption));
-  sRetHtml.replace("</style>", "#page table{margin:0px;}</style>");
+  sRetHtml.replace(QLatin1String("</style>"),
+                   QLatin1String("#page table{margin:0px;}</style>"));
 
   m_pPreviewWebview->setHtml(sRetHtml,
                              QUrl::fromLocalFile(m_dirPreview.absolutePath()
@@ -247,8 +264,8 @@ void Uu_TableTemplate::preview() {
 // ----------------------------------------------------------------------------
 
 auto Uu_TableTemplate::generateTable() -> QString {
-  QString sTab("{{{#!vorlage Tabelle\n");
-  QString sTableClass("");
+  QString sTab(QStringLiteral("{{{#!vorlage Tabelle\n"));
+  QString sTableClass(QLatin1String(""));
   int colsNum = m_pUi->colsNum->value();
   int rowsNum = m_pUi->rowsNum->value();
 
@@ -277,7 +294,7 @@ auto Uu_TableTemplate::generateTable() -> QString {
   // Create head if set
   if (m_pUi->showHeadBox->isChecked()) {
     if (m_pUi->showTitleBox->isChecked()) {
-      sTab += QString("<rowclass=\"%1%2\"> ")
+      sTab += QStringLiteral("<rowclass=\"%1%2\"> ")
               .arg(
                 m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
           m_sRowClassHead);
@@ -292,7 +309,7 @@ auto Uu_TableTemplate::generateTable() -> QString {
       sTab += QString(tr("Head") + " %1 \n").arg(i + 1);
     }
 
-    sTab += "+++\n";
+    sTab += QLatin1String("+++\n");
   }
 
   // Create body
@@ -301,19 +318,19 @@ auto Uu_TableTemplate::generateTable() -> QString {
         // Use only, if non-default style is used; otherwiese use "zebra" class.
         0 != m_pUi->tableStyleBox->currentIndex() &&
         1 == i % 2) {
-      sTab += QString("<rowclass=\"%1%2\">").arg(
+      sTab += QStringLiteral("<rowclass=\"%1%2\">").arg(
                 m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
           m_sRowClassHighlight);
     }
     for (int j = 0; j < colsNum; j++) {
-      sTab += "\n";
+      sTab += QLatin1String("\n");
     }
     if (i != rowsNum-1) {
-      sTab += "+++\n";
+      sTab += QLatin1String("+++\n");
     }
   }
 
-  sTab += "}}}\n";
+  sTab += QLatin1String("}}}\n");
   return sTab;
 }
 
@@ -322,29 +339,29 @@ auto Uu_TableTemplate::generateTable() -> QString {
 
 void Uu_TableTemplate::convertToBaseTemplate() {
   m_bBaseToNew = false;
-  QString sTableCode("");
+  QString sTableCode(QLatin1String(""));
   QString sInput(m_pUi->newTextEdit->toPlainText());
   QStringList sListInput;
   QStringList sListRow;
 
-  sInput.remove("{{{#!vorlage Tabelle");
+  sInput.remove(QStringLiteral("{{{#!vorlage Tabelle"));
   sInput = sInput.trimmed();
-  if (sInput.endsWith("}}}")) {
+  if (sInput.endsWith(QLatin1String("}}}"))) {
     sInput.remove(sInput.length() - 3, 3);
   }
 
-  sListInput << sInput.split("+++");
+  sListInput << sInput.split(QStringLiteral("+++"));
   for (int i = 0; i < sListInput.size(); i++) {
     sListInput[i] = sListInput[i].trimmed() + " ";
 
     sListRow.clear();
-    sListRow << sListInput[i].split("\n");
+    sListRow << sListInput[i].split(QStringLiteral("\n"));
     for (int j = 0; j < sListRow.size(); j++) {
       sTableCode += "|| " + sListRow[j].trimmed() + " ";
     }
 
     if (i < sListInput.size()) {
-      sTableCode += "||\n";
+      sTableCode += QLatin1String("||\n");
     }
   }
 
@@ -356,38 +373,40 @@ void Uu_TableTemplate::convertToBaseTemplate() {
 
 void Uu_TableTemplate::convertToNewTemplate() {
   m_bBaseToNew = true;
-  QString sTableCode("{{{#!vorlage Tabelle");
+  QString sTableCode(QStringLiteral("{{{#!vorlage Tabelle"));
   QStringList sListInput;
   QStringList sListRow;
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-                  QRegularExpression("\\|\\|\\s*\\n"), QString::SkipEmptyParts);
+                  QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
+                  QString::SkipEmptyParts);
 #else
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-                  QRegularExpression("\\|\\|\\s*\\n"), Qt::SkipEmptyParts);
+                  QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
+                  Qt::SkipEmptyParts);
 #endif
 
   for (int i = 0; i < sListInput.size(); i++) {
     sListInput[i] = sListInput[i].trimmed();
-    if (sListInput[i].startsWith("||")) {
+    if (sListInput[i].startsWith(QLatin1String("||"))) {
       sListInput[i].remove(0, 2);
     }
-    if (sListInput[i].endsWith("||")) {
+    if (sListInput[i].endsWith(QLatin1String("||"))) {
       sListInput[i].remove(sListInput[i].length() - 2, 2);
     }
 
     sListRow.clear();
-    sListRow << sListInput[i].split("||");
+    sListRow << sListInput[i].split(QStringLiteral("||"));
     for (int j = 0; j < sListRow.size(); j++) {
       sTableCode += "\n" + sListRow[j].trimmed();
     }
 
     if (i < sListInput.size() - 1) {
-      sTableCode += "\n+++";
+      sTableCode += QLatin1String("\n+++");
     }
   }
-  sTableCode += "\n}}}\n";
+  sTableCode += QLatin1String("\n}}}\n");
 
   m_pUi->newTextEdit->setPlainText(sTableCode);
 }
@@ -433,7 +452,7 @@ void Uu_TableTemplate::setEditorlist(const QList<TextEditor *> &listEditors) {
 void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  aboutbox.setIconPixmap(QPixmap(":/tabletemplate.png"));
+  aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/tabletemplate.png")));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
                            "<p>%3<br />"

@@ -114,7 +114,8 @@ SpellCheckDialog::~SpellCheckDialog() {
 SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
     const QString &sWord) {
   m_sUnkownWord = sWord;
-  m_pUi->lblUnknownWord->setText(QString("<b>%1</b>").arg(m_sUnkownWord));
+  m_pUi->lblUnknownWord->setText(
+        QStringLiteral("<b>%1</b>").arg(m_sUnkownWord));
 
   m_pUi->ledtReplaceWith->clear();
 
@@ -161,8 +162,9 @@ void SpellCheckDialog::replaceAll() {
 
 void SpellCheckDialog::closeDialog() {
   m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->currentText();
-  m_pSpellChecker->m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
-  m_pSpellChecker->m_pSettings->setValue("SpellCheckerLanguage",
+  m_pSpellChecker->m_pSettings->beginGroup("Plugin_" +
+                                           QStringLiteral(PLUGIN_NAME));
+  m_pSpellChecker->m_pSettings->setValue(QStringLiteral("SpellCheckerLanguage"),
                                          m_pSpellChecker->m_sDictLang);
   m_pSpellChecker->m_pSettings->endGroup();
   this->reject();

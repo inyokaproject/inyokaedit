@@ -87,12 +87,13 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_UserDataDir = userDataDir;
   m_sSharePath = sSharePath;
 
-  m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
-  m_sDictPath = m_pSettings->value("DictionaryPath", "").toString();
+  m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
+  m_sDictPath = m_pSettings->value(QStringLiteral("DictionaryPath"),
+                                   "").toString();
   this->setDictPath();
-  m_sDictLang = m_pSettings->value("SpellCheckerLanguage",
+  m_sDictLang = m_pSettings->value(QStringLiteral("SpellCheckerLanguage"),
                                    "de_DE").toString();
-  m_sCommunity = m_pSettings->value("InyokaCommunity",
+  m_sCommunity = m_pSettings->value(QStringLiteral("InyokaCommunity"),
                                     "ubuntuusers_de").toString();
   m_pSettings->endGroup();
 }
@@ -101,11 +102,11 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 
 auto SpellChecker::getPluginName() const -> QString {
-  return PLUGIN_NAME;
+  return QStringLiteral(PLUGIN_NAME);
 }
 
 auto SpellChecker::getPluginVersion() const -> QString {
-  return PLUGIN_VERSION;
+  return QStringLiteral(PLUGIN_VERSION);
 }
 
 // ----------------------------------------------------------------------------
@@ -117,15 +118,16 @@ void SpellChecker::installTranslator(const QString &sLang) {
     return;
   }
 
-  if (!m_translator.load(":/" + QString(PLUGIN_NAME).toLower() +
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
     qWarning() << "Could not load translation" <<
-                  ":/" + QString(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
-    if (!m_translator.load(QString(PLUGIN_NAME).toLower() + "_" + sLang,
+                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
+                  "_" + sLang + ".qm";
+    if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
       qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" + QString(PLUGIN_NAME).toLower() +
-                    "_" + sLang + ".qm";
+                    m_sSharePath + "/lang/" +
+                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
       return;
     }
   }
@@ -163,15 +165,16 @@ void SpellChecker::setDictPath() {
 
   if (m_sDictPath.isEmpty() || !QDir(m_sDictPath).exists()) {
     // Standard path for Hunspell
-    if (QDir("/usr/share/hunspell").exists()) {
-      m_sDictPath = "/usr/share/hunspell/";
-    } else if (QDir("/usr/local/share/hunspell").exists()) {
-      m_sDictPath = "/usr/local/share/hunspell/";
+    if (QDir(QStringLiteral("/usr/share/hunspell")).exists()) {
+      m_sDictPath = QStringLiteral("/usr/share/hunspell/");
+    } else if (QDir(QStringLiteral("/usr/local/share/hunspell")).exists()) {
+      m_sDictPath = QStringLiteral("/usr/local/share/hunspell/");
       // Otherwise look for MySpell dictionary
-    } else if (QDir("/usr/share/myspell/dicts").exists()) {
-      m_sDictPath = "/usr/share/myspell/dicts/";
-    } else if (QDir("/usr/local/share/myspell/dicts").exists()) {
-      m_sDictPath = "/usr/local/share/myspell/dicts/";
+    } else if (QDir(QStringLiteral("/usr/share/myspell/dicts")).exists()) {
+      m_sDictPath = QStringLiteral("/usr/share/myspell/dicts/");
+    } else if (QDir(
+                 QStringLiteral("/usr/local/share/myspell/dicts")).exists()) {
+      m_sDictPath = QStringLiteral("/usr/local/share/myspell/dicts/");
     } else {
       // Fallback and for Windows look in app dir
       m_sDictPath = qApp->applicationDirPath() + "/dicts/";
@@ -182,7 +185,7 @@ void SpellChecker::setDictPath() {
   }
   // Group already set in costructor
   // m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
-  m_pSettings->setValue("DictionaryPath", m_sDictPath);
+  m_pSettings->setValue(QStringLiteral("DictionaryPath"), m_sDictPath);
   // m_pSettings->endGroup();
 
   QFileInfoList fiListFiles = QDir(m_sDictPath).entryInfoList(
@@ -207,12 +210,12 @@ auto SpellChecker::initDictionaries() -> bool {
                          "Trying to load fallback dictionary.");
 
     // Try to load english fallback
-    m_sDictLang = "en_GB";
+    m_sDictLang = QStringLiteral("en_GB");
     if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
         || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
       qWarning() << "Spell checker fallback does not exist:"
                  << m_sDictPath + m_sDictLang << "*.dic *.aff";
-      m_sDictLang = "en-GB";
+      m_sDictLang = QStringLiteral("en-GB");
       if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
           || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
         qWarning() << "Spell checker fallback does not exist:"
@@ -233,8 +236,9 @@ auto SpellChecker::initDictionaries() -> bool {
     if (userDictFile.open(QIODevice::WriteOnly)) {
       userDictFile.close();
     } else {
-      QMessageBox::warning(nullptr, qApp->applicationName(),
-                           "User dictionary file couldn't be opened.");
+      QMessageBox::warning(
+            nullptr, qApp->applicationName(),
+            QStringLiteral("User dictionary file couldn't be opened."));
       qWarning() << "User dictionary file could not be opened/created:"
                  << m_sUserDict;
     }
@@ -248,13 +252,14 @@ auto SpellChecker::initDictionaries() -> bool {
   // qDebug() << "Using dictionary:" << sDictFile;
 
   // Detect encoding analyzing the SET option in the affix file
-  m_sEncoding = "ISO8859-1";
+  m_sEncoding = QStringLiteral("ISO8859-1");
   QFile _affixFile(sAffixFile);
   if (_affixFile.open(QIODevice::ReadOnly)) {
     QTextStream stream(&_affixFile);
-    QRegularExpression enc_detector("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*",
-                                    QRegularExpression::CaseInsensitiveOption);
-    QString sLine("");
+    QRegularExpression enc_detector(
+          QStringLiteral("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*"),
+          QRegularExpression::CaseInsensitiveOption);
+    QString sLine;
     QRegularExpressionMatch match;
     while (!stream.atEnd()) {
       sLine = stream.readLine();
@@ -269,7 +274,7 @@ auto SpellChecker::initDictionaries() -> bool {
     _affixFile.close();
   } else {
     QMessageBox::warning(nullptr, qApp->applicationName(),
-                         "Dictionary could not be opened.");
+                         QStringLiteral("Dictionary could not be opened."));
     qWarning() << "Dictionary could not be opened:" << sAffixFile;
     return false;
   }
@@ -517,7 +522,7 @@ void SpellChecker::addToUserWordlist(const QString &sWord) {
       stream << sWord << "\n";
       userDictonaryFile.close();
     } else {
-      QMessageBox::warning(nullptr, "Spell checker",
+      QMessageBox::warning(nullptr, QStringLiteral("Spell checker"),
                            "User dictionary " + m_sUserDict
                            + " could not be opened for appending a "
                              "new word.");
@@ -556,7 +561,7 @@ void SpellChecker::setEditorlist(const QList<TextEditor *> &listEditors) {
 void SpellChecker::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  aboutbox.setIconPixmap(QPixmap(":/spellchecker.png"));
+  aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/spellchecker.png")));
   aboutbox.setText(QString("<p><b>%1</b><br />"
                            "%2</p>"
                            "<p>%3<br />"
