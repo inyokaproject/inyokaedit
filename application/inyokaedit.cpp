@@ -445,7 +445,7 @@ void InyokaEdit::createActions() {
           QUrl("https://github.com/inyokaproject/inyokaedit/issues")); });
 
   // Open about windwow
-  connect(m_pUi->aboutAct, &QAction::triggered, m_pUtils, &Utils::showAbout);
+  connect(m_pUi->aboutAct, &QAction::triggered, this, &InyokaEdit::showAbout);
 }
 
 // ----------------------------------------------------------------------------
@@ -1299,6 +1299,38 @@ void InyokaEdit::showSyntaxOverview() {
   pDialog->show();
 }
 
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void InyokaEdit::showAbout() {
+  QMessageBox::about(
+        this, tr("About")+ " " + qApp->applicationName(),
+        QString("<big><b>%1 %2</b></big><br />"
+                "%3<br />"
+                "<small>%4</small><br /><br />"
+                "%5<br />"
+                "%6<br />"
+                "<small>%7</small><br /><br />"
+                "%8")
+        .arg(qApp->applicationName(),
+             qApp->applicationVersion(),
+             tr("Editor for Inyoka-based portals"),
+             APP_COPY,
+             "URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
+             "https://github.com/inyokaproject/inyokaedit</a>",
+             tr("License") +
+             ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
+             "GNU General Public License Version 3</a>",
+             tr("This application uses icons from "
+                "<a href=\"http://tango.freedesktop.org\">"
+                "Tango project</a>."),
+             tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
+                "Shakesbier and all testers from "
+                "<a href=\"https://ubuntuusers.de\"> "
+                "ubuntuusers.de</a>.")));
+}
+
+// ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 // Close event (File -> Close or X)

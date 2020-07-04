@@ -103,6 +103,7 @@ class InyokaEdit : public QMainWindow {
     void clickedLink(const QUrl &newUrl);
     void syncScrollbarsEditor();
     void syncScrollbarsWebview();
+    void showAbout();
 
  private:
     void createObjects();

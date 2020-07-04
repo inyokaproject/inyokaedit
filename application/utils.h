@@ -41,9 +41,6 @@ class Utils : public QObject {
                          const QString &sUser, const QString &sPassword);
     void checkWindowsUpdate();
 
- public slots:
-    void showAbout();
-
  private slots:
     void replyFinished(QNetworkReply *pReply);
 

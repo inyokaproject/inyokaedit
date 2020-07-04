@@ -56,10 +56,12 @@ include(../../application/templates/templates.pri)
 include(../../application/parser/parser.pri)
 
 HEADERS      += uu_tabletemplate.h \
-                ../../application/syntaxcheck.h
+                ../../application/syntaxcheck.h \
+                ../../application/utils.h
 
 SOURCES      += uu_tabletemplate.cpp \
-                ../../application/syntaxcheck.cpp
+                ../../application/syntaxcheck.cpp \
+                ../../application/utils.cpp
 
 FORMS        += uu_tabletemplate.ui
 
