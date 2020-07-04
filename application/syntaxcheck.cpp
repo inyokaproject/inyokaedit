@@ -58,7 +58,7 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   QList<QChar> listParenthesis;
   QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
-  QString sReplace("");
+  QString sReplace(QLatin1String(""));
 
   // Replace smilies, since most of them are including open parenthesis
   foreach (QString s, sListSmilies) {
@@ -141,8 +141,8 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
         sMacro.remove("[[" + sListTrans[i], Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
         sMacro.remove(0, 1);  // Remove (
-        sMacro = sMacro.left(sMacro.indexOf(",")).trimmed();
-        sMacro.remove(")]]");  // Needed if no "," is used
+        sMacro = sMacro.left(sMacro.indexOf(QLatin1String(","))).trimmed();
+        sMacro.remove(QStringLiteral(")]]"));  // Needed if no "," is used
         sMacro = sMacro.trimmed();
 
         if (sListTplMacros.contains(sMacro, Qt::CaseInsensitive)) {
@@ -152,14 +152,16 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                                    Qt::CaseInsensitive)) {
         sMacro.remove("{{{#!" + sListTrans[i] + " ", Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
-        if (-1 != sMacro.indexOf(" ") && -1 != sMacro.indexOf("\n")) {
-          if (sMacro.indexOf(" ") < sMacro.indexOf("\n")) {
-            sMacro = sMacro.left(sMacro.indexOf(" ")).trimmed();
+        if (-1 != sMacro.indexOf(QLatin1String(" ")) &&
+            -1 != sMacro.indexOf(QLatin1String("\n"))) {
+          if (sMacro.indexOf(QLatin1String(" ")) < sMacro.indexOf(
+                QLatin1String("\n"))) {
+            sMacro = sMacro.left(sMacro.indexOf(QLatin1String(" "))).trimmed();
           } else {
-            sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+            sMacro = sMacro.left(sMacro.indexOf(QLatin1String("\n"))).trimmed();
           }
         } else {
-          sMacro = sMacro.left(sMacro.indexOf("\n")).trimmed();
+          sMacro = sMacro.left(sMacro.indexOf(QLatin1String("\n"))).trimmed();
         }
 
         sMacro = sMacro.remove(',');

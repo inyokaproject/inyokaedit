@@ -46,11 +46,11 @@ Upload::Upload(QWidget *pParent, Session *pSession,
     m_sInyokaUrl(sInyokaUrl),
     m_pReply(nullptr),
     m_State(REQUREVISION),
-    m_sSitename(""),
-    m_sRevision(""),
+    m_sSitename(QLatin1String("")),
+    m_sRevision(QLatin1String("")),
     m_sConstructionArea(sConstArea),
     m_pEditor(nullptr),
-    m_sArticlename("") {
+    m_sArticlename(QLatin1String("")) {
   this->setParent(m_pParent);
 }
 
@@ -106,10 +106,13 @@ void Upload::clickUploadArticle() {
   }
 
   // Replace non valid characters
-  m_sSitename.replace(QString::fromUtf8("ä"), "a", Qt::CaseInsensitive);
-  m_sSitename.replace(QString::fromUtf8("ö"), "o", Qt::CaseInsensitive);
-  m_sSitename.replace(QString::fromUtf8("ü"), "u", Qt::CaseInsensitive);
-  m_sSitename.replace(" ", "_");
+  m_sSitename.replace(QStringLiteral("ä"), QLatin1String("a"),
+                      Qt::CaseInsensitive);
+  m_sSitename.replace(QStringLiteral("ö"), QLatin1String("o"),
+                      Qt::CaseInsensitive);
+  m_sSitename.replace(QStringLiteral("ü"), QLatin1String("u"),
+                      Qt::CaseInsensitive);
+  m_sSitename.replace(QLatin1String(" "), QLatin1String("_"));
   qDebug() << "UPLOAD site name:" << m_sSitename;
 
   m_pSession->checkSession();
@@ -157,9 +160,10 @@ void Upload::requestRevision(QString sUrl) {
 
 void Upload::getRevisionReply(const QString &sNWReply) {
   QString sURL(m_sInyokaUrl);
-  sURL.remove("https://");
-  sURL.remove("http://");
-  QRegularExpression findRevision(sURL + "/" + m_sSitename + "/a/revision/" + "\\d+",
+  sURL.remove(QStringLiteral("https://"));
+  sURL.remove(QStringLiteral("http://"));
+  QRegularExpression findRevision(sURL + "/" + m_sSitename +
+                                  "/a/revision/" + "\\d+",
                                   QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatch match = findRevision.match(sNWReply);
 
@@ -168,7 +172,7 @@ void Upload::getRevisionReply(const QString &sNWReply) {
     m_sRevision.remove(0, m_sRevision.lastIndexOf('/') + 1);
     qDebug() << "Last revision of" << m_sSitename << "=" << m_sRevision;
   } else {
-    m_sRevision = "";
+    m_sRevision = QLatin1String("");
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Last article revision not found!"));
     qWarning() << "Article revision not found!";
@@ -198,10 +202,11 @@ void Upload::requestUpload() {
   request.setUrl(QUrl(sUrl));
 
   QList<QNetworkCookie> listCookies;
-  listCookies << m_pSession->getNwManager()->cookieJar()->cookiesForUrl(QUrl(sUrl));
+  listCookies << m_pSession->getNwManager()->cookieJar()->cookiesForUrl(
+                   QUrl(sUrl));
   // qDebug() << "COOKIES FOR URL:" << listCookies;
 
-  QString sCookie("");
+  QString sCookie(QLatin1String(""));
   foreach (QNetworkCookie cookie, listCookies) {
     if (!cookie.isSessionCookie() && sCookie.isEmpty()) {
       // Use first cookie
@@ -211,7 +216,7 @@ void Upload::requestUpload() {
   }
   // qDebug() << "COOKIE:" << sCookie;
 
-  QString sToken("csrftoken=");
+  QString sToken(QStringLiteral("csrftoken="));
   int nInd = sCookie.indexOf(sToken) + sToken.length();
   sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
   if (sToken.isEmpty()) {
@@ -221,11 +226,11 @@ void Upload::requestUpload() {
     return;
   }
 
-  QString sNote("");
+  QString sNote(QLatin1String(""));
   bool bOk(false);
   sNote = QInputDialog::getText(m_pParent, tr("Change note"),
                                 tr("Please insert a change message:"),
-                                QLineEdit::Normal, "", &bOk);
+                                QLineEdit::Normal, QLatin1String(""), &bOk);
   sNote = sNote.trimmed();
   if (sNote.length() > nMAXINPUT) {
     sNote.resize(nMAXINPUT);
@@ -263,7 +268,7 @@ void Upload::requestUpload() {
   timePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                      QVariant("form-data; name=\"edit_time\""));
   timePart.setBody(QDateTime::currentDateTimeUtc().toString(
-                     "yyyy-MM-dd hh:mm:ss.zzzzzz").toLatin1());
+                     QStringLiteral("yyyy-MM-dd hh:mm:ss.zzzzzz")).toLatin1());
 
   QHttpPart revPart;
   revPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -293,9 +298,11 @@ void Upload::getUploadReply(const QString &sNWReply) {
 
   if (sNWReply.isEmpty()) {
     qDebug() << "UPLOAD SUCCESSFUL!";
-    QMessageBox::information(m_pParent, "Upload", tr("Upload successful!"));
+    QMessageBox::information(m_pParent, QStringLiteral("Upload"),
+                             tr("Upload successful!"));
   } else {
-    if (sNWReply.contains("Du hast die Seite nicht verändert.")) {
+    if (sNWReply.contains(
+          QStringLiteral("Du hast die Seite nicht verändert."))) {
       qDebug() << "UPLOAD REPLY: Page was not changed.";
       QMessageBox::warning(m_pParent, tr("Upload failed"),
                            tr("The page content was not changed!"));
@@ -317,7 +324,8 @@ void Upload::replyFinished(QNetworkReply *pReply) {
   QIODevice *pData(pReply);
 
   if (QNetworkReply::NoError != pReply->error()) {
-    QMessageBox::critical(m_pParent, "Error", pData->errorString());
+    QMessageBox::critical(m_pParent, QStringLiteral("Error"),
+                          pData->errorString());
     qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
                 << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
@@ -336,7 +344,7 @@ void Upload::replyFinished(QNetworkReply *pReply) {
     this->requestRevision(m_urlRedirectedTo.toString() + "a/log/");
   } else {
     QString sReply = QString::fromUtf8(pData->readAll());
-    sReply.replace("\r\r\n", "\n");
+    sReply.replace(QLatin1String("\r\r\n"), QLatin1String("\n"));
     m_pReply->deleteLater();
 
     if (sReply.isEmpty()) {

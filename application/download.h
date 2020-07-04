@@ -45,7 +45,7 @@ class Download : public QObject {
              const QString &sImgDir, const QString &sSharePath);
 
  public slots:
-    void downloadArticle(QString sUrl = "");
+    void downloadArticle(QString sUrl = QLatin1String(""));
     void showArticle();
     void updateSettings(const bool bDownloadImages,
                         const QString &sInyokaUrl,

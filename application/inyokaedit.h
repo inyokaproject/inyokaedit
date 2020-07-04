@@ -68,7 +68,8 @@ class InyokaEdit : public QMainWindow {
 
  public:
     explicit InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
-                        const QString &sArg = "", QWidget *parent = nullptr);
+                        const QString &sArg = QLatin1String(""),
+                        QWidget *parent = nullptr);
     ~InyokaEdit();
 
  public slots:
@@ -115,9 +116,10 @@ class InyokaEdit : public QMainWindow {
     void deleteAutoSaveBackups();
     void readSettings();
     void writeSettings();
-    static auto switchTranslator(QTranslator *translator,
-                                 const QString &sFile,
-                                 const QString &sPath = "") -> bool;
+    static auto switchTranslator(
+        QTranslator *translator,
+        const QString &sFile,
+        const QString &sPath = QLatin1String("")) -> bool;
 
     Ui::InyokaEdit *m_pUi;
     QTranslator m_translator;  // App translations

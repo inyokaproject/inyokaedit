@@ -132,7 +132,8 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
     // (redirected file could have other basename)
     if (m_sListBasename[nIndex].isEmpty()) {
       m_sListBasename[nIndex] = url.toString().mid(
-                                  url.toString().lastIndexOf("/") + 1);
+                                  url.toString().lastIndexOf(
+                                    QLatin1String("/")) + 1);
     }
 
     // If the URL is not empty, we're being redirected

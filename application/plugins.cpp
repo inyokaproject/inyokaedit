@@ -43,22 +43,22 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
 
   // If share folder start parameter is used
   QDir pluginsDir = sSharePath;
-  if (qApp->arguments().contains("-s") ||
-      qApp->arguments().contains("--share")) {
-    if (pluginsDir.cd("plugins")) {
+  if (qApp->arguments().contains(QStringLiteral("-s")) ||
+      qApp->arguments().contains(QStringLiteral("--share"))) {
+    if (pluginsDir.cd(QStringLiteral("plugins"))) {
       listPluginsDir << pluginsDir;
     }
   }
   // Plugins in user folder
   pluginsDir = m_userDataDir;
-  if (pluginsDir.cd("plugins")) {
+  if (pluginsDir.cd(QStringLiteral("plugins"))) {
     if (!listPluginsDir.contains(pluginsDir)) {
       listPluginsDir << pluginsDir;
     }
   }
   // Plugins in app folder (Windows and debugging)
   pluginsDir.setPath(qApp->applicationDirPath());
-  if (pluginsDir.cd("plugins")) {
+  if (pluginsDir.cd(QStringLiteral("plugins"))) {
     if (!listPluginsDir.contains(pluginsDir)) {
       listPluginsDir << pluginsDir;
     }
@@ -66,7 +66,7 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
   // Plugins in standard installation folder (Linux)
   pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/"
                      + qApp->applicationName().toLower());
-  if (pluginsDir.cd("plugins")) {
+  if (pluginsDir.cd(QStringLiteral("plugins"))) {
     if (!listPluginsDir.contains(pluginsDir)) {
       listPluginsDir << pluginsDir;
     }
@@ -127,7 +127,8 @@ void Plugins::loadPlugins(const QString &sLang) {
                                          m_pParent);
       connect(m_PluginMenuEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
-        qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))->callPlugin(); });
+        qobject_cast<IEditorPlugin *>(
+              m_listPluginObjects.at(i))->callPlugin(); });
     }
     if (m_listPlugins.at(i)->includeToolbar()) {
       m_PluginToolbarEntries << new QAction(m_listPlugins.at(i)->getIcon(),
@@ -135,7 +136,8 @@ void Plugins::loadPlugins(const QString &sLang) {
                                             m_pParent);
       connect(m_PluginToolbarEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
-        qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))->callPlugin(); });
+        qobject_cast<IEditorPlugin *>(
+              m_listPluginObjects.at(i))->callPlugin(); });
     }
 
     m_listPlugins.at(i)->executePlugin();

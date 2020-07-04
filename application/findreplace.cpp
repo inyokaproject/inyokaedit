@@ -41,7 +41,8 @@ FindReplace::FindReplace(QWidget *parent)
   this->setWindowFlags(this->windowFlags()
                        & ~Qt::WindowContextHelpButtonHint);
 
-  m_pUi->lbl_Error->setStyleSheet("font-weight: bold; color: red;");
+  m_pUi->lbl_Error->setStyleSheet(
+        QStringLiteral("font-weight: bold; color: red;"));
   m_pUi->lbl_Error->clear();
 
   connect(m_pUi->button_Find, &QPushButton::clicked,
@@ -77,7 +78,8 @@ void FindReplace::showEvent(QShowEvent *event) {
 
   // Check if editor was set before
   if (!m_pEditor) {
-    QMessageBox::warning(nullptr, "Warning", "Couldn't access editor object.");
+    QMessageBox::warning(nullptr, QStringLiteral("Warning"),
+                         QStringLiteral("Couldn't access editor object."));
     qWarning() << Q_FUNC_INFO << "- m_pEditor = NULL";
     event->ignore();
     this->close();
@@ -170,7 +172,7 @@ void FindReplace::textSearchChanged() {
       m_pUi->lbl_Error->setText(regexp.errorString());
     }
   } else {
-    m_pUi->lbl_Error->setText("");
+    m_pUi->lbl_Error->setText(QLatin1String(""));
   }
 }
 
@@ -220,7 +222,7 @@ void FindReplace::find(const bool bForward) {
   }
 
   if (bResult) {
-    m_pUi->lbl_Error->setText("");
+    m_pUi->lbl_Error->setText(QLatin1String(""));
   } else {
     m_pUi->lbl_Error->setText(tr("Could not find your expression"));
     // Move to the beginning of the document for the next search cycle

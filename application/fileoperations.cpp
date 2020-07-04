@@ -89,7 +89,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
       m_LastOpenedFilesAct << new QAction(
                                 m_pSettings->getRecentFiles().at(i), this);
     } else {
-      m_LastOpenedFilesAct << new QAction("EMPTY", this);
+      m_LastOpenedFilesAct << new QAction(QStringLiteral("EMPTY"), this);
       m_LastOpenedFilesAct.at(i)->setVisible(false);
     }
     connect(m_LastOpenedFilesAct.at(i), &QAction::triggered,
@@ -113,14 +113,13 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
 // ----------------------------------------------------------------------------
 
 void FileOperations::newFile(QString sFileName) {
-  static quint8 nCntDocs = 0;
-
   m_pCurrentEditor = new TextEditor(m_sListTplMacros, tr("Template"),
                                     m_pParent);
   m_pListEditors << m_pCurrentEditor;
   m_pCurrentEditor->installEventFilter(m_pParent);
 
   if (sFileName.isEmpty() || "!_TPL_!" == sFileName) {
+    static quint8 nCntDocs = 0;
     m_bLoadPreview = ("!_TPL_!" != sFileName);
 
     nCntDocs++;
@@ -203,7 +202,7 @@ auto FileOperations::saveAs() -> bool {
   }
 
   QFileDialog saveDialog(m_pParent);
-  saveDialog.setDefaultSuffix("iny");
+  saveDialog.setDefaultSuffix(QStringLiteral("iny"));
   QString sFileName = saveDialog.getSaveFileName(m_pParent,
                                                  tr("Save file"),
                                                  sCurFileName,
@@ -257,7 +256,7 @@ void FileOperations::loadFile(const QString &sFileName,
                               const bool bUpdateRecent,
                               const bool bArchive) {
   QString sTmpName(sFileName);
-  if (sTmpName.endsWith(".inyzip")) {
+  if (sTmpName.endsWith(QLatin1String(".inyzip"))) {
     this->loadInyArchive(sTmpName);
     return;
   }
@@ -281,12 +280,12 @@ void FileOperations::loadFile(const QString &sFileName,
   QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
   m_bLoadPreview = false;
-  if (sTmpName.endsWith(".tpl")) {
-    sTmpName = "!_TPL_!";
+  if (sTmpName.endsWith(QLatin1String(".tpl"))) {
+    sTmpName = QStringLiteral("!_TPL_!");
   }
   if (bArchive) {
-    sTmpName.replace(".iny", ".inyzip");
-    sTmpName.replace(".inyoka", ".inyzip");
+    sTmpName.replace(QLatin1String(".iny"), QLatin1String(".inyzip"));
+    sTmpName.replace(QLatin1String(".inyoka"), QLatin1String(".inyzip"));
   }
   this->newFile(sTmpName);
   m_pCurrentEditor->setPlainText(in.readAll());
@@ -306,8 +305,8 @@ void FileOperations::loadFile(const QString &sFileName,
 // ----------------------------------------------------------------------------
 
 void FileOperations::loadInyArchive(const QString &sArchive) {
-  QString sArticle("");
-  QString sOutput("");
+  QString sArticle(QLatin1String(""));
+  QString sOutput;
   QFileInfo file(sArchive);
 
   mz_zip_archive archive;
@@ -357,7 +356,8 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 
     sOutput = file_stat.m_filename;
 
-    if (sOutput.endsWith(".iny") || sOutput.endsWith(".inyoka")) {
+    if (sOutput.endsWith(QLatin1String(".iny")) ||
+        sOutput.endsWith(QLatin1String(".inyoka"))) {
       // Extract article into same folder as archive
       sArticle = file.absolutePath() + "/" + sOutput;
       sOutput = sArticle;
@@ -393,17 +393,18 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 
 auto FileOperations::saveFile(QString sFileName) -> bool {
   QFile file;
-  if (sFileName.endsWith(".inyzip")) {
+  if (sFileName.endsWith(QLatin1String(".inyzip"))) {
     // Special characters not allowed for miniz achives
-    sFileName.replace(QString::fromUtf8("Ä"), "Ae");
-    sFileName.replace(QString::fromUtf8("Ü"), "Ue");
-    sFileName.replace(QString::fromUtf8("Ö"), "Oe");
-    sFileName.replace(QString::fromUtf8("ä"), "ae");
-    sFileName.replace(QString::fromUtf8("ü"), "ue");
-    sFileName.replace(QString::fromUtf8("ö"), "oe");
+    sFileName.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
+    sFileName.replace(QStringLiteral("Ü"), QLatin1String("Ue"));
+    sFileName.replace(QStringLiteral("Ö"), QLatin1String("Oe"));
+    sFileName.replace(QStringLiteral("ä"), QLatin1String("ae"));
+    sFileName.replace(QStringLiteral("ü"), QLatin1String("ue"));
+    sFileName.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
     QString sFile(sFileName);
-    file.setFileName(sFile.replace(".inyzip", ".iny"));
+    file.setFileName(sFile.replace(QLatin1String(".inyzip"),
+                                   QLatin1String(".iny")));
   } else {
     file.setFileName(sFileName);
   }
@@ -440,7 +441,7 @@ auto FileOperations::saveFile(QString sFileName) -> bool {
   QApplication::restoreOverrideCursor();
 #endif
 
-  if (sFileName.endsWith(".inyzip")) {
+  if (sFileName.endsWith(QLatin1String(".inyzip"))) {
     if (!this->saveInyArchive(sFileName)) {
       return false;
     }
@@ -487,7 +488,7 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   QString sHtml(in.readAll());
 
   QRegularExpression imgTagRegex(
-        "\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>",
+        QStringLiteral("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>"),
         QRegularExpression::InvertedGreedinessOption |
         QRegularExpression::DotMatchesEverythingOption |
         QRegularExpression::CaseInsensitiveOption);
@@ -498,9 +499,11 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
 
   while (it.hasNext()) {
     QRegularExpressionMatch match = it.next();
-    img.setFile(match.captured(1).remove("file:///"));  // (Windows file:///)
+    img.setFile(match.captured(1).remove(
+                  QStringLiteral("file:///")));  // (Windows file:///)
     if (sListFiles.contains(img.fileName()) ||
-        img.absoluteFilePath().contains("/community/", Qt::CaseInsensitive)) {
+        img.absoluteFilePath().contains(QLatin1String("/community/"),
+                                        Qt::CaseInsensitive)) {
       continue;  // Filter duplicates or community images
     }
     sListFiles << img.fileName();
@@ -569,9 +572,11 @@ void FileOperations::saveDocumentAuto() {
         if (m_pListEditors.at(i)->getFileName().contains(tr("Untitled"))) {
           fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
                                 QString::number(i) + ".bak~");
-        } else if (m_pListEditors.at(i)->getFileName().endsWith(".inyzip")) {
+        } else if (m_pListEditors.at(i)->getFileName().endsWith(
+                     QLatin1String(".inyzip"))) {
           QString sName(m_pListEditors.at(i)->getFileName().replace(
-                          ".inyzip", ".iny.bak~"));
+                          QLatin1String(".inyzip"),
+                          QLatin1String(".iny.bak~")));
           fAutoSave.setFileName(sName);
         } else {
           fAutoSave.setFileName(
@@ -606,7 +611,7 @@ void FileOperations::printPreview() {
 #endif
   QPrinter printer;
   QFile previewFile(m_sPreviewFile);
-  QString sHtml("");
+  QString sHtml(QLatin1String(""));
 
   QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
   if (listPrinters.isEmpty()) {
@@ -641,8 +646,8 @@ void FileOperations::printPreview() {
   }
 
   QTextStream in(&previewFile);
-  QString sTmpLine1("");
-  QString sTmpLine2("");
+  QString sTmpLine1;
+  QString sTmpLine2;
   while (!in.atEnd()) {
     sTmpLine1 = in.readLine() + "\n";
     sTmpLine2 = in.readLine() + "\n";
@@ -663,10 +668,10 @@ void FileOperations::printPreview() {
   */
 
   // Add style format; remove unwanted div for printing
-  sHtml.replace("</style>",
+  sHtml.replace(QLatin1String("</style>"),
                 "html{background-color:#ffffff; margin:40px;}\n"
                 "body{background-color:#ffffff;\n</style>");
-  sHtml.remove("<div class=\"wrap\">");
+  sHtml.remove(QStringLiteral("<div class=\"wrap\">"));
 
   previewWebView.setHtml(sHtml, QUrl::fromLocalFile(
                            QFileInfo(m_sPreviewFile)
@@ -687,8 +692,9 @@ void FileOperations::printPreview() {
   #if QT_VERSION >= 0x050800
     previewWebView.page()->print(&printer, [=](bool){});
   #else
-    QMessageBox::warning(0, tr("Warning"),
-                         "Printing not supported with Qt < 5.8.0 and QWebEngineView.");
+    QMessageBox::warning(
+          0, tr("Warning"),
+          "Printing not supported with Qt < 5.8.0 and QWebEngineView.");
     qWarning() << "Printing not supported with Qt < 5.8.0 and QWebEngineView.";
   #endif
 #endif
@@ -747,7 +753,7 @@ void FileOperations::updateRecentFiles(const QString &sFileName) {
 // ----------------------------------------------------------------------------
 
 void FileOperations::clearRecentFiles() {
-  this->updateRecentFiles("_-CL3AR#R3C3NT#F!L35-_");
+  this->updateRecentFiles(QStringLiteral("_-CL3AR#R3C3NT#F!L35-_"));
 }
 
 // ----------------------------------------------------------------------------
@@ -813,9 +819,10 @@ auto FileOperations::closeDocument(int nIndex) -> bool {
   this->setCurrentEditor();
 
   if (this->maybeSave()) {
-    if (m_pCurrentEditor->getFileName().endsWith(".inyzip")) {
+    if (m_pCurrentEditor->getFileName().endsWith(QLatin1String(".inyzip"))) {
       if (!QFile::remove(
-            m_pCurrentEditor->getFileName().replace(".inyzip", ".iny"))) {
+            m_pCurrentEditor->getFileName().replace(QLatin1String(".inyzip"),
+                                                    QLatin1String(".iny")))) {
         qWarning() << "Couldn't remove temp iny from archive" <<
                       m_pCurrentEditor->getFileName();
       }

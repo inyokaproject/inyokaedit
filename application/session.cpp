@@ -39,7 +39,7 @@ Session::Session(QWidget *pParent, const QString &sInyokaUrl,
   : m_pParent(pParent),
     m_sInyokaUrl(sInyokaUrl),
     m_State(REQUTOKEN),
-    m_sToken(""),
+    m_sToken(QLatin1String("")),
     m_sHash(sHash) {
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   m_pNwManager->setCookieJar(this);
@@ -78,7 +78,7 @@ void Session::requestToken() {
 #endif
 
   QString sLoginUrl(m_sInyokaUrl);
-  sLoginUrl = sLoginUrl.remove("wiki.") + "/login/";
+  sLoginUrl = sLoginUrl.remove(QStringLiteral("wiki.")) + "/login/";
   QNetworkRequest request(sLoginUrl);
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
@@ -99,12 +99,12 @@ void Session::requestToken() {
 void Session::getTokenReply(const QString &sNWReply) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
-  QString sSessionCookie("");
+  QString sSessionCookie(QLatin1String(""));
 
   if (!m_ListCookies.isEmpty()) {
     // qDebug() << "COOKIES:" << m_ListCookies;
 
-    QString sCookie("");
+    QString sCookie(QLatin1String(""));
     foreach (QNetworkCookie cookie, m_ListCookies) {
       if (cookie.isSessionCookie()) {
         sSessionCookie = cookie.toRawForm();
@@ -114,7 +114,7 @@ void Session::getTokenReply(const QString &sNWReply) {
       }
     }
 
-    m_sToken = "csrftoken=";
+    m_sToken = QStringLiteral("csrftoken=");
     int nInd = sCookie.indexOf(m_sToken) + m_sToken.length();
     m_sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
 
@@ -159,13 +159,13 @@ void Session::requestLogin() {
 
   QString sUrl(m_sInyokaUrl);
   bool bOk = false;
-  QString sUsername("");
-  QString sPassword("");
+  QString sUsername(QLatin1String(""));
+  QString sPassword(QLatin1String(""));
 
   sUsername = QInputDialog::getText(
                 m_pParent, tr("Login user"),
                 tr("Please insert your Inyoka user name:"),
-                QLineEdit::Normal, "", &bOk).trimmed();
+                QLineEdit::Normal, QLatin1String(""), &bOk).trimmed();
   if (!bOk || sUsername.isEmpty()) {
     return;
   }
@@ -173,12 +173,12 @@ void Session::requestLogin() {
   sPassword = QInputDialog::getText(
                 m_pParent, tr("Login password"),
                 tr("Please insert your Inyoka password:"),
-                QLineEdit::Password, "", &bOk).trimmed();
+                QLineEdit::Password, QLatin1String(""), &bOk).trimmed();
   if (!bOk || sPassword.isEmpty()) {
     return;
   }
 
-  sUrl = sUrl.remove("wiki.") + "/login/?next=" + m_sInyokaUrl;
+  sUrl = sUrl.remove(QStringLiteral("wiki.")) + "/login/?next=" + m_sInyokaUrl;
 
 #ifndef QT_NO_CURSOR
   QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -188,7 +188,7 @@ void Session::requestLogin() {
                     "application/x-www-form-urlencoded");
   // Referer needed with POST request + https in Django
   QString sReferer(m_sInyokaUrl);
-  sReferer = sReferer.remove("wiki.");
+  sReferer = sReferer.remove(QStringLiteral("wiki."));
   request.setRawHeader("Referer", sReferer.toLatin1());
   request.setRawHeader("User-Agent",
                        QString(qApp->applicationName() + "/"
@@ -197,11 +197,11 @@ void Session::requestLogin() {
   m_State = REQULOGIN;
 
   QUrlQuery params;
-  params.addQueryItem("csrfmiddlewaretoken", m_sToken);
-  params.addQueryItem("username", sUsername);
-  sPassword.replace(QChar('+'), QString("%2B"));
-  params.addQueryItem("password", sPassword);
-  params.addQueryItem("redirect", "");
+  params.addQueryItem(QStringLiteral("csrfmiddlewaretoken"), m_sToken);
+  params.addQueryItem(QStringLiteral("username"), sUsername);
+  sPassword.replace(QChar('+'), QStringLiteral("%2B"));
+  params.addQueryItem(QStringLiteral("password"), sPassword);
+  params.addQueryItem(QStringLiteral("redirect"), QLatin1String(""));
 
   QNetworkReply *pReply = m_pNwManager->post(
                             request, params.query(QUrl::FullyEncoded).toUtf8());
@@ -216,7 +216,7 @@ void Session::requestLogin() {
 
 void Session::getLoginReply(const QString &sNWReply) {
   // If "$IS_LOGGED_IN = false" is found in reply --> login failed
-  if (-1 != sNWReply.indexOf("$IS_LOGGED_IN = false")) {
+  if (-1 != sNWReply.indexOf(QLatin1String("$IS_LOGGED_IN = false"))) {
     m_State = REQUTOKEN;
     qWarning() << "LOGIN FAILED! Wrong credentials?";
     QMessageBox::warning(m_pParent, tr("Error"),
@@ -258,7 +258,8 @@ void Session::replyFinished(QNetworkReply *pReply) {
   QIODevice *pData(pReply);
 
   if (QNetworkReply::NoError != pReply->error()) {
-    QMessageBox::critical(m_pParent, "Error", pData->errorString());
+    QMessageBox::critical(m_pParent, QStringLiteral("Error"),
+                          pData->errorString());
     qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
                 << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
@@ -269,7 +270,7 @@ void Session::replyFinished(QNetworkReply *pReply) {
 
   m_ListCookies = this->allCookies();
   QString sReply = QString::fromUtf8(pData->readAll());
-  sReply.replace("\r\r\n", "\n");
+  sReply.replace(QLatin1String("\r\r\n"), QLatin1String("\n"));
 
   if (sReply.isEmpty()) {
     qDebug() << "Login NW reply is empty.";
@@ -277,9 +278,9 @@ void Session::replyFinished(QNetworkReply *pReply) {
 
   QString sAttribute(pReply->request().attribute(
                        QNetworkRequest::User).toString());
-  if (sAttribute.contains("ReqestToken")) {
+  if (sAttribute.contains(QLatin1String("ReqestToken"))) {
     this->getTokenReply(sReply);
-  } else if (sAttribute.contains("ReqestLogin")) {
+  } else if (sAttribute.contains(QLatin1String("ReqestLogin"))) {
     this->getLoginReply(sReply);
   } else {
     qWarning() << "Ran into unexpected state!";

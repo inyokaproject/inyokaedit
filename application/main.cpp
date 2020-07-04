@@ -56,21 +56,24 @@ void LoggingHandler(QtMsgType type,
 
 auto main(int argc, char *argv[]) -> int {
   QApplication app(argc, argv);
-  app.setApplicationName(APP_NAME);
-  app.setApplicationVersion(APP_VERSION);
+  app.setApplicationName(QStringLiteral(APP_NAME));
+  app.setApplicationVersion(QStringLiteral(APP_VERSION));
 
   QCommandLineParser cmdparser;
-  cmdparser.setApplicationDescription(APP_DESC);
+  cmdparser.setApplicationDescription(QStringLiteral(APP_DESC));
   cmdparser.addHelpOption();
   cmdparser.addVersionOption();
-  QCommandLineOption enableDebug("debug", "Enable debug mode");
+  QCommandLineOption enableDebug(QStringLiteral("debug"),
+                                 QStringLiteral("Enable debug mode"));
   cmdparser.addOption(enableDebug);
-  QCommandLineOption cmdShare(QStringList() << "s" << "share",
+  QCommandLineOption cmdShare(QStringList() << QStringLiteral("s") <<
+                              QStringLiteral("share"),
                               "User defined share folder (folder containing "
                               "community files, plugins, etc.)",
-                              "Path to folder");
+                              QStringLiteral("Path to folder"));
   cmdparser.addOption(cmdShare);
-  cmdparser.addPositionalArgument("file", "File to be opened");
+  cmdparser.addPositionalArgument(QStringLiteral("file"),
+                                  QStringLiteral("File to be opened"));
   cmdparser.process(app);
 
   // User data directory
@@ -78,7 +81,7 @@ auto main(int argc, char *argv[]) -> int {
                              QStandardPaths::DataLocation);
   if (sListPaths.isEmpty()) {
     qCritical() << "Error while getting data standard path.";
-    sListPaths << "";
+    sListPaths << QLatin1String("");
   }
   const QDir userDataDir(sListPaths[0].toLower());
 
@@ -94,7 +97,7 @@ auto main(int argc, char *argv[]) -> int {
                  + app.applicationName().toLower();
   }
 
-  const QString sDebugFile("debug.log");
+  const QString sDebugFile(QStringLiteral("debug.log"));
   if (!userDataDir.exists()) {
     // Create folder including possible parent directories (mkPATH)!
     userDataDir.mkpath(userDataDir.absolutePath());
@@ -107,7 +110,7 @@ auto main(int argc, char *argv[]) -> int {
   }
 
   const QStringList sListArgs = cmdparser.positionalArguments();
-  QString sArg("");
+  QString sArg(QLatin1String(""));
   if (!sListArgs.isEmpty()) {
     sArg = sListArgs.at(0);
   }

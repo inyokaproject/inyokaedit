@@ -41,8 +41,8 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   m_sListIWLUrls.clear();
   Templates::initMappings(sPath + "/linkmap/linkmap.csv", ',',
                           m_sListIWLs, m_sListIWLUrls);
-  m_sListIWLs << "user";      // "Build-in" IWL
-  m_sListIWLUrls << "user/";  // TODO(): Minor; add community URL?
+  m_sListIWLs << QStringLiteral("user");      // "Build-in" IWL
+  m_sListIWLUrls << QStringLiteral("user/");  // TODO(): Add community URL?
 
   m_sListFlags.clear();
   m_sListFlagsImg.clear();
@@ -68,9 +68,10 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
 
   m_sListTestedWithTouch.clear();
   m_sListTestedWithTouchStrings.clear();
-  Templates::initMappings(sSharePath + sPath + "/templates/TestedWithTouch.conf",
-                          '=', m_sListTestedWithTouch,
-                          m_sListTestedWithTouchStrings);
+  Templates::initMappings(
+        sSharePath + sPath + "/templates/TestedWithTouch.conf",
+        '=', m_sListTestedWithTouch,
+        m_sListTestedWithTouchStrings);
   tmpFile.setFileName(sUserDataDir + sPath + "/templates/TestedWithTouch.conf");
   if (tmpFile.exists()) {
     Templates::initMappings(tmpFile.fileName(), '=',
@@ -83,17 +84,17 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
 // ----------------------------------------------------------------------------
 
 void Templates::initTemplates(const QString &sTplPath) {
-  QFile TplFile("");
+  QFile TplFile(QLatin1String(""));
   QDir TplDir(sTplPath);
   QString tmpLine;
-  QString sTempTplText("");
-  QString sTempMacro("");
+  QString sTempTplText(QLatin1String(""));
+  QString sTempMacro(QLatin1String(""));
   bool bFoundMacro;
   bool bFoundTpl;
 
   // Get template files
-  QFileInfoList fiListTplFiles = TplDir.entryInfoList(QDir::NoDotAndDotDot
-                                                      | QDir::Files);
+  QFileInfoList fiListTplFiles = TplDir.entryInfoList(
+                                   QDir::NoDotAndDotDot | QDir::Files);
   foreach (QFileInfo fi, fiListTplFiles) {
     if ("tpl" == fi.completeSuffix()) {
       // qDebug() << fi.absoluteFilePath();
@@ -108,12 +109,13 @@ void Templates::initTemplates(const QString &sTplPath) {
 
         while (!in.atEnd()) {
           tmpLine = in.readLine().trimmed();
-          if (!tmpLine.startsWith("#")) {
+          if (!tmpLine.startsWith(QLatin1String("#"))) {
             bFoundTpl = true;
             sTempTplText += tmpLine + "\n";
-          } else if (tmpLine.startsWith("## Macro=") && !bFoundMacro) {
+          } else if (tmpLine.startsWith(QLatin1String("## Macro=")) &&
+                     !bFoundMacro) {
             bFoundMacro = true;
-            tmpLine = tmpLine.remove("## Macro=");
+            tmpLine = tmpLine.remove(QStringLiteral("## Macro="));
             sTempMacro = tmpLine.trimmed();
           }
         }
@@ -126,7 +128,7 @@ void Templates::initTemplates(const QString &sTplPath) {
         }
         TplFile.close();
       } else {
-        QMessageBox::warning(nullptr, "Warning",
+        QMessageBox::warning(nullptr, QStringLiteral("Warning"),
                              "Could not open template file: \n" +
                              fi.absoluteFilePath());
         qWarning() << "Could not open template file:"
@@ -138,14 +140,14 @@ void Templates::initTemplates(const QString &sTplPath) {
         QTextStream in(&TplFile);
         in.setCodec("UTF-8");
         tmpLine = in.readLine().trimmed();
-        if (tmpLine.startsWith("## Macro=")) {
-          tmpLine = tmpLine.remove("## Macro=");
+        if (tmpLine.startsWith(QLatin1String("## Macro="))) {
+          tmpLine = tmpLine.remove(QStringLiteral("## Macro="));
           m_sListTplMacrosALL << tmpLine.trimmed();
           m_sListTplNamesALL << fi.baseName();
         }
         TplFile.close();
       } else {
-        QMessageBox::warning(nullptr, "Warning",
+        QMessageBox::warning(nullptr, QStringLiteral("Warning"),
                              "Could not open macro file: \n" +
                              fi.absoluteFilePath());
         qWarning() << "Could not open macro file:"
@@ -158,8 +160,9 @@ void Templates::initTemplates(const QString &sTplPath) {
   m_sListTplNamesALL.append(m_sListTplNamesINY);
 
   if (m_sListTplNamesINY.isEmpty()) {
-    QMessageBox::warning(nullptr, "Warning",
-                         "Could not find any markup template files!");
+    QMessageBox::warning(
+          nullptr, QStringLiteral("Warning"),
+          QStringLiteral("Could not find any markup template files!"));
     qWarning() << "Could not find any template files in:"
                << TplDir.absolutePath();
   }
@@ -173,11 +176,12 @@ void Templates::initTemplates(const QString &sTplPath) {
 void Templates::initHtmlTpl(const QString &sTplFile) {
   QFile HTMLTplFile(sTplFile);
   if (!HTMLTplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(nullptr, "Warning",
-                         "Could not open preview template file!");
+    QMessageBox::warning(
+          nullptr, QStringLiteral("Warning"),
+          QStringLiteral("Could not open preview template file!"));
     qWarning() << "Could not open preview template file:"
                << HTMLTplFile.fileName();
-    m_sPreviewTemplate = "ERROR";
+    m_sPreviewTemplate = QStringLiteral("ERROR");
   } else {
     QTextStream in(& HTMLTplFile);
     in.setCodec("UTF-8");
@@ -196,11 +200,13 @@ void Templates::initMappings(const QString &sFileName,
                              QStringList &sListMapping) {
   QFile MapFile(sFileName);
   if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(nullptr, "Warning", "Could not open mapping file!");
+    QMessageBox::warning(
+          nullptr, QStringLiteral("Warning"),
+          QStringLiteral("Could not open mapping file!"));
     qWarning() << "Could not open mapping config file:"
                << MapFile.fileName();
-    sListElements << "ERROR";
-    sListMapping << "ERROR";
+    sListElements << QStringLiteral("ERROR");
+    sListMapping << QStringLiteral("ERROR");
   } else {
     QTextStream in(&MapFile);
     in.setCodec("UTF-8");
@@ -209,7 +215,8 @@ void Templates::initMappings(const QString &sFileName,
     QString sMapping;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
-      if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
+      if (!tmpLine.startsWith(QLatin1String("#")) &&
+          !tmpLine.trimmed().isEmpty()) {
         sElement = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
         sMapping = tmpLine.section(cSplit, 1);     // Second part after match
         if (!sElement.isEmpty() && !sMapping.isEmpty() &&
@@ -231,22 +238,24 @@ void Templates::initTextformats(const QString &sFilename) {
   QStringList sListInput;
 
   if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(nullptr,
-                         "Warning", "Could not open text formats file!");
+    QMessageBox::warning(
+          nullptr, QStringLiteral("Warning"),
+          QStringLiteral("Could not open text formats file!"));
     qWarning() << "Could not open text formats config file:"
                << formatsFile.fileName();
     // Initialize possible text formats
-    m_sListFormatStart << "ERROR";
-    m_sListFormatEnd << "ERROR";
-    m_sListFormatHtmlStart << "ERROR";
-    m_sListFormatHtmlEnd << "ERROR";
+    m_sListFormatStart << QStringLiteral("ERROR");
+    m_sListFormatEnd << QStringLiteral("ERROR");
+    m_sListFormatHtmlStart << QStringLiteral("ERROR");
+    m_sListFormatHtmlEnd << QStringLiteral("ERROR");
   } else {
     QTextStream in(&formatsFile);
     in.setCodec("UTF-8");
     QString tmpLine;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
-      if (!tmpLine.startsWith("#") && !tmpLine.trimmed().isEmpty()) {
+      if (!tmpLine.startsWith(QLatin1String("#")) &&
+          !tmpLine.trimmed().isEmpty()) {
         sListInput << tmpLine.trimmed();
       }
     }

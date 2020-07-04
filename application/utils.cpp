@@ -51,7 +51,8 @@ Utils::Utils(QWidget *pParent, QObject *pParentObj)
 
 auto Utils::getOnlineState() -> bool {
   QNetworkAccessManager nam;
-  QNetworkRequest req(QUrl("https://github.com/inyokaproject/inyokaedit"));
+  QNetworkRequest req(
+        QUrl(QStringLiteral("https://github.com/inyokaproject/inyokaedit")));
   QNetworkReply *reply = nam.get(req);
   QEventLoop loop;
   connect(reply, &QNetworkReply::readyRead, &loop, &QEventLoop::quit);
@@ -91,7 +92,8 @@ void Utils::setProxy(const QString &sHostName, const quint16 nPort,
 // ----------------------------------------------------------------------------
 
 void Utils::checkWindowsUpdate() {
-  QString sDownloadUrl("https://github.com/inyokaproject/inyokaedit/releases");
+  QString sDownloadUrl(
+        QStringLiteral("https://github.com/inyokaproject/inyokaedit/releases"));
   qDebug() << "Looking for updates...";
   m_NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
 }
@@ -106,7 +108,8 @@ void Utils::replyFinished(QNetworkReply *pReply) {
                << pData->errorString();
   } else {
     QRegularExpression regExp(
-          "\\bInyokaEdit-(\\d+.\\d+.\\d+)-\\d+-Windows_x64.zip\\b");
+          QStringLiteral(
+            "\\bInyokaEdit-(\\d+.\\d+.\\d+)-\\d+-Windows_x64.zip\\b"));
     QString sReply = QString::fromUtf8(pData->readAll());
     QRegularExpressionMatch match = regExp.match(sReply);
 
@@ -116,8 +119,8 @@ void Utils::replyFinished(QNetworkReply *pReply) {
       QString sLatestVersion(match.captured(1));
       qDebug() << "Latest version on server:" << sLatestVersion;
 
-      sListCurrentVer = qApp->applicationVersion().split(".");
-      sListLatestVer = sLatestVersion.split(".");
+      sListCurrentVer = qApp->applicationVersion().split(QStringLiteral("."));
+      sListLatestVer = sLatestVersion.split(QStringLiteral("."));
 
       if (sListCurrentVer.size() > 2 && sListLatestVer.size() > 2) {
         auto nMainVer1 = static_cast<quint8>(sListCurrentVer[0].toUInt());
@@ -154,7 +157,9 @@ void Utils::replyFinished(QNetworkReply *pReply) {
           if (msgBox->clickedButton() == yesButton) {
             qDebug() << "Calling download page.";
             QDesktopServices::openUrl(
-                  QUrl("https://github.com/inyokaproject/inyokaedit/releases"));
+                  QUrl(
+                    QStringLiteral(
+                      "https://github.com/inyokaproject/inyokaedit/releases")));
           } else if (msgBox->clickedButton() == noButton) {
             qDebug() << "Don't want to download an update.";
           }

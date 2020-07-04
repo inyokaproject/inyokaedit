@@ -53,7 +53,7 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
                        const QString &sTransTemplate,
                        QWidget *pParent)
   : QTextEdit(pParent),
-    m_sFileName(""),
+    m_sFileName(QLatin1String("")),
     m_bCodeCompletion(false),
     m_sListCompleter(sListTplMacros) {
   for (int i = 0; i < m_sListCompleter.size(); i++) {
@@ -61,10 +61,14 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
         !m_sListCompleter[i].startsWith('{')) {
       m_sListCompleter[i].clear();
     }
-    m_sListCompleter[i].replace("\\n", "\n");
-    m_listPosCompleter << QPoint(m_sListCompleter[i].indexOf("%%"),
-                                 m_sListCompleter[i].lastIndexOf("%%"));
-    m_sListCompleter[i].remove("%%");
+    m_sListCompleter[i].replace(QLatin1String("\\n"),
+                                QLatin1String("\n"));
+    m_listPosCompleter << QPoint(
+                            m_sListCompleter[i].indexOf(
+                              QLatin1String("%%")),
+                            m_sListCompleter[i].lastIndexOf(
+                              QLatin1String("%%")));
+    m_sListCompleter[i].remove(QStringLiteral("%%"));
   }
   m_sListCompleter.push_front("[[" + sTransTemplate + "(");
   m_sListCompleter.push_front("{{{#!" + sTransTemplate.toLower() + " ");
@@ -195,7 +199,8 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
     return;
   }
 
-  static QString eow("~@$%^&*_+|:\"<>?,./;'\\-=");  // End of word
+  // End of word
+  static QString eow(QStringLiteral("~@$%^&*_+|:\"<>?,./;'\\-="));
   bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
   QString completionPrefix = this->getLineUnderCursor();
 

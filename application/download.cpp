@@ -39,8 +39,8 @@ Download::Download(QWidget *pParent, Session *pSession,
     m_pSession(pSession),
     m_sStylesDir(sStylesDir),
     m_sImgDir(sImgDir),
-    m_sInyokaUrl("https://wiki.ubuntuusers.de"),
-    m_sConstructionArea(""),
+    m_sInyokaUrl(QStringLiteral("https://wiki.ubuntuusers.de")),
+    m_sConstructionArea(QLatin1String("")),
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath),
     m_bDownloadArticle(true) {
@@ -76,7 +76,7 @@ void Download::downloadArticle(QString sUrl) {
   }
 
   if (sUrl.isEmpty()) {
-    m_sRevision = "";
+    m_sRevision = QLatin1String("");
     bool bOk;
 
     // Show input dialog
@@ -91,16 +91,17 @@ void Download::downloadArticle(QString sUrl) {
     if (!bOk || m_sSitename.isEmpty()) {
       return;
     }
-    m_sSitename.replace(" ", "_");
+    m_sSitename.replace(QLatin1String(" "), QLatin1String("_"));
     if (m_sSitename.endsWith('/')) {
       m_sSitename.remove(m_sSitename.length() - 1, 1);
     }
 
     // Download specific revision
-    if (m_sSitename.contains("@rev=")) {
-      m_sRevision = m_sSitename.mid(m_sSitename.indexOf("@rev="));
-      m_sRevision.remove("@rev=");
-      m_sSitename.remove(m_sSitename.indexOf("@rev="),
+    if (m_sSitename.contains(QLatin1String("@rev="))) {
+      m_sRevision = m_sSitename.mid(
+                      m_sSitename.indexOf(QLatin1String("@rev=")));
+      m_sRevision.remove(QStringLiteral("@rev="));
+      m_sSitename.remove(m_sSitename.indexOf(QLatin1String("@rev=")),
                          m_sSitename.length());
       m_sRevision = m_sRevision + "/";
     }
@@ -189,7 +190,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
 
     if (m_bDownloadArticle) {
       // Replace windows specific newlines
-      sTmpArticle.replace("\r\r\n", "\n");
+      sTmpArticle.replace(QLatin1String("\r\r\n"), QLatin1String("\n"));
 
       // Site does not exist etc.
       if (sTmpArticle.isEmpty()) {
@@ -215,7 +216,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
       }
 
       // Copy metadata line by line in list
-      sListTmp << sTmpArticle.split("\n");
+      sListTmp << sTmpArticle.split(QStringLiteral("\n"));
       // qDebug() << "META files:" << sListTmp;
 
       // Get only attachments article metadata
@@ -223,9 +224,9 @@ void Download::replyFinished(QNetworkReply *pReply) {
         if (sListTmp[i].startsWith("X-Attach: " + m_sSitename + "/",
                                    Qt::CaseInsensitive)) {
           // Remove "X-Attach: "
-          sListMetadata << sListTmp[i].remove("X-Attach: ");
+          sListMetadata << sListTmp[i].remove(QStringLiteral("X-Attach: "));
           // Remove windows specific newline \r
-          sListMetadata.last().remove("\r");
+          sListMetadata.last().remove(QStringLiteral("\r"));
           sListMetadata.last() = m_sInyokaUrl + "/_image?target="
                                  + sListMetadata.last();
           sListSaveFolder << m_sImgDir;

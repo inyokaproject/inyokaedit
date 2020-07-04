@@ -49,7 +49,7 @@ class Upload : public QObject {
     void clickUploadArticle();
 
  private:
-    void requestRevision(QString sUrl = "");
+    void requestRevision(QString sUrl = QLatin1String(""));
     void getRevisionReply(const QString &sNWReply);
     auto redirectUrl(const QUrl& possibleRedirectUrl,
                      const QUrl& oldRedirectUrl) -> QUrl;

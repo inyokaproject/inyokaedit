@@ -46,7 +46,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
                        const QString &sArg, QWidget *parent)
   : QMainWindow(parent),
     m_pUi(new Ui::InyokaEdit),
-    m_sCurrLang(""),
+    m_sCurrLang(QLatin1String("")),
     m_sSharePath(sharePath.absolutePath()),
     m_UserDataDir(userDataDir),
     m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
@@ -59,7 +59,8 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   m_pUi->setupUi(this);
 
   if (!sharePath.exists()) {
-    QMessageBox::warning(nullptr, "Warning", "App share folder not found!");
+    QMessageBox::warning(nullptr, QStringLiteral("Warning"),
+                         QStringLiteral("App share folder not found!"));
     qWarning() << "Share folder does not exist:" << m_sSharePath;
     exit(-1);
   }
@@ -196,7 +197,7 @@ void InyokaEdit::createObjects() {
   connect(m_pFileOperations, &FileOperations::movedEditorScrollbar,
           this, &InyokaEdit::syncScrollbarsEditor);
 
-  m_pWebview->settings()->setDefaultTextEncoding("utf-8");
+  m_pWebview->settings()->setDefaultTextEncoding(QStringLiteral("utf-8"));
 #else
   m_pWebview = new QWebEngineView(this);
 #endif
@@ -440,9 +441,11 @@ void InyokaEdit::createActions() {
 
   // Report a bug
   connect(m_pUi->reportBugAct, &QAction::triggered,
-          this, []() {
+          this,[]() {
     QDesktopServices::openUrl(
-          QUrl("https://github.com/inyokaproject/inyokaedit/issues")); });
+          QUrl(
+            QStringLiteral(
+              "https://github.com/inyokaproject/inyokaedit/issues"))); });
 
   // Open about windwow
   connect(m_pUi->aboutAct, &QAction::triggered, this, &InyokaEdit::showAbout);
@@ -478,7 +481,9 @@ void InyokaEdit::createMenus() {
     foreach (QFileInfo fi, fiListFiles) {
       if ("tpl" == fi.suffix()) {
         m_OpenTemplateFilesActions << new QAction(
-                                        fi.baseName().replace("_", " "),
+                                        fi.baseName().replace(
+                                          QLatin1String("_"),
+                                          QLatin1String(" ")),
                                         this);
         connect(m_OpenTemplateFilesActions.last(), &QAction::triggered,
                 this, [this, fi]() {
@@ -559,7 +564,9 @@ void InyokaEdit::createXmlMenus() {
   QString sTmpPath;
   sListFolders << m_sSharePath << m_UserDataDir.absolutePath();
   QStringList sListObjects;
-  sListObjects << "menu" << "dropdown" << "toolbar";
+  sListObjects << QStringLiteral("menu") <<
+                  QStringLiteral("dropdown") <<
+                  QStringLiteral("toolbar");
   const int MAXFILES = 9;
 
   this->clearXmlMenus();
@@ -577,7 +584,8 @@ void InyokaEdit::createXmlMenus() {
               sTmpPath + sObj + "_" + QString::number(n) + "_" +
               m_pSettings->getGuiLanguage() + ".xml");
 
-        if (!xmlFile.exists() && m_pSettings->getGuiLanguage() != "en") {
+        if (!xmlFile.exists() &&
+            m_pSettings->getGuiLanguage() != QLatin1String("en")) {
           if (1 == n && sPath == m_sSharePath) {
             qWarning() << "Xml menu file not found:" << xmlFile.fileName() <<
                           "- Trying to load English fallback.";
@@ -585,7 +593,7 @@ void InyokaEdit::createXmlMenus() {
           // Try English fallback
           QString sTemp(xmlFile.fileName());
           sTemp.replace("_" + m_pSettings->getGuiLanguage() + ".xml",
-                        "_en.xml");
+                        QLatin1String("_en.xml"));
           xmlFile.setFileName(sTemp);
         }
 
@@ -594,8 +602,10 @@ void InyokaEdit::createXmlMenus() {
           if (xmlParser.parseXml(xmlFile.fileName())) {
             QString sIconPath(xmlParser.getPath());
             if (this->window()->palette().window().color().lightnessF() < 0.5 &&
-                sIconPath.contains("light")) {
-              sIconPath.replace("light", "dark", Qt::CaseInsensitive);
+                sIconPath.contains(QLatin1String("light"))) {
+              sIconPath.replace(QLatin1String("light"),
+                                QLatin1String("dark"),
+                                Qt::CaseInsensitive);
             }
 
             if ("menu" == sObj) {
@@ -640,9 +650,9 @@ void InyokaEdit::createXmlMenus() {
 
                 // qDebug() << "INSERT" << xmlParser.getElementInserts()[i][j];
                 if (xmlParser.getElementInserts().at(i).at(j).endsWith(
-                      ".tpl", Qt::CaseInsensitive) ||
+                      QLatin1String(".tpl"), Qt::CaseInsensitive) ||
                     xmlParser.getElementInserts().at(i).at(j).endsWith(
-                      ".macro", Qt::CaseInsensitive)) {
+                      QLatin1String(".macro"), Qt::CaseInsensitive)) {
                   QFile tmp(sTmpPath + xmlParser.getPath() + "/" +
                             xmlParser.getElementInserts().at(i).at(j));
                   if (tmp.exists()) {
@@ -741,7 +751,7 @@ void InyokaEdit::openFile() {
 void InyokaEdit::previewInyokaPage() {
   m_pWebview->history()->clear();  // Clear history (clicked links)
 
-  QString sRetHTML("");
+  QString sRetHTML(QLatin1String(""));
   sRetHTML = m_pParser->genOutput(m_pFileOperations->getCurrentFile(),
                                   m_pCurrentEditor->document(),
                                   m_pSettings->getSyntaxCheck());
@@ -816,7 +826,7 @@ auto InyokaEdit::getHighlightErrorColor() -> QColor {
                      qApp->applicationName().toLower(),
                      qApp->applicationName().toLower());
 #endif
-  QString sStyle = settings.value("Plugin_highlighter/Style",
+  QString sStyle = settings.value(QStringLiteral("Plugin_highlighter/Style"),
                                   "standard-style").toString();
 
 #if defined __linux__
@@ -826,10 +836,11 @@ auto InyokaEdit::getHighlightErrorColor() -> QColor {
   QSettings styleset(QSettings::IniFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(), sStyle);
 #endif
-  sStyle = styleset.value("Style/SyntaxError",
+  sStyle = styleset.value(QStringLiteral("Style/SyntaxError"),
                           "---|---|---|0xffff00").toString();
 
-  QColor color(sStyle.right(8).replace("0x", "#"));
+  QColor color(sStyle.right(8).replace(QLatin1String("0x"),
+                                       QLatin1String("#")));
   if (color.isValid()) {
     return color;
   }
@@ -856,26 +867,28 @@ void InyokaEdit::dropdownXmlChanged(int nIndex) {
 
 // Insert macro/template/IWL/text from XML menu/toolbar/dropdown
 void InyokaEdit::insertMacro(const QString &sInsert) {
-  QString sMacro("");
+  QString sMacro(QLatin1String(""));
 
-  if (sInsert.endsWith(".tpl", Qt::CaseInsensitive) ||
-      sInsert.endsWith(".macro", Qt::CaseInsensitive)) {
+  if (sInsert.endsWith(QLatin1String(".tpl"), Qt::CaseInsensitive) ||
+      sInsert.endsWith(QLatin1String(".macro"), Qt::CaseInsensitive)) {
     QFile tplFile(sInsert);
     if (tplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
       QTextStream in(&tplFile);
       in.setCodec("UTF-8");
       sMacro = in.readLine().trimmed();  // First line HAS to include ## Macro
-      sMacro = sMacro.remove("## Macro=");
+      sMacro = sMacro.remove(QStringLiteral("## Macro="));
       tplFile.close();
     } else {
-      QMessageBox::warning(this, "Warning", "Could not open macro file: \n" +
+      QMessageBox::warning(this, QStringLiteral("Warning"),
+                           "Could not open macro file: \n" +
                            tplFile.fileName());
       qWarning() << "Could not open macro file:" << tplFile.fileName();
       return;
     }
 
     if (sMacro.isEmpty()) {
-      QMessageBox::warning(this, "Warning", "Macro file was empty!");
+      QMessageBox::warning(this, QStringLiteral("Warning"),
+                           QStringLiteral("Macro file was empty!"));
       qWarning() << "Macro file was empty:" << tplFile.fileName();
       return;
     }
@@ -883,14 +896,14 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
     sMacro = sInsert;
   }
 
-  sMacro.replace("\\n", "\n");
-  int nPlaceholder1(sMacro.indexOf("%%"));
-  int nPlaceholder2(sMacro.lastIndexOf("%%"));
+  sMacro.replace(QLatin1String("\\n"), QLatin1String("\n"));
+  int nPlaceholder1(sMacro.indexOf(QLatin1String("%%")));
+  int nPlaceholder2(sMacro.lastIndexOf(QLatin1String("%%")));
 
   // No text selected
   if (m_pCurrentEditor->textCursor().selectedText().isEmpty()) {
     int nCurrentPos = m_pCurrentEditor->textCursor().position();
-    sMacro.remove("%%");  // Remove placeholder
+    sMacro.remove(QStringLiteral("%%"));  // Remove placeholder
     m_pCurrentEditor->insertPlainText(sMacro);
 
     // Select placeholder
@@ -911,10 +924,10 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
         && nPlaceholder2 >= 0) {
       sTmp.replace(nPlaceholder1, nPlaceholder2 - nPlaceholder1,
                    m_pCurrentEditor->textCursor().selectedText());
-      m_pCurrentEditor->insertPlainText(sTmp.remove("%%"));
+      m_pCurrentEditor->insertPlainText(sTmp.remove(QStringLiteral("%%")));
     } else {
       // No placeholder defined (or problem with placeholder)
-      m_pCurrentEditor->insertPlainText(sMacro.remove("%%"));
+      m_pCurrentEditor->insertPlainText(sMacro.remove(QStringLiteral("%%")));
     }
   }
 
@@ -1034,11 +1047,11 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
 
     if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
       QString sBlock = m_pCurrentEditor->textCursor().block().text();
-      if (sBlock.startsWith(" * ") && sBlock.length() > 3) {
-        m_pCurrentEditor->textCursor().insertText("\n * ");
+      if (sBlock.startsWith(QLatin1String(" * ")) && sBlock.length() > 3) {
+        m_pCurrentEditor->textCursor().insertText(QStringLiteral("\n * "));
         return true;
       }
-      if (sBlock.startsWith(" * ") && 3 == sBlock.length()) {
+      if (sBlock.startsWith(QLatin1String(" * ")) && 3 == sBlock.length()) {
         m_pCurrentEditor->textCursor().deletePreviousChar();
         m_pCurrentEditor->textCursor().deletePreviousChar();
         m_pCurrentEditor->textCursor().deletePreviousChar();
@@ -1138,7 +1151,8 @@ void InyokaEdit::deleteAutoSaveBackups() {
   QFileInfoList fiListFiles = dir.entryInfoList(
                                 QDir::NoDotAndDotDot | QDir::Files);
   foreach (QFileInfo fi, fiListFiles) {
-    if ("bak~" == fi.suffix() && fi.baseName().startsWith("AutoSave")) {
+    if ("bak~" == fi.suffix() &&
+        fi.baseName().startsWith(QLatin1String("AutoSave"))) {
       if (!dir.remove(fi.fileName())) {
         qWarning() << "Could not delete auto save backup file:" <<
                       fi.fileName();
@@ -1220,7 +1234,8 @@ auto InyokaEdit::switchTranslator(QTranslator *translator,
   if (translator->load(sFile, sPath)) {
     qApp->installTranslator(translator);
   } else {
-    if (!sFile.endsWith("_en") && !sFile.endsWith("_en.qm")) {
+    if (!sFile.endsWith(QLatin1String("_en")) &&
+        !sFile.endsWith(QLatin1String("_en.qm"))) {
       // EN is build in translation -> no file
       qWarning() << "Could not find translation" << sFile << "in" << sPath;
     }
@@ -1263,7 +1278,7 @@ void InyokaEdit::showSyntaxOverview() {
 
   QTextStream in(&OverviewFile);
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::warning(nullptr, "Warning",
+    QMessageBox::warning(nullptr, QStringLiteral("Warning"),
                          tr("Could not open syntax overview file!"));
     qWarning() << "Could not open syntax overview file:"
                << OverviewFile.fileName();
@@ -1278,14 +1293,15 @@ void InyokaEdit::showSyntaxOverview() {
   pTextDocument->setPlainText(in.readAll());
   OverviewFile.close();
 
-  QString sRet(m_pParser->genOutput("", pTextDocument));
+  QString sRet(m_pParser->genOutput(QLatin1String(""), pTextDocument));
   sRet.remove(
-        QRegularExpression("<h1 class=\"pagetitle\">.*</h1>",
+        QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
                            QRegularExpression::DotMatchesEverythingOption));
   sRet.remove(
-        QRegularExpression("<p class=\"meta\">.*</p>",
+        QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
                            QRegularExpression::DotMatchesEverythingOption));
-  sRet.replace("</style>", "#page table{margin:0px;}</style>");
+  sRet.replace(QLatin1String("</style>"),
+               QLatin1String("#page table{margin:0px;}</style>"));
   pTextDocument->setPlainText(sRet);
 
   pLayout->setContentsMargins(2, 2, 2, 2);

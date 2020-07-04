@@ -80,7 +80,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
           m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
   } else {
     m_pUi->GuiLangCombo->setCurrentIndex(
-          m_pUi->GuiLangCombo->findText("auto"));
+          m_pUi->GuiLangCombo->findText(QStringLiteral("auto")));
   }
   m_sGuiLang = m_pUi->GuiLangCombo->currentText();
 
@@ -146,7 +146,7 @@ SettingsDialog::~SettingsDialog() {
 
 void SettingsDialog::accept() {
   QString tmpReloadPreviewKey(m_pUi->reloadPreviewKeyEdit->text());
-  if (!tmpReloadPreviewKey.startsWith("0x")) {
+  if (!tmpReloadPreviewKey.startsWith(QLatin1String("0x"))) {
     tmpReloadPreviewKey = "0x" + tmpReloadPreviewKey;
   }
 
@@ -195,8 +195,8 @@ void SettingsDialog::accept() {
   }
   oldDisabledPlugins.sort();  // Sort for comparison
   m_pSettings->m_sListDisabledPlugins.sort();
-  oldDisabledPlugins.removeAll("");
-  m_pSettings->m_sListDisabledPlugins.removeAll("");
+  oldDisabledPlugins.removeAll(QLatin1String(""));
+  m_pSettings->m_sListDisabledPlugins.removeAll(QLatin1String(""));
 
   if (m_pUi->GuiLangCombo->currentText() != m_sGuiLang) {
     emit changeLang(m_pSettings->getGuiLanguage());
@@ -210,13 +210,14 @@ void SettingsDialog::accept() {
           m_pUi->CommunityCombo->currentText() + "/community.conf");
     QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
     communityConfig.setIniCodec("UTF-8");
-    QString sValue(communityConfig.value("ConstructionArea", "").toString());
+    QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"),
+                                         "").toString());
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka construction area not found!";
     } else {
       m_pSettings->m_sInyokaConstArea = sValue;
     }
-    sValue = communityConfig.value("Hash", "").toString();
+    sValue = communityConfig.value(QStringLiteral("Hash"), "").toString();
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka hash is empty!";
     } else {
@@ -254,7 +255,7 @@ auto SettingsDialog::eventFilter(QObject *obj, QEvent *event) -> bool {
               "0x" + QString::number(keyEvent->key(), 16));
         return true;
       }
-      m_pUi->reloadPreviewKeyEdit->setText("0x0");
+      m_pUi->reloadPreviewKeyEdit->setText(QStringLiteral("0x0"));
     }
   }
   return QObject::eventFilter(obj, event);
@@ -278,7 +279,8 @@ void SettingsDialog::changedCommunity(int nIndex) {
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
   communityConfig.setIniCodec("UTF-8");
 
-  QString sUrl(communityConfig.value("InyokaUrl", "").toString());
+  QString sUrl(communityConfig.value(QStringLiteral("InyokaUrl"),
+                                     "").toString());
   if (sUrl.isEmpty()) {
     qWarning() << "Community Url not found!";
     QMessageBox::warning(nullptr, tr("Warning"),
@@ -341,9 +343,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
     if (m_listPLugins.at(nRow)->hasSettings()) {
       m_listPluginInfoButtons << new QPushButton(
                                    QIcon::fromTheme(
-                                     "preferences-system",
+                                     QStringLiteral("preferences-system"),
                                      QIcon(":/images/preferences-system.png")),
-                                   "");
+                                   QLatin1String(""));
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
               PluginObjList.at(nRow), [=]() {
         qobject_cast<IEditorPlugin *>(PluginObjList.at(nRow))->showSettings(); });
@@ -360,8 +362,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
     // Info
     m_listPluginInfoButtons << new QPushButton(
                                  QIcon::fromTheme(
-                                   "help-about",
-                                   QIcon(":/images/help-browser.png")), "");
+                                   QStringLiteral("help-about"),
+                                   QIcon(":/images/help-browser.png")),
+                                 QLatin1String(""));
     connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
             PluginObjList[nRow], [=]() {
       qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showAbout(); });
@@ -378,7 +381,7 @@ auto SettingsDialog::searchTranslations() -> QStringList {
   QString sTmp;
 
   // Translations build in resources
-  QDirIterator it(":", QStringList() << "*.qm",
+  QDirIterator it(QStringLiteral(":"), QStringList() << QStringLiteral("*.qm"),
                   QDir::NoDotAndDotDot | QDir::Files);
   while (it.hasNext()) {
     it.next();
@@ -386,14 +389,16 @@ auto SettingsDialog::searchTranslations() -> QStringList {
     // qDebug() << sTmp;
 
     if (sTmp.startsWith(qApp->applicationName().toLower() + "_") &&
-        sTmp.endsWith(".qm")) {
+        sTmp.endsWith(QLatin1String(".qm"))) {
       sList << sTmp.remove(
-                 qApp->applicationName().toLower() + "_").remove(".qm");
+                 qApp->applicationName().toLower() + "_").remove(
+                 QStringLiteral(".qm"));
     }
   }
 
   // Check for additional translation files in share folder
-  QDirIterator it2(m_sSharePath + "/lang", QStringList() << "*.qm",
+  QDirIterator it2(m_sSharePath + "/lang",
+                   QStringList() << QStringLiteral("*.qm"),
                    QDir::NoDotAndDotDot | QDir::Files);
   while (it2.hasNext()) {
     it2.next();
@@ -402,15 +407,16 @@ auto SettingsDialog::searchTranslations() -> QStringList {
 
     if (sTmp.startsWith(qApp->applicationName().toLower() + "_")) {
       sTmp = sTmp.remove(
-               qApp->applicationName().toLower() + "_") .remove(".qm");
+               qApp->applicationName().toLower() + "_") .remove(
+               QStringLiteral(".qm"));
       if (!sList.contains(sTmp)) {
         sList << sTmp;
       }
     }
   }
 
-  sList << "en";
+  sList << QStringLiteral("en");
   sList.sort();
-  sList.push_front("auto");
+  sList.push_front(QStringLiteral("auto"));
   return sList;
 }
