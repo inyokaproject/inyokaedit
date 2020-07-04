@@ -73,8 +73,8 @@ void ParseTable::startParsing(QTextDocument *pRawDoc) {
 auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QString sRet("");
   QStringList sListCells;
-  QString sLine("");
-  QString sCell("");
+  QString sLine;
+  QString sCell;
   QString sFormating("");
   QString sTmpStyle("");
 

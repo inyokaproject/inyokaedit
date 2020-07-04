@@ -86,23 +86,24 @@ class SpellChecker : public QObject, IEditorPlugin {
     ~SpellChecker();
 
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                    const QDir &userDataDir, const QString &sSharePath);
-    auto getPluginName() const -> QString;
-    auto getPluginVersion() const -> QString;
-    void installTranslator(const QString &sLang);
-    auto getCaption() const -> QString;
-    auto getIcon() const -> QIcon;
-    auto includeMenu() const -> bool;
-    auto includeToolbar() const -> bool;
-    bool hasSettings() const;
-    void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(const QList<TextEditor *> &listEditors);
+                    const QDir &userDataDir,
+                    const QString &sSharePath) override;
+    auto getPluginName() const -> QString override;
+    auto getPluginVersion() const -> QString override;
+    void installTranslator(const QString &sLang) override;
+    auto getCaption() const -> QString override;
+    auto getIcon() const -> QIcon override;
+    auto includeMenu() const -> bool override;
+    auto includeToolbar() const -> bool override;
+    bool hasSettings() const override;
+    void setCurrentEditor(TextEditor *pEditor) override;
+    void setEditorlist(const QList<TextEditor *> &listEditors) override;
 
  public slots:
-    void callPlugin();
-    void executePlugin();
-    void showSettings();
-    void showAbout();
+    void callPlugin() override;
+    void executePlugin() override;
+    void showSettings() override;
+    void showAbout() override;
 
  private:
     friend class SpellCheckDialog;

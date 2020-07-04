@@ -34,7 +34,7 @@ void ParseTxtMap::startParsing(QTextDocument *pRawDoc,
                                QStringList sListElements,
                                QStringList sListText) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sReplace("");
+  QString sReplace;
 
   for (int i = 0; i < sListElements.size(); i++) {
     if (0 == i && "error" == sListElements[0].toLower()) {

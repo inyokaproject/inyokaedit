@@ -857,7 +857,6 @@ void InyokaEdit::dropdownXmlChanged(int nIndex) {
 // Insert macro/template/IWL/text from XML menu/toolbar/dropdown
 void InyokaEdit::insertMacro(const QString &sInsert) {
   QString sMacro("");
-  QString sTmp("");
 
   if (sInsert.endsWith(".tpl", Qt::CaseInsensitive) ||
       sInsert.endsWith(".macro", Qt::CaseInsensitive)) {
@@ -906,7 +905,7 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
     }
   } else {
     // Some text is selected
-    sTmp = sMacro;
+    QString sTmp = sMacro;
     if ((nPlaceholder1 != nPlaceholder2)
         && nPlaceholder1 >= 0
         && nPlaceholder2 >= 0) {

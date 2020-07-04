@@ -85,7 +85,7 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
 void Templates::initTemplates(const QString &sTplPath) {
   QFile TplFile("");
   QDir TplDir(sTplPath);
-  QString tmpLine("");
+  QString tmpLine;
   QString sTempTplText("");
   QString sTempMacro("");
   bool bFoundMacro;

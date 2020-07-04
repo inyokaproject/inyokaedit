@@ -44,7 +44,7 @@ Macros::Macros(const QString &sSharePath,
   } else {
     QTextStream in(&fiMacros);
     in.setCodec("UTF-8");
-    QString tmpLine("");
+    QString tmpLine;
     QStringList tmpList;
     QStringList tmpList2;
     MACRO tmpMacro;
