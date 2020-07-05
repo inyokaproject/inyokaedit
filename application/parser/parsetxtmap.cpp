@@ -27,6 +27,7 @@
 #include "./parsetxtmap.h"
 
 #include <QDebug>
+#include <QTextDocument>
 
 ParseTxtMap::ParseTxtMap() = default;
 

@@ -31,6 +31,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QTextDocument>
 
 Macros::Macros(const QString &sSharePath,
                const QDir &tmpImgDir)

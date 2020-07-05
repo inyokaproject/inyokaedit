@@ -27,10 +27,13 @@
 #ifndef APPLICATION_UPLOAD_H_
 #define APPLICATION_UPLOAD_H_
 
-#include <QNetworkReply>
-#include <QTextEdit>
+#include <QObject>
+#include <QUrl>
 
-#include "./session.h"
+class QNetworkReply;
+class QTextEdit;
+
+class Session;
 
 /**
  * \class Upload

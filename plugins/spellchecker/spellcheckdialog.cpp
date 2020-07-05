@@ -56,7 +56,7 @@
 #include "./spellcheckdialog.h"
 
 #include <QDebug>
-#include <QTextEdit>
+#include <QSettings>
 
 #include "ui_spellcheckdialog.h"
 #include "./spellchecker.h"

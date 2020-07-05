@@ -29,6 +29,7 @@
 #include <QRegExp>
 #include <QStringList>
 #include <QTextBlock>
+#include <QTextDocument>
 
 ParseTable::ParseTable() = default;
 

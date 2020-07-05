@@ -27,9 +27,13 @@
 #ifndef APPLICATION_DOWNLOADIMG_H_
 #define APPLICATION_DOWNLOADIMG_H_
 
-#include <QNetworkReply>
-#include <QProgressDialog>
+#include <QObject>
 #include <QStringList>
+#include <QUrl>
+
+class QNetworkAccessManager;
+class QNetworkReply;
+class QProgressDialog;
 
 class DownloadImg : public QObject {
   Q_OBJECT
@@ -53,8 +57,8 @@ class DownloadImg : public QObject {
     void doDownload(const QUrl &url,
                     const QString &sSavePath,
                     const QString &sBase = QLatin1String(""));
-    static auto redirectUrl(const QUrl& possibleRedirectUrl,
-                            const QUrl& oldRedirectUrl) -> QUrl;
+    static auto redirectUrl(const QUrl &possibleRedirectUrl,
+                            const QUrl &oldRedirectUrl) -> QUrl;
 
     QNetworkAccessManager* m_pNwManager;
     QList<QNetworkReply *> m_listDownloadReplies;

@@ -56,22 +56,26 @@
 #ifndef PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 #define PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 
+#include <QDir>
 #include <QObject>
 #include <QTranslator>
 #include <QtPlugin>
-#include <QSettings>
 #include <QString>
 #include <QTextCursor>
 
-#include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
-#include "./spellcheckdialog.h"
 
 #if defined _WIN32
 #include "../windows_files/hunspell-mingw/include/hunspell.hxx"
 #else
 #include <hunspell/hunspell.hxx>
 #endif
+
+class QAction;
+class QSettings;
+
+class TextEditor;
+class SpellCheckDialog;
 
 /**
  * \class SpellChecker

@@ -29,7 +29,9 @@
 
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
-#include <QNetworkReply>
+
+class QNetworkAccessManager;
+class QNetworkReply;
 
 /**
  * \class Session

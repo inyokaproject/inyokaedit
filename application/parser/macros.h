@@ -28,7 +28,10 @@
 #define APPLICATION_PARSER_MACROS_H_
 
 #include <QDir>
-#include <QTextDocument>
+#include <QString>
+#include <QStringList>
+
+class QTextDocument;
 
 struct MACRO {
   QString name;

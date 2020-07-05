@@ -27,11 +27,10 @@
 #ifndef PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 #define PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 
-#include <QDialog>
 #include <QDir>
 #include <QtPlugin>
-#include <QSettings>
 #include <QString>
+#include <QTranslator>
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
@@ -39,16 +38,18 @@
 #include <QWebEngineView>
 #endif
 
-#include "../../application/parser/parser.h"
-#include "../../application/templates/templates.h"
-#include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
+
+class QSettings;
+class QTextDocument;
+
+class Parser;
+class Templates;
+class TextEditor;
 
 namespace Ui {
 class Uu_TableTemplateClass;
 }
-class QDir;
-class QTextDocument;
 
 /**
  * \class Uu_TableTemplate

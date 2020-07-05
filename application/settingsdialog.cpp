@@ -29,7 +29,12 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QKeyEvent>
+#include <QMessageBox>
 #include <QPushButton>
+#include <QSettings>
+
+#include "./settings.h"
+#include "./ieditorplugin.h"
 
 #include "ui_settingsdialog.h"
 

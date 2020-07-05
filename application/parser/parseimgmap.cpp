@@ -27,7 +27,8 @@
 #include "./parseimgmap.h"
 
 #include <QDebug>
-#include <QStringList>
+#include <QString>
+#include <QTextDocument>
 
 ParseImgMap::ParseImgMap() = default;
 

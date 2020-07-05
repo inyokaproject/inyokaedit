@@ -27,11 +27,12 @@
 #ifndef APPLICATION_FINDREPLACE_H_
 #define APPLICATION_FINDREPLACE_H_
 
-#include <QCloseEvent>
 #include <QDialog>
-#include <QShowEvent>
 #include <QTextCursor>
-#include <QTextEdit>
+
+class QCloseEvent;
+class QTextEdit;
+class QShowEvent;
 
 namespace Ui {
 class FindReplace;

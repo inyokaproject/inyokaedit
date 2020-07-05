@@ -27,7 +27,7 @@
 #include "./parsetextformats.h"
 
 #include <QRegExp>
-#include <QStringList>
+#include <QTextDocument>
 
 ParseTextformats::ParseTextformats() = default;
 

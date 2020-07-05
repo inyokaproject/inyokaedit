@@ -27,7 +27,7 @@
 #ifndef APPLICATION_PARSER_PARSELIST_H_
 #define APPLICATION_PARSER_PARSELIST_H_
 
-#include <QTextDocument>
+class QTextDocument;
 
 class ParseList {
   public:

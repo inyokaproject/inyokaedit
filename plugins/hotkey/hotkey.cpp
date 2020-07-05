@@ -26,10 +26,14 @@
 
 #include "./hotkey.h"
 
+#include <QAction>
 #include <QApplication>
 #include <QDebug>
-#include <QKeyEvent>
+#include <QKeySequenceEdit>
 #include <QMessageBox>
+#include <QSettings>
+
+#include "../../application/texteditor.h"
 
 #include "ui_hotkey.h"
 

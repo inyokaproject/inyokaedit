@@ -27,13 +27,15 @@
 #ifndef APPLICATION_FILEOPERATIONS_H_
 #define APPLICATION_FILEOPERATIONS_H_
 
-#include <QAction>
-#include <QTabWidget>
-#include <QTimer>
+#include <QObject>
 
-#include "./findreplace.h"
-#include "./settings.h"
-#include "./texteditor.h"
+class QAction;
+class QTabWidget;
+class QTimer;
+
+class FindReplace;
+class Settings;
+class TextEditor;
 
 /**
  * \class FileOperations

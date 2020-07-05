@@ -29,6 +29,12 @@
 #include <QApplication>
 #include <QDebug>
 #include <QTextDocument>
+#include <QMessageBox>
+#include <QSettings>
+
+#include "../../application/parser/parser.h"
+#include "../../application/templates/templates.h"
+#include "../../application/texteditor.h"
 
 #include "ui_uu_tabletemplate.h"
 

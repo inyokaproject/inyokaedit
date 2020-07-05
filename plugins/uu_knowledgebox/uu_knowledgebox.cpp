@@ -28,7 +28,11 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QFile>
 #include <QMessageBox>
+#include <QSettings>
+
+#include "../../application/texteditor.h"
 
 #include "ui_uu_knowledgebox.h"
 

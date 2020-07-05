@@ -24,13 +24,22 @@
  * Parse plain text with inyoka syntax into html code.
  */
 
+#include <QMessageBox>
+#include <QProcess>
+#include <QTextBlock>
+#include <QTextDocument>
+
+#include "./macros.h"
 #include "./parser.h"
 #include "./parseimgmap.h"
+#include "./parselinks.h"
 #include "./parselist.h"
 #include "./parsetable.h"
+#include "./parsetemplates.h"
 #include "./parsetextformats.h"
 #include "./parsetxtmap.h"
 #include "../syntaxcheck.h"
+#include "../templates/templates.h"
 
 Parser::Parser(const QString &sSharePath,
                const QDir &tmpImgDir,

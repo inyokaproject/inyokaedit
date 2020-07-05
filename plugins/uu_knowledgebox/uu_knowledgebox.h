@@ -27,21 +27,21 @@
 #ifndef PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_
 #define PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_
 
-#include <QDialog>
-#include <QDir>
 #include <QtPlugin>
-#include <QPushButton>
-#include <QSettings>
 #include <QString>
+#include <QTranslator>
 
-#include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
+
+class QDialog;
+class QPushButton;
+class QSettings;
+
+class TextEditor;
 
 namespace Ui {
 class Uu_KnowledgeBoxClass;
 }
-class QDir;
-class QTextDocument;
 
 /**
  * \class Uu_KnowledgeBox

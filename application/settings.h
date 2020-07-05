@@ -28,13 +28,12 @@
 #define APPLICATION_SETTINGS_H_
 
 #include <QDir>
-#include <QSettings>
-#include <QMessageBox>
+#include <QFont>
 
-#include "./settingsdialog.h"
-#include "./ieditorplugin.h"
+class QSettings;
 
 class SettingsDialog;
+class IEditorPlugin;
 
 /**
  * \class Settings

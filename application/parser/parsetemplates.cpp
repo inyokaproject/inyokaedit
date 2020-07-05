@@ -27,6 +27,9 @@
 #include "./parsetemplates.h"
 
 #include <QDebug>
+#include <QTextDocument>
+
+#include "./provisionaltplparser.h"
 
 ParseTemplates::ParseTemplates(const QStringList &sListTransTpl,
                                const QStringList &sListTplNames,

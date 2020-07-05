@@ -29,9 +29,11 @@
 
 #include <QString>
 #include <QStringList>
-#include <QTextDocument>
 
-#include "./provisionaltplparser.h"
+class QDir;
+class QTextDocument;
+
+class ProvisionalTplParser;
 
 class ParseTemplates {
   public:

@@ -27,12 +27,11 @@
 #ifndef APPLICATION_PARSER_PARSELINKS_H_
 #define APPLICATION_PARSER_PARSELINKS_H_
 
-#include <QEventLoop>
-#include <QList>
 #include <QNetworkConfigurationManager>
 #include <QNetworkReply>
 #include <QStringList>
-#include <QTextDocument>
+
+class QTextDocument;
 
 /**
  * \class ParseLinks

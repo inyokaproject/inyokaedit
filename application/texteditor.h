@@ -44,8 +44,9 @@
 #ifndef APPLICATION_TEXTEDITOR_H_
 #define APPLICATION_TEXTEDITOR_H_
 
-#include <QCompleter>
 #include <QTextEdit>
+
+class QCompleter;
 
 /**
  * \class TextEditor

@@ -28,6 +28,7 @@
 
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QTextDocument>
 
 SyntaxCheck::SyntaxCheck(QObject *pParent) {
   Q_UNUSED(pParent)

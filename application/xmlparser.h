@@ -27,7 +27,10 @@
 #ifndef APPLICATION_XMLPARSER_H_
 #define APPLICATION_XMLPARSER_H_
 
-#include <QXmlStreamReader>
+#include <QString>
+#include <QStringList>
+
+class QXmlStreamReader;
 
 /**
  * \class XmlParser

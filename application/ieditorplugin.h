@@ -27,10 +27,9 @@
 #ifndef APPLICATION_IEDITORPLUGIN_H_
 #define APPLICATION_IEDITORPLUGIN_H_
 
-#include <QAction>
-#include <QDir>
-#include <QTranslator>
 #include <QtPlugin>
+
+class QDir;
 
 class TextEditor;
 

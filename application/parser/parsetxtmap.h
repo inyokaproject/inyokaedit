@@ -27,7 +27,9 @@
 #ifndef APPLICATION_PARSER_PARSETXTMAP_H_
 #define APPLICATION_PARSER_PARSETXTMAP_H_
 
-#include <QTextDocument>
+#include <QStringList>
+
+class QTextDocument;
 
 class ParseTxtMap {
   public:

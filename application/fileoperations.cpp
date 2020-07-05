@@ -27,13 +27,17 @@
 #include "./fileoperations.h"
 
 #include <QApplication>
+#include <QAction>
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>
 #include <QRegularExpression>
 #include <QScrollBar>
+#include <QTabWidget>
+#include <QTimer>
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
@@ -41,6 +45,9 @@
 #include <QWebEngineView>
 #endif
 
+#include "./findreplace.h"
+#include "./settings.h"
+#include "./texteditor.h"
 #include "./3rdparty/miniz/miniz.c"
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,

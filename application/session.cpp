@@ -30,6 +30,8 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QTimer>
 #include <QUrl>
 #include <QUrlQuery>

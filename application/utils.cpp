@@ -26,11 +26,10 @@
 
 #include "./utils.h"
 
-#include <QDate>
+#include <QApplication>
 #include <QDebug>
 #include <QDesktopServices>
-#include <QFile>
-#include <QNetworkConfigurationManager>
+#include <QEventLoop>
 #include <QNetworkProxy>
 #include <QMessageBox>
 #include <QPushButton>

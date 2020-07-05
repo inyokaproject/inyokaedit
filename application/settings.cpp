@@ -28,7 +28,11 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QSettings>
 #include <QStandardPaths>
+
+#include "./settingsdialog.h"
+#include "./ieditorplugin.h"
 
 Settings::Settings(QWidget *pParent, const QString &sSharePath) {
 #if defined __linux__

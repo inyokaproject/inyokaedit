@@ -38,9 +38,12 @@
  */
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QDebug>
 #include <QtGlobal>
+#include <QTime>
 #include <QTextStream>
+#include <QStandardPaths>
 
 #include "./inyokaedit.h"
 

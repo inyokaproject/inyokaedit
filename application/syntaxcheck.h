@@ -28,7 +28,8 @@
 #define APPLICATION_SYNTAXCHECK_H_
 
 #include <QObject>
-#include <QTextDocument>
+
+class QTextDocument;
 
 class SyntaxCheck : public QObject {
   Q_OBJECT

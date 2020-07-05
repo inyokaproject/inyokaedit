@@ -28,8 +28,11 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QMessageBox>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QProgressDialog>
 
 DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
   : m_pNwManager(pNwManager),

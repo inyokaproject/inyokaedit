@@ -24,6 +24,9 @@
  * Parse all kind of links (external, InterWiki, etc.)
  */
 
+#include <QEventLoop>
+#include <QTextDocument>
+
 #include "./parselinks.h"
 #include "../utils.h"
 

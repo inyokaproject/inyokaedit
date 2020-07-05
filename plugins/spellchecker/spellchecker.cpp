@@ -58,11 +58,16 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QIcon>
 #include <QMessageBox>
 #include <QTextCodec>
 #include <QTextStream>
+#include <QSettings>
 #include <QStringList>
 #include <QRegularExpression>
+
+#include "./spellcheckdialog.h"
+#include "../../application/texteditor.h"
 
 SpellChecker::~SpellChecker() = default;
 

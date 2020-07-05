@@ -27,20 +27,16 @@
 #ifndef APPLICATION_PARSER_PARSER_H_
 #define APPLICATION_PARSER_PARSER_H_
 
-#include <QWidget>
-#include <QtGui>
 #include <QDir>
-#include <QMessageBox>
+#include <QString>
+#include <QStringList>
 
-#include "./macros.h"
-#include "./parsetemplates.h"
-#include "./parselinks.h"
-#include "../templates/templates.h"
-
-// Qt classes
-class QString;
 class QTextDocument;
-class QDir;
+
+class Macros;
+class ParseLinks;
+class ParseTemplates;
+class Templates;
 
 /**
  * \class Parser

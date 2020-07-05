@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QMessageBox>
+#include <QXmlStreamReader>
 
 XmlParser::XmlParser() = default;
 

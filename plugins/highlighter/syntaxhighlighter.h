@@ -32,11 +32,12 @@
 #include <QTextCharFormat>
 #include <QVector>
 
+class QTextDocument;
+
 struct HighlightingRule {
   QRegularExpression regexp;
   QTextCharFormat format;
 };
-class QTextDocument;
 
 /**
  * \class SyntaxHighlighter

@@ -27,26 +27,14 @@
 #ifndef APPLICATION_INYOKAEDIT_H_
 #define APPLICATION_INYOKAEDIT_H_
 
-#include <QBoxLayout>
+#include <QDir>
 #include <QMainWindow>
-#include <QSplitter>
-#include <QToolButton>
+#include <QTranslator>
 
-#include "./download.h"
-#include "./fileoperations.h"
-#include "./parser/parser.h"
-#include "./plugins.h"
-#include "./session.h"
-#include "./settings.h"
-#include "./templates/templates.h"
-#include "./texteditor.h"
-#include "./upload.h"
-#include "./utils.h"
-
-// Qt classes
 class QComboBox;
 class QFile;
-class QDir;
+class QSplitter;
+class QToolButton;
 #ifdef USEQTWEBKIT
 class QWebView;
 #else
@@ -54,6 +42,15 @@ class QWebEngineView;
 #endif
 
 class Download;
+class FileOperations;
+class Parser;
+class Plugins;
+class Settings;
+class Session;
+class Templates;
+class TextEditor;
+class Upload;
+class Utils;
 
 namespace Ui {
 class InyokaEdit;

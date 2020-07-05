@@ -27,8 +27,17 @@
 #include "./inyokaedit.h"
 
 #include <QComboBox>
-#include <QtGui>
+#include <QDesktopServices>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QLibraryInfo>
+#include <QMessageBox>
 #include <QScrollBar>
+#include <QSettings>
+#include <QSplitter>
+#include <QTextBlock>
+#include <QTimer>
+#include <QToolButton>
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
@@ -39,6 +48,17 @@
 #include <QWebEngineHistory>
 #endif
 
+#include "./download.h"
+#include "./fileoperations.h"
+#include "./ieditorplugin.h"
+#include "./parser/parser.h"
+#include "./plugins.h"
+#include "./settings.h"
+#include "./session.h"
+#include "./templates/templates.h"
+#include "./texteditor.h"
+#include "./upload.h"
+#include "./utils.h"
 #include "./xmlparser.h"
 #include "ui_inyokaedit.h"
 

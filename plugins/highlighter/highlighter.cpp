@@ -29,8 +29,13 @@
 #include <QApplication>
 #include <QColorDialog>
 #include <QDebug>
+#include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QSettings>
+
+#include "../../application/templates/templates.h"
+#include "../../application/texteditor.h"
 
 #include "ui_highlighter.h"
 

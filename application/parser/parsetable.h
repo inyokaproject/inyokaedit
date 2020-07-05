@@ -27,7 +27,10 @@
 #ifndef APPLICATION_PARSER_PARSETABLE_H_
 #define APPLICATION_PARSER_PARSETABLE_H_
 
-#include <QTextDocument>
+#include <QString>
+
+class QTextDocument;
+class QStringList;
 
 class ParseTable {
   public:

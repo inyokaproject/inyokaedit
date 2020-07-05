@@ -29,7 +29,12 @@
 #include <QApplication>
 #include <QDebug>
 #include <QInputDialog>
+#include <QMessageBox>
+#include <QNetworkReply>
+#include <QTimer>
 
+#include "./downloadimg.h"
+#include "./session.h"
 #include "./utils.h"
 
 Download::Download(QWidget *pParent, Session *pSession,

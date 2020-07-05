@@ -27,12 +27,13 @@
 #ifndef APPLICATION_PLUGINS_H_
 #define APPLICATION_PLUGINS_H_
 
-#include <QAction>
 #include <QDir>
 #include <QList>
 
-#include "./texteditor.h"
-#include "./ieditorplugin.h"
+class QAction;
+
+class TextEditor;
+class IEditorPlugin;
 
 class Plugins : public QObject {
   Q_OBJECT

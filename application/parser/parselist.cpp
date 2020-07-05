@@ -27,6 +27,7 @@
 #include "./parselist.h"
 
 #include <QTextBlock>
+#include <QTextDocument>
 
 ParseList::ParseList() = default;
 

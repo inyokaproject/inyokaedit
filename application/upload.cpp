@@ -26,17 +26,20 @@
 
 #include "./upload.h"
 
+#include <QApplication>
 #include <QDateTime>
 #include <QDebug>
+#include <QEventLoop>
 #include <QFileInfo>
 #include <QHttpMultiPart>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QNetworkCookie>
+#include <QNetworkReply>
 #include <QRegularExpression>
-#include <QUrl>
-#include <QUrlQuery>
+#include <QTextEdit>
 
+#include "./session.h"
 #include "./utils.h"
 
 Upload::Upload(QWidget *pParent, Session *pSession,

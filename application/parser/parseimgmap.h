@@ -27,7 +27,10 @@
 #ifndef APPLICATION_PARSER_PARSEIMGMAP_H_
 #define APPLICATION_PARSER_PARSEIMGMAP_H_
 
-#include <QTextDocument>
+#include <QStringList>
+
+class QString;
+class QTextDocument;
 
 class ParseImgMap {
   public:

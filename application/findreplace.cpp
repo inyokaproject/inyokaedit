@@ -29,7 +29,9 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QShowEvent>
 #include <QTextDocument>
+#include <QTextEdit>
 
 #include "ui_findreplace.h"
 

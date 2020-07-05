@@ -27,11 +27,15 @@
 #ifndef APPLICATION_DOWNLOAD_H_
 #define APPLICATION_DOWNLOAD_H_
 
-#include <QNetworkReply>
+#include <QObject>
+#include <QString>
+#include <QUrl>
 
-#include "./inyokaedit.h"
-#include "./downloadimg.h"
-#include "./session.h"
+class QNetworkReply;
+class QWidget;
+
+class DownloadImg;
+class Session;
 
 /**
  * \class Download
@@ -58,8 +62,8 @@ class Download : public QObject {
     void sendArticleText(const QString &, const QString &);
 
  private:
-    auto redirectUrl(const QUrl& possibleRedirectUrl,
-                     const QUrl& oldRedirectUrl) -> QUrl;
+    auto redirectUrl(const QUrl &possibleRedirectUrl,
+                     const QUrl &oldRedirectUrl) -> QUrl;
     void downloadImages();
 
     QWidget *m_pParent;

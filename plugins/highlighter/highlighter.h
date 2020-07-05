@@ -28,20 +28,21 @@
 #define PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
 
 #include <QtPlugin>
-#include <QSettings>
-#include <QSyntaxHighlighter>
 #include <QTextCharFormat>
+#include <QTranslator>
 #include <QVector>
 
 #include "./syntaxhighlighter.h"
-#include "../../application/templates/templates.h"
-#include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
+
+class QSettings;
+
+class Templates;
+class TextEditor;
 
 namespace Ui {
 class HighlighterDialog;
 }
-class QSettings;
 
 /**
  * \class Highlighter

@@ -45,7 +45,7 @@
 #include "./texteditor.h"
 
 #include <QAbstractItemView>
-#include <QFile>
+#include <QCompleter>
 #include <QKeyEvent>
 #include <QScrollBar>
 

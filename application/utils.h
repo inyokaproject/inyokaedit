@@ -27,8 +27,10 @@
 #ifndef APPLICATION_UTILS_H_
 #define APPLICATION_UTILS_H_
 
-#include <QApplication>
-#include <QNetworkAccessManager>
+#include <QObject>
+
+class QNetworkAccessManager;
+class QNetworkReply;
 
 class Utils : public QObject {
   Q_OBJECT

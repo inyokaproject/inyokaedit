@@ -29,13 +29,12 @@
 
 #include <QDialog>
 
-#include "./settings.h"
-#include "./ieditorplugin.h"
+class Settings;
+class IEditorPlugin;
 
 namespace Ui {
 class SettingsDialog;
 }
-class Settings;
 
 /**
  * \class SettingsDialog

@@ -27,7 +27,9 @@
 #ifndef APPLICATION_PARSER_PARSETEXTFORMATS_H_
 #define APPLICATION_PARSER_PARSETEXTFORMATS_H_
 
-#include <QTextDocument>
+#include <QStringList>
+
+class QTextDocument;
 
 class ParseTextformats {
   public:

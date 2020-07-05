@@ -27,22 +27,24 @@
 #ifndef PLUGINS_HOTKEY_HOTKEY_H_
 #define PLUGINS_HOTKEY_HOTKEY_H_
 
-#include <QDialog>
-#include <QKeySequenceEdit>
 #include <QtPlugin>
-#include <QPushButton>
-#include <QShortcut>
-#include <QSettings>
 #include <QString>
+#include <QTranslator>
 
-#include "../../application/texteditor.h"
 #include "../../application/ieditorplugin.h"
+
+class QAction;
+class QDialog;
+class QDir;
+class QKeySequenceEdit;
+class QPushButton;
+class QSettings;
+
+class TextEditor;
 
 namespace Ui {
 class HotkeyClass;
 }
-class QDir;
-class QTextDocument;
 
 /**
  * \class Hotkey
