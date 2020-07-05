@@ -672,10 +672,10 @@ void Parser::removeComments(QTextDocument *pRawDoc) {
 auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
   static const quint8 MAXHEAD = 5;
   QString sDoc("");
-  QString sLine("");
+  QString sLine;
   QString sTmp("");
   QString sLink("");
-  quint8 nHeadlineLevel = MAXHEAD;
+  quint8 nHeadlineLevel;
   QStringList slistHeadlines;
 
   // Go through each text block

@@ -37,11 +37,11 @@ Macros::Macros(const QString &sSharePath,
                const QDir &tmpImgDir)
   : m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir) {
-  QFile fiMacros(":/macros.conf");
+  QFile fiMacros(QStringLiteral(":/macros.conf"));
   if (!fiMacros.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open macros.conf";
-    QMessageBox::warning(nullptr, "Error",
-                         "Could not open macros.conf");
+    QMessageBox::warning(nullptr, QStringLiteral("Error"),
+                         QStringLiteral("Could not open macros.conf"));
   } else {
     QTextStream in(&fiMacros);
     in.setCodec("UTF-8");
@@ -52,13 +52,13 @@ Macros::Macros(const QString &sSharePath,
 
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
-      if (!tmpLine.startsWith("Code") &&
+      if (!tmpLine.startsWith(QLatin1String("Code")) &&
           !tmpLine.trimmed().isEmpty()) {
-        tmpList = tmpLine.split("=");
+        tmpList = tmpLine.split(QStringLiteral("="));
         if (2 == tmpList.size()) {
           tmpMacro.name = tmpList[0].trimmed();
           tmpMacro.translations.clear();
-          tmpList2 = tmpList[1].split(",");
+          tmpList2 = tmpList[1].split(QStringLiteral(","));
           if ("Template" != tmpMacro.name) {
             foreach (QString s, tmpList2) {
               tmpMacro.translations << s.trimmed();
@@ -128,17 +128,17 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
     // qDebug() << sAnchor;
 
     sAnchor.remove("[[" + sTrans + "(");
-    sAnchor.remove(")]]");
+    sAnchor.remove(QStringLiteral(")]]"));
     sAnchor = sAnchor.trimmed();
 
     // Replace characters for valid links (ä, ü, ö, spaces)
-    sAnchor.replace(" ", "-");
-    sAnchor.replace(QString::fromUtf8("Ä"), "Ae");
-    sAnchor.replace(QString::fromUtf8("Ü"), "Ue");
-    sAnchor.replace(QString::fromUtf8("Ö"), "Oe");
-    sAnchor.replace(QString::fromUtf8("ä"), "ae");
-    sAnchor.replace(QString::fromUtf8("ü"), "ue");
-    sAnchor.replace(QString::fromUtf8("ö"), "oe");
+    sAnchor.replace(QLatin1String(" "), QLatin1String("-"));
+    sAnchor.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
+    sAnchor.replace(QStringLiteral("Ü"), QLatin1String("Ue"));
+    sAnchor.replace(QStringLiteral("Ö"), QLatin1String("Oe"));
+    sAnchor.replace(QStringLiteral("ä"), QLatin1String("ae"));
+    sAnchor.replace(QStringLiteral("ü"), QLatin1String("ue"));
+    sAnchor.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
     sDoc.replace(nIndex, nLength,
                  "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
@@ -164,7 +164,7 @@ void Macros::replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans) {
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
     sMacro = findMacro.cap(0);
     sMacro.remove("[[" + sTrans + "(");
-    sMacro.remove(")]]");
+    sMacro.remove(QStringLiteral(")]]"));
     sMacro.remove('"');
 
     sMacro = "<a href=\"" + sMacro +
@@ -194,7 +194,7 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
     sMacro = findMacro.cap(0);
     sMacro.remove("[[" + sTrans + "(");
-    sMacro.remove(")]]");
+    sMacro.remove(QStringLiteral(")]]"));
 
     // First assume ISO 8601 datetime
     datetime = QDateTime::fromString(sMacro, Qt::ISODate);
@@ -211,7 +211,7 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
     if (bConversionOk && datetime.isValid()) {
       sMacro = QLocale::system().toString(datetime, QLocale::ShortFormat);
     } else {
-      sMacro = "Invalid date";
+      sMacro = QStringLiteral("Invalid date");
     }
 
     sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
@@ -227,8 +227,8 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
 
 void Macros::replaceNewline(QTextDocument *pRawDoc, const QString &sTrans) {
   QString sDoc(pRawDoc->toPlainText());
-  sDoc.replace("[[" + sTrans + "]]", "<br />");
-  sDoc.replace("\\\\", "<br />");
+  sDoc.replace("[[" + sTrans + "]]", QLatin1String("<br />"));
+  sDoc.replace(QLatin1String("\\\\"), QLatin1String("<br />"));
   pRawDoc->setPlainText(sDoc);
 }
 
@@ -242,13 +242,13 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
 #if defined _WIN32
   QString sExt("file:///");
 #else
-  QString sExt("");
+  QString sExt(QLatin1String(""));
 #endif
   QString sDoc(pRawDoc->toPlainText());
   QRegExp findImages("\\[\\[" + sTrans + "\\(.+\\)\\]\\]");
   QStringList sListTmpImageInfo;
 
-  QString sImagePath("");
+  QString sImagePath(QLatin1String(""));
   if (!sCurrentFile.isEmpty()) {
     QFileInfo fiArticleFile(sCurrentFile);
     sImagePath = fiArticleFile.absolutePath();
@@ -260,19 +260,20 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
     int nLength = findImages.matchedLength();
     QString sTmpImage = findImages.cap();
     sTmpImage.remove("[[" + sTrans + "(");
-    sTmpImage.remove(")]]");
+    sTmpImage.remove(QStringLiteral(")]]"));
 
-    QString sImageAlign = "default";
+    QString sImageAlign = QStringLiteral("default");
     double iImgHeight = 0;
     double iImgWidth = 0;
     double tmpH = 0;
     double tmpW = 0;
 
     sListTmpImageInfo.clear();
-    sListTmpImageInfo << sTmpImage.split(",");
+    sListTmpImageInfo << sTmpImage.split(QStringLiteral(","));
 
     QString sImageUrl = sListTmpImageInfo[0].trimmed();
-    if (sImageUrl.startsWith("Wiki/") || sImageUrl.startsWith("img/")) {
+    if (sImageUrl.startsWith(QLatin1String("Wiki/")) ||
+        sImageUrl.startsWith(QLatin1String("img/"))) {
       sImageUrl = m_sSharePath + "/community/" +
                   sCommunity + "/web/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
@@ -286,26 +287,29 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
       // Found integer (width)
       if (0 != sListTmpImageInfo[i].trimmed().toUInt()) {
         tmpW = sListTmpImageInfo[i].trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed().startsWith("x")) {
+      } else if (sListTmpImageInfo[i].trimmed().startsWith(
+                   QLatin1String("x"))) {
         // Found x+integer (height)
-        tmpH = sListTmpImageInfo[i].remove("x").trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].contains("x")) {
+        tmpH = sListTmpImageInfo[i].remove(
+                 QStringLiteral("x")).trimmed().toUInt();
+      } else if (sListTmpImageInfo[i].contains(QLatin1String("x"))) {
         // Found int x int (width x height)
         QString sTmp = sListTmpImageInfo[i];  // Copy needed!
         tmpW = sListTmpImageInfo[i].remove(
-                 sListTmpImageInfo[i].indexOf("x"),
+                 sListTmpImageInfo[i].indexOf(QLatin1String("x")),
                  sListTmpImageInfo[i].length()).trimmed().toUInt();
-        tmpH = sTmp.remove(0, sTmp.indexOf("x")+1).trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed() == "left" ||
-                 sListTmpImageInfo[i].trimmed() == "align=left") {
+        tmpH = sTmp.remove(0, sTmp.indexOf(
+                             QLatin1String("x"))+1).trimmed().toUInt();
+      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("left") ||
+                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=left")) {
         // Found alignment
-        sImageAlign = "left";
-      } else if (sListTmpImageInfo[i].trimmed() == "right" ||
-                 sListTmpImageInfo[i].trimmed() == "align=right") {
-        sImageAlign = "right";
-      } else if (sListTmpImageInfo[i].trimmed() == "center" ||
-                 sListTmpImageInfo[i].trimmed() == "align=center") {
-        sImageAlign = "center";
+        sImageAlign = QStringLiteral("left");
+      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("right") ||
+                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=right")) {
+        sImageAlign = QStringLiteral("right");
+      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("center") ||
+                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=center")) {
+        sImageAlign = QStringLiteral("center");
       }
     }
 
@@ -363,20 +367,20 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
   QStringList sListHeadlines_Links;
   foreach (QString s, sListHeadlines) {
     sMacro = s;
-    sMacro.replace(" ", "-");
-    sMacro.replace(QString::fromUtf8("Ä"), "Ae");
-    sMacro.replace(QString::fromUtf8("Ü"), "Ue");
-    sMacro.replace(QString::fromUtf8("Ö"), "Oe");
-    sMacro.replace(QString::fromUtf8("ä"), "ae");
-    sMacro.replace(QString::fromUtf8("ü"), "ue");
-    sMacro.replace(QString::fromUtf8("ö"), "oe");
+    sMacro.replace(QLatin1String(" "), QLatin1String("-"));
+    sMacro.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
+    sMacro.replace(QStringLiteral("Ü"), QLatin1String("Ue"));
+    sMacro.replace(QStringLiteral("Ö"), QLatin1String("Oe"));
+    sMacro.replace(QStringLiteral("ä"), QLatin1String("ae"));
+    sMacro.replace(QStringLiteral("ü"), QLatin1String("ue"));
+    sMacro.replace(QStringLiteral("ö"), QLatin1String("oe"));
     sListHeadlines_Links << sMacro.remove(QRegExp("#{1,5}\\d#{1,5}"));
   }
 
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
     sMacro = findMacro.cap(0);
     sMacro.remove("[[" + sTrans + "(");
-    sMacro.remove(")]]");
+    sMacro.remove(QStringLiteral(")]]"));
 
     if (sMacro.trimmed().length() > 0) {
       nTOCLevel = sMacro.trimmed().toUShort();
@@ -392,7 +396,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
       sTmp.remove(QRegExp("#{1,5}\\d#{1,5}"));
       sListHeadlines[i].remove(
             sListHeadlines[i].length() - sTmp.length(),
-            sTmp.length()).remove("#");
+            sTmp.length()).remove(QStringLiteral("#"));
 
       nCurrentLevel = sListHeadlines[i].toUShort();
       sSpaces.fill(' ', nCurrentLevel);
@@ -404,7 +408,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
         qWarning() << "Found strange formated headline:" << sTmp;
       }
     }
-    sMacro += "\n</div>\n";
+    sMacro += QLatin1String("\n</div>\n");
 
     sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
     // Go on with new start position
@@ -431,7 +435,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
     sMacro = findMacro.cap(0);
     sMacro.remove("[[" + sTrans + "(");
-    sMacro.remove(")]]");
+    sMacro.remove(QStringLiteral(")]]"));
     sArgs.clear();
     sClass.clear();
     sStyle.clear();
@@ -454,17 +458,17 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
       }
       bInside = !bInside;
     }
-    sArgs.removeAll(" ");
+    sArgs.removeAll(QStringLiteral(" "));
 
     sMacro.clear();
     if (!sArgs.isEmpty()) {
       sMacro = sArgs[0];
     }
     if (sArgs.size() > 1) {
-      sClass = " class=\"" + sArgs[1].remove("\"") + "\"";
+      sClass = " class=\"" + sArgs[1].remove(QStringLiteral("\"")) + "\"";
     }
     if (sArgs.size() > 2) {
-      sStyle = " style=\"" + sArgs[2].remove("\"") + "\"";
+      sStyle = " style=\"" + sArgs[2].remove(QStringLiteral("\"")) + "\"";
     }
     sMacro = "<span" + sStyle + sClass + ">" + sMacro + "</span>";
 
