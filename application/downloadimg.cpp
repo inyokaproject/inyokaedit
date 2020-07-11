@@ -34,11 +34,11 @@
 #include <QNetworkReply>
 #include <QProgressDialog>
 
-DownloadImg::DownloadImg(QObject *pParent, QNetworkAccessManager* pNwManager)
+DownloadImg::DownloadImg(QNetworkAccessManager* pNwManager, QObject *pObj)
   : m_pNwManager(pNwManager),
     m_pProgessDialog(nullptr),
     m_nProgress(0) {
-  Q_UNUSED(pParent)
+  Q_UNUSED(pObj)
   connect(m_pNwManager, &QNetworkAccessManager::finished,
           this, &DownloadImg::downloadFinished);
 }

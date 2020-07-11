@@ -90,8 +90,8 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
         if (sMacro.startsWith("(" + m_sListTplNames[i],
                               Qt::CaseInsensitive)) {
           sMacro.remove(0, 1);  // Remove (
-          sMacro.remove("\n)]]");
-          sMacro.remove(")]]");
+          sMacro.remove(QStringLiteral("\n)]]"));
+          sMacro.remove(QStringLiteral(")]]"));
 
           // Extract arguments
           // Split by ',' but don't split quoted strings with comma
@@ -113,11 +113,11 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
             }
             bInside = !bInside;
           }
-          sListArguments.removeAll(" ");
+          sListArguments.removeAll(QStringLiteral(" "));
 
           // In addition to ',' arguments can be separated by '\n'...
           for (int m = 0; m < sListArguments.size(); m++) {
-            if (sListArguments[m].contains("\n")) {
+            if (sListArguments[m].contains(QLatin1String("\n"))) {
               QString sTmp = sListArguments[m];
               QStringList tmpArgs;
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
@@ -136,10 +136,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
                                      Qt::CaseInsensitive)) {
           sMacro.remove("{{{#!" + sListTrans[k] + " ",
                         Qt::CaseInsensitive);
-          sMacro.remove("\n\\}}}");
-          sMacro.remove("\\}}}");
-          sMacro.remove("\n}}}");
-          sMacro.remove("}}}");
+          sMacro.remove(QStringLiteral("\n\\}}}"));
+          sMacro.remove(QStringLiteral("\\}}}"));
+          sMacro.remove(QStringLiteral("\n}}}"));
+          sMacro.remove(QStringLiteral("}}}"));
           sListArguments.clear();
 
           // Extract arguments
@@ -172,7 +172,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
                 }
               }
             }
-            if (sListArguments[0].endsWith(",")) {
+            if (sListArguments[0].endsWith(QLatin1String(","))) {
               sListArguments[0] = sListArguments[0].remove(
                                     sListArguments[0].size() - 1, 1);
             }

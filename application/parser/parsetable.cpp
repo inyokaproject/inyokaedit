@@ -34,8 +34,8 @@
 ParseTable::ParseTable() = default;
 
 void ParseTable::startParsing(QTextDocument *pRawDoc) {
-  QString sDoc("");
-  QString sLine("");
+  QString sDoc(QLatin1String(""));
+  QString sLine(QLatin1String(""));
   QStringList sListLines;
   bool bTable = false;
 
@@ -44,17 +44,17 @@ void ParseTable::startParsing(QTextDocument *pRawDoc) {
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     // New cell or still in table with unfinished line
-    if (block.text().trimmed().startsWith("||") || bTable) {
+    if (block.text().trimmed().startsWith(QLatin1String("||")) || bTable) {
       bTable = true;
       sLine += block.text();
 
       // Line completed
-      if (block.text().trimmed().endsWith("||")) {
+      if (block.text().trimmed().endsWith(QLatin1String("||"))) {
         sListLines << sLine.trimmed();
         sLine.clear();
 
         // Table finished
-        if (!(block.next().text().trimmed().startsWith("||"))) {
+        if (!(block.next().text().trimmed().startsWith(QLatin1String("||")))) {
           sDoc += createTable(sListLines);
           sListLines.clear();
           sLine.clear();
@@ -72,12 +72,12 @@ void ParseTable::startParsing(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 auto ParseTable::createTable(const QStringList &sListLines) -> QString {
-  QString sRet("");
+  QString sRet(QLatin1String(""));
   QStringList sListCells;
   QString sLine;
   QString sCell;
-  QString sFormating("");
-  QString sTmpStyle("");
+  QString sFormating(QLatin1String(""));
+  QString sTmpStyle(QLatin1String(""));
 
   QRegExp formatPattern("\\<{1,1}.+\\>{1,1}");
   QRegExp tableClassPattern("tableclass=\\\"[\\w\\s:;%#-=]+\\\"");
@@ -86,7 +86,7 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-=]+\\\"");
   QRegExp cellClassPattern("cellclass=\\\"[\\w.%-]+\\\"");
   QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-=]+\\\"");
-  bool bCellStyle = false;
+  bool bCellStyle;
 
   QRegExp connectCells("-\\d{1,2}");
   QRegExp connectRows("\\|\\d{1,2}");
@@ -96,7 +96,7 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
     sLine.remove(0, 2);  // Remove || at beginning and end
     sLine.remove(sLine.length() - 2, 2);
 
-    sListCells = sLine.split("||");
+    sListCells = sLine.split(QStringLiteral("||"));
     for (int nCell = 0; nCell < sListCells.size(); nCell++) {
       sCell = sListCells[nCell];
       bCellStyle = false;
@@ -111,133 +111,135 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
 
       if (0 == nCell) {
         if (0 == nLine) {
-          QString sTmpClass("");
+          QString sTmpClass(QLatin1String(""));
           if (tableClassPattern.indexIn(sFormating) >= 0) {
             sTmpClass = tableClassPattern.cap();
-            sTmpClass = " class=" + sTmpClass.remove("tableclass=");
+            sTmpClass = " class=" + sTmpClass.remove(
+                          QStringLiteral("tableclass="));
           }
           sTmpStyle.clear();
           if (tableStylePattern.indexIn(sFormating) >= 0) {
             sTmpStyle = tableStylePattern.cap();
-            sTmpStyle = " style=" + sTmpStyle.remove("tablestyle=");
+            sTmpStyle = " style=" + sTmpStyle.remove(
+                          QStringLiteral("tablestyle="));
           }
           sRet = "<table" + sTmpClass + sTmpStyle + ">\n<tbody>\n";
         }
 
         // New row
-        sRet += "<tr";  // Start tr
+        sRet += QLatin1String("<tr");  // Start tr
         // Found row class info --> in tr
         if (rowClassPattern.indexIn(sFormating) >= 0) {
           sTmpStyle = rowClassPattern.cap();
           sRet += " class="
-                  + sTmpStyle.remove("rowclass=");
+                  + sTmpStyle.remove(QStringLiteral("rowclass="));
         }
         // Found row sytle info --> in tr
         if (rowStylePattern.indexIn(sFormating) >= 0) {
           sTmpStyle = rowStylePattern.cap();
           sRet += " style=\""
-                  + sTmpStyle.remove("rowstyle=")
-                  .remove("\"") + "\"";
+                  + sTmpStyle.remove(QStringLiteral("rowstyle="))
+                  .remove(QStringLiteral("\"")) + "\"";
         }
-        sRet += ">\n";  // Close tr
+        sRet += QLatin1String(">\n");  // Close tr
       }
 
       // New cell
-      sRet += "<td";  // Start td
+      sRet += QLatin1String("<td");  // Start td
 
       // Found cell class info --> in td
       if (cellClassPattern.indexIn(sFormating) >= 0) {
         sTmpStyle = cellClassPattern.cap();
         sRet += " class="
-                + sTmpStyle.remove("cellclass=");
+                + sTmpStyle.remove(QStringLiteral("cellclass="));
       }
 
       // Connect cells info (-integer, e.g. -3)
       if (connectCells.indexIn(sFormating) >= 0) {
         sRet += " colspan=\""
-                + connectCells.cap().remove("-") + "\"";
+                + connectCells.cap().remove(QStringLiteral("-")) + "\"";
       }
 
       // Connect ROWS info (|integer, e.g. |2)
       if (connectRows.indexIn(sFormating) >= 0) {
         sRet += " rowspan=\""
-                + connectRows.cap().remove("|") + "\"";
+                + connectRows.cap().remove(QStringLiteral("|")) + "\"";
       }
 
       // Found cell sytle info --> in td
       if (cellStylePattern.indexIn(sFormating) >= 0) {
         sTmpStyle = cellStylePattern.cap();
         sRet += " style=\""
-                + sTmpStyle.remove("cellstyle=")
-                .remove("\"");
+                + sTmpStyle.remove(QStringLiteral("cellstyle="))
+                .remove(QStringLiteral("\""));
         bCellStyle = true;
       }
       // Text align center
-      if (sFormating.contains("<:")
-          || sFormating.contains(" : ")
-          || sFormating.contains(":>")) {
+      if (sFormating.contains(QLatin1String("<:"))
+          || sFormating.contains(QLatin1String(" : "))
+          || sFormating.contains(QLatin1String(":>"))) {
         if (bCellStyle) {
-          sRet += " text-align: center;";
+          sRet += QLatin1String(" text-align: center;");
         } else {
-          sRet += " style=\"text-align: center;";
+          sRet += QLatin1String(" style=\"text-align: center;");
           bCellStyle = true;
         }
       }
       // Text align left
-      if (sFormating.contains("<(")
-          || sFormating.contains("(")
-          || sFormating.contains("(>")) {
+      if (sFormating.contains(QLatin1String("<("))
+          || sFormating.contains(QLatin1String("("))
+          || sFormating.contains(QLatin1String("(>"))) {
         if (bCellStyle) {
-          sRet += " text-align: left;";
+          sRet += QLatin1String(" text-align: left;");
         } else {
-          sRet += " style=\"text-align: left;";
+          sRet += QLatin1String(" style=\"text-align: left;");
           bCellStyle = true;
         }
       }
       // Text align center
-      if (sFormating.contains("<)")
-          || sFormating.contains(" ) ")
-          || sFormating.contains(")>")) {
+      if (sFormating.contains(QLatin1String("<)"))
+          || sFormating.contains(QLatin1String(" ) "))
+          || sFormating.contains(QLatin1String(")>"))) {
         if (bCellStyle) {
-          sRet += " text-align: right;";
+          sRet += QLatin1String(" text-align: right;");
         } else {
-          sRet += " style=\"text-align: right;";
+          sRet += QLatin1String(" style=\"text-align: right;");
           bCellStyle = true;
         }
       }
       // Text vertical align top
-      if (sFormating.contains("<^")
-          || sFormating.contains(" ^ ")
-          || sFormating.contains("^>")) {
+      if (sFormating.contains(QLatin1String("<^"))
+          || sFormating.contains(QLatin1String(" ^ "))
+          || sFormating.contains(QLatin1String("^>"))) {
         if (bCellStyle) {
-          sRet += " text-align: top;";
+          sRet += QLatin1String(" text-align: top;");
         } else {
-          sRet += " style=\"vertical-align: top;";
+          sRet += QLatin1String(" style=\"vertical-align: top;");
           bCellStyle = true;
         }
       }
       // Text vertical align bottom
-      if (sFormating.contains("<v")
-          || sFormating.contains(" v ")
-          || sFormating.contains("v>")) {
+      if (sFormating.contains(QLatin1String("<v"))
+          || sFormating.contains(QLatin1String(" v "))
+          || sFormating.contains(QLatin1String("v>"))) {
         if (bCellStyle) {
-          sRet += " text-align: bottom;";
+          sRet += QLatin1String(" text-align: bottom;");
         } else {
-          sRet += " style=\"vertical-align: bottom;";
+          sRet += QLatin1String(" style=\"vertical-align: bottom;");
           bCellStyle = true;
         }
       }
       // Closing style section
       if (bCellStyle) {
-        sRet += "\"";
+        sRet += QLatin1String("\"");
       }
 
-      sRet += ">\n";  // Close td
+      sRet += QLatin1String(">\n");  // Close td
       sRet += sCell + "</td>\n";
     }
 
-    sRet += "</tr>\n";
+    sRet += QLatin1String("</tr>\n");
   }
-  sRet += "</tbody>\n</table>\n\n";
+  sRet += QLatin1String("</tbody>\n</table>\n\n");
   return sRet;
 }

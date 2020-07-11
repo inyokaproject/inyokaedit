@@ -23,6 +23,7 @@
  * \section DESCRIPTION
  * Editor interfaces definition for additional plugins.
  */
+// clazy:excludeall=copyable-polymorphic
 
 #ifndef APPLICATION_IEDITORPLUGIN_H_
 #define APPLICATION_IEDITORPLUGIN_H_

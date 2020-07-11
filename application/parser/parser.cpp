@@ -156,27 +156,29 @@ auto Parser::genOutput(const QString &sActFile,
   // File name
   QString sFilename;
   if (m_sCurrentFile.isEmpty()) {
-    sFilename = "Untitled";
+    sFilename = QStringLiteral("Untitled");
   } else {
     QFileInfo fi(m_sCurrentFile);
     sFilename = fi.baseName();
-    sFilename.replace("_", " ");
+    sFilename.replace(QLatin1String("_"), QLatin1String(" "));
   }
 
   // Replace template tags
   // Copy needed, otherwise %tags% will be replaced/removed in template!
   QString sTemplateCopy(m_pTemplates->getPreviewTemplate());
-  sTemplateCopy = sTemplateCopy.replace("%filename%", sFilename);
-  sTemplateCopy = sTemplateCopy.replace("%folder%",
+  sTemplateCopy = sTemplateCopy.replace(QLatin1String("%filename%"), sFilename);
+  sTemplateCopy = sTemplateCopy.replace(QLatin1String("%folder%"),
                                         m_sSharePath + "/community/" +
                                         m_sCommunity + "/web");
   sTemplateCopy = sTemplateCopy.replace(
-                    "%date%", QDate::currentDate().toString("dd.MM.yyyy"));
+                    QLatin1String("%date%"),
+                    QDate::currentDate().toString(QStringLiteral("dd.MM.yyyy")));
   sTemplateCopy = sTemplateCopy.replace(
-                    "%time%", QTime::currentTime().toString("hh:mm"));
-  sTemplateCopy = sTemplateCopy.replace("%tags%",
+                    QLatin1String("%time%"),
+                    QTime::currentTime().toString(QStringLiteral("hh:mm")));
+  sTemplateCopy = sTemplateCopy.replace(QLatin1String("%tags%"),
                                         this->generateTags(m_pRawText));
-  sTemplateCopy = sTemplateCopy.replace("%content%",
+  sTemplateCopy = sTemplateCopy.replace(QLatin1String("%content%"),
                                         m_pRawText->toPlainText());
   return sTemplateCopy;
 }
@@ -250,6 +252,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
   pRawDoc->setPlainText(sDoc);
 }
 */
+
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -257,8 +260,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QStringList sListTplRegExp;
   // Search for {{{#!code ...}}} and {{{ ... without #!X ...}}}
-  sListTplRegExp << "\\{\\{\\{#!code .+\\}\\}\\}"
-                 << "\\{\\{\\{(?!#!\\S).+\\}\\}\\}";
+  sListTplRegExp << QStringLiteral("\\{\\{\\{#!code .+\\}\\}\\}")
+                 << QStringLiteral("\\{\\{\\{(?!#!\\S).+\\}\\}\\}");
   QStringList sListLines;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
@@ -269,31 +272,31 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
     while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
       bool bFormated = false;
       QString sMacro = findTemplate.cap(0);
-      sMacro.remove("{{{\n");
-      sMacro.remove("{{{");
-      if (sMacro.startsWith("#!code ", Qt::CaseInsensitive)) {
+      sMacro.remove(QStringLiteral("{{{\n"));
+      sMacro.remove(QStringLiteral("{{{"));
+      if (sMacro.startsWith(QLatin1String("#!code "), Qt::CaseInsensitive)) {
         bFormated = true;
-        sMacro.remove("#!code ", Qt::CaseInsensitive);
+        sMacro.remove(QStringLiteral("#!code "), Qt::CaseInsensitive);
       }
-      sMacro.remove("\n}}}");
-      sMacro.remove("}}}");
+      sMacro.remove(QStringLiteral("\n}}}"));
+      sMacro.remove(QStringLiteral("}}}"));
 
       sListLines.clear();
       sListLines = sMacro.split(QRegExp("\\n"));
 
       // Only plain code
       if (!bFormated) {
-        sMacro = "<pre>";
+        sMacro = QStringLiteral("<pre>");
         for (int i = 0; i < sListLines.size(); i++) {
           // Replace char "<" because it will be interpreted as
           // html tag (see bug #826482)
-          sListLines[i].replace('<', "&lt;");
+          sListLines[i].replace('<', QLatin1String("&lt;"));
           sMacro += sListLines[i];
           if (i < sListLines.size() - 1) {
-            sMacro += "\n";
+            sMacro += QLatin1String("\n");
           }
         }
-        sMacro += "</pre>\n";
+        sMacro += QLatin1String("</pre>\n");
       } else {  // Syntax highlighting
         sMacro = "<div class=\"code\">\n<table class=\"syntaxtable\">"
                  "<tbody>\n<tr>\n<td class=\"linenos\">\n<div "
@@ -303,7 +306,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
         for (int i = 1; i < sListLines.size(); i++) {
           sMacro += QString::number(i);
           if (i < sListLines.size() - 1) {
-            sMacro += "\n";
+            sMacro += QLatin1String("\n");
           }
         }
 
@@ -311,7 +314,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
         sMacro += "</pre>\n</div>\n</td>\n<td class=\"code\">\n"
                   "<div class=\"syntax\">\n<pre>\n";
 
-        QString sCode("");
+        QString sCode(QLatin1String(""));
 
         for (int i = 1; i < sListLines.length(); i++) {
           // Replace char "<" because it will be interpreted as
@@ -320,7 +323,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 
           sCode += sListLines[i];
           if (i < sListLines.size() - 1) {
-            sCode += "\n";
+            sCode += QLatin1String("\n");
           }
         }
 
@@ -372,38 +375,38 @@ auto Parser::highlightCode(const QString &sLanguage,
 
     // Workaround for passing stdin string with code to pygmentize
     procEcho.setStandardOutputProcess(&procPygmentize);
-    procEcho.start("echo", QStringList() << sCode);
+    procEcho.start(QStringLiteral("echo"), QStringList() << sCode);
     if (!procEcho.waitForStarted()) {
-      QMessageBox::critical(nullptr, "Pygments error",
-                            "Could not start echo.");
+      QMessageBox::critical(nullptr, QStringLiteral("Pygments error"),
+                            QStringLiteral("Could not start echo."));
       qCritical() << "Pygments error: Could not start echo.";
       procEcho.kill();
       return sCode;
     }
     if (!procEcho.waitForFinished()) {
-      QMessageBox::critical(nullptr, "Pygments error",
-                            "Error while using echo.");
+      QMessageBox::critical(nullptr, QStringLiteral("Pygments error"),
+                            QStringLiteral("Error while using echo."));
       qCritical() << "Pygments error: While using echo.";
       procEcho.kill();
       return sCode;
     }
 
-    procPygmentize.start(sPygmentize.fileName(), QStringList() << "-l"
-                         << sLanguage
-                         << "-f" << "html"
-                         << "-O" << "nowrap"
-                         << "-O" << "noclasses");
+    procPygmentize.start(sPygmentize.fileName(),
+                         QStringList() << QStringLiteral("-l") << sLanguage <<
+                         QStringLiteral("-f") << QStringLiteral("html") <<
+                         QStringLiteral("-O") << QStringLiteral("nowrap") <<
+                         QStringLiteral("-O") << QStringLiteral("noclasses"));
 
     if (!procPygmentize.waitForStarted()) {
-      QMessageBox::critical(nullptr, "Pygments error",
-                            "Could not start pygmentize.");
+      QMessageBox::critical(nullptr, QStringLiteral("Pygments error"),
+                            QStringLiteral("Could not start pygmentize."));
       qCritical() << "Error while starting pygmentize - waitForStarted";
       procPygmentize.kill();
       return sCode;
     }
     if (!procPygmentize.waitForFinished()) {
-      QMessageBox::critical(nullptr, "Pygments error",
-                            "Error while using pygmentize.");
+      QMessageBox::critical(nullptr, QStringLiteral("Pygments error"),
+                            QStringLiteral("Error while using pygmentize."));
       qCritical() << "Error while executing pygmentize - waitForFinished";
       procPygmentize.kill();
       return sCode;
@@ -421,9 +424,9 @@ auto Parser::highlightCode(const QString &sLanguage,
 void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegExp pattern("\\\\.", Qt::CaseInsensitive);
-  QString sEscChar("");
+  QString sEscChar;
   int nPos(0);
-  unsigned int nNoTranslate(0);
+  unsigned int nNoTranslate;
 
   while ((nPos = pattern.indexIn(sDoc, nPos)) != -1) {
     sEscChar = pattern.cap(0);
@@ -449,13 +452,13 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   QStringList sListFormatEnd;
   QStringList sListHtmlStart;
   QStringList sListHtmlEnd;
-  QString sDoc("");
+  QString sDoc(QLatin1String(""));
   QRegExp patternFormat;
   unsigned int nNoTranslate;
 
   for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
     if (m_pTemplates->getListFormatHtmlStart().at(i)
-        .contains("class=\"notranslate\"")) {
+        .contains(QLatin1String("class=\"notranslate\""))) {
       sListFormatStart << m_pTemplates->getListFormatStart().at(i);
       sListFormatEnd << m_pTemplates->getListFormatEnd().at(i);
       sListHtmlStart << m_pTemplates->getListFormatHtmlStart().at(i);
@@ -509,13 +512,13 @@ void Parser::reinstertNoTranslate(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 void Parser::replaceHorLines(QTextDocument *pRawDoc) {
-  QString sDoc("");
+  QString sDoc(QLatin1String(""));
 
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if ("----" == block.text()) {
-      sDoc += "\n<hr />\n";
+      sDoc += QLatin1String("\n<hr />\n");
     } else {
       sDoc += block.text() + "\n";
     }
@@ -530,34 +533,34 @@ void Parser::replaceHorLines(QTextDocument *pRawDoc) {
 
 auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
   QString sDoc(pRawDoc->toPlainText());
-  QString sLine("");
-  QString sTags("");
+  QString sLine;
+  QString sTags(QLatin1String(""));
   QStringList sListTags;
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
-    if (block.text().trimmed().startsWith("#tag:") ||
-        block.text().trimmed().startsWith("# tag:")) {
+    if (block.text().trimmed().startsWith(QLatin1String("#tag:")) ||
+        block.text().trimmed().startsWith(QLatin1String("# tag:"))) {
       sLine = block.text();
       sTags = block.text().trimmed();
-      sTags.remove("#tag:");
-      sTags.remove("# tag:");
+      sTags.remove(QStringLiteral("#tag:"));
+      sTags.remove(QStringLiteral("# tag:"));
       sTags = sTags.trimmed();
-      QStringList sListElements = sTags.split(",");
+      QStringList sListElements = sTags.split(QStringLiteral(","));
       sListTags << sListElements;
-      sDoc.replace(sLine, "");
+      sDoc.replace(sLine, QLatin1String(""));
     }
   }
 
   sTags.clear();
   for (int i = 0; i < sListTags.size(); i++) {
-    sListTags[i].remove(" ");
+    sListTags[i].remove(QStringLiteral(" "));
     sTags += " <a href=\"" + m_sInyokaUrl + "/Wiki/Tags?tag="
              + sListTags[i] + "\">" + sListTags[i] + "</a>";
     if (i < sListTags.size() - 1) {
-      sTags += ",";
+      sTags += QLatin1String(",");
     }
   }
 
@@ -572,8 +575,8 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
 void Parser::replaceFlags(QTextDocument *pRawDoc) {
   QRegExp findFlag("\\{([a-z]{2}|[A-Z]{2})\\}");
   QString sDoc(pRawDoc->toPlainText());
-  QString sCountry("");
-  QString sHtml("");
+  QString sCountry;
+  QString sHtml(QLatin1String(""));
   int nIndex;
   int nLength(4);
 
@@ -583,7 +586,7 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
     sCountry = findFlag.cap(1);
     sCountry = sCountry.toLower();
     if ("en" == sCountry) {
-      sCountry = "gb";
+      sCountry = QStringLiteral("gb");
     }
     foreach(QChar ch, sCountry) {
       // Unicode char - (Unicode 'a' 97) + (Unicode reg. indicator 'a' 127462)
@@ -603,17 +606,17 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 void Parser::replaceQuotes(QTextDocument *pRawDoc) {
-  QString sDoc("");
-  QString sLine("");
-  quint16 nQuotes = 0;
+  QString sDoc(QLatin1String(""));
+  QString sLine;
+  quint16 nQuotes;
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
-    if (block.text().startsWith(">")) {
+    if (block.text().startsWith(QLatin1String(">"))) {
       sLine = block.text().trimmed();
-      nQuotes = static_cast<quint16>(sLine.count(">"));
+      nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
       sLine.remove(QRegExp("^>*"));
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
@@ -631,34 +634,34 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 void Parser::generateParagraphs(QTextDocument *pRawDoc) {
-  QString sDoc("<p>\n");
+  QString sDoc(QStringLiteral("<p>\n"));
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (block.text().trimmed().isEmpty()) {
-      sDoc += "</p>\n<p>\n";
+      sDoc += QLatin1String("</p>\n<p>\n");
     } else {
       sDoc += block.text() + "\n";
     }
   }
-  sDoc += "</p>";
+  sDoc += QLatin1String("</p>");
 
-  pRawDoc->setPlainText(sDoc.remove("<p>\n</p>\n"));
+  pRawDoc->setPlainText(sDoc.remove(QStringLiteral("<p>\n</p>\n")));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void Parser::removeComments(QTextDocument *pRawDoc) {
-  QString sDoc("");
+  QString sDoc(QLatin1String(""));
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
-    if (!block.text().startsWith("##")) {
+    if (!block.text().startsWith(QLatin1String("##"))) {
       sDoc += block.text() + "\n";
     }
   }
@@ -671,10 +674,10 @@ void Parser::removeComments(QTextDocument *pRawDoc) {
 
 auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
   static const quint8 MAXHEAD = 5;
-  QString sDoc("");
+  QString sDoc(QLatin1String(""));
   QString sLine;
-  QString sTmp("");
-  QString sLink("");
+  QString sTmp(QLatin1String(""));
+  QString sLink(QLatin1String(""));
   quint8 nHeadlineLevel;
   QStringList slistHeadlines;
 
@@ -686,7 +689,6 @@ auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
     for (int i = MAXHEAD; i >= 0; i--) {
       sLine = block.text();
       sTmp.fill('=', i);
-      nHeadlineLevel = 0;  // Always reset for each line
       if (0 == i) {
         sDoc += sLine + "\n";
         break;
@@ -727,15 +729,15 @@ auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
 
       // Replace characters for valid link
       sLink = sLine;
-      sLink.replace(" ", "-");
-      sLink.replace(QString::fromUtf8("Ä"), "Ae");
-      sLink.replace(QString::fromUtf8("Ü"), "Ue");
-      sLink.replace(QString::fromUtf8("Ö"), "Oe");
-      sLink.replace(QString::fromUtf8("ä"), "ae");
-      sLink.replace(QString::fromUtf8("ü"), "ue");
-      sLink.replace(QString::fromUtf8("ö"), "oe");
+      sLink.replace(QLatin1String(" "), QLatin1String("-"));
+      sLink.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
+      sLink.replace(QStringLiteral("Ü"), QLatin1String("Ue"));
+      sLink.replace(QStringLiteral("Ö"), QLatin1String("Oe"));
+      sLink.replace(QStringLiteral("ä"), QLatin1String("ae"));
+      sLink.replace(QStringLiteral("ü"), QLatin1String("ue"));
+      sLink.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
-      // usHeadlineLevel + 1 !!!
+      // HeadlineLevel + 1 !
       sLine = "<h" + QString::number(nHeadlineLevel+1) + " id=\"" +
               sLink + "\">" + sLine + " <a href=\"#" + sLink +
               "\" class=\"headerlink\"> &para;</a></h" +
@@ -755,21 +757,21 @@ auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
 
 void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\(\\(.*\\)\\)");
+  QString sRegExp(QStringLiteral("\\(\\(.*\\)\\)"));
   QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
   findMacro.setMinimal(true);
-  QString sNote("");
-  QString sIndex("");
+  QString sNote;
+  QString sIndex;
   int nPos = 0;
   quint16 nIndex = 0;
-  QString sFootnotes("");
+  QString sFootnotes(QLatin1String(""));
 
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
     nIndex++;
 
     sNote = findMacro.cap(0);
-    sNote.remove("((");
-    sNote.remove("))");
+    sNote.remove(QStringLiteral("(("));
+    sNote.remove(QStringLiteral("))"));
     sFootnotes += "<li><a id=\"fn-" + QString::number(nIndex) +
                   "\" class="
                   "\"crosslink\" href=\"#bfn-" + QString::number(nIndex) +

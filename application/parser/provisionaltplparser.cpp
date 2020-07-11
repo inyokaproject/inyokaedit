@@ -25,6 +25,8 @@
  * is not supperted.
  */
 
+// clazy:excludeall=qstring-allocations
+
 #include "./provisionaltplparser.h"
 
 #include <QDebug>
@@ -1286,7 +1288,7 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
 auto ProvisionalTplParser::parseKnowledge(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  QString sTmp("");
+  QString sTmp;
   for (int i = 0; i < sListArgs.length(); i++) {
     sOutput += "\n 1. [[Anker(source-" + QString::number(i + 1) + ")]]";
     if (sListArgs[i].contains(",")) {
@@ -1450,7 +1452,7 @@ auto ProvisionalTplParser::parseOverview2(
   QList <QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table style=\"width: 98%; border: none;\">\n<tbody>");
-  QString sStyle("");
+  QString sStyle;
 
   // Split arguments by 'empty line'
   for (int j = 0; j < sListArgs.size(); j++) {
@@ -1584,7 +1586,7 @@ auto ProvisionalTplParser::parsePkgInstall(
 
 auto ProvisionalTplParser::parsePkgInstallBut(
     const QStringList &sListArgs) -> QString {
-  QString sTmp("");
+  QString sTmp;
   QString sOutput("");
 
   sOutput += "<p>\n"
@@ -1615,8 +1617,8 @@ auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutsideBox("");
   QString sRemark("");
-  QString sUser("");
-  QString sPPA("");
+  QString sUser;
+  QString sPPA;
   QString sOutput("");
 
   if (!sArgs.isEmpty()) {
@@ -1786,7 +1788,7 @@ auto ProvisionalTplParser::parseSidebar(
 auto ProvisionalTplParser::parseStatusIcon(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  QString sTmp("");
+  QString sTmp;
   for (int i = 0; i < sListArgs.size(); i++) {
     if (sListArgs.size() - 1 == i) {
       sTmp = sListArgs[i];
@@ -2039,7 +2041,6 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 auto ProvisionalTplParser::parseTested(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  qint32 nIndex(-1);
   if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
@@ -2049,7 +2050,7 @@ auto ProvisionalTplParser::parseTested(
       sListTmp = sListArgs;
       sListTmp.sort();
       for (int i = sListArgs.size()-1; i >= 0; i--) {
-        nIndex = m_sListTestedWith.indexOf(sListTmp[i].toLower());
+        qint32 nIndex = m_sListTestedWith.indexOf(sListTmp[i].toLower());
         if (-1 != nIndex && nIndex < m_sListTestedWithStrings.size()) {
           sOutput += "\n * " + m_sListTestedWithStrings[nIndex];
         }
@@ -2084,7 +2085,6 @@ auto ProvisionalTplParser::parseTested(
 auto ProvisionalTplParser::parseTestedUT(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  qint32 nIndex(-1);
   if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
       sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
@@ -2092,7 +2092,7 @@ auto ProvisionalTplParser::parseTestedUT(
     } else {  // Article tested with Ubuntu versions
       for (int i = 0; i < sListArgs.size(); i++) {
         sOutput += "\n * ";
-        nIndex = m_sListTestedWithTouch.indexOf(sListArgs[i].toLower());
+        qint32 nIndex = m_sListTestedWithTouch.indexOf(sListArgs[i].toLower());
         if (-1 != nIndex && nIndex < m_sListTestedWithTouchStrings.size()) {
           sOutput += m_sListTestedWithTouchStrings[nIndex];
         } else {

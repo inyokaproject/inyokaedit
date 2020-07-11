@@ -41,7 +41,7 @@ class Plugins : public QObject {
  public:
     Plugins(QWidget *pParent, TextEditor *pEditor,
             const QStringList &sListDisabledPlugins, const QDir &userDataDir,
-            const QString &sSharePath);
+            const QString &sSharePath, QObject *pObj = nullptr);
     void loadPlugins(const QString &sLang);
     void setCurrentEditor(TextEditor *pEditor);
     void setEditorlist(const QList<TextEditor *> &listEditors);

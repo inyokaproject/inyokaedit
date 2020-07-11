@@ -42,7 +42,7 @@ class Session : public QNetworkCookieJar {
 
  public:
     explicit Session(QWidget *pParent, const QString &sInyokaUrl,
-                     const QString &sHash);
+                     const QString &sHash, QObject *pObj = nullptr);
 
     void checkSession();
     auto isLoggedIn() const -> bool;

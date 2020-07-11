@@ -43,7 +43,8 @@
 #include "./utils.h"
 
 Upload::Upload(QWidget *pParent, Session *pSession,
-               const QString &sInyokaUrl, const QString &sConstArea)
+               const QString &sInyokaUrl, const QString &sConstArea,
+               QObject *pObj)
   : m_pParent(pParent),
     m_pSession(pSession),
     m_sInyokaUrl(sInyokaUrl),
@@ -54,6 +55,7 @@ Upload::Upload(QWidget *pParent, Session *pSession,
     m_sConstructionArea(sConstArea),
     m_pEditor(nullptr),
     m_sArticlename(QLatin1String("")) {
+  Q_UNUSED(pObj)
   this->setParent(m_pParent);
 }
 

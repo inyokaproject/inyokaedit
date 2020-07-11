@@ -45,90 +45,32 @@ class FileOperations : public QObject {
   Q_OBJECT
 
  public:
-    /**
-    * \brief Constructor
-    * \param pParent Pointer to parent window
-    * \param pEditor Pointer to editor module
-    * \param pSettings Pointer to settings module
-    * \param sAppName Application name
-    */
     FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                    Settings *pSettings, const QString &sPreviewFile,
                    const QString &sUserDataDir,
-                   const QStringList &sListTplMacros);
+                   const QStringList &sListTplMacros,
+                   QObject *pObj = nullptr);
 
     void newFile(QString sFileName);
 
     auto getCurrentEditor() -> TextEditor*;
     auto getEditors() const -> QList<TextEditor *>;
-
-    /**
-    * \brief Get current file name
-    * \return File name of currently opened file
-    */
     auto getCurrentFile() const -> QString;
-
-    /**
-    * \brief Check if current file is saved or not
-    * \return True or false if current file is saved or not
-    */
     auto maybeSave() -> bool;
-
-    /**
-    * \brief Get list of recent opened files
-    * \return List of last opened files
-    */
     auto getLastOpenedFiles() const -> QList<QAction *>;
 
     auto closeAllmaybeSave() -> bool;
 
  public slots:
-    /** \brief Open an existing file */
     void open();
-
-    /**
-    * \brief Open recent opened file
-    * \param nEntry Number of file which should be opened
-    */
     void openRecentFile(const int nEntry);
-
-    /**
-    * \brief Save current file
-    * \return True or false if saving was successful / not successful
-    */
     bool save();
-
-    /**
-    * \brief Save current file under new name
-    * \return True or false if saving was successful / not successful
-    */
     bool saveAs();
-
-    /**
-    * \brief Load existing file
-    * \param sFileName Path and name of file which should be loaded
-    */
     void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
                   const bool bArchive = false);
-
-    /**
-    * \brief Load article from archive with images
-    */
     void loadInyArchive(const QString &sArchive);
-
-    /**
-    * \brief Save current file
-    * \param sFileName Path and name of file which should be saved
-    * \return True or false if saving was successful / not successful
-    */
     bool saveFile(QString sFileName);
-
-    /**
-    * \brief Save article into archive with images
-    */
     bool saveInyArchive(const QString &sArchive);
-
-    /** \brief Print preview (printer / PDF) */
     void printPreview();
 
     void copy();
@@ -138,9 +80,6 @@ class FileOperations : public QObject {
     void redo();
 
  signals:
-    /**
-    * \brief Signal for sending state of recent files menu entry
-    */
     void setMenuLastOpenedEnabled(const bool);
     void changedCurrentEditor();
     void newEditor();
@@ -159,7 +98,6 @@ class FileOperations : public QObject {
     void redoAvailable2(bool);
 
  private slots:
-    /** \brief Clear recent files list in file menu */
     void clearRecentFiles();
 
     void changedDocTab(int nIndex);
@@ -169,20 +107,15 @@ class FileOperations : public QObject {
     void saveDocumentAuto();
 
  private:
-    /**
-    * \brief Update list of recent opened files
-    * \param sFileName Path and name of a newly opened file
-    */
     void updateRecentFiles(const QString &sFileName);
-
     void setCurrentEditor();
 
-    QWidget *m_pParent;      /**< Pointer to parent window */
+    QWidget *m_pParent;
     QTabWidget *m_pDocumentTabs;
-    TextEditor *m_pCurrentEditor;  /**< Pointer to editor module */
-    Settings *m_pSettings;  /**< Pointer to settings module */
+    TextEditor *m_pCurrentEditor;
+    Settings *m_pSettings;
 
-    QList<QAction *> m_LastOpenedFilesAct;  /**< Actions open recent files */
+    QList<QAction *> m_LastOpenedFilesAct;
 
     QString m_sPreviewFile;
     const QString m_sFileFilter;
@@ -197,7 +130,6 @@ class FileOperations : public QObject {
 
     QList<TextEditor *> m_pListEditors;
 
-    // File menu: Clear recent opened files list
     QAction *m_pClearRecentFilesAct;
 
     QStringList m_sListTplMacros;

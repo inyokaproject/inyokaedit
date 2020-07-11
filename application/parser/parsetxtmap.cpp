@@ -43,8 +43,8 @@ void ParseTxtMap::startParsing(QTextDocument *pRawDoc,
       break;
     }
     sReplace = sListText[i];
-    if (sReplace.startsWith("css-class:")) {
-      sReplace = sReplace.remove("css-class:");
+    if (sReplace.startsWith(QLatin1String("css-class:"))) {
+      sReplace = sReplace.remove(QStringLiteral("css-class:"));
       sReplace = "<span class=\"" + sReplace + "\"></span>";
     }
     sDoc.replace(sListElements[i], sReplace);

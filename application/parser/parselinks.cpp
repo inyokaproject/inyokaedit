@@ -81,15 +81,15 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   nIndex = findHyperlink.indexIn(sDoc);
   while (nIndex >= 0) {
     // Found end of link
-    if (sDoc.indexOf("]", nIndex) != -1) {
-      nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+    if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
+      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
       // qDebug() << "FOUND: " << sLink;
 
-      sLink.remove("[");
-      sLink.remove("]");
+      sLink.remove(QStringLiteral("["));
+      sLink.remove(QStringLiteral("]"));
 
-      nSpace = sLink.indexOf(" ", 0);
+      nSpace = sLink.indexOf(QLatin1String(" "), 0);
       // Link with description
       if (nSpace != -1) {
         QString sHref = sLink;
@@ -124,28 +124,28 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   QRegExp findInyokaWikiLink("\\[{1,1}\\:[0-9A-Za-z:.]");
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
-  int nLength = 0;
-  QString sLink("");
-  QString sLinkURL("");
+  int nLength;
+  QString sLink;
+  QString sLinkURL;
   bool bIsOnline(Utils::getOnlineState());
 
   nIndex = findInyokaWikiLink.indexIn(sDoc);
   while (nIndex >= 0) {
     // Found end of link
-    if (sDoc.indexOf("]", nIndex) != -1) {
-      nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+    if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
+      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
-      if (2 <= sLink.count(":")) {
+      if (2 <= sLink.count(QStringLiteral(":"))) {
         // qDebug() << "FOUND: " << sLink;
-        sLink.remove("[:");
+        sLink.remove(QStringLiteral("[:"));
 
         // No description
-        if (sLink.endsWith(":]")) {
-          QString sAnchor("");
-          sLink.remove(":]");
+        if (sLink.endsWith(QLatin1String(":]"))) {
+          QString sAnchor(QLatin1String(""));
+          sLink.remove(QStringLiteral(":]"));
           // qDebug() << sLink;
           QString sLink2 = sLink;
-          sLink2.replace("_", " ");
+          sLink2.replace(QLatin1String("_"), QLatin1String(" "));
           sLinkURL = m_sWikiUrl + "/" + sLink;
 
           // Contains anchor link
@@ -155,7 +155,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
             sAnchor = " (" + tr("Section") + " \"" + sAnchor + "\")";
           }
 
-          m_sLinkClassAddition = "";
+          m_sLinkClassAddition = QLatin1String("");
           if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
@@ -166,9 +166,9 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {
-              m_sLinkClassAddition = "";
+              m_sLinkClassAddition = QLatin1String("");
             } else {
-              m_sLinkClassAddition = " missing";
+              m_sLinkClassAddition = QStringLiteral(" missing");
             }
           }
           sDoc.replace(nIndex, nLength,
@@ -177,12 +177,12 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
                        + m_sLinkClassAddition + "\">"
                        + sLink2 + sAnchor + "</a>");
         } else {
-          sLink.remove("]");
+          sLink.remove(QStringLiteral("]"));
           // qDebug() << sLink.mid(0, sLink.indexOf(":"))
           //          << " - "
           //          << sLink.mid(sLink.indexOf(":") + 1, nLength);
           sLinkURL = m_sWikiUrl + "/"
-                     + sLink.mid(0, sLink.indexOf(":"));
+                     + sLink.mid(0, sLink.indexOf(QLatin1String(":")));
           if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
                           QNetworkRequest(
@@ -193,16 +193,16 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {
-              m_sLinkClassAddition = "";
+              m_sLinkClassAddition = QLatin1String("");
             } else {
-              m_sLinkClassAddition = " missing";
+              m_sLinkClassAddition = QStringLiteral(" missing");
             }
           }
           sDoc.replace(nIndex, nLength,
                        "<a href=\"" + sLinkURL
                        + "\" class=\"internal"
                        + m_sLinkClassAddition + "\">"
-                       + sLink.mid(sLink.indexOf(":")
+                       + sLink.mid(sLink.indexOf(QLatin1String(":"))
                                    + 1, nLength).trimmed() + "</a>");
         }
       }
@@ -225,42 +225,42 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
 void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
-  int nLength = 0;
+  int nLength;
   QString sLink;
   QStringList sListLink;
   QString sClass;
 
   // Generate pattern
-  QString sPattern = "\\[{1,1}\\b(";
+  QString sPattern = QStringLiteral("\\[{1,1}\\b(");
   for (int i = 0; i < m_sListInterwikiKey.size(); i++) {
     sPattern += m_sListInterwikiKey[i];
     if (i != m_sListInterwikiKey.size() -1) {
-      sPattern += "|";
+      sPattern += QLatin1String("|");
     }
   }
-  sPattern += ")\\b:";
+  sPattern += QLatin1String(")\\b:");
 
   QRegExp findInterwikiLink(sPattern);
   // qDebug() << sPattern;
   nIndex = findInterwikiLink.indexIn(sDoc);
   while (nIndex >= 0) {
     // Found end of link
-    if (sDoc.indexOf("]", nIndex) != -1) {
-      nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+    if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
+      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
-      if (2 <= sLink.count(":")) {
-        sLink.remove("[");
-        sLink.remove("]");
-        sListLink = sLink.split(":");
+      if (2 <= sLink.count(QStringLiteral(":"))) {
+        sLink.remove(QStringLiteral("["));
+        sLink.remove(QStringLiteral("]"));
+        sListLink = sLink.split(QStringLiteral(":"));
         // qDebug() << sListLink;
 
         if (sListLink.size() > 1) {
-          if (sListLink[0] == "user") {
-            sClass = "crosslink user";
-          } else if (sListLink[0] == "ikhaya") {
-            sClass = "crosslink ikhaya";
-          } else if (sListLink[0] == "paste") {
-            sClass = "crosslink paste";
+          if (sListLink[0] == QLatin1String("user")) {
+            sClass = QStringLiteral("crosslink user");
+          } else if (sListLink[0] == QLatin1String("ikhaya")) {
+            sClass = QStringLiteral("crosslink ikhaya");
+          } else if (sListLink[0] == QLatin1String("paste")) {
+            sClass = QStringLiteral("crosslink paste");
           } else {
             sClass = "interwiki interwiki-" + sListLink[0];
           }
@@ -270,8 +270,8 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
                   m_sListInterwikiLink[m_sListInterwikiKey.indexOf(
                   sListLink[0])]);
             // Check for iWikilink with PAGE
-            if (sTmpUrl.contains("PAGE", Qt::CaseSensitive)) {
-              sTmpUrl.replace("PAGE", sListLink[1],
+            if (sTmpUrl.contains(QLatin1String("PAGE"), Qt::CaseSensitive)) {
+              sTmpUrl.replace(QLatin1String("PAGE"), sListLink[1],
                   Qt::CaseSensitive);
             } else {
               sTmpUrl.append(sListLink[1]);
@@ -316,20 +316,20 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
   QRegExp findAnchorLink("\\[{1,1}\\#");
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
-  int nLength = 0;
+  int nLength;
   QString sLink;
   int nSplit;
 
   nIndex = findAnchorLink.indexIn(sDoc);
   while (nIndex >= 0) {
     // Found end of link
-    if (sDoc.indexOf("]", nIndex) != -1) {
-      nLength = sDoc.indexOf("]", nIndex) - nIndex + 1;  // End of link
+    if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
+      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
 
-      sLink.remove("[#");
-      sLink.remove("]");
-      nSplit = sLink.indexOf(" ");
+      sLink.remove(QStringLiteral("[#"));
+      sLink.remove(QStringLiteral("]"));
+      nSplit = sLink.indexOf(QLatin1String(" "));
       // qDebug() << sLink.mid(0, nSplit)
       //          << sLink.mid(nSplit + 1 , nLength);
 
@@ -373,8 +373,8 @@ void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
     QString sLink = findKnowledgeBoxLink.cap();
     // qDebug() << sLink;
 
-    sLink.remove("[");
-    sLink.remove("]");
+    sLink.remove(QStringLiteral("["));
+    sLink.remove(QStringLiteral("]"));
 
     if (sLink.toUShort() != 0) {
       sDoc.replace(nIndex, nLength,

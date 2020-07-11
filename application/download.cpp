@@ -39,7 +39,7 @@
 
 Download::Download(QWidget *pParent, Session *pSession,
                    const QString &sStylesDir, const QString &sImgDir,
-                   const QString &sSharePath)
+                   const QString &sSharePath, QObject *pObj)
   : m_pParent(pParent),
     m_pSession(pSession),
     m_sStylesDir(sStylesDir),
@@ -49,10 +49,11 @@ Download::Download(QWidget *pParent, Session *pSession,
     m_bAutomaticImageDownload(false),
     m_sSharePath(sSharePath),
     m_bDownloadArticle(true) {
+  Q_UNUSED(pObj)
   connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished,
           this, &Download::replyFinished);
 
-  m_DlImages = new DownloadImg(nullptr, m_pSession->getNwManager());
+  m_DlImages = new DownloadImg(m_pSession->getNwManager());
   connect(m_DlImages, &DownloadImg::finsihedImageDownload,
           this, &Download::showArticle);
 }
@@ -181,8 +182,8 @@ void Download::replyFinished(QNetworkReply *pReply) {
   }
 
   // No error
-  QUrl url = pReply->url();
-  // qDebug() << "Downloading URL: " << url.toString();
+  QUrl url;
+  // qDebug() << "Downloading URL: " << pReply->url().toString();
 
   // If the URL is not empty, we're being redirected
   if (!m_urlRedirectedTo.isEmpty()) {

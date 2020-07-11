@@ -26,8 +26,9 @@
 
 #include "./syntaxhighlighter.h"
 
-SyntaxHighlighter::SyntaxHighlighter(QTextDocument *pDoc)
+SyntaxHighlighter::SyntaxHighlighter(QTextDocument *pDoc, QObject *pParent)
   : QSyntaxHighlighter(pDoc) {
+  Q_UNUSED(pParent)
 }
 
 SyntaxHighlighter::~SyntaxHighlighter() = default;

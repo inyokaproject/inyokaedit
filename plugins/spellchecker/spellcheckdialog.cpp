@@ -123,7 +123,7 @@ SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
   m_pUi->listWidget->clear();
   m_pUi->listWidget->addItems(sListSuggestions);
 
-  if (sListSuggestions.count() > 0) {
+  if (!sListSuggestions.isEmpty()) {
     m_pUi->listWidget->setCurrentRow(0, QItemSelectionModel::Select);
   }
 

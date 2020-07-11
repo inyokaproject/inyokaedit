@@ -23,6 +23,7 @@
  * \section DESCRIPTION
  * Class definition ubuntuusers.de table template dialog
  */
+// clazy:excludeall=ctor-missing-parent-argument
 
 #ifndef PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 #define PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
@@ -82,23 +83,12 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     void showAbout() override;
 
  private slots:
-    /** \brief Show preview */
     void preview();
-
-    /** \brief Convert base template to new table template */
     void convertToBaseTemplate();
-
-    /** \brief Convert new table template to base template */
     void convertToNewTemplate();
-
-    /** \brief Dialog finished */
     void accept();
 
  private:
-    /**
-    * \brief Generate specific table
-    * \return String including the generated table code
-    */
     auto generateTable() -> QString;
 
     QWidget *m_pParent;

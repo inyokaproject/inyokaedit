@@ -37,12 +37,13 @@
 #include <QUrlQuery>
 
 Session::Session(QWidget *pParent, const QString &sInyokaUrl,
-                 const QString &sHash)
+                 const QString &sHash, QObject *pObj)
   : m_pParent(pParent),
     m_sInyokaUrl(sInyokaUrl),
     m_State(REQUTOKEN),
     m_sToken(QLatin1String("")),
     m_sHash(sHash) {
+  Q_UNUSED(pObj)
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   m_pNwManager->setCookieJar(this);
   this->setParent(m_pParent);

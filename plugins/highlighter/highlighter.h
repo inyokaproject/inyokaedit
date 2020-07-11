@@ -23,6 +23,7 @@
  * \section DESCRIPTION
  * Class definition for syntax highlighting.
  */
+// clazy:excludeall=ctor-missing-parent-argument
 
 #ifndef PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_
 #define PLUGINS_HIGHLIGHTER_HIGHLIGHTER_H_

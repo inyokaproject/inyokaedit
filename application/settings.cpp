@@ -34,7 +34,8 @@
 #include "./settingsdialog.h"
 #include "./ieditorplugin.h"
 
-Settings::Settings(QWidget *pParent, const QString &sSharePath) {
+Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
+  Q_UNUSED(pObj)
 #if defined __linux__
   m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),

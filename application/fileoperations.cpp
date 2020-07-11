@@ -53,7 +53,7 @@
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                Settings *pSettings, const QString &sPreviewFile,
                                const QString &sUserDataDir,
-                               const QStringList &sListTplMacros)
+                               const QStringList &sListTplMacros, QObject *pObj)
   : m_pParent(pParent),
     m_pDocumentTabs(pTabWidget),
     m_pCurrentEditor(nullptr),
@@ -67,7 +67,8 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_sUserDataDir(sUserDataDir),
     m_sExtractDir(m_sUserDataDir + "/tmpImages"),
     m_sListTplMacros(sListTplMacros) {
-    qDebug() << "Using miniz version:" << MZ_VERSION;
+  Q_UNUSED(pObj)
+  qDebug() << "Using miniz version:" << MZ_VERSION;
   m_pFindReplace = new FindReplace();
   connect(this, &FileOperations::triggeredFind,
           m_pFindReplace, &FindReplace::callFind);

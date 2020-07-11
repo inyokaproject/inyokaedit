@@ -46,7 +46,8 @@ class Download : public QObject {
 
  public:
     Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
-             const QString &sImgDir, const QString &sSharePath);
+             const QString &sImgDir, const QString &sSharePath,
+             QObject *pObj = nullptr);
 
  public slots:
     void downloadArticle(QString sUrl = QLatin1String(""));

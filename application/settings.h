@@ -43,7 +43,8 @@ class Settings : public QObject {
   Q_OBJECT
 
  public:
-    Settings(QWidget *pParent, const QString &sSharePath);
+    Settings(QWidget *pParent, const QString &sSharePath,
+             QObject *pObj = nullptr);
     ~Settings();
 
     // Load / save application settings

@@ -23,6 +23,7 @@
  * \section DESCRIPTION
  * Class definition ubuntuusers.de knowledge box dialog
  */
+// clazy:excludeall=ctor-missing-parent-argument
 
 #ifndef PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_
 #define PLUGINS_UU_KNOWLEDGEBOX_UU_KNOWLEDGEBOX_H_

@@ -32,10 +32,10 @@
 ParseList::ParseList() = default;
 
 void ParseList::startParsing(QTextDocument *pRawDoc) {
-  QString sDoc("");
-  QString sLine("");
-  QString sClass("arabic");
-  int nPreviousIndex = -1;
+  QString sDoc(QLatin1String(""));
+  QString sLine;
+  QString sClass(QStringLiteral("arabic"));
+  int nPreviousIndex;
   int nCurrentIndex = -1;
   QList<bool> bArrayListType;  // Unsorted = false, sorted = true
 
@@ -43,37 +43,37 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
   for (QTextBlock block = pRawDoc->firstBlock();
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
-    if (block.text().trimmed().startsWith("*") ||
-        block.text().trimmed().startsWith("1.") ||
-        block.text().trimmed().startsWith("a.") ||
-        block.text().trimmed().startsWith("A.") ||
-        block.text().trimmed().startsWith("i.") ||
-        block.text().trimmed().startsWith("I.")) {
+    if (block.text().trimmed().startsWith(QLatin1String("*")) ||
+        block.text().trimmed().startsWith(QLatin1String("1.")) ||
+        block.text().trimmed().startsWith(QLatin1String("a.")) ||
+        block.text().trimmed().startsWith(QLatin1String("A.")) ||
+        block.text().trimmed().startsWith(QLatin1String("i.")) ||
+        block.text().trimmed().startsWith(QLatin1String("I."))) {
       sLine = block.text();
 
-      if (sLine.indexOf(" * ") >= 0) {  // Unsorted list
+      if (sLine.indexOf(QLatin1String(" * ")) >= 0) {  // Unsorted list
         nPreviousIndex = nCurrentIndex;
-        nCurrentIndex = sLine.indexOf(" * ");
-        sLine.remove(0, sLine.indexOf(" * ") + 3);
+        nCurrentIndex = sLine.indexOf(QLatin1String(" * "));
+        sLine.remove(0, sLine.indexOf(QLatin1String(" * ")) + 3);
         // qDebug() << "LIST:" << sLine << nCurrentIndex << false;
 
         if (nCurrentIndex != nPreviousIndex) {
           if (nCurrentIndex > nPreviousIndex) {  // New tag
-            sDoc += "<ul>\n";
+            sDoc += QLatin1String("<ul>\n");
             bArrayListType << false;
           } else {  // Close previous tag and maybe create new
             if (!bArrayListType.isEmpty()) {
               if (!bArrayListType.last()) {
-                sDoc += "</ul>\n";
+                sDoc += QLatin1String("</ul>\n");
               } else {
-                sDoc += "</ol>\n";
+                sDoc += QLatin1String("</ol>\n");
               }
               bArrayListType.removeLast();
             }
 
             if (!bArrayListType.isEmpty()) {
               if (bArrayListType.last()) {
-                sDoc += "</ol>\n<ul>\n";
+                sDoc += QLatin1String("</ol>\n<ul>\n");
                 bArrayListType.removeLast();
                 bArrayListType << false;
               }
@@ -82,32 +82,32 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
         }
         sDoc += "<li>" + sLine + "</li>\n";
 
-      } else if (sLine.indexOf(" 1. ") >= 0 ||
-                 sLine.indexOf(" a. ") >= 0 ||
-                 sLine.indexOf(" A. ") >= 0 ||
-                 sLine.indexOf(" i. ") >= 0 ||
-                 sLine.indexOf(" I. ") >= 0) {  // Sorted list
+      } else if (sLine.indexOf(QLatin1String(" 1. ")) >= 0 ||
+                 sLine.indexOf(QLatin1String(" a. ")) >= 0 ||
+                 sLine.indexOf(QLatin1String(" A. ")) >= 0 ||
+                 sLine.indexOf(QLatin1String(" i. ")) >= 0 ||
+                 sLine.indexOf(QLatin1String(" I. ")) >= 0) {  // Sorted list
         nPreviousIndex = nCurrentIndex;
 
-        nCurrentIndex = sLine.indexOf(" 1. ");
+        nCurrentIndex = sLine.indexOf(QLatin1String(" 1. "));
         if (nCurrentIndex >= 0) {
-          sClass = "arabic";
+          sClass = QStringLiteral("arabic");
         } else {
-          nCurrentIndex = sLine.indexOf(" a. ");
+          nCurrentIndex = sLine.indexOf(QLatin1String(" a. "));
           if (nCurrentIndex >= 0) {
-            sClass = "alphalower";
+            sClass = QStringLiteral("alphalower");
           } else {
-            nCurrentIndex = sLine.indexOf(" A. ");
+            nCurrentIndex = sLine.indexOf(QLatin1String(" A. "));
             if (nCurrentIndex >= 0) {
-              sClass = "alphaupper";
+              sClass = QStringLiteral("alphaupper");
             } else {
-              nCurrentIndex = sLine.indexOf(" i. ");
+              nCurrentIndex = sLine.indexOf(QLatin1String(" i. "));
               if (nCurrentIndex >= 0) {
-                sClass = "romanlower";
+                sClass = QStringLiteral("romanlower");
               } else {
-                nCurrentIndex = sLine.indexOf(" I. ");
+                nCurrentIndex = sLine.indexOf(QLatin1String(" I. "));
                 if (nCurrentIndex >= 0) {
-                  sClass = "romanupper";
+                  sClass = QStringLiteral("romanupper");
                 }
               }
             }
@@ -124,9 +124,9 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
           } else {  // Close previous tag and maybe create new
             if (!bArrayListType.isEmpty()) {
               if (!bArrayListType.last()) {
-                sDoc += "</ul>\n";
+                sDoc += QLatin1String("</ul>\n");
               } else {
-                sDoc += "</ol>\n";
+                sDoc += QLatin1String("</ol>\n");
               }
               bArrayListType.removeLast();
             }
@@ -146,13 +146,12 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
         // Close all open tags
         while (!bArrayListType.isEmpty()) {
           if (!bArrayListType.last()) {
-            sDoc += "</ul>\n";
+            sDoc += QLatin1String("</ul>\n");
           } else {
-            sDoc += "</ol>\n";
+            sDoc += QLatin1String("</ol>\n");
           }
           bArrayListType.removeLast();
         }
-        nPreviousIndex = -1;
         nCurrentIndex = -1;
         sDoc += block.text() + "\n";
         // qDebug() << "LIST END";
@@ -162,13 +161,12 @@ void ParseList::startParsing(QTextDocument *pRawDoc) {
       // Close all open tags
       while (!bArrayListType.isEmpty()) {
         if (!bArrayListType.last()) {
-          sDoc += "</ul>\n";
+          sDoc += QLatin1String("</ul>\n");
         } else {
-          sDoc += "</ol>\n";
+          sDoc += QLatin1String("</ol>\n");
         }
         bArrayListType.removeLast();
       }
-      nPreviousIndex = -1;
       nCurrentIndex = -1;
       sDoc += block.text() + "\n";
       // qDebug() << "LIST END";

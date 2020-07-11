@@ -39,7 +39,8 @@ class DownloadImg : public QObject {
   Q_OBJECT
 
  public:
-    explicit DownloadImg(QObject *pParent, QNetworkAccessManager *pNwManager);
+    explicit DownloadImg(QNetworkAccessManager *pNwManager,
+                         QObject *pObj = nullptr);
     void setDLs(const QStringList &sListUrls,
                 const QStringList &sListSavePath);
 

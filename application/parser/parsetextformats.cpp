@@ -38,7 +38,6 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
                                     const QStringList &sListHtmlEnd) {
   QString sDoc(pRawDoc->toPlainText());
   QRegExp patternTextformat;
-  QString sFormatedText;
   QString sTmpRegExp;
   int nIndex;
   int nLength;
@@ -51,20 +50,19 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
 
     // Start and end is not identical
     if (sListFormatStart[i] != sListFormatEnd[i]) {
-      if (!sListFormatStart[i].startsWith("RegExp=")) {
+      if (!sListFormatStart[i].startsWith(QLatin1String("RegExp="))) {
         sDoc.replace(sListFormatStart[i], sListHtmlStart[i]);
       } else {
         sTmpRegExp = sListFormatStart[i];
-        sTmpRegExp.remove("RegExp=");
+        sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
 
         nIndex = patternTextformat.indexIn(sDoc);
 
         while (nIndex >= 0) {
-          QString sCap("");
+          QString sCap(QLatin1String(""));
           nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
           sCap = patternTextformat.cap(1);
 
           if (sCap.isEmpty()) {
@@ -78,20 +76,19 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
           nIndex = patternTextformat.indexIn(sDoc, nIndex + nLength);
         }
       }
-      if (!sListFormatEnd[i].startsWith("RegExp=")) {
+      if (!sListFormatEnd[i].startsWith(QLatin1String("RegExp="))) {
         sDoc.replace(sListFormatEnd[i], sListHtmlEnd[i]);
       } else {
         sTmpRegExp = sListFormatEnd[i];
-        sTmpRegExp.remove("RegExp=");
+        sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
 
         nIndex = patternTextformat.indexIn(sDoc);
 
         while (nIndex >= 0) {
-          QString sCap("");
+          QString sCap(QLatin1String(""));
           nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
           sCap = patternTextformat.cap(1);
 
           if (sCap.isEmpty()) {
@@ -106,7 +103,7 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
         }
       }
     } else {  // Start and end is identical
-      if (!sListFormatStart[i].startsWith("RegExp=")) {
+      if (!sListFormatStart[i].startsWith(QLatin1String("RegExp="))) {
         while (-1 != sDoc.indexOf(sListFormatStart[i])) {
           if (bFoundStart) {
             sDoc.replace(sDoc.indexOf(sListFormatStart[i]),
@@ -121,16 +118,15 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
         }
       } else {
         sTmpRegExp = sListFormatStart[i];
-        sTmpRegExp.remove("RegExp=");
+        sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
 
         nIndex = patternTextformat.indexIn(sDoc);
 
         while (nIndex >= 0) {
-          QString sCap("");
+          QString sCap(QLatin1String(""));
           nLength = patternTextformat.matchedLength();
-          sFormatedText = patternTextformat.cap();
           sCap = patternTextformat.cap(1);
 
           if (sCap.isEmpty()) {

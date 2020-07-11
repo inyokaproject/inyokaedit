@@ -23,6 +23,7 @@
  * \section DESCRIPTION
  * Class definition hotkey dialog
  */
+// clazy:excludeall=ctor-missing-parent-argument
 
 #ifndef PLUGINS_HOTKEY_HOTKEY_H_
 #define PLUGINS_HOTKEY_HOTKEY_H_

@@ -52,6 +52,7 @@
  *
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
+// clazy:excludeall=ctor-missing-parent-argument
 
 #ifndef PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 #define PLUGINS_SPELLCHECKER_SPELLCHECKER_H_

@@ -37,12 +37,14 @@
 
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,
-                 const QDir &userDataDir, const QString &sSharePath)
+                 const QDir &userDataDir, const QString &sSharePath,
+                 QObject *pObj)
   : m_pParent(pParent),
     m_pEditor(pEditor),
     m_sListDisabledPlugins(sListDisabledPlugins),
     m_userDataDir(userDataDir),
     m_sSharePath(sSharePath) {
+  Q_UNUSED(pObj)
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
 

@@ -44,7 +44,8 @@ class Upload : public QObject {
 
  public:
     explicit Upload(QWidget *pParent, Session *pSession,
-                    const QString &sInyokaUrl, const QString &sConstArea);
+                    const QString &sInyokaUrl, const QString &sConstArea,
+                    QObject *pObj = nullptr);
 
     void setEditor(QTextEdit *pEditor, const QString &sArticlename);
 
