@@ -384,7 +384,7 @@ auto ProvisionalTplParser::parseForeignAuth(
 
       sOutput = QString::fromUtf8(
                   "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, "
-                  "kann man den Signierungsschlüssel mit folgendem Befehl "
+                  "muss man den Signierungsschlüssel mit folgendem Befehl "
                   "importieren:");
       sOutput += "</p>\n"
                  "<div class=\"bash\">\n"
@@ -397,9 +397,10 @@ auto ProvisionalTplParser::parseForeignAuth(
     } else {  // Url
       sOutput = QString::fromUtf8(
                   "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, "
-                  "kann man entweder den [%1 Signierungsschlüssel "
-                  "herunterladen] und in der [:Paketquellen_freischalten:"
-                  "Paketverwaltung hinzufügen] oder folgenden Befehl ausführen:"
+                  "muss man den [%1 Signierungsschlüssel herunterladen] und "
+                  "in der [:Paketquellen_freischalten: Paketverwaltung "
+                  "hinzufügen]. Alternativ dazu kann man auch im Terminal "
+                  "den folgenden Befehl ausführen:"
                   "</p>\n").arg(sArgs[0]);
       sOutput += "<div class=\"bash\">\n"
                  "<div class=\"contents\">\n"

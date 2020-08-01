@@ -193,9 +193,9 @@ void SpellChecker::setDictPath() {
   m_pSettings->setValue(QStringLiteral("DictionaryPath"), m_sDictPath);
   // m_pSettings->endGroup();
 
-  QFileInfoList fiListFiles = QDir(m_sDictPath).entryInfoList(
-                                QDir::NoDotAndDotDot | QDir::Files);
-  foreach (QFileInfo fi, fiListFiles) {
+  const QFileInfoList fiListFiles = QDir(m_sDictPath).entryInfoList(
+                                      QDir::NoDotAndDotDot | QDir::Files);
+  for (const auto &fi : fiListFiles) {
     m_sListDicts << fi.baseName();
   }
   m_sListDicts.removeDuplicates();

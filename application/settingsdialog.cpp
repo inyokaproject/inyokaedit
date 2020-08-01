@@ -104,9 +104,9 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   QStringList sListCommunities;
   QDir extendedShareDir(m_sSharePath + "/community");
-  QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
-                                QDir::NoDotAndDotDot | QDir::Dirs);
-  foreach (QFileInfo fi, fiListFiles) {
+  const QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
+                                      QDir::NoDotAndDotDot | QDir::Dirs);
+  for (const auto &fi : fiListFiles) {
     sListCommunities << fi.fileName();
   }
 

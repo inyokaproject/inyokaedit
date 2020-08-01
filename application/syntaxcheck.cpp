@@ -62,7 +62,7 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   QString sReplace(QLatin1String(""));
 
   // Replace smilies, since most of them are including open parenthesis
-  foreach (QString s, sListSmilies) {
+  for (const auto &s : sListSmilies) {
     sDoc = sDoc.replace(s, sReplace.fill('X', s.length()));
   }
 
@@ -119,7 +119,7 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                                       const QStringList &sListTplTrans) -> qint32 {
   QStringList sListTplRegExp;
   QStringList sListTrans;
-  foreach (QString s, sListTplTrans) {
+  for (const auto &s : sListTplTrans) {
     sListTplRegExp << "\\{\\{\\{#!" + s + " .+\\}\\}\\}"
                    << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
     sListTrans << s << s;

@@ -621,14 +621,14 @@ void FileOperations::printPreview() {
   QFile previewFile(m_sPreviewFile);
   QString sHtml(QLatin1String(""));
 
-  QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
+  const QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
   if (listPrinters.isEmpty()) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("No supported printer found."));
     return;
   }
 
-  foreach (QPrinterInfo info, listPrinters) {
+  for (const auto &info : listPrinters) {
       qDebug() << "Found printers" << info.printerName();
   }
 
@@ -804,9 +804,10 @@ void FileOperations::redo() {
 // ----------------------------------------------------------------------------
 
 void FileOperations::updateEditorSettings() {
-  foreach (TextEditor *pEditor, m_pListEditors) {
-    pEditor->setFont(m_pSettings->getEditorFont());
-    pEditor->updateTextEditorSettings(m_pSettings->getCodeCompletion());
+  for (int i = 0; i < m_pListEditors.size(); i++) {
+    m_pListEditors[i]->setFont(m_pSettings->getEditorFont());
+    m_pListEditors[i]->updateTextEditorSettings(
+          m_pSettings->getCodeCompletion());
   }
 
   m_pTimerAutosave->stop();

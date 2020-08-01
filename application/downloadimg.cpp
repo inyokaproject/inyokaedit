@@ -209,8 +209,8 @@ auto DownloadImg::redirectUrl(const QUrl &possibleRedirectUrl,
 // ----------------------------------------------------------------------------
 
 void DownloadImg::cancelDownloads() {
-  foreach (QNetworkReply *pReply, m_listDownloadReplies) {
-    pReply->abort();
+  for (int i = 0; i < m_listDownloadReplies.size(); i++) {
+    m_listDownloadReplies[i]->abort();
   }
 
   m_listDownloadReplies.clear();

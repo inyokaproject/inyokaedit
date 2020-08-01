@@ -217,7 +217,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
         QStringList tmpList = sMacro.split(QRegExp("\""));  // Split "
         bool bInside = false;
         sListArguments.clear();
-        foreach (QString s, tmpList) {
+        for (auto s : tmpList) {
           if (bInside) {
             // If 's' is inside quotes, get the whole string
             sListArguments.append(s);
