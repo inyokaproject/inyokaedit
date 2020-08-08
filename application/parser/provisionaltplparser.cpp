@@ -1525,18 +1525,17 @@ auto ProvisionalTplParser::parsePipInstall(
     const QStringList &sListArgs) -> QString {
   QString sOutput(QString::fromUtf8(
                     "Wer die neueste Version installieren möchte, kann das "
-                    "Programm über den Python-Paketmanager [:pip:] "
+                    "Programm über den Python Paketmanager [:pip:] "
                     "installieren:\n"
-                    "%1\n"
                     "<div class=\"bash\">\n"
                     "<div class=\"contents\">\n"
-                    "<pre>pip3 install --user")
-                  .arg(this->parseForeignWarning(QStringList() << "Software")));
+                    "<pre>pip3 install --user"));
   foreach (QString s, sListArgs) {
     sOutput += " " + s;
   }
   return sOutput + "     # Programm wird nur für den aktuellen Nutzer "
-                   "installiert</pre>\n</div>\n</div>\n";
+                   "installiert</pre>\n</div>\n</div>\n" +
+      this->parseForeignWarning(QStringList() << "Software");
 }
 
 // ----------------------------------------------------------------------------
