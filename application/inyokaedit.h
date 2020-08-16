@@ -77,9 +77,9 @@ class InyokaEdit : public QMainWindow {
     void updateEditorSettings();
 
  protected:
-    void changeEvent(QEvent *pEvent);
-    void closeEvent(QCloseEvent *pEvent);
-    auto eventFilter(QObject *pObj, QEvent *pEvent) -> bool;
+    void changeEvent(QEvent *pEvent) override;
+    void closeEvent(QCloseEvent *pEvent) override;
+    auto eventFilter(QObject *pObj, QEvent *pEvent) -> bool override;
 
  signals:
     void updateUiLang();

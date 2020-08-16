@@ -54,8 +54,8 @@ class FindReplace : public QDialog {
     void findPrevious();
 
  protected:
-    void showEvent(QShowEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
  private slots:
     void textSearchChanged();

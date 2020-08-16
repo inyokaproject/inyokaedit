@@ -54,7 +54,7 @@ class SyntaxHighlighter : public QSyntaxHighlighter {
 
  protected:
     // Apply highlighting rules
-    void highlightBlock(const QString &sText);
+    void highlightBlock(const QString &sText) override;
 
  private:
     QVector<HighlightingRule> m_highlightingRules;

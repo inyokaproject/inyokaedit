@@ -71,8 +71,8 @@ class TextEditor : public QTextEdit {
     void documentChanged(bool);
 
  protected:
-    void keyPressEvent(QKeyEvent *e);
-    void focusInEvent(QFocusEvent *e);
+    void keyPressEvent(QKeyEvent *e) override;
+    void focusInEvent(QFocusEvent *e) override;
 
  public slots:
     void updateTextEditorSettings(const bool bCompleter);

@@ -49,8 +49,8 @@ class SettingsDialog : public QDialog {
     virtual ~SettingsDialog();
 
  public slots:
-    void accept();
-    void reject();
+    void accept() override;
+    void reject() override;
     void updateUiLang();
     void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                              const QList<QObject *> &PluginObjList);
@@ -60,7 +60,7 @@ class SettingsDialog : public QDialog {
     void updatedSettings();
 
  protected:
-    auto eventFilter(QObject *obj, QEvent *event) -> bool;
+    auto eventFilter(QObject *obj, QEvent *event) -> bool override;
 
  private slots:
     void changedCommunity(int nIndex);
