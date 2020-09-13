@@ -48,6 +48,11 @@
 #include "./findreplace.h"
 #include "./settings.h"
 #include "./texteditor.h"
+
+#if defined __linux__
+#define _LARGEFILE64_SOURCE 1
+#endif
+#define MINIZ_HEADER_FILE_ONLY
 #include "./3rdparty/miniz/miniz.c"
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,

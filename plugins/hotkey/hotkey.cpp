@@ -297,7 +297,7 @@ void Hotkey::deleteRow() {
 
 void Hotkey::registerHotkeys() {
   qDebug() << Q_FUNC_INFO;
-  foreach (QAction* act, m_listActionsOld) {
+  for (const auto act : qAsConst(m_listActionsOld)) {
     m_pParent->removeAction(act);
   }
 

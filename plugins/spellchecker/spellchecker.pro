@@ -61,6 +61,7 @@ RCC_DIR       = ./.rcc
 
 QT           += widgets
 CONFIG       += c++11
+DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on

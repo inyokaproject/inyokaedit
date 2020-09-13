@@ -67,7 +67,7 @@ class Settings : public QObject {
     auto getPreviewHorizontal() const -> bool;
     auto getLastOpenedDir() const -> QDir;
     auto getCheckLinks() const -> bool;
-    auto getAutoSave() const -> quint32 ;
+    auto getAutoSave() const -> quint32;
     auto getReloadPreviewKey() const -> qint32;
     auto getTimedPreview() const -> quint32;
     auto getSyncScrollbars() const -> bool;

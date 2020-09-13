@@ -206,13 +206,13 @@ void Upload::requestUpload() {
                                + qApp->applicationVersion()).toLatin1());
   request.setUrl(QUrl(sUrl));
 
-  QList<QNetworkCookie> listCookies;
-  listCookies << m_pSession->getNwManager()->cookieJar()->cookiesForUrl(
-                   QUrl(sUrl));
+  const QList<QNetworkCookie> listCookies(
+        m_pSession->getNwManager()->cookieJar()->cookiesForUrl(
+          QUrl(sUrl)));
   // qDebug() << "COOKIES FOR URL:" << listCookies;
 
   QString sCookie(QLatin1String(""));
-  foreach (QNetworkCookie cookie, listCookies) {
+  for (const auto &cookie : listCookies) {
     if (!cookie.isSessionCookie() && sCookie.isEmpty()) {
       // Use first cookie
       sCookie = cookie.toRawForm();

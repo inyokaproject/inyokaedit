@@ -68,7 +68,7 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
 
   listParenthesis.clear();
   qint32 nCnt(0);
-  foreach (QChar c, sDoc) {
+  for (const auto c : qAsConst(sDoc)) {
     if ('(' == c || '{' == c || '[' == c) {
       listParenthesis.push_back(c);
       listPos.push_back(nCnt);

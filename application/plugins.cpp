@@ -80,10 +80,10 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
   }
 
   // Look for available plugins
-  foreach (QDir dir, listPluginsDir) {
+  for (const auto &dir : qAsConst(listPluginsDir)) {
     qDebug() << "Plugins folder:" << dir.absolutePath();
-
-    foreach (QString sFile, dir.entryList(QDir::Files)) {
+    const QStringList entryList(dir.entryList(QDir::Files));
+    for (const auto &sFile : entryList) {
       qDebug() << "Plugin file:" << sFile;
       QPluginLoader loader(dir.absoluteFilePath(sFile));
       QObject *pPlugin = loader.instance();

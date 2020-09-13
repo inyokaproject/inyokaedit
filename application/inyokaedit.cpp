@@ -461,7 +461,7 @@ void InyokaEdit::createActions() {
 
   // Report a bug
   connect(m_pUi->reportBugAct, &QAction::triggered,
-          this,[]() {
+          this, []() {
     QDesktopServices::openUrl(
           QUrl(
             QStringLiteral(
@@ -495,10 +495,10 @@ void InyokaEdit::createMenus() {
   }
 
   bool bFirstLoop(true);
-  foreach (QDir tplDir, listTplDirs) {
-    QFileInfoList fiListFiles = tplDir.entryInfoList(
-                                  QDir::NoDotAndDotDot | QDir::Files);
-    foreach (QFileInfo fi, fiListFiles) {
+  for (const auto &tplDir : qAsConst(listTplDirs)) {
+    const QFileInfoList fiListFiles = tplDir.entryInfoList(
+                                        QDir::NoDotAndDotDot | QDir::Files);
+    for (const auto &fi : fiListFiles) {
       if ("tpl" == fi.suffix()) {
         m_OpenTemplateFilesActions << new QAction(
                                         fi.baseName().replace(
@@ -539,26 +539,26 @@ void InyokaEdit::createMenus() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::clearXmlMenus() {
-  foreach (QMenu *m, m_pXmlSubMenus) {
+  for (auto *m : qAsConst(m_pXmlSubMenus)) {
     m->clear();
   }
-  foreach (QMenu *m, m_pXmlMenus) {
+  for (auto *m : qAsConst(m_pXmlMenus)) {
     m->clear();
     m->deleteLater();
   }
-  foreach (QComboBox *q, m_pXmlDropdowns) {
+  for (auto *q : qAsConst(m_pXmlDropdowns)) {
     q->clear();
   }
 
-  foreach (QToolBar *t, m_pXmlToolbars) {
+  for (auto *t : qAsConst(m_pXmlToolbars)) {
     t->clear();
   }
 
-  foreach (QAction *a, m_pXmlActions) {
+  for (auto *a : qAsConst(m_pXmlActions)) {
     m_pUi->inyokaeditorBar->removeAction(a);
     m_pUi->menuBar->removeAction(a);
     m_pUi->samplesmacrosBar->removeAction(a);
-    foreach (QToolButton *b, m_pXmlToolbuttons) {
+    for (auto *b : qAsConst(m_pXmlToolbuttons)) {
       b->removeAction(a);
     }
     a->deleteLater();
@@ -592,9 +592,9 @@ void InyokaEdit::createXmlMenus() {
   this->clearXmlMenus();
 
   // Check share and user path
-  foreach (QString sPath, sListFolders) {
+  for (const auto &sPath : qAsConst(sListFolders)) {
     // Search for menu/dropdown/toolbar
-    foreach (QString sObj, sListObjects) {
+    for (const auto &sObj : qAsConst(sListObjects)) {
       // Search for max 9 files
       for (int n = 1; n < MAXFILES; n++) {
         sTmpPath = sPath + "/community/" +
@@ -638,7 +638,8 @@ void InyokaEdit::createXmlMenus() {
               m_pXmlDropdowns.last()->addItem(xmlParser.getMenuName());
               m_pXmlDropdowns.last()->insertSeparator(1);
               connect(m_pXmlDropdowns.last(),
-                      static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                      static_cast<void(QComboBox::*)(int)>(
+                        &QComboBox::currentIndexChanged),
                       this, &InyokaEdit::dropdownXmlChanged);
             } else if ("toolbar" == sObj) {
               m_pXmlToolbars.append(
@@ -677,16 +678,16 @@ void InyokaEdit::createXmlMenus() {
                             xmlParser.getElementInserts().at(i).at(j));
                   if (tmp.exists()) {
                     QString s(tmp.fileName());
-                    connect (m_pXmlActions.last(), &QAction::triggered,
-                             this, [this, s]() { insertMacro(s); });
+                    connect(m_pXmlActions.last(), &QAction::triggered,
+                            this, [this, s]() { insertMacro(s); });
                   } else {
                     qWarning() << "Tpl/Macro file not found for XML menu:" <<
                                   tmp.fileName();
                   }
                 } else {
                   QString s(xmlParser.getElementInserts().at(i).at(j));
-                  connect (m_pXmlActions.last(), &QAction::triggered,
-                           this, [this, s]() { insertMacro(s); });
+                  connect(m_pXmlActions.last(), &QAction::triggered,
+                          this, [this, s]() { insertMacro(s); });
                 }
               }
               if ("menu" == sObj) {
@@ -1144,9 +1145,9 @@ void InyokaEdit::deleteTempImages() {
 
   if (QMessageBox::Yes== nRet) {
     // Remove all files in current folder
-    QFileInfoList fiListFiles = m_tmpPreviewImgDir.entryInfoList(
-                                  QDir::NoDotAndDotDot | QDir::Files);
-    foreach (QFileInfo fi, fiListFiles) {
+    const QFileInfoList fiListFiles = m_tmpPreviewImgDir.entryInfoList(
+                                        QDir::NoDotAndDotDot | QDir::Files);
+    for (const auto &fi : fiListFiles) {
       if (!m_tmpPreviewImgDir.remove(fi.fileName())) {
         QMessageBox::warning(this, qApp->applicationName(),
                              tr("Could not delete file: ") + fi.fileName());
@@ -1168,9 +1169,9 @@ void InyokaEdit::deleteTempImages() {
 // Delete old auto save backup files
 void InyokaEdit::deleteAutoSaveBackups() {
   QDir dir(m_UserDataDir.absolutePath());
-  QFileInfoList fiListFiles = dir.entryInfoList(
-                                QDir::NoDotAndDotDot | QDir::Files);
-  foreach (QFileInfo fi, fiListFiles) {
+  const QFileInfoList fiListFiles = dir.entryInfoList(
+                                      QDir::NoDotAndDotDot | QDir::Files);
+  for (const auto &fi : fiListFiles) {
     if ("bak~" == fi.suffix() &&
         fi.baseName().startsWith(QLatin1String("AutoSave"))) {
       if (!dir.remove(fi.fileName())) {

@@ -278,7 +278,7 @@ auto ProvisionalTplParser::parseBash(const QStringList &sListArgs) -> QString {
   QString sOutput("<div class=\"bash\">\n"
                   "<div class=\"contents\">\n"
                   "<pre>");
-  foreach (QString s, sListArgs) {
+  for (auto s : sListArgs) {
     sOutput += s.replace("<", "&lt;") + "\n";
   }
   return sOutput + "</pre>\n</div>\n</div>\n";
@@ -299,7 +299,7 @@ auto ProvisionalTplParser::parseBuilddeps(
                           "<div class=\"contents\">\n"
                           "<pre class=\"notranslate\"> "
                           "sudo apt-get build-dep"));
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += " " + s.trimmed();
   }
   return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
@@ -310,7 +310,7 @@ auto ProvisionalTplParser::parseBuilddeps(
 
 auto ProvisionalTplParser::parseCode(const QStringList &sListArgs) -> QString {
   QString sOutput("<pre>");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + "\n";
   }
   return sOutput + "</pre>";
@@ -344,7 +344,7 @@ auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
 auto ProvisionalTplParser::parseExperts(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + " ";
   }
   return ProvisionalTplParser::insertBox("box experts",
@@ -498,7 +498,6 @@ auto ProvisionalTplParser::parseForeignSource(
     const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput("");
-  QStringList sListVersions;
 
   sOutput = QString::fromUtf8("<p>Um aus der [:Fremdquellen:Fremdquelle] zu "
                               "installieren, muss man unabhängig von der "
@@ -513,12 +512,13 @@ auto ProvisionalTplParser::parseForeignSource(
 
   if (sArgs.size() >= 2) {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    sListVersions = sArgs[1].split(" ", QString::SkipEmptyParts);
+    const QStringList sListVersions(sArgs[1].split(" ",
+                                                   QString::SkipEmptyParts));
 #else
-    sListVersions = sArgs[1].split(" ", Qt::SkipEmptyParts);
+    const QStringList sListVersions(sArgs[1].split(" ", Qt::SkipEmptyParts));
 #endif
     QString sVersions("");
-    foreach (QString s, sListVersions) {
+    for (auto s : sListVersions) {
       s = s.toLower();
       s[0] = s[0].toUpper();
       sVersions += "<a href=\"#\">" + s + "</a> | ";
@@ -636,7 +636,7 @@ auto ProvisionalTplParser::parseIconOverview(
 auto ProvisionalTplParser::parseIkhayaAuthor(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + " ";
   }
 
@@ -651,7 +651,7 @@ auto ProvisionalTplParser::parseIkhayaAuthor(
 auto ProvisionalTplParser::parseIkhayaAward(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + " ";
   }
 
@@ -969,7 +969,7 @@ auto ProvisionalTplParser::parseInfobox(
   QString sOutput("");
 
   QStringList sList;
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     if ("+++" != s) {
       sList << s;
     }
@@ -1332,7 +1332,7 @@ auto ProvisionalTplParser::parseLeft(const QStringList &sListArgs) -> QString {
 auto ProvisionalTplParser::parseNotice(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + " ";
   }
   return ProvisionalTplParser::insertBox("box notice",
@@ -1512,7 +1512,7 @@ auto ProvisionalTplParser::parsePackage(
                     "<p>Paketliste zum Kopieren:</p>\n"
                     "<div class=\"bash\">\n<pre class=\"notranslate\"> "
                     "sudo apt-get install"));
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += " " + s;
   }
   return sOutput + "</pre>\n</div>\n";
@@ -1530,7 +1530,7 @@ auto ProvisionalTplParser::parsePipInstall(
                     "<div class=\"bash\">\n"
                     "<div class=\"contents\">\n"
                     "<pre>pip3 install --user"));
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += " " + s;
   }
   return sOutput + "     # Programm wird nur für den aktuellen Nutzer "
@@ -1571,7 +1571,7 @@ auto ProvisionalTplParser::parsePkgInstall(
   sOutput += "\n<p>" + QString::fromUtf8("Paketliste zum Kopieren:") + "</p>\n";
   sOutput += "<div class=\"bash\">\n"
              "<pre class=\"notranslate\"> sudo apt-get install";
-  foreach (QString s, sListPackages) {
+  for (auto &s : sListPackages) {
     sOutput += " " + s.trimmed();
   }
   sOutput += "</pre>\n</div>\n";
@@ -1766,7 +1766,7 @@ auto ProvisionalTplParser::parseSidebar(
 #else
         sListTmp = sListList[i][k].split("[[BR]]", Qt::SkipEmptyParts);
 #endif
-        foreach (QString s, sListTmp) {
+        for (const auto &s : qAsConst(sListTmp)) {
           sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
                      "border-width: 0 0 10px 0; border-color: #FFFFFF\">"
                      + s + "</td>\n</tr>\n";
@@ -1880,7 +1880,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 
       // Check if found style info is in reality a html text format
       bool bTextformat = false;
-      foreach (const QString &sTmp, m_sListHtmlStart) {
+      for (const auto &sTmp : qAsConst(m_sListHtmlStart)) {
         if (sArgs[i].trimmed().startsWith(sTmp)) {
           bTextformat = true;
         }
@@ -2210,7 +2210,7 @@ auto ProvisionalTplParser::parseUnderConst(
 auto ProvisionalTplParser::parseWarning(
     const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  foreach (QString s, sListArgs) {
+  for (const auto &s : sListArgs) {
     sOutput += s + " ";
   }
   return ProvisionalTplParser::insertBox("box warning",

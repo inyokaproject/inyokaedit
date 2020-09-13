@@ -41,6 +41,7 @@ RCC_DIR       = ./.rcc
 
 QT           += core gui widgets network printsupport xml
 CONFIG       += c++11
+DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on

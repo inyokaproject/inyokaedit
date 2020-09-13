@@ -35,6 +35,7 @@ RCC_DIR       = ./.rcc
 include(../../application/templates/templates.pri)
 
 CONFIG       += c++11
+DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on

@@ -93,9 +93,9 @@ void Templates::initTemplates(const QString &sTplPath) {
   bool bFoundTpl;
 
   // Get template files
-  QFileInfoList fiListTplFiles = TplDir.entryInfoList(
-                                   QDir::NoDotAndDotDot | QDir::Files);
-  foreach (QFileInfo fi, fiListTplFiles) {
+  const QFileInfoList fiListTplFiles = TplDir.entryInfoList(
+                                         QDir::NoDotAndDotDot | QDir::Files);
+  for (const auto &fi : fiListTplFiles) {
     if ("tpl" == fi.completeSuffix()) {
       // qDebug() << fi.absoluteFilePath();
       TplFile.setFileName(fi.absoluteFilePath());

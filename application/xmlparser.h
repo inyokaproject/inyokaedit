@@ -37,7 +37,6 @@ class QXmlStreamReader;
  * \brief Delivering menu structure from xml file.
  */
 class XmlParser {
-
  public:
     XmlParser();
     auto parseXml(const QString &sXmlFile) -> bool;

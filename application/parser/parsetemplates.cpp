@@ -62,7 +62,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
   QStringList sListTplRegExp;
   QStringList sListTrans;
-  foreach (QString s, m_sListTransTpl) {
+  for (const auto &s : qAsConst(m_sListTransTpl)) {
     sListTplRegExp << "\\{\\{\\{#!" + s + " .+\\}\\}\\}"
                    << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
     sListTrans << s << s;
@@ -95,9 +95,9 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
           // Extract arguments
           // Split by ',' but don't split quoted strings with comma
-          QStringList tmpList = sMacro.split(QRegExp("\""));
+          const QStringList tmpList = sMacro.split(QRegExp("\""));
           bool bInside = false;
-          foreach (QString s, tmpList) {
+          for (const auto &s : tmpList) {
             if (bInside) {
               // If 's' is inside quotes, get the whole string
               sListArguments.append(s);
@@ -148,9 +148,9 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
           if (!sListArguments.isEmpty()) {
             // Split by ' ' - don't split quoted strings with space
             QStringList sList;
-            QStringList sL = sListArguments[0].split(QRegExp("\""));
+            const QStringList sL = sListArguments[0].split(QRegExp("\""));
             bool bInside = false;
-            foreach (QString s, sL) {
+            for (const auto &s : sL) {
               if (bInside) {
                 // If 's' is inside quotes, get the whole string
                 sList.append(s);

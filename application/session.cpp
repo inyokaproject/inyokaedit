@@ -108,7 +108,7 @@ void Session::getTokenReply(const QString &sNWReply) {
     // qDebug() << "COOKIES:" << m_ListCookies;
 
     QString sCookie(QLatin1String(""));
-    foreach (QNetworkCookie cookie, m_ListCookies) {
+    for (const auto &cookie : qAsConst(m_ListCookies)) {
       if (cookie.isSessionCookie()) {
         sSessionCookie = cookie.toRawForm();
         m_SessionCookie = cookie;
@@ -227,7 +227,7 @@ void Session::getLoginReply(const QString &sNWReply) {
     return;
   }
 
-  foreach (QNetworkCookie cookie, m_ListCookies) {
+  for (const auto &cookie : qAsConst(m_ListCookies)) {
     if (cookie.isSessionCookie()) {
       // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
       // --> "Du hast dich erfolgreich angemeldet"

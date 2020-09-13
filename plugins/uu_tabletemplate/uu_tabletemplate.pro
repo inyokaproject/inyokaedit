@@ -34,6 +34,7 @@ RCC_DIR       = ./.rcc
 
 QT           += network
 CONFIG       += c++11
+DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on

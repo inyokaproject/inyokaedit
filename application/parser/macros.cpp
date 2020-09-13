@@ -47,7 +47,6 @@ Macros::Macros(const QString &sSharePath,
     in.setCodec("UTF-8");
     QString tmpLine;
     QStringList tmpList;
-    QStringList tmpList2;
     MACRO tmpMacro;
 
     while (!in.atEnd()) {
@@ -58,14 +57,14 @@ Macros::Macros(const QString &sSharePath,
         if (2 == tmpList.size()) {
           tmpMacro.name = tmpList[0].trimmed();
           tmpMacro.translations.clear();
-          tmpList2 = tmpList[1].split(QStringLiteral(","));
+          const QStringList tmpList2(tmpList[1].split(QStringLiteral(",")));
           if ("Template" != tmpMacro.name) {
-            foreach (QString s, tmpList2) {
+            for (const auto &s : tmpList2) {
               tmpMacro.translations << s.trimmed();
             }
             m_listMacros << tmpMacro;
           } else {
-            foreach (QString s, tmpList2) {
+            for (const auto &s : tmpList2) {
               m_sListTplTranslations << s.trimmed();
             }
           }
@@ -83,8 +82,8 @@ void Macros::startParsing(QTextDocument *pRawDoc,
                           const QString &sCurrentFile,
                           const QString &sCommunity,
                           QStringList &sListHeadlines) {
-  foreach (MACRO macro, m_listMacros) {
-    foreach (QString s, macro.translations) {
+  for (const auto &macro : qAsConst(m_listMacros)) {
+    for (const auto &s : macro.translations) {
       if ("Anchor" == macro.name) {
         Macros::replaceAnchors(pRawDoc, s);
       } else if ("Attachment" == macro.name) {
@@ -365,7 +364,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
 
   // Replace characters for valid links (ä, ü, ö, spaces)
   QStringList sListHeadlines_Links;
-  foreach (QString s, sListHeadlines) {
+  for (const auto &s : sListHeadlines) {
     sMacro = s;
     sMacro.replace(QLatin1String(" "), QLatin1String("-"));
     sMacro.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
@@ -442,9 +441,9 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 
     // Extract arguments
     // Split by ',' but don't split quoted strings with comma
-    QStringList tmpList = sMacro.split(QRegExp("\""));
+    const QStringList tmpList = sMacro.split(QRegExp("\""));
     bool bInside = false;
-    foreach (QString s, tmpList) {
+    for (const auto &s : tmpList) {
       if (bInside) {
         // If 's' is inside quotes, get the whole string
         sArgs.append(s);
