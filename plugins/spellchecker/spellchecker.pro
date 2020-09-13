@@ -85,9 +85,3 @@ TRANSLATIONS += lang/spellchecker_de.ts \
 
 win32:LIBS   += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
 unix:LIBS    += -lhunspell
-
-# Workaround for automatic build on Launchpad and new Hunspell version (>= v1.5)
-# E.g. Ubuntu 16.04 (and before) using Qt <= v5.5.x with old Hunspell v1.3
-equals(QT_MAJOR_VERSION, 5):greaterThan(QT_MINOR_VERSION, 5) {
-  DEFINES    += USE_NEW_HUNSPELL
-}

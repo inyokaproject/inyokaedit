@@ -702,14 +702,7 @@ void FileOperations::printPreview() {
 #ifdef USEQTWEBKIT
     previewWebView.print(&printer);
 #else
-  #if QT_VERSION >= 0x050800
     previewWebView.page()->print(&printer, [=](bool){});
-  #else
-    QMessageBox::warning(
-          0, tr("Warning"),
-          "Printing not supported with Qt < 5.8.0 and QWebEngineView.");
-    qWarning() << "Printing not supported with Qt < 5.8.0 and QWebEngineView.";
-  #endif
 #endif
   }
 }

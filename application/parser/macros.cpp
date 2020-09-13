@@ -200,11 +200,7 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
     bConversionOk = true;
     // Otherwise handle input as unix timestamp
     if (!datetime.isValid()) {
-#if QT_VERSION < 0x050800
-      datetime.setTime_t(sMacro.toUInt(&bConversionOk));
-#else
       datetime.setSecsSinceEpoch(sMacro.toUInt(&bConversionOk));
-#endif
     }
 
     if (bConversionOk && datetime.isValid()) {
