@@ -30,7 +30,7 @@ Build for Windows: https://github.com/inyokaproject/inyokaedit/releases
 Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 
 ## Compiling
-* InyokaEdit can be compiled with Qt >= 5.4 (including webkitwidgets or webenginewidgets)
+* InyokaEdit can be compiled with Qt >= 5.8 (including webkitwidgets or webenginewidgets)
 * For compiling spell checker plugin, libhunspell-dev is needed.
 
 ### Manual installation
