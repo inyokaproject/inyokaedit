@@ -27,7 +27,7 @@
 #ifndef APPLICATION_PARSER_PARSELINKS_H_
 #define APPLICATION_PARSER_PARSELINKS_H_
 
-#include <QNetworkConfigurationManager>
+#include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
 
