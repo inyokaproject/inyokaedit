@@ -1,3 +1,12 @@
+inyokaedit (0.25.0-1) bionic; urgency=low
+
+  [ Thorsten Roth ]
+  * Toolbar icons for dark color themes.
+  * Dropped support for Xenial.
+  * Internal code changes.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 10 Oct 2020 15:34:00 +0200
+
 inyokaedit (0.24.0-1) xenial; urgency=low
 
   [ Thorsten Roth ]
