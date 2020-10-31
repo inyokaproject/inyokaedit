@@ -97,6 +97,9 @@ Fossa
 groovy
 Groovy
 Gorilla
+hirsute
+Hirsute
+Hippo
 Ubuntu
 Kubuntu
 Xubuntu

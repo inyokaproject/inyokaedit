@@ -7,7 +7,7 @@ Ubuntu-Versionen getestet:" class="box tested_for">
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
 <@ if $arguments as lowercase contain 'groovy' @>
-  * [:Focal_Fossa:Ubuntu 20.10] Groovy Gorilla
+  * [:Groovy_Gorilla:Ubuntu 20.10] Groovy Gorilla
 <@ endif @>
 <@ if $arguments as lowercase contain 'focal' @>
   * [:Focal_Fossa:Ubuntu 20.04] Focal Fossa
