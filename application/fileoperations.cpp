@@ -638,9 +638,9 @@ void FileOperations::printPreview() {
   }
 
   // Configure printer: format A4, PDF
-  printer.setPaperSize(QPrinter::A4);
-  printer.setFullPage(true);
-  printer.setOrientation(QPrinter::Portrait);
+  printer.setPageSize(QPageSize(QPageSize::A4));
+  printer.setPageOrientation(QPageLayout::Portrait);
+  printer.setPageMargins(QMarginsF(0, 10, 0, 10), QPageLayout::Millimeter);
   printer.setPrintRange(QPrinter::AllPages);
 #ifndef _WIN32
   printer.setOutputFormat(QPrinter::PdfFormat);
