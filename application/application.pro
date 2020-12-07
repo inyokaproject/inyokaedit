@@ -24,7 +24,7 @@ unix: !macx {
 
 DESTDIR       = ../
 
-VERSION       = 0.25.0
+VERSION       = 0.26.0
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2020 The InyokaEdit developers"
@@ -46,7 +46,7 @@ DEFINES      += QT_NO_FOREACH
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
   DEFINES    += QT_DEPRECATED_WARNINGS
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x051500
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 }
 
 qtHaveModule(webkitwidgets) {
