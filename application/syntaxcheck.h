@@ -40,16 +40,16 @@ class SyntaxCheck : public QObject {
     static auto checkInyokaSyntax(const QTextDocument *pRawDoc,
                                   const QStringList &sListTplMacros,
                                   const QStringList &sListSmilies,
-                                  const QStringList &sListTplTrans) -> qint32;
+                                  const QStringList &sListTplTrans) -> QPair <int, QString>;
 
  private:
     static auto checkParenthesis(const QTextDocument *pRawDoc,
-                                 const QStringList &sListSmilies) -> qint32;
+                                 const QStringList &sListSmilies) -> QPair <int, QString>;
     static auto checkParenthesisPair(const QChar cLeft,
                                      const QChar cRight) -> bool;
-    static qint32 checkKnownTemplates(const QTextDocument *pRawDoc,
-                                      const QStringList &sListTplMacros,
-                                      const QStringList &sListTplTrans);
+    static auto checkKnownTemplates(const QTextDocument *pRawDoc,
+                                    const QStringList &sListTplMacros,
+                                    const QStringList &sListTplTrans) -> QPair <int, QString>;
 };
 
 #endif  // APPLICATION_SYNTAXCHECK_H_

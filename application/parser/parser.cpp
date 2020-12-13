@@ -108,12 +108,12 @@ auto Parser::genOutput(const QString &sActFile,
   this->filterEscapedChars(m_pRawText);  // Before everything
   this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
   if (bSyntaxCheck) {
-    qint32 nRet = SyntaxCheck::checkInyokaSyntax(
-                    m_pRawText,
-                    m_pTemplates->getListTplNamesINY(),
-                    m_pTemplates->getListSmilies(),
-                    m_pMacros->getTplTranslations());
-    emit this->hightlightSyntaxError(nRet);
+    QPair<int, QString> ret = SyntaxCheck::checkInyokaSyntax(
+          m_pRawText,
+          m_pTemplates->getListTplNamesINY(),
+          m_pTemplates->getListSmilies(),
+          m_pMacros->getTplTranslations());
+    emit this->hightlightSyntaxError(ret);
   }
   this->replaceCodeblocks(m_pRawText);
 

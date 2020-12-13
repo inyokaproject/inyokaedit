@@ -60,7 +60,7 @@ class Parser : public QObject {
     void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
 
   signals:
-    void hightlightSyntaxError(const qint32);
+    void hightlightSyntaxError(const QPair<int, QString>);
 
   private:
     // void replaceTemplates(QTextDocument *pRawDoc);

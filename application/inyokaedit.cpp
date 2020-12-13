@@ -38,6 +38,7 @@
 #include <QTextBlock>
 #include <QTimer>
 #include <QToolButton>
+#include <QToolTip>
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
@@ -808,7 +809,7 @@ void InyokaEdit::previewInyokaPage() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void InyokaEdit::highlightSyntaxError(const qint32 nPos) {
+void InyokaEdit::highlightSyntaxError(const QPair<int, QString> &error) {
   QList<QTextEdit::ExtraSelection> extras;
   QTextEdit::ExtraSelection selection;
 
@@ -816,12 +817,37 @@ void InyokaEdit::highlightSyntaxError(const qint32 nPos) {
   selection.format.setProperty(QTextFormat::FullWidthSelection, true);
 
   extras.clear();
-  if (-1 != nPos) {
+  if (-1 != error.first) {
+    QTextCursor initialCur = m_pCurrentEditor->textCursor();
     selection.cursor = m_pCurrentEditor->textCursor();
-    selection.cursor.setPosition(nPos);
+    selection.cursor.setPosition(error.first);
     selection.cursor.clearSelection();
     extras << selection;
     m_pCurrentEditor->setTextCursor(selection.cursor);
+
+    QFontMetrics fm1(QToolTip::font());
+    QFontMetrics fm2(m_pSettings->getEditorFont());
+    QPoint cur = m_pCurrentEditor->cursorRect().topLeft();
+    cur.setY(cur.y() + m_pCurrentEditor->viewport()->mapToGlobal(
+          m_pCurrentEditor->pos()).y() - fm1.height() - fm2.height() - 10);
+    cur.setX(cur.x() + m_pCurrentEditor->viewport()->mapToGlobal(
+          m_pCurrentEditor->pos()).x());
+    QString sError(error.second);
+    if ("OPEN_PAR_MISSING" == sError) {
+      sError = tr("Opening paraenthesis missing!");
+    } else if ("CLOSE_PAR_MISSING" == sError) {
+      sError = tr("Closing paraenthesis missing!");
+    } else if (sError.startsWith("UNKNOWN_TPL|")) {
+      sError = sError.remove("UNKNOWN_TPL|");
+      sError = tr("Unknown template:") + " " + sError;
+    } else {
+      qWarning() << "Unknown syntax error code: " + sError;
+      sError = tr("Syntax error");
+    }
+    QToolTip::showText(cur, sError);
+
+    // Reset cursor to initial position to not disturb writing
+    m_pCurrentEditor->setTextCursor(initialCur);
   }
 
   m_pCurrentEditor->setExtraSelections(extras);

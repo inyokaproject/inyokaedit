@@ -40,22 +40,22 @@ SyntaxCheck::SyntaxCheck(QObject *pParent) {
 auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,
                                     const QStringList &sListSmilies,
-                                    const QStringList &sListTplTrans) -> qint32 {
-  qint32 nRet(-1);
-  nRet = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
-  if (-1 == nRet) {
-    nRet = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros,
-                                            sListTplTrans);
+                                    const QStringList &sListTplTrans) -> QPair<int, QString> {
+  QPair<int, QString> ret(-1, "");
+  ret = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
+  if (-1 == ret.first) {
+    ret = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros,
+                                           sListTplTrans);
   }
 
-  return nRet;
+  return ret;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
-                                   const QStringList &sListSmilies) -> qint32 {
+                                   const QStringList &sListSmilies) -> QPair<int, QString> {
   QList<QChar> listParenthesis;
   QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
@@ -67,6 +67,7 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   }
 
   listParenthesis.clear();
+  QPair<int, QString> ret(-1, "");
   qint32 nCnt(0);
   for (const auto c : qAsConst(sDoc)) {
     if ('(' == c || '{' == c || '[' == c) {
@@ -75,10 +76,9 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
     } else if (')' == c || '}' == c || ']' == c) {
       if (listParenthesis.isEmpty() ||
           !SyntaxCheck::checkParenthesisPair(listParenthesis.last(), c)) {
-        QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
-                             tr("Syntax error detected - closing parenthesis "
-                                "without opening paraenthesis!"));
-        return nCnt;
+        ret.first = nCnt;
+        ret.second = "OPEN_PAR_MISSING";
+        return ret;
       }
       listParenthesis.pop_back();
       listPos.pop_back();
@@ -87,11 +87,11 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   }
 
   if (!listParenthesis.isEmpty()) {
-    QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
-                         tr("Syntax error detected - open parenthesis!"));
-    return listPos.last();
+    ret.first = listPos.last();
+    ret.second = "CLOSE_PAR_MISSING";
+    return ret;
   }
-  return -1;
+  return ret;
 }
 
 // ----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 
 auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
                                       const QStringList &sListTplMacros,
-                                      const QStringList &sListTplTrans) -> qint32 {
+                                      const QStringList &sListTplTrans) -> QPair<int, QString> {
   QStringList sListTplRegExp;
   QStringList sListTrans;
   for (const auto &s : sListTplTrans) {
@@ -125,6 +125,7 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
     sListTrans << s << s;
   }
   QString sDoc(pRawDoc->toPlainText());
+  QPair<int, QString> ret(-1, "");
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
     QRegularExpression findTemplate(
@@ -174,12 +175,11 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
       }
 
       if (!sMacro.isEmpty()) {
-        QMessageBox::warning(nullptr, tr("Inyoka syntax check"),
-                             tr("Found unknown template: %1").arg(sMacro));
-        return match.capturedStart();
+        ret.first = match.capturedStart();
+        ret.second = "UNKNOWN_TPL|" + sMacro;
       }
     }
   }
 
-  return -1;
+  return ret;
 }

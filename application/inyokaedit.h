@@ -92,7 +92,7 @@ class InyokaEdit : public QMainWindow {
     void insertMacro(const QString &sInsert);
     void dropdownXmlChanged(int nIndex);
     void deleteTempImages();
-    void highlightSyntaxError(const qint32 nPos);
+    void highlightSyntaxError(const QPair<int, QString> &error);
     static QColor getHighlightErrorColor();
     // Preview
     void previewInyokaPage();
