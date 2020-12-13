@@ -84,7 +84,7 @@ void Settings::readSettings(const QString &sSharePath) {
                                       true).toBool();
   m_bPreviewSplitHorizontal = m_pSettings->value(
                                 QStringLiteral("PreviewSplitHorizontal"),
-                                true).toBool();
+                                false).toBool();
   m_sInyokaCommunity = m_pSettings->value(QStringLiteral("InyokaCommunity"),
                                           "ubuntuusers_de").toString();
   // Community settings
@@ -234,6 +234,9 @@ void Settings::readSettings(const QString &sSharePath) {
   m_aSplitterState = m_pSettings->value(
                        QStringLiteral("SplitterState")).toByteArray();
   m_pSettings->endGroup();
+
+  m_nDarkThreshold = m_pSettings->value(
+        QStringLiteral("DarkThreshold"), 0.5).toDouble();
 }
 
 // ----------------------------------------------------------------------------
@@ -477,6 +480,9 @@ auto Settings::getWindowState() const -> QByteArray {
 }
 auto Settings::getSplitterState() const -> QByteArray {
   return m_aSplitterState;
+}
+auto Settings::getDarkThreshold() const -> double {
+  return m_nDarkThreshold;
 }
 
 // ----------------------------------------------------

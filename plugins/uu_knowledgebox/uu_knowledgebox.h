@@ -92,7 +92,6 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
     QString m_sSharePath;
     QDialog *m_pDialog;
     QSettings *m_pSettings;
-    QString m_sExt;
     TextEditor *m_pEditor;
     QList<bool> m_bListEntryActive;
     QStringList m_sListEntries;

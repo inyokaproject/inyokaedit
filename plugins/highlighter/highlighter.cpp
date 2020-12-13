@@ -56,13 +56,18 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pSettings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
-  m_sExt = ".ini";
+  m_sExt = QStringLiteral(".ini");
 #endif
   m_sSharePath = sSharePath;
 
   this->copyDefaultStyles();
 
-  m_sStyleFile = QStringLiteral("standard-style");
+  if (pParent->window()->palette().window().color().lightnessF() <
+      m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble()) {
+      m_sStyleFile = QStringLiteral("dark-style");
+  } else {
+    m_sStyleFile = QStringLiteral("standard-style");
+  }
   // Check for old entry
   if (!m_pSettings->value(QStringLiteral("Style"), "").toString().isEmpty()) {
     m_sStyleFile = m_pSettings->value(QStringLiteral("Style"), "").toString();

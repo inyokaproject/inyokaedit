@@ -437,7 +437,8 @@ void InyokaEdit::createActions() {
   connect(m_pUi->uploadArticleAct, &QAction::triggered,
           m_pUploadModule, &Upload::clickUploadArticle);
 
-  if (this->window()->palette().window().color().lightnessF() < 0.5) {
+  if (this->window()->palette().window().color().lightnessF() <
+      m_pSettings->getDarkThreshold()) {
     m_pUi->previewAct->setIcon(
           QIcon(":/images/toolbar/dark/preview.png"));
     m_pUi->downloadArticleAct->setIcon(
@@ -615,7 +616,8 @@ void InyokaEdit::createXmlMenus() {
           // qDebug() << "Read XML" << xmlFile.fileName();
           if (xmlParser.parseXml(xmlFile.fileName())) {
             QString sIconPath(xmlParser.getPath());
-            if (this->window()->palette().window().color().lightnessF() < 0.5 &&
+            if (this->window()->palette().window().color().lightnessF() <
+                m_pSettings->getDarkThreshold() &&
                 sIconPath.contains(QLatin1String("light"))) {
               sIconPath.replace(QLatin1String("light"),
                                 QLatin1String("dark"),

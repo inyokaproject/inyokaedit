@@ -81,6 +81,7 @@ class Settings : public QObject {
     auto getWindowState() const -> QByteArray;
     auto getWindowGeometry() const -> QByteArray;
     auto getSplitterState() const -> QByteArray;
+    auto getDarkThreshold() const -> double;
 
     // Recent files
     auto getNumOfRecentFiles() const -> quint16;
@@ -145,6 +146,7 @@ class Settings : public QObject {
     QByteArray m_aWindowState;
     QByteArray m_aWindowGeometry;
     QByteArray m_aSplitterState;
+    double m_nDarkThreshold;
 
     // Last opened
     static const quint16 m_cMAXFILES = 10;
