@@ -104,9 +104,6 @@ auto Parser::genOutput(const QString &sActFile,
   m_sCurrentFile = sActFile;
   Parser::removeComments(m_pRawText);
 
-  m_sListNoTranslate.clear();
-  this->filterEscapedChars(m_pRawText);  // Before everything
-  this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
   if (bSyntaxCheck) {
     QPair<int, QString> ret = SyntaxCheck::checkInyokaSyntax(
           m_pRawText,
@@ -115,6 +112,10 @@ auto Parser::genOutput(const QString &sActFile,
           m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(ret);
   }
+
+  m_sListNoTranslate.clear();
+  this->filterEscapedChars(m_pRawText);  // Before everything
+  this->filterNoTranslate(m_pRawText);   // Before replaceCodeblocks()
   this->replaceCodeblocks(m_pRawText);
 
   m_pTemplateParser->startParsing(m_pRawText, m_sCurrentFile);

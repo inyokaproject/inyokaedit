@@ -41,7 +41,7 @@ auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,
                                     const QStringList &sListSmilies,
                                     const QStringList &sListTplTrans) -> QPair<int, QString> {
-  QPair<int, QString> ret(-1, "");
+  QPair<int, QString> ret(-1, QLatin1String(""));
   ret = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == ret.first) {
     ret = SyntaxCheck::checkKnownTemplates(pRawDoc, sListTplMacros,
@@ -65,11 +65,17 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
   for (const auto &s : sListSmilies) {
     sDoc = sDoc.replace(s, sReplace.fill('X', s.length()));
   }
+  // Replace left/right text alignment in tables
+  sDoc = sDoc.replace(QLatin1String("<(>"), sReplace.fill('X', 3));
+  sDoc = sDoc.replace(QLatin1String("<)>"), sReplace.fill('X', 3));
+
+  SyntaxCheck::filterMonotype(sDoc);
 
   listParenthesis.clear();
-  QPair<int, QString> ret(-1, "");
-  qint32 nCnt(0);
+  QPair<int, QString> ret(-1, QLatin1String(""));
+  qint32 nCnt(-1);
   for (const auto c : qAsConst(sDoc)) {
+    nCnt++;
     if ('(' == c || '{' == c || '[' == c) {
       listParenthesis.push_back(c);
       listPos.push_back(nCnt);
@@ -77,18 +83,17 @@ auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
       if (listParenthesis.isEmpty() ||
           !SyntaxCheck::checkParenthesisPair(listParenthesis.last(), c)) {
         ret.first = nCnt;
-        ret.second = "OPEN_PAR_MISSING";
+        ret.second = QStringLiteral("OPEN_PAR_MISSING");
         return ret;
       }
       listParenthesis.pop_back();
       listPos.pop_back();
     }
-    nCnt++;
   }
 
   if (!listParenthesis.isEmpty()) {
     ret.first = listPos.last();
-    ret.second = "CLOSE_PAR_MISSING";
+    ret.second = QStringLiteral("CLOSE_PAR_MISSING");
     return ret;
   }
   return ret;
@@ -125,7 +130,8 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
     sListTrans << s << s;
   }
   QString sDoc(pRawDoc->toPlainText());
-  QPair<int, QString> ret(-1, "");
+  SyntaxCheck::filterMonotype(sDoc);
+  QPair<int, QString> ret(-1, QLatin1String(""));
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
     QRegularExpression findTemplate(
@@ -176,10 +182,38 @@ auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
 
       if (!sMacro.isEmpty()) {
         ret.first = match.capturedStart();
-        ret.second = "UNKNOWN_TPL|" + sMacro;
+        ret.second = QStringLiteral("UNKNOWN_TPL|") + sMacro;
       }
     }
   }
 
   return ret;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void SyntaxCheck::filterMonotype(QString &sDoc) {
+  QString sReplace(QLatin1String(""));
+  QStringList sListMonotype;
+  sListMonotype << QStringLiteral("``");
+  sListMonotype << QStringLiteral("`");
+  for (int i = 0; i < sListMonotype.size(); i++) {
+    int nStart = -1;
+    int nEnd = -1;
+    int nIndex = 0;
+    while (-1 != sDoc.indexOf(sListMonotype[i], nIndex)) {
+      if (-1 == nStart) {
+        nStart = sDoc.indexOf(sListMonotype[i], nIndex);
+        nIndex = nStart + sListMonotype[i].length();
+      } else {
+        nEnd = sDoc.indexOf(sListMonotype[i], nIndex);
+        sDoc.replace(nStart, nEnd - nStart + sListMonotype[i].length(),
+                     sReplace.fill('X',
+                                   nEnd - nStart + sListMonotype[i].length()));
+        nIndex = nEnd + sListMonotype[i].length();
+        nStart = -1;
+      }
+    }
+  }
 }

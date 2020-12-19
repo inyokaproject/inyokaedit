@@ -50,6 +50,8 @@ class SyntaxCheck : public QObject {
     static auto checkKnownTemplates(const QTextDocument *pRawDoc,
                                     const QStringList &sListTplMacros,
                                     const QStringList &sListTplTrans) -> QPair <int, QString>;
+
+    static void filterMonotype(QString &sDoc);
 };
 
 #endif  // APPLICATION_SYNTAXCHECK_H_
