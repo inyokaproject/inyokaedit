@@ -573,84 +573,84 @@ Please check your installation and restart the application.</source>
 Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="780"/>
+        <location filename="../inyokaedit.cpp" line="782"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kan geen tijdelijk HTML-bestand creëren!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="837"/>
-        <source>Opening paraenthesis missing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../inyokaedit.cpp" line="839"/>
-        <source>Closing paraenthesis missing!</source>
-        <translation type="unfinished"></translation>
+        <source>Opening parenthesis missing!</source>
+        <translation>Haakje openen ontbreekt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="842"/>
+        <location filename="../inyokaedit.cpp" line="841"/>
+        <source>Closing parenthesis missing!</source>
+        <translation>Haakje sluiten ontbreekt!</translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.cpp" line="844"/>
         <source>Unknown template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekend sjabloon:</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="845"/>
+        <location filename="../inyokaedit.cpp" line="847"/>
         <source>Syntax error</source>
-        <translation type="unfinished"></translation>
+        <translation>Syntaxfout</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1026"/>
+        <location filename="../inyokaedit.cpp" line="1028"/>
         <source>Error while loading preview.</source>
         <translation>Fout tijdens laden van voorbeeld.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1161"/>
+        <location filename="../inyokaedit.cpp" line="1163"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Weet u zeker dat u alle tijdelijke artikelafbeeldingen wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1172"/>
+        <location filename="../inyokaedit.cpp" line="1174"/>
         <source>Could not delete file: </source>
         <translation>Bestand kan niet worden verwijderd: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1179"/>
+        <location filename="../inyokaedit.cpp" line="1181"/>
         <source>Images successfully deleted.</source>
         <translation>De afbeeldingen zijn succesvol verwijderd.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1322"/>
+        <location filename="../inyokaedit.cpp" line="1324"/>
         <source>Could not open syntax overview file!</source>
         <translation>Het syntax-overzichtsbestand kan niet worden geopend!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1350"/>
+        <location filename="../inyokaedit.cpp" line="1352"/>
         <source>Syntax overview</source>
         <translation>Syntax-overzicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1362"/>
+        <location filename="../inyokaedit.cpp" line="1364"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1372"/>
+        <location filename="../inyokaedit.cpp" line="1374"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Bewerker voor Inyoka-gebaseerde portals</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1376"/>
+        <location filename="../inyokaedit.cpp" line="1378"/>
         <source>License</source>
         <translation>Licentie</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1379"/>
-        <source>This application uses icons from &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango project&lt;/a&gt;.</source>
-        <translation>Deze applicatie gebruikt pictogrammen van het &lt;a href=&quot;http://tango.freedesktop.org&quot;&gt;Tango-project&lt;/a&gt;.</translation>
+        <location filename="../inyokaedit.cpp" line="1381"/>
+        <source>This application uses icons from Tango project of &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</source>
+        <translation>Deze applicatie gebruikt pictogrammen van het Tango-project van &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1382"/>
-        <source>Special thanks to djcj, bubi97, Lasall, Vistaus, Shakesbier and all testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
-        <translation>Veel dank aan djcj, bubi97, Lasall, Vistaus, Shakesbier en alle testers van &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
+        <location filename="../inyokaedit.cpp" line="1384"/>
+        <source>Special thanks to all contributors and testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
+        <translation>Veel dank aan alle bijdragers en testers van &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>

@@ -2058,18 +2058,32 @@ auto ProvisionalTplParser::parseTested(
       if (sOutput.isEmpty()) {
         sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                     "unterstützten Ubuntu-Version getestet! "
-                                    "Bitte hilf mit, indem du diesen Artikel "
-                                    "testest. [:Wiki/FAQ_-_häufig_gestellte_"
-                                    "Fragen/#Wikiartikel-testen:]");
+                                    "Bitte teste diesen Artikel für eine "
+                                    "Ubuntu-Version, welche aktuell "
+                                    "unterstützt wird. Dazu sind die Hinweise "
+                                    "[:Wiki/FAQ_-_häufig_gestellte_Fragen/"
+                                    "#Wikiartikel-testen:zum Testen von "
+                                    "Artikeln] zu beachten.");
+      } else {
+        sOutput += QString::fromUtf8("\n<hr>\n~-(Du möchtest den Artikel für "
+                                     "eine weitere Ubuntu-Version testen? "
+                                     "Mitarbeit im Wiki ist immer willkommen! "
+                                     "Dazu sind die Hinweise [:Wiki/FAQ_-_"
+                                     "häufig_gestellte_Fragen/#Wikiartikel-"
+                                     "testen:zum Testen von Artikeln] zu "
+                                     "beachten.)-~");
       }
       sOutput += "\n";
     }
   } else {
     sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
                                 "unterstützten Ubuntu-Version getestet! "
-                                "Bitte hilf mit, indem du diesen Artikel "
-                                "testest. [:Wiki/FAQ_-_häufig_gestellte_"
-                                "Fragen/#Wikiartikel-testen:]");
+                                "Bitte teste diesen Artikel für eine "
+                                "Ubuntu-Version, welche aktuell "
+                                "unterstützt wird. Dazu sind die Hinweise "
+                                "[:Wiki/FAQ_-_häufig_gestellte_Fragen/"
+                                "#Wikiartikel-testen:zum Testen von "
+                                "Artikeln] zu beachten.");
   }
 
   return ProvisionalTplParser::insertBox(

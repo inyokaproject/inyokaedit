@@ -836,9 +836,9 @@ void InyokaEdit::highlightSyntaxError(const QPair<int, QString> &error) {
           m_pCurrentEditor->pos()).x());
     QString sError(error.second);
     if ("OPEN_PAR_MISSING" == sError) {
-      sError = tr("Opening paraenthesis missing!");
+      sError = tr("Opening parenthesis missing!");
     } else if ("CLOSE_PAR_MISSING" == sError) {
-      sError = tr("Closing paraenthesis missing!");
+      sError = tr("Closing parenthesis missing!");
     } else if (sError.startsWith("UNKNOWN_TPL|")) {
       sError = sError.remove("UNKNOWN_TPL|");
       sError = tr("Unknown template:") + " " + sError;
@@ -1378,11 +1378,10 @@ void InyokaEdit::showAbout() {
              tr("License") +
              ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
              "GNU General Public License Version 3</a>",
-             tr("This application uses icons from "
-                "<a href=\"http://tango.freedesktop.org\">"
-                "Tango project</a>."),
-             tr("Special thanks to djcj, bubi97, Lasall, Vistaus, "
-                "Shakesbier and all testers from "
+             tr("This application uses icons from Tango project of "
+                "<a href=\"https://www.freedesktop.org\">"
+                "freedesktop.org</a>."),
+             tr("Special thanks to all contributors and testers from "
                 "<a href=\"https://ubuntuusers.de\"> "
                 "ubuntuusers.de</a>.")));
 }
