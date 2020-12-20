@@ -18,9 +18,11 @@ Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ if $arguments as lowercase contain 'xenial' @>
   * [:Xenial_Xerus:Ubuntu 16.04] Xenial Xerus
 <@ endif @>
+----
+~-(Du möchtest den Artikel für eine weitere Ubuntu-Version testen? Mitarbeit im Wiki ist immer willkommen! Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu beachten.)-~
 <@ endif @>
 <@ else @>
-Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte hilf mit, indem du diesen Artikel testest. [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:].
+Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bitte teste diesen Artikel für eine Ubuntu-Version, welche aktuell unterstützt wird. Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu beachten.
 #tag: ungetestet
 <@ endif @>
 |}}

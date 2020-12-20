@@ -19,16 +19,14 @@
     <element name="User" insert="[user:%%uu-user%%:]" icon="user.png" />
     <element name="Ikhaya" insert="[ikhaya:%%Ikhaya article%%:]" icon="ikhaya.png" />
     <element name="Calendar" insert="[calendar:%%Calender%%:]" icon="calendar.png" />
-    <element name="Inyoka-Ticket" insert="[ticket:%%Ticket%%:]" icon="ticket.png" />
     <element name="Wiki Tag" insert="[tag:%%Wiki-Tag%%:]" icon="" />
-    <element name="Behind Ubuntuusers" insert="[behind:%%Behind%%:]" icon="" />
     <element name="Paste Service" insert="[paste:%%Paste%%:]" icon="favicon.ico" />
   </group>
   <group name="Canonical &amp;&amp; Ubuntu" icon="canonical.png">
     <element name="Canonical" insert="[canonical:%%Sitename%%:]" icon="canonical.png" />
     <element name="Canonical (subdomain)" insert="[canonicalsubdomain:%%Sitename%%:]" icon="canonicalsubdomain_.png" />
     <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
-    <element name="Canonical Voises" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
+    <element name="Canonical Voices" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
     <element name="Ubuntu Wiki" insert="[ubuntu:%%Sitename%%:]" icon="ubuntu.png" />
     <element name="Ubuntu.com sub page" insert="[ubuntusub:%%Sitename%%:]" icon="ubuntusub.png" />
