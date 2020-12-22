@@ -59,12 +59,12 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pTextDocument = new QTextDocument(this);
   m_sSharePath = sSharePath;
   m_pTemplates = new Templates(
-                   m_pSettings->value(QStringLiteral("InyokaCommunity"),
+                   m_pSettings->value(QStringLiteral("Inyoka/Community"),
                                       "ubuntuusers_de").toString(),
                    m_sSharePath, m_dirPreview.absolutePath());
   m_pParser = new Parser(m_sSharePath, QDir(QLatin1String("")),
                          QLatin1String(""), false, m_pTemplates,
-                         m_pSettings->value(QStringLiteral("InyokaCommunity"),
+                         m_pSettings->value(QStringLiteral("Inyoka/Community"),
                                             "ubuntuusers_de").toString(),
                          m_pSettings->value(QStringLiteral("Pygmentize"),
                                             "").toString());

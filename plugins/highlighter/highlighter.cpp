@@ -83,7 +83,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   m_pStyleSet = nullptr;
   m_pTemplates = new Templates(
-                   m_pSettings->value(QStringLiteral("InyokaCommunity"),
+                   m_pSettings->value(QStringLiteral("Inyoka/Community"),
                                       "ubuntuusers_de").toString(),
                    m_sSharePath, userDataDir.absolutePath());
   this->getTranslations();

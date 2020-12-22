@@ -284,10 +284,10 @@ void SettingsDialog::changedCommunity(int nIndex) {
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
   communityConfig.setIniCodec("UTF-8");
 
-  QString sUrl(communityConfig.value(QStringLiteral("InyokaUrl"),
+  QString sUrl(communityConfig.value(QStringLiteral("WikiUrl"),
                                      "").toString());
   if (sUrl.isEmpty()) {
-    qWarning() << "Community Url not found!";
+    qWarning() << "Community Wiki URL not found!";
     QMessageBox::warning(nullptr, tr("Warning"),
                          tr("No community url defined!"));
   } else {

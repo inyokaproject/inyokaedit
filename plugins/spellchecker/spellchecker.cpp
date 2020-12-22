@@ -98,7 +98,7 @@ void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->setDictPath();
   m_sDictLang = m_pSettings->value(QStringLiteral("SpellCheckerLanguage"),
                                    "de_DE").toString();
-  m_sCommunity = m_pSettings->value(QStringLiteral("InyokaCommunity"),
+  m_sCommunity = m_pSettings->value(QStringLiteral("Inyoka/Community"),
                                     "ubuntuusers_de").toString();
   m_pSettings->endGroup();
 }

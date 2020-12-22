@@ -85,7 +85,46 @@ void Settings::readSettings(const QString &sSharePath) {
   m_bPreviewSplitHorizontal = m_pSettings->value(
                                 QStringLiteral("PreviewSplitHorizontal"),
                                 false).toBool();
-  m_sInyokaCommunity = m_pSettings->value(QStringLiteral("InyokaCommunity"),
+
+  QStringList sListPaths = QStandardPaths::standardLocations(
+                             QStandardPaths::DocumentsLocation);
+  if (sListPaths.isEmpty()) {
+    qCritical() << "Error while getting documents standard path.";
+    sListPaths << QLatin1String("");
+  }
+  m_LastOpenedDir.setPath(m_pSettings->value(QStringLiteral("LastOpenedDir"),
+                                             sListPaths[0]).toString());
+
+  m_bAutomaticImageDownload = m_pSettings->value(
+                                QStringLiteral("AutomaticImageDownload"),
+                                false).toBool();
+  m_bCheckLinks = m_pSettings->value(QStringLiteral("CheckLinks"),
+                                     false).toBool();
+  m_nAutosave = m_pSettings->value(QStringLiteral("AutoSave"), 300).toUInt();
+  // 0x01000004 = Qt::Key_Return
+  m_sReloadPreviewKey = m_pSettings->value(QStringLiteral("ReloadPreviewKey"),
+                                           "0x01000004").toString();
+  m_nTimedPreview = m_pSettings->value(QStringLiteral("TimedPreview"),
+                                       15).toUInt();
+
+  // TODO(volunteer): Check again as soon as QWebEngine scrolling is available
+#ifdef USEQTWEBKIT
+  m_bSyncScrollbars = m_pSettings->value(QStringLiteral("SyncScrollbars"),
+                                         true).toBool();
+#else
+  m_bSyncScrollbars = false;
+#endif
+
+  m_sPygmentize = m_pSettings->value(QStringLiteral("Pygmentize"),
+                                     "/usr/bin/pygmentize").toString();
+
+  m_bWinCheckUpdate = m_pSettings->value(
+                        QStringLiteral("WindowsCheckForUpdate"),
+                        false).toBool();
+
+  // Inyoka community settings
+  m_pSettings->beginGroup(QStringLiteral("Inyoka"));
+  m_sInyokaCommunity = m_pSettings->value(QStringLiteral("Community"),
                                           "ubuntuusers_de").toString();
   // Community settings
   QFile communityFile(sSharePath + "/community/" +
@@ -94,12 +133,12 @@ void Settings::readSettings(const QString &sSharePath) {
   communityConfig.setIniCodec("UTF-8");
 
   m_sInyokaUrl = m_pSettings->value(
-                   QStringLiteral("InyokaUrl"), "").toString();
+                   QStringLiteral("WikiUrl"), "").toString();
   if (m_sInyokaUrl.isEmpty()) {
     QString sValue(communityConfig.value(
-                     QStringLiteral("InyokaUrl"), "").toString());
+                     QStringLiteral("WikiUrl"), "").toString());
     if (sValue.isEmpty()) {
-      qWarning() << "Inyoka construction area not found!";
+      qWarning() << "Inyoka wiki URL not found!";
     } else {
       m_sInyokaUrl = sValue;
     }
@@ -131,42 +170,7 @@ void Settings::readSettings(const QString &sSharePath) {
       m_sInyokaHash = sValue;
     }
   }
-
-  QStringList sListPaths = QStandardPaths::standardLocations(
-                             QStandardPaths::DocumentsLocation);
-  if (sListPaths.isEmpty()) {
-    qCritical() << "Error while getting documents standard path.";
-    sListPaths << QLatin1String("");
-  }
-  m_LastOpenedDir.setPath(m_pSettings->value(QStringLiteral("LastOpenedDir"),
-                                             sListPaths[0]).toString());
-
-  m_bAutomaticImageDownload = m_pSettings->value(
-                                QStringLiteral("AutomaticImageDownload"),
-                                false).toBool();
-  m_bCheckLinks = m_pSettings->value(QStringLiteral("CheckLinks"),
-                                     false).toBool();
-  m_nAutosave = m_pSettings->value(QStringLiteral("AutoSave"), 300).toUInt();
-  // 0x01000004 = Qt::Key_Return
-  m_sReloadPreviewKey = m_pSettings->value(QStringLiteral("ReloadPreviewKey"),
-                                           "0x01000004").toString();
-  m_nTimedPreview = m_pSettings->value(QStringLiteral("TimedPreview"),
-                                       15).toUInt();
-
-  // TODO(volunteer): Check again as soon as QWebEngine scrolling is available
-#ifdef USEQTWEBKIT
-  m_bSyncScrollbars = m_pSettings->value(QStringLiteral("SyncScrollbars"),
-                                         true).toBool();
-#else
-  m_bSyncScrollbars = false;
-#endif
-
-  m_bWinCheckUpdate = m_pSettings->value(
-                        QStringLiteral("WindowsCheckForUpdate"),
-                        false).toBool();
-
-  m_sPygmentize = m_pSettings->value(QStringLiteral("Pygmentize"),
-                                     "/usr/bin/pygmentize").toString();
+  m_pSettings->endGroup();
 
   // Font settings
   m_pSettings->beginGroup(QStringLiteral("Font"));
@@ -233,10 +237,9 @@ void Settings::readSettings(const QString &sSharePath) {
                      QStringLiteral("WindowState")).toByteArray();
   m_aSplitterState = m_pSettings->value(
                        QStringLiteral("SplitterState")).toByteArray();
-  m_pSettings->endGroup();
-
   m_nDarkThreshold = m_pSettings->value(
         QStringLiteral("DarkThreshold"), 0.5).toDouble();
+  m_pSettings->endGroup();
 }
 
 // ----------------------------------------------------------------------------
@@ -253,10 +256,7 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
   m_pSettings->setValue(QStringLiteral("InyokaSyntaxCheck"), m_bSyntaxCheck);
   m_pSettings->setValue(QStringLiteral("PreviewSplitHorizontal"),
                         m_bPreviewSplitHorizontal);
-  m_pSettings->setValue(QStringLiteral("InyokaCommunity"), m_sInyokaCommunity);
-  m_pSettings->setValue(QStringLiteral("InyokaUrl"), m_sInyokaUrl);
-  m_pSettings->setValue(QStringLiteral("ConstructionArea"), m_sInyokaConstArea);
-  m_pSettings->setValue(QStringLiteral("Hash"), m_sInyokaHash);
+
   m_pSettings->setValue(QStringLiteral("LastOpenedDir"),
                         m_LastOpenedDir.absolutePath());
   m_pSettings->setValue(QStringLiteral("AutomaticImageDownload"),
@@ -267,11 +267,19 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
                         m_sReloadPreviewKey);
   m_pSettings->setValue(QStringLiteral("TimedPreview"), m_nTimedPreview);
   m_pSettings->setValue(QStringLiteral("SyncScrollbars"), m_bSyncScrollbars);
+  m_pSettings->setValue(QStringLiteral("Pygmentize"), m_sPygmentize);
 #if defined _WIN32
   m_pSettings->setValue(QStringLiteral("WindowsCheckForUpdate"),
                         m_bWinCheckUpdate);
 #endif
-  m_pSettings->setValue(QStringLiteral("Pygmentize"), m_sPygmentize);
+
+  // Inyoka community settings
+  m_pSettings->beginGroup(QStringLiteral("Inyoka"));
+  m_pSettings->setValue(QStringLiteral("Community"), m_sInyokaCommunity);
+  m_pSettings->setValue(QStringLiteral("WikiUrl"), m_sInyokaUrl);
+  m_pSettings->setValue(QStringLiteral("ConstructionArea"), m_sInyokaConstArea);
+  m_pSettings->setValue(QStringLiteral("Hash"), m_sInyokaHash);
+  m_pSettings->endGroup();
 
   // Font settings
   m_pSettings->beginGroup(QStringLiteral("Font"));
@@ -321,6 +329,7 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
   m_pSettings->setValue(QStringLiteral("Geometry"), WinGeometry);
   m_pSettings->setValue(QStringLiteral("WindowState"), WinState);
   m_pSettings->setValue(QStringLiteral("SplitterState"), SplitterState);
+  // m_pSettings->setValue(QStringLiteral("DarkThreshold"), m_nDarkThreshold);
   m_pSettings->endGroup();
 }
 
@@ -335,6 +344,10 @@ void Settings::removeObsolete() {
   m_pSettings->remove(QStringLiteral("PreviewAlongside"));
   m_pSettings->remove(QStringLiteral("PreviewInEditor"));
   m_pSettings->remove(QStringLiteral("TemplateLanguage"));
+  m_pSettings->remove(QStringLiteral("InyokaCommunity"));
+  m_pSettings->remove(QStringLiteral("Hash"));
+  m_pSettings->remove(QStringLiteral("InyokaUrl"));
+  m_pSettings->remove(QStringLiteral("ConstructionArea"));
   m_pSettings->beginGroup(QStringLiteral("FindDialog"));
   m_pSettings->remove(QLatin1String(""));
   m_pSettings->endGroup();
