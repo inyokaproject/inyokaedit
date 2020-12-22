@@ -214,8 +214,8 @@ void Settings::readSettings(const QString &sSharePath) {
                                         QStringLiteral("Port"), "").toUInt());
   m_sProxyUserName = m_pSettings->value(
                        QStringLiteral("UserName"), "").toString();
-  m_sProxyPassword = m_pSettings->value(
-                       QStringLiteral("Password"), "").toString();
+  m_sProxyPassword = QByteArray::fromBase64(m_pSettings->value(
+                       QStringLiteral("Password"), "").toByteArray());
   m_pSettings->endGroup();
 
   // Plugins
@@ -302,7 +302,9 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
     m_pSettings->setValue(QStringLiteral("Port"), m_nProxyPort);
   }
   m_pSettings->setValue(QStringLiteral("UserName"), m_sProxyUserName);
-  m_pSettings->setValue(QStringLiteral("Password"), m_sProxyPassword);
+  QByteArray ba;
+  ba.append(m_sProxyPassword.toUtf8());
+  m_pSettings->setValue(QStringLiteral("Password"), ba.toBase64());
   m_pSettings->endGroup();
 
   // Plugins
