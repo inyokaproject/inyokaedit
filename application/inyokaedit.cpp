@@ -158,8 +158,7 @@ void InyokaEdit::createObjects() {
   m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(),
                                m_sSharePath, m_UserDataDir.absolutePath());
 
-  m_pSession = new Session(this, m_pSettings->getInyokaUrl(),
-                           m_pSettings->getInyokaHash());
+  m_pSession = new Session(this, m_pSettings->getInyokaHash());
 
   m_pDownloadModule = new Download(this, m_pSession,
                                    m_UserDataDir.absolutePath(),
@@ -1064,6 +1063,10 @@ void InyokaEdit::updateEditorSettings() {
     m_pPreviewTimer->start(static_cast<int>(
                              m_pSettings->getTimedPreview() * 1000));
   }
+
+  m_pSession->updateSettings(m_pSettings->getInyokaUrl(),
+                             m_pSettings->getInyokaUser(),
+                             m_pSettings->getInyokaPassword());
 
   m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
                                     m_pSettings->getInyokaUrl(),

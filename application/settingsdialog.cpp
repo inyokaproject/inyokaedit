@@ -64,9 +64,6 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
         m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->splitVerticalRadio->setChecked(
         !m_pSettings->m_bPreviewSplitHorizontal);
-  m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
-  m_pUi->articleImageDownloadCheck->setChecked(
-        m_pSettings->m_bAutomaticImageDownload);
   m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
   m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->reloadPreviewKeyEdit->setText(
@@ -102,6 +99,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->numberRecentFilesEdit->setMaximum(
         static_cast<quint16>(m_pSettings->m_cMAXFILES));
 
+  // Inyoka community
   QStringList sListCommunities;
   QDir extendedShareDir(m_sSharePath + "/community");
   const QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
@@ -122,6 +120,13 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_sCommunity = m_pUi->CommunityCombo->currentText();
   m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
   m_pUi->CommunityCombo->blockSignals(false);
+
+  m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
+  m_pUi->articleImageDownloadCheck->setChecked(
+        m_pSettings->m_bAutomaticImageDownload);
+
+  m_pUi->inyokaUserEdit->setText(m_pSettings->getInyokaUser());
+  m_pUi->inyokaPasswordEdit->setText(m_pSettings->getInyokaPassword());
 
   // Proxy
   m_pUi->proxyHostNameEdit->setText(m_pSettings->m_sProxyHostName);
@@ -160,8 +165,6 @@ void SettingsDialog::accept() {
   m_pSettings->m_bSyntaxCheck = m_pUi->syntaxCheck->isChecked();
   m_pSettings->m_bPreviewSplitHorizontal =
       m_pUi->splitHorizontalRadio->isChecked();
-  m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
-  m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
   m_pSettings->m_bAutomaticImageDownload =
       m_pUi->articleImageDownloadCheck->isChecked();
   m_pSettings->m_bCheckLinks = m_pUi->linkCheckingCheck->isChecked();
@@ -172,6 +175,12 @@ void SettingsDialog::accept() {
   m_pSettings->m_bSyncScrollbars = m_pUi->scrollbarSyncCheck->isChecked();
   m_pSettings->m_bWinCheckUpdate = m_pUi->WindowsUpdateCheck->isChecked();
   m_pSettings->m_sGuiLanguage = m_pUi->GuiLangCombo->currentText();
+
+  // Inyoka community
+  m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
+  m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
+  m_pSettings->m_sInyokaUser = m_pUi->inyokaUserEdit->text();
+  m_pSettings->m_sInyokaPassword = m_pUi->inyokaPasswordEdit->text();
 
   // Font
   m_pSettings->m_sFontFamily = m_pUi->fontComboBox->currentFont().family();

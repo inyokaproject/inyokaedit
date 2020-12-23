@@ -59,10 +59,6 @@ class Settings : public QObject {
     auto getGuiLanguage() const -> QString;
     auto getCodeCompletion() const -> bool;
     auto getSyntaxCheck() const -> bool;
-    auto getInyokaUrl() const-> QString;
-    auto getInyokaCommunity() const-> QString;
-    auto getInyokaConstructionArea() const-> QString;
-    auto getInyokaHash() const-> QString;
     auto getAutomaticImageDownload() const -> bool;
     auto getPreviewHorizontal() const -> bool;
     auto getLastOpenedDir() const -> QDir;
@@ -73,6 +69,14 @@ class Settings : public QObject {
     auto getSyncScrollbars() const -> bool;
     auto getWindowsCheckUpdate() const -> bool;
     auto getPygmentize() const -> QString;
+
+    // Inyoka community
+    auto getInyokaCommunity() const-> QString;
+    auto getInyokaUrl() const-> QString;
+    auto getInyokaConstructionArea() const-> QString;
+    auto getInyokaHash() const-> QString;
+    auto getInyokaUser() const-> QString;
+    auto getInyokaPassword() const-> QString;
 
     // Font
     auto getEditorFont() const -> QFont;
@@ -120,15 +124,11 @@ class Settings : public QObject {
 
     // General
     QString m_sGuiLanguage;
-    bool m_bCodeCompletion{};   // Enable / disable code completion
+    bool m_bCodeCompletion{};
     bool m_bSyntaxCheck{};
     bool m_bPreviewSplitHorizontal{};
-    QString m_sInyokaCommunity;
-    QString m_sInyokaUrl;     // Url to inyoka
-    QString m_sInyokaConstArea;
-    QString m_sInyokaHash;
     QDir m_LastOpenedDir;
-    bool m_bAutomaticImageDownload{};  // Enable/disable download article images
+    bool m_bAutomaticImageDownload{};
     bool m_bCheckLinks{};
     quint32 m_nAutosave{};
     QString m_sReloadPreviewKey;
@@ -136,6 +136,14 @@ class Settings : public QObject {
     bool m_bSyncScrollbars{};
     bool m_bWinCheckUpdate{};
     QString m_sPygmentize;
+
+    // Inyoka community
+    QString m_sInyokaCommunity;
+    QString m_sInyokaUrl;
+    QString m_sInyokaConstArea;
+    QString m_sInyokaHash;
+    QString m_sInyokaUser;
+    QString m_sInyokaPassword;
 
     // Font
     QFont m_EditorFont;

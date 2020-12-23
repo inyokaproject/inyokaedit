@@ -41,12 +41,17 @@ class Session : public QNetworkCookieJar {
   Q_OBJECT
 
  public:
-    explicit Session(QWidget *pParent, const QString &sInyokaUrl,
-                     const QString &sHash, QObject *pObj = nullptr);
+    explicit Session(QWidget *pParent, const QString &sHash,
+                     QObject *pObj = nullptr);
 
     void checkSession();
     auto isLoggedIn() const -> bool;
     auto getNwManager() -> QNetworkAccessManager*;
+
+ public slots:
+    void updateSettings(const QString &sInyokaUrl,
+                        const QString &sUsername,
+                        const QString &sPassword);
 
  private:
     void requestToken();
@@ -59,6 +64,8 @@ class Session : public QNetworkCookieJar {
 
     QWidget *m_pParent;
     QString m_sInyokaUrl;
+    QString m_sUsername;
+    QString m_sPassword;
     QNetworkAccessManager *m_pNwManager;
 
     REQUESTSTATE m_State;

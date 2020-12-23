@@ -573,82 +573,82 @@ Please check your installation and restart the application.</source>
 Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="782"/>
+        <location filename="../inyokaedit.cpp" line="781"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kan geen tijdelijk HTML-bestand creëren!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="839"/>
+        <location filename="../inyokaedit.cpp" line="838"/>
         <source>Opening parenthesis missing!</source>
         <translation>Haakje openen ontbreekt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="841"/>
+        <location filename="../inyokaedit.cpp" line="840"/>
         <source>Closing parenthesis missing!</source>
         <translation>Haakje sluiten ontbreekt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="844"/>
+        <location filename="../inyokaedit.cpp" line="843"/>
         <source>Unknown template:</source>
         <translation>Onbekend sjabloon:</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="847"/>
+        <location filename="../inyokaedit.cpp" line="846"/>
         <source>Syntax error</source>
         <translation>Syntaxfout</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1028"/>
+        <location filename="../inyokaedit.cpp" line="1027"/>
         <source>Error while loading preview.</source>
         <translation>Fout tijdens laden van voorbeeld.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1163"/>
+        <location filename="../inyokaedit.cpp" line="1166"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Weet u zeker dat u alle tijdelijke artikelafbeeldingen wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1174"/>
+        <location filename="../inyokaedit.cpp" line="1177"/>
         <source>Could not delete file: </source>
         <translation>Bestand kan niet worden verwijderd: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1181"/>
+        <location filename="../inyokaedit.cpp" line="1184"/>
         <source>Images successfully deleted.</source>
         <translation>De afbeeldingen zijn succesvol verwijderd.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1324"/>
+        <location filename="../inyokaedit.cpp" line="1327"/>
         <source>Could not open syntax overview file!</source>
         <translation>Het syntax-overzichtsbestand kan niet worden geopend!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1352"/>
+        <location filename="../inyokaedit.cpp" line="1355"/>
         <source>Syntax overview</source>
         <translation>Syntax-overzicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1364"/>
+        <location filename="../inyokaedit.cpp" line="1367"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1374"/>
+        <location filename="../inyokaedit.cpp" line="1377"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Bewerker voor Inyoka-gebaseerde portals</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1378"/>
+        <location filename="../inyokaedit.cpp" line="1381"/>
         <source>License</source>
         <translation>Licentie</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1381"/>
+        <location filename="../inyokaedit.cpp" line="1384"/>
         <source>This application uses icons from Tango project of &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</source>
         <translation>Deze applicatie gebruikt pictogrammen van het Tango-project van &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1384"/>
+        <location filename="../inyokaedit.cpp" line="1387"/>
         <source>Special thanks to all contributors and testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Veel dank aan alle bijdragers en testers van &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
@@ -664,62 +664,62 @@ Controleer uw installatie en herstart de applicatie.</translation>
 <context>
     <name>Session</name>
     <message>
-        <location filename="../session.cpp" line="52"/>
-        <location filename="../session.cpp" line="127"/>
-        <location filename="../session.cpp" line="136"/>
+        <location filename="../session.cpp" line="50"/>
         <location filename="../session.cpp" line="150"/>
-        <location filename="../session.cpp" line="225"/>
-        <location filename="../session.cpp" line="247"/>
+        <location filename="../session.cpp" line="159"/>
+        <location filename="../session.cpp" line="173"/>
+        <location filename="../session.cpp" line="256"/>
+        <location filename="../session.cpp" line="278"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="53"/>
+        <location filename="../session.cpp" line="51"/>
         <source>Inyoka community hash not defined!</source>
         <translation>De Inyoka-gemeenschapscontrolesom is niet opgegeven!</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="128"/>
+        <location filename="../session.cpp" line="151"/>
         <source>Login failed! No CSRFTOKEN received.</source>
         <translation>Inloggen mislukt! Geen CSRFTOKEN ontvangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="137"/>
+        <location filename="../session.cpp" line="160"/>
         <source>Login failed! No session cookie received.</source>
         <translation>Inloggen mislukt! Geen sessiecookie ontvangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="151"/>
+        <location filename="../session.cpp" line="174"/>
         <source>Login failed! No cookies received.</source>
         <translation>Inloggen mislukt! Geen cookies ontvangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="169"/>
+        <location filename="../session.cpp" line="193"/>
         <source>Login user</source>
         <translation>Gebruikersnaam</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="170"/>
+        <location filename="../session.cpp" line="194"/>
         <source>Please insert your Inyoka user name:</source>
         <translation>Voer uw Inyoka-gebruikersnaam in:</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="177"/>
+        <location filename="../session.cpp" line="205"/>
         <source>Login password</source>
         <translation>Wachtwoord</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="178"/>
+        <location filename="../session.cpp" line="206"/>
         <source>Please insert your Inyoka password:</source>
         <translation>Voer uw Inyoka-wachtwoord in:</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="226"/>
+        <location filename="../session.cpp" line="257"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Het inloggen op Inyoka is mislukt. Heeft u verkeerde inloggegevens gebruikt?</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="248"/>
+        <location filename="../session.cpp" line="279"/>
         <source>Login at Inyoka failed.</source>
         <translation>Het inloggen op Inyoka is mislukt.</translation>
     </message>
@@ -752,12 +752,12 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <translation>Verbinding</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="195"/>
+        <location filename="../settingsdialog.ui" line="205"/>
         <source>URL to Inyoka wiki</source>
         <translation>URL naar Inyoka-wiki</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="205"/>
+        <location filename="../settingsdialog.ui" line="215"/>
         <source>Download article images automatically</source>
         <translation>Artikelafbeeldingen automatisch downloaden</translation>
     </message>
@@ -827,42 +827,50 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <translation>Hori&amp;zontaal</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="219"/>
+        <location filename="../settingsdialog.ui" line="274"/>
         <source>Proxy host name</source>
         <translation>Proxy-hostnaam</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="229"/>
+        <location filename="../settingsdialog.ui" line="284"/>
         <source>Port</source>
         <translation>Poort</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="243"/>
+        <location filename="../settingsdialog.ui" line="236"/>
+        <location filename="../settingsdialog.ui" line="298"/>
         <source>User name</source>
         <translation>Gebruikersnaam</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="253"/>
+        <location filename="../settingsdialog.ui" line="229"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Optional: Store Inyoka user name and/or password.&lt;br&gt;Otherwise one has to enter it manually during article up-/download!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.ui" line="246"/>
+        <location filename="../settingsdialog.ui" line="308"/>
         <source>Password</source>
         <translation>Wachtwoord</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="267"/>
+        <location filename="../settingsdialog.ui" line="260"/>
+        <location filename="../settingsdialog.ui" line="322"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Attention: Password not encrypted!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#ff0000;&quot;&gt;Waarschuwing: het wachtwoord wordt niet versleuteld!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="281"/>
+        <location filename="../settingsdialog.ui" line="336"/>
         <source>Check for updates (Windows only)</source>
         <translation>Controleren op updates (werkt alleen op Windows)</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="288"/>
+        <location filename="../settingsdialog.ui" line="195"/>
         <source>Inyoka Community</source>
         <translation>Inyoka-gemeenschap</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.ui" line="299"/>
+        <location filename="../settingsdialog.ui" line="344"/>
         <source>Plugins</source>
         <translation>Plug-ins</translation>
     </message>
@@ -872,27 +880,27 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <translation>Aantal items in recente bestanden-lijst</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="233"/>
+        <location filename="../settingsdialog.cpp" line="242"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Om de wijzigingen toe te passen, moet de bewerker opnieuw worden gestart.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="278"/>
+        <location filename="../settingsdialog.cpp" line="287"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="279"/>
+        <location filename="../settingsdialog.cpp" line="288"/>
         <source>Could not open/find community file!</source>
         <translation>Het gemeenschapsbestand kan niet worden geopend en/of gevonden!</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="291"/>
+        <location filename="../settingsdialog.cpp" line="300"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="292"/>
+        <location filename="../settingsdialog.cpp" line="301"/>
         <source>No community url defined!</source>
         <translation>Geen gemeenschaps-URL opgegeven!</translation>
     </message>

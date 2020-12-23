@@ -170,6 +170,11 @@ void Settings::readSettings(const QString &sSharePath) {
       m_sInyokaHash = sValue;
     }
   }
+
+  m_sInyokaUser = m_pSettings->value(QStringLiteral("UserName"),
+                                          "").toString();
+  m_sInyokaPassword = QByteArray::fromBase64(
+        m_pSettings->value(QStringLiteral("Password"), "").toByteArray());
   m_pSettings->endGroup();
 
   // Font settings
@@ -218,8 +223,8 @@ void Settings::readSettings(const QString &sSharePath) {
                                         QStringLiteral("Port"), "").toUInt());
   m_sProxyUserName = m_pSettings->value(
                        QStringLiteral("UserName"), "").toString();
-  m_sProxyPassword = QByteArray::fromBase64(m_pSettings->value(
-                       QStringLiteral("Password"), "").toByteArray());
+  m_sProxyPassword = QByteArray::fromBase64(
+        m_pSettings->value(QStringLiteral("Password"), "").toByteArray());
   m_pSettings->endGroup();
 
   // Plugins
@@ -279,6 +284,10 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
   m_pSettings->setValue(QStringLiteral("WikiUrl"), m_sInyokaUrl);
   m_pSettings->setValue(QStringLiteral("ConstructionArea"), m_sInyokaConstArea);
   m_pSettings->setValue(QStringLiteral("Hash"), m_sInyokaHash);
+  m_pSettings->setValue(QStringLiteral("UserName"), m_sInyokaUser);
+  QByteArray ba;
+  ba.append(m_sInyokaPassword.toUtf8());
+  m_pSettings->setValue(QStringLiteral("Password"), ba.toBase64());
   m_pSettings->endGroup();
 
   // Font settings
@@ -310,7 +319,7 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
     m_pSettings->setValue(QStringLiteral("Port"), m_nProxyPort);
   }
   m_pSettings->setValue(QStringLiteral("UserName"), m_sProxyUserName);
-  QByteArray ba;
+  ba.clear();
   ba.append(m_sProxyPassword.toUtf8());
   m_pSettings->setValue(QStringLiteral("Password"), ba.toBase64());
   m_pSettings->endGroup();
@@ -379,19 +388,6 @@ auto Settings::getGuiLanguage() const -> QString {
   return m_sGuiLanguage;
 }
 
-auto Settings::getInyokaCommunity() const -> QString {
-  return m_sInyokaCommunity;
-}
-auto Settings::getInyokaUrl() const -> QString {
-  return m_sInyokaUrl;
-}
-auto Settings::getInyokaConstructionArea() const -> QString {
-  return m_sInyokaConstArea;
-}
-auto Settings::getInyokaHash() const -> QString {
-  return m_sInyokaHash;
-}
-
 auto Settings::getCodeCompletion() const -> bool {
   return m_bCodeCompletion;
 }
@@ -440,6 +436,32 @@ auto Settings::getSyncScrollbars() const -> bool {
 
 auto Settings::getPygmentize() const -> QString {
   return m_sPygmentize;
+}
+
+// ----------------------------------------------------
+
+auto Settings::getInyokaCommunity() const -> QString {
+  return m_sInyokaCommunity;
+}
+
+auto Settings::getInyokaUrl() const -> QString {
+  return m_sInyokaUrl;
+}
+
+auto Settings::getInyokaConstructionArea() const -> QString {
+  return m_sInyokaConstArea;
+}
+
+auto Settings::getInyokaHash() const -> QString {
+  return m_sInyokaHash;
+}
+
+auto Settings::getInyokaUser() const -> QString {
+  return m_sInyokaUser;
+}
+
+auto Settings::getInyokaPassword() const -> QString {
+  return m_sInyokaPassword;
 }
 
 // ----------------------------------------------------

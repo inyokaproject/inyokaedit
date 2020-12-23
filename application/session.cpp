@@ -36,10 +36,8 @@
 #include <QUrl>
 #include <QUrlQuery>
 
-Session::Session(QWidget *pParent, const QString &sInyokaUrl,
-                 const QString &sHash, QObject *pObj)
+Session::Session(QWidget *pParent, const QString &sHash, QObject *pObj)
   : m_pParent(pParent),
-    m_sInyokaUrl(sInyokaUrl),
     m_State(REQUTOKEN),
     m_sToken(QLatin1String("")),
     m_sHash(sHash) {
@@ -51,6 +49,31 @@ Session::Session(QWidget *pParent, const QString &sInyokaUrl,
   if (m_sHash.isEmpty()) {
     QMessageBox::warning(m_pParent, tr("Error"),
                          tr("Inyoka community hash not defined!"));
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void Session::updateSettings(const QString &sInyokaUrl,
+                             const QString &sUsername,
+                             const QString &sPassword) {
+  if (m_sInyokaUrl != sInyokaUrl ||
+      m_sUsername != sUsername ||
+      m_sPassword != sPassword) {
+    qDebug() << "Calling" << Q_FUNC_INFO;
+
+    m_State = REQUTOKEN;
+    for (auto& cookie : this->allCookies())
+    {
+      m_pNwManager->cookieJar()->deleteCookie(cookie);
+    }
+    m_ListCookies.clear();
+    m_sToken.clear();
+
+    m_sInyokaUrl = sInyokaUrl;
+    m_sUsername = sUsername;
+    m_sPassword = sPassword;
   }
 }
 
@@ -165,20 +188,28 @@ void Session::requestLogin() {
   QString sUsername(QLatin1String(""));
   QString sPassword(QLatin1String(""));
 
-  sUsername = QInputDialog::getText(
-                m_pParent, tr("Login user"),
-                tr("Please insert your Inyoka user name:"),
-                QLineEdit::Normal, QLatin1String(""), &bOk).trimmed();
-  if (!bOk || sUsername.isEmpty()) {
-    return;
+  if (m_sUsername.isEmpty()) {
+    sUsername = QInputDialog::getText(
+                  m_pParent, tr("Login user"),
+                  tr("Please insert your Inyoka user name:"),
+                  QLineEdit::Normal, QLatin1String(""), &bOk).trimmed();
+    if (!bOk || sUsername.isEmpty()) {
+      return;
+    }
+  } else {
+    sUsername = m_sUsername;
   }
 
-  sPassword = QInputDialog::getText(
-                m_pParent, tr("Login password"),
-                tr("Please insert your Inyoka password:"),
-                QLineEdit::Password, QLatin1String(""), &bOk).trimmed();
-  if (!bOk || sPassword.isEmpty()) {
-    return;
+  if (m_sPassword.isEmpty()) {
+      sPassword = QInputDialog::getText(
+                  m_pParent, tr("Login password"),
+                  tr("Please insert your Inyoka password:"),
+                  QLineEdit::Password, QLatin1String(""), &bOk).trimmed();
+    if (!bOk || sPassword.isEmpty()) {
+      return;
+    }
+  } else {
+    sPassword = m_sPassword;
   }
 
   sUrl = sUrl.remove(QStringLiteral("wiki.")) + "/login/?next=" + m_sInyokaUrl;
