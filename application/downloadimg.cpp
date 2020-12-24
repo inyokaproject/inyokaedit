@@ -89,7 +89,10 @@ void DownloadImg::doDownload(const QUrl &url,
                              const QString &sSavePath,
                              const QString &sBase) {
   QNetworkRequest request(url);
+  qDebug() << "Image DL request:" << url.toString();
   request.setOriginatingObject(this);
+  // Follow redirects automatically
+  request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
   QNetworkReply *reply = m_pNwManager->get(request);
 
   m_listDownloadReplies.append(reply);
@@ -129,7 +132,7 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
   } else {
     // No error
     QUrl url = pReply->url();
-    qDebug() << "Downloading URL: " << url.toString();
+    qDebug() << "Downloading URL:" << url.toString();
 
     // Basename has to be set before possible redirection
     // (redirected file could have other basename)
