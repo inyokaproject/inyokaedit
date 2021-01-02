@@ -60,11 +60,11 @@ isEmpty(PREVIEW) {
   }
 } else {
   message("Preview set to \"$$PREVIEW\"")
-  equals(PREVIEW, "USEQTWEBKIT") {
+  equals(PREVIEW, "useqtwebkit") {
     QT         += webkitwidgets
     DEFINES    += USEQTWEBKIT
   } else {
-    equals(PREVIEW, "USEQTWEBENGINE") {
+    equals(PREVIEW, "useqtwebengine") {
       QT         += webenginewidgets
       DEFINES    += USEQTWEBENGINE
     } else {
