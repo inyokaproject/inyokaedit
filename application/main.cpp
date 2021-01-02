@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -149,8 +149,12 @@ void setupLogger(const QString &sDebugFilePath) {
 
 #ifdef USEQTWEBKIT
   qDebug() << "Compiled with Qt" << QT_VERSION_STR << "+ webkitwidgets";
-#else
+#endif
+#ifdef USEQTWEBENGINE
   qDebug() << "Compiled with Qt" << QT_VERSION_STR << "+ webenginewidgets";
+#endif
+#ifdef NOPREVIEW
+  qDebug() << "Compiled with Qt" << QT_VERSION_STR << "WITHOUT preview!";
 #endif
   qDebug() << "Qt runtime" << qVersion();
 }

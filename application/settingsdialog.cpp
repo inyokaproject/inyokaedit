@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -72,7 +72,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
         static_cast<int>(m_pSettings->m_nTimedPreview));
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
 #ifndef USEQTWEBKIT
-  m_pUi->scrollbarSyncCheck->setEnabled(false);
+  m_pUi->scrollbarSyncCheck->setVisible(false);
 #endif
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 

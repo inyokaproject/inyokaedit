@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -37,7 +37,8 @@ class QSplitter;
 class QToolButton;
 #ifdef USEQTWEBKIT
 class QWebView;
-#else
+#endif
+#ifdef USEQTWEBENGINE
 class QWebEngineView;
 #endif
 
@@ -86,7 +87,6 @@ class InyokaEdit : public QMainWindow {
 
  private slots:
     void loadLanguage(const QString &sLang);
-    void showSyntaxOverview();
     void openFile();
     void setCurrentEditor();
     void insertMacro(const QString &sInsert);
@@ -96,12 +96,15 @@ class InyokaEdit : public QMainWindow {
     static QColor getHighlightErrorColor();
     // Preview
     void previewInyokaPage();
-    void loadPreviewFinished(const bool bSuccess);
-    void changedUrl();
-    void clickedLink(const QUrl &newUrl);
     void syncScrollbarsEditor();
     void syncScrollbarsWebview();
     void showAbout();
+#ifndef NOPREVIEW
+    void loadPreviewFinished(const bool bSuccess);
+    void clickedLink(const QUrl &newUrl);
+    void changedUrl();
+    void showSyntaxOverview();
+#endif
 
  private:
     void createObjects();
@@ -137,7 +140,8 @@ class InyokaEdit : public QMainWindow {
     QPoint m_WebviewScrollPosition;
 #ifdef USEQTWEBKIT
     QWebView *m_pWebview{};
-#else
+#endif
+#ifdef USEQTWEBENGINE
     QWebEngineView *m_pWebview{};
 #endif
 

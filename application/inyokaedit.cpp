@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -44,7 +44,8 @@
 #include <QtWebKitWidgets/QWebView>
 #include <QWebFrame>
 #include <QWebHistory>
-#else
+#endif
+#ifdef USEQTWEBENGINE
 #include <QWebEngineView>
 #include <QWebEngineHistory>
 #endif
@@ -218,10 +219,13 @@ void InyokaEdit::createObjects() {
           this, &InyokaEdit::syncScrollbarsEditor);
 
   m_pWebview->settings()->setDefaultTextEncoding(QStringLiteral("utf-8"));
-#else
+#endif
+#ifdef USEQTWEBENGINE
   m_pWebview = new QWebEngineView(this);
 #endif
+#ifndef NOPREVIEW
   m_pWebview->installEventFilter(this);
+#endif
 
   m_pUtils = new Utils(this);
   connect(m_pUtils, &Utils::setWindowsUpdateCheck,
@@ -249,7 +253,8 @@ void InyokaEdit::setupEditor() {
 #ifdef USEQTWEBKIT
   connect(m_pWebview, &QWebView::loadFinished,
           this, &InyokaEdit::loadPreviewFinished);
-#else
+#endif
+#ifdef USEQTWEBENGINE
   connect(m_pWebview, &QWebEngineView::loadFinished,
           this, &InyokaEdit::loadPreviewFinished);
 #endif
@@ -257,7 +262,9 @@ void InyokaEdit::setupEditor() {
   m_pWidgetSplitter = new QSplitter;
 
   m_pWidgetSplitter->addWidget(m_pDocumentTabs);
+#ifndef NOPREVIEW
   m_pWidgetSplitter->addWidget(m_pWebview);
+#endif
   setCentralWidget(m_pWidgetSplitter);
   m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
@@ -296,7 +303,8 @@ void InyokaEdit::setupEditor() {
 
   m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
-#else
+#endif
+#ifdef USEQTWEBENGINE
   connect(m_pUi->goBackBrowserAct, &QAction::triggered,
           m_pWebview, &QWebEngineView::back);
   connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
@@ -341,9 +349,13 @@ void InyokaEdit::createActions() {
   connect(m_pUi->saveAsAct, &QAction::triggered,
           m_pFileOperations, &FileOperations::saveAs);
   // Print preview
+#ifdef NOPREVIEW
+  m_pUi->printPreviewAct->setEnabled(false);
+#else
   m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
   connect(m_pUi->printPreviewAct, &QAction::triggered,
           m_pFileOperations, &FileOperations::printPreview);
+#endif
 
   // Exit application
   m_pUi->exitAct->setShortcuts(QKeySequence::Quit);
@@ -450,8 +462,12 @@ void InyokaEdit::createActions() {
   // ABOUT MENU
 
   // Show syntax overview
+#ifdef NOPREVIEW
+  m_pUi->showSyntaxOverviewAct->setVisible(false);
+#else
   connect(m_pUi->showSyntaxOverviewAct, &QAction::triggered,
           this, &InyokaEdit::showSyntaxOverview);
+#endif
 
   // Report a bug
   connect(m_pUi->reportBugAct, &QAction::triggered,
@@ -754,7 +770,8 @@ void InyokaEdit::openFile() {
   // Reset scroll position
 #ifdef USEQTWEBKIT
   m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
-#else
+#endif
+#ifdef USEQTWEBENGINE
   m_pWebview->scroll(0, 0);
 #endif
   m_pFileOperations->open();
@@ -765,7 +782,9 @@ void InyokaEdit::openFile() {
 
 // Call parser
 void InyokaEdit::previewInyokaPage() {
+#ifndef NOPREVIEW
   m_pWebview->history()->clear();  // Clear history (clicked links)
+#endif
 
   QString sRetHTML(QLatin1String(""));
   sRetHTML = m_pParser->genOutput(m_pFileOperations->getCurrentFile(),
@@ -798,13 +817,16 @@ void InyokaEdit::previewInyokaPage() {
 #ifdef USEQTWEBKIT
   m_WebviewScrollPosition =
       m_pWebview->page()->mainFrame()->scrollPosition();
-#else
+#endif
+#ifdef USEQTWEBENGINE
   m_WebviewScrollPosition = QPoint(0, 0);
 #endif
 
+#ifndef NOPREVIEW
   m_pWebview->load(
         QUrl::fromLocalFile(
           QFileInfo(tmphtmlfile).absoluteFilePath()));
+#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -989,7 +1011,8 @@ void InyokaEdit::displayArticleText(const QString &sArticleText,
   m_WebviewScrollPosition = QPoint(0, 0);
 #ifdef USEQTWEBKIT
   m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
-#else
+#endif
+#ifdef USEQTWEBENGINE
   m_pWebview->scroll(0, 0);
 #endif
 }
@@ -997,6 +1020,7 @@ void InyokaEdit::displayArticleText(const QString &sArticleText,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+#ifndef NOPREVIEW
 // Wait until loading has finished
 void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
   if (bSuccess) {
@@ -1018,7 +1042,8 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
     m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
-#else
+#endif
+#ifdef USEQTWEBENGINE
     m_pWebview->scroll(0, 0);
 #endif
     m_bReloadPreviewBlocked = false;
@@ -1044,6 +1069,7 @@ void InyokaEdit::clickedLink(const QUrl &newUrl) {
     m_pWebview->load(newUrl);
   }
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -1143,7 +1169,9 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
       m_bReloadPreviewBlocked = true;
       previewInyokaPage();
     }
-  } else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
+  }
+#ifndef NOPREVIEW
+  else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
     // Forward / backward mouse button
     auto *mouseEvent = static_cast<QMouseEvent*>(pEvent);
 
@@ -1153,6 +1181,7 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
       m_pWebview->forward();
     }
   }
+#endif
 
   return QObject::eventFilter(pObj, pEvent);
 }
@@ -1306,13 +1335,15 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+#ifndef NOPREVIEW
 void InyokaEdit::showSyntaxOverview() {
   auto *pDialog = new QDialog(this, this->windowFlags()
                               & ~Qt::WindowContextHelpButtonHint);
   auto *pLayout = new QGridLayout(pDialog);
 #ifdef USEQTWEBKIT
   auto *pWebview = new QWebView();
-#else
+#endif
+#ifdef USEQTWEBENGINE
   auto *pWebview = new QWebEngineView();
 #endif
   auto *pTextDocument = new QTextDocument(this);
@@ -1358,6 +1389,7 @@ void InyokaEdit::showSyntaxOverview() {
                     QUrl::fromLocalFile(m_UserDataDir.absolutePath() + "/"));
   pDialog->show();
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

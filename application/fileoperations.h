@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -71,7 +71,9 @@ class FileOperations : public QObject {
     void loadInyArchive(const QString &sArchive);
     bool saveFile(QString sFileName);
     bool saveInyArchive(const QString &sArchive);
+#ifndef NOPREVIEW
     void printPreview();
+#endif
 
     void copy();
     void cut();

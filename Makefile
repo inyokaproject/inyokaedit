@@ -31,12 +31,12 @@ dataroot = $(prefix)/share
 all:	app allplugins
 
 app:
-	$(QMAKE) application/application.pro -o application/$(MAKEFILE)
+	$(QMAKE) $(preview) application/application.pro -o application/$(MAKEFILE)
 	$(MAKE) -C application -f $(MAKEFILE)
 	$(LRELEASE) application/lang/*.ts
 
 allplugins:
-	$(QMAKE) plugins/plugins.pro -o plugins/$(MAKEFILE2)
+	$(QMAKE) $(preview) plugins/plugins.pro -o plugins/$(MAKEFILE2)
 	$(MAKE) -C plugins -f $(MAKEFILE2)
 	$(LRELEASE) plugins/highlighter/lang/*.ts
 	$(LRELEASE) plugins/hotkey/lang/*.ts

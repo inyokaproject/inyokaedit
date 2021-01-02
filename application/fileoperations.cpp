@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2020 The InyokaEdit developers
+ * Copyright (C) 2011-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -41,7 +41,8 @@
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
-#else
+#endif
+#ifdef USEQTWEBENGINE
 #include <QWebEngineView>
 #endif
 
@@ -616,10 +617,12 @@ void FileOperations::saveDocumentAuto() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+#ifndef NOPREVIEW
 void FileOperations::printPreview() {
 #ifdef USEQTWEBKIT
   QWebView previewWebView;
-#else
+#endif
+#ifdef USEQTWEBENGINE
   QWebEngineView previewWebView;
 #endif
   QPrinter printer;
@@ -701,11 +704,13 @@ void FileOperations::printPreview() {
   if (QDialog::Accepted == printDialog.exec()) {
 #ifdef USEQTWEBKIT
     previewWebView.print(&printer);
-#else
+#endif
+#ifdef USEQTWEBENGINE
     previewWebView.page()->print(&printer, [=](bool){});
 #endif
   }
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

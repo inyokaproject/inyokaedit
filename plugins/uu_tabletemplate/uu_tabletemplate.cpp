@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2012-2020 The InyokaEdit developers
+ * Copyright (C) 2012-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -81,15 +81,21 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
 #ifdef USEQTWEBKIT
   m_pPreviewWebview = new QWebView();
-#else
+#endif
+#ifdef USEQTWEBENGINE
   m_pPreviewWebview = new QWebEngineView();
 #endif
+
+#ifndef NOPREVIEW
   m_pUi->generatorTab->layout()->addWidget(m_pPreviewWebview);
   m_pPreviewWebview->setContextMenuPolicy(Qt::NoContextMenu);
   m_pPreviewWebview->setAcceptDrops(false);
   m_pPreviewWebview->setUrl(QUrl(QStringLiteral("about:blank")));
+#else
+  m_pUi->previewButton->setVisible(false);
+#endif
 
-  // Remove old obsoleteconf entry
+  // Remove old obsolete conf entry
   m_pSettings->beginGroup(QStringLiteral("Plugin_tabletemplate"));
   m_pSettings->remove(QLatin1String(""));
   m_pSettings->endGroup();
@@ -147,8 +153,10 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
           this, &Uu_TableTemplate::convertToNewTemplate);
   connect(m_pUi->NewToBaseButton, &QPushButton::pressed,
           this, &Uu_TableTemplate::convertToBaseTemplate);
+#ifndef NOPREVIEW
   connect(m_pUi->previewButton, &QPushButton::pressed,
           this, &Uu_TableTemplate::preview);
+#endif
   connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
           this, &Uu_TableTemplate::accept);
   connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
@@ -227,7 +235,9 @@ void Uu_TableTemplate::callPlugin() {
   m_pUi->HighlightSecondBox->setChecked(false);
   m_pUi->colsNum->setValue(2);
   m_pUi->rowsNum->setValue(m_pUi->rowsNum->minimum());
+#ifndef NOPREVIEW
   m_pPreviewWebview->setHtml(QLatin1String(""));
+#endif
   m_pUi->baseTextEdit->clear();
   m_pUi->newTextEdit->clear();
   if (m_pEditor->textCursor().selectedText().startsWith(
@@ -247,6 +257,7 @@ void Uu_TableTemplate::executePlugin() {}
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+#ifndef NOPREVIEW
 void Uu_TableTemplate::preview() {
   m_pTextDocument->setPlainText(this->generateTable());
 
@@ -265,6 +276,7 @@ void Uu_TableTemplate::preview() {
                              QUrl::fromLocalFile(m_dirPreview.absolutePath()
                                                  + "/"));
 }
+#endif
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

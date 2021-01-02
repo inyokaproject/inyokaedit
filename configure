@@ -14,6 +14,10 @@ options:
   --community=COMMUNITY    install specified Inyoka community [ubuntuusers_de]
                            for installation without any community files,
                            define --community=none
+  --preview=PREVIEW        compile with Qt WebKit [useqtwebkit], Qt WebEngine
+                           [useqtwebengine] or none of them [none] for the
+                           integrated article preview. Omit parameter completly
+                           for automatic detection.
 EOF
 exit 1
 fi
@@ -33,6 +37,9 @@ for opt; do
         --community=*)
             community="$optarg"
             ;;
+        --preview=*)
+            preview="$optarg"
+            ;;
         *)
             ;;
     esac
@@ -42,6 +49,7 @@ test -n "$prefix" || prefix="/usr/local"
 test -n "$docdir" || docdir='${dataroot}/docs/inyokaedit'
 test -n "$mandir" || mandir='${dataroot}/man'
 test -n "$community" || community='ubuntuusers_de'
+test -n "$preview" || preview=''
 
 if [ "$community" != "none" ]; then
   community="community/$community"
@@ -66,6 +74,7 @@ prefix = $prefix
 docdir = $docdir
 mandir = $mandir
 community = $community
+preview = "PREVIEW=$preview"
 EOF
 
 cat config.mak

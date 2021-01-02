@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2012-2020 The InyokaEdit developers
+#  Copyright (C) 2012-2021 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ DESTDIR       = ../
 
 VERSION       = 1.4.1
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2020 - Christian Schärf, Thorsten Roth"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2012-2021 - Christian Schärf, Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \
@@ -42,14 +42,35 @@ CONFIG(debug, debug|release) {
   DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 }
 
-qtHaveModule(webkitwidgets) {
-  QT         += webkitwidgets
-  DEFINES    += USEQTWEBKIT
-} else {
-  qtHaveModule(webenginewidgets) {
-    QT       += webenginewidgets
+isEmpty(PREVIEW) {
+  qtHaveModule(webkitwidgets) {
+    QT         += webkitwidgets
+    DEFINES    += USEQTWEBKIT
+    message("Qt webkitwidgets module found!")
   } else {
-    error("Neither QtWebKit nor QtWebEngine installation found!")
+    qtHaveModule(webenginewidgets) {
+      QT       += webenginewidgets
+      DEFINES  += USEQTWEBENGINE
+      message("Qt webenginewidgets module found!")
+    } else {
+      DEFINES  += NOPREVIEW
+      message("Neither QtWebKit nor QtWebEngine installation found!")
+      message("Building without included preview.")
+    }
+  }
+} else {
+  message("Preview set to \"$$PREVIEW\"")
+  equals(PREVIEW, "USEQTWEBKIT") {
+    QT         += webkitwidgets
+    DEFINES    += USEQTWEBKIT
+  } else {
+    equals(PREVIEW, "USEQTWEBENGINE") {
+      QT         += webenginewidgets
+      DEFINES    += USEQTWEBENGINE
+    } else {
+      DEFINES  += NOPREVIEW
+      message("Building without included preview.")
+    }
   }
 }
 

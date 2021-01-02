@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2020 The InyokaEdit developers
+ * Copyright (C) 2014-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -140,6 +140,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     QString m_sSharePath;
     QString m_sCommunity;
     QString m_sEncoding;
+    // TODO(volunteer): Replace with QStringConverter for Qt6 or (temporary) use core5compat
     QTextCodec *m_pCodec;
 };
 

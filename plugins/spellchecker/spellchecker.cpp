@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2020 The InyokaEdit developers
+ * Copyright (C) 2014-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -188,7 +188,7 @@ void SpellChecker::setDictPath() {
   if (!m_sDictPath.endsWith('/')) {
     m_sDictPath.append('/');
   }
-  // Group already set in costructor
+  // Group already set in constructor
   // m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
   m_pSettings->setValue(QStringLiteral("DictionaryPath"), m_sDictPath);
   // m_pSettings->endGroup();

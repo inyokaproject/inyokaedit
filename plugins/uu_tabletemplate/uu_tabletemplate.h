@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2012-2020 The InyokaEdit developers
+ * Copyright (C) 2012-2021 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -28,6 +28,7 @@
 #ifndef PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 #define PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_
 
+#include <QDialog>
 #include <QDir>
 #include <QtPlugin>
 #include <QString>
@@ -35,7 +36,8 @@
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
-#else
+#endif
+#ifdef USEQTWEBENGINE
 #include <QWebEngineView>
 #endif
 
@@ -83,10 +85,12 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     void showAbout() override;
 
  private slots:
-    void preview();
     void convertToBaseTemplate();
     void convertToNewTemplate();
     void accept();
+#ifndef NOPREVIEW
+    void preview();
+#endif
 
  private:
     auto generateTable() -> QString;
@@ -102,7 +106,8 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
     QTextDocument *m_pTextDocument;
 #ifdef USEQTWEBKIT
     QWebView *m_pPreviewWebview;
-#else
+#endif
+#ifdef USEQTWEBENGINE
     QWebEngineView *m_pPreviewWebview;
 #endif
 
