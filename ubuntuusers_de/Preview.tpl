@@ -9,10 +9,11 @@
     <link rel="stylesheet" type="text/css" href="%folder%/style/wiki.css" />
     <link rel="stylesheet" type="text/css" href="%folder%/style/highlight.css" />
     <link rel="stylesheet" type="text/css" href="%folder%/../linkmap/linkmap.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="%folder%/style/inyokaedit.ico">
     <style type="text/css">
       body{display:inline;}
     </style>
-    <meta name="theme-color" content="#2b2929" />
+    <meta name="theme-color" content="#2b2929" />%refresh%
   </head>
   <body>
   <main id="main" class="content">
