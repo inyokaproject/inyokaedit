@@ -101,9 +101,13 @@ void Settings::readSettings(const QString &sSharePath) {
   m_bCheckLinks = m_pSettings->value(QStringLiteral("CheckLinks"),
                                      false).toBool();
   m_nAutosave = m_pSettings->value(QStringLiteral("AutoSave"), 300).toUInt();
+#ifdef NOPREVIEW
+  m_sReloadPreviewKey = QStringLiteral("0x0");
+#else
   // 0x01000004 = Qt::Key_Return
   m_sReloadPreviewKey = m_pSettings->value(QStringLiteral("ReloadPreviewKey"),
                                            "0x01000004").toString();
+#endif
   m_nTimedPreview = m_pSettings->value(QStringLiteral("TimedPreview"),
                                        15).toUInt();
 
@@ -173,8 +177,9 @@ void Settings::readSettings(const QString &sSharePath) {
 
   m_sInyokaUser = m_pSettings->value(QStringLiteral("UserName"),
                                           "").toString();
-  m_sInyokaPassword = QByteArray::fromBase64(
-        m_pSettings->value(QStringLiteral("Password"), "").toByteArray());
+  m_sInyokaPassword = QString::fromLatin1(
+        QByteArray::fromBase64(
+          m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
   m_pSettings->endGroup();
 
   // Font settings
@@ -223,8 +228,9 @@ void Settings::readSettings(const QString &sSharePath) {
                                         QStringLiteral("Port"), "").toUInt());
   m_sProxyUserName = m_pSettings->value(
                        QStringLiteral("UserName"), "").toString();
-  m_sProxyPassword = QByteArray::fromBase64(
-        m_pSettings->value(QStringLiteral("Password"), "").toByteArray());
+  m_sProxyPassword = QString::fromLatin1(
+        QByteArray::fromBase64(
+          m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
   m_pSettings->endGroup();
 
   // Plugins
@@ -378,7 +384,7 @@ auto Settings::getGuiLanguage() const -> QString {
 #ifdef Q_OS_UNIX
     QByteArray lang = qgetenv("LANG");
     if (!lang.isEmpty()) {
-      sLang = QLocale(lang).name();
+      sLang = QLocale(QString::fromLatin1(lang)).name();
       return sLang.mid(0, sLang.indexOf('_'));
     }
 #endif

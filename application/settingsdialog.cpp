@@ -64,10 +64,17 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
         m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->splitVerticalRadio->setChecked(
         !m_pSettings->m_bPreviewSplitHorizontal);
-  m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
-  m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->reloadPreviewKeyEdit->setText(
         "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
+#ifdef NOPREVIEW
+  m_pUi->previewsplitlabel->setVisible(false);
+  m_pUi->splitHorizontalRadio->setVisible(false);
+  m_pUi->splitVerticalRadio->setVisible(false);
+  m_pUi->reloadPreviewKeyLabel->setVisible(false);
+  m_pUi->reloadPreviewKeyEdit->setVisible(false);
+#endif
+  m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
+  m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->timedPreviewsEdit->setValue(
         static_cast<int>(m_pSettings->m_nTimedPreview));
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
@@ -358,7 +365,9 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
       m_listPluginInfoButtons << new QPushButton(
                                    QIcon::fromTheme(
                                      QStringLiteral("preferences-system"),
-                                     QIcon(":/images/preferences-system.png")),
+                                     QIcon(
+                                       QLatin1String(
+                                         ":/images/preferences-system.png"))),
                                    QLatin1String(""));
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
               PluginObjList.at(nRow), [=]() {
@@ -377,7 +386,8 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
     m_listPluginInfoButtons << new QPushButton(
                                  QIcon::fromTheme(
                                    QStringLiteral("help-about"),
-                                   QIcon(":/images/help-browser.png")),
+                                   QIcon(QLatin1String(
+                                           ":/images/help-browser.png"))),
                                  QLatin1String(""));
     connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
             PluginObjList[nRow], [=]() {

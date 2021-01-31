@@ -409,10 +409,10 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Open preview</string>
+    <string>Generate preview</string>
    </property>
    <property name="toolTip">
-    <string>Open preview of current article</string>
+    <string>Generate preview of current article</string>
    </property>
   </action>
   <action name="downloadArticleAct">

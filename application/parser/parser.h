@@ -57,7 +57,8 @@ class Parser : public QObject {
                       const bool bSyntaxCheck = false);
 
   public slots:
-    void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks);
+    void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
+                        const quint32 nTimedPreview);
 
   signals:
     void hightlightSyntaxError(const QPair<int, QString>);
@@ -100,6 +101,7 @@ class Parser : public QObject {
     Macros *m_pMacros;
     const QString m_sCommunity;
     const QString m_sPygmentize;
+    quint32 m_nTimedPreview;
 };
 
 #endif  // APPLICATION_PARSER_PARSER_H_

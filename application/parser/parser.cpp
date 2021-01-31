@@ -57,7 +57,8 @@ Parser::Parser(const QString &sSharePath,
     m_sInyokaUrl(sInyokaUrl),
     m_pTemplates(pTemplates),
     m_sCommunity(sCommunity),
-    m_sPygmentize(sPygmentize) {
+    m_sPygmentize(sPygmentize),
+    m_nTimedPreview(0) {
   Q_UNUSED(pParent)
   m_pMacros = new Macros(m_sSharePath, m_tmpImgDir);
 
@@ -88,10 +89,15 @@ Parser::~Parser() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::updateSettings(const QString &sInyokaUrl,
-                            const bool bCheckLinks) {
+void Parser::updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
+                            const quint32 nTimedPreview) {
   m_sInyokaUrl = sInyokaUrl;
   m_pLinkParser->updateSettings(sInyokaUrl, bCheckLinks);
+#ifdef NOPREVIEW
+  m_nTimedPreview = nTimedPreview;
+#else
+  Q_UNUSED(nTimedPreview)
+#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -178,14 +184,22 @@ auto Parser::genOutput(const QString &sActFile,
                                         m_sCommunity + "/web");
   sTemplateCopy = sTemplateCopy.replace(
                     QLatin1String("%date%"),
-                    QDate::currentDate().toString(QStringLiteral("dd.MM.yyyy")));
+                    QDate::currentDate().toString(
+          QStringLiteral("dd.MM.yyyy")));
   sTemplateCopy = sTemplateCopy.replace(
                     QLatin1String("%time%"),
-                    QTime::currentTime().toString(QStringLiteral("hh:mm")));
+                    QTime::currentTime().toString(
+          QStringLiteral("hh:mm")));
   sTemplateCopy = sTemplateCopy.replace(QLatin1String("%tags%"),
                                         this->generateTags(m_pRawText));
   sTemplateCopy = sTemplateCopy.replace(QLatin1String("%content%"),
                                         m_pRawText->toPlainText());
+  QString sRefresh(QLatin1String(""));
+  if (m_nTimedPreview > 0) {
+    sRefresh = "<meta http-equiv=\"refresh\" content=\"" +
+        QString::number(m_nTimedPreview) + "\">";
+  }
+  sTemplateCopy = sTemplateCopy.replace(QLatin1String("%refresh%"), sRefresh);
   return sTemplateCopy;
 }
 

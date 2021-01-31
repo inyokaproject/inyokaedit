@@ -274,10 +274,12 @@ void InyokaEdit::setupEditor() {
   connect(m_pFileOperations, &FileOperations::newEditor,
           this, &InyokaEdit::updateEditorSettings);
 
+#ifndef NOPREVIEW
   // Show an empty website after start
   if (!m_bOpenFileAfterStart) {
     this->previewInyokaPage();
   }
+#endif
 
   connect(m_pDownloadModule, &Download::sendArticleText,
           this, &InyokaEdit::displayArticleText);
@@ -320,6 +322,10 @@ void InyokaEdit::setupEditor() {
   // m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   // connect(m_pWebview, &QWebView::linkClicked,
   //         this, &InyokaEdit::clickedLink);
+#endif
+#ifdef NOPREVIEW
+  m_pUi->browserBar->clear();
+  this->removeToolBar(m_pUi->browserBar);
 #endif
 }
 
@@ -822,7 +828,15 @@ void InyokaEdit::previewInyokaPage() {
   m_WebviewScrollPosition = QPoint(0, 0);
 #endif
 
-#ifndef NOPREVIEW
+#ifdef NOPREVIEW
+  static bool bOpenedBrowser = false;
+  if (!bOpenedBrowser) {
+    QDesktopServices::openUrl(
+          QUrl::fromLocalFile(
+            QFileInfo(tmphtmlfile).absoluteFilePath()));
+    bOpenedBrowser = true;
+  }
+#else
   m_pWebview->load(
         QUrl::fromLocalFile(
           QFileInfo(tmphtmlfile).absoluteFilePath()));
@@ -1076,7 +1090,8 @@ void InyokaEdit::clickedLink(const QUrl &newUrl) {
 
 void InyokaEdit::updateEditorSettings() {
   m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
-                            m_pSettings->getCheckLinks());
+                            m_pSettings->getCheckLinks(),
+                            m_pSettings->getTimedPreview());
 
   if (m_pSettings->getPreviewHorizontal()) {
     m_pWidgetSplitter->setOrientation(Qt::Vertical);
