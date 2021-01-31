@@ -73,7 +73,9 @@ class Parser : public QObject {
     static void removeComments(QTextDocument *pRawDoc);
     static void generateParagraphs(QTextDocument *pRawDoc);
 
-    // void replaceFlags(QTextDocument *pRawDoc);
+#ifdef USEQTWEBENGINE
+    void replaceFlags(QTextDocument *pRawDoc);
+#endif
     static void replaceQuotes(QTextDocument *pRawDoc);
     static void replaceHorLines(QTextDocument *pRawDoc);
     static auto replaceHeadlines(QTextDocument *pRawDoc) -> QStringList;

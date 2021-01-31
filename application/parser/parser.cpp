@@ -31,7 +31,9 @@
 
 #include "./macros.h"
 #include "./parser.h"
+#ifndef USEQTWEBENGINE
 #include "./parseimgmap.h"
+#endif
 #include "./parselinks.h"
 #include "./parselist.h"
 #include "./parsetable.h"
@@ -128,13 +130,16 @@ auto Parser::genOutput(const QString &sActFile,
   ParseList::startParsing(m_pRawText);
   m_pLinkParser->startParsing(m_pRawText);
 
-  // Replace flags
+  // Replace flags (only Qt WebEngine is able to render unicode flags)
+#ifdef USEQTWEBENGINE
+  this->replaceFlags(m_pRawText);
+#else
   ParseImgMap::startParsing(m_pRawText,
                             m_pTemplates->getListFlags(),
                             m_pTemplates->getListFlagsImg(),
                             m_sSharePath,
                             m_sCommunity);
-  // this->replaceFlags(m_pRawText);
+#endif
 
   Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
   // Replace smilies
@@ -283,7 +288,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
       sMacro.remove(QStringLiteral("}}}"));
 
       sListLines.clear();
-      sListLines = sMacro.split(QRegExp("\\n"));
+      sListLines = sMacro.split(QRegExp(QLatin1String("\\n")));
 
       // Only plain code
       if (!bFormated) {
@@ -299,9 +304,10 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
         }
         sMacro += QLatin1String("</pre>\n");
       } else {  // Syntax highlighting
-        sMacro = "<div class=\"code\">\n<table class=\"syntaxtable\">"
-                 "<tbody>\n<tr>\n<td class=\"linenos\">\n<div "
-                 "class=\"linenodiv\"><pre>";
+        sMacro = QStringLiteral("<div class=\"code\">\n<table "
+                                "class=\"syntaxtable\"><tbody>\n<tr>\n<td "
+                                "class=\"linenos\">\n<div class=\"linenodiv\">"
+                                "<pre>");
 
         // First column (line numbers)
         for (int i = 1; i < sListLines.size(); i++) {
@@ -312,8 +318,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
         }
 
         // Second column (code)
-        sMacro += "</pre>\n</div>\n</td>\n<td class=\"code\">\n"
-                  "<div class=\"syntax\">\n<pre>\n";
+        sMacro += QLatin1String("</pre>\n</div>\n</td>\n<td class=\"code\">\n"
+                                "<div class=\"syntax\">\n<pre>\n");
 
         QString sCode(QLatin1String(""));
 
@@ -413,7 +419,7 @@ auto Parser::highlightCode(const QString &sLanguage,
       return sCode;
     }
 
-    return procPygmentize.readAll();
+    return QString::fromUtf8(procPygmentize.readAll());
   }
 
   return sCode;
@@ -424,7 +430,7 @@ auto Parser::highlightCode(const QString &sLanguage,
 
 void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QRegExp pattern("\\\\.", Qt::CaseInsensitive);
+  QRegExp pattern(QLatin1String("\\\\."), Qt::CaseInsensitive);
   QString sEscChar;
   int nPos(0);
   unsigned int nNoTranslate;
@@ -571,10 +577,10 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
-// TODO(volunteer): Not working correctly with webkitwidgets
-/*
+
+#ifdef USEQTWEBENGINE
 void Parser::replaceFlags(QTextDocument *pRawDoc) {
-  QRegExp findFlag("\\{([a-z]{2}|[A-Z]{2})\\}");
+  QRegExp findFlag(QLatin1String("\\{([a-z]{2}|[A-Z]{2})\\}"));
   QString sDoc(pRawDoc->toPlainText());
   QString sCountry;
   QString sHtml(QLatin1String(""));
@@ -601,7 +607,7 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
 
   pRawDoc->setPlainText(sDoc);
 }
-*/
+#endif
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -618,7 +624,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
     if (block.text().startsWith(QLatin1String(">"))) {
       sLine = block.text().trimmed();
       nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
-      sLine.remove(QRegExp("^>*"));
+      sLine.remove(QRegExp(QLatin1String("^>*")));
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
       }
