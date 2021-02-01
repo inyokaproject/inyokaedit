@@ -210,7 +210,6 @@ void InyokaEdit::createObjects() {
 
   this->setCurrentEditor();
 
-  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   m_pWebview = new QWebView(this);
   connect(m_pWebview->page(), &QWebPage::scrollRequested,
@@ -222,6 +221,9 @@ void InyokaEdit::createObjects() {
 #endif
 #ifdef USEQTWEBENGINE
   m_pWebview = new QWebEngineView(this);
+  m_pWebview->pageAction(QWebEnginePage::SavePage)->setVisible(false);
+  m_pWebview->pageAction(QWebEnginePage::ViewSource)->setVisible(false);
+  // TODO(volunteer): Sync scrollbar solution for QWebEngineView
 #endif
 #ifndef NOPREVIEW
   m_pWebview->installEventFilter(this);
