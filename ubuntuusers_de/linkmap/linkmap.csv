@@ -18,7 +18,6 @@ derstandard,https://derstandard.at/
 diaspora,https://joindiaspora.com/tags/
 dropbox,https://dl.dropbox.com/
 duckduckgo,https://duckduckgo.com/?q=PAGE&kl=de-de
-ean,https://www.google.de/#q=
 edubuntu,https://www.edubuntu.org/
 fb,https://www.facebook.com/
 find-link,https://startpage.com/do/search?query=host:wiki.ubuntuusers.de+link:
@@ -75,6 +74,7 @@ sourceforge2,http://PAGE.sourceforge.net
 freenode,https://webchat.freenode.net/?channels=
 stackoverflow,https://stackoverflow.com/questions/
 openstore,https://open-store.io/app/
+ean,https://www.google.de/search?q=
 steam,https://store.steampowered.com/PAGE?l=german
 tag,https://wiki.ubuntuusers.de/wiki/tags/
 ticket,https://trac.ubuntuusers.de/ticket/
