@@ -223,7 +223,11 @@ void InyokaEdit::createObjects() {
   m_pWebview = new QWebEngineView(this);
   m_pWebview->pageAction(QWebEnginePage::SavePage)->setVisible(false);
   m_pWebview->pageAction(QWebEnginePage::ViewSource)->setVisible(false);
-  // TODO(volunteer): Sync scrollbar solution for QWebEngineView
+
+  connect(m_pWebview->page(), &QWebEnginePage::scrollPositionChanged,
+          this, &InyokaEdit::syncScrollbarsWebview);
+  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar,
+          this, &InyokaEdit::syncScrollbarsEditor);
 #endif
 #ifndef NOPREVIEW
   m_pWebview->installEventFilter(this);
@@ -459,11 +463,11 @@ void InyokaEdit::createActions() {
   if (this->window()->palette().window().color().lightnessF() <
       m_pSettings->getDarkThreshold()) {
     m_pUi->previewAct->setIcon(
-          QIcon(":/images/toolbar/dark/preview.png"));
+          QIcon(QLatin1String(":/images/toolbar/dark/preview.png")));
     m_pUi->downloadArticleAct->setIcon(
-          QIcon(":/images/toolbar/dark/cloud_download.png"));
+          QIcon(QLatin1String(":/images/toolbar/dark/cloud_download.png")));
     m_pUi->uploadArticleAct->setIcon(
-          QIcon(":/images/toolbar/dark/cloud_upload.png"));
+          QIcon(QLatin1String(":/images/toolbar/dark/cloud_upload.png")));
   }
 
   // ------------------------------------------------------------------------
@@ -821,13 +825,11 @@ void InyokaEdit::previewInyokaPage() {
   tmphtmlfile.close();
 
   // Store scroll position
-  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
-  m_WebviewScrollPosition =
-      m_pWebview->page()->mainFrame()->scrollPosition();
+  m_WebviewScrollPosition = m_pWebview->page()->mainFrame()->scrollPosition();
 #endif
 #ifdef USEQTWEBENGINE
-  m_WebviewScrollPosition = QPoint(0, 0);
+  m_WebviewScrollPosition = m_pWebview->page()->scrollPosition().toPoint();
 #endif
 
 #ifdef NOPREVIEW
@@ -876,8 +878,8 @@ void InyokaEdit::highlightSyntaxError(const QPair<int, QString> &error) {
       sError = tr("Opening parenthesis missing!");
     } else if ("CLOSE_PAR_MISSING" == sError) {
       sError = tr("Closing parenthesis missing!");
-    } else if (sError.startsWith("UNKNOWN_TPL|")) {
-      sError = sError.remove("UNKNOWN_TPL|");
+    } else if (sError.startsWith(QLatin1String("UNKNOWN_TPL|"))) {
+      sError = sError.remove(QStringLiteral("UNKNOWN_TPL|"));
       sError = tr("Unknown template:") + " " + sError;
     } else {
       qWarning() << "Unknown syntax error code: " + sError;
@@ -1055,12 +1057,14 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     }
 
     // Restore scroll position
-    // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
     m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
 #endif
 #ifdef USEQTWEBENGINE
-    m_pWebview->scroll(0, 0);
+    m_pWebview->page()->runJavaScript(
+          QStringLiteral("window.scrollTo(%1, %2);")
+          .arg(m_WebviewScrollPosition.x())
+          .arg(m_WebviewScrollPosition.y()));
 #endif
     m_bReloadPreviewBlocked = false;
   } else {
@@ -1256,7 +1260,6 @@ void InyokaEdit::deleteAutoSaveBackups() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsEditor() {
-  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
@@ -1271,12 +1274,30 @@ void InyokaEdit::syncScrollbarsEditor() {
     m_bEditorScrolling = false;
   }
 #endif
+#ifdef USEQTWEBENGINE
+  if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
+    m_pWebview->page()->runJavaScript(
+          QStringLiteral("document.documentElement.scrollHeight"),
+          [this](const QVariant &v) {
+      int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
+      int nSizeWebviewBar = v.toInt();
+      auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
+      nSizeWebviewBar = static_cast<int>(
+            m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR);
+
+      m_bEditorScrolling = true;
+      m_pWebview->page()->runJavaScript(QStringLiteral("window.scrollTo(0,%1);")
+                                        .arg(nSizeWebviewBar));
+      m_bEditorScrolling = false;
+
+    });
+  }
+#endif
 }
 
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsWebview() {
-  // TODO(volunteer): Find solution for QWebEngineView
 #ifdef USEQTWEBKIT
   if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
@@ -1288,6 +1309,22 @@ void InyokaEdit::syncScrollbarsWebview() {
     m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
           m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio));
     m_bWebviewScrolling = false;
+  }
+#endif
+#ifdef USEQTWEBENGINE
+  if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
+    m_pWebview->page()->runJavaScript(
+          QStringLiteral("document.documentElement.scrollHeight"),
+          [this](const QVariant &v) {
+      int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
+      int nSizeWebviewBar = v.toInt();
+      auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
+
+      m_bWebviewScrolling = true;
+      m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
+            m_pWebview->page()->scrollPosition().y() * nRatio));
+      m_bWebviewScrolling = false;
+    });
   }
 #endif
 }
@@ -1414,13 +1451,13 @@ void InyokaEdit::showSyntaxOverview() {
 void InyokaEdit::showAbout() {
   QMessageBox::about(
         this, tr("About")+ " " + qApp->applicationName(),
-        QString("<big><b>%1 %2</b></big><br />"
-                "%3<br />"
-                "<small>%4</small><br /><br />"
-                "%5<br />"
-                "%6<br />"
-                "<small>%7</small><br /><br />"
-                "%8")
+        QString::fromLatin1("<big><b>%1 %2</b></big><br />"
+                            "%3<br />"
+                            "<small>%4</small><br /><br />"
+                            "%5<br />"
+                            "%6<br />"
+                            "<small>%7</small><br /><br />"
+                            "%8")
         .arg(qApp->applicationName(),
              qApp->applicationVersion(),
              tr("Editor for Inyoka-based portals"),

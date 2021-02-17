@@ -72,15 +72,14 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->splitVerticalRadio->setVisible(false);
   m_pUi->reloadPreviewKeyLabel->setVisible(false);
   m_pUi->reloadPreviewKeyEdit->setVisible(false);
+  m_pUi->scrollbarSyncCheck->setVisible(false);
 #endif
   m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
   m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->timedPreviewsEdit->setValue(
         static_cast<int>(m_pSettings->m_nTimedPreview));
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
-#ifndef USEQTWEBKIT
-  m_pUi->scrollbarSyncCheck->setVisible(false);
-#endif
+
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
 
   m_pUi->GuiLangCombo->addItems(this->searchTranslations());

@@ -103,21 +103,17 @@ void Settings::readSettings(const QString &sSharePath) {
   m_nAutosave = m_pSettings->value(QStringLiteral("AutoSave"), 300).toUInt();
 #ifdef NOPREVIEW
   m_sReloadPreviewKey = QStringLiteral("0x0");
+  m_bSyncScrollbars = false;
 #else
   // 0x01000004 = Qt::Key_Return
   m_sReloadPreviewKey = m_pSettings->value(QStringLiteral("ReloadPreviewKey"),
                                            "0x01000004").toString();
+
+  m_bSyncScrollbars = m_pSettings->value(QStringLiteral("SyncScrollbars"),
+                                         true).toBool();
 #endif
   m_nTimedPreview = m_pSettings->value(QStringLiteral("TimedPreview"),
                                        15).toUInt();
-
-  // TODO(volunteer): Check again as soon as QWebEngine scrolling is available
-#ifdef USEQTWEBKIT
-  m_bSyncScrollbars = m_pSettings->value(QStringLiteral("SyncScrollbars"),
-                                         true).toBool();
-#else
-  m_bSyncScrollbars = false;
-#endif
 
   m_sPygmentize = m_pSettings->value(QStringLiteral("Pygmentize"),
                                      "/usr/bin/pygmentize").toString();
