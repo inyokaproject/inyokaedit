@@ -31,7 +31,6 @@ gnomeapps,https://wiki.gnome.org/Apps/
 gnomeprojects,https://wiki.gnome.org/Projects/
 gog,https://www.gog.com/game/
 google,https://www.google.de/search?q=
-googlecode,https://code.google.com/p/
 heise,https://www.heise.de/
 holarse,https://www.holarse-linuxgaming.de/wiki/
 humble,https://www.humblebundle.com/store/p/
@@ -75,6 +74,7 @@ freenode,https://webchat.freenode.net/?channels=
 stackoverflow,https://stackoverflow.com/questions/
 openstore,https://open-store.io/app/
 ean,https://www.google.de/search?q=
+googlecode,https://code.google.com/archive/p/
 steam,https://store.steampowered.com/PAGE?l=german
 tag,https://wiki.ubuntuusers.de/wiki/tags/
 ticket,https://trac.ubuntuusers.de/ticket/
