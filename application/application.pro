@@ -24,7 +24,9 @@ unix: !macx {
 
 DESTDIR       = ../
 
-VERSION       = 0.26.0
+win32:VERSION = 0.26.0.0
+else:VERSION  = 0.26.0
+
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011-2021 The InyokaEdit developers"
@@ -122,11 +124,12 @@ FORMS        += inyokaedit.ui \
 
 RESOURCES     = res/inyokaedit_resources.qrc \
                 res/translations.qrc
-win32:RC_FILE = res/inyokaedit_win.rc
+
+win32:RC_ICONS = icons/inyokaedit.ico
 
 macx {
-    ICON             = res/images/icon.icns
-    QMAKE_INFO_PLIST = res/Info.plist
+  ICON             = icons/icon.icns
+  QMAKE_INFO_PLIST = data/mac/Info.plist
 }
 
 TRANSLATIONS += lang/inyokaedit_de.ts \

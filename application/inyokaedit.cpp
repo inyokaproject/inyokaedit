@@ -1289,7 +1289,6 @@ void InyokaEdit::syncScrollbarsEditor() {
       m_pWebview->page()->runJavaScript(QStringLiteral("window.scrollTo(0,%1);")
                                         .arg(nSizeWebviewBar));
       m_bEditorScrolling = false;
-
     });
   }
 #endif
