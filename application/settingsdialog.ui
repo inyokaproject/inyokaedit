@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res/inyokaedit_resources.qrc">
-    <normaloff>:/images/inyokaedit_64x64.png</normaloff>:/images/inyokaedit_64x64.png</iconset>
+    <normaloff>:/inyokaedit.png</normaloff>:/inyokaedit.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>

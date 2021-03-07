@@ -54,16 +54,14 @@ install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/mime/packages
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/pixmaps
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/man1
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/de/man1
 	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(bindir)
-	$(INSTALL_FILE) application/res/images/inyokaedit.xpm $(DESTDIR)$(dataroot)/pixmaps
-	$(INSTALL_FILE) data/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
-	$(INSTALL_FILE) data/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
+	$(INSTALL_FILE) application/data/unix/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
+	$(INSTALL_FILE) application/data/unix/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_FILE) man/inyokaedit.1        $(DESTDIR)$(mandir)/man1
 	$(INSTALL_FILE) man/de/inyokaedit.1     $(DESTDIR)$(mandir)/de/man1
-	$(CP) application/res/images/hicolor    $(DESTDIR)$(dataroot)/icons
+	$(CP) application/icons/hicolor         $(DESTDIR)$(dataroot)/icons
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
@@ -87,7 +85,6 @@ uninstall:
 	$(RM) -r $(DESTDIR)$(libdir)/inyokaedit
 	$(RM) -r $(DESTDIR)$(dataroot)/inyokaedit
 	$(RM) $(DESTDIR)$(bindir)/inyokaedit
-	$(RM) $(DESTDIR)$(dataroot)/pixmaps/inyokaedit.xpm
 	$(RM) $(DESTDIR)$(dataroot)/applications/inyokaedit.desktop
 	$(RM) $(DESTDIR)$(dataroot)/mime/packages/inyokaedit.xml
 	$(RM) $(DESTDIR)$(mandir)/man1/inyokaedit.1*

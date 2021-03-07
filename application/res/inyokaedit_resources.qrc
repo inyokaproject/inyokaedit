@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file alias="inyokaedit.png">../icons/hicolor/64x64/apps/inyokaedit.png</file>
         <file>macros.conf</file>
         <file>images/document-new.png</file>
         <file>images/document-open.png</file>
@@ -14,7 +15,6 @@
         <file>images/edit-find.png</file>
         <file>images/go-down.png</file>
         <file>images/go-up.png</file>
-        <file>images/inyokaedit_64x64.png</file>
         <file>images/bug.png</file>
         <file>images/edit-delete.png</file>
         <file>images/view-refresh.png</file>

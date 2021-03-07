@@ -14,9 +14,8 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normalon>:/images/inyokaedit_64x64.png</normalon>
-   </iconset>
+   <iconset resource="res/inyokaedit_resources.qrc">
+    <normaloff>:/inyokaedit.png</normaloff>:/inyokaedit.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
@@ -514,6 +513,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="res/inyokaedit_resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
