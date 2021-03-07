@@ -36,7 +36,7 @@ class QTextDocument;
 class ProvisionalTplParser;
 
 class ParseTemplates {
-  public:
+ public:
     ParseTemplates(const QStringList &sListTransTpl,
                    const QStringList &sListTplNames,
                    const QStringList &sListHtmlStart,
@@ -50,7 +50,7 @@ class ParseTemplates {
 
     void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
 
-  private:
+ private:
     ProvisionalTplParser *m_pProvTplTarser;
     QStringList m_sListTransTpl;
     QStringList m_sListTplNames;

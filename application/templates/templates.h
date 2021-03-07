@@ -31,7 +31,7 @@
 #include <QStringList>
 
 class Templates {
-  public:
+ public:
     Templates(const QString &sCommunity, const QString &sSharePath,
               const QString &sUserDataDir);
 
@@ -59,7 +59,7 @@ class Templates {
     auto getListTestedWithTouch() const -> QStringList;
     auto getListTestedWithTouchStrings() const -> QStringList;
 
-  private:
+ private:
     void initTemplates(const QString &sTplPath);
     void initHtmlTpl(const QString &sTplFile);
     static void initMappings(const QString &sFileName,

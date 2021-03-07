@@ -110,6 +110,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   QDir extendedShareDir(m_sSharePath + "/community");
   const QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
                                       QDir::NoDotAndDotDot | QDir::Dirs);
+  sListCommunities.reserve(fiListFiles.size());
   for (const auto &fi : fiListFiles) {
     sListCommunities << fi.fileName();
   }
@@ -320,8 +321,9 @@ void SettingsDialog::updateUiLang() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
-                                         const QList<QObject *> &PluginObjList) {
+void SettingsDialog::getAvailablePlugins(
+    const QList<IEditorPlugin *> &Plugins,
+    const QList<QObject *> &PluginObjList) {
   m_listPLugins = Plugins;
   const quint8 nNUMCOLS = 5;
   const quint8 nWIDTH = 40;

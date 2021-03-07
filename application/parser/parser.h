@@ -45,7 +45,7 @@ class Templates;
 class Parser : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     Parser(const QString &sSharePath, const QDir &tmpImgDir,
            const QString &sInyokaUrl, const bool bCheckLinks,
            Templates *pTemplates, const QString &sCommunity,
@@ -56,14 +56,14 @@ class Parser : public QObject {
     QString genOutput(const QString &sActFile, QTextDocument *pRawDocument,
                       const bool bSyntaxCheck = false);
 
-  public slots:
+ public slots:
     void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
                         const quint32 nTimedPreview);
 
-  signals:
+ signals:
     void hightlightSyntaxError(const QPair<int, QString>);
 
-  private:
+ private:
     // void replaceTemplates(QTextDocument *pRawDoc);
 
     void filterEscapedChars(QTextDocument *pRawDoc);

@@ -37,10 +37,11 @@ SyntaxCheck::SyntaxCheck(QObject *pParent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                    const QStringList &sListTplMacros,
-                                    const QStringList &sListSmilies,
-                                    const QStringList &sListTplTrans) -> QPair<int, QString> {
+auto SyntaxCheck::checkInyokaSyntax(
+    const QTextDocument *pRawDoc,
+    const QStringList &sListTplMacros,
+    const QStringList &sListSmilies,
+    const QStringList &sListTplTrans) -> QPair<int, QString> {
   QPair<int, QString> ret(-1, QLatin1String(""));
   ret = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == ret.first) {
@@ -54,8 +55,9 @@ auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
-                                   const QStringList &sListSmilies) -> QPair<int, QString> {
+auto SyntaxCheck::checkParenthesis(
+    const QTextDocument *pRawDoc,
+    const QStringList &sListSmilies) -> QPair<int, QString> {
   QList<QChar> listParenthesis;
   QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
@@ -119,9 +121,10 @@ auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
-                                      const QStringList &sListTplMacros,
-                                      const QStringList &sListTplTrans) -> QPair<int, QString> {
+auto SyntaxCheck::checkKnownTemplates(
+    const QTextDocument *pRawDoc,
+    const QStringList &sListTplMacros,
+    const QStringList &sListTplTrans) -> QPair<int, QString> {
   QStringList sListTplRegExp;
   QStringList sListTrans;
   for (const auto &s : sListTplTrans) {

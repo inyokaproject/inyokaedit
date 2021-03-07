@@ -33,7 +33,7 @@ class QString;
 class QTextDocument;
 
 class ParseImgMap {
-  public:
+ public:
     ParseImgMap();
     static void startParsing(QTextDocument *pRawDoc,
                              QStringList sListElements,

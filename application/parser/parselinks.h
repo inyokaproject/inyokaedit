@@ -40,7 +40,7 @@ class QTextDocument;
 class ParseLinks : public QObject {
   Q_OBJECT
 
-  public:
+ public:
     ParseLinks(const QString &sUrlToWiki,
                const QStringList &sListIWiki,
                const QStringList &sListIWikiUrl,
@@ -49,10 +49,10 @@ class ParseLinks : public QObject {
 
     void startParsing(QTextDocument *pRawDoc);
 
-  public slots:
+ public slots:
     void updateSettings(const QString &sUrlToWiki, const bool bCheckLinks);
 
-  private:
+ private:
     static void replaceHyperlinks(QTextDocument *pRawDoc);
     void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
     void replaceInterwikiLinks(QTextDocument *pRawDoc);

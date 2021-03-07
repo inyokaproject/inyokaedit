@@ -116,9 +116,9 @@ auto Hotkey::getCaption() const -> QString {
 }
 auto Hotkey::getIcon() const -> QIcon {
   if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(":/hotkey_dark.png");
+    return QIcon(QLatin1String(":/hotkey_dark.png"));
   }
-  return QIcon(":/hotkey.png");
+  return QIcon(QLatin1String(":/hotkey.png"));
 }
 
 auto Hotkey::includeMenu() const -> bool {
@@ -159,8 +159,9 @@ void Hotkey::buildUi(QWidget *pParent) {
     this->createRow(m_listSequenceEdit.at(nRow), m_sListEntries.at(nRow));
   }
 
-  m_pUi->addButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add"),
-                                             QIcon(":/add.png")));
+  m_pUi->addButton->setIcon(
+        QIcon::fromTheme(QStringLiteral("list-add"),
+                         QIcon(QLatin1String(":/add.png"))));
   connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
 }
 
@@ -262,8 +263,9 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
 
   // Delete row button
   m_listDelRowButtons << new QPushButton(
-                           QIcon::fromTheme(QStringLiteral("list-remove"),
-                                            QIcon(":/remove.png")),
+                           QIcon::fromTheme(
+                             QStringLiteral("list-remove"),
+                             QIcon(QLatin1String(":/remove.png"))),
                            QLatin1String(""));
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
@@ -386,11 +388,11 @@ void Hotkey::showAbout() {
   aboutbox.setIconPixmap(
         QPixmap(
           QStringLiteral(":/preferences-desktop-keyboard-shortcuts.png")));
-  aboutbox.setText(QString("<p><b>%1</b><br />"
-                           "%2</p>"
-                           "<p>%3<br />"
-                           "%4</p>"
-                           "<p><i>%5</i></p>")
+  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
+                                       "%2</p>"
+                                       "<p>%3<br />"
+                                       "%4</p>"
+                                       "<p><i>%5</i></p>")
                    .arg(this->getCaption(),
                         tr("Version") + ": " + PLUGIN_VERSION,
                         PLUGIN_COPY,

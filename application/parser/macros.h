@@ -39,7 +39,7 @@ struct MACRO {
 };
 
 class Macros {
-  public:
+ public:
     Macros(const QString &sSharePath, const QDir &tmpImgDir);
     void startParsing(QTextDocument *pRawDoc,
                       const QString &sCurrentFile,
@@ -47,7 +47,7 @@ class Macros {
                       QStringList &sListHeadlines);
     auto getTplTranslations() const -> QStringList;
 
-  private:
+ private:
     static void replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans);
     static void replaceAttachments(QTextDocument *pRawDoc,
                                    const QString &sTrans);

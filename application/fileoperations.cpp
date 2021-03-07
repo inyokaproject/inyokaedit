@@ -368,7 +368,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
     }
     // qDebug() << "Extracting:" << file_stat.m_filename;
 
-    sOutput = file_stat.m_filename;
+    sOutput = QString::fromLatin1(file_stat.m_filename);
 
     if (sOutput.endsWith(QLatin1String(".iny")) ||
         sOutput.endsWith(QLatin1String(".inyoka"))) {
@@ -385,7 +385,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
       QMessageBox::critical(
             m_pParent, qApp->applicationName(),
             tr("Error while extracting \"%1\" from archive!")
-            .arg(file_stat.m_filename));
+            .arg(QString::fromLatin1(file_stat.m_filename)));
       qWarning() << "mz_zip_reader_extract_to_file() failed:" <<
                     mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     }
@@ -685,8 +685,9 @@ void FileOperations::printPreview() {
 
   // Add style format; remove unwanted div for printing
   sHtml.replace(QLatin1String("</style>"),
-                "html{background-color:#ffffff; margin:40px;}\n"
-                "body{background-color:#ffffff;\n</style>");
+                QString::fromLatin1(
+                  "html{background-color:#ffffff; margin:40px;}\n"
+                  "body{background-color:#ffffff;\n</style>"));
   sHtml.remove(QStringLiteral("<div class=\"wrap\">"));
 
   previewWebView.setHtml(sHtml, QUrl::fromLocalFile(

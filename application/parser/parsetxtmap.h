@@ -32,7 +32,7 @@
 class QTextDocument;
 
 class ParseTxtMap {
-  public:
+ public:
     ParseTxtMap();
     static void startParsing(QTextDocument *pRawDoc,
                              QStringList sListElements,

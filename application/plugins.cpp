@@ -57,7 +57,7 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
     }
   }
   // Plugins in user folder
-  pluginsDir = m_userDataDir;
+  pluginsDir.setPath(m_userDataDir.absolutePath());
   if (pluginsDir.cd(QStringLiteral("plugins"))) {
     if (!listPluginsDir.contains(pluginsDir)) {
       listPluginsDir << pluginsDir;

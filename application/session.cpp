@@ -64,8 +64,7 @@ void Session::updateSettings(const QString &sInyokaUrl,
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_State = REQUTOKEN;
-    for (auto& cookie : this->allCookies())
-    {
+    for (auto& cookie : this->allCookies()) {
       m_pNwManager->cookieJar()->deleteCookie(cookie);
     }
     m_ListCookies.clear();
@@ -133,10 +132,10 @@ void Session::getTokenReply(const QString &sNWReply) {
     QString sCookie(QLatin1String(""));
     for (const auto &cookie : qAsConst(m_ListCookies)) {
       if (cookie.isSessionCookie()) {
-        sSessionCookie = cookie.toRawForm();
+        sSessionCookie = QString::fromLatin1(cookie.toRawForm());
         m_SessionCookie = cookie;
       } else if (sCookie.isEmpty()) {  // Use first found cookie
-        sCookie = cookie.toRawForm();
+        sCookie = QString::fromLatin1(cookie.toRawForm());
       }
     }
 

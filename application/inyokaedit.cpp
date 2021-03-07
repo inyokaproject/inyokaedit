@@ -1269,8 +1269,10 @@ void InyokaEdit::syncScrollbarsEditor() {
 
     m_bEditorScrolling = true;
     m_pWebview->page()->mainFrame()->setScrollPosition(
-          QPoint(0, static_cast<int>(
-                   m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
+          QPoint(
+            0,
+            static_cast<int>(
+              m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
     m_bEditorScrolling = false;
   }
 #endif

@@ -30,7 +30,7 @@
 class QTextDocument;
 
 class ParseList {
-  public:
+ public:
     ParseList();
     static void startParsing(QTextDocument *pRawDoc);
 };

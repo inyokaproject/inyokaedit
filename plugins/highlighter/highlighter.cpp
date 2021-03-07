@@ -649,7 +649,7 @@ auto Highlighter::createValues(const quint16 nRow) -> QString {
   QString sTmp(QLatin1String(""));
   sTmp = m_pUi->styleTable->item(nRow, 0)->text();
   sTmp.remove(0, 1).push_front(QStringLiteral("0x"));
-  sTmp.append("|");
+  sTmp.append(QLatin1String("|"));
   sReturn += sTmp;
   if (m_pUi->styleTable->item(nRow, 1)->checkState() == Qt::Checked) {
     sReturn += QLatin1String("true|");
@@ -768,13 +768,14 @@ void Highlighter::defineRules() {
   m_highlightingRules.append(rule);
 
   // Image map elements (flags, smilies, etc.)
-  sListRegExpPatterns.clear();
   const QStringList listFlags(m_pTemplates->getListFlags());
+  const QStringList listSmilies(m_pTemplates->getListSmilies());
+  sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(listFlags.size() + listSmilies.size());
   for (const auto &tmpStr : listFlags) {
     sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
   // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
-  const QStringList listSmilies(m_pTemplates->getListSmilies());
   for (const auto &tmpStr : listSmilies) {
     sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
@@ -786,8 +787,9 @@ void Highlighter::defineRules() {
   }
 
   // InterWiki-Links
-  sListRegExpPatterns.clear();
   const QStringList listIWLs(m_pTemplates->getListIWLs());
+  sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(listIWLs.size());
   for (const auto &tmpStr : listIWLs) {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
@@ -800,6 +802,7 @@ void Highlighter::defineRules() {
 
   // Macros ([[Vorlage(...) etc.)
   sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(m_sListMacroKeywords.size() + 1);
   for (const auto &tmpStr : qAsConst(m_sListMacroKeywords)) {
     sListRegExpPatterns << "\\[\\[" + tmpStr + "\\ *\\(";
   }
@@ -813,6 +816,7 @@ void Highlighter::defineRules() {
 
   // Parser ({{{#!code etc.)
   sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(m_sListParserKeywords.size() + 2);
   for (const auto &tmpStr : qAsConst(m_sListParserKeywords)) {
     sListRegExpPatterns << QRegularExpression::escape("{{{#!" + tmpStr);
   }
@@ -827,6 +831,8 @@ void Highlighter::defineRules() {
 
   // Define textformat keywords (bold, italic, etc.)
   sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(m_pTemplates->getListFormatStart().size() +
+                              m_pTemplates->getListFormatEnd().size());
   sListRegExpPatterns.append(m_pTemplates->getListFormatStart());
   sListRegExpPatterns.append(m_pTemplates->getListFormatEnd());
   sListRegExpPatterns.removeDuplicates();
@@ -859,6 +865,7 @@ void Highlighter::defineRules() {
 
   // Misc
   sListRegExpPatterns.clear();
+  sListRegExpPatterns.reserve(2);
   sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("[[BR]]")) <<
                          QRegularExpression::escape(QStringLiteral("\\\\"));
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
@@ -949,11 +956,11 @@ void Highlighter::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/highlighter.png"));
-  aboutbox.setText(QString("<p><b>%1</b><br />"
-                           "%2</p>"
-                           "<p>%3<br />"
-                           "%4</p>"
-                           "<p><i>%5</i></p>")
+  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
+                                       "%2</p>"
+                                       "<p>%3<br />"
+                                       "%4</p>"
+                                       "<p><i>%5</i></p>")
                    .arg(this->getCaption(),
                         tr("Version") + ": " + PLUGIN_VERSION,
                         PLUGIN_COPY,

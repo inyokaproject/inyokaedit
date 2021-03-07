@@ -79,17 +79,19 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QString sFormating(QLatin1String(""));
   QString sTmpStyle(QLatin1String(""));
 
-  QRegExp formatPattern("\\<{1,1}.+\\>{1,1}");
-  QRegExp tableClassPattern("tableclass=\\\"[\\w\\s:;%#-=]+\\\"");
-  QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-=]+\\\"");
-  QRegExp rowClassPattern("rowclass=\\\"[\\w.%-]+\\\"");
-  QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-=]+\\\"");
-  QRegExp cellClassPattern("cellclass=\\\"[\\w.%-]+\\\"");
-  QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-=]+\\\"");
+  QRegExp formatPattern(QLatin1String("\\<{1,1}.+\\>{1,1}"));
+  QRegExp tableClassPattern(
+        QLatin1String("tableclass=\\\"[\\w\\s:;%#-=]+\\\""));
+  QRegExp tableStylePattern(
+        QLatin1String("tablestyle=\\\"[\\w\\s:;%#-=]+\\\""));
+  QRegExp rowClassPattern(QLatin1String("rowclass=\\\"[\\w.%-]+\\\""));
+  QRegExp rowStylePattern(QLatin1String("rowstyle=\\\"[\\w\\s:;%#-=]+\\\""));
+  QRegExp cellClassPattern(QLatin1String("cellclass=\\\"[\\w.%-]+\\\""));
+  QRegExp cellStylePattern(QLatin1String("cellstyle=\\\"[\\w\\s:;%#-=]+\\\""));
   bool bCellStyle;
 
-  QRegExp connectCells("-\\d{1,2}");
-  QRegExp connectRows("\\|\\d{1,2}");
+  QRegExp connectCells(QLatin1String("-\\d{1,2}"));
+  QRegExp connectRows(QLatin1String("\\|\\d{1,2}"));
 
   for (int nLine = 0; nLine < sListLines.size(); nLine++) {
     sLine = sListLines[nLine];

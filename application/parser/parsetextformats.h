@@ -32,7 +32,7 @@
 class QTextDocument;
 
 class ParseTextformats {
-  public:
+ public:
     ParseTextformats();
     static void startParsing(QTextDocument *pRawDoc,
                              const QStringList &sListFormatStart,

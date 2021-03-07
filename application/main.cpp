@@ -80,8 +80,9 @@ auto main(int argc, char *argv[]) -> int {
   cmdparser.addOption(enableDebug);
   QCommandLineOption cmdShare(QStringList() << QStringLiteral("s") <<
                               QStringLiteral("share"),
-                              "User defined share folder (folder containing "
-                              "community files, plugins, etc.)",
+                              QString::fromLatin1(
+                                "User defined share folder (folder containing "
+                                "community files, plugins, etc.)"),
                               QStringLiteral("Path to folder"));
   cmdparser.addOption(cmdShare);
   cmdparser.addPositionalArgument(QStringLiteral("file"),
@@ -174,9 +175,9 @@ void setupLogger(const QString &sDebugFilePath) {
 void LoggingHandler(QtMsgType type,
                     const QMessageLogContext &context,
                     const QString &sMsg) {
-  QString sContext = sMsg + " (" + QString(context.file) + ":"
+  QString sContext = sMsg + " (" + QString::fromLatin1(context.file) + ":"
                      + QString::number(context.line) + ", "
-                     + QString(context.function) + ")";
+                     + QString::fromLatin1(context.function) + ")";
   QString sTime(QTime::currentTime().toString());
 
   switch (type) {

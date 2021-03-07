@@ -37,19 +37,22 @@ class SyntaxCheck : public QObject {
  public:
     explicit SyntaxCheck(QObject *pParent = nullptr);
 
-    static auto checkInyokaSyntax(const QTextDocument *pRawDoc,
-                                  const QStringList &sListTplMacros,
-                                  const QStringList &sListSmilies,
-                                  const QStringList &sListTplTrans) -> QPair <int, QString>;
+    static auto checkInyokaSyntax(
+        const QTextDocument *pRawDoc,
+        const QStringList &sListTplMacros,
+        const QStringList &sListSmilies,
+        const QStringList &sListTplTrans) -> QPair <int, QString>;
 
  private:
-    static auto checkParenthesis(const QTextDocument *pRawDoc,
-                                 const QStringList &sListSmilies) -> QPair <int, QString>;
+    static auto checkParenthesis(
+        const QTextDocument *pRawDoc,
+        const QStringList &sListSmilies) -> QPair <int, QString>;
     static auto checkParenthesisPair(const QChar cLeft,
                                      const QChar cRight) -> bool;
-    static auto checkKnownTemplates(const QTextDocument *pRawDoc,
-                                    const QStringList &sListTplMacros,
-                                    const QStringList &sListTplTrans) -> QPair <int, QString>;
+    static auto checkKnownTemplates(
+        const QTextDocument *pRawDoc,
+        const QStringList &sListTplMacros,
+        const QStringList &sListTplTrans) -> QPair <int, QString>;
 
     static void filterMonotype(QString &sDoc);
 };

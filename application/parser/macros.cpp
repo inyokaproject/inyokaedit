@@ -369,7 +369,8 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     sMacro.replace(QStringLiteral("ä"), QLatin1String("ae"));
     sMacro.replace(QStringLiteral("ü"), QLatin1String("ue"));
     sMacro.replace(QStringLiteral("ö"), QLatin1String("oe"));
-    sListHeadlines_Links << sMacro.remove(QRegExp("#{1,5}\\d#{1,5}"));
+    sListHeadlines_Links << sMacro.remove(
+                              QRegExp(QLatin1String("#{1,5}\\d#{1,5}")));
   }
 
   while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
@@ -388,7 +389,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
              sTrans + "</div>\n";
     for (int i = 0; i < sListHeadlines.size(); i++) {
       sTmp = sListHeadlines[i];
-      sTmp.remove(QRegExp("#{1,5}\\d#{1,5}"));
+      sTmp.remove(QRegExp(QLatin1String("#{1,5}\\d#{1,5}")));
       sListHeadlines[i].remove(
             sListHeadlines[i].length() - sTmp.length(),
             sTmp.length()).remove(QStringLiteral("#"));
@@ -437,7 +438,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 
     // Extract arguments
     // Split by ',' but don't split quoted strings with comma
-    const QStringList tmpList = sMacro.split(QRegExp("\""));
+    const QStringList tmpList = sMacro.split(QRegExp(QLatin1String("\"")));
     bool bInside = false;
     for (const auto &s : tmpList) {
       if (bInside) {
@@ -448,7 +449,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         sArgs.append(s.split(QRegExp(",+"), QString::SkipEmptyParts));
 #else
-        sArgs.append(s.split(QRegExp(",+"), Qt::SkipEmptyParts));
+        sArgs.append(s.split(QRegExp(QLatin1String(",+")), Qt::SkipEmptyParts));
 #endif
       }
       bInside = !bInside;

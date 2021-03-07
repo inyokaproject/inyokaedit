@@ -212,9 +212,9 @@ auto Uu_TableTemplate::getCaption() const -> QString {
 }
 auto Uu_TableTemplate::getIcon() const -> QIcon {
   if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(":/tabletemplate_dark.png");
+    return QIcon(QLatin1String(":/tabletemplate_dark.png"));
   }
-  return QIcon(":/tabletemplate.png");
+  return QIcon(QLatin1String(":/tabletemplate.png"));
 }
 
 auto Uu_TableTemplate::includeMenu() const -> bool {
@@ -471,11 +471,11 @@ void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/tabletemplate.png")));
-  aboutbox.setText(QString("<p><b>%1</b><br />"
-                           "%2</p>"
-                           "<p>%3<br />"
-                           "%4</p>"
-                           "<p><i>%5</i></p>")
+  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
+                                       "%2</p>"
+                                       "<p>%3<br />"
+                                       "%4</p>"
+                                       "<p><i>%5</i></p>")
                    .arg(this->getCaption(),
                         tr("Version") + ": " + PLUGIN_VERSION,
                         PLUGIN_COPY,

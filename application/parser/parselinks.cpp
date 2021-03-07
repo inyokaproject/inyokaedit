@@ -24,13 +24,12 @@
  * Parse all kind of links (external, InterWiki, etc.)
  */
 
+// #include <QDebug>
 #include <QEventLoop>
 #include <QTextDocument>
 
 #include "./parselinks.h"
 #include "../utils.h"
-
-#include <QDebug>
 
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
                        const QStringList &sListIWiki,
@@ -70,8 +69,9 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 
 // External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
-  QRegExp findHyperlink("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
-                        "|git|dict|nntp|irc|rsync|smb|apt)\\b://");
+  QRegExp findHyperlink(
+        QString::fromLatin1("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
+                            "|git|dict|nntp|irc|rsync|smb|apt)\\b://"));
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
   int nLength;
@@ -121,7 +121,7 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
 
 // Inyoka wiki links [:Wikipage:]
 void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
-  QRegExp findInyokaWikiLink("\\[{1,1}\\:[0-9A-Za-z:.]");
+  QRegExp findInyokaWikiLink(QLatin1String("\\[{1,1}\\:[0-9A-Za-z:.]"));
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
   int nLength;
@@ -313,7 +313,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
 // Anchor [#Headline Text]
 void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
-  QRegExp findAnchorLink("\\[{1,1}\\#");
+  QRegExp findAnchorLink(QLatin1String("\\[{1,1}\\#"));
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
   int nLength;
@@ -363,7 +363,7 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
 
 // Link to knowledge box entry
 void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
-  QRegExp findKnowledgeBoxLink("\\[{1,1}[0-9]{1,}\\]{1,1}");
+  QRegExp findKnowledgeBoxLink(QLatin1String("\\[{1,1}[0-9]{1,}\\]{1,1}"));
   QString sDoc(pRawDoc->toPlainText());
   int nIndex;
 

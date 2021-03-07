@@ -215,7 +215,7 @@ void Upload::requestUpload() {
   for (const auto &cookie : listCookies) {
     if (!cookie.isSessionCookie() && sCookie.isEmpty()) {
       // Use first cookie
-      sCookie = cookie.toRawForm();
+      sCookie = QString::fromLatin1(cookie.toRawForm());
       break;
     }
   }

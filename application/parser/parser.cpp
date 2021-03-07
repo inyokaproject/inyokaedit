@@ -612,7 +612,8 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
     for (const auto ch : qAsConst(sCountry)) {
       // Unicode char - (Unicode 'a' 97) + (Unicode reg. indicator 'a' 127462)
       // qDebug() << (int)ch.unicode() - 97 + 127462;
-      sHtml += "&#" + QString::number((int)ch.unicode() - 97 + 127462) + ";";
+      sHtml += "&#" + QString::number(
+            static_cast<int>(ch.unicode()) - 97 + 127462) + ";";
     }
 
     sDoc.replace(nIndex, nLength, sHtml);

@@ -32,7 +32,7 @@
 #include <QStringList>
 
 class ProvisionalTplParser {
-  public:
+ public:
     ProvisionalTplParser(const QStringList &sListHtmlStart,
                          const QString &sSharePath,
                          const QDir &tmpImgDir,
@@ -45,7 +45,7 @@ class ProvisionalTplParser {
     auto parseTpl(const QStringList &sListArgs,
                   const QString &sCurrentFile) -> QString;
 
-  private:
+ private:
     static auto parseAdvanced() -> QString;
     static auto parseArchived(const QStringList &sListArgs) -> QString;
     static auto parseBash(const QStringList &sListArgs) -> QString;
@@ -89,10 +89,11 @@ class ProvisionalTplParser {
     static auto parseWarning(const QStringList &sListArgs) -> QString;
     static auto parseWorkInProgr(const QStringList &sListArgs) -> QString;
 
-    static auto insertBox(const QString &sClass,
-                          const QString &sHeadline,
-                          const QString &sContents,
-                          const QString &sRemark = QLatin1String("")) -> QString;
+    static auto insertBox(
+        const QString &sClass,
+        const QString &sHeadline,
+        const QString &sContents,
+        const QString &sRemark = QLatin1String("")) -> QString;
 
     QStringList m_sListHtmlStart;
     QString m_sCurrentFile;

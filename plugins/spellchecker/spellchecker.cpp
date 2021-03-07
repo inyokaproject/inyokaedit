@@ -150,9 +150,9 @@ auto SpellChecker::getCaption() const -> QString {
 }
 auto SpellChecker::getIcon() const -> QIcon {
   if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(":/spellchecker_dark.png");
+    return QIcon(QLatin1String(":/spellchecker_dark.png"));
   }
-  return QIcon(":/spellchecker.png");
+  return QIcon(QLatin1String(":/spellchecker.png"));
 }
 
 auto SpellChecker::includeMenu() const -> bool{
@@ -211,8 +211,9 @@ auto SpellChecker::initDictionaries() -> bool {
     qWarning() << "Spell checker dictionary file does not exist:"
                << m_sDictPath + m_sDictLang << "*.dic *.aff";
     QMessageBox::warning(nullptr, qApp->applicationName(),
-                         "Spell checker dictionary file does not exist!\n"
-                         "Trying to load fallback dictionary.");
+                         QString::fromLatin1(
+                           "Spell checker dictionary file does not exist!\n"
+                           "Trying to load fallback dictionary."));
 
     // Try to load english fallback
     m_sDictLang = QStringLiteral("en_GB");
@@ -546,11 +547,11 @@ void SpellChecker::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/spellchecker.png")));
-  aboutbox.setText(QString("<p><b>%1</b><br />"
-                           "%2</p>"
-                           "<p>%3<br />"
-                           "%4</p>"
-                           "<p><i>%5</i></p>")
+  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
+                                       "%2</p>"
+                                       "<p>%3<br />"
+                                       "%4</p>"
+                                       "<p><i>%5</i></p>")
                    .arg(this->getCaption(),
                         tr("Version") + ": " + PLUGIN_VERSION,
                         PLUGIN_COPY,

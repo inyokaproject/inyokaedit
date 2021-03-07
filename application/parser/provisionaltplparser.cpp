@@ -56,7 +56,7 @@ ProvisionalTplParser::ProvisionalTplParser(
 // ----------------------------------------------------------------------------
 
 auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
-                                   const QString &sCurrentFile) -> QString{
+                                    const QString &sCurrentFile) -> QString {
   m_sCurrentFile = sCurrentFile;
 
   QStringList sArgs = sListArgs;
@@ -1646,11 +1646,11 @@ auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
     sOutput = QString::fromUtf8("Zusätzliche [:Fremdquellen:] können das "
                                 "System gefährden.");
     sRemark = QString::fromUtf8(
-                "Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. "
-                "Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]]"
-                " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
-                "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
-              .arg(sUser, sPPA, sUser);
+          "Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. "
+          "Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]]"
+          " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
+          "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
+        .arg(sUser, sPPA, sUser);
   }
 
   return sOutsideBox + ProvisionalTplParser::insertBox(
