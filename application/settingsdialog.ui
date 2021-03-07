@@ -14,7 +14,7 @@
    <string>Preferences</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="res/inyokaedit_resources.qrc">
+   <iconset resource="data/data.qrc">
     <normaloff>:/inyokaedit.png</normaloff>:/inyokaedit.png</iconset>
   </property>
   <property name="locale">
@@ -395,7 +395,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="res/inyokaedit_resources.qrc"/>
+  <include location="data/data.qrc"/>
  </resources>
  <connections/>
 </ui>

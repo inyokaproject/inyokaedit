@@ -463,11 +463,11 @@ void InyokaEdit::createActions() {
   if (this->window()->palette().window().color().lightnessF() <
       m_pSettings->getDarkThreshold()) {
     m_pUi->previewAct->setIcon(
-          QIcon(QLatin1String(":/images/toolbar/dark/preview.png")));
+          QIcon(QLatin1String(":/toolbar/dark/preview.png")));
     m_pUi->downloadArticleAct->setIcon(
-          QIcon(QLatin1String(":/images/toolbar/dark/cloud_download.png")));
+          QIcon(QLatin1String(":/toolbar/dark/cloud_download.png")));
     m_pUi->uploadArticleAct->setIcon(
-          QIcon(QLatin1String(":/images/toolbar/dark/cloud_upload.png")));
+          QIcon(QLatin1String(":/toolbar/dark/cloud_upload.png")));
   }
 
   // ------------------------------------------------------------------------

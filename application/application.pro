@@ -53,16 +53,16 @@ CONFIG(debug, debug|release) {
 
 isEmpty(PREVIEW) {
   qtHaveModule(webkitwidgets) {
-    QT         += webkitwidgets
-    DEFINES    += USEQTWEBKIT
+    QT        += webkitwidgets
+    DEFINES   += USEQTWEBKIT
     message("Qt webkitwidgets module found!")
   } else {
     qtHaveModule(webenginewidgets) {
-      QT       += webenginewidgets
-      DEFINES  += USEQTWEBENGINE
+      QT      += webenginewidgets
+      DEFINES += USEQTWEBENGINE
       message("Qt webenginewidgets module found!")
     } else {
-      DEFINES  += NOPREVIEW
+      DEFINES += NOPREVIEW
       message("Neither QtWebKit nor QtWebEngine installation found!")
       message("Building without included preview.")
     }
@@ -70,14 +70,14 @@ isEmpty(PREVIEW) {
 } else {
   message("Preview set to \"$$PREVIEW\"")
   equals(PREVIEW, "useqtwebkit") {
-    QT         += webkitwidgets
-    DEFINES    += USEQTWEBKIT
+    QT        += webkitwidgets
+    DEFINES   += USEQTWEBKIT
   } else {
     equals(PREVIEW, "useqtwebengine") {
-      QT         += webenginewidgets
-      DEFINES    += USEQTWEBENGINE
+      QT      += webenginewidgets
+      DEFINES += USEQTWEBENGINE
     } else {
-      DEFINES  += NOPREVIEW
+      DEFINES += NOPREVIEW
       message("Building without included preview.")
     }
   }
@@ -86,44 +86,47 @@ isEmpty(PREVIEW) {
 include(templates/templates.pri)
 include(parser/parser.pri)
 
-HEADERS      += inyokaedit.h \
-                download.h \
-                downloadimg.h \
-                fileoperations.h \
-                findreplace.h \
-                plugins.h \
-                texteditor.h \
-                session.h \
-                settings.h \
-                settingsdialog.h \
-                syntaxcheck.h \
-                upload.h \
-                utils.h \
-                xmlparser.h \
-                ieditorplugin.h
+HEADERS       += inyokaedit.h \
+                 download.h \
+                 downloadimg.h \
+                 fileoperations.h \
+                 findreplace.h \
+                 plugins.h \
+                 texteditor.h \
+                 session.h \
+                 settings.h \
+                 settingsdialog.h \
+                 syntaxcheck.h \
+                 upload.h \
+                 utils.h \
+                 xmlparser.h \
+                 ieditorplugin.h
 
-SOURCES      += main.cpp \
-                inyokaedit.cpp \
-                download.cpp \
-                downloadimg.cpp \
-                fileoperations.cpp \
-                findreplace.cpp \
-                plugins.cpp \
-                texteditor.cpp \
-                session.cpp \
-                settings.cpp \
-                settingsdialog.cpp \
-                syntaxcheck.cpp \
-                upload.cpp \
-                xmlparser.cpp \
-                utils.cpp
+SOURCES       += main.cpp \
+                 inyokaedit.cpp \
+                 download.cpp \
+                 downloadimg.cpp \
+                 fileoperations.cpp \
+                 findreplace.cpp \
+                 plugins.cpp \
+                 texteditor.cpp \
+                 session.cpp \
+                 settings.cpp \
+                 settingsdialog.cpp \
+                 syntaxcheck.cpp \
+                 upload.cpp \
+                 xmlparser.cpp \
+                 utils.cpp
 
-FORMS        += inyokaedit.ui \
-                findreplace.ui \
-                settingsdialog.ui
+FORMS         += inyokaedit.ui \
+                 findreplace.ui \
+                 settingsdialog.ui
 
-RESOURCES     = res/inyokaedit_resources.qrc \
-                res/translations.qrc
+RESOURCES      = data/data.qrc \
+                 lang/translations.qrc
+
+TRANSLATIONS  += lang/inyokaedit_de.ts \
+                 lang/inyokaedit_nl.ts
 
 win32:RC_ICONS = icons/inyokaedit.ico
 
@@ -131,6 +134,3 @@ macx {
   ICON             = icons/icon.icns
   QMAKE_INFO_PLIST = data/mac/Info.plist
 }
-
-TRANSLATIONS += lang/inyokaedit_de.ts \
-                lang/inyokaedit_nl.ts

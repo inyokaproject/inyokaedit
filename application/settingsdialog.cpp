@@ -366,7 +366,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                                      QStringLiteral("preferences-system"),
                                      QIcon(
                                        QLatin1String(
-                                         ":/images/preferences-system.png"))),
+                                         ":/menu/preferences-system.png"))),
                                    QLatin1String(""));
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
               PluginObjList.at(nRow), [=]() {
@@ -386,7 +386,7 @@ void SettingsDialog::getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                                  QIcon::fromTheme(
                                    QStringLiteral("help-about"),
                                    QIcon(QLatin1String(
-                                           ":/images/help-browser.png"))),
+                                           ":/menu/help-browser.png"))),
                                  QLatin1String(""));
     connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
             PluginObjList[nRow], [=]() {
