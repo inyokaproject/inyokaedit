@@ -52,16 +52,18 @@ infiles:
 install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(bindir)
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/applications
-	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/metainfo
 	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/man1
 	$(INSTALL_DIR) $(DESTDIR)$(mandir)/de/man1
-	$(INSTALL_PROGRAM) inyokaedit           $(DESTDIR)$(bindir)
-	$(INSTALL_FILE) application/data/unix/inyokaedit.desktop $(DESTDIR)$(dataroot)/applications
-	$(INSTALL_FILE) application/data/unix/inyokaedit.xml     $(DESTDIR)$(dataroot)/mime/packages
-	$(INSTALL_FILE) man/inyokaedit.1        $(DESTDIR)$(mandir)/man1
-	$(INSTALL_FILE) man/de/inyokaedit.1     $(DESTDIR)$(mandir)/de/man1
-	$(CP) application/icons/hicolor         $(DESTDIR)$(dataroot)/icons
+	$(INSTALL_DIR) $(DESTDIR)$(dataroot)/icons
+	$(INSTALL_PROGRAM) inyokaedit       $(DESTDIR)$(bindir)
+	$(INSTALL_FILE) application/data/unix/org.inyokaproject.inyokaedit.desktop      $(DESTDIR)$(dataroot)/applications
+	$(INSTALL_FILE) application/data/unix/org.inyokaproject.inyokaedit.metainfo.xml $(DESTDIR)$(dataroot)/metainfo
+	$(INSTALL_FILE) application/data/unix/inyokaedit.xml $(DESTDIR)$(dataroot)/mime/packages
+	$(INSTALL_FILE) man/inyokaedit.1    $(DESTDIR)$(mandir)/man1
+	$(INSTALL_FILE) man/de/inyokaedit.1 $(DESTDIR)$(mandir)/de/man1
+	$(CP) application/icons/hicolor     $(DESTDIR)$(dataroot)/icons
 
 install-plugins:
 	$(INSTALL_DIR) $(DESTDIR)$(libdir)/inyokaedit/plugins
@@ -85,7 +87,8 @@ uninstall:
 	$(RM) -r $(DESTDIR)$(libdir)/inyokaedit
 	$(RM) -r $(DESTDIR)$(dataroot)/inyokaedit
 	$(RM) $(DESTDIR)$(bindir)/inyokaedit
-	$(RM) $(DESTDIR)$(dataroot)/applications/inyokaedit.desktop
+	$(RM) $(DESTDIR)$(dataroot)/applications/org.inyokaproject.inyokaedit.desktop
+	$(RM) $(DESTDIR)$(dataroot)/metainfo/org.inyokaproject.inyokaedit.metainfo.xml
 	$(RM) $(DESTDIR)$(dataroot)/mime/packages/inyokaedit.xml
 	$(RM) $(DESTDIR)$(mandir)/man1/inyokaedit.1*
 	$(RM) $(DESTDIR)$(mandir)/de/man1/inyokaedit.1*

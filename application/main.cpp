@@ -61,6 +61,15 @@ auto main(int argc, char *argv[]) -> int {
   QApplication app(argc, argv);
   app.setApplicationName(QStringLiteral(APP_NAME));
   app.setApplicationVersion(QStringLiteral(APP_VERSION));
+  app.setApplicationDisplayName(QStringLiteral(APP_NAME));
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
+  app.setWindowIcon(
+        QIcon::fromTheme(QStringLiteral("inyokaedit"),
+                         QIcon(QStringLiteral(":/inyokaedit.png"))));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+  app.setDesktopFileName(QStringLiteral("org.inyokaproject.inyokaedit"));
+#endif
+#endif
 
   QCommandLineParser cmdparser;
   cmdparser.setApplicationDescription(QStringLiteral(APP_DESC));

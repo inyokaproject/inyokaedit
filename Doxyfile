@@ -51,7 +51,7 @@ PROJECT_BRIEF          = "A markup editor for Inyoka articles"
 # and the maximum width should not exceed 200 pixels. Doxygen will copy the logo
 # to the output directory.
 
-PROJECT_LOGO           = ./application/res/images/inyokaedit_64x64.png
+PROJECT_LOGO           = ./application/icons/hicolor/64x64/apps/inyokaedit.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is

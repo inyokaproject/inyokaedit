@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2021 The InyokaEdit developers -->
+<component type="desktop-application">
+  <id>org.inyokaproject.inyokaedit.desktop</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>InyokaEdit</name>
+  <name xml:lang="de">InyokaEdit</name>
+  <summary>Inyoka Markup Editor</summary>
+  <summary xml:lang="de">Inyoka Markup Editor</summary>
+  
+  <description>
+    <p>InyokaEdit is a markup editor to create and preview Inyoka articles.</p>
+    <p xml:lang="de">InyokaEdit ist ein Markup-Editor zum bearbeiten und ansehen von Inyoka-Artikeln.</p>
+  </description>
+  
+  <screenshots>
+    <screenshot type="default">
+      <image>https://user-images.githubusercontent.com/26674558/110246608-8df67e00-7f68-11eb-93b5-a6802b2f37a7.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <launchable type="desktop-id">org.inyokaproject.inyokaedit.desktop</launchable>
+  
+  <url type="homepage">https://github.com/inyokaproject/inyokaedit</url>
+  <url type="bugtracker">https://github.com/inyokaproject/inyokaedit/issues</url>
+  
+  <developer_name>Thorsten Roth</developer_name>
+  <update_contact>elthoro@gmx.de</update_contact>
+  
+  <provides>
+    <binary>inyokaedit</binary>
+  </provides>
+  
+  <content_rating type="oars-1.0" />
+  
+  <releases>
+    <release version="0.25.0" date="2020-10-10">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Toolbar icons for dark color themes</li>
+          <li>Dropped support for Xenial</li>
+          <li>Internal code reconstructions</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.24.0" date="2020-03-22">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Update to latest ubuntuusers.de styles</li>
+          <li>Support for table classes (e.g. zebra)</li>
+          <li>Use new linkmap for IWLs</li>
+          <li>Add new arrow smileys and all available flags</li>
+          <li>Use ini files for configs for all non-Linux operating systems</li>
+          <li>Search in share folder (start parameter -s) for plugins</li>
+          <li>Compilation: Split make all/app/allplugins</li>
+          <li>Fix: Create highlighter plugin conf folder, if not existing</li>
+          <li>Some internal code improvements</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.23.0" date="2019-08-31">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Add new element when pressing return in unsorted list</li>
+          <li>Implementation of new unicode smileys</li>
+          <li>Syntax check enhancements</li>
+          <li>Updated to latest IWL and templates</li>
+          <li>Updated Miniz to 2.1.0</li>
+          <li>Code improvements (fixed compiler warnings)</li>
+          <li>Configurable pygmentize path</li>
+          <li>Fixed spell checker ReplaceAll function (#100)</li>
+          <li>Extended cmd line arguments (user defined share folder)</li>
+          <li>Updated to latest ubuntuusers style</li>
+          <li>Improved configure/makefile (#97)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.22.0" date="2018-12-23">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Login needed for accessing Baustelle (#99) / added session handling</li>
+          <li>Implement new anchor rendering (#98)</li>
+          <li>Readded print support for most Qt version / QWeb(Engine)View combinations</li>
+          <li>Support for Hunspell >= v1.5</li>
+          <li>Updated Miniz to v2.0.8</li>
+          <li>TPL: Removed IM, updated Copy/PipInstall/Archived/Imgage collection</li>
+          <li>Minor IWL updates</li>
+          <li>Qt >= 5.4 required for building (= dropped support for Ubuntu 14.04)</li>
+          <li>Converted to Qt5 signal/slots; code reconstructions (using Clazy code checks)</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.21.0" date="2018-04-15">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Added Dutch translation - many thanks to Vistaus!</li>
+          <li>Change gui language without restarting the application</li>
+          <li>Improvements for inyzip</li>
+          <li>IWL updates</li>
+          <li>Heavy code reconstructions</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.20.0" date="2017-09-10">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Possibility to save an article and images together in one file (#75)</li>
+          <li>Improved code completion for templates at beginning of a line (#69)</li>
+          <li>Simple Inyoka syntax check</li>
+          <li>Improved hotkey plugin by using QKeySequenceEdit widget</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+</component>
