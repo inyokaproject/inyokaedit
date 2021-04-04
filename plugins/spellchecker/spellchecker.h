@@ -74,6 +74,7 @@
 
 class QAction;
 class QSettings;
+class QTextCodec;
 
 class TextEditor;
 class SpellCheckDialog;

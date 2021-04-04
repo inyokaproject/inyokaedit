@@ -105,7 +105,10 @@ void Templates::initTemplates(const QString &sTplPath) {
         sTempTplText.clear();
         sTempMacro.clear();
         QTextStream in(&TplFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        // Since Qt 6 UTF-8 is used by default
         in.setCodec("UTF-8");
+#endif
 
         while (!in.atEnd()) {
           tmpLine = in.readLine().trimmed();
@@ -138,7 +141,10 @@ void Templates::initTemplates(const QString &sTplPath) {
       TplFile.setFileName(fi.absoluteFilePath());
       if (TplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&TplFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        // Since Qt 6 UTF-8 is used by default
         in.setCodec("UTF-8");
+#endif
         tmpLine = in.readLine().trimmed();
         if (tmpLine.startsWith(QLatin1String("## Macro="))) {
           tmpLine = tmpLine.remove(QStringLiteral("## Macro="));
@@ -184,7 +190,10 @@ void Templates::initHtmlTpl(const QString &sTplFile) {
     m_sPreviewTemplate = QStringLiteral("ERROR");
   } else {
     QTextStream in(& HTMLTplFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
+#endif
     m_sPreviewTemplate = in.readAll();
 
     HTMLTplFile.close();
@@ -209,7 +218,10 @@ void Templates::initMappings(const QString &sFileName,
     sListMapping << QStringLiteral("ERROR");
   } else {
     QTextStream in(&MapFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
+#endif
     QString tmpLine;
     QString sElement;
     QString sMapping;
@@ -250,7 +262,10 @@ void Templates::initTextformats(const QString &sFilename) {
     m_sListFormatHtmlEnd << QStringLiteral("ERROR");
   } else {
     QTextStream in(&formatsFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
+#endif
     QString tmpLine;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();

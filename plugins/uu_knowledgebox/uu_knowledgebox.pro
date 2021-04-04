@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = uu_knowledgebox
 DESTDIR       = ../
 
-VERSION       = 1.1.3
+VERSION       = 1.1.4
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de knowledge box selection plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2013-2021 - Thorsten Roth"
 

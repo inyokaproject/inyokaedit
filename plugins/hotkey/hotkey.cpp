@@ -54,7 +54,11 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               qApp->applicationName().toLower(),
                               QStringLiteral(PLUGIN_NAME));
 #endif
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  // Since Qt 6 UTF-8 is used by default
   m_pSettings->setIniCodec("UTF-8");
+#endif
   m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;
@@ -175,11 +179,11 @@ void Hotkey::loadHotkeyEntries() {
   uint nNumOfEntries = m_pSettings->value(QStringLiteral("Hotkey/NumOfEntries"),
                                           0).toUInt();
   if (0 == nNumOfEntries) {
-    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL | Qt::Key_B);
     m_sListEntries << QStringLiteral("'''Bold'''");
-    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_I);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL | Qt::Key_I);
     m_sListEntries << QStringLiteral("''Italic''");
-    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_L);
+    m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL | Qt::Key_L);
     m_sListEntries << QStringLiteral("Text %%Selected%%");
     this->writeSettings();
   } else {
@@ -237,7 +241,7 @@ void Hotkey::reject() {
 
 void Hotkey::addRow() {
   m_sListEntries << tr("'''Bold'''");
-  m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL + Qt::Key_B);
+  m_listSequenceEdit << new QKeySequenceEdit(Qt::CTRL | Qt::Key_B);
   this->createRow(m_listSequenceEdit.last(), m_sListEntries.last());
   m_pUi->entriesTable->scrollToBottom();
   m_pUi->entriesTable->editItem(m_pUi->entriesTable->item(

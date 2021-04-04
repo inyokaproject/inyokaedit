@@ -46,7 +46,7 @@ CONFIG       += plugin
 TARGET        = spellchecker
 DESTDIR       = ../
 
-VERSION       = 1.2.2
+VERSION       = 1.2.3
 QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-2021 - Thorsten Roth"
 
@@ -60,6 +60,9 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += widgets
+greaterThan(QT_MAJOR_VERSION, 5) {
+  QT         += core5compat
+}
 CONFIG       += c++11
 DEFINES      += QT_NO_FOREACH
 
