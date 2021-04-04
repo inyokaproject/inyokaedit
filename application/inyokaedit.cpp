@@ -447,7 +447,6 @@ void InyokaEdit::createActions() {
   // ------------------------------------------------------------------------
 
   // Show html preview
-  m_pUi->previewAct->setShortcut(Qt::CTRL + Qt::Key_P);
   connect(m_pUi->previewAct, &QAction::triggered,
           this, &InyokaEdit::previewInyokaPage);
 
@@ -817,7 +816,10 @@ void InyokaEdit::previewInyokaPage() {
 
   // Stream for output in file
   QTextStream tmpoutputstream(&tmphtmlfile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  // Since Qt 6 UTF-8 is used by default
   tmpoutputstream.setCodec("UTF-8");
+#endif
   tmpoutputstream.setAutoDetectUnicode(true);
 
   // Write HTML code into output file
@@ -955,7 +957,10 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
     QFile tplFile(sInsert);
     if (tplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
       QTextStream in(&tplFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+      // Since Qt 6 UTF-8 is used by default
       in.setCodec("UTF-8");
+#endif
       sMacro = in.readLine().trimmed();  // First line HAS to include ## Macro
       sMacro = sMacro.remove(QStringLiteral("## Macro="));
       tplFile.close();
@@ -1337,7 +1342,11 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
   if (m_sCurrLang != sLang) {
     m_sCurrLang = sLang;
     if (!InyokaEdit::switchTranslator(&m_translatorQt, "qt_" + sLang,
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+                                      QLibraryInfo::path(
+#else
                                       QLibraryInfo::location(
+#endif
                                         QLibraryInfo::TranslationsPath))) {
       InyokaEdit::switchTranslator(&m_translatorQt, "qt_" + sLang,
                                    m_sSharePath + "/lang");
@@ -1351,6 +1360,7 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
             m_sSharePath + "/lang");
     }
   }
+  m_pUi->retranslateUi(this);
 }
 
 // ---------------------------------------------------------------------------

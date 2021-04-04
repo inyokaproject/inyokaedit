@@ -32,6 +32,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QImage>
+#include <QRegExp>
 
 ProvisionalTplParser::ProvisionalTplParser(
     const QStringList &sListHtmlStart,

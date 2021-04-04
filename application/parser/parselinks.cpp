@@ -26,6 +26,7 @@
 
 // #include <QDebug>
 #include <QEventLoop>
+#include <QRegExp>
 #include <QTextDocument>
 
 #include "./parselinks.h"

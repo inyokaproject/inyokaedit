@@ -26,6 +26,7 @@
 
 #include <QMessageBox>
 #include <QProcess>
+#include <QRegExp>
 #include <QTextBlock>
 #include <QTextDocument>
 

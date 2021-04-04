@@ -30,7 +30,6 @@
 #include <QString>
 
 class QTextDocument;
-class QStringList;
 
 class ParseTable {
  public:

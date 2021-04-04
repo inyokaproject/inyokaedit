@@ -27,6 +27,7 @@
 #include "./parsetemplates.h"
 
 #include <QDebug>
+#include <QRegExp>
 #include <QTextDocument>
 
 #include "./provisionaltplparser.h"

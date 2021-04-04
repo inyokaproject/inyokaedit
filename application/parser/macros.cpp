@@ -31,6 +31,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QRegExp>
 #include <QTextDocument>
 
 Macros::Macros(const QString &sSharePath,
@@ -44,7 +45,10 @@ Macros::Macros(const QString &sSharePath,
                          QStringLiteral("Could not open macros.conf"));
   } else {
     QTextStream in(&fiMacros);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
+#endif
     QString tmpLine;
     QStringList tmpList;
     MACRO tmpMacro;
