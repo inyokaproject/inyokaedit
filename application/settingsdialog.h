@@ -29,8 +29,9 @@
 
 #include <QDialog>
 
+#include "./ieditorplugin.h"  // Cannot use forward declaration (since Qt 6)
+
 class Settings;
-class IEditorPlugin;
 
 namespace Ui {
 class SettingsDialog;

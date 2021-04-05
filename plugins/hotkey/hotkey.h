@@ -28,13 +28,13 @@
 #ifndef PLUGINS_HOTKEY_HOTKEY_H_
 #define PLUGINS_HOTKEY_HOTKEY_H_
 
+#include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QtPlugin>
 #include <QString>
 #include <QTranslator>
 
 #include "../../application/ieditorplugin.h"
 
-class QAction;
 class QDialog;
 class QDir;
 class QKeySequenceEdit;

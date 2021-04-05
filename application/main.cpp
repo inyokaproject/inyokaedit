@@ -66,9 +66,7 @@ auto main(int argc, char *argv[]) -> int {
   app.setWindowIcon(
         QIcon::fromTheme(QStringLiteral("inyokaedit"),
                          QIcon(QStringLiteral(":/inyokaedit.png"))));
-#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
   app.setDesktopFileName(QStringLiteral("org.inyokaproject.inyokaedit"));
-#endif
 #endif
 
   QCommandLineParser cmdparser;

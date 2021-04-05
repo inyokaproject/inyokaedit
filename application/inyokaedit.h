@@ -27,6 +27,7 @@
 #ifndef APPLICATION_INYOKAEDIT_H_
 #define APPLICATION_INYOKAEDIT_H_
 
+#include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QDir>
 #include <QMainWindow>
 #include <QTranslator>
@@ -74,7 +75,7 @@ class InyokaEdit : public QMainWindow {
     void displayArticleText(const QString &sArticleText,
                             const QString &sSitename);
     void addPluginsButtons(const QList<QAction *> &ToolbarEntries,
-                           QList<QAction *> &MenueEntries);
+                           QList<QAction *> MenueEntries);
     void updateEditorSettings();
 
  protected:

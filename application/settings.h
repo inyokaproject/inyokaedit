@@ -30,10 +30,11 @@
 #include <QDir>
 #include <QFont>
 
+#include "./ieditorplugin.h"  // Cannot use forward declaration (since Qt 6)
+
 class QSettings;
 
 class SettingsDialog;
-class IEditorPlugin;
 
 /**
  * \class Settings

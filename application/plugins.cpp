@@ -27,13 +27,11 @@
 #include "./plugins.h"
 
 #include <QApplication>
-#include <QAction>
 #include <QDebug>
 #include <QIcon>
 #include <QPluginLoader>
 
 #include "./texteditor.h"
-#include "./ieditorplugin.h"
 
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,

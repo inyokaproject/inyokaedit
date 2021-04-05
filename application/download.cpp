@@ -132,6 +132,8 @@ void Download::downloadArticle(QString sUrl) {
   qDebug() << "DOWNLOADING article:" << sUrl;
   QNetworkRequest request(sUrl);
   request.setOriginatingObject(this);
+  request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+                       QNetworkRequest::ManualRedirectPolicy);
   m_urlRedirectedTo = sUrl;
   QNetworkReply *reply = m_pSession->getNwManager()->get(request);
   m_listDownloadReplies.append(reply);

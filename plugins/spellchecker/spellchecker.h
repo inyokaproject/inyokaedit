@@ -57,6 +57,7 @@
 #ifndef PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 #define PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
 
+#include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QDir>
 #include <QObject>
 #include <QTranslator>
@@ -72,7 +73,6 @@
 #include <hunspell/hunspell.hxx>
 #endif
 
-class QAction;
 class QSettings;
 class QTextCodec;
 
@@ -141,7 +141,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     QString m_sSharePath;
     QString m_sCommunity;
     QString m_sEncoding;
-    // TODO(volunteer): Replace with QStringConverter for Qt6 or (temporary) use core5compat
+    // TODO(volunteer): Replace with QStringConverter for Qt6 (currently core5compat is used)
     QTextCodec *m_pCodec;
 };
 

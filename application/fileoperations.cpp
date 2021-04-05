@@ -27,7 +27,6 @@
 #include "./fileoperations.h"
 
 #include <QApplication>
-#include <QAction>
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>

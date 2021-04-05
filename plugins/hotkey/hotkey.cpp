@@ -26,7 +26,6 @@
 
 #include "./hotkey.h"
 
-#include <QAction>
 #include <QApplication>
 #include <QDebug>
 #include <QKeySequenceEdit>

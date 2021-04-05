@@ -243,6 +243,7 @@ void InyokaEdit::createObjects() {
 void InyokaEdit::setCurrentEditor() {
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
   m_pPlugins->setCurrentEditor(m_pCurrentEditor);
+  m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
   m_pUploadModule->setEditor(m_pCurrentEditor, m_pCurrentEditor->getFileName());
 }
 
@@ -761,7 +762,7 @@ void InyokaEdit::createXmlMenus() {
 
 // Add plugins to plugin toolbar and tools menu
 void InyokaEdit::addPluginsButtons(const QList<QAction *> &ToolbarEntries,
-                                   QList<QAction *> &MenueEntries) {
+                                   QList<QAction *> MenueEntries) {
   m_pUi->pluginsBar->addActions(ToolbarEntries);
   if (!m_pUi->toolsMenu->actions().isEmpty()) {
     auto *separator = new QAction(this);

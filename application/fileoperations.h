@@ -27,9 +27,9 @@
 #ifndef APPLICATION_FILEOPERATIONS_H_
 #define APPLICATION_FILEOPERATIONS_H_
 
+#include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QObject>
 
-class QAction;
 class QTabWidget;
 class QTimer;
 

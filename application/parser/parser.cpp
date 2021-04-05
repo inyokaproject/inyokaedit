@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QRegExp>
+#include <QRegularExpression>
 #include <QTextBlock>
 #include <QTextDocument>
 
@@ -303,7 +304,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
       sMacro.remove(QStringLiteral("}}}"));
 
       sListLines.clear();
-      sListLines = sMacro.split(QRegExp(QLatin1String("\\n")));
+      sListLines = sMacro.split(QRegularExpression(QLatin1String("\\n")));
 
       // Only plain code
       if (!bFormated) {
@@ -640,7 +641,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
     if (block.text().startsWith(QLatin1String(">"))) {
       sLine = block.text().trimmed();
       nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
-      sLine.remove(QRegExp(QLatin1String("^>*")));
+      sLine.remove(QRegularExpression(QLatin1String("^>*")));
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
       }

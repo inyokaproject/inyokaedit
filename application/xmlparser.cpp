@@ -68,7 +68,7 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
     }
 
     if (token == QXmlStreamReader::StartElement) {
-      if (m_pXmlReader->name() == "menu") {
+      if (m_pXmlReader->name().toString() == QLatin1String("menu")) {
         if (!this->parseMenu()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
           qCritical() << "XML contains multiple \"menu\" entries! Line:" <<
@@ -82,7 +82,7 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
         continue;
       }
 
-      if (m_pXmlReader->name() == "group") {
+      if (m_pXmlReader->name().toString() == QLatin1String("group")) {
         if (!this->parseGroup()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
           qCritical() << "Found \"group\" outside of \"menu\" or" <<
@@ -97,7 +97,7 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
         continue;
       }
 
-      if (m_pXmlReader->name() == "element") {
+      if (m_pXmlReader->name().toString() == QLatin1String("element")) {
         if (!this->parseElement()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
           qCritical() << "Found \"element\" outside of \"menu\" or" <<
@@ -112,11 +112,11 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
     }
 
     if (token == QXmlStreamReader::EndElement) {
-      if (m_pXmlReader->name() == "menu") {
+      if (m_pXmlReader->name().toString() == QLatin1String("menu")) {
         m_bInMenu = false;
       }
 
-      if (m_pXmlReader->name() == "group") {
+      if (m_pXmlReader->name().toString() == QLatin1String("group")) {
         m_sListGroups << m_sTmpGroupName;
         m_sListGroupIcons << m_sTmpGroupIcon;
         m_sTmpGroupName = QLatin1String("");

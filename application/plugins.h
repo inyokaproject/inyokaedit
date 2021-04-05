@@ -27,13 +27,13 @@
 #ifndef APPLICATION_PLUGINS_H_
 #define APPLICATION_PLUGINS_H_
 
+#include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QDir>
 #include <QList>
 
-class QAction;
+#include "./ieditorplugin.h"  // Cannot use forward declaration (since Qt 6)
 
 class TextEditor;
-class IEditorPlugin;
 
 class Plugins : public QObject {
   Q_OBJECT
@@ -53,7 +53,7 @@ class Plugins : public QObject {
     void availablePlugins(const QList<IEditorPlugin *> &PluginList,
                           const QList<QObject *> &PluginObjList);
     void addMenuToolbarEntries(const QList<QAction *> &ToolbarEntries,
-                               QList<QAction *> &MenueEntries);
+                               QList<QAction *> MenueEntries);
 
  private:
     QWidget *m_pParent;

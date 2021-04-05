@@ -91,8 +91,8 @@ void DownloadImg::doDownload(const QUrl &url,
   QNetworkRequest request(url);
   qDebug() << "Image DL request:" << url.toString();
   request.setOriginatingObject(this);
-  // Follow redirects automatically
-  request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+  request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+                       QNetworkRequest::NoLessSafeRedirectPolicy);
   QNetworkReply *reply = m_pNwManager->get(request);
 
   m_listDownloadReplies.append(reply);
