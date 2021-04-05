@@ -138,8 +138,16 @@ auto Parser::genOutput(const QString &sActFile,
   ParseList::startParsing(m_pRawText);
   m_pLinkParser->startParsing(m_pRawText);
 
-  // Replace flags (only Qt WebEngine is able to render unicode flags)
+  Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
+  // Replace smilies
+  ParseTxtMap::startParsing(m_pRawText,
+                            m_pTemplates->getListSmilies(),
+                            m_pTemplates->getListSmiliesImg());
+
+  // Replace flags
+  // After smilies, because some smilies are using flag format (e.g. {dl})
 #ifdef USEQTWEBENGINE
+  // Only Qt WebEngine is able to render unicode flags
   this->replaceFlags(m_pRawText);
 #else
   ParseImgMap::startParsing(m_pRawText,
@@ -148,12 +156,6 @@ auto Parser::genOutput(const QString &sActFile,
                             m_sSharePath,
                             m_sCommunity);
 #endif
-
-  Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
-  // Replace smilies
-  ParseTxtMap::startParsing(m_pRawText,
-                            m_pTemplates->getListSmilies(),
-                            m_pTemplates->getListSmiliesImg());
 
   ParseTextformats::startParsing(m_pRawText,
                                  m_pTemplates->getListFormatStart(),
