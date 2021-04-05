@@ -223,6 +223,10 @@ void InyokaEdit::createObjects() {
   m_pWebview = new QWebEngineView(this);
   m_pWebview->pageAction(QWebEnginePage::SavePage)->setVisible(false);
   m_pWebview->pageAction(QWebEnginePage::ViewSource)->setVisible(false);
+  m_pWebview->pageAction(QWebEnginePage::OpenLinkInNewTab)->setVisible(false);
+  m_pWebview->pageAction(QWebEnginePage::DownloadLinkToDisk)->setVisible(false);
+  m_pWebview->pageAction(
+        QWebEnginePage::OpenLinkInNewWindow)->setVisible(false);
 
   connect(m_pWebview->page(), &QWebEnginePage::scrollPositionChanged,
           this, &InyokaEdit::syncScrollbarsWebview);
