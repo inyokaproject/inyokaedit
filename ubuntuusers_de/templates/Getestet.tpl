@@ -2,10 +2,13 @@
 
 {{|<title="Dieser Artikel wurde für die folgenden
 Ubuntu-Versionen getestet:" class="box tested_for">
-<@ if ['general', 'groovy', 'focal', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
+<@ if ['general', 'hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
+<@ if $arguments as lowercase contain 'groovy' @>
+  * [:Hirsute_Hippo:Ubuntu 21.04] Hirsute Hippo
+<@ endif @>
 <@ if $arguments as lowercase contain 'groovy' @>
   * [:Groovy_Gorilla:Ubuntu 20.10] Groovy Gorilla
 <@ endif @>
@@ -26,10 +29,13 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #tag: ungetestet
 <@ endif @>
 |}}
-<@ if ['general', 'groovy', 'focal', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
+<@ if ['general', 'hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 #getestet: general
 <@ else @>
+<@ if $arguments as lowercase contain 'hirsute' @>
+#getestet: hirsute
+<@ endif @>
 <@ if $arguments as lowercase contain 'groovy' @>
 #getestet: groovy
 <@ endif @>

@@ -26,7 +26,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
+<@ if $loop.index < 3 or ['hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,10 +39,11 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'groovy' or 'focal' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
+<@ if $arguments contain 'hirsute' or $arguments contain 'groovy' or $arguments contain 'focal' or $arguments contain 'bionic' or $arguments contain 'xenial' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
+<@ if ['hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
+<@ if $arg == 'hirsute' @>[:Hirsute_Hippo: Ubuntu 21.04]<@ endif @>
 <@ if $arg == 'groovy' @>[:Groovy_Gorilla: Ubuntu 20.10]<@ endif @>
 <@ if $arg == 'focal' @>[:Focal_Fossa: Ubuntu 20.04]<@ endif @>
 <@ if $arg == 'bionic' @>[:Bionic_Beaver: Ubuntu 18.04]<@ endif @>

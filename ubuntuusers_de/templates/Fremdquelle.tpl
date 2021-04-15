@@ -1,6 +1,7 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'groovy' or
+<@ if $arguments as lowercase contain 'hirsute' or
+      $arguments as lowercase contain 'groovy' or
       $arguments as lowercase contain 'focal' or
       $arguments as lowercase contain 'bionic' or
       $arguments as lowercase contain 'xenial' @> die folgenden [:Paketquellen freischalten:]:
@@ -16,12 +17,14 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ endif @>
 <@if $arguments as lowercase contain 'groovy' @> thirdpartyrepo-version-groovy
 <@ endif @>
+<@if $arguments as lowercase contain 'hirsute' @> thirdpartyrepo-version-hirsute
+<@ endif @>
 ">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
+<@ if ['hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
