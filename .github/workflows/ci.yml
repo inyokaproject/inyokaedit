@@ -43,9 +43,9 @@ jobs:
        make DESTDIR=appdir install
        find appdir
 
-    - name: Create AppImage
+    - name: Create AppImage # Remove not-recommended "-unsupported-allow-new-glibc" as soon as linuxdeployqt supports Ubuntu 18.04 
       run: |
-       ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs -extra-plugins=iconengines,platformthemes/libqgtk3.so
+       ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs -extra-plugins=iconengines,platformthemes/libqgtk3.so -unsupported-allow-new-glibc
        find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
 
     - name: Upload AppImage
