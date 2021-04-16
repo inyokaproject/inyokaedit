@@ -32,11 +32,15 @@ jobs:
        mv ./ffsend-* ./ffsend
        chmod a+x ./ffsend
 
+    - name: Clone ubuntuusers community repository
+      run: |
+       git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
+
     - name: Compile
       run: |
-       ./configure --prefix=/usr --community=none
+       ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
-       make DESTDIR=appdir -j$(nproc) install
+       make DESTDIR=appdir install
        find appdir
 
     - name: Create AppImage
