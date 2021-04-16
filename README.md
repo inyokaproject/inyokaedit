@@ -1,4 +1,4 @@
-# InyokaEdit
+# InyokaEdit [![CodeQL](https://github.com/inyokaproject/inyokaedit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/inyokaproject/inyokaedit/actions/workflows/codeql-analysis.yml)
 InyokaEdit is a markup editor for Inyoka articles.
 
 ![Screenshot](https://user-images.githubusercontent.com/26674558/110246608-8df67e00-7f68-11eb-93b5-a6802b2f37a7.png)
