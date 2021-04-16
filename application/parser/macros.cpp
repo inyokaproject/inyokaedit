@@ -31,7 +31,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <QRegExp>
 #include <QRegularExpression>
 #include <QTextDocument>
 
@@ -121,14 +120,16 @@ auto Macros::getTplTranslations() const -> QStringList {
 // ----------------------------------------------------------------------------
 
 void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
-  QRegExp regex("\\[{2,2}\\b(" + sTrans + ")\\([A-Za-z_\\s-0-9]+\\)\\]{2,2}");
   QString sDoc(pRawDoc->toPlainText());
-  int nIndex;
+  QRegularExpression regex(
+        "\\[{2,2}\\b(" + sTrans + ")\\([A-Za-z_\\s\\-0-9]+\\)\\]{2,2}");
+  int nIndex = 0;
+  QRegularExpressionMatch match;
+  QString sAnchor;
 
-  nIndex = regex.indexIn(sDoc);
-  while (nIndex >= 0) {
-    int nLength = regex.matchedLength();
-    QString sAnchor = regex.cap();
+  while ((match = regex.match(sDoc, nIndex)).hasMatch()) {
+    sAnchor = match.captured();
+    nIndex = match.capturedStart();
     // qDebug() << sAnchor;
 
     sAnchor.remove("[[" + sTrans + "(");
@@ -144,11 +145,11 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
     sAnchor.replace(QStringLiteral("ü"), QLatin1String("ue"));
     sAnchor.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
-    sDoc.replace(nIndex, nLength,
-                 "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor
-                 + "\" class=\"crosslink anchor\"> </a>");
+    sAnchor = "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor +
+              "\" class=\"crosslink anchor\"> </a>";
+    sDoc.replace(nIndex, match.capturedLength(), sAnchor);
     // Go on with RegExp-Search
-    nIndex = regex.indexIn(sDoc, nIndex + nLength);
+    nIndex += sAnchor.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -159,24 +160,28 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
 
 void Macros::replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + sTrans + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
+  QRegularExpression findMacro(
+        "\\[\\[" + sTrans + "\\(.*\\)\\]\\]",
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
+  int nIndex = 0;
+  QRegularExpressionMatch match;
   QString sMacro;
-  int nPos = 0;
 
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + sTrans + "(");
+  while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
+    sMacro = match.captured(0);
+    nIndex = match.capturedStart();
+    sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
     sMacro.remove('"');
 
     sMacro = "<a href=\"" + sMacro +
              "\" class=\"crosslink\">" + sMacro + "</a>";
 
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+    sDoc.replace(nIndex, match.capturedLength(), sMacro);
     // Go on with new start position
-    nPos += sMacro.length();
+    nIndex += sMacro.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -187,17 +192,21 @@ void Macros::replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans) {
 
 void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + sTrans + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
+  QRegularExpression findMacro(
+        "\\[\\[" + sTrans + "\\(.*\\)\\]\\]",
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
+  int nIndex = 0;
+  QRegularExpressionMatch match;
   QString sMacro;
   QDateTime datetime;
   bool bConversionOk;
-  int nPos = 0;
 
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + sTrans + "(");
+  while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
+    sMacro = match.captured(0);
+    nIndex = match.capturedStart();
+    sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
 
     // First assume ISO 8601 datetime
@@ -214,9 +223,9 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
       sMacro = QStringLiteral("Invalid date");
     }
 
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+    sDoc.replace(nIndex, match.capturedLength(), sMacro);
     // Go on with new start position
-    nPos += sMacro.length();
+    nIndex += sMacro.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -245,7 +254,11 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
   QString sExt(QLatin1String(""));
 #endif
   QString sDoc(pRawDoc->toPlainText());
-  QRegExp findImages("\\[\\[" + sTrans + "\\(.+\\)\\]\\]");
+  QRegularExpression findImages(
+        "\\[\\[" + sTrans + "\\(.+\\)\\]\\]",
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
   QStringList sListTmpImageInfo;
 
   QString sImagePath(QLatin1String(""));
@@ -254,12 +267,12 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
     sImagePath = fiArticleFile.absolutePath();
   }
 
-  findImages.setMinimal(true);
-  int nIndex = findImages.indexIn(sDoc);
-  while (nIndex >= 0) {
-    int nLength = findImages.matchedLength();
-    QString sTmpImage = findImages.cap();
-    sTmpImage.remove("[[" + sTrans + "(");
+  int nIndex = 0;
+  QRegularExpressionMatch match;
+  while ((match = findImages.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    QString sTmpImage = match.captured();
+    sTmpImage.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sTmpImage.remove(QStringLiteral(")]]"));
 
     QString sImageAlign = QStringLiteral("default");
@@ -338,9 +351,9 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
                  + QString::number(tmpW) + "\" ";
     sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
 
-    sDoc.replace(nIndex, nLength, sTmpImage);
+    sDoc.replace(nIndex, match.capturedLength(), sTmpImage);
     // Go on with RegExp-Search
-    nIndex = findImages.indexIn(sDoc, nIndex + nLength);
+    nIndex += sTmpImage.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -353,13 +366,14 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
                                     const QString &sTrans,
                                     QStringList &sListHeadlines) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + sTrans + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
+  QRegularExpression findMacro(
+        "\\[\\[" + sTrans + "\\(.*\\)\\]\\]",
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
   QString sMacro;
   QString sSpaces;
   QString sTmp;
-  int nPos = 0;
   quint16 nTOCLevel;
   quint16 nCurrentLevel;
 
@@ -376,17 +390,19 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     sMacro.replace(QStringLiteral("ö"), QLatin1String("oe"));
     sListHeadlines_Links << sMacro.remove(
                               QRegularExpression(
-                                QLatin1String("#{1,5}\\d#{1,5}")));
+                                QStringLiteral("#{1,5}\\d#{1,5}")));
   }
 
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + sTrans + "(");
+  int nIndex = 0;
+  QRegularExpressionMatch match;
+  while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    sMacro = match.captured(0);
+    sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
 
-    if (sMacro.trimmed().length() > 0) {
-      nTOCLevel = sMacro.trimmed().toUShort();
-    } else {
+    nTOCLevel = sMacro.trimmed().toUShort();
+    if (0 == nTOCLevel || nTOCLevel > 5) {
       nTOCLevel = 3;  // Default
     }
     // qDebug() << "TOC level:" << nTOCLevel;
@@ -395,7 +411,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
              sTrans + "</div>\n";
     for (int i = 0; i < sListHeadlines.size(); i++) {
       sTmp = sListHeadlines[i];
-      sTmp.remove(QRegularExpression(QLatin1String("#{1,5}\\d#{1,5}")));
+      sTmp.remove(QRegularExpression(QStringLiteral("#{1,5}\\d#{1,5}")));
       sListHeadlines[i].remove(
             sListHeadlines[i].length() - sTmp.length(),
             sTmp.length()).remove(QStringLiteral("#"));
@@ -412,9 +428,9 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     }
     sMacro += QLatin1String("\n</div>\n");
 
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+    sDoc.replace(nIndex, match.capturedLength(), sMacro);
     // Go on with new start position
-    nPos += sMacro.length();
+    nIndex += sMacro.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -425,18 +441,22 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
 
 void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp("\\[\\[" + sTrans + "\\(.*\\)\\]\\]");
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
+  QRegularExpression findMacro(
+        "\\[\\[" + sTrans + "\\(.*\\)\\]\\]",
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
   QString sMacro;
   QStringList sArgs;
   QString sClass;
   QString sStyle;
-  int nPos = 0;
 
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findMacro.cap(0);
-    sMacro.remove("[[" + sTrans + "(");
+  int nIndex = 0;
+  QRegularExpressionMatch match;
+  while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    sMacro = match.captured(0);
+    sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
     sArgs.clear();
     sClass.clear();
@@ -445,7 +465,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
     // Extract arguments
     // Split by ',' but don't split quoted strings with comma
     const QStringList tmpList = sMacro.split(
-          QRegularExpression(QLatin1String("\"")));
+          QRegularExpression(QStringLiteral("\"")));
     bool bInside = false;
     for (const auto &s : tmpList) {
       if (bInside) {
@@ -454,10 +474,10 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
       } else {
         // If 's' is outside quotes, get the splitted string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        sArgs.append(s.split(QRegularExpression(",+"),
+        sArgs.append(s.split(QRegularExpression(QStringLiteral(",+")),
                              QString::SkipEmptyParts));
 #else
-        sArgs.append(s.split(QRegularExpression(QLatin1String(",+")),
+        sArgs.append(s.split(QRegularExpression(QStringLiteral(",+")),
                              Qt::SkipEmptyParts));
 #endif
       }
@@ -467,19 +487,21 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 
     sMacro.clear();
     if (!sArgs.isEmpty()) {
-      sMacro = sArgs[0];
+      sMacro = sArgs[0].trimmed();
     }
     if (sArgs.size() > 1) {
-      sClass = " class=\"" + sArgs[1].remove(QStringLiteral("\"")) + "\"";
+      sClass = " class=\"" +
+          sArgs[1].remove(QStringLiteral("\"")).trimmed() + "\"";
     }
     if (sArgs.size() > 2) {
-      sStyle = " style=\"" + sArgs[2].remove(QStringLiteral("\"")) + "\"";
+      sStyle = " style=\"" +
+          sArgs[2].remove(QStringLiteral("\"")).trimmed() + "\"";
     }
     sMacro = "<span" + sStyle + sClass + ">" + sMacro + "</span>";
 
-    sDoc.replace(nPos, findMacro.matchedLength(), sMacro);
+    sDoc.replace(nIndex, match.capturedLength(), sMacro);
     // Go on with new start position
-    nPos += sMacro.length();
+    nIndex += sMacro.length();
   }
 
   pRawDoc->setPlainText(sDoc);

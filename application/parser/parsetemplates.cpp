@@ -27,7 +27,6 @@
 #include "./parsetemplates.h"
 
 #include <QDebug>
-#include <QRegExp>
 #include <QRegularExpression>
 #include <QTextDocument>
 
@@ -73,12 +72,16 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
   QStringList sListArguments;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
-    QRegExp findTemplate(sListTplRegExp[k], Qt::CaseInsensitive);
-    findTemplate.setMinimal(true);
+    QRegularExpression findTemplate(
+          sListTplRegExp[k],
+          QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+          QRegularExpression::DotMatchesEverythingOption |
+          QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match;
     int nPos = 0;
 
-    while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-      QString sMacro = findTemplate.cap(0);
+    while ((match = findTemplate.match(sDoc, nPos)).hasMatch()) {
+      QString sMacro = match.captured(0);
       QString sBackupMacro = sMacro;
       if (sMacro.startsWith("[[" + sListTrans[k], Qt::CaseInsensitive)) {
         // Step needed because of possible spaces
@@ -98,7 +101,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
           // Extract arguments
           // Split by ',' but don't split quoted strings with comma
           const QStringList tmpList = sMacro.split(
-                QRegularExpression(QLatin1String("\"")));
+                QRegularExpression(QStringLiteral("\"")));
           bool bInside = false;
           for (const auto &s : tmpList) {
             if (bInside) {
@@ -108,11 +111,11 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               // If 's' is outside quotes, get the splitted string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
               sListArguments.append(s.split(
-                                      QRegularExpression(QLatin1String(",+")),
+                                      QRegularExpression(QStringLiteral(",+")),
                                       QString::SkipEmptyParts));
 #else
               sListArguments.append(s.split(
-                                      QRegularExpression(QLatin1String(",+")),
+                                      QRegularExpression(QStringLiteral(",+")),
                                       Qt::SkipEmptyParts));
 #endif
             }
@@ -126,10 +129,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               QString sTmp = sListArguments[m];
               QStringList tmpArgs;
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-              tmpArgs << sTmp.split(QRegularExpression(QLatin1String("\\n")),
+              tmpArgs << sTmp.split(QRegularExpression(QStringLiteral("\\n")),
                                     QString::SkipEmptyParts);
 #else
-              tmpArgs << sTmp.split(QRegularExpression(QLatin1String("\\n")),
+              tmpArgs << sTmp.split(QRegularExpression(QStringLiteral("\\n")),
                                     Qt::SkipEmptyParts);
 #endif
               for (int j = 0; j < tmpArgs.size(); j++) {
@@ -151,13 +154,13 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
           // Extract arguments
           sListArguments = sMacro.split(
-                QRegularExpression(QLatin1String("\\n")));
+                QRegularExpression(QStringLiteral("\\n")));
 
           if (!sListArguments.isEmpty()) {
             // Split by ' ' - don't split quoted strings with space
             QStringList sList;
             const QStringList sL = sListArguments[0].split(
-                  QRegularExpression(QLatin1String("\"")));
+                  QRegularExpression(QStringLiteral("\"")));
             bool bInside = false;
             for (const auto &s : sL) {
               if (bInside) {
@@ -166,10 +169,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               } else {
                 // If 's' is outside quotes, get splitted string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                sList.append(s.split(QRegularExpression(QLatin1String("\\s+")),
+                sList.append(s.split(QRegularExpression(QStringLiteral("\\s+")),
                                      QString::SkipEmptyParts));
 #else
-                sList.append(s.split(QRegularExpression(QLatin1String("\\s+")),
+                sList.append(s.split(QRegularExpression(QStringLiteral("\\s+")),
                                      Qt::SkipEmptyParts));
 #endif
               }
@@ -200,7 +203,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
       if (sMacro.isEmpty()) {
         sMacro = sBackupMacro;
       }
-      sDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
+      sDoc.replace(match.capturedStart(), match.capturedLength(), sMacro);
 
       // Go on with new start position
       nPos += sMacro.length();

@@ -139,6 +139,13 @@ auto Parser::genOutput(const QString &sActFile,
   m_pLinkParser->startParsing(m_pRawText);
 
   Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
+
+  ParseTextformats::startParsing(m_pRawText,
+                                 m_pTemplates->getListFormatStart(),
+                                 m_pTemplates->getListFormatEnd(),
+                                 m_pTemplates->getListFormatHtmlStart(),
+                                 m_pTemplates->getListFormatHtmlEnd());
+
   // Replace smilies
   ParseTxtMap::startParsing(m_pRawText,
                             m_pTemplates->getListSmilies(),
@@ -156,12 +163,6 @@ auto Parser::genOutput(const QString &sActFile,
                             m_sSharePath,
                             m_sCommunity);
 #endif
-
-  ParseTextformats::startParsing(m_pRawText,
-                                 m_pTemplates->getListFormatStart(),
-                                 m_pTemplates->getListFormatEnd(),
-                                 m_pTemplates->getListFormatHtmlStart(),
-                                 m_pTemplates->getListFormatHtmlEnd());
 
   Parser::replaceQuotes(m_pRawText);
   Parser::generateParagraphs(m_pRawText);
