@@ -6,7 +6,7 @@ Ubuntu-Versionen getestet:" class="box tested_for">
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
-<@ if $arguments as lowercase contain 'groovy' @>
+<@ if $arguments as lowercase contain 'hirsute' @>
   * [:Hirsute_Hippo:Ubuntu 21.04] Hirsute Hippo
 <@ endif @>
 <@ if $arguments as lowercase contain 'groovy' @>
