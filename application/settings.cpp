@@ -44,6 +44,10 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
 #endif
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  // Since Qt 6 UTF-8 is used by default
+  m_pSettings->setIniCodec("UTF-8");
+#endif
 
   this->readSettings(sSharePath);
 

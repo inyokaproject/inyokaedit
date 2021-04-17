@@ -26,7 +26,7 @@
 
 #include "./parsetable.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringList>
 #include <QTextBlock>
 #include <QTextDocument>
@@ -78,20 +78,26 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QString sCell;
   QString sFormating(QLatin1String(""));
   QString sTmpStyle(QLatin1String(""));
+  QRegularExpressionMatch match;
 
-  QRegExp formatPattern(QLatin1String("\\<{1,1}.+\\>{1,1}"));
-  QRegExp tableClassPattern(
-        QLatin1String("tableclass=\\\"[\\w\\s:;%#-=]+\\\""));
-  QRegExp tableStylePattern(
-        QLatin1String("tablestyle=\\\"[\\w\\s:;%#-=]+\\\""));
-  QRegExp rowClassPattern(QLatin1String("rowclass=\\\"[\\w.%-]+\\\""));
-  QRegExp rowStylePattern(QLatin1String("rowstyle=\\\"[\\w\\s:;%#-=]+\\\""));
-  QRegExp cellClassPattern(QLatin1String("cellclass=\\\"[\\w.%-]+\\\""));
-  QRegExp cellStylePattern(QLatin1String("cellstyle=\\\"[\\w\\s:;%#-=]+\\\""));
+  QRegularExpression formatPattern(
+        QStringLiteral("\\<{1,1}.+\\>{1,1}"));
+  QRegularExpression tableClassPattern(
+        QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-=]+\\\""));
+  QRegularExpression tableStylePattern(
+        QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
+  QRegularExpression rowClassPattern(
+        QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
+  QRegularExpression rowStylePattern(
+        QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
+  QRegularExpression cellClassPattern(
+        QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
+  QRegularExpression cellStylePattern(
+        QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
   bool bCellStyle;
 
-  QRegExp connectCells(QLatin1String("-\\d{1,2}"));
-  QRegExp connectRows(QLatin1String("\\|\\d{1,2}"));
+  QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
+  QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
 
   for (int nLine = 0; nLine < sListLines.size(); nLine++) {
     sLine = sListLines[nLine];
@@ -104,8 +110,8 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
       bCellStyle = false;
 
       // Look for formating
-      if (formatPattern.indexIn(sCell) >= 0) {
-        sFormating = formatPattern.cap();
+      if ((match = formatPattern.match(sCell)).hasMatch()) {
+        sFormating = match.captured();
         sCell.remove(sFormating);
       } else {
         sFormating.clear();
@@ -114,16 +120,16 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
       if (0 == nCell) {
         if (0 == nLine) {
           QString sTmpClass(QLatin1String(""));
-          if (tableClassPattern.indexIn(sFormating) >= 0) {
-            sTmpClass = tableClassPattern.cap();
+          if ((match = tableClassPattern.match(sFormating)).hasMatch()) {
+            sTmpClass = match.captured();
             sTmpClass = " class=" + sTmpClass.remove(
-                          QStringLiteral("tableclass="));
+                  QStringLiteral("tableclass="));
           }
           sTmpStyle.clear();
-          if (tableStylePattern.indexIn(sFormating) >= 0) {
-            sTmpStyle = tableStylePattern.cap();
+          if ((match = tableStylePattern.match(sFormating)).hasMatch()) {
+            sTmpStyle = match.captured();
             sTmpStyle = " style=" + sTmpStyle.remove(
-                          QStringLiteral("tablestyle="));
+                  QStringLiteral("tablestyle="));
           }
           sRet = "<table" + sTmpClass + sTmpStyle + ">\n<tbody>\n";
         }
@@ -131,17 +137,16 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
         // New row
         sRet += QLatin1String("<tr");  // Start tr
         // Found row class info --> in tr
-        if (rowClassPattern.indexIn(sFormating) >= 0) {
-          sTmpStyle = rowClassPattern.cap();
-          sRet += " class="
-                  + sTmpStyle.remove(QStringLiteral("rowclass="));
+        if ((match = rowClassPattern.match(sFormating)).hasMatch()) {
+          sTmpStyle = match.captured();
+          sRet += " class=" + sTmpStyle.remove(QStringLiteral("rowclass="));
         }
         // Found row sytle info --> in tr
-        if (rowStylePattern.indexIn(sFormating) >= 0) {
-          sTmpStyle = rowStylePattern.cap();
-          sRet += " style=\""
-                  + sTmpStyle.remove(QStringLiteral("rowstyle="))
-                  .remove(QStringLiteral("\"")) + "\"";
+        if ((match = rowStylePattern.match(sFormating)).hasMatch()) {
+          sTmpStyle = match.captured();
+          sRet += " style=\"" + sTmpStyle.remove(
+                QStringLiteral("rowstyle=")).remove(
+                QStringLiteral("\"")) + "\"";
         }
         sRet += QLatin1String(">\n");  // Close tr
       }
@@ -150,36 +155,34 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
       sRet += QLatin1String("<td");  // Start td
 
       // Found cell class info --> in td
-      if (cellClassPattern.indexIn(sFormating) >= 0) {
-        sTmpStyle = cellClassPattern.cap();
-        sRet += " class="
-                + sTmpStyle.remove(QStringLiteral("cellclass="));
+      if ((match = cellClassPattern.match(sFormating)).hasMatch()) {
+        sTmpStyle = match.captured();
+        sRet += " class=" + sTmpStyle.remove(QStringLiteral("cellclass="));
       }
 
       // Connect cells info (-integer, e.g. -3)
-      if (connectCells.indexIn(sFormating) >= 0) {
-        sRet += " colspan=\""
-                + connectCells.cap().remove(QStringLiteral("-")) + "\"";
+      if ((match = connectCells.match(sFormating)).hasMatch()) {
+        sRet += " colspan=\"" + match.captured().remove(
+              QStringLiteral("-")) + "\"";
       }
 
       // Connect ROWS info (|integer, e.g. |2)
-      if (connectRows.indexIn(sFormating) >= 0) {
-        sRet += " rowspan=\""
-                + connectRows.cap().remove(QStringLiteral("|")) + "\"";
+      if ((match = connectRows.match(sFormating)).hasMatch()) {
+        sRet += " rowspan=\"" + match.captured().remove(
+              QStringLiteral("|")) + "\"";
       }
 
       // Found cell sytle info --> in td
-      if (cellStylePattern.indexIn(sFormating) >= 0) {
-        sTmpStyle = cellStylePattern.cap();
-        sRet += " style=\""
-                + sTmpStyle.remove(QStringLiteral("cellstyle="))
-                .remove(QStringLiteral("\""));
+      if ((match = cellStylePattern.match(sFormating)).hasMatch()) {
+        sTmpStyle = match.captured();
+        sRet += " style=\"" + sTmpStyle.remove(
+              QStringLiteral("cellstyle=")).remove(QStringLiteral("\""));
         bCellStyle = true;
       }
       // Text align center
-      if (sFormating.contains(QLatin1String("<:"))
-          || sFormating.contains(QLatin1String(" : "))
-          || sFormating.contains(QLatin1String(":>"))) {
+      if (sFormating.contains(QLatin1String("<:")) ||
+          sFormating.contains(QLatin1String(" : ")) ||
+          sFormating.contains(QLatin1String(":>"))) {
         if (bCellStyle) {
           sRet += QLatin1String(" text-align: center;");
         } else {
@@ -188,9 +191,9 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
         }
       }
       // Text align left
-      if (sFormating.contains(QLatin1String("<("))
-          || sFormating.contains(QLatin1String("("))
-          || sFormating.contains(QLatin1String("(>"))) {
+      if (sFormating.contains(QLatin1String("<(")) ||
+          sFormating.contains(QLatin1String("(")) ||
+          sFormating.contains(QLatin1String("(>"))) {
         if (bCellStyle) {
           sRet += QLatin1String(" text-align: left;");
         } else {
@@ -199,9 +202,9 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
         }
       }
       // Text align center
-      if (sFormating.contains(QLatin1String("<)"))
-          || sFormating.contains(QLatin1String(" ) "))
-          || sFormating.contains(QLatin1String(")>"))) {
+      if (sFormating.contains(QLatin1String("<)")) ||
+          sFormating.contains(QLatin1String(" ) ")) ||
+          sFormating.contains(QLatin1String(")>"))) {
         if (bCellStyle) {
           sRet += QLatin1String(" text-align: right;");
         } else {
@@ -210,9 +213,9 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
         }
       }
       // Text vertical align top
-      if (sFormating.contains(QLatin1String("<^"))
-          || sFormating.contains(QLatin1String(" ^ "))
-          || sFormating.contains(QLatin1String("^>"))) {
+      if (sFormating.contains(QLatin1String("<^")) ||
+          sFormating.contains(QLatin1String(" ^ ")) ||
+          sFormating.contains(QLatin1String("^>"))) {
         if (bCellStyle) {
           sRet += QLatin1String(" text-align: top;");
         } else {
@@ -221,9 +224,9 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
         }
       }
       // Text vertical align bottom
-      if (sFormating.contains(QLatin1String("<v"))
-          || sFormating.contains(QLatin1String(" v "))
-          || sFormating.contains(QLatin1String("v>"))) {
+      if (sFormating.contains(QLatin1String("<v")) ||
+          sFormating.contains(QLatin1String(" v ")) ||
+          sFormating.contains(QLatin1String("v>"))) {
         if (bCellStyle) {
           sRet += QLatin1String(" text-align: bottom;");
         } else {

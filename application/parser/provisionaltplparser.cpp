@@ -25,14 +25,14 @@
  * is not supperted.
  */
 
-// clazy:excludeall=qstring-allocations
+// clazy:excludeall=qstring-allocations,qt4-qstring-from-array
 
 #include "./provisionaltplparser.h"
 
 #include <QDebug>
 #include <QFileInfo>
 #include <QImage>
-#include <QRegExp>
+#include <QRegularExpression>
 
 ProvisionalTplParser::ProvisionalTplParser(
     const QStringList &sListHtmlStart,
@@ -1839,16 +1839,24 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   QString sOutput("");
   QStringList sArgs(sListArgs);
   sArgs.prepend("DUMMY");  // "Needed" because of usage i-1 !!!
-  QRegExp tablePattern("\\<{1,1}[\\w\\s=.-\":;^|]+\\>{1,1}");
-  QRegExp connectCells("-\\d{1,2}");
-  QRegExp connectRows("\\|\\d{1,2}");
-  QRegExp rowclassPattern("rowclass=\\\"[\\w.%-]+\\\"");
-  QRegExp cellclassPattern("cellclass=\\\"[\\w.%-]+\\\"");
-  QRegExp tableClassPattern("tableclass=\\\"[\\w\\s:;%#-]+\\\"");
+  QRegularExpressionMatch match;
+  QRegularExpression tablePattern(
+        QStringLiteral("\\<{1,1}[\\w\\s=.\\-\":;^|()]+\\>{1,1}"));
+  QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
+  QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
+  QRegularExpression rowclassPattern(
+        QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
+  QRegularExpression cellclassPattern(
+        QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
+  QRegularExpression tableClassPattern(
+        QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-]+\\\""));
 
-  QRegExp cellStylePattern("cellstyle=\\\"[\\w\\s:;%#-]+\\\"");
-  QRegExp rowStylePattern("rowstyle=\\\"[\\w\\s:;%#-]+\\\"");
-  QRegExp tableStylePattern("tablestyle=\\\"[\\w\\s:;%#-]+\\\"");
+  QRegularExpression cellStylePattern(
+        QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
+  QRegularExpression rowStylePattern(
+        QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
+  QRegularExpression tableStylePattern(
+        QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-]+\\\""));
 
   int nLength;
   QString sTmpCellStyle;
@@ -1857,13 +1865,13 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 
   if (sArgs.length() >= 2) {
     QString sTmpClass("");
-    if (tableClassPattern.indexIn(sArgs[1]) >= 0) {
-      sTmpClass = tableClassPattern.cap();
+    if ((match = tableClassPattern.match(sArgs[1])).hasMatch()) {
+      sTmpClass = match.captured();
       sTmpClass = " class=" + sTmpClass.remove("tableclass=");
     }
     sTmpCellStyle.clear();
-    if (tableStylePattern.indexIn(sArgs[1]) >= 0) {
-      sTmpCellStyle = tableStylePattern.cap();
+    if ((match = tableStylePattern.match(sArgs[1])).hasMatch()) {
+      sTmpCellStyle = match.captured();
       sTmpCellStyle = " style=" + sTmpCellStyle.remove("tablestyle=");
     }
     sOutput = "<table" + sTmpClass + sTmpCellStyle + ">\n<tbody>\n";
@@ -1877,8 +1885,6 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
     if (sArgs[i] == "+++") {  // New line
       sOutput += "</tr>\n";
     } else {  // New cell
-      int nIndex = tablePattern.indexIn(sArgs[i]);
-
       // Check if found style info is in reality a html text format
       bool bTextformat = false;
       for (const auto &sTmp : qAsConst(m_sListHtmlStart)) {
@@ -1889,38 +1895,37 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 
       // Found style info && pattern which was found is not
       // a <span class=...> element or html text format
-      if (nIndex >= 0
-          && !sArgs[i].trimmed().startsWith("<span")
-          && !bTextformat) {
+      if ((match = tablePattern.match(sArgs[i])).hasMatch() &&
+          !sArgs[i].trimmed().startsWith("<span") &&
+          !bTextformat) {
+        int nIndex = match.capturedStart();
         bool bCellStyleWasSet = false;
-        nLength = tablePattern.matchedLength();
-        sStyleInfo = tablePattern.cap();
+        nLength = match.capturedLength();
+        sStyleInfo = match.captured();
 
         // Start tr
-        if (i == 1 || sArgs[i-1] == "+++"
-            || rowclassPattern.indexIn(sStyleInfo) >= 0
-            || rowStylePattern.indexIn(sStyleInfo) >= 0) {
+        if (i == 1 || sArgs[i-1] == "+++" ||
+            rowclassPattern.match(sStyleInfo).hasMatch() ||
+            rowStylePattern.match(sStyleInfo).hasMatch()) {
           sOutput += "<tr";
         }
 
         // Found row class info --> in tr
-        if (rowclassPattern.indexIn(sStyleInfo) >= 0) {
-          sTmpCellStyle = rowclassPattern.cap();
-          sOutput += " class="
-                     + sTmpCellStyle.remove("rowclass=");
+        if ((match = rowclassPattern.match(sStyleInfo)).hasMatch()) {
+          sTmpCellStyle = match.captured();
+          sOutput += " class=" + sTmpCellStyle.remove("rowclass=");
         }
         // Found row sytle info --> in tr
-        if (rowStylePattern.indexIn(sStyleInfo) >= 0) {
-          sTmpCellStyle = rowStylePattern.cap();
-          sOutput += " style=\""
-                     + sTmpCellStyle.remove("rowstyle=")
-                     .remove("\"") + "\"";
+        if ((match = rowStylePattern.match(sStyleInfo)).hasMatch()) {
+          sTmpCellStyle = match.captured();
+          sOutput += " style=\"" +
+              sTmpCellStyle.remove("rowstyle=").remove("\"") + "\"";
         }
 
         // Close tr
-        if (i == 1 || sArgs[i-1] == "+++"
-            || rowclassPattern.indexIn(sStyleInfo) >= 0
-            || rowStylePattern.indexIn(sStyleInfo) >= 0) {
+        if (i == 1 || sArgs[i-1] == "+++" ||
+            rowclassPattern.match(sStyleInfo).hasMatch() ||
+            rowStylePattern.match(sStyleInfo).hasMatch()) {
           sOutput += ">\n";
         }
 
@@ -1928,36 +1933,32 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
         sOutput += "<td";
 
         // Found cellclass info
-        if (cellclassPattern.indexIn(sStyleInfo) >= 0) {
-          sTmpCellStyle = cellclassPattern.cap();
-          sTmpTD += " class="
-                    + sTmpCellStyle.remove("cellclass=");
+        if ((match = cellclassPattern.match(sStyleInfo)).hasMatch()) {
+          sTmpCellStyle = match.captured();
+          sTmpTD += " class=" + sTmpCellStyle.remove("cellclass=");
         }
 
         // Connect cells info (-integer, e.g. -3)
-        if (connectCells.indexIn(sStyleInfo) >= 0) {
-          sTmpTD += " colspan=\""
-                    + connectCells.cap().remove("-") + "\"";
+        if ((match = connectCells.match(sStyleInfo)).hasMatch()) {
+          sTmpTD += " colspan=\"" + match.captured().remove("-") + "\"";
         }
 
         // Connect ROWS info (|integer, e.g. |2)
-        if (connectRows.indexIn(sStyleInfo) >= 0) {
-          sTmpTD += " rowspan=\""
-                    + connectRows.cap().remove("|") + "\"";
+        if ((match = connectRows.match(sStyleInfo)).hasMatch()) {
+          sTmpTD += " rowspan=\"" + match.captured().remove("|") + "\"";
         }
 
         // Cell style attributs
-        if (cellStylePattern.indexIn(sStyleInfo) >= 0) {
-          sTmpTD += " style=\""
-                    + cellStylePattern.cap().remove("cellstyle=")
-                    .remove("\"");
+        if ((match = cellStylePattern.match(sStyleInfo)).hasMatch()) {
+          sTmpTD += " style=\"" +
+              match.captured().remove("cellstyle=").remove("\"");
           bCellStyleWasSet = true;
         }
 
         // Text align center
-        if (sStyleInfo.contains("<:")
-            || sStyleInfo.contains(" : ")
-            || sStyleInfo.contains(":>")) {
+        if (sStyleInfo.contains("<:") ||
+            sStyleInfo.contains(" : ") ||
+            sStyleInfo.contains(":>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: center;";
           } else {
@@ -1966,9 +1967,9 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text align left
-        if (sStyleInfo.contains("<(")
-            || sStyleInfo.contains("(")
-            || sStyleInfo.contains("(>")) {
+        if (sStyleInfo.contains("<(") ||
+            sStyleInfo.contains("(") ||
+            sStyleInfo.contains("(>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: left;";
           } else {
@@ -1977,9 +1978,9 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text align center
-        if (sStyleInfo.contains("<)")
-            || sStyleInfo.contains(" ) ")
-            || sStyleInfo.contains(")>")) {
+        if (sStyleInfo.contains("<)") ||
+            sStyleInfo.contains(" ) ") ||
+            sStyleInfo.contains(")>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: right;";
           } else {
@@ -1988,9 +1989,9 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text vertical align top
-        if (sStyleInfo.contains("<^")
-            || sStyleInfo.contains(" ^ ")
-            || sStyleInfo.contains("^>")) {
+        if (sStyleInfo.contains("<^") ||
+            sStyleInfo.contains(" ^ ") ||
+            sStyleInfo.contains("^>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: top;";
           } else {
@@ -1999,9 +2000,9 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text vertical align bottom
-        if (sStyleInfo.contains("<v")
-            || sStyleInfo.contains(" v ")
-            || sStyleInfo.contains("v>")) {
+        if (sStyleInfo.contains("<v") ||
+            sStyleInfo.contains(" v ") ||
+            sStyleInfo.contains("v>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: bottom;";
           } else {
