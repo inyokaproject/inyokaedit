@@ -259,7 +259,7 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
         QRegularExpression::InvertedGreedinessOption |  // Only smallest match
         QRegularExpression::DotMatchesEverythingOption |
         QRegularExpression::CaseInsensitiveOption);
-  QStringList sListTmpImageInfo;
+  QStringList sListTmpImgInfo;
 
   QString sImagePath(QLatin1String(""));
   if (!sCurrentFile.isEmpty()) {
@@ -281,10 +281,10 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
     double tmpH = 0;
     double tmpW = 0;
 
-    sListTmpImageInfo.clear();
-    sListTmpImageInfo << sTmpImage.split(QStringLiteral(","));
+    sListTmpImgInfo.clear();
+    sListTmpImgInfo << sTmpImage.split(QStringLiteral(","));
 
-    QString sImageUrl = sListTmpImageInfo[0].trimmed();
+    QString sImageUrl = sListTmpImgInfo[0].trimmed();
     if (sImageUrl.startsWith(QLatin1String("Wiki/")) ||
         sImageUrl.startsWith(QLatin1String("img/"))) {
       sImageUrl = m_sSharePath + "/community/" +
@@ -296,32 +296,32 @@ void Macros::replacePictures(QTextDocument *pRawDoc,
       sImageUrl = m_tmpImgDir.absolutePath() + "/" + sImageUrl;
     }
 
-    for (int i = 1; i < sListTmpImageInfo.length(); i++) {
+    for (int i = 1; i < sListTmpImgInfo.length(); i++) {
       // Found integer (width)
-      if (0 != sListTmpImageInfo[i].trimmed().toUInt()) {
-        tmpW = sListTmpImageInfo[i].trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed().startsWith(
+      if (0 != sListTmpImgInfo[i].trimmed().toUInt()) {
+        tmpW = sListTmpImgInfo[i].trimmed().toUInt();
+      } else if (sListTmpImgInfo[i].trimmed().startsWith(
                    QLatin1String("x"))) {
         // Found x+integer (height)
-        tmpH = sListTmpImageInfo[i].remove(
+        tmpH = sListTmpImgInfo[i].remove(
                  QStringLiteral("x")).trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].contains(QLatin1String("x"))) {
+      } else if (sListTmpImgInfo[i].contains(QLatin1String("x"))) {
         // Found int x int (width x height)
-        QString sTmp = sListTmpImageInfo[i];  // Copy needed!
-        tmpW = sListTmpImageInfo[i].remove(
-                 sListTmpImageInfo[i].indexOf(QLatin1String("x")),
-                 sListTmpImageInfo[i].length()).trimmed().toUInt();
+        QString sTmp = sListTmpImgInfo[i];  // Copy needed!
+        tmpW = sListTmpImgInfo[i].remove(
+                 sListTmpImgInfo[i].indexOf(QLatin1String("x")),
+                 sListTmpImgInfo[i].length()).trimmed().toUInt();
         tmpH = sTmp.remove(0, sTmp.indexOf(
                              QLatin1String("x"))+1).trimmed().toUInt();
-      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("left") ||
-                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=left")) {
+      } else if (sListTmpImgInfo[i].trimmed() == QLatin1String("left") ||
+                 sListTmpImgInfo[i].trimmed() == QLatin1String("align=left")) {
         // Found alignment
         sImageAlign = QStringLiteral("left");
-      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("right") ||
-                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=right")) {
+      } else if (sListTmpImgInfo[i].trimmed() == QLatin1String("right") ||
+                 sListTmpImgInfo[i].trimmed() == QLatin1String("align=right")) {
         sImageAlign = QStringLiteral("right");
-      } else if (sListTmpImageInfo[i].trimmed() == QLatin1String("center") ||
-                 sListTmpImageInfo[i].trimmed() == QLatin1String("align=center")) {
+      } else if (sListTmpImgInfo[i].trimmed() == QLatin1String("center") ||
+                 sListTmpImgInfo[i].trimmed() == QLatin1String("align=center")) {
         sImageAlign = QStringLiteral("center");
       }
     }

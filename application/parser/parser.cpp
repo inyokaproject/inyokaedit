@@ -26,7 +26,6 @@
 
 #include <QMessageBox>
 #include <QProcess>
-#include <QRegExp>
 #include <QRegularExpression>
 #include <QTextBlock>
 #include <QTextDocument>
@@ -213,71 +212,90 @@ auto Parser::genOutput(const QString &sActFile,
 /*
 void Parser::replaceTemplates(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
+  QRegularExpression findTemplate;
+  QRegularExpressionMatch match;
   QString sMacro;
   QStringList sListArguments;
-  int nPos = 0;
+  int nIndex = 0;
+
   QStringList sListTplRegExp;
-  sListTplRegExp << "\\[\\[" + m_pTemplates->getTransTemplate()
-                    + "\\(.+\\)\\]\\]";
-  //                 << "\\{\\{\\{#!" + m_pTemplates->getTransTemplate()
-  //                    + " .+\\}\\}\\}";
+  sListTplRegExp.reserve(m_pMacros->getTplTranslations().size());
+  for (const auto &s : m_pMacros->getTplTranslations()) {
+    sListTplRegExp << "\\[\\[" + s + "\\(.+\\)\\]\\]";
+    // << "\\{\\{\\{#!" + s + " .+\\}\\}\\}";
+  }
 
-  QRegExp findTemplate(sListTplRegExp[0], Qt::CaseInsensitive);
-  findTemplate.setMinimal(true);
+  findTemplate.setPatternOptions(
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
 
-  while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
-    sMacro = findTemplate.cap(0);
-    // qDebug() << "CAPTURED:" << sMacro;
+  for (const auto &sRegExp : qAsConst(sListTplRegExp)) {
+    findTemplate.setPattern(sRegExp);
 
-    for (int i = 0; i < m_pTemplates->getListTplNamesINY().size(); i++) {
-      if (sMacro.startsWith("[[" + m_pTemplates->getTransTemplate()
-                            + "(" + m_pTemplates->getListTplNamesINY()[i],
-                            Qt::CaseInsensitive)) {
-        qDebug() << "Found known macro:"
-                 << m_pTemplates->getListTplNamesINY()[i];
-        sMacro.remove("[[" + m_pTemplates->getTransTemplate() + "(");
-        sMacro.remove(")]]");
+    while ((match = findTemplate.match(sDoc, nIndex)).hasMatch()) {
+      nIndex = match.capturedStart();
+      sMacro = match.captured(0);
+      // qDebug() << "CAPTURED:" << sMacro;
 
-        // Split by ',' but DON'T split quoted strings containing commas
-        QStringList tmpList = sMacro.split(QRegExp("\""));  // Split "
-        bool bInside = false;
-        sListArguments.clear();
-        for (auto s : tmpList) {
-          if (bInside) {
-            // If 's' is inside quotes, get the whole string
-            sListArguments.append(s);
-          } else {
-            // If 's' is outside quotes, get the splitted string
-            sListArguments.append(s.split(QRegExp(",+"),
-                                          QString::SkipEmptyParts));
+      for (const auto &s : m_pMacros->getTplTranslations()) {
+        for (int i = 0; i < m_pTemplates->getListTplNamesINY().size(); i++) {
+          if (sMacro.startsWith("[[" + s + "(" +
+                                m_pTemplates->getListTplNamesINY().at(i),
+                                Qt::CaseInsensitive)) {
+            qDebug() << "Found known macro:"
+                 << m_pTemplates->getListTplNamesINY().at(i);
+            sMacro.remove(0, sMacro.indexOf(QLatin1String("(")) + 1);
+            sMacro.remove(QStringLiteral(")]]"));
+
+            // Split by ',' but DON'T split quoted strings containing commas
+            QStringList tmpList = sMacro.split(QRegularExpression(QStringLiteral("\"")));  // Split "
+            bool bInside = false;
+            sListArguments.clear();
+            for (const auto &s : qAsConst(tmpList)) {
+              if (bInside) {
+                // If 's' is inside quotes, get the whole string
+                sListArguments.append(s);
+              } else {
+                // If 's' is outside quotes, get the splitted string
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+                sListArguments.append(s.split(QRegularExpression(
+                                                QStringLiteral(",+")),
+                                              QString::SkipEmptyParts));
+#else
+                sListArguments.append(s.split(QRegularExpression(
+                                                QStringLiteral(",+")),
+                                              Qt::SkipEmptyParts));
+#endif
+              }
+              bInside = !bInside;
+            }
+
+            sListArguments.removeAll(QStringLiteral(" "));
+            sListArguments.removeFirst();  // Remove template name
+
+            // Replace arguments
+            sMacro = m_pTemplates->getListTemplatesINY().at(i);
+            for (int k = 0; k < sListArguments.size(); k++) {
+              sMacro.replace("<@ $arguments." + QString::number(k)
+                             + " @>", sListArguments[k].trimmed());
+            }
+
+            sDoc.replace(nIndex, match.capturedLength(), sMacro);
           }
-          bInside = !bInside;
         }
-
-        sListArguments.removeAll(" ");
-        sListArguments.removeFirst();  // Remove template name
-
-        // Replace arguments
-        sMacro = m_pTemplates->getListTemplatesINY()[i];
-        for (int k = 0; k < sListArguments.size(); k++) {
-          sMacro.replace("<@ $arguments." + QString::number(k)
-                         + " @>", sListArguments[k].trimmed());
-        }
-
-        sDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
       }
-    }
 
-    // Go on with new start position
-    nPos += sMacro.length();
-    // nPos += findTemplate.matchedLength();
+      // Go on with new start position
+      nIndex += sMacro.length();
+      // nPos += findTemplate.matchedLength();
+    }
   }
 
   // Replace pRawDoc with adapted document
   pRawDoc->setPlainText(sDoc);
 }
 */
-
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -290,13 +308,18 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
   QStringList sListLines;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
-    QRegExp findTemplate(sListTplRegExp[k], Qt::CaseInsensitive);
-    findTemplate.setMinimal(true);
-    int nPos = 0;
+    QRegularExpression findTemplate(
+          sListTplRegExp[k],
+          QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+          QRegularExpression::DotMatchesEverythingOption |
+          QRegularExpression::CaseInsensitiveOption);
+    int nIndex = 0;
+    QRegularExpressionMatch match;
 
-    while ((nPos = findTemplate.indexIn(sDoc, nPos)) != -1) {
+    while ((match = findTemplate.match(sDoc, nIndex)).hasMatch()) {
+      nIndex = match.capturedStart();
       bool bFormated = false;
-      QString sMacro = findTemplate.cap(0);
+      QString sMacro = match.captured(0);
       sMacro.remove(QStringLiteral("{{{\n"));
       sMacro.remove(QStringLiteral("{{{"));
       if (sMacro.startsWith(QLatin1String("#!code "), Qt::CaseInsensitive)) {
@@ -307,7 +330,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
       sMacro.remove(QStringLiteral("}}}"));
 
       sListLines.clear();
-      sListLines = sMacro.split(QRegularExpression(QLatin1String("\\n")));
+      sListLines = sMacro.split(QRegularExpression(QStringLiteral("\\n")));
 
       // Only plain code
       if (!bFormated) {
@@ -367,9 +390,9 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
       m_sListNoTranslate << sMacro;  // Save code block
       sMacro = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
 
-      sDoc.replace(nPos, findTemplate.matchedLength(), sMacro);
+      sDoc.replace(nIndex, match.capturedLength(), sMacro);
       // Go on with new start position
-      nPos += sMacro.length();
+      nIndex += sMacro.length();
     }
   }
 
@@ -449,23 +472,26 @@ auto Parser::highlightCode(const QString &sLanguage,
 
 void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QRegExp pattern(QLatin1String("\\\\."), Qt::CaseInsensitive);
+  QRegularExpression pattern(QStringLiteral("\\\\."),
+                             QRegularExpression::CaseInsensitiveOption);
+  QRegularExpressionMatch match;
   QString sEscChar;
-  int nPos(0);
+  int nIndex = 0;
   unsigned int nNoTranslate;
 
-  while ((nPos = pattern.indexIn(sDoc, nPos)) != -1) {
-    sEscChar = pattern.cap(0);
+  while ((match = pattern.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    sEscChar = match.captured(0);
     if ("\\\\" != sEscChar) {
       sEscChar.remove(0, 1);  // Remove escape char
       nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
       m_sListNoTranslate << sEscChar;
 
-      sDoc.replace(nPos, pattern.matchedLength(), "%%NO_TRANSLATE_" +
-                   QString::number(nNoTranslate) + "%%");
+      sEscChar = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
+      sDoc.replace(nIndex, match.capturedLength(), sEscChar);
     }
     // Go on with search
-    nPos += sEscChar.length();
+    nIndex += sEscChar.length();
   }
   pRawDoc->setPlainText(sDoc);
 }
@@ -478,8 +504,8 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
   QStringList sListFormatEnd;
   QStringList sListHtmlStart;
   QStringList sListHtmlEnd;
-  QString sDoc(QLatin1String(""));
-  QRegExp patternFormat;
+  QString sDoc;
+  QRegularExpression patternFormat;
   unsigned int nNoTranslate;
 
   for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
@@ -494,24 +520,27 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
 
   ParseTextformats::startParsing(pRawDoc, sListFormatStart, sListFormatEnd,
                                  sListHtmlStart, sListHtmlEnd);
-
-  patternFormat.setCaseSensitivity(Qt::CaseInsensitive);
-  patternFormat.setMinimal(true);  // Search only for smallest match
-
   sDoc = pRawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
-  // qDebug() << "\n\n" << sDoc << "\n\n";
+
+  patternFormat.setPatternOptions(
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
+
   nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
   for (int i = 0; i < sListHtmlStart.size(); i++) {
     patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
-    int nIndex = patternFormat.indexIn(sDoc);
+    int nIndex = 0;
+    QRegularExpressionMatch match;
 
-    while (nIndex >= 0) {
-      QString sFormatedText = patternFormat.cap();
+    while ((match = patternFormat.match(sDoc, nIndex)).hasMatch()) {
+      nIndex = match.capturedStart();
+      QString sFormatedText = match.captured();
       m_sListNoTranslate << sFormatedText;
-      nIndex = patternFormat.indexIn(sDoc,
-                                     nIndex + sFormatedText.length());
-      sDoc.replace(sFormatedText, "%%NO_TRANSLATE_" +
-                   QString::number(nNoTranslate) + "%%");
+      QString sTmp = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
+      sDoc.replace(sFormatedText, sTmp);
+
+      nIndex += sTmp.length();
       nNoTranslate++;
     }
   }
@@ -599,17 +628,18 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
 
 #ifdef USEQTWEBENGINE
 void Parser::replaceFlags(QTextDocument *pRawDoc) {
-  QRegExp findFlag(QLatin1String("\\{([a-z]{2}|[A-Z]{2})\\}"));
+  QRegularExpression findFlag(QStringLiteral("\\{([a-z]{2}|[A-Z]{2})\\}"));
   QString sDoc(pRawDoc->toPlainText());
   QString sCountry;
   QString sHtml(QLatin1String(""));
-  int nIndex;
+  int nIndex = 0;
   int nLength(4);
+  QRegularExpressionMatch match;
 
-  nIndex = findFlag.indexIn(sDoc);
-  while (nIndex >= 0) {
+  while ((match = findFlag.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
     sHtml.clear();
-    sCountry = findFlag.cap(1);
+    sCountry = match.captured(1);
     sCountry = sCountry.toLower();
     if ("en" == sCountry) {
       sCountry = QStringLiteral("gb");
@@ -622,7 +652,7 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
     }
 
     sDoc.replace(nIndex, nLength, sHtml);
-    nIndex = findFlag.indexIn(sDoc, nIndex + nLength);
+    nIndex += sHtml.length();
   }
 
   pRawDoc->setPlainText(sDoc);
@@ -644,7 +674,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
     if (block.text().startsWith(QLatin1String(">"))) {
       sLine = block.text().trimmed();
       nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
-      sLine.remove(QRegularExpression(QLatin1String("^>*")));
+      sLine.remove(QRegularExpression(QStringLiteral("^>*")));
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
       }
@@ -784,36 +814,40 @@ auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
 
 void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QString sRegExp(QStringLiteral("\\(\\(.*\\)\\)"));
-  QRegExp findMacro(sRegExp, Qt::CaseInsensitive);
-  findMacro.setMinimal(true);
+  QRegularExpression findMacro(
+        QStringLiteral("\\(\\(.*\\)\\)"),
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+        QRegularExpression::DotMatchesEverythingOption |
+        QRegularExpression::CaseInsensitiveOption);
   QString sNote;
-  QString sIndex;
-  int nPos = 0;
-  quint16 nIndex = 0;
+  int nIndex = 0;
+  QString sCount;
+  quint16 nCount = 0;
   QString sFootnotes(QLatin1String(""));
+  QRegularExpressionMatch match;
 
-  while ((nPos = findMacro.indexIn(sDoc, nPos)) != -1) {
-    nIndex++;
+  while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    nCount++;
 
-    sNote = findMacro.cap(0);
+    sNote = match.captured(0);
     sNote.remove(QStringLiteral("(("));
     sNote.remove(QStringLiteral("))"));
-    sFootnotes += "<li><a id=\"fn-" + QString::number(nIndex) +
+    sFootnotes += "<li><a id=\"fn-" + QString::number(nCount) +
                   "\" class="
-                  "\"crosslink\" href=\"#bfn-" + QString::number(nIndex) +
-                  "\">" + QString::number(nIndex) + "</a>: " + sNote +
+                  "\"crosslink\" href=\"#bfn-" + QString::number(nCount) +
+                  "\">" + QString::number(nCount) + "</a>: " + sNote +
                   "</li>\n";
 
-    sIndex = "<a id=\"bfn-" + QString::number(nIndex) +
+    sCount = "<a id=\"bfn-" + QString::number(nCount) +
              "\" class=\""
-             "footnote\" href=\"#fn-" + QString::number(nIndex) +
+             "footnote\" href=\"#fn-" + QString::number(nCount) +
              "\">"
-             "&#091;" + QString::number(nIndex) + "&#093;</a>";
+             "&#091;" + QString::number(nCount) + "&#093;</a>";
 
-    sDoc.replace(nPos, findMacro.matchedLength(), sIndex);
+    sDoc.replace(nIndex, match.capturedLength(), sCount);
     // Go on with new start position
-    nPos += sIndex.length();
+    nIndex += sCount.length();
   }
 
   if (!sFootnotes.isEmpty()) {
