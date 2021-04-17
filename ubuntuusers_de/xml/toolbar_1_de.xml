@@ -19,7 +19,7 @@
     <element name="Unsortierte Liste" insert=" * %%Liste%%" icon="list-unsorted.png" />
     <element name="Nummerierte Liste" insert=" 1. %%Nummerierte Liste%%" icon="list-sorted.png" />
     <element name="Link auf eine Inyoka-Wikiseite" insert="[:%%Seitenname%%:]" icon="interwiki.png" />
-    <element name="Link auf eine externe Webseite" insert="[%%http://www.beispiel.org/%%] {en}" icon="link.png" />
+    <element name="Link auf eine externe Webseite" insert="[%%https://www.beispiel.org/%%] {en}" icon="link.png" />
     <element name="Bild einfügen" insert="[[Bild(%%Bild.png%%)]]" icon="image.png" />
   </group>
   <group name="Codeblock" icon="code.png">
