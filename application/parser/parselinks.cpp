@@ -58,11 +58,48 @@ void ParseLinks::updateSettings(const QString &sUrlToWiki,
 // ----------------------------------------------------------------------------
 
 void ParseLinks::startParsing(QTextDocument *pRawDoc) {
+  ParseLinks::replaceUrls(pRawDoc);  // Before Inyoka style hyperlinks with []
   ParseLinks::replaceHyperlinks(pRawDoc);
   this->replaceInyokaWikiLinks(pRawDoc);
   this->replaceInterwikiLinks(pRawDoc);
   ParseLinks::replaceAnchorLinks(pRawDoc);
   ParseLinks::replaceKnowledgeBoxLinks(pRawDoc);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// External Urls not in square brackets
+void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
+  QRegularExpression findUrl(
+        QString::fromLatin1(
+          "(?:(?:https?|ftps?|file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|irc|"
+          "rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
+          "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
+  QString sDoc(pRawDoc->toPlainText());
+  QRegularExpressionMatch match;
+  int nIndex = 0;
+  QString sLink;
+
+  while ((match = findUrl.match(sDoc, nIndex)).hasMatch()) {
+    nIndex = match.capturedStart();
+    sLink = match.captured();
+
+    if (nIndex > 0) {
+      // Important to check if previous char is a Inyoka style link in []
+      // Might be possible to solve with adjusted reg exp?
+      if ('[' != sDoc.at(nIndex - 1)) {
+        sLink = "<a rel=\"nofollow\" class=\"external\" href=\"" + sLink +
+                "\" " + "title=\"" + sLink + "\">" + sLink + "</a>";
+        sDoc.replace(nIndex, match.capturedLength(), sLink);
+      }
+    }
+
+    // Go on with next
+    nIndex += sLink.length();
+  }
+
+  pRawDoc->setPlainText(sDoc);
 }
 
 // ----------------------------------------------------------------------------

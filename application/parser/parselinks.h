@@ -53,6 +53,7 @@ class ParseLinks : public QObject {
     void updateSettings(const QString &sUrlToWiki, const bool bCheckLinks);
 
  private:
+    static void replaceUrls(QTextDocument *pRawDoc);
     static void replaceHyperlinks(QTextDocument *pRawDoc);
     void replaceInyokaWikiLinks(QTextDocument *pRawDoc);
     void replaceInterwikiLinks(QTextDocument *pRawDoc);
