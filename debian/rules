@@ -9,6 +9,7 @@ BUILDFLAGS = \
 	QMAKE_CXXFLAGS="$(CXXFLAGS)" \
 	QMAKE_LFLAGS="$(LDFLAGS)"
 
+export QT_SELECT = qt5
 
 %:
 	dh ${@} --parallel
