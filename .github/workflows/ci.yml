@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install Dependencies
-      run: sudo apt update && sudo apt install qt5-default qt5-qmake qttools5-dev-tools libqt5webkit5-dev libhunspell-dev
+      run: sudo apt update && sudo apt install qtbase5-dev qt5-qmake qttools5-dev-tools libqt5webkit5-dev libhunspell-dev
 
     - name: Download linuxdeployqt
       run: |
