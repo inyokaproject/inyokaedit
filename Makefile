@@ -2,6 +2,8 @@ ifneq ($(wildcard config.mak),)
 include config.mak
 endif
 
+export QT_SELECT = qt5
+
 INSTALL_FILE := install -m644 -D
 INSTALL_PROGRAM := install -m755 -D
 INSTALL_DIR := install -m755 -d
