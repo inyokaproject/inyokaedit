@@ -78,4 +78,3 @@ Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. Weitere Informat
 <@ endif @><@ endfor @> PPA-Beschreibung] des Eigentümers/Teams [lpuser:<@ $arguments.0 @>:] zu entnehmen.
 |}}
 <@ endif @>
-Damit Pakete aus dem PPA genutzt werden können, müssen die Paketquellen [:Paketquellen_freischalten:neu eingelesen] werden.
