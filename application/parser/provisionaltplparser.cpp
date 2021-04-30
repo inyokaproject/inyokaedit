@@ -1655,11 +1655,7 @@ auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
   }
 
   return sOutsideBox + ProvisionalTplParser::insertBox(
-        "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark) +
-      QString::fromUtf8("<p>Damit Pakete aus dem PPA genutzt werden "
-                          "können, müssen die Paketquellen neu "
-                          "[:apt/apt-get#apt-get-update:eingelesen] "
-                          "werden.</p>");
+        "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark);
 }
 
 // ----------------------------------------------------------------------------

@@ -35,6 +35,21 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.26.0" date="2021-04-18">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Use tooltip for syntax error instead of message box</li>
+          <li>Add possibility to store credentials</li>
+          <li>Possibility to compile with Qt Webkit, Qt Webengine or none</li>
+          <li>Use unicode flags if QWebEngineView is used</li>
+          <li>Add support for Qt 6; remove of QRegExp</li>
+          <li>Convert urls which are not in square brackets</li>
+          <li>Fixes: Syntax check improvements, redirects</li>
+          <li>File reorganization, metainfo and desktop file</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.25.0" date="2020-10-10">
       <description>
         <p>Main changes:</p>
