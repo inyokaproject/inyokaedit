@@ -45,7 +45,7 @@ jobs:
 
     - name: Create AppImage
       run: |
-       export QT_SELECT = qt5
+       echo "QT_SELECT=qt5" >> $GITHUB_ENV
        ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs -extra-plugins=iconengines,platformthemes/libqgtk3.so
        find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
 
