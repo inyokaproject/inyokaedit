@@ -33,18 +33,18 @@ dataroot = $(prefix)/share
 all:	app allplugins
 
 app:
+	$(LRELEASE) application/lang/*.ts
 	$(QMAKE) $(preview) application/application.pro -o application/$(MAKEFILE)
 	$(MAKE) -C application -f $(MAKEFILE)
-	$(LRELEASE) application/lang/*.ts
 
 allplugins:
-	$(QMAKE) $(preview) plugins/plugins.pro -o plugins/$(MAKEFILE2)
-	$(MAKE) -C plugins -f $(MAKEFILE2)
 	$(LRELEASE) plugins/highlighter/lang/*.ts
 	$(LRELEASE) plugins/hotkey/lang/*.ts
 	$(LRELEASE) plugins/spellchecker/lang/*.ts
 	$(LRELEASE) plugins/uu_knowledgebox/lang/*.ts
 	$(LRELEASE) plugins/uu_tabletemplate/lang/*.ts
+	$(QMAKE) $(preview) plugins/plugins.pro -o plugins/$(MAKEFILE2)
+	$(MAKE) -C plugins -f $(MAKEFILE2)
 
 install: install-inyokaedit install-plugins install-data-ubuntuusersde install-hook
 
