@@ -42,6 +42,7 @@ target_compile_definitions(hotkey
 target_compile_options(hotkey
     PRIVATE
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        -fno-sized-deallocation
 )
 target_link_libraries(hotkey
     PRIVATE

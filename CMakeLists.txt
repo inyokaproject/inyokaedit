@@ -19,6 +19,7 @@ project(InyokaEdit
     VERSION 0.26.0
     DESCRIPTION "Editor for Inyoka based portals"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
+    LANGUAGES CXX
 )
 set(PROJECT_COPYRIGHT "(C) 2011-2021 The InyokaEdit developers")
 

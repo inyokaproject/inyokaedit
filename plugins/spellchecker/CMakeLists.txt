@@ -43,6 +43,7 @@ target_compile_definitions(spellchecker
 target_compile_options(spellchecker
     PRIVATE
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        -fno-sized-deallocation
 )
 target_link_libraries(spellchecker
     PRIVATE

@@ -26,7 +26,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 ${QT_MINIMUM_VERSION}
-    REQUIRED Network LinguistTools
+    REQUIRED Core Network LinguistTools
 )
 
 add_library(uu_tabletemplate SHARED)
@@ -42,9 +42,11 @@ target_compile_definitions(uu_tabletemplate
 target_compile_options(uu_tabletemplate
     PRIVATE
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        -fno-sized-deallocation
 )
 target_link_libraries(uu_tabletemplate
     PRIVATE
+        Qt5::Core
         Qt5::Network
 )
 

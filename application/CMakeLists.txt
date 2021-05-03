@@ -36,6 +36,7 @@ target_compile_definitions(inyokaedit
 target_compile_options(inyokaedit
     PRIVATE
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        -fno-sized-deallocation
 )
 target_link_libraries(inyokaedit
     PRIVATE
