@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 project(InyokaEdit
     VERSION 0.26.0
     DESCRIPTION "Editor for Inyoka based portals"
@@ -27,5 +27,19 @@ set(QT_MINIMUM_VERSION 5.9)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 include(cmake/preview-deps.cmake)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    set(LINUX ON)
+endif()
+
+
 add_subdirectory(plugins)
 add_subdirectory(application)
+
+if(LINUX)
+    add_subdirectory(man)
+
+    include(GNUInstallDirs)
+    if(COMMUNITY STREQUAL "community/ubuntuusers_de")
+        install(DIRECTORY community/ubuntuusers_de DESTINATION ${CMAKE_INSTALL_DATADIR}/inyokaedit/community)
+    endif()
+endif()

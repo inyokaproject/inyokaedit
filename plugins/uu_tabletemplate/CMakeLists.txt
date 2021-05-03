@@ -83,3 +83,9 @@ qt5_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(uu_tabletemplate PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
+
+
+if(LINUX)
+    include(GNUInstallDirs)
+    install(TARGETS uu_tabletemplate DESTINATION ${CMAKE_INSTALL_LIBDIR}/inyokaedit/plugins)
+endif()

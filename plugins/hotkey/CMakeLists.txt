@@ -77,3 +77,9 @@ qt5_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(hotkey PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
+
+
+if(LINUX)
+    include(GNUInstallDirs)
+    install(TARGETS hotkey DESTINATION ${CMAKE_INSTALL_LIBDIR}/inyokaedit/plugins)
+endif()

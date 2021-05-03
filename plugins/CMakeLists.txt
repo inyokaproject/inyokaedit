@@ -14,8 +14,27 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-add_subdirectory(spellchecker)
-add_subdirectory(uu_tabletemplate)
-add_subdirectory(uu_knowledgebox)
-add_subdirectory(highlighter)
-add_subdirectory(hotkey)
+option(SPELLCHECKER "Enable spellchecker plugin" ON)
+if(SPELLCHECKER)
+    add_subdirectory(spellchecker)
+endif()
+
+option(UU_TABLETEMPLATE "Enable uu_tabletemplate plugin" ON)
+if(UU_TABLETEMPLATE)
+    add_subdirectory(uu_tabletemplate)
+endif()
+
+option(UU_KNOWLEDGEBOX "Enable uu_knowledgebox plugin" ON)
+if(UU_KNOWLEDGEBOX)
+    add_subdirectory(uu_knowledgebox)
+endif()
+
+option(HIGHLIGHTER "Enable highlighter plugin" ON)
+if(HIGHLIGHTER)
+    add_subdirectory(highlighter)
+endif()
+
+option(HOTKEY "Enable hotkey plugin" ON)
+if(HOTKEY)
+    add_subdirectory(hotkey)
+endif()

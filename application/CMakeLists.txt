@@ -108,3 +108,13 @@ qt5_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
 target_sources(inyokaedit PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
+
+
+if(LINUX)
+    include(GNUInstallDirs)
+    install(TARGETS inyokaedit DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(FILES data/unix/org.inyokaproject.inyokaedit.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+    install(FILES data/unix/org.inyokaproject.inyokaedit.metainfo.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
+    install(FILES data/unix/inyokaedit.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+    install(DIRECTORY icons/hicolor DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+endif()

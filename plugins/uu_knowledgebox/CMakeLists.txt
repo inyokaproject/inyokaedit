@@ -75,3 +75,8 @@ add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(uu_knowledgebox PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
 
+
+if(LINUX)
+    include(GNUInstallDirs)
+    install(TARGETS uu_knowledgebox DESTINATION ${CMAKE_INSTALL_LIBDIR}/inyokaedit/plugins)
+endif()

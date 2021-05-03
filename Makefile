@@ -49,7 +49,7 @@ allplugins:
 install: install-inyokaedit install-plugins install-data-ubuntuusersde install-hook
 
 infiles:
-	$(foreach FILE,$(INFILES),sed -e 's@___PREFIX___@$(prefix)@g' $(FILE).in > $(FILE) ; )
+	$(foreach FILE,$(INFILES),sed -e 's/@___PREFIX___@/$(prefix)/g' $(FILE).in > $(FILE) ; )
 
 install-inyokaedit: infiles
 	$(INSTALL_DIR) $(DESTDIR)$(bindir)
