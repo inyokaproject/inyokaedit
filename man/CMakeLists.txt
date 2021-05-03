@@ -19,6 +19,8 @@ set(MAN_FILES
     de/inyokaedit.1.in
 )
 
+find_program(GZIP gzip REQUIRED)
+
 set(___PREFIX___ ${CMAKE_INSTALL_PREFIX})
 foreach(file ${MAN_FILES})
     get_filename_component(file_stripped ${file} NAME_WLE)
@@ -34,7 +36,8 @@ foreach(file ${MAN_FILES})
     list(APPEND MAN_FILES_STRIPPED_ABSOLUTE ${man_path_absolute}.gz)
     configure_file(${file} ${man_path_absolute})
     add_custom_command(OUTPUT ${man_path_absolute}.gz
-        COMMAND ${CMAKE_COMMAND} -E tar "czvf" ${man_path_absolute}.gz ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${GZIP} -k -f9 ${man_path_absolute}
+        DEPENDS ${man_path_absolute}
     )
 endforeach()
 
