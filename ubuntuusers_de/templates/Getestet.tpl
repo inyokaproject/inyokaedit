@@ -16,7 +16,7 @@ Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
   * [:Focal_Fossa:Ubuntu 20.04] Focal Fossa
 <@ endif @>
 <@ if $arguments as lowercase contain 'bionic' @>
-  * [:Bionic_Beaver:Ubuntu 18.04] Bionic  Beaver
+  * [:Bionic_Beaver:Ubuntu 18.04] Bionic Beaver
 <@ endif @>
 <@ if $arguments as lowercase contain 'xenial' @>
   * [:Xenial_Xerus:Ubuntu 16.04] Xenial Xerus
