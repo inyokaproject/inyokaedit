@@ -15,7 +15,6 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 string(TOLOWER ${PROJECT_NAME} target_name)
-target_include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
 set(HEADERS
     parser.h

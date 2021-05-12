@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-find_package(Qt5 ${QT_MINIMUM_VERSION}
+find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
     REQUIRED Core Gui Widgets Network PrintSupport Xml LinguistTools
 )
 
@@ -40,12 +40,12 @@ target_compile_options(inyokaedit
 )
 target_link_libraries(inyokaedit
     PRIVATE
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
-        Qt5::Network
-        Qt5::PrintSupport
-        Qt5::Xml
+        ${QT_MAIN_VERSION}::Core
+        ${QT_MAIN_VERSION}::Gui
+        ${QT_MAIN_VERSION}::Widgets
+        ${QT_MAIN_VERSION}::Network
+        ${QT_MAIN_VERSION}::PrintSupport
+        ${QT_MAIN_VERSION}::Xml
 )
 
 set_preview_dependencies(inyokaedit)
@@ -105,7 +105,7 @@ set(TRANSLATIONS
     lang/inyokaedit_nl.ts
 )
 
-qt5_add_translation(QM_FILES ${TRANSLATIONS})
+qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
 
 target_sources(inyokaedit PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})

@@ -25,7 +25,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 ${QT_MINIMUM_VERSION}
+find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
     REQUIRED Core Widgets LinguistTools
 )
 
@@ -46,8 +46,8 @@ target_compile_options(highlighter
 )
 target_link_libraries(highlighter
     PRIVATE
-        Qt5::Core
-        Qt5::Widgets
+        ${QT_MAIN_VERSION}::Core
+        ${QT_MAIN_VERSION}::Widgets
 )
 
 add_subdirectory(../../application/templates ${CMAKE_CURRENT_BINARY_DIR}/templates)
@@ -76,7 +76,7 @@ set(TRANSLATIONS
     lang/highlighter_nl.ts
 )
 
-qt5_add_translation(QM_FILES ${TRANSLATIONS})
+qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(highlighter PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})

@@ -25,10 +25,13 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 ${QT_MINIMUM_VERSION}
+find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
     REQUIRED Core Widgets LinguistTools
 )
 find_package(HUNSPELL REQUIRED)
+if (QT6)
+    find_package(Qt6 ${QT_MINIMUM_VERSION} REQUIRED Core5Compat)
+endif()
 
 add_library(spellchecker SHARED)
 
@@ -47,8 +50,9 @@ target_compile_options(spellchecker
 )
 target_link_libraries(spellchecker
     PRIVATE
-        Qt5::Core
-        Qt5::Widgets
+        ${QT_MAIN_VERSION}::Core
+        ${QT_MAIN_VERSION}::Widgets
+        $<$<BOOL:${QT6}>:Qt6::Core5Compat>
 )
 
 set(HEADERS
@@ -75,7 +79,7 @@ set(TRANSLATIONS
     lang/spellchecker_nl.ts
 )
 
-qt5_add_translation(QM_FILES ${TRANSLATIONS})
+qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(spellchecker PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})

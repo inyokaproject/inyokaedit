@@ -15,9 +15,8 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 string(TOLOWER ${PROJECT_NAME} target_name)
-target_include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 
-find_package(Qt5 ${QT_MINIMUM_VERSION} REQUIRED Widgets)
+find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION} REQUIRED Widgets)
 
 set(HEADERS
     templates.h
@@ -28,4 +27,4 @@ set(SOURCES
 )
 
 target_sources(${target_name} PRIVATE ${HEADERS} ${SOURCES})
-target_link_libraries(${target_name} PRIVATE Qt5::Widgets)
+target_link_libraries(${target_name} PRIVATE ${QT_MAIN_VERSION}::Widgets)

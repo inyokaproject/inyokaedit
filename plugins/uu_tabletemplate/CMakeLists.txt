@@ -25,8 +25,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 ${QT_MINIMUM_VERSION}
-    REQUIRED Core Network LinguistTools
+find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
+    REQUIRED Core Network Widgets LinguistTools
 )
 
 add_library(uu_tabletemplate SHARED)
@@ -46,8 +46,8 @@ target_compile_options(uu_tabletemplate
 )
 target_link_libraries(uu_tabletemplate
     PRIVATE
-        Qt5::Core
-        Qt5::Network
+        ${QT_MAIN_VERSION}::Core
+        ${QT_MAIN_VERSION}::Network
 )
 
 set_preview_dependencies(uu_tabletemplate)
@@ -81,7 +81,7 @@ set(TRANSLATIONS
     lang/uu_tabletemplate_nl.ts
 )
 
-qt5_add_translation(QM_FILES ${TRANSLATIONS})
+qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
 target_sources(uu_tabletemplate PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
