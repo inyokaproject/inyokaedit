@@ -13,3 +13,14 @@ Getestet wurde der Artikel für folgende Version(en):
 Dieser Artikel ist mit keiner derzeit unterstützten Ubuntu-Touch-Version getestet! Bitte diesen Artikel testen!
 <@ endif @>
 |}}
+<@ if ['general', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) @> 
+<@ if $arguments as lowercase contain 'general' @>
+#getestet: generalut
+<@ else @>
+<@ if $arguments as lowercase contain 'xenial' @>
+#getestet: xenialut
+<@ endif @>
+<@ endif @>
+<@ else @>
+#getestet: ungetestetut
+<@ endif @>
