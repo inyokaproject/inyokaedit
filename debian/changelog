@@ -1,3 +1,18 @@
+inyokaedit (0.26.0-1) focal; urgency=low
+
+  [ Thorsten Roth ]
+  * Use tooltip for syntax error instead of message box
+  * Add possibility to store credentials
+  * Possibility to compile with Qt Webkit, Qt Webengine or none
+  * Use unicode flags if QWebEngineView is used
+  * Add support for Qt 6; remove of QRegExp
+  * Convert urls which are not in square brackets
+  * Fixes: Syntax check improvements, redirects
+  * First AppImage build
+  * File reorganization, metainfo and desktop file
+
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 28 May 2021 15:47:00 +0200
+
 inyokaedit (0.25.0-1) bionic; urgency=low
 
   [ Thorsten Roth ]
