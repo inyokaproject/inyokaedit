@@ -35,7 +35,7 @@
   <content_rating type="oars-1.0" />
   
   <releases>
-    <release version="0.26.0" date="2021-04-18">
+    <release version="0.26.0" date="2021-05-28">
       <description>
         <p>Main changes:</p>
         <ul>
@@ -46,6 +46,7 @@
           <li>Add support for Qt 6; remove of QRegExp</li>
           <li>Convert urls which are not in square brackets</li>
           <li>Fixes: Syntax check improvements, redirects</li>
+          <li>First AppImage and Windows installer</li>
           <li>File reorganization, metainfo and desktop file</li>
         </ul>
       </description>

@@ -45,8 +45,6 @@ build_script:
 
     copy COPYING InyokaEdit\
 
-    copy README.md InyokaEdit\
-
     copy windows_files\OpenSSL_%BUILD%\* InyokaEdit\
 
     echo n | copy /-y windows_files\bearer\qnativewifibearer.dll InyokaEdit\bearer\
@@ -62,5 +60,14 @@ build_script:
     rmdir /S /Q InyokaEdit\position
 
     7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip .\InyokaEdit\
+
+    curl -fsSL -o inyokaedit.nsi https://raw.githubusercontent.com/inyokaproject/inyokaedit/packaging/Windows/inyokaedit.nsi
+
+    curl -fsSL -o inyokaedit.ico https://raw.githubusercontent.com/inyokaproject/inyokaedit/packaging/Windows/inyokaedit.ico
+
+    makensis inyokaedit.nsi
+
+    ren InyokaEdit_Installer.exe InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.exe
 artifacts:
 - path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip
+- path: InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.exe
