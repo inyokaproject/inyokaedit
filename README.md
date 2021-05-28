@@ -27,7 +27,7 @@ sudo apt-get update
 sudo apt-get install inyokaedit inyokaedit-data-ubuntuusersde inyokaedit-plugins
 ```
 
-Build for Windows: https://github.com/inyokaproject/inyokaedit/releases
+AppImage and build for Windows: https://github.com/inyokaproject/inyokaedit/releases
 
 Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 
