@@ -117,7 +117,7 @@
     <element name="Dropbox" insert="[dropbox:%%Sitename%%:]" icon="dropbox.png" />
     <element name="EAN" insert="[ean:%%EAN%%:]" icon="ean.png" />
     <element name="Facebook" insert="[fb:%%Sitename%%:]" icon="fb.png" />
-    <element name="Freenode Web IRC" insert="[freenode:%%IRC Name%%:]" icon="freenode.png" />
+    <element name="Freenode Web IRC" insert="[freenode:%%Channel name%%:]" icon="freenode.png" />
     <element name="Google" insert="[google:%%Search term%%:]" icon="google.png" />
     <element name="heise online" insert="[heise:%%Sitename%%:]" icon="heise.png" />
     <element name="Identica" insert="[identica:%%Sitename%%:]" icon="identica.png" />
@@ -125,6 +125,7 @@
     <element name="ISBN" insert="[isbn:%%ISBN%%:]" icon="isbn.png" />
     <element name="Ixquick" insert="[ixquick:%%Search term%%:]" icon="ixquick.png" />
     <element name="Last.fm" insert="[lastfm:%%Sitename%%:]" icon="lastfm.png" />
+    <element name="Libera Web IRC" insert="[libera:%%Channel name%%:]" icon="libera_WSg5ZI5.png" />
     <element name="OpenStreetMap" insert="[osm:%%Sitename%%:]" icon="osm.png" />
     <element name="QuakeNet IRC" insert="[quakenet:%%Sitename%%:]" icon="quakenet.png" />
     <element name="SELFHTML Wiki" insert="[selfhtmlwiki:%%Sitename%%:]" icon="selfhtmlwiki.png" />
