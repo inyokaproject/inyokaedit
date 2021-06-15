@@ -52,4 +52,5 @@ RESOURCES     = res/hotkey_resources.qrc \
                 res/translations.qrc
 
 TRANSLATIONS += lang/hotkey_de.ts \
+                lang/hotkey_en.ts \
                 lang/hotkey_nl.ts

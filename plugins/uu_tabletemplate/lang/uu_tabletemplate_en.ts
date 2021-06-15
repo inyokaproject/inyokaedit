@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1" language="en_US">
 <context>
     <name>ParseLinks</name>
     <message>
@@ -32,37 +32,37 @@
     <message>
         <location filename="../uu_tabletemplate.cpp" line="208"/>
         <source>Ubuntuusers.de table generator</source>
-        <translation>Ubuntuusers.de Tabellengenerator</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="306"/>
         <source>Title</source>
-        <translation>Titel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="324"/>
         <source>Head</source>
-        <translation>Kopf</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="469"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="477"/>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="479"/>
         <source>Licence</source>
-        <translation>Lizenz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.cpp" line="482"/>
         <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
-        <translation>Erweiterung zur Erstellung von ubuntuusers.de Inyoka-Tabellen.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -70,72 +70,72 @@
     <message>
         <location filename="../uu_tabletemplate.ui" line="32"/>
         <source>Table</source>
-        <translation>Tabelle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="49"/>
         <source>Generator</source>
-        <translation>Generator</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="73"/>
         <source>Table style:</source>
-        <translation>Tabellenstil:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="80"/>
         <source>Insert head</source>
-        <translation>Kopfzeile einfügen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="87"/>
         <source>Insert title</source>
-        <translation>Titelzeile einfügen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="94"/>
         <source>Highlight every second row</source>
-        <translation>Jede zweite Zeile hervorheben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="108"/>
         <source>Number of columns</source>
-        <translation>Anzahl Spalten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="115"/>
         <source>Number of rows</source>
-        <translation>Anzahl Zeilen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="131"/>
         <source>Show preview</source>
-        <translation>Vorschau anzeigen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="139"/>
         <source>Converter</source>
-        <translation>Konverter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="147"/>
         <source>Inyoka base template:</source>
-        <translation>Inyoka Basistemplate:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="157"/>
         <source>Base to ubuntuusers.de</source>
-        <translation>Basis zu ubuntuusers.de</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="169"/>
         <source>ubuntuusers.de to base</source>
-        <translation>ubuntuusers.de zu Basis</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../uu_tabletemplate.ui" line="181"/>
         <source>ubuntuusers.de table template:</source>
-        <translation>ubuntuusers.de Tabellentemplate:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

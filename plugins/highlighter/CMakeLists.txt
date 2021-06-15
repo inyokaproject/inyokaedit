@@ -73,6 +73,7 @@ set(RESOURCES
 
 set(TRANSLATIONS
     lang/highlighter_de.ts
+    lang/highlighter_en.ts
     lang/highlighter_nl.ts
 )
 

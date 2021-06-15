@@ -55,4 +55,5 @@ RESOURCES     = res/highlighter_resources.qrc \
                 res/translations.qrc
 
 TRANSLATIONS += lang/highlighter_de.ts \
+                lang/highlighter_en.ts \
                 lang/highlighter_nl.ts

@@ -78,6 +78,7 @@ set(RESOURCES
 
 set(TRANSLATIONS
     lang/uu_tabletemplate_de.ts
+    lang/uu_tabletemplate_en.ts
     lang/uu_tabletemplate_nl.ts
 )
 

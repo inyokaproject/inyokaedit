@@ -71,6 +71,7 @@ set(RESOURCES
 
 set(TRANSLATIONS
     lang/hotkey_de.ts
+    lang/hotkey_en.ts
     lang/hotkey_nl.ts
 )
 

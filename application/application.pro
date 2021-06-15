@@ -126,6 +126,7 @@ RESOURCES      = data/data.qrc \
                  lang/translations.qrc
 
 TRANSLATIONS  += lang/inyokaedit_de.ts \
+                 lang/inyokaedit_en.ts \
                  lang/inyokaedit_nl.ts
 
 win32:RC_ICONS = icons/inyokaedit.ico

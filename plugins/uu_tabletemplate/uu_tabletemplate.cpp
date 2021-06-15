@@ -179,9 +179,6 @@ auto Uu_TableTemplate::getPluginVersion() const -> QString {
 
 void Uu_TableTemplate::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
-  if ("en" == sLang) {
-    return;
-  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
@@ -197,7 +194,7 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
     }
   }
 
-  if (qApp->installTranslator(&m_translator)) {
+  if (qApp->installTranslator(&m_translator) || "en" == sLang) {
     m_pUi->retranslateUi(m_pDialog);
   } else {
     qWarning() << "Translator could not be installed!";

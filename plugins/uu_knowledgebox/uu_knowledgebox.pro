@@ -52,4 +52,5 @@ RESOURCES     = res/uu_knowledgebox_resources.qrc \
                 res/translations.qrc
 
 TRANSLATIONS += lang/uu_knowledgebox_de.ts \
+                lang/uu_knowledgebox_en.ts \
                 lang/uu_knowledgebox_nl.ts

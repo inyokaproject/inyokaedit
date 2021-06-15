@@ -37,7 +37,7 @@ Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 * For running InyokaEdit, community files have to be included. Because of this it is recommended to include the community files during **make/cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the master branch root folder.
 
 ### make
-If Qt 6 shall be used, change export 'QT_SELECT = qt5' in make file accordingly.
+If Qt 6 shall be used, change export `QT_SELECT = qt5` in make file accordingly.
 ```
 ./configure   # Execute ./configure --help to see all config options
 make -j8      # Adjust -j8 according to your available cores.

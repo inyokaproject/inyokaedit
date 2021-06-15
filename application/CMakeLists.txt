@@ -102,6 +102,7 @@ set(RESOURCES
 
 set(TRANSLATIONS
     lang/inyokaedit_de.ts
+    lang/inyokaedit_en.ts
     lang/inyokaedit_nl.ts
 )
 

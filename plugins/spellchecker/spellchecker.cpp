@@ -119,9 +119,6 @@ auto SpellChecker::getPluginVersion() const -> QString {
 
 void SpellChecker::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
-  if ("en" == sLang) {
-    return;
-  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
                          "_" + sLang + ".qm")) {
@@ -137,7 +134,7 @@ void SpellChecker::installTranslator(const QString &sLang) {
     }
   }
 
-  if (!qApp->installTranslator(&m_translator)) {
+  if (!qApp->installTranslator(&m_translator) && "en" != sLang) {
     qWarning() << "Translator could not be installed!";
   }
 }

@@ -19,17 +19,17 @@
         <translation>Artikel</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="204"/>
+        <location filename="../download.cpp" line="206"/>
         <source>Could not download the article.</source>
         <translation>Der Artikel konnte nicht heruntergeladen werden.</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="220"/>
+        <location filename="../download.cpp" line="222"/>
         <source>Could not find meta data.</source>
         <translation>Es konnten keine Metadaten gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../download.cpp" line="252"/>
+        <location filename="../download.cpp" line="254"/>
         <source>Do you want to download the images which are attached to the article?</source>
         <translation>Am Artikel angehängte Bilder ebenfalls herunterladen?</translation>
     </message>
@@ -55,140 +55,140 @@
 <context>
     <name>FileOperations</name>
     <message>
-        <location filename="../fileoperations.cpp" line="68"/>
+        <location filename="../fileoperations.cpp" line="67"/>
         <source>Inyoka article</source>
         <translation>Inyoka Artikel</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="69"/>
+        <location filename="../fileoperations.cpp" line="68"/>
         <source>Inyoka article + images</source>
         <translation>Inyoka Artikel + Bilder</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="70"/>
+        <location filename="../fileoperations.cpp" line="69"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="116"/>
+        <location filename="../fileoperations.cpp" line="115"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="130"/>
+        <location filename="../fileoperations.cpp" line="129"/>
         <source>Template</source>
         <translation>Vorlage</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="177"/>
+        <location filename="../fileoperations.cpp" line="176"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="221"/>
+        <location filename="../fileoperations.cpp" line="220"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="250"/>
+        <location filename="../fileoperations.cpp" line="249"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="282"/>
+        <location filename="../fileoperations.cpp" line="281"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="332"/>
+        <location filename="../fileoperations.cpp" line="334"/>
         <source>The file &quot;%1&quot; could not be opened.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="343"/>
+        <location filename="../fileoperations.cpp" line="345"/>
         <source>The file &quot;%1&quot; is empty!</source>
         <translation>Die Datei &quot;%1&quot; ist leer!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="350"/>
+        <location filename="../fileoperations.cpp" line="352"/>
         <source>Error reading &quot;%1&quot;</source>
         <translation>Fehler beim Lesen von&quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="362"/>
+        <location filename="../fileoperations.cpp" line="364"/>
         <source>Something went wrong while reading &quot;%1&quot;</source>
         <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="387"/>
+        <location filename="../fileoperations.cpp" line="389"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="397"/>
+        <location filename="../fileoperations.cpp" line="399"/>
         <source>Error while extracting archive!</source>
         <translation>Fehler während des Entpackens des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="429"/>
+        <location filename="../fileoperations.cpp" line="431"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="481"/>
+        <location filename="../fileoperations.cpp" line="486"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="493"/>
+        <location filename="../fileoperations.cpp" line="498"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="531"/>
-        <location filename="../fileoperations.cpp" line="547"/>
+        <location filename="../fileoperations.cpp" line="539"/>
+        <location filename="../fileoperations.cpp" line="555"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="559"/>
+        <location filename="../fileoperations.cpp" line="567"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="568"/>
+        <location filename="../fileoperations.cpp" line="576"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="635"/>
+        <location filename="../fileoperations.cpp" line="646"/>
         <source>No supported printer found.</source>
         <translation>Kein unterstützter Drucker gefunden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="657"/>
+        <location filename="../fileoperations.cpp" line="668"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="658"/>
+        <location filename="../fileoperations.cpp" line="669"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="140"/>
-        <location filename="../fileoperations.cpp" line="199"/>
-        <location filename="../fileoperations.cpp" line="210"/>
-        <location filename="../fileoperations.cpp" line="243"/>
-        <location filename="../fileoperations.cpp" line="586"/>
+        <location filename="../fileoperations.cpp" line="139"/>
+        <location filename="../fileoperations.cpp" line="198"/>
+        <location filename="../fileoperations.cpp" line="209"/>
+        <location filename="../fileoperations.cpp" line="242"/>
+        <location filename="../fileoperations.cpp" line="594"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -280,288 +280,288 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
 <context>
     <name>InyokaEdit</name>
     <message>
-        <location filename="../inyokaedit.ui" line="42"/>
+        <location filename="../inyokaedit.ui" line="41"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="46"/>
+        <location filename="../inyokaedit.ui" line="45"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt geöffnete Dateien</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="71"/>
+        <location filename="../inyokaedit.ui" line="70"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="89"/>
+        <location filename="../inyokaedit.ui" line="88"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="55"/>
+        <location filename="../inyokaedit.ui" line="54"/>
         <source>New from &amp;template</source>
         <translation>Neu von &amp;Template</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="100"/>
+        <location filename="../inyokaedit.ui" line="99"/>
         <source>&amp;Tools</source>
         <translation>E&amp;xtras</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="111"/>
+        <location filename="../inyokaedit.ui" line="110"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="125"/>
+        <location filename="../inyokaedit.ui" line="124"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="142"/>
+        <location filename="../inyokaedit.ui" line="141"/>
         <source>Preview / Download</source>
         <translation>Vorschau / Download</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="156"/>
+        <location filename="../inyokaedit.ui" line="155"/>
         <source>Inyoka editor</source>
         <translation>Inyoka editor</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="167"/>
+        <location filename="../inyokaedit.ui" line="166"/>
         <source>Samples and macros</source>
         <translation>Vorlagen und Makros</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="178"/>
+        <location filename="../inyokaedit.ui" line="177"/>
         <source>Browser toolbar</source>
         <translation>Browser Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="192"/>
+        <location filename="../inyokaedit.ui" line="191"/>
         <source>Plugins toolBar</source>
         <translation>Plugins Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="221"/>
+        <location filename="../inyokaedit.ui" line="220"/>
         <source>Shows the about box of this application</source>
         <translation>Infobox zu dieser Anwendung anzeigen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="231"/>
+        <location filename="../inyokaedit.ui" line="230"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="234"/>
+        <location filename="../inyokaedit.ui" line="233"/>
         <source>Create a new file</source>
         <translation>Eine neue Datei erstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="244"/>
+        <location filename="../inyokaedit.ui" line="243"/>
         <source>&amp;Open...</source>
         <translation>&amp;Öffnen...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="247"/>
+        <location filename="../inyokaedit.ui" line="246"/>
         <source>Open a file</source>
         <translation>Eine Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="257"/>
+        <location filename="../inyokaedit.ui" line="256"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="260"/>
+        <location filename="../inyokaedit.ui" line="259"/>
         <source>Save current document</source>
         <translation>Das aktuelle Dokument speichern</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="273"/>
+        <location filename="../inyokaedit.ui" line="272"/>
         <source>Save current document under a new name</source>
         <translation>Das aktuelle Dokment unter neuem Namen speichern</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="282"/>
+        <location filename="../inyokaedit.ui" line="281"/>
         <source>&amp;Quit</source>
         <translation>B&amp;eenden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="285"/>
+        <location filename="../inyokaedit.ui" line="284"/>
         <source>Quit the application</source>
         <translation>Das Programm beenden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="298"/>
+        <location filename="../inyokaedit.ui" line="297"/>
         <source>Undo changes</source>
         <translation>Änderungen rückgängig machen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="311"/>
+        <location filename="../inyokaedit.ui" line="310"/>
         <source>Redo changes</source>
         <translation>Änderungen wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="324"/>
+        <location filename="../inyokaedit.ui" line="323"/>
         <source>Cut highlighted text</source>
         <translation>Den markierten Text ausschneiden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="337"/>
+        <location filename="../inyokaedit.ui" line="336"/>
         <source>Copy highlighted text</source>
         <translation>Den markierten Text in die Zwischenablage kopieren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="350"/>
+        <location filename="../inyokaedit.ui" line="349"/>
         <source>Paste text from clipboard</source>
         <translation>Text aus der Zwischenablage einfügen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="363"/>
+        <location filename="../inyokaedit.ui" line="362"/>
         <source>Find text</source>
         <translation>Einen Ausdruck suchen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="376"/>
+        <location filename="../inyokaedit.ui" line="375"/>
         <source>Replace text</source>
         <translation>Einen bestimmten Ausdruck ersetzen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="389"/>
+        <location filename="../inyokaedit.ui" line="388"/>
         <source>Find next (search forward)</source>
         <translation>Weitersuchen (vorwärts)</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="270"/>
+        <location filename="../inyokaedit.ui" line="269"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="295"/>
+        <location filename="../inyokaedit.ui" line="294"/>
         <source>&amp;Undo</source>
         <translation>Rü&amp;ckgängig</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="308"/>
+        <location filename="../inyokaedit.ui" line="307"/>
         <source>&amp;Redo</source>
         <translation>&amp;Wiederherstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="321"/>
+        <location filename="../inyokaedit.ui" line="320"/>
         <source>&amp;Cut</source>
         <translation>&amp;Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="334"/>
+        <location filename="../inyokaedit.ui" line="333"/>
         <source>C&amp;opy</source>
         <translation>&amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="347"/>
+        <location filename="../inyokaedit.ui" line="346"/>
         <source>&amp;Paste</source>
         <translation>Ei&amp;nfügen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="360"/>
+        <location filename="../inyokaedit.ui" line="359"/>
         <source>&amp;Find...</source>
         <translation>&amp;Suchen...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="373"/>
+        <location filename="../inyokaedit.ui" line="372"/>
         <source>R&amp;eplace...</source>
         <translation>&amp;Ersetzen...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="386"/>
+        <location filename="../inyokaedit.ui" line="385"/>
         <source>Find &amp;next</source>
         <translation>We&amp;itersuchen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="399"/>
+        <location filename="../inyokaedit.ui" line="398"/>
         <source>F&amp;ind previous</source>
         <translation>Rüc&amp;kwärts weitersuchen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="402"/>
+        <location filename="../inyokaedit.ui" line="401"/>
         <source>Find previous (search backward)</source>
         <translation>Weitersuchen (rückwärts)</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="425"/>
+        <location filename="../inyokaedit.ui" line="424"/>
         <source>Download raw format</source>
         <translation>Rohformat herunterladen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="428"/>
+        <location filename="../inyokaedit.ui" line="427"/>
         <source>Downloads raw format of an existing Inyoka article</source>
         <translation>Den Rohtext eines bestehenden Inyoka Wikiartikels herunterladen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="438"/>
+        <location filename="../inyokaedit.ui" line="437"/>
         <source>Delete temporarily &amp;images</source>
         <translation>Temporäre Bilder &amp;löschen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="448"/>
+        <location filename="../inyokaedit.ui" line="447"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="458"/>
+        <location filename="../inyokaedit.ui" line="457"/>
         <source>Forward</source>
         <translation>Vorwärts</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="468"/>
-        <location filename="../inyokaedit.ui" line="471"/>
+        <location filename="../inyokaedit.ui" line="467"/>
+        <location filename="../inyokaedit.ui" line="470"/>
         <source>Reload</source>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="481"/>
+        <location filename="../inyokaedit.ui" line="480"/>
         <source>&amp;Print preview</source>
         <translation>&amp;Vorschau drucken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="499"/>
+        <location filename="../inyokaedit.ui" line="498"/>
         <source>Preference&amp;s</source>
         <translation>&amp;Einstellungen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="484"/>
+        <location filename="../inyokaedit.ui" line="483"/>
         <source>Print preview or export to PDF</source>
         <translation>Vorschau ausdrucken oder als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="412"/>
+        <location filename="../inyokaedit.ui" line="411"/>
         <source>Generate preview</source>
         <translation>Vorschau erstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="415"/>
+        <location filename="../inyokaedit.ui" line="414"/>
         <source>Generate preview of current article</source>
         <translation>Die Vorschau des aktuellen Artikels erstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="489"/>
+        <location filename="../inyokaedit.ui" line="488"/>
         <source>&amp;Syntax overview</source>
         <translation>&amp;Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="512"/>
+        <location filename="../inyokaedit.ui" line="511"/>
         <source>Upload article</source>
         <translation>Artikel hochladen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="208"/>
+        <location filename="../inyokaedit.ui" line="207"/>
         <source>Report &amp;bug</source>
         <translation>&amp;Fehler melden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="218"/>
+        <location filename="../inyokaedit.ui" line="217"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
@@ -573,82 +573,82 @@ Please check your installation and restart the application.</source>
 Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="806"/>
+        <location filename="../inyokaedit.cpp" line="816"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Temporäre HTML-Datei konnte nicht erzeugt werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="874"/>
+        <location filename="../inyokaedit.cpp" line="885"/>
         <source>Opening parenthesis missing!</source>
         <translation>Öffnende Klammer fehlt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="876"/>
+        <location filename="../inyokaedit.cpp" line="887"/>
         <source>Closing parenthesis missing!</source>
         <translation>Schließende Klammer fehlt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="879"/>
+        <location filename="../inyokaedit.cpp" line="890"/>
         <source>Unknown template:</source>
         <translation>Unbekannte Vorlage:</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="882"/>
+        <location filename="../inyokaedit.cpp" line="893"/>
         <source>Syntax error</source>
         <translation>Syntaxfehler</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1066"/>
+        <location filename="../inyokaedit.cpp" line="1082"/>
         <source>Error while loading preview.</source>
         <translation>Fehler beim Laden der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1210"/>
+        <location filename="../inyokaedit.cpp" line="1226"/>
         <source>Do you really want to delete all temporay article images?</source>
         <translation>Sollen wirklich alle temporären Artikelbilder gelöscht werden?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1221"/>
+        <location filename="../inyokaedit.cpp" line="1237"/>
         <source>Could not delete file: </source>
         <translation>Kann Datei nicht löschen: </translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1228"/>
+        <location filename="../inyokaedit.cpp" line="1244"/>
         <source>Images successfully deleted.</source>
         <translation>Die Bilder wurden erfolgreich entfernt.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1373"/>
+        <location filename="../inyokaedit.cpp" line="1424"/>
         <source>Could not open syntax overview file!</source>
         <translation>Die Syntax-Übrsicht knnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1401"/>
+        <location filename="../inyokaedit.cpp" line="1452"/>
         <source>Syntax overview</source>
         <translation>Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1414"/>
+        <location filename="../inyokaedit.cpp" line="1465"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1424"/>
+        <location filename="../inyokaedit.cpp" line="1475"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Editor für Inyoka-basierende Portale</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1428"/>
+        <location filename="../inyokaedit.cpp" line="1479"/>
         <source>License</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1431"/>
+        <location filename="../inyokaedit.cpp" line="1482"/>
         <source>This application uses icons from Tango project of &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</source>
         <translation>Diese Anwendung verwendet Symbole des Tango Projekts von &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1434"/>
+        <location filename="../inyokaedit.cpp" line="1485"/>
         <source>Special thanks to all contributors and testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Besonderen Dank an alle Mitwirkenden und Tester von &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
@@ -656,7 +656,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
 <context>
     <name>ParseLinks</name>
     <message>
-        <location filename="../parser/parselinks.cpp" line="155"/>
+        <location filename="../parser/parselinks.cpp" line="196"/>
         <source>Section</source>
         <translation>Abschnitt</translation>
     </message>
@@ -665,11 +665,11 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
     <name>Session</name>
     <message>
         <location filename="../session.cpp" line="50"/>
-        <location filename="../session.cpp" line="150"/>
-        <location filename="../session.cpp" line="159"/>
-        <location filename="../session.cpp" line="173"/>
-        <location filename="../session.cpp" line="256"/>
-        <location filename="../session.cpp" line="278"/>
+        <location filename="../session.cpp" line="149"/>
+        <location filename="../session.cpp" line="158"/>
+        <location filename="../session.cpp" line="172"/>
+        <location filename="../session.cpp" line="255"/>
+        <location filename="../session.cpp" line="277"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -679,47 +679,47 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Inyoka Community Hash ist nicht definiert!</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="151"/>
+        <location filename="../session.cpp" line="150"/>
         <source>Login failed! No CSRFTOKEN received.</source>
         <translation>Login fehlgeschlagen! Kein CSFRTOKEN empfangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="160"/>
+        <location filename="../session.cpp" line="159"/>
         <source>Login failed! No session cookie received.</source>
         <translation>Login fehlgeschlagen! Kein Sessioncookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="174"/>
+        <location filename="../session.cpp" line="173"/>
         <source>Login failed! No cookies received.</source>
         <translation>Login fehlgeschlagen! Kein Cookie empfangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="193"/>
+        <location filename="../session.cpp" line="192"/>
         <source>Login user</source>
         <translation>Login Benutzer</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="194"/>
+        <location filename="../session.cpp" line="193"/>
         <source>Please insert your Inyoka user name:</source>
         <translation>Bitte Deinen Inyoka Benutzernamen eingeben:</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="205"/>
+        <location filename="../session.cpp" line="204"/>
         <source>Login password</source>
         <translation>Login Passwort</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="206"/>
+        <location filename="../session.cpp" line="205"/>
         <source>Please insert your Inyoka password:</source>
         <translation>Bitte Dein Inyoka Passwort eingeben:</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="257"/>
+        <location filename="../session.cpp" line="256"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Login fehlgeschlagen. Falsche Zugangsdaten?</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="279"/>
+        <location filename="../session.cpp" line="278"/>
         <source>Login at Inyoka failed.</source>
         <translation>Login fehlgeschlagen.</translation>
     </message>
@@ -880,27 +880,27 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
         <translation>Anzahl zuletzt geöffnete Dokumente</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="249"/>
+        <location filename="../settingsdialog.cpp" line="251"/>
         <source>The editor has to be restarted for applying the changes.</source>
         <translation>Der Editor muss neu gestartet werden, damit die Änderungen übernommen werden.</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="294"/>
+        <location filename="../settingsdialog.cpp" line="296"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="295"/>
+        <location filename="../settingsdialog.cpp" line="297"/>
         <source>Could not open/find community file!</source>
         <translation>Community-Datei konnte nicht geöffnet/gefunden werden!</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="307"/>
+        <location filename="../settingsdialog.cpp" line="312"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="308"/>
+        <location filename="../settingsdialog.cpp" line="313"/>
         <source>No community url defined!</source>
         <translation>Keine Community-Url definiert!</translation>
     </message>

@@ -76,6 +76,7 @@ set(RESOURCES
 
 set(TRANSLATIONS
     lang/spellchecker_de.ts
+    lang/spellchecker_en.ts
     lang/spellchecker_nl.ts
 )
 

@@ -2,65 +2,65 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="nl_NL">
 <context>
-    <name>SyntaxCheck</name>
+    <name>ParseLinks</name>
     <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="76"/>
-        <location filename="../../../application/syntaxcheck.cpp" line="89"/>
-        <location filename="../../../application/syntaxcheck.cpp" line="163"/>
-        <source>Inyoka syntax check</source>
-        <translatorcomment>Inyoka-syntaxcontrole</translatorcomment>
-        <translation>Inyoka Syntaxüberprüfung</translation>
+        <location filename="../../../application/parser/parselinks.cpp" line="196"/>
+        <source>Section</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Utils</name>
+    <message>
+        <location filename="../../../application/utils.cpp" line="137"/>
+        <source>Update found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="77"/>
-        <source>Syntax error detected - closing parenthesis without opening paraenthesis!</source>
-        <translation>&gt;Syntaxfout ontdekt - haakjes sluiten zonder haakjes openen!</translation>
+        <location filename="../../../application/utils.cpp" line="138"/>
+        <source>Found a new version of %1.&lt;br&gt;Do you want to download the latest version?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="90"/>
-        <source>Syntax error detected - open parenthesis!</source>
-        <translation>Syntaxfout ontdekt - alleen geopende haakjes!</translation>
-    </message>
-    <message>
-        <location filename="../../../application/syntaxcheck.cpp" line="164"/>
-        <source>Found unknown template: %1</source>
-        <translation>Onbekend sjabloon ontdekt: %1</translation>
+        <location filename="../../../application/utils.cpp" line="143"/>
+        <source>No, don&apos;t ask again!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Uu_TableTemplate</name>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="173"/>
+        <location filename="../uu_tabletemplate.cpp" line="208"/>
         <source>Ubuntuusers.de table generator</source>
         <translation>Ubuntuusers.de-tabelgenerator</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="244"/>
+        <location filename="../uu_tabletemplate.cpp" line="306"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="254"/>
+        <location filename="../uu_tabletemplate.cpp" line="324"/>
         <source>Head</source>
         <translation>Kop</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="390"/>
+        <location filename="../uu_tabletemplate.cpp" line="469"/>
         <source>Info</source>
         <translation>Informatie</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="398"/>
+        <location filename="../uu_tabletemplate.cpp" line="477"/>
         <source>Version</source>
         <translation>Versie</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="400"/>
+        <location filename="../uu_tabletemplate.cpp" line="479"/>
         <source>Licence</source>
         <translation>Licentie</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="403"/>
+        <location filename="../uu_tabletemplate.cpp" line="482"/>
         <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
         <translation>Plug-in voor het genereren van Inyoka-tabellen in de stijl van ubuntuusers.de.</translation>
     </message>
@@ -128,12 +128,12 @@
         <translation>Van basis naar ubuntuusers.de</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.ui" line="168"/>
+        <location filename="../uu_tabletemplate.ui" line="169"/>
         <source>ubuntuusers.de to base</source>
         <translation>Van ubuntuusers.de naar basis</translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.ui" line="179"/>
+        <location filename="../uu_tabletemplate.ui" line="181"/>
         <source>ubuntuusers.de table template:</source>
         <translation>ubuntuusers.de-tabelsjabloon:</translation>
     </message>
