@@ -1,5 +1,5 @@
 #  The files in folder 'spellchecker' are part of InyokaEdit.
-#  Copyright (C) 2014-2019 The InyokaEdit developers
+#  Copyright (C) 2014-2021 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #  permission notice:
 #
 #  Copyright (c) 2011, Volker Götz
+#  Copyright (c) 2020, Thorsten Roth
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -42,3 +43,4 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #  Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
+#     and              https://github.com/martonmiklos/SpellChecker
