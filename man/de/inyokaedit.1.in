@@ -43,7 +43,7 @@ Die Konfigurationsdatei.
 .I ~/.config/inyokaedit/standard-style.conf
 Die Standardsyntaxhervorhebung.
 .TP
-.I ___PREFIX___/share/inyokaedit/iWikiLinks/iWikiLinks.xml
+.I @___PREFIX___@/share/inyokaedit/iWikiLinks/iWikiLinks.xml
 XML-Datei mit den unterstützten InterWiki-Links. Wird zur Generierung des
 InterWiki-Menüs, sowie zum Parsen verwendet.
 .SH FEHLER
