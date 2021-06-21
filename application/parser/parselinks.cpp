@@ -73,7 +73,7 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
   QRegularExpression findUrl(
         QString::fromLatin1(
-          "(?:(?:https?|ftps?|file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|irc|"
+          "(?:(?:https?|ftps?|file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|ircs?|"
           "rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
           "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
   QString sDoc(pRawDoc->toPlainText());
@@ -108,8 +108,8 @@ void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
 // External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   QRegularExpression findHyperlink(
-        QString::fromLatin1("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
-                            "|git|dict|nntp|irc|rsync|smb|apt)\\b://"));
+        QString::fromLatin1("\\[{1,1}\\b(https?|ftps?|file|ssh|mms|svn"
+                            "|git|dict|nntp|ircs?|rsync|smb|apt)\\b://"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
