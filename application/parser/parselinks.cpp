@@ -108,7 +108,7 @@ void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
 // External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   QRegularExpression findHyperlink(
-        QString::fromLatin1("\\[{1,1}\\b(http|https|ftp|ftps|file|ssh|mms|svn"
+        QString::fromLatin1("\\[{1,1}\\b(https?|ftps?|file|ssh|mms|svn"
                             "|git|dict|nntp|ircs?|rsync|smb|apt)\\b://"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
