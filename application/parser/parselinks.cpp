@@ -72,9 +72,10 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 // External Urls not in square brackets
 void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
   QRegularExpression findUrl(
+        // Skip file:// with " in front, which is used on Windows for image path
         QString::fromLatin1(
-          "(?:(?:https?|ftps?|file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|ircs?|"
-          "rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
+          "(?:(?:https?|ftps?|[^\"]file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|"
+          "ircs?|rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
           "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;

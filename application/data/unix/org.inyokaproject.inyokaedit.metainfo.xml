@@ -10,8 +10,8 @@
   <summary xml:lang="de">Inyoka Markup Editor</summary>
   
   <description>
-    <p>InyokaEdit is a markup editor to create and preview Inyoka articles.</p>
-    <p xml:lang="de">InyokaEdit ist ein Markup-Editor zum bearbeiten und ansehen von Inyoka-Artikeln.</p>
+    <p>InyokaEdit is a markup editor to create and preview Inyoka articles. Besides down- and upload of the raw article, the editor provides code completion for templates and additional optional extensions. </p>
+    <p xml:lang="de">InyokaEdit ist ein Markup-Editor zum bearbeiten und ansehen von Inyoka-Artikeln. Neben dem Herunter- und Hochladen des Rohtextes bietet der Editor Codevervollständigung für Vorlagen, sowie zusätzliche optionale Erweiterungen.</p>
   </description>
   
   <screenshots>
