@@ -44,6 +44,8 @@ build_script:
     windeployqt --release --no-translations --no-angle --no-opengl-sw InyokaEdit\InyokaEdit.exe
 
     copy COPYING InyokaEdit\
+    
+    copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
 
     copy windows_files\OpenSSL_%BUILD%\* InyokaEdit\
 
