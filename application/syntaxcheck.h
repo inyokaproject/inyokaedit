@@ -54,7 +54,7 @@ class SyntaxCheck : public QObject {
         const QStringList &sListTplMacros,
         const QStringList &sListTplTrans) -> QPair <int, QString>;
 
-    static void filterMonotype(QString &sDoc);
+    static void filterMonotype(QString *sDoc);
 };
 
 #endif  // APPLICATION_SYNTAXCHECK_H_

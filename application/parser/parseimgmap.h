@@ -27,7 +27,7 @@
 #ifndef APPLICATION_PARSER_PARSEIMGMAP_H_
 #define APPLICATION_PARSER_PARSEIMGMAP_H_
 
-#include <QStringList>
+#include <QHash>
 
 class QString;
 class QTextDocument;
@@ -36,8 +36,7 @@ class ParseImgMap {
  public:
     ParseImgMap();
     static void startParsing(QTextDocument *pRawDoc,
-                             QStringList sListElements,
-                             QStringList sListImages,
+                             const QHash<QString, QString> &map,
                              const QString &sSharePath,
                              const QString &sCommunity);
 };

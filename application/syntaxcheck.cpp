@@ -71,7 +71,7 @@ auto SyntaxCheck::checkParenthesis(
   sDoc = sDoc.replace(QLatin1String("<(>"), sReplace.fill('X', 3));
   sDoc = sDoc.replace(QLatin1String("<)>"), sReplace.fill('X', 3));
 
-  SyntaxCheck::filterMonotype(sDoc);
+  SyntaxCheck::filterMonotype(&sDoc);
 
   listParenthesis.clear();
   QPair<int, QString> ret(-1, QLatin1String(""));
@@ -133,7 +133,7 @@ auto SyntaxCheck::checkKnownTemplates(
     sListTrans << s << s;
   }
   QString sDoc(pRawDoc->toPlainText());
-  SyntaxCheck::filterMonotype(sDoc);
+  SyntaxCheck::filterMonotype(&sDoc);
   QPair<int, QString> ret(-1, QLatin1String(""));
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
@@ -196,7 +196,7 @@ auto SyntaxCheck::checkKnownTemplates(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SyntaxCheck::filterMonotype(QString &sDoc) {
+void SyntaxCheck::filterMonotype(QString *sDoc) {
   QString sReplace(QLatin1String(""));
   QStringList sListMonotype;
   sListMonotype << QStringLiteral("``");
@@ -205,13 +205,13 @@ void SyntaxCheck::filterMonotype(QString &sDoc) {
     int nStart = -1;
     int nEnd = -1;
     int nIndex = 0;
-    while (-1 != sDoc.indexOf(sListMonotype[i], nIndex)) {
+    while (-1 != sDoc->indexOf(sListMonotype[i], nIndex)) {
       if (-1 == nStart) {
-        nStart = sDoc.indexOf(sListMonotype[i], nIndex);
+        nStart = sDoc->indexOf(sListMonotype[i], nIndex);
         nIndex = nStart + sListMonotype[i].length();
       } else {
-        nEnd = sDoc.indexOf(sListMonotype[i], nIndex);
-        sDoc.replace(nStart, nEnd - nStart + sListMonotype[i].length(),
+        nEnd = sDoc->indexOf(sListMonotype[i], nIndex);
+        sDoc->replace(nStart, nEnd - nStart + sListMonotype[i].length(),
                      sReplace.fill('X',
                                    nEnd - nStart + sListMonotype[i].length()));
         nIndex = nEnd + sListMonotype[i].length();

@@ -37,46 +37,33 @@ Templates::Templates(const QString &sCommunity, const QString &sSharePath,
   QString sPath(sSharePath + "/community/" + sCommunity);
   this->initTemplates(sPath + "/templates");
   this->initHtmlTpl(sPath + "/Preview.tpl");
-  m_sListIWLs.clear();
-  m_sListIWLUrls.clear();
-  Templates::initMappings(sPath + "/linkmap/linkmap.csv", ',',
-                          m_sListIWLs, m_sListIWLUrls);
-  m_sListIWLs << QStringLiteral("user");      // "Build-in" IWL
-  m_sListIWLUrls << QStringLiteral("user/");  // TODO(): Add community URL?
 
-  m_sListFlags.clear();
-  m_sListFlagsImg.clear();
-  Templates::initMappings(sPath + "/flagmap/flagmap.csv", ',',
-                          m_sListFlags, m_sListFlagsImg);
-  m_sListSmilies.clear();
-  m_sListSmiliesImg.clear();
-  Templates::initMappings(sPath + "/SmileysMap.csv", ',',
-                          m_sListSmilies, m_sListSmiliesImg);
+  m_IwlMap.clear();
+  Templates::initMap(sPath + "/linkmap/linkmap.csv", ',', &m_IwlMap);
+  m_IwlMap.insert(QStringLiteral("user"), QStringLiteral("user/"));  // Buildin
+  m_FlagMap.clear();
+  Templates::initMap(sPath + "/flagmap/flagmap.csv", ',', &m_FlagMap);
+
+  Templates::initTxtMap(sPath + "/SmileysMap.csv", ',', &m_SmiliesTxtMap);
+
   this->initTextformats(sPath + "/Textformats.conf");
 
   sPath = "/community/" + sCommunity;
 
-  m_sListTestedWith.clear();
-  m_sListTestedWithStrings.clear();
-  Templates::initMappings(sSharePath + sPath + "/templates/TestedWith.conf",
-                          '=', m_sListTestedWith, m_sListTestedWithStrings);
+  m_TestedWithMap.clear();
+  Templates::initMap(sSharePath + sPath + "/templates/TestedWith.conf",
+                     '=', &m_TestedWithMap);
   QFile tmpFile(sUserDataDir + sPath + "/templates/TestedWith.conf");
   if (tmpFile.exists()) {
-    Templates::initMappings(tmpFile.fileName(), '=',
-                            m_sListTestedWith, m_sListTestedWithStrings);
+    Templates::initMap(tmpFile.fileName(), '=', &m_TestedWithMap);
   }
 
-  m_sListTestedWithTouch.clear();
-  m_sListTestedWithTouchStrings.clear();
-  Templates::initMappings(
-        sSharePath + sPath + "/templates/TestedWithTouch.conf",
-        '=', m_sListTestedWithTouch,
-        m_sListTestedWithTouchStrings);
+  m_TestedWithTouchMap.clear();
+  Templates::initMap(sSharePath + sPath + "/templates/TestedWithTouch.conf",
+                     '=', &m_TestedWithTouchMap);
   tmpFile.setFileName(sUserDataDir + sPath + "/templates/TestedWithTouch.conf");
   if (tmpFile.exists()) {
-    Templates::initMappings(tmpFile.fileName(), '=',
-                            m_sListTestedWithTouch,
-                            m_sListTestedWithTouchStrings);
+    Templates::initMap(tmpFile.fileName(), '=', &m_TestedWithTouchMap);
   }
 }
 
@@ -203,19 +190,17 @@ void Templates::initHtmlTpl(const QString &sTplFile) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Templates::initMappings(const QString &sFileName,
-                             const QChar cSplit,
-                             QStringList &sListElements,
-                             QStringList &sListMapping) {
-  QFile MapFile(sFileName);
+void Templates::initMap(const QString &sFile,
+                        const QChar cSplit,
+                        QHash<QString, QString> *map) {
+  QFile MapFile(sFile);
   if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(
           nullptr, QStringLiteral("Warning"),
           QStringLiteral("Could not open mapping file!"));
     qWarning() << "Could not open mapping config file:"
                << MapFile.fileName();
-    sListElements << QStringLiteral("ERROR");
-    sListMapping << QStringLiteral("ERROR");
+    map->clear();
   } else {
     QTextStream in(&MapFile);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -223,18 +208,56 @@ void Templates::initMappings(const QString &sFileName,
     in.setCodec("UTF-8");
 #endif
     QString tmpLine;
-    QString sElement;
-    QString sMapping;
+    QString sKey;
+    QString sValue;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) &&
           !tmpLine.trimmed().isEmpty()) {
-        sElement = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
-        sMapping = tmpLine.section(cSplit, 1);     // Second part after match
-        if (!sElement.isEmpty() && !sMapping.isEmpty() &&
-            !sListElements.contains(sElement.trimmed())) {
-          sListElements << sElement.trimmed();
-          sListMapping << sMapping.trimmed();
+        sKey = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
+        sValue = tmpLine.section(cSplit, 1);   // Second part after match
+        if (!sKey.isEmpty() && !sValue.isEmpty() &&
+            !map->contains(sKey.trimmed())) {
+          map->insert(sKey.trimmed(), sValue.trimmed());
+        }
+      }
+    }
+    MapFile.close();
+  }
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void Templates::initTxtMap(const QString &sFile,
+                           const QChar cSplit,
+                           QPair<QStringList, QStringList> *map) {
+  QFile MapFile(sFile);
+  if (!MapFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QMessageBox::warning(
+          nullptr, QStringLiteral("Warning"),
+          QStringLiteral("Could not open TXT mapping file!"));
+    qWarning() << "Could not open TXT mapping config file:"
+               << MapFile.fileName();
+  } else {
+    QTextStream in(&MapFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Since Qt 6 UTF-8 is used by default
+    in.setCodec("UTF-8");
+#endif
+    QString tmpLine;
+    QString sKey;
+    QString sValue;
+    while (!in.atEnd()) {
+      tmpLine = in.readLine().trimmed();
+      if (!tmpLine.startsWith(QLatin1String("#")) &&
+          !tmpLine.trimmed().isEmpty()) {
+        sKey = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
+        sValue = tmpLine.section(cSplit, 1);   // Second part after match
+        if (!sKey.isEmpty() && !sValue.isEmpty() &&
+            !map->first.contains(sKey.trimmed())) {
+          map->first << sKey.trimmed();
+          map->second << sValue.trimmed();
         }
       }
     }
@@ -322,39 +345,24 @@ auto Templates::getListFormatHtmlEnd() const -> QStringList {
 }
 
 // ----------------------------------------------------------------------------
-// Mappings
+// Mappings / txt mappings
 
-auto Templates::getListIWLs() const -> QStringList {
-  return m_sListIWLs;
-}
-auto Templates::getListIWLUrls() const -> QStringList {
-  return m_sListIWLUrls;
+auto  Templates::getIwlMap() const -> QHash<QString, QString> {
+  return m_IwlMap;
 }
 
-auto Templates::getListFlags() const -> QStringList {
-  return m_sListFlags;
-}
-auto Templates::getListFlagsImg() const -> QStringList {
-  return m_sListFlagsImg;
+auto  Templates::getFlagMap() const -> QHash<QString, QString> {
+  return m_FlagMap;
 }
 
-auto Templates::getListSmilies() const -> QStringList {
-  return m_sListSmilies;
-}
-auto Templates::getListSmiliesImg() const -> QStringList {
-  return m_sListSmiliesImg;
+auto  Templates::getTestedWithMap() const -> QHash<QString, QString> {
+  return m_TestedWithMap;
 }
 
-auto Templates::getListTestedWith() const -> QStringList {
-  return m_sListTestedWith;
-}
-auto Templates::getListTestedWithStrings() const -> QStringList {
-  return m_sListTestedWithStrings;
+auto  Templates::getTestedWithTouchMap() const -> QHash<QString, QString> {
+  return m_TestedWithTouchMap;
 }
 
-auto Templates::getListTestedWithTouch() const -> QStringList {
-  return m_sListTestedWithTouch;
-}
-auto Templates::getListTestedWithTouchStrings() const -> QStringList {
-  return m_sListTestedWithTouchStrings;
+auto Templates::getSmiliesTxtMap() const -> QPair<QStringList, QStringList> {
+  return m_SmiliesTxtMap;
 }

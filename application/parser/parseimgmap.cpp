@@ -33,20 +33,21 @@
 ParseImgMap::ParseImgMap() = default;
 
 void ParseImgMap::startParsing(QTextDocument *pRawDoc,
-                               QStringList sListElements,
-                               QStringList sListImages,
+                               const QHash<QString, QString> &map,
                                const QString &sSharePath,
                                const QString &sCommunity) {
   QString sDoc(pRawDoc->toPlainText());
 
-  for (int i = 0; i < sListElements.size(); i++) {
-    if (0 == i && "error" == sListElements[0].toLower()) {
-      qCritical() << "Error while parsing image map.";
-      break;
+  QHashIterator<QString, QString> i(map);
+  if (!map.isEmpty()) {
+    while (i.hasNext()) {
+      i.next();
+      sDoc.replace(i.key(),
+                   "<img src=\"" + sSharePath + "/community/" + sCommunity +
+                   "/" + i.value() + "\" />");
     }
-    sDoc.replace(sListElements[i],
-                 "<img src=\"" + sSharePath + "/community/" + sCommunity +
-                 "/" + sListImages[i] + "\" />");
+  } else {
+    qCritical() << "Error while parsing image map - map is empty!";
   }
 
   // Replace raw document with new replaced doc

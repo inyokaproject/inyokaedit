@@ -38,18 +38,14 @@ ProvisionalTplParser::ProvisionalTplParser(
     const QStringList &sListHtmlStart,
     const QString &sSharePath,
     const QDir &tmpImgDir,
-    const QStringList &sListTestedWith,
-    const QStringList &sListTestedWithStrings,
-    const QStringList &sListTestedWithTouch,
-    const QStringList &sListTestedWithTouchStrings,
+    const QHash<QString, QString> &TestedWithMap,
+    const QHash<QString, QString> &TestedWithTouchMap,
     const QString &sCommunity)
   : m_sListHtmlStart(sListHtmlStart),
     m_sSharePath(sSharePath),
     m_tmpImgDir(tmpImgDir),
-    m_sListTestedWith(sListTestedWith),
-    m_sListTestedWithStrings(sListTestedWithStrings),
-    m_sListTestedWithTouch(sListTestedWithTouch),
-    m_sListTestedWithTouchStrings(sListTestedWithTouchStrings),
+    m_TestedWithMap(TestedWithMap),
+    m_TestedWithTouchMap(TestedWithTouchMap),
     m_sCommunity(sCommunity) {
 }
 
@@ -2048,9 +2044,8 @@ auto ProvisionalTplParser::parseTested(
       sListTmp = sListArgs;
       sListTmp.sort();
       for (int i = sListArgs.size()-1; i >= 0; i--) {
-        qint32 nIndex = m_sListTestedWith.indexOf(sListTmp[i].toLower());
-        if (-1 != nIndex && nIndex < m_sListTestedWithStrings.size()) {
-          sOutput += "\n * " + m_sListTestedWithStrings[nIndex];
+        if (m_TestedWithMap.contains(sListTmp[i].toLower())) {
+          sOutput += "\n * " + m_TestedWithMap.value(sListTmp[i].toLower());
         }
       }
       if (sOutput.isEmpty()) {
@@ -2104,9 +2099,8 @@ auto ProvisionalTplParser::parseTestedUT(
     } else {  // Article tested with Ubuntu versions
       for (int i = 0; i < sListArgs.size(); i++) {
         sOutput += "\n * ";
-        qint32 nIndex = m_sListTestedWithTouch.indexOf(sListArgs[i].toLower());
-        if (-1 != nIndex && nIndex < m_sListTestedWithTouchStrings.size()) {
-          sOutput += m_sListTestedWithTouchStrings[nIndex];
+        if (m_TestedWithTouchMap.contains(sListArgs[i].toLower())) {
+          sOutput += m_TestedWithTouchMap.value(sListArgs[i]);
         } else {
           sOutput += sListArgs[i];
         }

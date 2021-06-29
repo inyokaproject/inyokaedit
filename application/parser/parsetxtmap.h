@@ -27,6 +27,7 @@
 #ifndef APPLICATION_PARSER_PARSETXTMAP_H_
 #define APPLICATION_PARSER_PARSETXTMAP_H_
 
+#include <QPair>
 #include <QStringList>
 
 class QTextDocument;
@@ -35,8 +36,7 @@ class ParseTxtMap {
  public:
     ParseTxtMap();
     static void startParsing(QTextDocument *pRawDoc,
-                             QStringList sListElements,
-                             QStringList sListText);
+                             const QPair<QStringList, QStringList> &map);
 };
 
 #endif  // APPLICATION_PARSER_PARSETXTMAP_H_

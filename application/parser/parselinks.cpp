@@ -33,12 +33,10 @@
 #include "../utils.h"
 
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
-                       const QStringList &sListIWiki,
-                       const QStringList &sListIWikiUrl,
+                       const QHash<QString, QString> &IwlMap,
                        const bool bCheckLinks, QObject *pParent)
   : m_sWikiUrl(sUrlToWiki),
-    m_sListInterwikiKey(sListIWiki),
-    m_sListInterwikiLink(sListIWikiUrl),
+    m_IwlMap(IwlMap),
     m_bCheckLinks(bCheckLinks),
     m_NWreply(nullptr) {
   Q_UNUSED(pParent)
@@ -273,9 +271,11 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
   // Generate pattern
   QString sPattern = QStringLiteral("\\[{1,1}\\b(");
-  for (int i = 0; i < m_sListInterwikiKey.size(); i++) {
-    sPattern += m_sListInterwikiKey[i];
-    if (i != m_sListInterwikiKey.size() -1) {
+  QHashIterator<QString, QString> i(m_IwlMap);
+  while (i.hasNext()) {
+    i.next();
+    sPattern += i.key();
+    if (i.hasNext()) {
       sPattern += QLatin1String("|");
     }
   }
@@ -308,9 +308,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
           }
 
           if (sListLink.size() >= 3) {
-            QString sTmpUrl(
-                  m_sListInterwikiLink[m_sListInterwikiKey.indexOf(
-                  sListLink[0])]);
+            QString sTmpUrl(m_IwlMap.value(sListLink[0]));
             // Check for iWikilink with PAGE
             if (sTmpUrl.contains(QLatin1String("PAGE"), Qt::CaseSensitive)) {
               sTmpUrl.replace(QLatin1String("PAGE"), sListLink[1],

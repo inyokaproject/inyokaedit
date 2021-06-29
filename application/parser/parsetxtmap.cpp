@@ -32,22 +32,22 @@
 ParseTxtMap::ParseTxtMap() = default;
 
 void ParseTxtMap::startParsing(QTextDocument *pRawDoc,
-                               QStringList sListElements,
-                               QStringList sListText) {
+                               const QPair<QStringList, QStringList> &map) {
   QString sDoc(pRawDoc->toPlainText());
   QString sReplace;
 
-  for (int i = 0; i < sListElements.size(); i++) {
-    if (0 == i && "error" == sListElements[0].toLower()) {
-      qCritical() << "Error while parsing text map.";
-      break;
-    }
-    sReplace = sListText[i];
+  if (map.first.size() != map.second.size() || map.first.isEmpty()) {
+    qWarning() << "Error while parsing text map!";
+    return;
+  }
+
+  for (int i = 0; i < map.first.size(); i++) {
+    sReplace = map.second.at(i);
     if (sReplace.startsWith(QLatin1String("css-class:"))) {
       sReplace = sReplace.remove(QStringLiteral("css-class:"));
       sReplace = "<span class=\"" + sReplace + "\"></span>";
     }
-    sDoc.replace(sListElements[i], sReplace);
+    sDoc.replace(map.first.at(i), sReplace);
   }
 
   // Replace raw document with new replaced doc

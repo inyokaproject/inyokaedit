@@ -27,6 +27,7 @@
 #ifndef APPLICATION_TEMPLATES_TEMPLATES_H_
 #define APPLICATION_TEMPLATES_TEMPLATES_H_
 
+#include <QHash>
 #include <QString>
 #include <QStringList>
 
@@ -48,24 +49,22 @@ class Templates {
     auto getListFormatHtmlEnd() const -> QStringList;
 
     // Mappings
-    auto getListIWLs() const -> QStringList;
-    auto getListIWLUrls() const -> QStringList;
-    auto getListFlags() const -> QStringList;
-    auto getListFlagsImg() const -> QStringList;
-    auto getListSmilies() const -> QStringList;
-    auto getListSmiliesImg() const -> QStringList;
-    auto getListTestedWith() const -> QStringList;
-    auto getListTestedWithStrings() const -> QStringList;
-    auto getListTestedWithTouch() const -> QStringList;
-    auto getListTestedWithTouchStrings() const -> QStringList;
+    auto getIwlMap() const -> QHash<QString, QString>;
+    auto getFlagMap() const -> QHash<QString, QString>;
+    auto getTestedWithMap() const -> QHash<QString, QString>;
+    auto getTestedWithTouchMap() const -> QHash<QString, QString>;
+    // Txt mapping
+    auto getSmiliesTxtMap() const -> QPair<QStringList, QStringList>;
 
  private:
     void initTemplates(const QString &sTplPath);
     void initHtmlTpl(const QString &sTplFile);
-    static void initMappings(const QString &sFileName,
-                             const QChar cSplit,
-                             QStringList &sListElements,
-                             QStringList &sListMapping);
+    static void initMap(const QString &sFile,
+                        const QChar cSplit,
+                        QHash<QString, QString> *map);
+    static void initTxtMap(const QString &sFile,
+                           const QChar cSplit,
+                           QPair<QStringList, QStringList> *map);
     void initTextformats(const QString &sFileName);
 
     QString m_sPreviewTemplate;
@@ -84,16 +83,12 @@ class Templates {
     QStringList m_sListFormatHtmlEnd;
 
     // Mappings
-    QStringList m_sListIWLs;
-    QStringList m_sListIWLUrls;
-    QStringList m_sListFlags;
-    QStringList m_sListFlagsImg;
-    QStringList m_sListSmilies;
-    QStringList m_sListSmiliesImg;
-    QStringList m_sListTestedWith;
-    QStringList m_sListTestedWithStrings;
-    QStringList m_sListTestedWithTouch;
-    QStringList m_sListTestedWithTouchStrings;
+    QHash<QString, QString> m_IwlMap;
+    QHash<QString, QString> m_FlagMap;
+    QHash<QString, QString> m_TestedWithMap;
+    QHash<QString, QString> m_TestedWithTouchMap;
+    // Txt mapping (only if order of the mappings is important)
+    QPair<QStringList, QStringList> m_SmiliesTxtMap;
 };
 
 #endif  // APPLICATION_TEMPLATES_TEMPLATES_H_

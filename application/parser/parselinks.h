@@ -27,9 +27,9 @@
 #ifndef APPLICATION_PARSER_PARSELINKS_H_
 #define APPLICATION_PARSER_PARSELINKS_H_
 
+#include <QHash>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QStringList>
 
 class QTextDocument;
 
@@ -42,8 +42,7 @@ class ParseLinks : public QObject {
 
  public:
     ParseLinks(const QString &sUrlToWiki,
-               const QStringList &sListIWiki,
-               const QStringList &sListIWikiUrl,
+               const QHash<QString, QString> &IwlMap,
                const bool bCheckLinks,
                QObject *pParent = nullptr);
 
@@ -61,8 +60,7 @@ class ParseLinks : public QObject {
     static void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
 
     QString m_sWikiUrl;   // Inyoka wiki url
-    QStringList m_sListInterwikiKey;   // Interwiki link keywords
-    QStringList m_sListInterwikiLink;  // Interwiki link urls
+    QHash<QString, QString> m_IwlMap; // Interwiki link keys/urls
 
     bool m_bCheckLinks;
     QString m_sLinkClassAddition;

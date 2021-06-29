@@ -68,15 +68,12 @@ Parser::Parser(const QString &sSharePath,
                         m_pTemplates->getListTplNamesINY(),
                         m_pTemplates->getListFormatHtmlStart(),
                         m_sSharePath, m_tmpImgDir,
-                        m_pTemplates->getListTestedWith(),
-                        m_pTemplates->getListTestedWithStrings(),
-                        m_pTemplates->getListTestedWithTouch(),
-                        m_pTemplates->getListTestedWithTouchStrings(),
+                        m_pTemplates->getTestedWithMap(),
+                        m_pTemplates->getTestedWithTouchMap(),
                         m_sCommunity);
 
   m_pLinkParser = new ParseLinks(m_sInyokaUrl,
-                                 m_pTemplates->getListIWLs(),
-                                 m_pTemplates->getListIWLUrls(),
+                                 m_pTemplates->getIwlMap(),
                                  bCheckLinks);
 }
 
@@ -117,7 +114,7 @@ auto Parser::genOutput(const QString &sActFile,
     QPair<int, QString> ret = SyntaxCheck::checkInyokaSyntax(
           m_pRawText,
           m_pTemplates->getListTplNamesINY(),
-          m_pTemplates->getListSmilies(),
+          m_pTemplates->getSmiliesTxtMap().first,
           m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(ret);
   }
@@ -146,9 +143,7 @@ auto Parser::genOutput(const QString &sActFile,
                                  m_pTemplates->getListFormatHtmlEnd());
 
   // Replace smilies
-  ParseTxtMap::startParsing(m_pRawText,
-                            m_pTemplates->getListSmilies(),
-                            m_pTemplates->getListSmiliesImg());
+  ParseTxtMap::startParsing(m_pRawText, m_pTemplates->getSmiliesTxtMap());
 
   // Replace flags
   // After smilies, because some smilies are using flag format (e.g. {dl})
@@ -157,8 +152,7 @@ auto Parser::genOutput(const QString &sActFile,
   this->replaceFlags(m_pRawText);
 #else
   ParseImgMap::startParsing(m_pRawText,
-                            m_pTemplates->getListFlags(),
-                            m_pTemplates->getListFlagsImg(),
+                            m_pTemplates->getFlagMap(),
                             m_sSharePath,
                             m_sCommunity);
 #endif

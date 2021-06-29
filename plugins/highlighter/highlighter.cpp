@@ -768,15 +768,15 @@ void Highlighter::defineRules() {
   m_highlightingRules.append(rule);
 
   // Image map elements (flags, smilies, etc.)
-  const QStringList listFlags(m_pTemplates->getListFlags());
-  const QStringList listSmilies(m_pTemplates->getListSmilies());
+  const QList<QString> flagMap(m_pTemplates->getFlagMap().keys());
+  const QStringList smiliesTxtMap(m_pTemplates->getSmiliesTxtMap().first);
   sListRegExpPatterns.clear();
-  sListRegExpPatterns.reserve(listFlags.size() + listSmilies.size());
-  for (const auto &tmpStr : listFlags) {
+  sListRegExpPatterns.reserve(flagMap.size() + smiliesTxtMap.size());
+  for (const auto &tmpStr : flagMap) {
     sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
   // sListRegExpPatterns << "\\{([a-z]{2}|[A-Z]{2})\\}";  // Flags
-  for (const auto &tmpStr : listSmilies) {
+  for (const auto &tmpStr : smiliesTxtMap) {
     sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
@@ -787,10 +787,10 @@ void Highlighter::defineRules() {
   }
 
   // InterWiki-Links
-  const QStringList listIWLs(m_pTemplates->getListIWLs());
+  const QList<QString> iwlKeys(m_pTemplates->getIwlMap().keys());
   sListRegExpPatterns.clear();
-  sListRegExpPatterns.reserve(listIWLs.size());
-  for (const auto &tmpStr : listIWLs) {
+  sListRegExpPatterns.reserve(iwlKeys.size());
+  for (const auto &tmpStr : iwlKeys) {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
