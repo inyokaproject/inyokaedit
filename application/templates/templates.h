@@ -43,11 +43,6 @@ class Templates {
     auto getListTplNamesALL() const -> QStringList;
     auto getListTplMacrosALL() const -> QStringList;
 
-    auto getListFormatStart() const -> QStringList;
-    auto getListFormatEnd() const -> QStringList;
-    auto getListFormatHtmlStart() const -> QStringList;
-    auto getListFormatHtmlEnd() const -> QStringList;
-
     // Mappings
     auto getIwlMap() const -> QHash<QString, QString>;
     auto getFlagMap() const -> QHash<QString, QString>;
@@ -55,6 +50,10 @@ class Templates {
     auto getTestedWithTouchMap() const -> QHash<QString, QString>;
     // Txt mapping
     auto getSmiliesTxtMap() const -> QPair<QStringList, QStringList>;
+    auto getFormatStartMap() const -> QPair<QStringList, QStringList>;
+    auto getFormatEndMap() const -> QPair<QStringList, QStringList>;
+    auto getFormatStartNoTranslateMap() const -> QPair<QStringList, QStringList>;
+    auto getFormatEndNoTranslateMap() const -> QPair<QStringList, QStringList>;
 
  private:
     void initTemplates(const QString &sTplPath);
@@ -75,13 +74,6 @@ class Templates {
     QStringList m_sListTplNamesALL;
     QStringList m_sListTplMacrosALL;
 
-    // List for text formats (start keyword, end keyword,
-    // start HTML code, end HTML code)
-    QStringList m_sListFormatStart;
-    QStringList m_sListFormatEnd;
-    QStringList m_sListFormatHtmlStart;
-    QStringList m_sListFormatHtmlEnd;
-
     // Mappings
     QHash<QString, QString> m_IwlMap;
     QHash<QString, QString> m_FlagMap;
@@ -89,6 +81,10 @@ class Templates {
     QHash<QString, QString> m_TestedWithTouchMap;
     // Txt mapping (only if order of the mappings is important)
     QPair<QStringList, QStringList> m_SmiliesTxtMap;
+    QPair<QStringList, QStringList> m_FormatStartMap;
+    QPair<QStringList, QStringList> m_FormatEndMap;
+    QPair<QStringList, QStringList> m_FormatStartNoTranslateMap;
+    QPair<QStringList, QStringList> m_FormatEndNoTranslateMap;
 };
 
 #endif  // APPLICATION_TEMPLATES_TEMPLATES_H_

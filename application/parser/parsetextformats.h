@@ -34,11 +34,10 @@ class QTextDocument;
 class ParseTextformats {
  public:
     ParseTextformats();
-    static void startParsing(QTextDocument *pRawDoc,
-                             const QStringList &sListFormatStart,
-                             const QStringList &sListFormatEnd,
-                             const QStringList &sListHtmlStart,
-                             const QStringList &sListHtmlEnd);
+    static void startParsing(
+        QTextDocument *pRawDoc,
+        const QPair<QStringList, QStringList> &FormatStartMap,
+        const QPair<QStringList, QStringList> &FormatEndMap);
 };
 
 #endif  // APPLICATION_PARSER_PARSETEXTFORMATS_H_

@@ -831,10 +831,10 @@ void Highlighter::defineRules() {
 
   // Define textformat keywords (bold, italic, etc.)
   sListRegExpPatterns.clear();
-  sListRegExpPatterns.reserve(m_pTemplates->getListFormatStart().size() +
-                              m_pTemplates->getListFormatEnd().size());
-  sListRegExpPatterns.append(m_pTemplates->getListFormatStart());
-  sListRegExpPatterns.append(m_pTemplates->getListFormatEnd());
+  sListRegExpPatterns.reserve(m_pTemplates->getFormatStartMap().first.size() +
+                              m_pTemplates->getFormatEndMap().first.size());
+  sListRegExpPatterns.append(m_pTemplates->getFormatStartMap().first);
+  sListRegExpPatterns.append(m_pTemplates->getFormatEndMap().first);
   sListRegExpPatterns.removeDuplicates();
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   for (auto sPattern : qAsConst(sListRegExpPatterns)) {

@@ -31,11 +31,10 @@
 
 ParseTextformats::ParseTextformats() = default;
 
-void ParseTextformats::startParsing(QTextDocument *pRawDoc,
-                                    const QStringList &sListFormatStart,
-                                    const QStringList &sListFormatEnd,
-                                    const QStringList &sListHtmlStart,
-                                    const QStringList &sListHtmlEnd) {
+void ParseTextformats::startParsing(
+    QTextDocument *pRawDoc,
+    const QPair<QStringList, QStringList> &FormatStartMap,
+    const QPair<QStringList, QStringList> &FormatEndMap) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpression patternTextformat;
   QString sTmpRegExp;
@@ -47,15 +46,15 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
         QRegularExpression::DotMatchesEverythingOption |
         QRegularExpression::CaseInsensitiveOption);
 
-  for (int i = 0; i < sListFormatStart.size(); i++) {
+  for (int i = 0; i < FormatStartMap.first.size(); i++) {
     bool bFoundStart = true;
 
     // Start and end is not identical
-    if (sListFormatStart[i] != sListFormatEnd[i]) {
-      if (!sListFormatStart[i].startsWith(QLatin1String("RegExp="))) {
-        sDoc.replace(sListFormatStart[i], sListHtmlStart[i]);
+    if (FormatStartMap.first.at(i) != FormatEndMap.first.at(i)) {
+      if (!FormatStartMap.first.at(i).startsWith(QLatin1String("RegExp="))) {
+        sDoc.replace(FormatStartMap.first.at(i), FormatStartMap.second.at(i));
       } else {
-        sTmpRegExp = sListFormatStart[i];
+        sTmpRegExp = FormatStartMap.first.at(i);
         sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
@@ -68,19 +67,19 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
           nLength = match.capturedLength();
 
           if (sCap.isEmpty()) {
-            sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
-            nIndex += sListHtmlStart[i].length();
+            sDoc.replace(nIndex, nLength, FormatStartMap.second.at(i));
+            nIndex += FormatStartMap.second.at(i).length();
           } else {
             sDoc.replace(nIndex, nLength,
-                         sListHtmlStart[i].arg(sCap));
-            nIndex += sListHtmlStart[i].arg(sCap).length();
+                         FormatStartMap.second.at(i).arg(sCap));
+            nIndex += FormatStartMap.second.at(i).arg(sCap).length();
           }
         }
       }
-      if (!sListFormatEnd[i].startsWith(QLatin1String("RegExp="))) {
-        sDoc.replace(sListFormatEnd[i], sListHtmlEnd[i]);
+      if (!FormatEndMap.first.at(i).startsWith(QLatin1String("RegExp="))) {
+        sDoc.replace(FormatEndMap.first.at(i), FormatEndMap.second.at(i));
       } else {
-        sTmpRegExp = sListFormatEnd[i];
+        sTmpRegExp = FormatEndMap.first.at(i);
         sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
@@ -93,31 +92,31 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
           nLength = match.capturedLength();
 
           if (sCap.isEmpty()) {
-            sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
-            nIndex += sListHtmlEnd[i].length();
+            sDoc.replace(nIndex, nLength, FormatEndMap.second.at(i));
+            nIndex += FormatEndMap.second.at(i).length();
           } else {
             sDoc.replace(nIndex, nLength,
-                         sListHtmlEnd[i].arg(sCap));
-            nIndex += sListHtmlEnd[i].arg(sCap).length();
+                         FormatEndMap.second.at(i).arg(sCap));
+            nIndex += FormatEndMap.second.at(i).arg(sCap).length();
           }
         }
       }
     } else {  // Start and end is identical
-      if (!sListFormatStart[i].startsWith(QLatin1String("RegExp="))) {
-        while (-1 != sDoc.indexOf(sListFormatStart[i])) {
+      if (!FormatStartMap.first.at(i).startsWith(QLatin1String("RegExp="))) {
+        while (-1 != sDoc.indexOf(FormatStartMap.first.at(i))) {
           if (bFoundStart) {
-            sDoc.replace(sDoc.indexOf(sListFormatStart[i]),
-                         sListFormatStart[i].length(),
-                         sListHtmlStart[i]);
+            sDoc.replace(sDoc.indexOf(FormatStartMap.first.at(i)),
+                         FormatStartMap.first.at(i).length(),
+                         FormatStartMap.second.at(i));
           } else {
-            sDoc.replace(sDoc.indexOf(sListFormatStart[i]),
-                         sListFormatStart[i].length(),
-                         sListHtmlEnd[i]);
+            sDoc.replace(sDoc.indexOf(FormatStartMap.first.at(i)),
+                         FormatStartMap.first.at(i).length(),
+                         FormatEndMap.second.at(i));
           }
           bFoundStart = !bFoundStart;
         }
       } else {
-        sTmpRegExp = sListFormatStart[i];
+        sTmpRegExp = FormatStartMap.first.at(i);
         sTmpRegExp.remove(QStringLiteral("RegExp="));
         sTmpRegExp = sTmpRegExp.trimmed();
         patternTextformat.setPattern(sTmpRegExp);
@@ -131,21 +130,21 @@ void ParseTextformats::startParsing(QTextDocument *pRawDoc,
 
           if (sCap.isEmpty()) {
             if (bFoundStart) {
-              sDoc.replace(nIndex, nLength, sListHtmlStart[i]);
-              nIndex += sListHtmlStart[i].length();
+              sDoc.replace(nIndex, nLength, FormatStartMap.second.at(i));
+              nIndex += FormatStartMap.second.at(i).length();
             } else {
-              sDoc.replace(nIndex, nLength, sListHtmlEnd[i]);
-              nIndex += sListHtmlEnd[i].length();
+              sDoc.replace(nIndex, nLength, FormatEndMap.second.at(i));
+              nIndex += FormatEndMap.second.at(i).length();
             }
           } else {
             if (bFoundStart) {
               sDoc.replace(nIndex, nLength,
-                           sListHtmlStart[i].arg(sCap));
-              nIndex += sListHtmlStart[i].arg(sCap).length();
+                           FormatStartMap.second.at(i).arg(sCap));
+              nIndex += FormatStartMap.second.at(i).arg(sCap).length();
             } else {
               sDoc.replace(nIndex, nLength,
-                           sListHtmlEnd[i].arg(sCap));
-              nIndex += sListHtmlEnd[i].arg(sCap).length();
+                           FormatEndMap.second.at(i).arg(sCap));
+              nIndex += FormatEndMap.second.at(i).arg(sCap).length();
             }
           }
         }

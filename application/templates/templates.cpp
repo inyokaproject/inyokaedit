@@ -213,12 +213,12 @@ void Templates::initMap(const QString &sFile,
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) &&
-          !tmpLine.trimmed().isEmpty()) {
-        sKey = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
-        sValue = tmpLine.section(cSplit, 1);   // Second part after match
+          !tmpLine.isEmpty()) {
+        sKey = tmpLine.section(cSplit, 0, 0).trimmed();  // Split at first occurrence
+        sValue = tmpLine.section(cSplit, 1).trimmed();   // Second part after match
         if (!sKey.isEmpty() && !sValue.isEmpty() &&
-            !map->contains(sKey.trimmed())) {
-          map->insert(sKey.trimmed(), sValue.trimmed());
+            !map->contains(sKey)) {
+          map->insert(sKey, sValue);
         }
       }
     }
@@ -251,13 +251,13 @@ void Templates::initTxtMap(const QString &sFile,
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) &&
-          !tmpLine.trimmed().isEmpty()) {
-        sKey = tmpLine.section(cSplit, 0, 0);  // Split at first occurrence
-        sValue = tmpLine.section(cSplit, 1);   // Second part after match
+          !tmpLine.isEmpty()) {
+        sKey = tmpLine.section(cSplit, 0, 0).trimmed();  // Split at first occurrence
+        sValue = tmpLine.section(cSplit, 1).trimmed();   // Second part after match
         if (!sKey.isEmpty() && !sValue.isEmpty() &&
-            !map->first.contains(sKey.trimmed())) {
-          map->first << sKey.trimmed();
-          map->second << sValue.trimmed();
+            !map->first.contains(sKey)) {
+          map->first << sKey;
+          map->second << sValue;
         }
       }
     }
@@ -278,11 +278,6 @@ void Templates::initTextformats(const QString &sFilename) {
           QStringLiteral("Could not open text formats file!"));
     qWarning() << "Could not open text formats config file:"
                << formatsFile.fileName();
-    // Initialize possible text formats
-    m_sListFormatStart << QStringLiteral("ERROR");
-    m_sListFormatEnd << QStringLiteral("ERROR");
-    m_sListFormatHtmlStart << QStringLiteral("ERROR");
-    m_sListFormatHtmlEnd << QStringLiteral("ERROR");
   } else {
     QTextStream in(&formatsFile);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -292,18 +287,24 @@ void Templates::initTextformats(const QString &sFilename) {
     QString tmpLine;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
-      if (!tmpLine.startsWith(QLatin1String("#")) &&
-          !tmpLine.trimmed().isEmpty()) {
-        sListInput << tmpLine.trimmed();
+      if (!tmpLine.startsWith(QLatin1String("#")) && !tmpLine.isEmpty()) {
+        sListInput << tmpLine;
       }
     }
     formatsFile.close();
 
     for (int i = 0; i + 3 < sListInput.size(); i += 4) {
-      m_sListFormatStart << sListInput[i];
-      m_sListFormatEnd << sListInput[i+1];
-      m_sListFormatHtmlStart << sListInput[i+2];
-      m_sListFormatHtmlEnd << sListInput[i+3];
+      m_FormatStartMap.first << sListInput.at(i);
+      m_FormatEndMap.first << sListInput.at(i+1);
+      m_FormatStartMap.second << sListInput.at(i+2);
+      m_FormatEndMap.second << sListInput.at(i+3);
+
+      if (sListInput.at(i+2).contains(QLatin1String("class=\"notranslate\""))) {
+        m_FormatStartNoTranslateMap.first << sListInput.at(i);
+        m_FormatEndNoTranslateMap.first << sListInput.at(i+1);
+        m_FormatStartNoTranslateMap.second << sListInput.at(i+2);
+        m_FormatEndNoTranslateMap.second << sListInput.at(i+3);
+      }
     }
   }
 }
@@ -331,21 +332,8 @@ auto Templates::getListTplMacrosALL() const -> QStringList {
   return m_sListTplMacrosALL;
 }
 
-auto Templates::getListFormatStart() const -> QStringList {
-  return m_sListFormatStart;
-}
-auto Templates::getListFormatEnd() const -> QStringList {
-  return m_sListFormatEnd;
-}
-auto Templates::getListFormatHtmlStart() const -> QStringList {
-  return m_sListFormatHtmlStart;
-}
-auto Templates::getListFormatHtmlEnd() const -> QStringList {
-  return m_sListFormatHtmlEnd;
-}
-
 // ----------------------------------------------------------------------------
-// Mappings / txt mappings
+// Mappings
 
 auto  Templates::getIwlMap() const -> QHash<QString, QString> {
   return m_IwlMap;
@@ -363,6 +351,23 @@ auto  Templates::getTestedWithTouchMap() const -> QHash<QString, QString> {
   return m_TestedWithTouchMap;
 }
 
+// ----------------------------------------------------------------------------
+// Txt mappings
+
 auto Templates::getSmiliesTxtMap() const -> QPair<QStringList, QStringList> {
   return m_SmiliesTxtMap;
+}
+
+auto Templates::getFormatStartMap() const -> QPair<QStringList, QStringList> {
+  return m_FormatStartMap;
+}
+auto Templates::getFormatEndMap() const -> QPair<QStringList, QStringList> {
+  return m_FormatEndMap;
+}
+
+auto Templates::getFormatStartNoTranslateMap() const -> QPair<QStringList, QStringList> {
+  return m_FormatStartNoTranslateMap;
+}
+auto Templates::getFormatEndNoTranslateMap() const -> QPair<QStringList, QStringList> {
+  return m_FormatEndNoTranslateMap;
 }

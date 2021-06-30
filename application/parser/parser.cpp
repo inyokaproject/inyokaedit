@@ -66,7 +66,7 @@ Parser::Parser(const QString &sSharePath,
   m_pTemplateParser = new ParseTemplates(
                         m_pMacros->getTplTranslations(),
                         m_pTemplates->getListTplNamesINY(),
-                        m_pTemplates->getListFormatHtmlStart(),
+                        m_pTemplates->getFormatStartMap().second,
                         m_sSharePath, m_tmpImgDir,
                         m_pTemplates->getTestedWithMap(),
                         m_pTemplates->getTestedWithTouchMap(),
@@ -137,10 +137,8 @@ auto Parser::genOutput(const QString &sActFile,
   Parser::replaceHorLines(m_pRawText);  // Before smilies, because of -- smiley
 
   ParseTextformats::startParsing(m_pRawText,
-                                 m_pTemplates->getListFormatStart(),
-                                 m_pTemplates->getListFormatEnd(),
-                                 m_pTemplates->getListFormatHtmlStart(),
-                                 m_pTemplates->getListFormatHtmlEnd());
+                                 m_pTemplates->getFormatStartMap(),
+                                 m_pTemplates->getFormatEndMap());
 
   // Replace smilies
   ParseTxtMap::startParsing(m_pRawText, m_pTemplates->getSmiliesTxtMap());
@@ -494,26 +492,17 @@ void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 
 void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
-  QStringList sListFormatStart;
-  QStringList sListFormatEnd;
-  QStringList sListHtmlStart;
-  QStringList sListHtmlEnd;
+  static QPair<QStringList, QStringList> FormatStartNoTranslateMap(
+        m_pTemplates->getFormatStartNoTranslateMap());
+  static QPair<QStringList, QStringList> FormatEndNoTranslateMap(
+        m_pTemplates->getFormatEndNoTranslateMap());
   QString sDoc;
   QRegularExpression patternFormat;
   unsigned int nNoTranslate;
 
-  for (int i = 0; i < m_pTemplates->getListFormatHtmlStart().size(); i++) {
-    if (m_pTemplates->getListFormatHtmlStart().at(i)
-        .contains(QLatin1String("class=\"notranslate\""))) {
-      sListFormatStart << m_pTemplates->getListFormatStart().at(i);
-      sListFormatEnd << m_pTemplates->getListFormatEnd().at(i);
-      sListHtmlStart << m_pTemplates->getListFormatHtmlStart().at(i);
-      sListHtmlEnd << m_pTemplates->getListFormatHtmlEnd().at(i);
-    }
-  }
-
-  ParseTextformats::startParsing(pRawDoc, sListFormatStart, sListFormatEnd,
-                                 sListHtmlStart, sListHtmlEnd);
+  ParseTextformats::startParsing(pRawDoc,
+                                 FormatStartNoTranslateMap,
+                                 FormatEndNoTranslateMap);
   sDoc = pRawDoc->toPlainText();  // Init sDoc here; AFTER raw doc is changed
 
   patternFormat.setPatternOptions(
@@ -522,8 +511,9 @@ void Parser::filterNoTranslate(QTextDocument *pRawDoc) {
         QRegularExpression::CaseInsensitiveOption);
 
   nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
-  for (int i = 0; i < sListHtmlStart.size(); i++) {
-    patternFormat.setPattern(sListHtmlStart[i] + ".+" + sListHtmlEnd[i]);
+  for (int i = 0; i < FormatStartNoTranslateMap.second.size(); i++) {
+    patternFormat.setPattern(FormatStartNoTranslateMap.second.at(i) +
+                             ".+" + FormatEndNoTranslateMap.second.at(i));
     int nIndex = 0;
     QRegularExpressionMatch match;
 
