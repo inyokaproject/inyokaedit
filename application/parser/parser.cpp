@@ -65,7 +65,7 @@ Parser::Parser(const QString &sSharePath,
 
   m_pTemplateParser = new ParseTemplates(
                         m_pMacros->getTplTranslations(),
-                        m_pTemplates->getListTplNamesINY(),
+                        m_pTemplates->getTemplateMap().keys(),
                         m_pTemplates->getFormatStartMap().second,
                         m_sSharePath, m_tmpImgDir,
                         m_pTemplates->getTestedWithMap(),
@@ -113,7 +113,7 @@ auto Parser::genOutput(const QString &sActFile,
   if (bSyntaxCheck) {
     QPair<int, QString> ret = SyntaxCheck::checkInyokaSyntax(
           m_pRawText,
-          m_pTemplates->getListTplNamesINY(),
+          m_pTemplates->getTemplateMap().keys(),
           m_pTemplates->getSmiliesTxtMap().first,
           m_pMacros->getTplTranslations());
     emit this->hightlightSyntaxError(ret);
@@ -231,17 +231,15 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
       // qDebug() << "CAPTURED:" << sMacro;
 
       for (const auto &s : m_pMacros->getTplTranslations()) {
-        for (int i = 0; i < m_pTemplates->getListTplNamesINY().size(); i++) {
-          if (sMacro.startsWith("[[" + s + "(" +
-                                m_pTemplates->getListTplNamesINY().at(i),
-                                Qt::CaseInsensitive)) {
-            qDebug() << "Found known macro:"
-                 << m_pTemplates->getListTplNamesINY().at(i);
+        for (const auto &sName : m_pTemplates->getTemplateMap().keys()) {
+          if (sMacro.startsWith("[[" + s + "(" + sName, Qt::CaseInsensitive)) {
+            qDebug() << "Found known macro:" << sName;
             sMacro.remove(0, sMacro.indexOf(QLatin1String("(")) + 1);
             sMacro.remove(QStringLiteral(")]]"));
 
             // Split by ',' but DON'T split quoted strings containing commas
-            QStringList tmpList = sMacro.split(QRegularExpression(QStringLiteral("\"")));  // Split "
+            QStringList tmpList = sMacro.split(
+                  QRegularExpression(QStringLiteral("\"")));  // Split at "
             bool bInside = false;
             sListArguments.clear();
             for (const auto &s : qAsConst(tmpList)) {
@@ -267,7 +265,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
             sListArguments.removeFirst();  // Remove template name
 
             // Replace arguments
-            sMacro = m_pTemplates->getListTemplatesINY().at(i);
+            sMacro = m_pTemplates->getInyokaTplLangMap().value(sName);
             for (int k = 0; k < sListArguments.size(); k++) {
               sMacro.replace("<@ $arguments." + QString::number(k)
                              + " @>", sListArguments[k].trimmed());

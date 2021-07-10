@@ -74,7 +74,7 @@ void Templates::initTemplates(const QString &sTplPath) {
   QFile TplFile(QLatin1String(""));
   QDir TplDir(sTplPath);
   QString tmpLine;
-  QString sTempTplText(QLatin1String(""));
+  QString sTempTplLangText(QLatin1String(""));
   QString sTempMacro(QLatin1String(""));
   bool bFoundMacro;
   bool bFoundTpl;
@@ -89,7 +89,7 @@ void Templates::initTemplates(const QString &sTplPath) {
       if (TplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         bFoundMacro = false;
         bFoundTpl = false;
-        sTempTplText.clear();
+        sTempTplLangText.clear();
         sTempMacro.clear();
         QTextStream in(&TplFile);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -101,7 +101,7 @@ void Templates::initTemplates(const QString &sTplPath) {
           tmpLine = in.readLine().trimmed();
           if (!tmpLine.startsWith(QLatin1String("#"))) {
             bFoundTpl = true;
-            sTempTplText += tmpLine + "\n";
+            sTempTplLangText += tmpLine + "\n";
           } else if (tmpLine.startsWith(QLatin1String("## Macro=")) &&
                      !bFoundMacro) {
             bFoundMacro = true;
@@ -112,9 +112,8 @@ void Templates::initTemplates(const QString &sTplPath) {
 
         // Found complete template
         if (bFoundMacro && bFoundTpl) {
-          m_sListTplNamesINY << fi.baseName();
-          m_sListTemplatesINY << sTempTplText;
-          m_sListTplMacrosINY << sTempMacro;
+          m_TemplateMap.insert(fi.baseName(), sTempMacro);
+          m_InyokaTplLangMap.insert(fi.baseName(), sTempTplLangText);
         }
         TplFile.close();
       } else {
@@ -135,8 +134,7 @@ void Templates::initTemplates(const QString &sTplPath) {
         tmpLine = in.readLine().trimmed();
         if (tmpLine.startsWith(QLatin1String("## Macro="))) {
           tmpLine = tmpLine.remove(QStringLiteral("## Macro="));
-          m_sListTplMacrosALL << tmpLine.trimmed();
-          m_sListTplNamesALL << fi.baseName();
+          m_MacroMap.insert(fi.baseName(), tmpLine.trimmed());
         }
         TplFile.close();
       } else {
@@ -149,10 +147,7 @@ void Templates::initTemplates(const QString &sTplPath) {
     }
   }
 
-  m_sListTplMacrosALL.append(m_sListTplMacrosINY);
-  m_sListTplNamesALL.append(m_sListTplNamesINY);
-
-  if (m_sListTplNamesINY.isEmpty()) {
+  if (m_TemplateMap.isEmpty() || m_InyokaTplLangMap.isEmpty()) {
     QMessageBox::warning(
           nullptr, QStringLiteral("Warning"),
           QStringLiteral("Could not find any markup template files!"));
@@ -160,7 +155,10 @@ void Templates::initTemplates(const QString &sTplPath) {
                << TplDir.absolutePath();
   }
 
-  qDebug() << "Found templates:" << m_sListTplNamesINY;
+  QStringList sSorted;
+  sSorted = m_TemplateMap.keys();
+  sSorted.sort();
+  qDebug() << "Found templates:" << sSorted;
 }
 
 // ----------------------------------------------------------------------------
@@ -316,20 +314,16 @@ auto Templates::getPreviewTemplate() const -> QString {
   return m_sPreviewTemplate;
 }
 
-auto Templates::getListTplNamesINY() const -> QStringList {
-  return m_sListTplNamesINY;
+auto Templates::getTemplateMap() const -> QHash<QString, QString> {
+  return m_TemplateMap;
 }
-auto Templates::getListTemplatesINY() const -> QStringList {
-  return m_sListTemplatesINY;
+
+auto Templates::getInyokaTplLangMap() const -> QHash<QString, QString> {
+  return m_InyokaTplLangMap;
 }
-auto Templates::getListTplMacrosINY() const -> QStringList {
-  return m_sListTplMacrosINY;
-}
-auto Templates::getListTplNamesALL() const -> QStringList {
-  return m_sListTplNamesALL;
-}
-auto Templates::getListTplMacrosALL() const -> QStringList {
-  return m_sListTplMacrosALL;
+
+auto Templates::getAllBoilerplates() const -> QStringList {
+  return QStringList() << m_MacroMap.values() << m_TemplateMap.values();
 }
 
 // ----------------------------------------------------------------------------

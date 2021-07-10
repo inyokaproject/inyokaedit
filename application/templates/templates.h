@@ -37,11 +37,9 @@ class Templates {
               const QString &sUserDataDir);
 
     auto getPreviewTemplate() const -> QString;
-    auto getListTplNamesINY() const -> QStringList;
-    auto getListTemplatesINY() const -> QStringList;
-    auto getListTplMacrosINY() const -> QStringList;
-    auto getListTplNamesALL() const -> QStringList;
-    auto getListTplMacrosALL() const -> QStringList;
+    auto getTemplateMap() const -> QHash<QString, QString>;
+    auto getInyokaTplLangMap() const -> QHash<QString, QString>;
+    auto getAllBoilerplates() const -> QStringList;
 
     // Mappings
     auto getIwlMap() const -> QHash<QString, QString>;
@@ -67,14 +65,12 @@ class Templates {
     void initTextformats(const QString &sFileName);
 
     QString m_sPreviewTemplate;
-    QStringList m_sListTplNamesINY;
-    QStringList m_sListTemplatesINY;
-    QStringList m_sListTplMacrosINY;
-
-    QStringList m_sListTplNamesALL;
-    QStringList m_sListTplMacrosALL;
 
     // Mappings
+    QHash<QString, QString> m_MacroMap;
+    QHash<QString, QString> m_TemplateMap;
+    QHash<QString, QString> m_InyokaTplLangMap;
+
     QHash<QString, QString> m_IwlMap;
     QHash<QString, QString> m_FlagMap;
     QHash<QString, QString> m_TestedWithMap;
