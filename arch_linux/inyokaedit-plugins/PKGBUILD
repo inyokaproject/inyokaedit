@@ -6,6 +6,7 @@ pkgdesc='Plugins for InyokaEdit'
 arch=('i686' 'x86_64')
 url='https://github.com/inyokaproject/inyokaedit/'
 license=('GPL3')
+makedepends=('qt5-tools')
 depends=('qt5-webkit' 'hunspell')
 optdepends=('inyokaedit: Editor for Inyoka based portals'
             'inyokaedit-data-ubuntuusersde: ubuntuusers.de community files')
