@@ -18,9 +18,6 @@ Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ if $arguments as lowercase contain 'bionic' @>
   * [:Bionic_Beaver:Ubuntu 18.04] Bionic Beaver
 <@ endif @>
-<@ if $arguments as lowercase contain 'xenial' @>
-  * [:Xenial_Xerus:Ubuntu 16.04] Xenial Xerus
-<@ endif @>
 ----
 ~-(Du möchtest den Artikel für eine weitere Ubuntu-Version testen? Mitarbeit im Wiki ist immer willkommen! Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu beachten.)-~
 <@ endif @>
@@ -29,7 +26,7 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #tag: ungetestet
 <@ endif @>
 |}}
-<@ if ['general', 'hirsute', 'groovy', 'focal', 'bionic', 'xenial'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
+<@ if ['general', 'hirsute', 'groovy', 'focal', 'bionic'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 #getestet: general
 <@ else @>
@@ -44,9 +41,6 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 <@ endif @>
 <@ if $arguments as lowercase contain 'bionic' @>
 #getestet: bionic
-<@ endif @>
-<@ if $arguments as lowercase contain 'xenial' @>
-#getestet: xenial
 <@ endif @>
 <@ endif @>
 <@ else @>
