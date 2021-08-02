@@ -1565,7 +1565,8 @@ auto ProvisionalTplParser::parsePkgInstall(
     }
   }
 
-  sOutput += "\n<p>" + QString::fromUtf8("Paketliste zum Kopieren:") + "</p>\n";
+  sOutput += "\n<p>" +
+      QString::fromUtf8("Befehl zum Installieren der Pakete:") + "</p>\n";
   sOutput += "<div class=\"bash\">\n"
              "<pre class=\"notranslate\"> sudo apt-get install";
   for (auto &s : sListPackages) {
