@@ -66,7 +66,7 @@
 ## das Makro Paketinstallation benutzen.
 ## Das könnte man später wieder ändern, der Übersicht wegen.
 ######
-Paketliste zum Kopieren:
+Befehl zum Installieren der Pakete:
 [[Vorlage(Wiki/Vorlagen/Befehl, 'sudo apt-get install<@ for $row in $arguments split_by '
 ' @> 
 <@ for $col in $row split_by "," @>
@@ -80,7 +80,7 @@ Paketliste zum Kopieren:
 ##
 ## Jetzt Installieren - Button
 ##
-Oder mit [:apturl:] die Pakete installieren. Link: [apt://<@ for $row in $arguments split_by '
+Oder mit [:apturl:] installieren, Link: [apt://<@ for $row in $arguments split_by '
 ' @>
 <@ for $col in $row split_by "," @>
 <@ if $loop.first @><@ $col @>
