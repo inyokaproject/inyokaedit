@@ -1,6 +1,7 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'hirsute' or
+<@ if $arguments as lowercase contain 'impish' or
+      $arguments as lowercase contain 'hirsute' or
       $arguments as lowercase contain 'focal' or
       $arguments as lowercase contain 'bionic' @> die folgenden [:Paketquellen freischalten:]:
 [[Vorlage(Fremd, Quelle)]] 
@@ -13,12 +14,14 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ endif @>
 <@if $arguments as lowercase contain 'hirsute' @> thirdpartyrepo-version-hirsute
 <@ endif @>
+<@if $arguments as lowercase contain 'impish' @> thirdpartyrepo-version-impish
+<@ endif @>
 ">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['hirsute', 'focal', 'bionic'] contains $arg @>
+<@ if ['impish', 'hirsute', 'focal', 'bionic'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
