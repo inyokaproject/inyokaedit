@@ -9,5 +9,5 @@
 [:Programme starten:Ein Programm ohne Menüeintrag starten]
 [:Autostart:Automatischer Start von Programmen]
 [:Menüeditor:Programme zum Menü hinzufügen]
-[:sudo:Root-Rechte]
+[:mit Root-Rechten arbeiten:]
 [:Rechte:Rechte für Dateien und Ordner ändern]
