@@ -43,15 +43,15 @@ CONFIG(debug, debug|release) {
 }
 
 isEmpty(PREVIEW) {
-  qtHaveModule(webkitwidgets) {
-    QT         += webkitwidgets
-    DEFINES    += USEQTWEBKIT
-    message("Qt webkitwidgets module found!")
+  qtHaveModule(webenginewidgets) {
+    QT         += webenginewidgets
+    DEFINES    += USEQTWEBENGINE
+    message("Qt webenginewidgetswebkitwidgets module found!")
   } else {
-    qtHaveModule(webenginewidgets) {
-      QT       += webenginewidgets
-      DEFINES  += USEQTWEBENGINE
-      message("Qt webenginewidgets module found!")
+    qtHaveModule(webkitwidgets) {
+      QT       += webkitwidgets
+      DEFINES  += USEQTWEBKIT
+      message("Qt webkitwidgets module found!")
     } else {
       DEFINES  += NOPREVIEW
       message("Neither QtWebKit nor QtWebEngine installation found!")

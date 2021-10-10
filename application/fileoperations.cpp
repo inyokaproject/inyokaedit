@@ -36,6 +36,7 @@
 #include <QTimer>
 
 #ifdef USEQTWEBENGINE
+#include <QMenu>  // Needed to compile with Qt 6.2 ?!
 #include <QWebEngineView>
 #endif
 
