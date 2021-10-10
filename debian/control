@@ -11,7 +11,7 @@ Build-Depends:
    qtbase5-dev,
    qt5-qmake,
    qttools5-dev-tools,
-   libqt5webkit5-dev,
+   qtwebengine5-dev,
    libhunspell-dev,
    pkg-config
 Standards-Version: 4.1.1
