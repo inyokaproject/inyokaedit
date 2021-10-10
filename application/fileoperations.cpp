@@ -30,17 +30,11 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QPrinter>
-#include <QPrinterInfo>
-#include <QPrintDialog>
 #include <QRegularExpression>
 #include <QScrollBar>
 #include <QTabWidget>
 #include <QTimer>
 
-#ifdef USEQTWEBKIT
-#include <QtWebKitWidgets/QWebView>
-#endif
 #ifdef USEQTWEBENGINE
 #include <QWebEngineView>
 #endif
@@ -64,6 +58,9 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
     m_pCurrentEditor(nullptr),
     m_pSettings(pSettings),
     m_sPreviewFile(sPreviewFile),
+#ifdef USEQTWEBENGINE
+    m_pPreviewWebView(nullptr),
+#endif
     m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;" +
                   tr("Inyoka article + images") + " (*.inyzip);;" +
                   tr("All files") + " (*)"),
@@ -629,40 +626,11 @@ void FileOperations::saveDocumentAuto() {
 // ----------------------------------------------------------------------------
 
 #ifndef NOPREVIEW
-void FileOperations::printPreview() {
-#ifdef USEQTWEBKIT
-  QWebView previewWebView;
-#endif
-#ifdef USEQTWEBENGINE
-  QWebEngineView previewWebView;
-#endif
-  QPrinter printer;
+#ifndef USEQTWEBKIT  // QtWebkit doesn't support print to PDF out of the box
+void FileOperations::printPdfPreview() {
+  m_pPreviewWebView = new QWebEngineView();
   QFile previewFile(m_sPreviewFile);
   QString sHtml(QLatin1String(""));
-
-  const QList <QPrinterInfo> listPrinters = QPrinterInfo::availablePrinters();
-  if (listPrinters.isEmpty()) {
-    QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         tr("No supported printer found."));
-    return;
-  }
-
-  for (const auto &info : listPrinters) {
-      qDebug() << "Found printers" << info.printerName();
-  }
-
-  // Configure printer: format A4, PDF
-  printer.setPageSize(QPageSize(QPageSize::A4));
-  printer.setPageOrientation(QPageLayout::Portrait);
-  printer.setPageMargins(QMarginsF(0, 10, 0, 10), QPageLayout::Millimeter);
-  printer.setPrintRange(QPrinter::AllPages);
-#ifndef _WIN32
-  printer.setOutputFormat(QPrinter::PdfFormat);
-  printer.setOutputFileName(m_pSettings->getLastOpenedDir().absolutePath()
-                            + "/Preview.pdf");
-#else
-  printer.setOutputFormat(QPrinter::NativeFormat);
-#endif
 
   if (!previewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(nullptr, tr("Warning"),
@@ -691,7 +659,7 @@ void FileOperations::printPreview() {
 
   /*
   // Load preview from url
-  previewWebView.load(QUrl::fromLocalFile(m_sPreviewFile));
+  m_pPreviewWebView->load(QUrl::fromLocalFile(m_sPreviewFile));
   */
 
   // Add style format; remove unwanted div for printing
@@ -701,27 +669,48 @@ void FileOperations::printPreview() {
                   "body{background-color:#ffffff;\n</style>"));
   sHtml.remove(QStringLiteral("<div class=\"wrap\">"));
 
-  previewWebView.setHtml(sHtml, QUrl::fromLocalFile(
-                           QFileInfo(m_sPreviewFile)
-                           .absoluteDir().absolutePath() + "/"));
+  QFileDialog savePdfDialog(m_pParent);
+  savePdfDialog.setDefaultSuffix(QStringLiteral("pdf"));
+  QString sPreviewOut = savePdfDialog.getSaveFileName(
+        m_pParent, tr("Print preview to PDF"),
+        m_pSettings->getLastOpenedDir().absolutePath(),
+        tr("PDF document") + " (*.pdf)");
+  if (sPreviewOut.isEmpty()) {
+    return;
+  }
+
+  connect(m_pPreviewWebView, &QWebEngineView::loadFinished,
+          this, [this, sPreviewOut]() {
+    m_pPreviewWebView->page()->printToPdf(
+          sPreviewOut, QPageLayout(QPageSize(QPageSize::A4),
+                                   QPageLayout::Portrait,
+                                   QMarginsF(0, 10, 0, 10),
+                                   QPageLayout::Millimeter));
+  });
+  connect(m_pPreviewWebView->page(), &QWebEnginePage::pdfPrintingFinished,
+          this, [this](const QString & sFilename, bool bSuccess) {
+    if (bSuccess) {
+      qDebug() << "PDF created:" << sFilename;
+    } else {
+      QMessageBox::warning(m_pParent, qApp->applicationName(),
+                           tr("PDF could not be created."));
+      qWarning() << "PDF could not be created:" << sFilename;
+    }
+    m_pPreviewWebView->deleteLater();
+  });
+
+  m_pPreviewWebView->setHtml(sHtml, QUrl::fromLocalFile(
+                               QFileInfo(m_sPreviewFile)
+                               .absoluteDir().absolutePath() + "/"));
 
   /*
-  previewWebView.setContent(sHtml.toLocal8Bit(), "application/xhtml+xml",
-                            QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
-                                                .absoluteDir()
-                                                .absolutePath() + "/"));
+  m_pPreviewWebView->setContent(sHtml.toLocal8Bit(), "application/xhtml+xml",
+                                QUrl::fromLocalFile(QFileInfo(m_sPreviewFile)
+                                                    .absoluteDir()
+                                                    .absolutePath() + "/"));
   */
-
-  QPrintDialog printDialog(&printer);
-  if (QDialog::Accepted == printDialog.exec()) {
-#ifdef USEQTWEBKIT
-    previewWebView.print(&printer);
-#endif
-#ifdef USEQTWEBENGINE
-    previewWebView.page()->print(&printer, [=](bool){});
-#endif
-  }
 }
+#endif
 #endif
 
 // ----------------------------------------------------------------------------

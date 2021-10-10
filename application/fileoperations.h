@@ -32,6 +32,9 @@
 
 class QTabWidget;
 class QTimer;
+#ifdef USEQTWEBENGINE
+class QWebEngineView;
+#endif
 
 class FindReplace;
 class Settings;
@@ -71,8 +74,8 @@ class FileOperations : public QObject {
     void loadInyArchive(const QString &sArchive);
     bool saveFile(QString sFileName);
     bool saveInyArchive(const QString &sArchive);
-#ifndef NOPREVIEW
-    void printPreview();
+#ifdef USEQTWEBENGINE  // QtWebkit doesn't support print to PDF out of the box
+    void printPdfPreview();
 #endif
 
     void copy();
@@ -120,6 +123,9 @@ class FileOperations : public QObject {
     QList<QAction *> m_LastOpenedFilesAct;
 
     QString m_sPreviewFile;
+#ifdef USEQTWEBENGINE
+    QWebEngineView *m_pPreviewWebView;
+#endif
     const QString m_sFileFilter;
 
     bool m_bLoadPreview;

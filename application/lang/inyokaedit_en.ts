@@ -55,136 +55,146 @@
 <context>
     <name>FileOperations</name>
     <message>
-        <location filename="../fileoperations.cpp" line="67"/>
+        <location filename="../fileoperations.cpp" line="64"/>
         <source>Inyoka article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="68"/>
+        <location filename="../fileoperations.cpp" line="65"/>
         <source>Inyoka article + images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="69"/>
+        <location filename="../fileoperations.cpp" line="66"/>
         <source>All files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="115"/>
+        <location filename="../fileoperations.cpp" line="112"/>
         <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="129"/>
+        <location filename="../fileoperations.cpp" line="126"/>
         <source>Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="139"/>
-        <location filename="../fileoperations.cpp" line="198"/>
-        <location filename="../fileoperations.cpp" line="209"/>
-        <location filename="../fileoperations.cpp" line="242"/>
-        <location filename="../fileoperations.cpp" line="594"/>
+        <location filename="../fileoperations.cpp" line="136"/>
+        <location filename="../fileoperations.cpp" line="195"/>
+        <location filename="../fileoperations.cpp" line="206"/>
+        <location filename="../fileoperations.cpp" line="239"/>
+        <location filename="../fileoperations.cpp" line="591"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="176"/>
+        <location filename="../fileoperations.cpp" line="173"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="220"/>
+        <location filename="../fileoperations.cpp" line="217"/>
         <source>Save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="249"/>
+        <location filename="../fileoperations.cpp" line="246"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="281"/>
+        <location filename="../fileoperations.cpp" line="278"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="334"/>
+        <location filename="../fileoperations.cpp" line="331"/>
         <source>The file &quot;%1&quot; could not be opened.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="345"/>
+        <location filename="../fileoperations.cpp" line="342"/>
         <source>The file &quot;%1&quot; is empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="352"/>
+        <location filename="../fileoperations.cpp" line="349"/>
         <source>Error reading &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="364"/>
+        <location filename="../fileoperations.cpp" line="361"/>
         <source>Something went wrong while reading &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="389"/>
+        <location filename="../fileoperations.cpp" line="386"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="399"/>
+        <location filename="../fileoperations.cpp" line="396"/>
         <source>Error while extracting archive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="431"/>
+        <location filename="../fileoperations.cpp" line="428"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="486"/>
+        <location filename="../fileoperations.cpp" line="483"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="498"/>
+        <location filename="../fileoperations.cpp" line="495"/>
         <source>Error while packing image files:
 %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="539"/>
-        <location filename="../fileoperations.cpp" line="555"/>
+        <location filename="../fileoperations.cpp" line="536"/>
+        <location filename="../fileoperations.cpp" line="552"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="567"/>
+        <location filename="../fileoperations.cpp" line="564"/>
         <source>Error while finalizing archive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="576"/>
+        <location filename="../fileoperations.cpp" line="573"/>
         <source>Error while creating archive!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="646"/>
-        <source>No supported printer found.</source>
+        <location filename="../fileoperations.cpp" line="674"/>
+        <source>Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="668"/>
+        <location filename="../fileoperations.cpp" line="676"/>
+        <source>PDF document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fileoperations.cpp" line="694"/>
+        <source>PDF could not be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../fileoperations.cpp" line="635"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="669"/>
+        <location filename="../fileoperations.cpp" line="636"/>
         <source>Could not open preview file for printing!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,26 +548,27 @@ Do you want to save your changes or discard them?</source>
     </message>
     <message>
         <location filename="../inyokaedit.ui" line="480"/>
-        <source>&amp;Print preview</source>
+        <source>&amp;Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../inyokaedit.ui" line="483"/>
-        <source>Print preview or export to PDF</source>
+        <location filename="../inyokaedit.ui" line="486"/>
+        <source>Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="488"/>
+        <location filename="../inyokaedit.ui" line="491"/>
         <source>&amp;Syntax overview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="498"/>
+        <location filename="../inyokaedit.ui" line="501"/>
         <source>Preference&amp;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="511"/>
+        <location filename="../inyokaedit.ui" line="514"/>
         <source>Upload article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -651,7 +662,7 @@ Please check your installation and restart the application.</source>
 <context>
     <name>ParseLinks</name>
     <message>
-        <location filename="../parser/parselinks.cpp" line="196"/>
+        <location filename="../parser/parselinks.cpp" line="195"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>

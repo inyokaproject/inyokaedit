@@ -61,7 +61,7 @@
     <addaction name="saveAct"/>
     <addaction name="saveAsAct"/>
     <addaction name="separator"/>
-    <addaction name="printPreviewAct"/>
+    <addaction name="printPdfPreviewAct"/>
     <addaction name="separator"/>
     <addaction name="exitAct"/>
    </widget>
@@ -470,17 +470,20 @@
     <string>Reload</string>
    </property>
   </action>
-  <action name="printPreviewAct">
+  <action name="printPdfPreviewAct">
    <property name="icon">
     <iconset theme="document-print">
      <normalon>:/menu/document-print.png</normalon>
     </iconset>
    </property>
    <property name="text">
-    <string>&amp;Print preview</string>
+    <string>&amp;Print preview to PDF</string>
+   </property>
+   <property name="iconText">
+    <string>Print preview to PDF</string>
    </property>
    <property name="toolTip">
-    <string>Print preview or export to PDF</string>
+    <string>Print preview to PDF</string>
    </property>
   </action>
   <action name="showSyntaxOverviewAct">

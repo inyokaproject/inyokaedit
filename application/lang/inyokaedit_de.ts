@@ -55,140 +55,150 @@
 <context>
     <name>FileOperations</name>
     <message>
-        <location filename="../fileoperations.cpp" line="67"/>
+        <location filename="../fileoperations.cpp" line="64"/>
         <source>Inyoka article</source>
         <translation>Inyoka Artikel</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="68"/>
+        <location filename="../fileoperations.cpp" line="65"/>
         <source>Inyoka article + images</source>
         <translation>Inyoka Artikel + Bilder</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="69"/>
+        <location filename="../fileoperations.cpp" line="66"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="115"/>
+        <location filename="../fileoperations.cpp" line="112"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="129"/>
+        <location filename="../fileoperations.cpp" line="126"/>
         <source>Template</source>
         <translation>Vorlage</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="176"/>
+        <location filename="../fileoperations.cpp" line="173"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="220"/>
+        <location filename="../fileoperations.cpp" line="217"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="249"/>
+        <location filename="../fileoperations.cpp" line="246"/>
         <source>The document &quot;%1&quot; has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Das Dokument &quot;%1&quot; ist geändert worden.
 Möchten Sie die Änderungen speichern oder verwerfen?</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="281"/>
+        <location filename="../fileoperations.cpp" line="278"/>
         <source>The file &quot;%1&quot; could not be opened:
 %2.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="334"/>
+        <location filename="../fileoperations.cpp" line="331"/>
         <source>The file &quot;%1&quot; could not be opened.</source>
         <translation>Die Datei &quot;%1&quot; konnte nicht geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="345"/>
+        <location filename="../fileoperations.cpp" line="342"/>
         <source>The file &quot;%1&quot; is empty!</source>
         <translation>Die Datei &quot;%1&quot; ist leer!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="352"/>
+        <location filename="../fileoperations.cpp" line="349"/>
         <source>Error reading &quot;%1&quot;</source>
         <translation>Fehler beim Lesen von&quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="364"/>
+        <location filename="../fileoperations.cpp" line="361"/>
         <source>Something went wrong while reading &quot;%1&quot;</source>
         <translation>Etwas ist während des Lesens von &quot;%1&quot; schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="389"/>
+        <location filename="../fileoperations.cpp" line="386"/>
         <source>Error while extracting &quot;%1&quot; from archive!</source>
         <translation>Fehler während des Entpackens von &quot;%1&quot; aus dem Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="399"/>
+        <location filename="../fileoperations.cpp" line="396"/>
         <source>Error while extracting archive!</source>
         <translation>Fehler während des Entpackens des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="431"/>
+        <location filename="../fileoperations.cpp" line="428"/>
         <source>The file &quot;%1&quot; could not be saved:
 %2.</source>
         <translation>Das Dokument &quot;%1&quot; konnte nicht gespeichert werden:
 %2.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="486"/>
+        <location filename="../fileoperations.cpp" line="483"/>
         <source>Error while creating archive &quot;%1&quot;</source>
         <translation>Fehler während der Erstellung des Archivs &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="498"/>
+        <location filename="../fileoperations.cpp" line="495"/>
         <source>Error while packing image files:
 %1.</source>
         <translation>Fehler während des Packens der Bilddatei:
 %1.</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="539"/>
-        <location filename="../fileoperations.cpp" line="555"/>
+        <location filename="../fileoperations.cpp" line="536"/>
+        <location filename="../fileoperations.cpp" line="552"/>
         <source>Error while adding &quot;%1&quot; to archive!</source>
         <translation>Fehler während des Hinzufügens von &quot;%1&quot; zum Archiv!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="567"/>
+        <location filename="../fileoperations.cpp" line="564"/>
         <source>Error while finalizing archive!</source>
         <translation>Fehler während der Fertigstellung des Archivs!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="576"/>
+        <location filename="../fileoperations.cpp" line="573"/>
         <source>Error while creating archive!</source>
         <translation>Fehler bei der Archiverstellung!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="646"/>
-        <source>No supported printer found.</source>
-        <translation>Kein unterstützter Drucker gefunden.</translation>
+        <location filename="../fileoperations.cpp" line="674"/>
+        <source>Print preview to PDF</source>
+        <translation>Vorschau als PDF drucken</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="668"/>
+        <location filename="../fileoperations.cpp" line="676"/>
+        <source>PDF document</source>
+        <translation>PDF Dokument</translation>
+    </message>
+    <message>
+        <location filename="../fileoperations.cpp" line="694"/>
+        <source>PDF could not be created.</source>
+        <translation>PDF konnte nicht erstellt werden.</translation>
+    </message>
+    <message>
+        <location filename="../fileoperations.cpp" line="635"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="669"/>
+        <location filename="../fileoperations.cpp" line="636"/>
         <source>Could not open preview file for printing!</source>
         <translation>Vorschaudatei konnte nicht zum Drucken geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../fileoperations.cpp" line="139"/>
-        <location filename="../fileoperations.cpp" line="198"/>
-        <location filename="../fileoperations.cpp" line="209"/>
-        <location filename="../fileoperations.cpp" line="242"/>
-        <location filename="../fileoperations.cpp" line="594"/>
+        <location filename="../fileoperations.cpp" line="136"/>
+        <location filename="../fileoperations.cpp" line="195"/>
+        <location filename="../fileoperations.cpp" line="206"/>
+        <location filename="../fileoperations.cpp" line="239"/>
+        <location filename="../fileoperations.cpp" line="591"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -521,19 +531,9 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Neu laden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="480"/>
-        <source>&amp;Print preview</source>
-        <translation>&amp;Vorschau drucken</translation>
-    </message>
-    <message>
-        <location filename="../inyokaedit.ui" line="498"/>
+        <location filename="../inyokaedit.ui" line="501"/>
         <source>Preference&amp;s</source>
         <translation>&amp;Einstellungen</translation>
-    </message>
-    <message>
-        <location filename="../inyokaedit.ui" line="483"/>
-        <source>Print preview or export to PDF</source>
-        <translation>Vorschau ausdrucken oder als PDF exportieren</translation>
     </message>
     <message>
         <location filename="../inyokaedit.ui" line="411"/>
@@ -546,12 +546,23 @@ Möchten Sie die Änderungen speichern oder verwerfen?</translation>
         <translation>Die Vorschau des aktuellen Artikels erstellen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="488"/>
+        <location filename="../inyokaedit.ui" line="480"/>
+        <source>&amp;Print preview to PDF</source>
+        <translation>&amp;Vorschau als PDF drucken</translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.ui" line="483"/>
+        <location filename="../inyokaedit.ui" line="486"/>
+        <source>Print preview to PDF</source>
+        <translation>Vorschau als PDF drucken</translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.ui" line="491"/>
         <source>&amp;Syntax overview</source>
         <translation>&amp;Syntax-Übersicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="511"/>
+        <location filename="../inyokaedit.ui" line="514"/>
         <source>Upload article</source>
         <translation>Artikel hochladen</translation>
     </message>
@@ -656,7 +667,7 @@ Bitte überprüfe die Installation und starte das Programm erneut.</translation>
 <context>
     <name>ParseLinks</name>
     <message>
-        <location filename="../parser/parselinks.cpp" line="196"/>
+        <location filename="../parser/parselinks.cpp" line="195"/>
         <source>Section</source>
         <translation>Abschnitt</translation>
     </message>

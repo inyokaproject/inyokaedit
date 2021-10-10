@@ -366,12 +366,12 @@ void InyokaEdit::createActions() {
   connect(m_pUi->saveAsAct, &QAction::triggered,
           m_pFileOperations, &FileOperations::saveAs);
   // Print preview
-#ifdef NOPREVIEW
-  m_pUi->printPreviewAct->setEnabled(false);
-#else
-  m_pUi->printPreviewAct->setShortcut(QKeySequence::Print);
-  connect(m_pUi->printPreviewAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::printPreview);
+  m_pUi->printPdfPreviewAct->setEnabled(false);
+#ifdef USEQTWEBENGINE
+  m_pUi->printPdfPreviewAct->setEnabled(true);
+  m_pUi->printPdfPreviewAct->setShortcut(QKeySequence::Print);
+  connect(m_pUi->printPdfPreviewAct, &QAction::triggered,
+          m_pFileOperations, &FileOperations::printPdfPreview);
 #endif
 
   // Exit application
