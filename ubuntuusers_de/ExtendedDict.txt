@@ -103,6 +103,9 @@ Hippo
 impish
 Impish
 Indri
+jammy
+Jammy
+Jellyfish
 Ubuntu
 Kubuntu
 Xubuntu
