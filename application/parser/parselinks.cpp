@@ -324,8 +324,8 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
             if (!sListLink[2].isEmpty()) {
               sTmpDescr = sListLink[2];
               // Append description with ":" if any exist
-              for (int i = 3; i < sListLink.size(); i++) {
-                sTmpDescr.append(":" + sListLink[i]);
+              for (int j = 3; j < sListLink.size(); j++) {
+                sTmpDescr.append(":" + sListLink[j]);
               }
             }
 

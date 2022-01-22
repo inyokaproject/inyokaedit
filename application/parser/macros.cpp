@@ -379,6 +379,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
 
   // Replace characters for valid links (ä, ü, ö, spaces)
   QStringList sListHeadlines_Links;
+  sListHeadlines_Links.reserve(sListHeadlines.size());
   for (const auto &s : sListHeadlines) {
     sMacro = s;
     sMacro.replace(QLatin1String(" "), QLatin1String("-"));

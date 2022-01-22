@@ -56,6 +56,7 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
     m_sFileName(QLatin1String("")),
     m_bCodeCompletion(false),
     m_sListCompleter(sListTplMacros) {
+  m_listPosCompleter.reserve(m_sListCompleter.size() + 2);
   for (int i = 0; i < m_sListCompleter.size(); i++) {
     if (!m_sListCompleter[i].startsWith('[') &&
         !m_sListCompleter[i].startsWith('{')) {
