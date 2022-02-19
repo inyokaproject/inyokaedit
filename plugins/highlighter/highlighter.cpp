@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2014-2021 The InyokaEdit developers
+ * Copyright (C) 2014-2022 The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -174,16 +174,22 @@ void Highlighter::copyDefaultStyles() {
 
   QFile stylefile(confDir.absolutePath() + "/standard-style" + m_sExt);
   if (!stylefile.exists()) {
-    if (!QFile::copy(QStringLiteral(":/standard-style.conf"),
+    if (QFile::copy(QStringLiteral(":/standard-style.conf"),
                      confDir.absolutePath() + "/standard-style" + m_sExt)) {
+      stylefile.setPermissions(stylefile.permissions() |
+                                     QFileDevice::WriteUser);
+    } else {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
   }
 
   stylefile.setFileName(confDir.absolutePath() + "/dark-style" + m_sExt);
   if (!stylefile.exists()) {
-    if (!QFile::copy(QStringLiteral(":/dark-style.conf"),
+    if (QFile::copy(QStringLiteral(":/dark-style.conf"),
                      confDir.absolutePath() + "/dark-style" + m_sExt)) {
+      stylefile.setPermissions(stylefile.permissions() |
+                                     QFileDevice::WriteUser);
+    } else {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
   }

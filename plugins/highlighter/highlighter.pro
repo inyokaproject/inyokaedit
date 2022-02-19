@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2014-2021 The InyokaEdit developers
+#  Copyright (C) 2014-2022 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.3.0
+VERSION       = 1.3.1
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2021 - Thorsten Roth"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2022 - Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \

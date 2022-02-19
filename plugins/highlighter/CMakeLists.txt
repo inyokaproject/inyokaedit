@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2021 The InyokaEdit developers
+#  Copyright (C) 2011-2022 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(highlighter
-    VERSION 1.2.6
+    VERSION 1.3.1
     DESCRIPTION "Syntax highlighter plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
-set(PROJECT_COPYRIGHT "(C) 2014-2021 - Thorsten Roth")
+set(PROJECT_COPYRIGHT "(C) 2014-2022 - Thorsten Roth")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

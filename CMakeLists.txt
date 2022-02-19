@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2021 The InyokaEdit developers
+#  Copyright (C) 2011-2022 The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
 
 cmake_minimum_required(VERSION 3.14)
 project(InyokaEdit
-    VERSION 0.26.0
+    VERSION 0.27.0
     DESCRIPTION "Editor for Inyoka based portals"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
     LANGUAGES CXX
 )
-set(PROJECT_COPYRIGHT "(C) 2011-2021 The InyokaEdit developers")
+set(PROJECT_COPYRIGHT "(C) 2011-2022 The InyokaEdit developers")
 
 option(QT6 "Use Qt6" OFF)
 
