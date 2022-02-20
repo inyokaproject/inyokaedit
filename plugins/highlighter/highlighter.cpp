@@ -531,16 +531,22 @@ void Highlighter::loadHighlighting(const QString &sStyleFile) {
   // Background
   if (this->m_bSystemBackground) {
     m_pUi->styleTable->item(0, 0)->setText(QStringLiteral("System"));
+    m_pUi->styleTable->item(0, 0)->setBackground(
+          QBrush(QApplication::palette().color(QPalette::Base)));
   } else {
     m_pUi->styleTable->item(0, 0)->setText(
           this->m_colorBackground.name());
+    m_pUi->styleTable->item(0, 0)->setBackground(QBrush(m_colorBackground));
   }
   // Foreground
   if (this->m_bSystemForeground) {
     m_pUi->styleTable->item(1, 0)->setText(QStringLiteral("System"));
+    m_pUi->styleTable->item(1, 0)->setBackground(
+          QBrush(QApplication::palette().color(QPalette::Text)));
   } else {
     m_pUi->styleTable->item(1, 0)->setText(
           this->m_colorForeground.name());
+    m_pUi->styleTable->item(1, 0)->setBackground(QBrush(m_colorForeground));
   }
 
   this->readValue(2, this->m_textformatFormat);      // Text format
@@ -557,6 +563,8 @@ void Highlighter::loadHighlighting(const QString &sStyleFile) {
   this->readValue(13, this->m_commentFormat);        // Comment
   m_pUi->styleTable->item(14, 3)->setText(
         m_syntaxErrorFormat.background().color().name());  // Syntax error
+  m_pUi->styleTable->item(14, 3)->setBackground(
+        m_syntaxErrorFormat.background());
 }
 
 // ----------------------------------------------------------------------------
@@ -567,6 +575,7 @@ void Highlighter::readValue(const quint16 nRow,
   // Foreground
   m_pUi->styleTable->item(nRow, 0)->setText(
         charFormat.foreground().color().name());
+  m_pUi->styleTable->item(nRow, 0)->setBackground(charFormat.foreground());
   // Bold
   if (charFormat.font().bold()) {
     m_pUi->styleTable->item(nRow, 1)->setCheckState(Qt::Checked);
@@ -583,8 +592,10 @@ void Highlighter::readValue(const quint16 nRow,
   if (charFormat.background().color() != Qt::transparent) {
     m_pUi->styleTable->item(nRow, 3)->setText(
           charFormat.background().color().name());
+    m_pUi->styleTable->item(nRow, 3)->setBackground(charFormat.background());
   } else {
     m_pUi->styleTable->item(nRow, 3)->setText(QLatin1String(""));
+    m_pUi->styleTable->item(nRow, 3)->setBackground(charFormat.background());
   }
 }
 
@@ -597,6 +608,7 @@ void Highlighter::clickedStyleCell(int nRow, int nCol) {
     QColor newColor = QColorDialog::getColor(initialColor);
     if (newColor.isValid()) {
       m_pUi->styleTable->item(nRow, nCol)->setText(newColor.name());
+      m_pUi->styleTable->item(nRow, nCol)->setBackground(QBrush(newColor));
     } else if (newColor.name().isEmpty()) {
       m_pUi->styleTable->item(nRow, nCol)->setText(QLatin1String(""));
     }
