@@ -65,6 +65,8 @@
     <element name="Dt. Debianwiki" insert="[debian_de:%%Seitenname%%:]" icon="debian_de.png" />
     <element name="GNOME apps" insert="[gnomeapps:%%Seitenname%%:]" icon="gnomeapps.png" />
     <element name="GNOME projects" insert="[gnomeprojects:%%Seitenname%%:]" icon="gnomeprojects.png" />
+    <element name="KDE apps" insert="[kdeapps:%%Seitenname%%:]" icon="kdeapps.png" />
+    <element name="KDE project" insert="[kdeproject:%%Seitenname%%:]" icon="kdeproject.png" />
     <element name="openSUSE" insert="[opensuse:%%Seitenname%%:]" icon="opensuse.jpg" />
     <element name="Freedesktop Software" insert="[freedesktop-software:%%Seitenname%%:]" icon="freedesktop.png" />
     <element name="Pro-Linux" insert="[prolinux:%%Seitenname%%:]" icon="prolinux.png" />
