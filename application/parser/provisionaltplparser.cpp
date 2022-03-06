@@ -105,6 +105,10 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return ProvisionalTplParser::parseForeignWarning(sArgs);
     }
+    if (sArgs[0].toLower() == QString::fromUtf8("Howto").toLower()) {
+      sArgs.removeFirst();
+      return ProvisionalTplParser::parseHowto(sArgs);
+    }
     if (sArgs[0].toLower() == QString::fromUtf8("Icon-Übersicht").toLower()) {
       sArgs.removeFirst();
       return ProvisionalTplParser::parseIconOverview(sArgs);
@@ -995,6 +999,34 @@ auto ProvisionalTplParser::parseInfobox(
   }
 
   return sOutput;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto ProvisionalTplParser::parseHowto(const QStringList &sListArgs) -> QString {
+  // Generate user list
+  QString sUsers("");
+  for (int i = 0; i < sListArgs.size(); i++) {
+    if (sListArgs.size() > 1) {
+      // Comma or "and" between users
+      if (i == sListArgs.size() - 1) {
+        sUsers += " und ";
+      } else if (i > 0 && i < sListArgs.size() - 1) {
+        sUsers += ", ";
+      }
+    }
+    sUsers += "[user:" + sListArgs.at(i) + ":]";
+  }
+
+  QString sOutput("Diese Howto wurde von " + sUsers + " erstellt. "
+                  "Bei Problemen mit der Anleitung melde dies bitte in der "
+                  "dazugehörigen Diskussion und wende dich gegebenenfalls "
+                  "zusätzlich an den Verfasser des Howtos.");
+
+  return ProvisionalTplParser::insertBox("box notice",
+                                         QString::fromUtf8("Hinweis:"),
+                                         sOutput);
 }
 
 // ----------------------------------------------------------------------------

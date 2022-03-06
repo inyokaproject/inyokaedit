@@ -57,6 +57,7 @@ class ProvisionalTplParser {
     static auto parseForeignPackage(const QStringList &sListArg) -> QString;
     static auto parseForeignSource(const QStringList &sListArgs) -> QString;
     static auto parseForeignWarning(const QStringList &sListArg) -> QString;
+    static auto parseHowto(const QStringList &sListArg) -> QString;
     static auto parseIconOverview(const QStringList &sListArgs) -> QString;
     static auto parseIkhayaAuthor(const QStringList &sListArgs) -> QString;
     static auto parseIkhayaAward(const QStringList &sListArgs) -> QString;
