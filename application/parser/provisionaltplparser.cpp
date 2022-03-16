@@ -1019,10 +1019,10 @@ auto ProvisionalTplParser::parseHowto(const QStringList &sListArgs) -> QString {
     sUsers += "[user:" + sListArgs.at(i) + ":]";
   }
 
-  QString sOutput("Diese Howto wurde von " + sUsers + " erstellt. "
+  QString sOutput("Dieses Howto wurde von " + sUsers + " erstellt. "
                   "Bei Problemen mit der Anleitung melde dies bitte in der "
                   "dazugehörigen Diskussion und wende dich gegebenenfalls "
-                  "zusätzlich an den Verfasser des Howtos.");
+                  "zusätzlich an den/die Verfasser des Howtos.");
 
   return ProvisionalTplParser::insertBox("box notice",
                                          QString::fromUtf8("Hinweis:"),
