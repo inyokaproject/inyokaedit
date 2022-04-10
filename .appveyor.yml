@@ -49,8 +49,6 @@ build_script:
 
     copy windows_files\OpenSSL_%BUILD%\* InyokaEdit\
 
-    echo n | copy /-y windows_files\bearer\qnativewifibearer.dll InyokaEdit\bearer\
-
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
     chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
