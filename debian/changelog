@@ -1,3 +1,14 @@
+inyokaedit (0.27.0-0) focal; urgency=low
+
+  [ Thorsten Roth ]
+  * Add CMake support (thanks to Lasall!)
+  * Show color in highlighter settings table
+  * Template alignments with Inyoka
+  * Fixes: Hyperlink protocols, write permission highlighting tpl
+  * Internal: Using QHash for mappings and templates
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 10 Apr 2022 15:38:00 +0200
+
 inyokaedit (0.26.0-1) focal; urgency=low
 
   [ Thorsten Roth ]
