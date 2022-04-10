@@ -35,6 +35,18 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.27.0" date="2022-04-10">
+      <description>
+        <p>Main changes:</p>
+        <ul>
+          <li>Add CMake support (thanks to Lasall!)</li>
+          <li>Show color in highlighter settings table</li>
+          <li>Template alignments with Inyoka</li>
+          <li>Fixes: Hyperlink protocols, write permission highlighting tpl</li>
+          <li>Internal: Using QHash for mappings and templates</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.26.0" date="2021-05-28">
       <description>
         <p>Main changes:</p>

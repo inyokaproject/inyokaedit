@@ -2,13 +2,13 @@ version: 0.27.0-{build}
 branches:
   only:
   - master
-image: Visual Studio 2017
+image: Visual Studio 2019
 environment:
   matrix:
   - BUILD: x86
-    QTDIR: C:\Qt\5.12\msvc2017
+    QTDIR: C:\Qt\5.15\msvc2019
   - BUILD: x64
-    QTDIR: C:\Qt\5.12\msvc2017_64
+    QTDIR: C:\Qt\5.15\msvc2019_64
 install:
 - ps: (Get-Content plugins/plugins.pro).replace("spellchecker ", '') | Set-Content plugins/plugins.pro
 build_script:
@@ -19,7 +19,7 @@ build_script:
 
     set PATH=%QTDIR%\bin;%PATH%
 
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %BUILD%
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %BUILD%
 
     qmake inyokaedit.pro
 
