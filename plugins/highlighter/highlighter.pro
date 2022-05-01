@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.3.1
+VERSION       = 1.3.2
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2014-2022 - Thorsten Roth"
 

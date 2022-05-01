@@ -127,6 +127,20 @@ void Highlighter::installTranslator(const QString &sLang) {
 
   if (qApp->installTranslator(&m_translator) || "en" == sLang) {
     m_pUi->retranslateUi(m_pDialog);
+
+    QStringList sListHeader;
+    sListHeader << tr("Color") << tr("Bold")
+                << tr("Italic") << tr("Background");
+    m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
+    sListHeader.clear();
+    sListHeader << tr("Background") << tr("Text color")
+                << tr("Text formating") << tr("Heading")
+                << tr("Hyperlink") << tr("InterWiki")
+                << tr("Macro") << tr("Parser") << tr("List")
+                << tr("Table line") << tr("Table cell format")
+                << tr("ImgMap") << tr("Misc") << tr("Comment")
+                << tr("Syntax error");
+    m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
   } else {
     qWarning() << "Translator could not be installed!";
   }
@@ -225,20 +239,6 @@ void Highlighter::buildUi(QWidget *pParent) {
   m_pUi->styleFilesBox->setCurrentIndex(
         m_pUi->styleFilesBox->findText(m_sStyleFile));
   this->loadHighlighting(m_sStyleFile);
-
-  QStringList sListHeader;
-  sListHeader << tr("Color") << tr("Bold")
-              << tr("Italic") << tr("Background");
-  m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
-  sListHeader.clear();
-  sListHeader << tr("Background") << tr("Text color")
-              << tr("Text formating") << tr("Heading")
-              << tr("Hyperlink") << tr("InterWiki")
-              << tr("Macro") << tr("Parser") << tr("List")
-              << tr("Table line") << tr("Table cell format")
-              << tr("ImgMap") << tr("Misc") << tr("Comment")
-              << tr("Syntax error");
-  m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 
   connect(m_pUi->styleFilesBox,
           static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
