@@ -89,8 +89,6 @@ class SpellChecker : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
 
  public:
-    ~SpellChecker();
-
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
                     const QDir &userDataDir,
                     const QString &sSharePath) override;

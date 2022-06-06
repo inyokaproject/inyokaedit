@@ -87,7 +87,7 @@ class FileOperations : public QObject {
  signals:
     void setMenuLastOpenedEnabled(const bool);
     void changedCurrentEditor();
-    void newEditor();
+    void changedNumberOfEditors();
     void callPreview();
     void modifiedDoc(bool bModified);
     void movedEditorScrollbar();

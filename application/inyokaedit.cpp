@@ -243,12 +243,18 @@ void InyokaEdit::createObjects() {
 }
 
 // ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 void InyokaEdit::setCurrentEditor() {
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
   m_pPlugins->setCurrentEditor(m_pCurrentEditor);
-  m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
   m_pUploadModule->setEditor(m_pCurrentEditor, m_pCurrentEditor->getFileName());
+}
+
+// ----------------------------------------------------------------------------
+
+void InyokaEdit::changedNumberOfEditors() {
+  m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 }
 
 // ----------------------------------------------------------------------------
@@ -279,11 +285,10 @@ void InyokaEdit::setupEditor() {
   setCentralWidget(m_pWidgetSplitter);
   m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
-  this->updateEditorSettings();
   connect(m_pSettings, &Settings::updateEditorSettings,
           this, &InyokaEdit::updateEditorSettings);
-  connect(m_pFileOperations, &FileOperations::newEditor,
-          this, &InyokaEdit::updateEditorSettings);
+  connect(m_pFileOperations, &FileOperations::changedNumberOfEditors,
+          this, &InyokaEdit::changedNumberOfEditors);
 
 #ifndef NOPREVIEW
   // Show an empty website after start

@@ -162,7 +162,7 @@ void FileOperations::newFile(QString sFileName) {
 
   m_pDocumentTabs->setCurrentIndex(m_pDocumentTabs->count() - 1);
   this->updateEditorSettings();
-  emit this->newEditor();
+  emit this->changedNumberOfEditors();
 }
 
 // ----------------------------------------------------------------------------
@@ -850,8 +850,9 @@ auto FileOperations::closeDocument(int nIndex) -> bool {
       m_pCurrentEditor = m_pListEditors.last();
       this->setCurrentEditor();
       m_pDocumentTabs->setCurrentIndex(m_pDocumentTabs->count() - 1);
-      if (nIndex == m_pDocumentTabs->count() && !m_bCloseApp) {
+      if (!m_bCloseApp) {
         emit this->callPreview();
+        emit this->changedNumberOfEditors();
       }
     } else if (!m_bCloseApp) {
       this->newFile(QString());

@@ -90,6 +90,7 @@ class InyokaEdit : public QMainWindow {
     void loadLanguage(const QString &sLang);
     void openFile();
     void setCurrentEditor();
+    void changedNumberOfEditors();
     void insertMacro(const QString &sInsert);
     void dropdownXmlChanged(int nIndex);
     void deleteTempImages();

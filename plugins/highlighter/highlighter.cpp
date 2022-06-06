@@ -932,38 +932,55 @@ void Highlighter::setCurrentEditor(TextEditor *pEditor) {
 }
 
 void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
-  m_ListHighlighters.clear();
+  QList<TextEditor *> tmpEditorList;
+  tmpEditorList.reserve(m_ListEditorsAndHighighters.size());
 
+  QList<int> nToBeDeleted;
+  int index = -1;
+  // Collect editors, which to not exist anymore
+  // and create temp. list for comparisson in next loop
+  for (auto EditHlight : qAsConst(m_ListEditorsAndHighighters)) {
+    index++;
+    tmpEditorList << EditHlight.first;
+    if (!listEditors.contains(EditHlight.first)) {
+      nToBeDeleted << index;
+    }
+  }
+
+  QPalette pal;
+  pal.setColor(QPalette::Base, m_colorBackground);
+  pal.setColor(QPalette::Text, m_colorForeground);
   for (auto *pEd : listEditors) {
-    if (!m_listEditors.contains(pEd)) {
-      m_listEditors << pEd;
-    }
-  }
-  for (auto *pEd : qAsConst(m_listEditors)) {
-    if (!listEditors.contains(pEd)) {
-      m_listEditors.removeOne(pEd);
-    } else {
-      m_ListHighlighters << new SyntaxHighlighter(pEd->document());
+    if (!tmpEditorList.contains(pEd)) {
+      m_ListEditorsAndHighighters << QPair<TextEditor *,
+          SyntaxHighlighter *>(pEd, new SyntaxHighlighter(pEd->document()));
+      // Run highligther for new editor
+      m_ListEditorsAndHighighters.last().first->setPalette(pal);
+      m_ListEditorsAndHighighters.last().second->setRules(m_highlightingRules);
+      m_ListEditorsAndHighighters.last().second->rehighlight();
     }
   }
 
-  this->rehighlightAll();
+  // Cleanup list and remove not existing editors
+  while (nToBeDeleted.size() > 0) {
+    m_ListEditorsAndHighighters[nToBeDeleted.last()].second->deleteLater();
+    m_ListEditorsAndHighighters.removeAt(nToBeDeleted.last());
+    nToBeDeleted.removeLast();
+  }
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void Highlighter::rehighlightAll() {
-  for (auto *hlight : qAsConst(m_ListHighlighters)) {
-    hlight->setRules(m_highlightingRules);
-    hlight->rehighlight();
-  }
-
   QPalette pal;
   pal.setColor(QPalette::Base, m_colorBackground);
   pal.setColor(QPalette::Text, m_colorForeground);
-  for (auto *editor : qAsConst(m_listEditors)) {
-    editor->setPalette(pal);
+
+  for (auto EditHlight : qAsConst(m_ListEditorsAndHighighters)) {
+    EditHlight.first->setPalette(pal);
+    EditHlight.second->setRules(m_highlightingRules);
+    EditHlight.second->rehighlight();
   }
 }
 

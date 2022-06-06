@@ -100,8 +100,7 @@ class Highlighter : public QObject, IEditorPlugin {
     QString m_sSharePath;
     QDialog *m_pDialog;
     QSettings *m_pSettings;
-    QList<SyntaxHighlighter *> m_ListHighlighters;
-    QList<TextEditor *> m_listEditors;
+    QList<QPair<TextEditor *, SyntaxHighlighter *>> m_ListEditorsAndHighighters;
     Templates *m_pTemplates;
 
     QString m_sStyleFile;

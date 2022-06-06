@@ -69,8 +69,6 @@
 #include "./spellcheckdialog.h"
 #include "../../application/texteditor.h"
 
-SpellChecker::~SpellChecker() = default;
-
 void SpellChecker::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               const QDir &userDataDir,
                               const QString &sSharePath) {
