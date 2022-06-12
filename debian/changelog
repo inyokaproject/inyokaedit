@@ -1,3 +1,11 @@
+inyokaedit (0.27.1-0) focal; urgency=low
+
+  [ Thorsten Roth ]
+  * Fix performance issue when adding/removing/switching tabs
+  * Fix missing table headers translations
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 12 Jun 2022 14:09:00 +0200
+
 inyokaedit (0.27.0-0) focal; urgency=low
 
   [ Thorsten Roth ]
