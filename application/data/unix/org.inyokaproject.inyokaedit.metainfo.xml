@@ -35,6 +35,15 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.27.1" date="2022-06-12">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix performance issue when adding/removing/switching tabs</li>
+          <li>Translate table headers</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.27.0" date="2022-04-10">
       <description>
         <p>Main changes:</p>
