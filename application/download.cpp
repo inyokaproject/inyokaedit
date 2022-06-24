@@ -112,7 +112,7 @@ void Download::downloadArticle(QString sUrl) {
       m_sRevision = m_sRevision + "/";
     }
 
-    // Login needed for accessing ContructionArea
+    // Login needed for accessing ConstructionArea
     if (m_sSitename.startsWith(m_sConstructionArea)) {
       m_pSession->checkSession();
       if (!m_pSession->isLoggedIn()) {

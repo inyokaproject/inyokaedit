@@ -134,7 +134,7 @@ void Highlighter::installTranslator(const QString &sLang) {
     m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
     sListHeader.clear();
     sListHeader << tr("Background") << tr("Text color")
-                << tr("Text formating") << tr("Heading")
+                << tr("Text formatting") << tr("Heading")
                 << tr("Hyperlink") << tr("InterWiki")
                 << tr("Macro") << tr("Parser") << tr("List")
                 << tr("Table line") << tr("Table cell format")
@@ -954,7 +954,7 @@ void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
     if (!tmpEditorList.contains(pEd)) {
       m_ListEditorsAndHighighters << QPair<TextEditor *,
           SyntaxHighlighter *>(pEd, new SyntaxHighlighter(pEd->document()));
-      // Run highligther for new editor
+      // Run highlighter for new editor
       m_ListEditorsAndHighighters.last().first->setPalette(pal);
       m_ListEditorsAndHighighters.last().second->setRules(m_highlightingRules);
       m_ListEditorsAndHighighters.last().second->rehighlight();

@@ -134,8 +134,8 @@ void DownloadImg::downloadFinished(QNetworkReply *pReply) {
     QUrl url = pReply->url();
     qDebug() << "Downloading URL:" << url.toString();
 
-    // Basename has to be set before possible redirection
-    // (redirected file could have other basename)
+    // Base name has to be set before possible redirection
+    // (redirected file could have other base name)
     if (m_sListBasename[nIndex].isEmpty()) {
       m_sListBasename[nIndex] = url.toString().mid(
                                   url.toString().lastIndexOf(

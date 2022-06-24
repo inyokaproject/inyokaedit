@@ -114,7 +114,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
     sListCommunities << fi.fileName();
   }
 
-  m_pUi->CommunityCombo->blockSignals(true);  // No change index signal emited
+  m_pUi->CommunityCombo->blockSignals(true);  // No change index signal emitted
   m_pUi->CommunityCombo->addItems(sListCommunities);
   if (-1 != m_pUi->CommunityCombo->findText(
         m_pSettings->getInyokaCommunity())) {

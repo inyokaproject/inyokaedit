@@ -22,7 +22,7 @@
  *
  * \section DESCRIPTION
  * Provisional template parser. Only used as long as complete inyoka parsing
- * is not supperted.
+ * is not supported.
  */
 
 // clazy:excludeall=qstring-allocations,qt4-qstring-from-array

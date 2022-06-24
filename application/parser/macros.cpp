@@ -424,7 +424,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
         sMacro += sSpaces + "1. [#" + sListHeadlines_Links[i] + " "
                   + sTmp + "]\n";
       } else if (0 == nCurrentLevel) {
-        qWarning() << "Found strange formated headline:" << sTmp;
+        qWarning() << "Found strange formatted headline:" << sTmp;
       }
     }
     sMacro += QLatin1String("\n</div>\n");
@@ -473,7 +473,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
         // If 's' is inside quotes, get the whole string
         sArgs.append(s);
       } else {
-        // If 's' is outside quotes, get the splitted string
+        // If 's' is outside quotes, get the split string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         sArgs.append(s.split(QRegularExpression(QStringLiteral(",+")),
                              QString::SkipEmptyParts));

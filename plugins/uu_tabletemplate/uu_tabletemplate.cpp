@@ -285,7 +285,7 @@ auto Uu_TableTemplate::generateTable() -> QString {
   int rowsNum = m_pUi->rowsNum->value();
 
   if (m_pUi->HighlightSecondBox->isChecked() &&
-      // Use only, if default style is used; otherwiese highlight every second.
+      // Use only, if default style is used; otherwise highlight every second.
       0 == m_pUi->tableStyleBox->currentIndex()) {
     if (m_pUi->showTitleBox->isChecked() && m_pUi->showHeadBox->isChecked()) {
       sTableClass = "tableclass=\"" + m_sListTableClasses[2] + "\" ";

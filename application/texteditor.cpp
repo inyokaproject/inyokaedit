@@ -38,7 +38,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  *
  * \section DESCRIPTION
- * Extend QTextEdit (editor widget) to popup code completition for Inyoka
+ * Extend QTextEdit (editor widget) to popup code completion for Inyoka
  * syntax elements.
  */
 

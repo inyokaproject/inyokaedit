@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Main application generation (gui, object creation etc.).
+ * Main application generation (GUI, object creation etc.).
  */
 
 #include "./inyokaedit.h"
@@ -498,7 +498,7 @@ void InyokaEdit::createActions() {
             QStringLiteral(
               "https://github.com/inyokaproject/inyokaedit/issues"))); });
 
-  // Open about windwow
+  // Open about window
   connect(m_pUi->aboutAct, &QAction::triggered, this, &InyokaEdit::showAbout);
 }
 
@@ -1057,7 +1057,7 @@ void InyokaEdit::displayArticleText(const QString &sArticleText,
 // Wait until loading has finished
 void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
   if (bSuccess) {
-    // Enable / disbale back button
+    // Enable / disable back button
     if (m_pWebview->history()->canGoBack()) {
       m_pUi->goBackBrowserAct->setEnabled(true);
     } else {
@@ -1229,7 +1229,7 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
 void InyokaEdit::deleteTempImages() {
   int nRet = QMessageBox::question(this, qApp->applicationName(),
                                    tr("Do you really want to delete all "
-                                      "temporay article images?"),
+                                      "temporary article images?"),
                                    QMessageBox::Yes | QMessageBox::No);
 
   if (QMessageBox::Yes== nRet) {
