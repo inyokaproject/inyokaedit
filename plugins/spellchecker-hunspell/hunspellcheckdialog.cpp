@@ -1,5 +1,5 @@
 /**
- * \file spellcheckdialog.cpp
+ * \file hunspellcheckdialog.cpp
  *
  * \section LICENSE
  *
@@ -53,18 +53,18 @@
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
 
-#include "./spellcheckdialog.h"
+#include "./hunspellcheckdialog.h"
 
 #include <QDebug>
 #include <QSettings>
 
-#include "ui_spellcheckdialog.h"
-#include "./spellchecker.h"
+#include "ui_hunspellcheckdialog.h"
+#include "./spellchecker-hunspell.h"
 
-SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
-                                   QWidget *pParent)
+HunspellCheckDialog::HunspellCheckDialog(SpellChecker_Hunspell *pSpellChecker,
+                                         QWidget *pParent)
   : QDialog(pParent),
-    m_pUi(new Ui::SpellCheckDialog),
+    m_pUi(new Ui::HunspellCheckDialog),
     m_returnCode(None) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
@@ -78,23 +78,23 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
           m_pUi->ledtReplaceWith, &QLineEdit::setText);
 
   connect(m_pUi->btnAddToDict, &QPushButton::clicked,
-          this, &SpellCheckDialog::addToDict);
+          this, &HunspellCheckDialog::addToDict);
   connect(m_pUi->btnReplaceOnce, &QPushButton::clicked,
-          this, &SpellCheckDialog::replaceOnce);
+          this, &HunspellCheckDialog::replaceOnce);
   connect(m_pUi->btnReplaceAll, &QPushButton::clicked,
-          this, &SpellCheckDialog::replaceAll);
+          this, &HunspellCheckDialog::replaceAll);
   connect(m_pUi->btnIgnoreOnce, &QPushButton::clicked,
-          this, &SpellCheckDialog::ignoreOnce);
+          this, &HunspellCheckDialog::ignoreOnce);
   connect(m_pUi->btnIgnoreAll, &QPushButton::clicked,
-          this, &SpellCheckDialog::ignoreAll);
+          this, &HunspellCheckDialog::ignoreAll);
   connect(m_pUi->btnCancel, &QPushButton::clicked,
-          this, &SpellCheckDialog::closeDialog);
+          this, &HunspellCheckDialog::closeDialog);
 
   // Add items before connect(), otherwise indexChanged is emitted!
   m_pUi->comboBoxLang->addItems(m_pSpellChecker->m_sListDicts);
   connect(m_pUi->comboBoxLang,
           static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &SpellCheckDialog::changeLanguage);
+          this, &HunspellCheckDialog::changeLanguage);
 
   if (-1 != m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang)) {
     m_pUi->comboBoxLang->setCurrentIndex(
@@ -103,7 +103,7 @@ SpellCheckDialog::SpellCheckDialog(SpellChecker *pSpellChecker,
   }
 }
 
-SpellCheckDialog::~SpellCheckDialog() {
+HunspellCheckDialog::~HunspellCheckDialog() {
   delete m_pUi;
   m_pUi = nullptr;
 }
@@ -111,7 +111,7 @@ SpellCheckDialog::~SpellCheckDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
+HunspellCheckDialog::SpellCheckAction HunspellCheckDialog::checkWord(
     const QString &sWord) {
   m_sUnkownWord = sWord;
   m_pUi->lblUnknownWord->setText(
@@ -135,32 +135,32 @@ SpellCheckDialog::SpellCheckAction SpellCheckDialog::checkWord(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellCheckDialog::replacement() const -> QString {
+auto HunspellCheckDialog::replacement() const -> QString {
   return m_pUi->ledtReplaceWith->text();
 }
 
-void SpellCheckDialog::ignoreOnce() {
+void HunspellCheckDialog::ignoreOnce() {
   m_returnCode = IgnoreOnce;
   this->accept();
 }
 
-void SpellCheckDialog::ignoreAll() {
+void HunspellCheckDialog::ignoreAll() {
   m_pSpellChecker->ignoreWord(m_sUnkownWord);
   m_returnCode = IgnoreAll;
   this->accept();
 }
 
-void SpellCheckDialog::replaceOnce() {
+void HunspellCheckDialog::replaceOnce() {
   m_returnCode = ReplaceOnce;
   this->accept();
 }
 
-void SpellCheckDialog::replaceAll() {
+void HunspellCheckDialog::replaceAll() {
   m_returnCode = ReplaceAll;
   this->accept();
 }
 
-void SpellCheckDialog::closeDialog() {
+void HunspellCheckDialog::closeDialog() {
   m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->currentText();
   m_pSpellChecker->m_pSettings->beginGroup("Plugin_" +
                                            QStringLiteral(PLUGIN_NAME));
@@ -173,7 +173,7 @@ void SpellCheckDialog::closeDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellCheckDialog::changeLanguage(int nIndex) {
+void HunspellCheckDialog::changeLanguage(int nIndex) {
   // Before initDictionaries() !
   m_pSpellChecker->m_sDictLang = m_pUi->comboBoxLang->itemText(nIndex);
   m_pSpellChecker->initDictionaries();
@@ -182,7 +182,7 @@ void SpellCheckDialog::changeLanguage(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellCheckDialog::addToDict() {
+void HunspellCheckDialog::addToDict() {
   m_pSpellChecker->addToUserWordlist(m_sUnkownWord);
   m_returnCode = AddToDict;
   this->accept();

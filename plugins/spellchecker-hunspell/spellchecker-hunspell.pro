@@ -43,10 +43,10 @@
 
 TEMPLATE      = lib
 CONFIG       += plugin
-TARGET        = spellchecker
+TARGET        = spellchecker-hunspell
 DESTDIR       = ../
 
-VERSION       = 1.2.3
+VERSION       = 1.3.0
 QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-2022 - Thorsten Roth"
 
@@ -60,9 +60,6 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += widgets
-greaterThan(QT_MAJOR_VERSION, 5) {
-  QT         += core5compat
-}
 CONFIG       += c++11
 DEFINES      += QT_NO_FOREACH
 
@@ -72,20 +69,20 @@ CONFIG(debug, debug|release) {
   DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 }
 
-HEADERS      += spellcheckdialog.h \
-                spellchecker.h
+HEADERS      += hunspellcheckdialog.h \
+                spellchecker-hunspell.h
 
-SOURCES      += spellcheckdialog.cpp \
-                spellchecker.cpp
+SOURCES      += hunspellcheckdialog.cpp \
+                spellchecker-hunspell.cpp
 
-FORMS        += spellcheckdialog.ui
+FORMS        += hunspellcheckdialog.ui
 
-RESOURCES     = res/spellchecker_resources.qrc \
+RESOURCES     = res/spellchecker-hunspell_resources.qrc \
                 res/translations.qrc
 
-TRANSLATIONS += lang/spellchecker_de.ts \
-                lang/spellchecker_en.ts \
-                lang/spellchecker_nl.ts
+TRANSLATIONS += lang/spellchecker-hunspell_de.ts \
+                lang/spellchecker-hunspell_en.ts \
+                lang/spellchecker-hunspell_nl.ts
 
 win32:LIBS   += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
 unix:LIBS    += -lhunspell

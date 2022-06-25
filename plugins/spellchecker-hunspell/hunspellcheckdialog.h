@@ -1,5 +1,5 @@
 /**
- * \file spellcheckdialog.h
+ * \file hunspellcheckdialog.h
  *
  * \section LICENSE
  *
@@ -53,22 +53,22 @@
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
 
-#ifndef PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_
-#define PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_
+#ifndef PLUGINS_SPELLCHECKER_HUNSPELL_HUNSPELLCHECKDIALOG_H_
+#define PLUGINS_SPELLCHECKER_HUNSPELL_HUNSPELLCHECKDIALOG_H_
 
 #include <QDialog>
 
-class SpellChecker;
+class SpellChecker_Hunspell;
 
 namespace Ui {
-class SpellCheckDialog;
+class HunspellCheckDialog;
 }
 
 /**
  * \class SpellCheckDialog
  * \brief Spell checker dialog.
  */
-class SpellCheckDialog : public QDialog {
+class HunspellCheckDialog : public QDialog {
   Q_OBJECT
 
  public:
@@ -77,14 +77,14 @@ class SpellCheckDialog : public QDialog {
       ReplaceOnce, ReplaceAll, AddToDict
     };
 
-    explicit SpellCheckDialog(SpellChecker *pSpellChecker,
+    explicit HunspellCheckDialog(SpellChecker_Hunspell *pSpellChecker,
                               QWidget *pParent = nullptr);
-    ~SpellCheckDialog();
+    ~HunspellCheckDialog();
 
     auto replacement() const -> QString;
 
  public slots:
-    SpellCheckDialog::SpellCheckAction checkWord(const QString &sWord);
+    HunspellCheckDialog::SpellCheckAction checkWord(const QString &sWord);
 
  protected slots:
     void ignoreOnce();
@@ -98,10 +98,10 @@ class SpellCheckDialog : public QDialog {
     void closeDialog();
 
  private:
-    Ui::SpellCheckDialog *m_pUi;
-    SpellChecker *m_pSpellChecker;
+    Ui::HunspellCheckDialog *m_pUi;
+    SpellChecker_Hunspell *m_pSpellChecker;
     QString m_sUnkownWord;
     SpellCheckAction m_returnCode;
 };
 
-#endif  // PLUGINS_SPELLCHECKER_SPELLCHECKDIALOG_H_
+#endif  // PLUGINS_SPELLCHECKER_HUNSPELL_HUNSPELLCHECKDIALOG_H_

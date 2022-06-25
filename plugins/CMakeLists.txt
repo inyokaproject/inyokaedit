@@ -14,9 +14,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-option(SPELLCHECKER "Enable spellchecker plugin" ON)
-if(SPELLCHECKER)
-    add_subdirectory(spellchecker)
+option(SPELLCHECKER-HUNSPELL "Enable hunspell spellchecker plugin" ON)
+if(SPELLCHECKER-HUNSPELL)
+    add_subdirectory(spellchecker-hunspell)
 endif()
 
 option(UU_TABLETEMPLATE "Enable uu_tabletemplate plugin" ON)

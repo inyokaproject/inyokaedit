@@ -14,8 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-project(spellchecker
-    VERSION 1.2.3
+project(spellchecker-hunspell
+    VERSION 1.3.0
     DESCRIPTION "Hunspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
@@ -29,64 +29,60 @@ find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
     REQUIRED Core Widgets LinguistTools
 )
 find_package(HUNSPELL REQUIRED)
-if (QT6)
-    find_package(Qt6 ${QT_MINIMUM_VERSION} REQUIRED Core5Compat)
-endif()
 
-add_library(spellchecker SHARED)
+add_library(spellchecker-hunspell SHARED)
 
-target_compile_features(spellchecker PUBLIC cxx_std_11)
-target_compile_definitions(spellchecker
+target_compile_features(spellchecker-hunspell PUBLIC cxx_std_11)
+target_compile_definitions(spellchecker-hunspell
     PRIVATE
         PLUGIN_NAME="${PROJECT_NAME}"
         PLUGIN_VERSION="${PROJECT_VERSION}"
         PLUGIN_COPY="${PROJECT_COPYRIGHT}"
         QT_NO_FOREACH
 )
-target_compile_options(spellchecker
+target_compile_options(spellchecker-hunspell
     PRIVATE
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
         -fno-sized-deallocation
 )
-target_link_libraries(spellchecker
+target_link_libraries(spellchecker-hunspell
     PRIVATE
         ${QT_MAIN_VERSION}::Core
         ${QT_MAIN_VERSION}::Widgets
-        $<$<BOOL:${QT6}>:Qt6::Core5Compat>
 )
 
 set(HEADERS
-    spellcheckdialog.h
-    spellchecker.h
+    hunspellcheckdialog.h
+    spellchecker-hunspell.h
 )
 
 set(SOURCES
-    spellcheckdialog.cpp
-    spellchecker.cpp
+    hunspellcheckdialog.cpp
+    spellchecker-hunspell.cpp
 )
 
 set(FORMS
-    spellcheckdialog.ui
+    hunspellcheckdialog.ui
 )
 
 set(RESOURCES
-    res/spellchecker_resources.qrc
+    res/spellchecker-hunspell_resources.qrc
     res/translations.qrc
 )
 
 set(TRANSLATIONS
-    lang/spellchecker_de.ts
-    lang/spellchecker_en.ts
-    lang/spellchecker_nl.ts
+    lang/spellchecker-hunspell_de.ts
+    lang/spellchecker-hunspell_en.ts
+    lang/spellchecker-hunspell_nl.ts
 )
 
 qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 
-target_sources(spellchecker PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
+target_sources(spellchecker-hunspell PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
 
 
 if(LINUX)
     include(GNUInstallDirs)
-    install(TARGETS spellchecker DESTINATION ${CMAKE_INSTALL_LIBDIR}/inyokaedit/plugins)
+    install(TARGETS spellchecker-hunspell DESTINATION ${CMAKE_INSTALL_LIBDIR}/inyokaedit/plugins)
 endif()

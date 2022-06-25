@@ -1,5 +1,5 @@
 /**
- * \file spellchecker.h
+ * \file spellchecker-hunspell.h
  *
  * \section LICENSE
  *
@@ -54,8 +54,8 @@
  */
 // clazy:excludeall=ctor-missing-parent-argument
 
-#ifndef PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
-#define PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
+#ifndef PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
+#define PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
 
 #include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QDir>
@@ -73,20 +73,25 @@
 #include <hunspell/hunspell.hxx>
 #endif
 
-class QSettings;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 class QTextCodec;
+#else
+#include <QStringDecoder>
+#include <QStringEncoder>
+#endif
+class QSettings;
 
 class TextEditor;
-class SpellCheckDialog;
+class HunspellCheckDialog;
 
 /**
  * \class SpellChecker
  * \brief Spell checker using hunspell.
  */
-class SpellChecker : public QObject, IEditorPlugin {
+class SpellChecker_Hunspell : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker.hunspell")
 
  public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -110,7 +115,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     void showAbout() override;
 
  private:
-    friend class SpellCheckDialog;
+    friend class HunspellCheckDialog;
 
     void setDictPath();
     auto initDictionaries() -> bool;
@@ -126,7 +131,7 @@ class SpellChecker : public QObject, IEditorPlugin {
     Hunspell *m_pHunspell;
     TextEditor *m_pEditor;
     QAction *m_pExecuteAct;
-    SpellCheckDialog *m_pCheckDialog;
+    HunspellCheckDialog *m_pCheckDialog;
     QSettings *m_pSettings;
     QWidget *m_pParent;
     QTextCursor m_oldCursor;
@@ -139,8 +144,12 @@ class SpellChecker : public QObject, IEditorPlugin {
     QString m_sSharePath;
     QString m_sCommunity;
     QString m_sEncoding;
-    // TODO(volunteer): Replace with QStringConverter for Qt6 (currently core5compat is used)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QTextCodec *m_pCodec;
+#else
+    QStringDecoder m_Decoder;
+    QStringEncoder m_Encoder;
+#endif
 };
 
-#endif  // PLUGINS_SPELLCHECKER_SPELLCHECKER_H_
+#endif  // PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
