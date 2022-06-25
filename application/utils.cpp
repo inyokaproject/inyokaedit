@@ -130,8 +130,10 @@ void Utils::replyFinished(QNetworkReply *pReply) {
         auto nRevision2 = static_cast<quint8>(sListLatestVer[2].toUInt());
 
         if (nMainVer2 > nMainVer1
-            ||nMinorVer2 > nMinorVer1
-            || nRevision2 > nRevision1) {
+            || (nMainVer2 == nMainVer1 && nMinorVer2 > nMinorVer1)
+            || (nMainVer2 == nMainVer1
+                && nMinorVer2 == nMinorVer1
+                && nRevision2 > nRevision1)) {
           auto *msgBox = new QMessageBox(
                            QMessageBox::Question,
                            tr("Update found"),
