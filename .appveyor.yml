@@ -10,7 +10,7 @@ environment:
   - BUILD: x64
     QTDIR: C:\Qt\5.15\msvc2019_64
 install:
-- ps: (Get-Content plugins/plugins.pro).replace("spellchecker ", '') | Set-Content plugins/plugins.pro
+- ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", '') | Set-Content plugins/plugins.pro
 build_script:
 - cmd: >-
     git clone -b windows_files --single-branch https://github.com/inyokaproject/inyokaedit.git windows_files
