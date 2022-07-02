@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="spellchecker-nuspell_de.qm">../lang/spellchecker-nuspell_de.qm</file>
+        <file alias="spellchecker-nuspell_en.qm">../lang/spellchecker-nuspell_en.qm</file>
+        <file alias="spellchecker-nuspell_nl.qm">../lang/spellchecker-nuspell_nl.qm</file>
+    </qresource>
+</RCC>

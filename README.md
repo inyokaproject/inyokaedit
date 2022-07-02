@@ -14,7 +14,7 @@ Features:
 * Save article together with images in one file
 * Plug-ins:
   * Syntax highlighting of Inyoka elements
-  * Spell checker (based on Hunspell)
+  * Spell checker (based on [Hunspell](https://hunspell.github.io/) or optionally [Nuspell](https://nuspell.github.io/))
   * Hotkyes for own text blocks
   * Knowledge block dialog (ubuntuusers.de)
   * Table generator / converter (ubuntuusers.de)

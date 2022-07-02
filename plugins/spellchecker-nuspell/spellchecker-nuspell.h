@@ -1,5 +1,5 @@
 /**
- * \file spellchecker-hunspell.h
+ * \file spellchecker-nuspell.h
  *
  * \section LICENSE
  *
@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for spell checker using hunspell.
+ * Class definition for spell checker using nuspell.
  *
  * \section SOURCE
  * This file incorporates work covered by the following copyright and
@@ -54,8 +54,8 @@
  */
 // clazy:excludeall=ctor-missing-parent-argument
 
-#ifndef PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
-#define PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
+#ifndef PLUGINS_SPELLCHECKER_NUSPELL_SPELLCHECKER_NUSPELL_H_
+#define PLUGINS_SPELLCHECKER_NUSPELL_SPELLCHECKER_NUSPELL_H_
 
 #include <QAction>  // Cannot use forward declaration (since Qt 6)
 #include <QDir>
@@ -65,33 +65,27 @@
 #include <QString>
 #include <QTextCursor>
 
+#if defined _WIN32
+#include "../windows_files/nuspell/dictionary.hxx"
+#else
+#include <nuspell/dictionary.hxx>
+#endif
+
 #include "../../application/ieditorplugin.h"
 
-#if defined _WIN32
-#include "../windows_files/hunspell-mingw/include/hunspell.hxx"
-#else
-#include <hunspell/hunspell.hxx>
-#endif
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-class QTextCodec;
-#else
-#include <QStringDecoder>
-#include <QStringEncoder>
-#endif
 class QSettings;
 
 class TextEditor;
-class HunspellCheckDialog;
+class NuspellCheckDialog;
 
 /**
- * \class SpellChecker_Hunspell
- * \brief Spell checker using hunspell.
+ * \class SpellChecker_Nuspell
+ * \brief Spell checker using nuspell.
  */
-class SpellChecker_Hunspell : public QObject, IEditorPlugin {
+class SpellChecker_Nuspell : public QObject, IEditorPlugin {
   Q_OBJECT
   Q_INTERFACES(IEditorPlugin)
-  Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker.hunspell")
+  Q_PLUGIN_METADATA(IID "InyokaEdit.spellchecker.nuspell")
 
  public:
     void initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -115,9 +109,8 @@ class SpellChecker_Hunspell : public QObject, IEditorPlugin {
     void showAbout() override;
 
  private:
-    friend class HunspellCheckDialog;
+    friend class NuspellCheckDialog;
 
-    void setDictPath();
     auto initDictionaries() -> bool;
     void loadAdditionalDict(const QString &sFilename);
 
@@ -128,28 +121,21 @@ class SpellChecker_Hunspell : public QObject, IEditorPlugin {
     void putWord(const QString &sWord);
     void replaceAll(const int nPos, const QString &sOld, const QString &sNew);
 
-    Hunspell *m_pHunspell;
     TextEditor *m_pEditor;
     QAction *m_pExecuteAct;
-    HunspellCheckDialog *m_pCheckDialog;
+    NuspellCheckDialog *m_pCheckDialog;
+    nuspell::Dictionary m_Dict;
     QSettings *m_pSettings;
     QWidget *m_pParent;
     QTextCursor m_oldCursor;
-    QString m_sDictPath;
     QStringList m_sListDicts;
     QString m_sDictLang;
     QString m_sUserDict;
     QDir m_UserDataDir;
+    QStringList m_UserWordsList;
     QTranslator m_translator;
     QString m_sSharePath;
     QString m_sCommunity;
-    QString m_sEncoding;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QTextCodec *m_pCodec;
-#else
-    QStringDecoder m_Decoder;
-    QStringEncoder m_Encoder;
-#endif
 };
 
-#endif  // PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_
+#endif  // PLUGINS_SPELLCHECKER_NUSPELL_SPELLCHECKER_NUSPELL_H_

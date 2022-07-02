@@ -14,6 +14,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
+option(SPELLCHECKER-NUSPELL "Enable nuspell spellchecker plugin" OFF)
+if(SPELLCHECKER-NUSPELL)
+    add_subdirectory(spellchecker-nuspell)
+endif()
+
 option(SPELLCHECKER-HUNSPELL "Enable hunspell spellchecker plugin" ON)
 if(SPELLCHECKER-HUNSPELL)
     add_subdirectory(spellchecker-hunspell)

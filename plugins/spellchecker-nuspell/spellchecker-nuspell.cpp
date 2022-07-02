@@ -1,5 +1,5 @@
 /**
- * \file spellchecker-hunspell.cpp
+ * \file spellchecker-nuspell.cpp
  *
  * \section LICENSE
  *
@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Spell checker using Hunspell
+ * Spell checker using Nuspell
  *
  * \section SOURCE
  * This file incorporates work covered by the following copyright and
@@ -53,7 +53,7 @@
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
 
-#include "./spellchecker-hunspell.h"
+#include "./spellchecker-nuspell.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -68,12 +68,18 @@
 #include <QTextCodec>
 #endif
 
-#include "./hunspellcheckdialog.h"
+#if defined _WIN32
+#include "../windows_files/nuspell/finder.hxx"
+#else
+#include <nuspell/finder.hxx>
+#endif
+
+#include "./nuspellcheckdialog.h"
 #include "../../application/texteditor.h"
 
-void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                                       const QDir &userDataDir,
-                                       const QString &sSharePath) {
+void SpellChecker_Nuspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
+                                      const QDir &userDataDir,
+                                      const QString &sSharePath) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined __linux__
@@ -86,16 +92,12 @@ void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               qApp->applicationName().toLower());
 #endif
 
-  m_pHunspell = nullptr;
   m_pEditor = pEditor;
   m_pParent = pParent;
   m_UserDataDir = userDataDir;
   m_sSharePath = sSharePath;
 
   m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
-  m_sDictPath = m_pSettings->value(QStringLiteral("DictionaryPath"),
-                                   "").toString();
-  this->setDictPath();
   m_sDictLang = m_pSettings->value(QStringLiteral("SpellCheckerLanguage"),
                                    "de_DE").toString();
   m_sCommunity = m_pSettings->value(QStringLiteral("Inyoka/Community"),
@@ -106,18 +108,18 @@ void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellChecker_Hunspell::getPluginName() const -> QString {
+auto SpellChecker_Nuspell::getPluginName() const -> QString {
   return QStringLiteral(PLUGIN_NAME);
 }
 
-auto SpellChecker_Hunspell::getPluginVersion() const -> QString {
+auto SpellChecker_Nuspell::getPluginVersion() const -> QString {
   return QStringLiteral(PLUGIN_VERSION);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
+void SpellChecker_Nuspell::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
@@ -142,93 +144,73 @@ void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellChecker_Hunspell::getCaption() const -> QString {
-  return tr("Spell checker") + QStringLiteral(" (Hunspell)");
+auto SpellChecker_Nuspell::getCaption() const -> QString {
+  return tr("Spell checker") + QStringLiteral(" (Nuspell)");
 }
-auto SpellChecker_Hunspell::getIcon() const -> QIcon {
+auto SpellChecker_Nuspell::getIcon() const -> QIcon {
   if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
     return QIcon(QLatin1String(":/spellchecker_dark.png"));
   }
   return QIcon(QLatin1String(":/spellchecker.png"));
 }
 
-auto SpellChecker_Hunspell::includeMenu() const -> bool{
+auto SpellChecker_Nuspell::includeMenu() const -> bool{
   return true;
 }
-auto SpellChecker_Hunspell::includeToolbar() const -> bool {
+auto SpellChecker_Nuspell::includeToolbar() const -> bool {
   return true;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::setDictPath() {
+auto SpellChecker_Nuspell::initDictionaries() -> bool {
   m_sListDicts.clear();
+  auto dirs = std::vector<std::filesystem::path>();
+  nuspell::append_default_dir_paths(dirs);
+  auto dict_list = nuspell::search_default_dirs_for_dicts();
 
-  if (m_sDictPath.isEmpty() || !QDir(m_sDictPath).exists()) {
-    // Standard path for Hunspell
-    if (QDir(QStringLiteral("/usr/share/hunspell")).exists()) {
-      m_sDictPath = QStringLiteral("/usr/share/hunspell/");
-    } else if (QDir(QStringLiteral("/usr/local/share/hunspell")).exists()) {
-      m_sDictPath = QStringLiteral("/usr/local/share/hunspell/");
-      // Otherwise look for MySpell dictionary
-    } else if (QDir(QStringLiteral("/usr/share/myspell/dicts")).exists()) {
-      m_sDictPath = QStringLiteral("/usr/share/myspell/dicts/");
-    } else if (QDir(
-                 QStringLiteral("/usr/local/share/myspell/dicts")).exists()) {
-      m_sDictPath = QStringLiteral("/usr/local/share/myspell/dicts/");
+  // Add application folder to search folder for dictionaries
+  std::filesystem::path app_path(
+        QString(qApp->applicationDirPath() + "/dicts/").toStdU16String());
+  auto dirs2 = std::vector<std::filesystem::path>();
+  dirs2.push_back(app_path);
+  nuspell::search_dirs_for_dicts(dirs2, dict_list);
+
+  QString sTmp;
+  for (auto s : dict_list) {
+    sTmp = QString::fromUtf16(s.u16string().c_str());
+    // qDebug() << sTmp;
+    sTmp.remove(QStringLiteral(".aff"));
+    if (sTmp.contains('\\')) {
+      sTmp = sTmp.right(sTmp.length() - sTmp.lastIndexOf('\\') - 1);
     } else {
-      // Fallback and for Windows look in app dir
-      m_sDictPath = qApp->applicationDirPath() + "/dicts/";
+      sTmp = sTmp.right(sTmp.length() - sTmp.lastIndexOf('/') -1);
     }
+    m_sListDicts << sTmp;
   }
-  if (!m_sDictPath.endsWith('/')) {
-    m_sDictPath.append('/');
-  }
-  // Group already set in constructor
-  // m_pSettings->beginGroup("Plugin_" + QString(PLUGIN_NAME));
-  m_pSettings->setValue(QStringLiteral("DictionaryPath"), m_sDictPath);
-  // m_pSettings->endGroup();
 
-  const QFileInfoList fiListFiles = QDir(m_sDictPath).entryInfoList(
-                                      QDir::NoDotAndDotDot | QDir::Files);
-  for (const auto &fi : fiListFiles) {
-    m_sListDicts << fi.baseName();
-  }
-  m_sListDicts.removeDuplicates();
-  // qDebug() << "Dictionary files:" << m_sListDicts;
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto SpellChecker_Hunspell::initDictionaries() -> bool {
-  if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
-      || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
-    qWarning() << "Spell checker dictionary file does not exist:"
-               << m_sDictPath + m_sDictLang << "*.dic *.aff";
+  auto dict_path = nuspell::search_dirs_for_one_dict(dirs,
+                                                     m_sDictLang.toStdString());
+  if (std::empty(dict_path)) {
+    qWarning() << "Can not find the requested dictionary:" << m_sDictLang;
+    qDebug() << "Found dictionaries:";
+    for (auto s : dict_list) {
+      qDebug() << QString::fromUtf16(s.u16string().c_str());
+    }
     QMessageBox::warning(nullptr, qApp->applicationName(),
-                         QString::fromLatin1(
-                           "Spell checker dictionary file does not exist!\n"
-                           "Trying to load fallback dictionary."));
+                         tr("Can not find the requested dictionary!"));
+    return false;
+  }
 
-    // Try to load english fallback
-    m_sDictLang = QStringLiteral("en_GB");
-    if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
-        || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
-      qWarning() << "Spell checker fallback does not exist:"
-                 << m_sDictPath + m_sDictLang << "*.dic *.aff";
-      m_sDictLang = QStringLiteral("en-GB");
-      if (!QFile::exists(m_sDictPath + m_sDictLang + ".dic")
-          || !QFile::exists(m_sDictPath + m_sDictLang + ".aff")) {
-        qWarning() << "Spell checker fallback does not exist:"
-                   << m_sDictPath + m_sDictLang << "*.dic *.aff";
-        QMessageBox::warning(nullptr, qApp->applicationName(),
-                             "Spell checker fallback "
-                             + m_sDictLang + " doesn't exist as well.");
-        return false;
-      }
-    }
+  try {
+    m_Dict.load_aff_dic(dict_path);
+  }
+  catch (const nuspell::Dictionary_Loading_Error& e) {
+    qWarning() << e.what() << '\n';
+    QMessageBox::warning(nullptr, qApp->applicationName(),
+                         QString::fromLatin1(e.what()));
+    return false;
   }
 
   // Init user dictionary
@@ -247,60 +229,6 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
     }
   }
 
-  QString sDictFile(m_sDictPath + m_sDictLang + ".dic");
-  QString sAffixFile(m_sDictPath + m_sDictLang + ".aff");
-  QByteArray dictFilePathBA = sDictFile.toLocal8Bit();
-  QByteArray affixFilePathBA = sAffixFile.toLocal8Bit();
-
-  // qDebug() << "Using dictionary:" << sDictFile;
-
-  // Detect encoding analyzing the SET option in the affix file
-  m_sEncoding = QStringLiteral("ISO8859-1");
-  QFile _affixFile(sAffixFile);
-  if (_affixFile.open(QIODevice::ReadOnly)) {
-    QTextStream stream(&_affixFile);
-    QRegularExpression enc_detector(
-          QStringLiteral("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*"),
-          QRegularExpression::CaseInsensitiveOption);
-    QString sLine;
-    QRegularExpressionMatch match;
-    while (!stream.atEnd()) {
-      sLine = stream.readLine();
-      if (sLine.isEmpty()) { continue; }
-      match = enc_detector.match(sLine);
-      if (match.hasMatch()) {
-        m_sEncoding = match.captured(1);
-        // qDebug() << QString("Encoding set to ") + m_sEncoding;
-        break;
-      }
-    }
-    _affixFile.close();
-  } else {
-    QMessageBox::warning(nullptr, qApp->applicationName(),
-                         QStringLiteral("Dictionary could not be opened."));
-    qWarning() << "Dictionary could not be opened:" << sAffixFile;
-    return false;
-  }
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  m_pCodec = QTextCodec::codecForName(
-               this->m_sEncoding.toLatin1().constData());
-#else
-  m_Decoder = QStringDecoder(this->m_sEncoding.toLatin1().constData());
-  m_Encoder = QStringEncoder(this->m_sEncoding.toLatin1().constData());
-  if (!m_Decoder.isValid() || !m_Encoder.isValid()) {
-    QMessageBox::warning(nullptr, qApp->applicationName(),
-                         QStringLiteral("No valid string converter found!"));
-    qWarning() << "Invalid string converter! Decoder:" << m_Decoder.name()
-               << "- Encoder: " << m_Encoder.name();
-  }
-#endif
-
-  delete m_pHunspell;
-  m_pHunspell = nullptr;
-  m_pHunspell = new Hunspell(affixFilePathBA.constData(),
-                             dictFilePathBA.constData());
-
   this->loadAdditionalDict(m_sUserDict);
   this->loadAdditionalDict(m_sSharePath + "/community/" +
                            m_sCommunity + "/ExtendedDict.txt");
@@ -311,7 +239,7 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::loadAdditionalDict(const QString &sFilename) {
+void SpellChecker_Nuspell::loadAdditionalDict(const QString &sFilename) {
   QFile DictonaryFile(sFilename);
   if (DictonaryFile.exists()) {
     if (DictonaryFile.open(QIODevice::ReadOnly)) {
@@ -331,12 +259,12 @@ void SpellChecker_Hunspell::loadAdditionalDict(const QString &sFilename) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::callPlugin() {
+void SpellChecker_Nuspell::callPlugin() {
   if (!this->initDictionaries()) {
     return;
   }
 
-  m_pCheckDialog = new HunspellCheckDialog(this, nullptr);
+  m_pCheckDialog = new NuspellCheckDialog(this, nullptr);
   m_pCheckDialog->setWindowIcon(this->getIcon());
 
   QTextCharFormat highlightFormat;
@@ -353,7 +281,7 @@ void SpellChecker_Hunspell::callPlugin() {
   QTextCursor cursor(m_pEditor->document());
   QList<QTextEdit::ExtraSelection> esList;
 
-  HunspellCheckDialog::SpellCheckAction spellResult = HunspellCheckDialog::None;
+  NuspellCheckDialog::SpellCheckAction spellResult = NuspellCheckDialog::None;
 
   // Don't call cursor.beginEditBlock(), as this prevents the redraw
   // after changes to the content
@@ -398,15 +326,15 @@ void SpellChecker_Hunspell::callPlugin() {
       m_pEditor->setExtraSelections(esList);
       QCoreApplication::processEvents();
 
-      if (spellResult == HunspellCheckDialog::AbortCheck) {
+      if (spellResult == NuspellCheckDialog::AbortCheck) {
         break;
       }
 
       switch (spellResult) {
-        case HunspellCheckDialog::ReplaceOnce:
+        case NuspellCheckDialog::ReplaceOnce:
           cursor.insertText(m_pCheckDialog->replacement());
           break;
-        case HunspellCheckDialog::ReplaceAll:
+        case NuspellCheckDialog::ReplaceAll:
           this->replaceAll(cursor.position(), sWord,
                            m_pCheckDialog->replacement());
           break;
@@ -424,59 +352,46 @@ void SpellChecker_Hunspell::callPlugin() {
   // cursor.endEditBlock();
   m_pEditor->setTextCursor(m_oldCursor);
 
-  if (spellResult != HunspellCheckDialog::AbortCheck) {
+  if (spellResult != NuspellCheckDialog::AbortCheck) {
     QMessageBox::information(nullptr, qApp->applicationName(),
                              tr("Spell check has finished."));
   }
 }
 
-void SpellChecker_Hunspell::executePlugin() {}
+void SpellChecker_Nuspell::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellChecker_Hunspell::spell(const QString &sWord) -> bool {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  return m_pHunspell->spell(m_pCodec->fromUnicode(sWord).toStdString());
-#else
-  return m_pHunspell->spell(QByteArray(m_Encoder(sWord)).toStdString());
-#endif
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto SpellChecker_Hunspell::suggest(const QString &sWord) -> QStringList {
-  int nSuggestions = 0;
-  QStringList sListSuggestions;
-  std::vector<std::string> wordlist;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  wordlist = m_pHunspell->suggest(m_pCodec->fromUnicode(sWord).toStdString());
-#else
-  wordlist = m_pHunspell->suggest(QByteArray(m_Encoder(sWord)).toStdString());
-#endif
-
-  nSuggestions = static_cast<int>(wordlist.size());
-  if (nSuggestions > 0) {
-    sListSuggestions.reserve(nSuggestions);
-    for (int i = 0; i < nSuggestions; i++) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      sListSuggestions << m_pCodec->toUnicode(
-                            QByteArray::fromStdString(wordlist[i]));
-#else
-      sListSuggestions << m_Decoder(wordlist[i]);
-#endif
-    }
+auto SpellChecker_Nuspell::spell(const QString &sWord) -> bool {
+  if (!m_UserWordsList.contains(sWord)) {
+    return m_Dict.spell(sWord.toStdString());
   }
-
-  return sListSuggestions;
+  return true;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::replaceAll(const int nPos, const QString &sOld,
-                                       const QString &sNew) {
+auto SpellChecker_Nuspell::suggest(const QString &sWord) -> QStringList {
+  auto sugs = std::vector<std::string>();
+  m_Dict.suggest(sWord.toStdString(), sugs);
+
+  QStringList suggestions;
+  std::transform(
+        sugs.begin(), sugs.end(), std::back_inserter(suggestions),
+        [](const std::string &v){
+    return QString::fromStdString(v);
+  });
+
+  return suggestions;
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+void SpellChecker_Nuspell::replaceAll(const int nPos, const QString &sOld,
+                                      const QString &sNew) {
   QTextCursor cursor(m_pEditor->document());
   cursor.setPosition(nPos-sOld.length(), QTextCursor::MoveAnchor);
 
@@ -505,25 +420,21 @@ void SpellChecker_Hunspell::replaceAll(const int nPos, const QString &sOld,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::ignoreWord(const QString &sWord) {
+void SpellChecker_Nuspell::ignoreWord(const QString &sWord) {
   this->putWord(sWord);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::putWord(const QString &sWord) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  m_pHunspell->add(m_pCodec->fromUnicode(sWord).constData());
-#else
-  m_pHunspell->add(QByteArray(m_Encoder(sWord)).constData());
-#endif
+void SpellChecker_Nuspell::putWord(const QString &sWord) {
+  m_UserWordsList << sWord;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::addToUserWordlist(const QString &sWord) {
+void SpellChecker_Nuspell::addToUserWordlist(const QString &sWord) {
   this->putWord(sWord);
   if (!m_sUserDict.isEmpty()) {
     QFile userDictonaryFile(m_sUserDict);
@@ -547,21 +458,21 @@ void SpellChecker_Hunspell::addToUserWordlist(const QString &sWord) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellChecker_Hunspell::hasSettings() const -> bool {
+auto SpellChecker_Nuspell::hasSettings() const -> bool {
   return false;
 }
 
-void SpellChecker_Hunspell::showSettings() {
+void SpellChecker_Nuspell::showSettings() {
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::setCurrentEditor(TextEditor *pEditor) {
+void SpellChecker_Nuspell::setCurrentEditor(TextEditor *pEditor) {
   m_pEditor = pEditor;
 }
 
-void SpellChecker_Hunspell::setEditorlist(
+void SpellChecker_Nuspell::setEditorlist(
     const QList<TextEditor *> &listEditors) {
   Q_UNUSED(listEditors)
 }
@@ -569,7 +480,7 @@ void SpellChecker_Hunspell::setEditorlist(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::showAbout() {
+void SpellChecker_Nuspell::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/spellchecker.png")));
@@ -588,7 +499,7 @@ void SpellChecker_Hunspell::showAbout() {
                         "https://opensource.org/licenses/BSD-2-Clause\">"
                         "2-Clause BSD License</a>",
                         tr("Spell checker based on "
-                           "<a href=\"https://hunspell.github.io/\">"
-                           "Hunspell</a>.")));
+                           "<a href=\"https://nuspell.github.io/\">"
+                           "Nuspell</a>.")));
   aboutbox.exec();
 }

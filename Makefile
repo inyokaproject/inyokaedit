@@ -41,6 +41,7 @@ allplugins:
 	$(LRELEASE) plugins/highlighter/lang/*.ts
 	$(LRELEASE) plugins/hotkey/lang/*.ts
 	$(LRELEASE) plugins/spellchecker-hunspell/lang/*.ts
+#	$(LRELEASE) plugins/spellchecker-nuspell/lang/*.ts
 	$(LRELEASE) plugins/uu_knowledgebox/lang/*.ts
 	$(LRELEASE) plugins/uu_tabletemplate/lang/*.ts
 	$(QMAKE) $(preview) plugins/plugins.pro -o plugins/$(MAKEFILE2)
@@ -72,6 +73,7 @@ install-plugins:
 	$(INSTALL_FILE) plugins/libhighlighter.so               $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libhotkey.so                    $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libspellchecker-hunspell.so     $(DESTDIR)$(libdir)/inyokaedit/plugins
+#	$(INSTALL_FILE) plugins/libspellchecker-nuspell.so      $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libuu_knowledgebox.so           $(DESTDIR)$(libdir)/inyokaedit/plugins
 	$(INSTALL_FILE) plugins/libuu_tabletemplate.so          $(DESTDIR)$(libdir)/inyokaedit/plugins
 
