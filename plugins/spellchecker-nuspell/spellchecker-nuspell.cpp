@@ -63,16 +63,8 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QStringList>
-#include <QRegularExpression>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QTextCodec>
-#endif
 
-#if defined _WIN32
-#include "../windows_files/nuspell/finder.hxx"
-#else
 #include <nuspell/finder.hxx>
-#endif
 
 #include "./nuspellcheckdialog.h"
 #include "../../application/texteditor.h"

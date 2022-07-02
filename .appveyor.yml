@@ -7,13 +7,23 @@ environment:
   matrix:
   - BUILD: x86
     QTDIR: C:\Qt\5.15\msvc2019
+    VCPKG_DIR: C:\Tools\vcpkg
   - BUILD: x64
     QTDIR: C:\Qt\5.15\msvc2019_64
+    VCPKG_DIR: C:\Tools\vcpkg
 install:
-- ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", '') | Set-Content plugins/plugins.pro
+- ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", 'spellchecker-nuspell ') | Set-Content plugins/plugins.pro
 build_script:
 - cmd: >-
-    git clone -b windows_files --single-branch https://github.com/inyokaproject/inyokaedit.git windows_files
+    %VCPKG_DIR%\vcpkg.exe version
+    
+    %VCPKG_DIR%\vcpkg.exe install nuspell:%BUILD%-windows icu:%BUILD%-windows
+    
+    %VCPKG_DIR%\vcpkg.exe list
+    
+    %VCPKG_DIR%\vcpkg.exe integrate install
+
+    git clone -b packaging --single-branch https://github.com/inyokaproject/inyokaedit.git packaging
 
     git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
 
@@ -47,7 +57,13 @@ build_script:
     
     copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
 
-    copy windows_files\OpenSSL_%BUILD%\* InyokaEdit\
+    copy packaging\Windows\OpenSSL_%BUILD%\* InyokaEdit\
+    
+    xcopy /y /d %VCPKG_DIR%/packages/icu_%BUILD%-windows/bin/*.dll InyokaEdit\
+    
+    xcopy /y /d %VCPKG_DIR%/packages/nuspell_%BUILD%-windows/bin/*.dll InyokaEdit\
+
+    xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
 
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
@@ -61,9 +77,9 @@ build_script:
 
     7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip .\InyokaEdit\
 
-    curl -fsSL -o inyokaedit.nsi https://raw.githubusercontent.com/inyokaproject/inyokaedit/packaging/Windows/inyokaedit.nsi
-
-    curl -fsSL -o inyokaedit.ico https://raw.githubusercontent.com/inyokaproject/inyokaedit/packaging/Windows/inyokaedit.ico
+    copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
+    
+    copy packaging\Windows\inyokaedit.ico inyokaedit.ico
 
     makensis inyokaedit.nsi
 

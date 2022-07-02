@@ -84,5 +84,5 @@ TRANSLATIONS += lang/spellchecker-nuspell_de.ts \
                 lang/spellchecker-nuspell_en.ts \
                 lang/spellchecker-nuspell_nl.ts
 
-#win32:LIBS   += $$PWD/windows_files/nuspell/libnuspell.dll
+win32:LIBS   += C:/Tools/vcpkg/packages/nuspell/bin/libnuspell.dll
 unix:LIBS    += -lnuspell

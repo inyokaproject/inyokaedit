@@ -65,11 +65,7 @@
 #include <QString>
 #include <QTextCursor>
 
-#if defined _WIN32
-#include "../windows_files/nuspell/dictionary.hxx"
-#else
 #include <nuspell/dictionary.hxx>
-#endif
 
 #include "../../application/ieditorplugin.h"
 
