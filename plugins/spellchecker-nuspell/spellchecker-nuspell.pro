@@ -84,5 +84,15 @@ TRANSLATIONS += lang/spellchecker-nuspell_de.ts \
                 lang/spellchecker-nuspell_en.ts \
                 lang/spellchecker-nuspell_nl.ts
 
-win32:LIBS   += C:/Tools/vcpkg/packages/nuspell/bin/libnuspell.dll
 unix:LIBS    += -lnuspell
+
+win32 {
+ equals(QT_ARCH, "x86") {
+  INCLUDEPATH += c:/tools/vcpkg/installed/x86-windows/include
+  LIBS        += c:/tools/vcpkg/installed/x86-windows/libnuspell.dll
+ }
+ equals(QT_ARCH, "x86_64") {
+  INCLUDEPATH += c:/tools/vcpkg/installed/x64-windows/include
+  LIBS        += c:/tools/vcpkg/installed/x64-windows/bin/libnuspell.dll
+ }
+}
