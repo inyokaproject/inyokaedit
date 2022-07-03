@@ -89,9 +89,9 @@ unix:LIBS    += -lnuspell
 win32 {
  equals(QT_ARCH, "x86_64") {
   INCLUDEPATH += c:/tools/vcpkg/installed/x64-windows/include
-  LIBS        += c:/tools/vcpkg/installed/x64-windows/bin/nuspell.dll
+  LIBS        += -L"c:/tools/vcpkg/installed/x64-windows/lib" -lnuspell
  } else {
   INCLUDEPATH += c:/tools/vcpkg/installed/x86-windows/include
-  LIBS        += c:/tools/vcpkg/installed/x86-windows/bin/nuspell.dll
+  LIBS        += -L"c:/tools/vcpkg/installed/x86-windows/lib" -lnuspell
  }
 }
