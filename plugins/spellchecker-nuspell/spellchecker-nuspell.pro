@@ -92,6 +92,6 @@ win32 {
   LIBS        += c:/tools/vcpkg/installed/x64-windows/bin/nuspell.dll
  } else {
   INCLUDEPATH += c:/tools/vcpkg/installed/x86-windows/include
-  LIBS        += c:/tools/vcpkg/installed/x86-windows/nuspell.dll
+  LIBS        += c:/tools/vcpkg/installed/x86-windows/bin/nuspell.dll
  }
 }
