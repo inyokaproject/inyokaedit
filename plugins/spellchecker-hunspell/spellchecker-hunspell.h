@@ -67,11 +67,7 @@
 
 #include "../../application/ieditorplugin.h"
 
-#if defined _WIN32
-#include "../windows_files/hunspell-mingw/include/hunspell.hxx"
-#else
 #include <hunspell/hunspell.hxx>
-#endif
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 class QTextCodec;

@@ -12,16 +12,24 @@ environment:
     QTDIR: C:\Qt\5.15\msvc2019_64
     VCPKG_DIR: C:\Tools\vcpkg
 install:
-- ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", 'spellchecker-nuspell ') | Set-Content plugins/plugins.pro
+- ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", "spellchecker-nuspell ") | Set-Content plugins/plugins.pro
 build_script:
 - cmd: >-
     %VCPKG_DIR%\vcpkg.exe version
-    
-    %VCPKG_DIR%\vcpkg.exe install nuspell:%BUILD%-windows icu:%BUILD%-windows
-    
+
+    echo set(VCPKG_BUILD_TYPE release) >> %VCPKG_DIR%\triplets\%BUILD%-windows.cmake
+
+    type %VCPKG_DIR%\triplets\%BUILD%-windows.cmake
+
+    %VCPKG_DIR%\vcpkg.exe install nuspell:%BUILD%-windows
+
     %VCPKG_DIR%\vcpkg.exe list
-    
-    %VCPKG_DIR%\vcpkg.exe integrate install
+
+    tree /f /a %VCPKG_DIR%\installed\%BUILD%-windows\lib
+
+    tree /f /a %VCPKG_DIR%\installed\%BUILD%-windows\bin
+
+    tree /f /a %VCPKG_DIR%\installed\%BUILD%-windows\include
 
     git clone -b packaging --single-branch https://github.com/inyokaproject/inyokaedit.git packaging
 
@@ -39,6 +47,8 @@ build_script:
 
     lrelease plugins\hotkey\hotkey.pro
 
+    lrelease plugins\spellchecker-nuspell\spellchecker-nuspell.pro
+
     lrelease plugins\uu_knowledgebox\uu_knowledgebox.pro
 
     lrelease plugins\uu_tabletemplate\uu_tabletemplate.pro
@@ -54,14 +64,12 @@ build_script:
     windeployqt --release --no-translations --no-angle --no-opengl-sw InyokaEdit\InyokaEdit.exe
 
     copy COPYING InyokaEdit\
-    
+
     copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
 
     copy packaging\Windows\OpenSSL_%BUILD%\* InyokaEdit\
-    
-    xcopy /y /d %VCPKG_DIR%/packages/icu_%BUILD%-windows/bin/*.dll InyokaEdit\
-    
-    xcopy /y /d %VCPKG_DIR%/packages/nuspell_%BUILD%-windows/bin/*.dll InyokaEdit\
+
+    xcopy /y /d %VCPKG_DIR%\installed\%BUILD%-windows\bin\*.dll InyokaEdit\
 
     xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
 
@@ -78,7 +86,7 @@ build_script:
     7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip .\InyokaEdit\
 
     copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
-    
+
     copy packaging\Windows\inyokaedit.ico inyokaedit.ico
 
     makensis inyokaedit.nsi

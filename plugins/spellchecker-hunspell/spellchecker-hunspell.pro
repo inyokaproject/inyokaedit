@@ -84,5 +84,8 @@ TRANSLATIONS += lang/spellchecker-hunspell_de.ts \
                 lang/spellchecker-hunspell_en.ts \
                 lang/spellchecker-hunspell_nl.ts
 
-win32:LIBS   += $$PWD/windows_files/hunspell-mingw/bin/libhunspell.dll
 unix:LIBS    += -lhunspell
+
+win32 {
+  error("This plugin is not supported on Windows, please use spellchecker-nuspell instead!")
+}
