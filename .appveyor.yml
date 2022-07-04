@@ -67,6 +67,10 @@ build_script:
 
     copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
 
+    copy packaging\Windows\ICU_License.txt InyokaEdit\
+
+    copy packaging\Windows\Nuspell_License.txt InyokaEdit\
+
     copy packaging\Windows\OpenSSL_%BUILD%\* InyokaEdit\
 
     xcopy /y /d %VCPKG_DIR%\installed\%BUILD%-windows\bin\*.dll InyokaEdit\
