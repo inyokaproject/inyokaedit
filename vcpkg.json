@@ -3,15 +3,12 @@
     "version-string": "current",
     "dependencies": [
         "nuspell"
-    ],
+    ], 
+    "builtin-baseline": "261ca0dd4d458f9ea58fc7096b1eb1a68c47cfc8",
     "overrides": [
         {
             "name": "nuspell",
             "version": "5.1.0#2"
-        },
-        {
-            "name": "icu",
-            "version": "71.1"
         }
     ]
 }
