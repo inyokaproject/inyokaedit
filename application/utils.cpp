@@ -118,7 +118,7 @@ void Utils::replyFinished(QNetworkReply *pReply) {
     sLatestVersion = sLatestVersion.remove('v');
 
     if (sLatestVersion.isEmpty()) {
-      qWarning() << "Couldn't get latest version from GitHb API:" <<
+      qWarning() << "Couldn't get latest version from GitHub API:" <<
                     pReply->url().toString();
     } else {
       qDebug() << "Latest version on server:" << sLatestVersion;

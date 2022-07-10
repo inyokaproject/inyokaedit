@@ -13,6 +13,10 @@ environment:
     VCPKG_DIR: C:\Tools\vcpkg
 install:
 - ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", "spellchecker-nuspell ") | Set-Content plugins/plugins.pro
+cache:
+- '%VCPKG_DIR%\installed\%BUILD%-windows\lib -> vcpkg.json'
+- '%VCPKG_DIR%\installed\%BUILD%-windows\bin -> vcpkg.json'
+- '%VCPKG_DIR%\installed\%BUILD%-windows\include -> vcpkg.json'
 build_script:
 - cmd: >-
     %VCPKG_DIR%\vcpkg.exe version

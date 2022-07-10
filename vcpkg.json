@@ -1,0 +1,17 @@
+{
+    "name": "InyokaEdit",
+    "version-string": "current",
+    "dependencies": [
+        "nuspell"
+    ],
+    "overrides": [
+        {
+            "name": "nuspell",
+            "version": "5.1.0#2"
+        },
+        {
+            "name": "icu",
+            "version": "71.1"
+        }
+    ]
+}
