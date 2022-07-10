@@ -30,12 +30,14 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QEventLoop>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QNetworkProxy>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QRegularExpression>
+#include <QVersionNumber>
 
 Utils::Utils(QWidget *pParent, QObject *pParentObj)
   : m_pParent(pParent) {
@@ -91,10 +93,13 @@ void Utils::setProxy(const QString &sHostName, const quint16 nPort,
 // ----------------------------------------------------------------------------
 
 void Utils::checkWindowsUpdate() {
-  QString sDownloadUrl(
-        QStringLiteral("https://github.com/inyokaproject/inyokaedit/releases"));
+  QUrl url(
+        QStringLiteral(
+          "https://api.github.com/repos/inyokaproject/inyokaedit/releases/latest"));
   qDebug() << "Looking for updates...";
-  m_NwManager->get(QNetworkRequest(QUrl(sDownloadUrl)));
+  QNetworkRequest request(url);
+  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+  m_NwManager->get(request);
 }
 
 // ----------------------------------------------------------------------------
@@ -106,64 +111,51 @@ void Utils::replyFinished(QNetworkReply *pReply) {
     qWarning() << "Error (#" << pReply->error() << ")while update check:"
                << pData->errorString();
   } else {
-    QRegularExpression regExp(
-          QStringLiteral(
-            "\\bInyokaEdit-(\\d+.\\d+.\\d+)-\\d+-Windows_x64.zip\\b"));
-    QString sReply = QString::fromUtf8(pData->readAll());
-    QRegularExpressionMatch match = regExp.match(sReply);
+    QByteArray response_data = pData->readAll();
+    QJsonDocument jsondoc = QJsonDocument::fromJson(response_data);
+    QJsonObject jsonobj = jsondoc.object();
+    QString sLatestVersion(jsonobj[QStringLiteral("tag_name")].toString());
+    sLatestVersion = sLatestVersion.remove('v');
 
-    if (match.hasMatch()) {
-      QStringList sListCurrentVer;
-      QStringList sListLatestVer;
-      QString sLatestVersion(match.captured(1));
+    if (sLatestVersion.isEmpty()) {
+      qWarning() << "Couldn't get latest version from GitHb API:" <<
+                    pReply->url().toString();
+    } else {
       qDebug() << "Latest version on server:" << sLatestVersion;
+      QVersionNumber currentVer(
+            QVersionNumber::fromString(qApp->applicationVersion()));
+      QVersionNumber latestVer(QVersionNumber::fromString(sLatestVersion));
 
-      sListCurrentVer = qApp->applicationVersion().split(QStringLiteral("."));
-      sListLatestVer = sLatestVersion.split(QStringLiteral("."));
+      if (latestVer > currentVer) {
+        auto *msgBox = new QMessageBox(
+              QMessageBox::Question,
+              tr("Update found"),
+              tr("Found a new version of %1.<br>"
+                 "Do you want to download the latest version?")
+              .arg(qApp->applicationName()),
+              QMessageBox::NoButton, m_pParent);
+        QPushButton *noDontAskAgainButton = msgBox->addButton(
+              tr("No, don't ask again!"),
+              QMessageBox::NoRole);
+        QPushButton *noButton = msgBox->addButton(QMessageBox::No);
+        QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
 
-      if (sListCurrentVer.size() > 2 && sListLatestVer.size() > 2) {
-        auto nMainVer1 = static_cast<quint8>(sListCurrentVer[0].toUInt());
-        auto nMinorVer1 = static_cast<quint8>(sListCurrentVer[1].toUInt());
-        auto nRevision1 = static_cast<quint8>(sListCurrentVer[2].toUInt());
-        auto nMainVer2 = static_cast<quint8>(sListLatestVer[0].toUInt());
-        auto nMinorVer2 = static_cast<quint8>(sListLatestVer[1].toUInt());
-        auto nRevision2 = static_cast<quint8>(sListLatestVer[2].toUInt());
+        msgBox->setDefaultButton(noButton);
+        msgBox->exec();
 
-        if (nMainVer2 > nMainVer1
-            || (nMainVer2 == nMainVer1 && nMinorVer2 > nMinorVer1)
-            || (nMainVer2 == nMainVer1
-                && nMinorVer2 == nMinorVer1
-                && nRevision2 > nRevision1)) {
-          auto *msgBox = new QMessageBox(
-                           QMessageBox::Question,
-                           tr("Update found"),
-                           tr("Found a new version of %1.<br>"
-                           "Do you want to download the latest version?")
-                           .arg(qApp->applicationName()),
-                           QMessageBox::NoButton, m_pParent);
-          QPushButton *noDontAskAgainButton = msgBox->addButton(
-                                                tr("No, don't ask again!"),
-                                                QMessageBox::NoRole);
-          QPushButton *noButton = msgBox->addButton(QMessageBox::No);
-          QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
-
-          msgBox->setDefaultButton(noButton);
-          msgBox->exec();
-
-          if (msgBox->clickedButton() == noDontAskAgainButton) {
-            qDebug() << "Don't want to download an update and DON'T ASK AGAIN!";
-            emit this->setWindowsUpdateCheck(false);
-            return;
-          }
-          if (msgBox->clickedButton() == yesButton) {
-            qDebug() << "Calling download page.";
-            QDesktopServices::openUrl(
-                  QUrl(
-                    QStringLiteral(
-                      "https://github.com/inyokaproject/inyokaedit/releases")));
-          } else if (msgBox->clickedButton() == noButton) {
-            qDebug() << "Don't want to download an update.";
-          }
+        if (msgBox->clickedButton() == noDontAskAgainButton) {
+          qDebug() << "Don't want to download an update and DON'T ASK AGAIN!";
+          emit this->setWindowsUpdateCheck(false);
+          return;
+        }
+        if (msgBox->clickedButton() == yesButton) {
+          qDebug() << "Calling download page.";
+          QDesktopServices::openUrl(
+                QUrl(
+                  QStringLiteral(
+                    "https://github.com/inyokaproject/inyokaedit/releases")));
+        } else if (msgBox->clickedButton() == noButton) {
+          qDebug() << "Don't want to download an update.";
         }
       }
     }
