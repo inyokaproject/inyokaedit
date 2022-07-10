@@ -1,5 +1,5 @@
 {
-    "name": "InyokaEdit",
+    "name": "inyokaedit",
     "version-string": "current",
     "dependencies": [
         "nuspell"
