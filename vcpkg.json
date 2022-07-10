@@ -1,6 +1,6 @@
 {
     "name": "inyokaedit",
-    "version-string": "current",
+    "version-string": "master",
     "dependencies": [
         "nuspell"
     ], 
