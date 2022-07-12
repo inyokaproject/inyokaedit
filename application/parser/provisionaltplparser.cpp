@@ -290,31 +290,23 @@ auto ProvisionalTplParser::parseBash(const QStringList &sListArgs) -> QString {
 
 auto ProvisionalTplParser::parseBuilddeps(
     const QStringList &sListArgs) -> QString {
-  QString sOutput(
-        QString::fromUtf8("<div class=\"package-list\">\n"
-                          "<div class=\"contents\">\n"
-                          "<p>"
-                          "Befehl zum Installieren der Build-Abhängigkeiten: "
-                          "'''[#dummy apt-get]''' [#dummy aptitude]</p>\n"
-                          "<div class=\"bash\">"
-                          "<div class=\"contents\">\n"
-                          "<pre class=\"notranslate\"> "
-                          "sudo apt-get build-dep"));
-  for (const auto &s : sListArgs) {
-    sOutput += " " + s.trimmed();
-  }
-  return sOutput + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+  return QString::fromUtf8("<div class=\"package-list\">\n"
+                           "<div class=\"contents\">\n"
+                           "<p>"
+                           "Befehl zum Installieren der Build-Abhängigkeiten: "
+                           "'''[#dummy apt-get]''' [#dummy aptitude]</p>\n"
+                           "<div class=\"bash\">"
+                           "<div class=\"contents\">\n"
+                           "<pre class=\"notranslate\"> "
+                           "sudo apt-get build-dep ") +
+      sListArgs.join(' ') + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 auto ProvisionalTplParser::parseCode(const QStringList &sListArgs) -> QString {
-  QString sOutput("<pre>");
-  for (const auto &s : sListArgs) {
-    sOutput += s + "\n";
-  }
-  return sOutput + "</pre>";
+  return "<pre>" + sListArgs.join("\n") + "</pre>";
 }
 
 // ----------------------------------------------------------------------------
@@ -322,7 +314,6 @@ auto ProvisionalTplParser::parseCode(const QStringList &sListArgs) -> QString {
 
 auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
   QString sLink("");
-
   if (!sListArgs.isEmpty()) {
     sLink = sListArgs[0];
   }
@@ -344,13 +335,9 @@ auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
 
 auto ProvisionalTplParser::parseExperts(
     const QStringList &sListArgs) -> QString {
-  QString sOutput("");
-  for (const auto &s : sListArgs) {
-    sOutput += s + " ";
-  }
   return ProvisionalTplParser::insertBox("box experts",
                                          QString::fromUtf8("Experten-Info:"),
-                                         sOutput);
+                                         sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -636,14 +623,9 @@ auto ProvisionalTplParser::parseIconOverview(
 
 auto ProvisionalTplParser::parseIkhayaAuthor(
     const QStringList &sListArgs) -> QString {
-  QString sOutput("");
-  for (const auto &s : sListArgs) {
-    sOutput += s + " ";
-  }
-
   return ProvisionalTplParser::insertBox("box tested_for",
                                          QString::fromUtf8("Über den Autor"),
-                                         sOutput);
+                                         sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -651,14 +633,9 @@ auto ProvisionalTplParser::parseIkhayaAuthor(
 
 auto ProvisionalTplParser::parseIkhayaAward(
     const QStringList &sListArgs) -> QString {
-  QString sOutput("");
-  for (const auto &s : sListArgs) {
-    sOutput += s + " ";
-  }
-
   return ProvisionalTplParser::insertBox("box award",
                                          QString::fromUtf8("Award:"),
-                                         sOutput);
+                                         sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -1360,13 +1337,9 @@ auto ProvisionalTplParser::parseLeft(const QStringList &sListArgs) -> QString {
 
 auto ProvisionalTplParser::parseNotice(
     const QStringList &sListArgs) -> QString {
-  QString sOutput("");
-  for (const auto &s : sListArgs) {
-    sOutput += s + " ";
-  }
   return ProvisionalTplParser::insertBox("box notice",
                                          QString::fromUtf8("Hinweis:"),
-                                         sOutput);
+                                         sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -1537,14 +1510,10 @@ auto ProvisionalTplParser::parseOverview2(
 
 auto ProvisionalTplParser::parsePackage(
     const QStringList &sListArgs) -> QString {
-  QString sOutput(QString::fromUtf8(
-                    "<p>Paketliste zum Kopieren:</p>\n"
-                    "<div class=\"bash\">\n<pre class=\"notranslate\"> "
-                    "sudo apt-get install"));
-  for (const auto &s : sListArgs) {
-    sOutput += " " + s;
-  }
-  return sOutput + "</pre>\n</div>\n";
+  return QString::fromUtf8(
+        "<p>Paketliste zum Kopieren:</p>\n"
+        "<div class=\"bash\">\n<pre class=\"notranslate\"> "
+        "sudo apt-get install ") + sListArgs.join(' ')  + "</pre>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------
@@ -1552,18 +1521,14 @@ auto ProvisionalTplParser::parsePackage(
 
 auto ProvisionalTplParser::parsePipInstall(
     const QStringList &sListArgs) -> QString {
-  QString sOutput(QString::fromUtf8(
-                    "Wer die neueste Version installieren möchte, kann das "
-                    "Programm über den Python Paketmanager [:pip:] "
-                    "installieren:\n"
-                    "<div class=\"bash\">\n"
-                    "<div class=\"contents\">\n"
-                    "<pre>pip3 install --user"));
-  for (const auto &s : sListArgs) {
-    sOutput += " " + s;
-  }
-  return sOutput + "     # Programm wird nur für den aktuellen Nutzer "
-                   "installiert</pre>\n</div>\n</div>\n" +
+  return QString::fromUtf8(
+        "Wer die neueste Version installieren möchte, kann das Programm über "
+        "den Python Paketmanager [:pip:] installieren:\n"
+        "<div class=\"bash\">\n"
+        "<div class=\"contents\">\n"
+        "<pre>pip3 install ") +
+      sListArgs.join(' ') + "     # Programm wird nur für den aktuellen Nutzer "
+                            "installiert</pre>\n</div>\n</div>\n" +
       this->parseForeignWarning(QStringList() << "Software");
 }
 
@@ -1600,11 +1565,8 @@ auto ProvisionalTplParser::parsePkgInstall(
   sOutput += "\n<p>" +
       QString::fromUtf8("Befehl zum Installieren der Pakete:") + "</p>\n";
   sOutput += "<div class=\"bash\">\n"
-             "<pre class=\"notranslate\"> sudo apt-get install";
-  for (auto &s : sListPackages) {
-    sOutput += " " + s.trimmed();
-  }
-  sOutput += "</pre>\n</div>\n";
+             "<pre class=\"notranslate\"> sudo apt-get install " +
+      sListPackages.join(' ') + "</pre>\n</div>\n";
   sOutput += "<p>" + QString::fromUtf8("Oder mit [:apturl:] installieren, "
                                        "Link: [apt://");
   sOutput += sPackages;
@@ -1616,28 +1578,12 @@ auto ProvisionalTplParser::parsePkgInstall(
 
 auto ProvisionalTplParser::parsePkgInstallBut(
     const QStringList &sListArgs) -> QString {
-  QString sTmp;
-  QString sOutput("");
-
-  sOutput += "<p>\n"
-             "<a href=\"apt://";
-
-  // Apt packages install list / button
-  for (int i = 0; i < sListArgs.length(); i++) {
-    sTmp = sListArgs[i];
-    sOutput += sTmp.replace(" ", ",").trimmed();
-    if (i < sListArgs.size() - 1) {
-      sOutput += ",";
-    }
-  }
-
-  sOutput += "\" rel=\"nofollow\" class=\"external\">"
-             "<img src=\"" + m_sSharePath + "/community/" +
-             m_sCommunity + "/web/Wiki/Vorlagen/Installbutton/button.png\" "
-             "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
-             "mit [:apturl:]</p>";
-
-  return sOutput;
+  return "<p>\n<a href=\"apt://" + sListArgs.join(',') +
+      "\" rel=\"nofollow\" class=\"external\"><img src=\"" + m_sSharePath +
+      "/community/" + m_sCommunity +
+      "/web/Wiki/Vorlagen/Installbutton/button.png\" "
+      "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
+      "mit [:apturl:]</p>";
 }
 
 // ----------------------------------------------------------------------------
@@ -1647,11 +1593,11 @@ auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   QString sOutsideBox("");
   QString sRemark("");
-  QString sUser;
-  QString sPPA;
   QString sOutput("");
 
   if (!sArgs.isEmpty()) {
+    QString sUser;
+    QString sPPA;
     sArgs[0].replace(" ", "_");  // Replace possible spaces
     if (sArgs[0].contains('/')) {
       QStringList sList;
@@ -2162,8 +2108,8 @@ auto ProvisionalTplParser::parseUnderConst(
   QStringList sArgs = sListArgs;
   QString sOutput("");
   // Get and check date
-  QString sDate("");
   if (!sArgs.isEmpty()) {
+    QString sDate("");
     // Extract date
     QStringList sListDate = sArgs[0].split(".");
     // Wrong date format
@@ -2248,13 +2194,9 @@ auto ProvisionalTplParser::parseUnderConst(
 
 auto ProvisionalTplParser::parseWarning(
     const QStringList &sListArgs) -> QString {
-  QString sOutput("");
-  for (const auto &s : sListArgs) {
-    sOutput += s + " ";
-  }
   return ProvisionalTplParser::insertBox("box warning",
                                          QString::fromUtf8("Achtung!"),
-                                         sOutput);
+                                         sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------

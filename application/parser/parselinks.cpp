@@ -71,18 +71,18 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
   QRegularExpression findUrl(
         // Skip file:// with " in front, which is used on Windows for image path
+        // Skip apt:// with " in front, which is used for e.g. for installbutton
         QString::fromLatin1(
           "(?:(?:https?|ftps?|[^\"]file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|"
-          "ircs?|rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
+          "ircs?|rsync|smb|[^\"]apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
           "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  QString sLink;
 
   while ((match = findUrl.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
-    sLink = match.captured();
+    QString sLink(match.captured());
 
     if (nIndex > 0) {
       // Important to check if previous char is a Inyoka style link in []
