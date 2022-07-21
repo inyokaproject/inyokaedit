@@ -37,11 +37,11 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,
                  const QDir &userDataDir, const QString &sSharePath,
                  QObject *pObj)
-  : m_pParent(pParent),
-    m_pEditor(pEditor),
-    m_sListDisabledPlugins(sListDisabledPlugins),
-    m_userDataDir(userDataDir),
-    m_sSharePath(sSharePath) {
+    : m_pParent(pParent),
+      m_pEditor(pEditor),
+      m_sListDisabledPlugins(sListDisabledPlugins),
+      m_userDataDir(userDataDir),
+      m_sSharePath(sSharePath) {
   Q_UNUSED(pObj)
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
@@ -69,8 +69,8 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
     }
   }
   // Plugins in standard installation folder (Linux)
-  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/"
-                     + qApp->applicationName().toLower());
+  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/" +
+                     qApp->applicationName().toLower());
   if (pluginsDir.cd(QStringLiteral("plugins"))) {
     if (!listPluginsDir.contains(pluginsDir)) {
       listPluginsDir << pluginsDir;
@@ -121,8 +121,8 @@ void Plugins::loadPlugins(const QString &sLang) {
       continue;
     }
 
-    m_listPlugins.at(i)->initPlugin(m_pParent, m_pEditor,
-                                    m_userDataDir, m_sSharePath);
+    m_listPlugins.at(i)->initPlugin(m_pParent, m_pEditor, m_userDataDir,
+                                    m_sSharePath);
     m_listPlugins.at(i)->installTranslator(sLang);
 
     QString sMenu(m_listPlugins.at(i)->getCaption());
@@ -132,17 +132,19 @@ void Plugins::loadPlugins(const QString &sLang) {
                                          m_pParent);
       connect(m_PluginMenuEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
-        qobject_cast<IEditorPlugin *>(
-              m_listPluginObjects.at(i))->callPlugin(); });
+                qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))
+                    ->callPlugin();
+              });
     }
     if (m_listPlugins.at(i)->includeToolbar()) {
-      m_PluginToolbarEntries << new QAction(m_listPlugins.at(i)->getIcon(),
-                                            m_listPlugins.at(i)->getCaption(),
-                                            m_pParent);
+      m_PluginToolbarEntries
+          << new QAction(m_listPlugins.at(i)->getIcon(),
+                         m_listPlugins.at(i)->getCaption(), m_pParent);
       connect(m_PluginToolbarEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
-        qobject_cast<IEditorPlugin *>(
-              m_listPluginObjects.at(i))->callPlugin(); });
+                qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))
+                    ->callPlugin();
+              });
     }
 
     m_listPlugins.at(i)->executePlugin();

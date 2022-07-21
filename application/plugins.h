@@ -39,33 +39,33 @@ class Plugins : public QObject {
   Q_OBJECT
 
  public:
-    Plugins(QWidget *pParent, TextEditor *pEditor,
-            const QStringList &sListDisabledPlugins, const QDir &userDataDir,
-            const QString &sSharePath, QObject *pObj = nullptr);
-    void loadPlugins(const QString &sLang);
-    void setCurrentEditor(TextEditor *pEditor);
-    void setEditorlist(const QList<TextEditor *> &listEditors);
+  Plugins(QWidget *pParent, TextEditor *pEditor,
+          const QStringList &sListDisabledPlugins, const QDir &userDataDir,
+          const QString &sSharePath, QObject *pObj = nullptr);
+  void loadPlugins(const QString &sLang);
+  void setCurrentEditor(TextEditor *pEditor);
+  void setEditorlist(const QList<TextEditor *> &listEditors);
 
  public slots:
-    void changeLang(const QString &sLang);
+  void changeLang(const QString &sLang);
 
  signals:
-    void availablePlugins(const QList<IEditorPlugin *> &PluginList,
-                          const QList<QObject *> &PluginObjList);
-    void addMenuToolbarEntries(const QList<QAction *> &ToolbarEntries,
-                               QList<QAction *> MenueEntries);
+  void availablePlugins(const QList<IEditorPlugin *> &PluginList,
+                        const QList<QObject *> &PluginObjList);
+  void addMenuToolbarEntries(const QList<QAction *> &ToolbarEntries,
+                             QList<QAction *> MenueEntries);
 
  private:
-    QWidget *m_pParent;
-    TextEditor *m_pEditor;
-    QStringList m_sListDisabledPlugins;
-    const QDir m_userDataDir;
-    const QString m_sSharePath;
+  QWidget *m_pParent;
+  TextEditor *m_pEditor;
+  QStringList m_sListDisabledPlugins;
+  const QDir m_userDataDir;
+  const QString m_sSharePath;
 
-    QList<IEditorPlugin *> m_listPlugins;
-    QList<QObject *> m_listPluginObjects;
-    QList<QAction *> m_PluginMenuEntries;
-    QList<QAction *> m_PluginToolbarEntries;
+  QList<IEditorPlugin *> m_listPlugins;
+  QList<QObject *> m_listPluginObjects;
+  QList<QAction *> m_PluginMenuEntries;
+  QList<QAction *> m_PluginToolbarEntries;
 };
 
 #endif  // APPLICATION_PLUGINS_H_

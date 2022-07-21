@@ -40,22 +40,22 @@
 Download::Download(QWidget *pParent, Session *pSession,
                    const QString &sStylesDir, const QString &sImgDir,
                    const QString &sSharePath, QObject *pObj)
-  : m_pParent(pParent),
-    m_pSession(pSession),
-    m_sStylesDir(sStylesDir),
-    m_sImgDir(sImgDir),
-    m_sInyokaUrl(QStringLiteral("https://wiki.ubuntuusers.de")),
-    m_sConstructionArea(QLatin1String("")),
-    m_bAutomaticImageDownload(false),
-    m_sSharePath(sSharePath),
-    m_bDownloadArticle(true) {
+    : m_pParent(pParent),
+      m_pSession(pSession),
+      m_sStylesDir(sStylesDir),
+      m_sImgDir(sImgDir),
+      m_sInyokaUrl(QStringLiteral("https://wiki.ubuntuusers.de")),
+      m_sConstructionArea(QLatin1String("")),
+      m_bAutomaticImageDownload(false),
+      m_sSharePath(sSharePath),
+      m_bDownloadArticle(true) {
   Q_UNUSED(pObj)
-  connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished,
-          this, &Download::replyFinished);
+  connect(m_pSession->getNwManager(), &QNetworkAccessManager::finished, this,
+          &Download::replyFinished);
 
   m_DlImages = new DownloadImg(m_pSession->getNwManager());
-  connect(m_DlImages, &DownloadImg::finsihedImageDownload,
-          this, &Download::showArticle);
+  connect(m_DlImages, &DownloadImg::finsihedImageDownload, this,
+          &Download::showArticle);
 }
 
 // ----------------------------------------------------------------------------
@@ -87,11 +87,9 @@ void Download::downloadArticle(QString sUrl) {
 
     // Show input dialog
     m_sSitename = QInputDialog::getText(
-                    m_pParent, qApp->applicationName(),
-                    tr("Please insert name of the article which "
-                       "should be downloaded:"),
-                    QLineEdit::Normal,
-                    m_sConstructionArea + "/" + tr("Article"), &bOk);
+        m_pParent, qApp->applicationName(),
+        tr("Please insert name of the article which should be downloaded:"),
+        QLineEdit::Normal, m_sConstructionArea + "/" + tr("Article"), &bOk);
     m_sSitename = m_sSitename.trimmed();
 
     if (!bOk || m_sSitename.isEmpty()) {
@@ -104,8 +102,8 @@ void Download::downloadArticle(QString sUrl) {
 
     // Download specific revision
     if (m_sSitename.contains(QLatin1String("@rev="))) {
-      m_sRevision = m_sSitename.mid(
-                      m_sSitename.indexOf(QLatin1String("@rev=")));
+      m_sRevision =
+          m_sSitename.mid(m_sSitename.indexOf(QLatin1String("@rev=")));
       m_sRevision.remove(QStringLiteral("@rev="));
       m_sSitename.remove(m_sSitename.indexOf(QLatin1String("@rev=")),
                          m_sSitename.length());
@@ -145,7 +143,7 @@ void Download::downloadArticle(QString sUrl) {
 void Download::downloadImages() {
   m_bDownloadArticle = false;
 
-  QString sUrl(m_sInyokaUrl + "/" + m_sSitename +"/a/export/meta/");
+  QString sUrl(m_sInyokaUrl + "/" + m_sSitename + "/a/export/meta/");
   qDebug() << "DOWNLOADING meta data:" << sUrl;
   QNetworkRequest request(sUrl);
   request.setOriginatingObject(this);
@@ -169,16 +167,16 @@ void Download::replyFinished(QNetworkReply *pReply) {
 
   QIODevice *pData(pReply);
   // Check for redirection
-  QVariant possibleRedirectUrl = pReply->attribute(
-                                   QNetworkRequest::RedirectionTargetAttribute);
-  m_urlRedirectedTo = this->redirectUrl(possibleRedirectUrl.toUrl(),
-                                        m_urlRedirectedTo);
+  QVariant possibleRedirectUrl =
+      pReply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+  m_urlRedirectedTo =
+      this->redirectUrl(possibleRedirectUrl.toUrl(), m_urlRedirectedTo);
 
   if (QNetworkReply::NoError != pReply->error()) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           pData->errorString());
-    qCritical() << "Error (#" << pReply->error() <<
-                   ") while NW reply:" << pData->errorString();
+    qCritical() << "Error (#" << pReply->error()
+                << ") while NW reply:" << pData->errorString();
     // qDebug() << "Reply content:" << pReply->readAll();
     return;
   }
@@ -235,8 +233,8 @@ void Download::replyFinished(QNetworkReply *pReply) {
           sListMetadata << sListTmp[i].remove(QStringLiteral("X-Attach: "));
           // Remove windows specific newline \r
           sListMetadata.last().remove(QStringLiteral("\r"));
-          sListMetadata.last() = m_sInyokaUrl + "/_image?target="
-                                 + sListMetadata.last();
+          sListMetadata.last() =
+              m_sInyokaUrl + "/_image?target=" + sListMetadata.last();
           sListSaveFolder << m_sImgDir;
 
           // qDebug() << sListMetadata.last();
@@ -249,8 +247,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
         // Ask if images should be downloaded,
         // if not enabled by default in settings
         if (!m_bAutomaticImageDownload) {
-          iRet = QMessageBox::question(m_pParent,
-                                       qApp->applicationName(),
+          iRet = QMessageBox::question(m_pParent, qApp->applicationName(),
                                        tr("Do you want to download "
                                           "the images which are "
                                           "attached to the article?"),
@@ -281,8 +278,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
 auto Download::redirectUrl(const QUrl &possibleRedirectUrl,
                            const QUrl &oldRedirectUrl) -> QUrl {
   QUrl redirectUrl;
-  if (!possibleRedirectUrl.isEmpty()
-      && possibleRedirectUrl != oldRedirectUrl) {
+  if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl) {
     redirectUrl = possibleRedirectUrl;
     m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
     if (m_sSitename.startsWith('/')) {

@@ -42,19 +42,18 @@
 #include "./session.h"
 #include "./utils.h"
 
-Upload::Upload(QWidget *pParent, Session *pSession,
-               const QString &sInyokaUrl, const QString &sConstArea,
-               QObject *pObj)
-  : m_pParent(pParent),
-    m_pSession(pSession),
-    m_sInyokaUrl(sInyokaUrl),
-    m_pReply(nullptr),
-    m_State(REQUREVISION),
-    m_sSitename(QLatin1String("")),
-    m_sRevision(QLatin1String("")),
-    m_sConstructionArea(sConstArea),
-    m_pEditor(nullptr),
-    m_sArticlename(QLatin1String("")) {
+Upload::Upload(QWidget *pParent, Session *pSession, const QString &sInyokaUrl,
+               const QString &sConstArea, QObject *pObj)
+    : m_pParent(pParent),
+      m_pSession(pSession),
+      m_sInyokaUrl(sInyokaUrl),
+      m_pReply(nullptr),
+      m_State(REQUREVISION),
+      m_sSitename(QLatin1String("")),
+      m_sRevision(QLatin1String("")),
+      m_sConstructionArea(sConstArea),
+      m_pEditor(nullptr),
+      m_sArticlename(QLatin1String("")) {
   Q_UNUSED(pObj)
   this->setParent(m_pParent);
 }
@@ -93,12 +92,12 @@ void Upload::clickUploadArticle() {
 
   bool bOk = false;
   m_sSitename = QInputDialog::getText(
-                  m_pParent, tr("Upload"),
-                  tr("Please insert name of the article which should be "
-                     "uploaded.\nIt is only possible to upload into "
-                     "the \"%1\"!").arg(m_sConstructionArea),
-                  QLineEdit::Normal, m_sConstructionArea + "/" + m_sArticlename,
-                  &bOk);
+      m_pParent, tr("Upload"),
+      tr("Please insert name of the article which should be "
+         "uploaded.\nIt is only possible to upload into "
+         "the \"%1\"!")
+          .arg(m_sConstructionArea),
+      QLineEdit::Normal, m_sConstructionArea + "/" + m_sArticlename, &bOk);
   m_sSitename = m_sSitename.trimmed();
 
   if (!bOk || m_sSitename.isEmpty()) {
@@ -151,9 +150,9 @@ void Upload::requestRevision(QString sUrl) {
 
   QNetworkRequest request(sUrl);
   m_urlRedirectedTo = sUrl;
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
+  request.setRawHeader("User-Agent", QString(qApp->applicationName() + "/" +
+                                             qApp->applicationVersion())
+                                         .toLatin1());
   m_pReply = m_pSession->getNwManager()->get(request);
   QEventLoop loop;
   connect(m_pReply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
@@ -167,9 +166,9 @@ void Upload::getRevisionReply(const QString &sNWReply) {
   QString sURL(m_sInyokaUrl);
   sURL.remove(QStringLiteral("https://"));
   sURL.remove(QStringLiteral("http://"));
-  QRegularExpression findRevision(sURL + "/" + m_sSitename +
-                                  "/a/revision/" + "\\d+",
-                                  QRegularExpression::CaseInsensitiveOption);
+  QRegularExpression findRevision(
+      sURL + "/" + m_sSitename + "/a/revision/" + "\\d+",
+      QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatch match = findRevision.match(sNWReply);
 
   if (match.hasMatch()) {
@@ -201,14 +200,13 @@ void Upload::requestUpload() {
   QNetworkRequest request;
   // Referer needed with POST request + https in Django
   request.setRawHeader("Referer", m_sInyokaUrl.toLatin1());
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
+  request.setRawHeader("User-Agent", QString(qApp->applicationName() + "/" +
+                                             qApp->applicationVersion())
+                                         .toLatin1());
   request.setUrl(QUrl(sUrl));
 
   const QList<QNetworkCookie> listCookies(
-        m_pSession->getNwManager()->cookieJar()->cookiesForUrl(
-          QUrl(sUrl)));
+      m_pSession->getNwManager()->cookieJar()->cookiesForUrl(QUrl(sUrl)));
   // qDebug() << "COOKIES FOR URL:" << listCookies;
 
   QString sCookie(QLatin1String(""));
@@ -272,8 +270,9 @@ void Upload::requestUpload() {
   QHttpPart timePart;
   timePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                      QVariant("form-data; name=\"edit_time\""));
-  timePart.setBody(QDateTime::currentDateTimeUtc().toString(
-                     QStringLiteral("yyyy-MM-dd hh:mm:ss.zzzzzz")).toLatin1());
+  timePart.setBody(QDateTime::currentDateTimeUtc()
+                       .toString(QStringLiteral("yyyy-MM-dd hh:mm:ss.zzzzzz"))
+                       .toLatin1());
 
   QHttpPart revPart;
   revPart.setHeader(QNetworkRequest::ContentDispositionHeader,
@@ -307,7 +306,7 @@ void Upload::getUploadReply(const QString &sNWReply) {
                              tr("Upload successful!"));
   } else {
     if (sNWReply.contains(
-          QStringLiteral("Du hast die Seite nicht verändert."))) {
+            QStringLiteral("Du hast die Seite nicht verändert."))) {
       qDebug() << "UPLOAD REPLY: Page was not changed.";
       QMessageBox::warning(m_pParent, tr("Upload failed"),
                            tr("The page content was not changed!"));
@@ -331,18 +330,18 @@ void Upload::replyFinished(QNetworkReply *pReply) {
   if (QNetworkReply::NoError != pReply->error()) {
     QMessageBox::critical(m_pParent, QStringLiteral("Error"),
                           pData->errorString());
-    qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
-                << pData->errorString();
+    qCritical() << "Error (#" << pReply->error()
+                << ") while NW reply:" << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
     return;
   }
 
   if (m_State == REQUREVISION) {
     // Check for redirection
-    QVariant varRedirectUrl = pReply->attribute(
-                                QNetworkRequest::RedirectionTargetAttribute);
-    m_urlRedirectedTo = this->redirectUrl(varRedirectUrl.toUrl(),
-                                          m_urlRedirectedTo);
+    QVariant varRedirectUrl =
+        pReply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    m_urlRedirectedTo =
+        this->redirectUrl(varRedirectUrl.toUrl(), m_urlRedirectedTo);
   }
   if (!m_urlRedirectedTo.isEmpty() && m_State == REQUREVISION) {
     qDebug() << "Redirected to: " + m_urlRedirectedTo.toString();

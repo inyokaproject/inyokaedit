@@ -53,18 +53,18 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
 
   m_pSettingsDialog = new SettingsDialog(this, sSharePath, pParent);
 
-  connect(this, &Settings::availablePlugins,
-          m_pSettingsDialog, &SettingsDialog::getAvailablePlugins);
+  connect(this, &Settings::availablePlugins, m_pSettingsDialog,
+          &SettingsDialog::getAvailablePlugins);
 
-  connect(this, &Settings::showSettingsDialog,
-          m_pSettingsDialog, &SettingsDialog::show);
+  connect(this, &Settings::showSettingsDialog, m_pSettingsDialog,
+          &SettingsDialog::show);
 
-  connect(m_pSettingsDialog, &SettingsDialog::changeLang,
-          this, &Settings::changeLang);
-  connect(this, &Settings::updateUiLang,
-          m_pSettingsDialog, &SettingsDialog::updateUiLang);
-  connect(m_pSettingsDialog, &SettingsDialog::updatedSettings,
-          this, &Settings::updateEditorSettings);
+  connect(m_pSettingsDialog, &SettingsDialog::changeLang, this,
+          &Settings::changeLang);
+  connect(this, &Settings::updateUiLang, m_pSettingsDialog,
+          &SettingsDialog::updateUiLang);
+  connect(m_pSettingsDialog, &SettingsDialog::updatedSettings, this,
+          &Settings::updateEditorSettings);
 }
 
 Settings::~Settings() {
@@ -79,70 +79,73 @@ Settings::~Settings() {
 
 void Settings::readSettings(const QString &sSharePath) {
   // General settings
-  m_sGuiLanguage = m_pSettings->value(QStringLiteral("GuiLanguage"),
-                                      "auto").toString();
-  m_bCodeCompletion = m_pSettings->value(QStringLiteral("CodeCompletion"),
-                                         true).toBool();
-  m_bSyntaxCheck = m_pSettings->value(QStringLiteral("InyokaSyntaxCheck"),
-                                      true).toBool();
-  m_bPreviewSplitHorizontal = m_pSettings->value(
-                                QStringLiteral("PreviewSplitHorizontal"),
-                                false).toBool();
+  m_sGuiLanguage =
+      m_pSettings->value(QStringLiteral("GuiLanguage"), "auto").toString();
+  m_bCodeCompletion =
+      m_pSettings->value(QStringLiteral("CodeCompletion"), true).toBool();
+  m_bSyntaxCheck =
+      m_pSettings->value(QStringLiteral("InyokaSyntaxCheck"), true).toBool();
+  m_bPreviewSplitHorizontal =
+      m_pSettings->value(QStringLiteral("PreviewSplitHorizontal"), false)
+          .toBool();
 
-  QStringList sListPaths = QStandardPaths::standardLocations(
-                             QStandardPaths::DocumentsLocation);
+  QStringList sListPaths =
+      QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
   if (sListPaths.isEmpty()) {
     qCritical() << "Error while getting documents standard path.";
     sListPaths << QLatin1String("");
   }
-  m_LastOpenedDir.setPath(m_pSettings->value(QStringLiteral("LastOpenedDir"),
-                                             sListPaths[0]).toString());
+  m_LastOpenedDir.setPath(
+      m_pSettings->value(QStringLiteral("LastOpenedDir"), sListPaths[0])
+          .toString());
 
-  m_bAutomaticImageDownload = m_pSettings->value(
-                                QStringLiteral("AutomaticImageDownload"),
-                                false).toBool();
-  m_bCheckLinks = m_pSettings->value(QStringLiteral("CheckLinks"),
-                                     false).toBool();
+  m_bAutomaticImageDownload =
+      m_pSettings->value(QStringLiteral("AutomaticImageDownload"), false)
+          .toBool();
+  m_bCheckLinks =
+      m_pSettings->value(QStringLiteral("CheckLinks"), false).toBool();
   m_nAutosave = m_pSettings->value(QStringLiteral("AutoSave"), 300).toUInt();
 #ifdef NOPREVIEW
   m_sReloadPreviewKey = QStringLiteral("0x0");
   m_bSyncScrollbars = false;
 #else
   // 0x01000004 = Qt::Key_Return
-  m_sReloadPreviewKey = m_pSettings->value(QStringLiteral("ReloadPreviewKey"),
-                                           "0x01000004").toString();
+  m_sReloadPreviewKey =
+      m_pSettings->value(QStringLiteral("ReloadPreviewKey"), "0x01000004")
+          .toString();
 
-  m_bSyncScrollbars = m_pSettings->value(QStringLiteral("SyncScrollbars"),
-                                         true).toBool();
+  m_bSyncScrollbars =
+      m_pSettings->value(QStringLiteral("SyncScrollbars"), true).toBool();
 #endif
-  m_nTimedPreview = m_pSettings->value(QStringLiteral("TimedPreview"),
-                                       15).toUInt();
+  m_nTimedPreview =
+      m_pSettings->value(QStringLiteral("TimedPreview"), 15).toUInt();
 
-  m_sPygmentize = m_pSettings->value(QStringLiteral("Pygmentize"),
-                                     "/usr/bin/pygmentize").toString();
+  m_sPygmentize =
+      m_pSettings->value(QStringLiteral("Pygmentize"), "/usr/bin/pygmentize")
+          .toString();
 
-  m_bWinCheckUpdate = m_pSettings->value(
-                        QStringLiteral("WindowsCheckForUpdate"),
-                        false).toBool();
+  m_bWinCheckUpdate =
+      m_pSettings->value(QStringLiteral("WindowsCheckForUpdate"), false)
+          .toBool();
 
   // Inyoka community settings
   m_pSettings->beginGroup(QStringLiteral("Inyoka"));
-  m_sInyokaCommunity = m_pSettings->value(QStringLiteral("Community"),
-                                          "ubuntuusers_de").toString();
+  m_sInyokaCommunity =
+      m_pSettings->value(QStringLiteral("Community"), "ubuntuusers_de")
+          .toString();
   // Community settings
-  QFile communityFile(sSharePath + "/community/" +
-                      m_sInyokaCommunity + "/community.conf");
+  QFile communityFile(sSharePath + "/community/" + m_sInyokaCommunity +
+                      "/community.conf");
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   // Since Qt 6 UTF-8 is used by default
   communityConfig.setIniCodec("UTF-8");
 #endif
 
-  m_sInyokaUrl = m_pSettings->value(
-                   QStringLiteral("WikiUrl"), "").toString();
+  m_sInyokaUrl = m_pSettings->value(QStringLiteral("WikiUrl"), "").toString();
   if (m_sInyokaUrl.isEmpty()) {
-    QString sValue(communityConfig.value(
-                     QStringLiteral("WikiUrl"), "").toString());
+    QString sValue(
+        communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka wiki URL not found!";
     } else {
@@ -153,11 +156,11 @@ void Settings::readSettings(const QString &sSharePath) {
     m_sInyokaUrl = m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
   }
 
-  m_sInyokaConstArea = m_pSettings->value(
-                         QStringLiteral("ConstructionArea"), "").toString();
+  m_sInyokaConstArea =
+      m_pSettings->value(QStringLiteral("ConstructionArea"), "").toString();
   if (m_sInyokaConstArea.isEmpty()) {
-    QString sValue(communityConfig.value(
-                     QStringLiteral("ConstructionArea"), "").toString());
+    QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"), "")
+                       .toString());
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka construction area not found!";
     } else {
@@ -165,11 +168,10 @@ void Settings::readSettings(const QString &sSharePath) {
     }
   }
 
-  m_sInyokaHash = m_pSettings->value(
-                    QStringLiteral("Hash"), "").toString();
+  m_sInyokaHash = m_pSettings->value(QStringLiteral("Hash"), "").toString();
   if (m_sInyokaHash.isEmpty()) {
-    QString sValue(communityConfig.value(
-                     QStringLiteral("Hash"), "").toString());
+    QString sValue(
+        communityConfig.value(QStringLiteral("Hash"), "").toString());
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka hash is empty!";
     } else {
@@ -177,20 +179,17 @@ void Settings::readSettings(const QString &sSharePath) {
     }
   }
 
-  m_sInyokaUser = m_pSettings->value(QStringLiteral("UserName"),
-                                          "").toString();
-  m_sInyokaPassword = QString::fromLatin1(
-        QByteArray::fromBase64(
-          m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
+  m_sInyokaUser = m_pSettings->value(QStringLiteral("UserName"), "").toString();
+  m_sInyokaPassword = QString::fromLatin1(QByteArray::fromBase64(
+      m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
   m_pSettings->endGroup();
 
   // Font settings
   m_pSettings->beginGroup(QStringLiteral("Font"));
-  m_sFontFamily = m_pSettings->value(QStringLiteral("FontFamily"),
-                                     "Monospace").toString();
+  m_sFontFamily =
+      m_pSettings->value(QStringLiteral("FontFamily"), "Monospace").toString();
   // Used string for font size because float isn't saved human readable...
-  m_nFontsize = m_pSettings->value(QStringLiteral("FontSize"),
-                                   "10.5").toReal();
+  m_nFontsize = m_pSettings->value(QStringLiteral("FontSize"), "10.5").toReal();
   if (m_nFontsize <= 0) {
     m_nFontsize = 10.5;
   }
@@ -203,8 +202,8 @@ void Settings::readSettings(const QString &sSharePath) {
 
   // Recent files
   m_pSettings->beginGroup(QStringLiteral("RecentFiles"));
-  m_nMaxLastOpenedFiles = m_pSettings->value(
-                            QStringLiteral("NumberOfRecentFiles"), 5).toInt();
+  m_nMaxLastOpenedFiles =
+      m_pSettings->value(QStringLiteral("NumberOfRecentFiles"), 5).toInt();
   if (m_nMaxLastOpenedFiles < 0) {
     m_nMaxLastOpenedFiles = 0;
   }
@@ -213,8 +212,7 @@ void Settings::readSettings(const QString &sSharePath) {
   }
   QString sTmpFile;
   for (int i = 0; i < m_nMaxLastOpenedFiles; i++) {
-    sTmpFile = m_pSettings->value("File_" + QString::number(i)
-                                  , "").toString();
+    sTmpFile = m_pSettings->value("File_" + QString::number(i), "").toString();
     if (!sTmpFile.isEmpty()) {
       m_sListRecentFiles << sTmpFile;
     }
@@ -224,34 +222,33 @@ void Settings::readSettings(const QString &sSharePath) {
 
   // Proxy
   m_pSettings->beginGroup(QStringLiteral("Proxy"));
-  m_sProxyHostName = m_pSettings->value(
-                       QStringLiteral("HostName"), "").toString();
-  m_nProxyPort = static_cast<quint16>(m_pSettings->value(
-                                        QStringLiteral("Port"), "").toUInt());
-  m_sProxyUserName = m_pSettings->value(
-                       QStringLiteral("UserName"), "").toString();
-  m_sProxyPassword = QString::fromLatin1(
-        QByteArray::fromBase64(
-          m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
+  m_sProxyHostName =
+      m_pSettings->value(QStringLiteral("HostName"), "").toString();
+  m_nProxyPort = static_cast<quint16>(
+      m_pSettings->value(QStringLiteral("Port"), "").toUInt());
+  m_sProxyUserName =
+      m_pSettings->value(QStringLiteral("UserName"), "").toString();
+  m_sProxyPassword = QString::fromLatin1(QByteArray::fromBase64(
+      m_pSettings->value(QStringLiteral("Password"), "").toByteArray()));
   m_pSettings->endGroup();
 
   // Plugins
   m_pSettings->beginGroup(QStringLiteral("Plugins"));
-  m_sListDisabledPlugins = m_pSettings->value(QStringLiteral("Disabled"),
-                                              "").toStringList();
+  m_sListDisabledPlugins =
+      m_pSettings->value(QStringLiteral("Disabled"), "").toStringList();
   m_pSettings->endGroup();
 
   // Window state
   m_pSettings->beginGroup(QStringLiteral("Window"));
-  m_aWindowGeometry = m_pSettings->value(
-                        QStringLiteral("Geometry")).toByteArray();
+  m_aWindowGeometry =
+      m_pSettings->value(QStringLiteral("Geometry")).toByteArray();
   // Restore toolbar position etc.
-  m_aWindowState = m_pSettings->value(
-                     QStringLiteral("WindowState")).toByteArray();
-  m_aSplitterState = m_pSettings->value(
-                       QStringLiteral("SplitterState")).toByteArray();
-  m_nDarkThreshold = m_pSettings->value(
-        QStringLiteral("DarkThreshold"), 0.5).toDouble();
+  m_aWindowState =
+      m_pSettings->value(QStringLiteral("WindowState")).toByteArray();
+  m_aSplitterState =
+      m_pSettings->value(QStringLiteral("SplitterState")).toByteArray();
+  m_nDarkThreshold =
+      m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble();
   m_pSettings->endGroup();
 }
 
@@ -396,13 +393,9 @@ auto Settings::getGuiLanguage() const -> QString {
   return m_sGuiLanguage;
 }
 
-auto Settings::getCodeCompletion() const -> bool {
-  return m_bCodeCompletion;
-}
+auto Settings::getCodeCompletion() const -> bool { return m_bCodeCompletion; }
 
-auto Settings::getSyntaxCheck() const -> bool {
-  return m_bSyntaxCheck;
-}
+auto Settings::getSyntaxCheck() const -> bool { return m_bSyntaxCheck; }
 
 auto Settings::getAutomaticImageDownload() const -> bool {
   return m_bAutomaticImageDownload;
@@ -412,39 +405,27 @@ auto Settings::getPreviewHorizontal() const -> bool {
   return m_bPreviewSplitHorizontal;
 }
 
-auto Settings::getLastOpenedDir() const -> QDir {
-  return m_LastOpenedDir;
-}
+auto Settings::getLastOpenedDir() const -> QDir { return m_LastOpenedDir; }
 
 void Settings::setLastOpenedDir(const QDir &LastDir) {
   m_LastOpenedDir = LastDir;
 }
 
-auto Settings::getCheckLinks() const -> bool {
-  return m_bCheckLinks;
-}
+auto Settings::getCheckLinks() const -> bool { return m_bCheckLinks; }
 
-auto Settings::getAutoSave() const -> quint32 {
-  return m_nAutosave;
-}
+auto Settings::getAutoSave() const -> quint32 { return m_nAutosave; }
 
 auto Settings::getReloadPreviewKey() const -> qint32 {
   QString sTmp = m_sReloadPreviewKey;
-  return sTmp.remove(QStringLiteral("0x"),
-                     Qt::CaseInsensitive).toInt(nullptr, 16);
+  return sTmp.remove(QStringLiteral("0x"), Qt::CaseInsensitive)
+      .toInt(nullptr, 16);
 }
 
-auto Settings::getTimedPreview() const -> quint32 {
-  return m_nTimedPreview;
-}
+auto Settings::getTimedPreview() const -> quint32 { return m_nTimedPreview; }
 
-auto Settings::getSyncScrollbars() const -> bool {
-  return m_bSyncScrollbars;
-}
+auto Settings::getSyncScrollbars() const -> bool { return m_bSyncScrollbars; }
 
-auto Settings::getPygmentize() const -> QString {
-  return m_sPygmentize;
-}
+auto Settings::getPygmentize() const -> QString { return m_sPygmentize; }
 
 // ----------------------------------------------------
 
@@ -452,21 +433,15 @@ auto Settings::getInyokaCommunity() const -> QString {
   return m_sInyokaCommunity;
 }
 
-auto Settings::getInyokaUrl() const -> QString {
-  return m_sInyokaUrl;
-}
+auto Settings::getInyokaUrl() const -> QString { return m_sInyokaUrl; }
 
 auto Settings::getInyokaConstructionArea() const -> QString {
   return m_sInyokaConstArea;
 }
 
-auto Settings::getInyokaHash() const -> QString {
-  return m_sInyokaHash;
-}
+auto Settings::getInyokaHash() const -> QString { return m_sInyokaHash; }
 
-auto Settings::getInyokaUser() const -> QString {
-  return m_sInyokaUser;
-}
+auto Settings::getInyokaUser() const -> QString { return m_sInyokaUser; }
 
 auto Settings::getInyokaPassword() const -> QString {
   return m_sInyokaPassword;
@@ -474,9 +449,7 @@ auto Settings::getInyokaPassword() const -> QString {
 
 // ----------------------------------------------------
 
-auto Settings::getEditorFont() const -> QFont {
-  return m_EditorFont;
-}
+auto Settings::getEditorFont() const -> QFont { return m_EditorFont; }
 
 // ----------------------------------------------------
 
@@ -520,30 +493,18 @@ void Settings::setWindowsCheckUpdate(const bool bValue) {
 auto Settings::getWindowGeometry() const -> QByteArray {
   return m_aWindowGeometry;
 }
-auto Settings::getWindowState() const -> QByteArray {
-  return m_aWindowState;
-}
+auto Settings::getWindowState() const -> QByteArray { return m_aWindowState; }
 auto Settings::getSplitterState() const -> QByteArray {
   return m_aSplitterState;
 }
-auto Settings::getDarkThreshold() const -> double {
-  return m_nDarkThreshold;
-}
+auto Settings::getDarkThreshold() const -> double { return m_nDarkThreshold; }
 
 // ----------------------------------------------------
 
-auto Settings::getProxyHostName() const -> QString {
-  return m_sProxyHostName;
-}
-auto Settings::getProxyPort() const -> quint16 {
-  return m_nProxyPort;
-}
-auto Settings::getProxyUserName() const -> QString {
-  return m_sProxyUserName;
-}
-auto Settings::getProxyPassword() const -> QString {
-  return m_sProxyPassword;
-}
+auto Settings::getProxyHostName() const -> QString { return m_sProxyHostName; }
+auto Settings::getProxyPort() const -> quint16 { return m_nProxyPort; }
+auto Settings::getProxyUserName() const -> QString { return m_sProxyUserName; }
+auto Settings::getProxyPassword() const -> QString { return m_sProxyPassword; }
 
 // ----------------------------------------------------
 

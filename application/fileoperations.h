@@ -48,99 +48,97 @@ class FileOperations : public QObject {
   Q_OBJECT
 
  public:
-    FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
-                   Settings *pSettings, const QString &sPreviewFile,
-                   const QString &sUserDataDir,
-                   const QStringList &sListTplMacros,
-                   QObject *pObj = nullptr);
+  FileOperations(QWidget *pParent, QTabWidget *pTabWidget, Settings *pSettings,
+                 const QString &sPreviewFile, const QString &sUserDataDir,
+                 const QStringList &sListTplMacros, QObject *pObj = nullptr);
 
-    void newFile(QString sFileName);
+  void newFile(QString sFileName);
 
-    auto getCurrentEditor() -> TextEditor*;
-    auto getEditors() const -> QList<TextEditor *>;
-    auto getCurrentFile() const -> QString;
-    auto maybeSave() -> bool;
-    auto getLastOpenedFiles() const -> QList<QAction *>;
+  auto getCurrentEditor() -> TextEditor *;
+  auto getEditors() const -> QList<TextEditor *>;
+  auto getCurrentFile() const -> QString;
+  auto maybeSave() -> bool;
+  auto getLastOpenedFiles() const -> QList<QAction *>;
 
-    auto closeAllmaybeSave() -> bool;
+  auto closeAllmaybeSave() -> bool;
 
  public slots:
-    void open();
-    void openRecentFile(const int nEntry);
-    bool save();
-    bool saveAs();
-    void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
-                  const bool bArchive = false);
-    void loadInyArchive(const QString &sArchive);
-    bool saveFile(QString sFileName);
-    bool saveInyArchive(const QString &sArchive);
+  void open();
+  void openRecentFile(const int nEntry);
+  bool save();
+  bool saveAs();
+  void loadFile(const QString &sFileName, const bool bUpdateRecent = false,
+                const bool bArchive = false);
+  void loadInyArchive(const QString &sArchive);
+  bool saveFile(QString sFileName);
+  bool saveInyArchive(const QString &sArchive);
 #ifdef USEQTWEBENGINE  // QtWebkit doesn't support print to PDF out of the box
-    void printPdfPreview();
+  void printPdfPreview();
 #endif
 
-    void copy();
-    void cut();
-    void paste();
-    void undo();
-    void redo();
+  void copy();
+  void cut();
+  void paste();
+  void undo();
+  void redo();
 
  signals:
-    void setMenuLastOpenedEnabled(const bool);
-    void changedCurrentEditor();
-    void changedNumberOfEditors();
-    void callPreview();
-    void modifiedDoc(bool bModified);
-    void movedEditorScrollbar();
+  void setMenuLastOpenedEnabled(const bool);
+  void changedCurrentEditor();
+  void changedNumberOfEditors();
+  void callPreview();
+  void modifiedDoc(bool bModified);
+  void movedEditorScrollbar();
 
-    void triggeredFind();
-    void triggeredReplace();
-    void triggeredFindNext();
-    void triggeredFindPrevious();
-    void copyAvailable(bool);
-    void undoAvailable(bool);
-    void redoAvailable(bool);
-    void undoAvailable2(bool);
-    void redoAvailable2(bool);
+  void triggeredFind();
+  void triggeredReplace();
+  void triggeredFindNext();
+  void triggeredFindPrevious();
+  void copyAvailable(bool);
+  void undoAvailable(bool);
+  void redoAvailable(bool);
+  void undoAvailable2(bool);
+  void redoAvailable2(bool);
 
  private slots:
-    void clearRecentFiles();
+  void clearRecentFiles();
 
-    void changedDocTab(int nIndex);
-    bool closeDocument(int nIndex);
+  void changedDocTab(int nIndex);
+  bool closeDocument(int nIndex);
 
-    void updateEditorSettings();
-    void saveDocumentAuto();
+  void updateEditorSettings();
+  void saveDocumentAuto();
 
  private:
-    void updateRecentFiles(const QString &sFileName);
-    void setCurrentEditor();
+  void updateRecentFiles(const QString &sFileName);
+  void setCurrentEditor();
 
-    QWidget *m_pParent;
-    QTabWidget *m_pDocumentTabs;
-    TextEditor *m_pCurrentEditor;
-    Settings *m_pSettings;
+  QWidget *m_pParent;
+  QTabWidget *m_pDocumentTabs;
+  TextEditor *m_pCurrentEditor;
+  Settings *m_pSettings;
 
-    QList<QAction *> m_LastOpenedFilesAct;
+  QList<QAction *> m_LastOpenedFilesAct;
 
-    QString m_sPreviewFile;
+  QString m_sPreviewFile;
 #ifdef USEQTWEBENGINE
-    QWebEngineView *m_pPreviewWebView;
+  QWebEngineView *m_pPreviewWebView;
 #endif
-    const QString m_sFileFilter;
+  const QString m_sFileFilter;
 
-    bool m_bLoadPreview;
-    bool m_bCloseApp;
-    QTimer *m_pTimerAutosave;
-    const QString m_sUserDataDir;
-    const QString m_sExtractDir;
+  bool m_bLoadPreview;
+  bool m_bCloseApp;
+  QTimer *m_pTimerAutosave;
+  const QString m_sUserDataDir;
+  const QString m_sExtractDir;
 
-    FindReplace *m_pFindReplace;
+  FindReplace *m_pFindReplace;
 
-    QList<TextEditor *> m_pListEditors;
+  QList<TextEditor *> m_pListEditors;
 
-    QAction *m_pClearRecentFilesAct;
+  QAction *m_pClearRecentFilesAct;
 
-    QStringList m_sListTplMacros;
+  QStringList m_sListTplMacros;
 };
 
 #endif  // APPLICATION_FILEOPERATIONS_H_

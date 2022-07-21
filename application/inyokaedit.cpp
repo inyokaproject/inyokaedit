@@ -41,13 +41,13 @@
 #include <QToolTip>
 
 #ifdef USEQTWEBKIT
-#include <QtWebKitWidgets/QWebView>
 #include <QWebFrame>
 #include <QWebHistory>
+#include <QtWebKitWidgets/QWebView>
 #endif
 #ifdef USEQTWEBENGINE
-#include <QWebEngineView>
 #include <QWebEngineHistory>
+#include <QWebEngineView>
 #endif
 
 #include "./download.h"
@@ -55,8 +55,8 @@
 #include "./ieditorplugin.h"
 #include "./parser/parser.h"
 #include "./plugins.h"
-#include "./settings.h"
 #include "./session.h"
+#include "./settings.h"
 #include "./templates/templates.h"
 #include "./texteditor.h"
 #include "./upload.h"
@@ -66,18 +66,18 @@
 
 InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
                        const QString &sArg, QWidget *parent)
-  : QMainWindow(parent),
-    m_pUi(new Ui::InyokaEdit),
-    m_sCurrLang(QLatin1String("")),
-    m_sSharePath(sharePath.absolutePath()),
-    m_UserDataDir(userDataDir),
-    m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
-    m_tmpPreviewImgDir(m_UserDataDir.absolutePath() + "/tmpImages"),
-    m_pPreviewTimer(new QTimer(this)),
-    m_bOpenFileAfterStart(false),
-    m_bEditorScrolling(false),
-    m_bWebviewScrolling(false),
-    m_bReloadPreviewBlocked(false) {
+    : QMainWindow(parent),
+      m_pUi(new Ui::InyokaEdit),
+      m_sCurrLang(QLatin1String("")),
+      m_sSharePath(sharePath.absolutePath()),
+      m_UserDataDir(userDataDir),
+      m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
+      m_tmpPreviewImgDir(m_UserDataDir.absolutePath() + "/tmpImages"),
+      m_pPreviewTimer(new QTimer(this)),
+      m_bOpenFileAfterStart(false),
+      m_bEditorScrolling(false),
+      m_bWebviewScrolling(false),
+      m_bReloadPreviewBlocked(false) {
   m_pUi->setupUi(this);
 
   if (!sharePath.exists()) {
@@ -106,7 +106,8 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   this->setUnifiedTitleAndToolBarOnMac(true);
 
   if (!QFile(m_UserDataDir.absolutePath() + "/community/" +
-             m_pSettings->getInyokaCommunity()).exists()) {
+             m_pSettings->getInyokaCommunity())
+           .exists()) {
     m_UserDataDir.mkpath(m_UserDataDir.absolutePath() + "/community/" +
                          m_pSettings->getInyokaCommunity());
   }
@@ -138,45 +139,42 @@ void InyokaEdit::createObjects() {
   m_pSettings = new Settings(this, m_sSharePath);
   qDebug() << "Inyoka Community:" << m_pSettings->getInyokaCommunity();
   if (m_pSettings->getInyokaCommunity().isEmpty() ||
-      !QDir(m_sSharePath + "/community/" +
-            m_pSettings->getInyokaCommunity()).exists()) {
+      !QDir(m_sSharePath + "/community/" + m_pSettings->getInyokaCommunity())
+           .exists()) {
     qCritical() << "No Inyoka community files found / installed!";
-    qCritical() << "Community path:" << m_sSharePath + "/community/" +
-                   m_pSettings->getInyokaCommunity();
+    qCritical() << "Community path:"
+                << m_sSharePath + "/community/" +
+                       m_pSettings->getInyokaCommunity();
     QMessageBox::critical(this, qApp->applicationName(),
                           tr("No Inyoka community files found/installed!\n"
                              "Please check your installation and restart "
                              "the application."));
     exit(-2);
   }
-  connect(m_pSettings, &Settings::changeLang,
-          this, &InyokaEdit::loadLanguage);
-  connect(this, &InyokaEdit::updateUiLang,
-          m_pSettings, &Settings::updateUiLang);
+  connect(m_pSettings, &Settings::changeLang, this, &InyokaEdit::loadLanguage);
+  connect(this, &InyokaEdit::updateUiLang, m_pSettings,
+          &Settings::updateUiLang);
   this->loadLanguage(m_pSettings->getGuiLanguage());
 
   // Has to be created before parser
-  m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(),
-                               m_sSharePath, m_UserDataDir.absolutePath());
+  m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(), m_sSharePath,
+                               m_UserDataDir.absolutePath());
 
   m_pSession = new Session(this, m_pSettings->getInyokaHash());
 
-  m_pDownloadModule = new Download(this, m_pSession,
-                                   m_UserDataDir.absolutePath(),
-                                   m_tmpPreviewImgDir.absolutePath(),
-                                   m_sSharePath);
+  m_pDownloadModule =
+      new Download(this, m_pSession, m_UserDataDir.absolutePath(),
+                   m_tmpPreviewImgDir.absolutePath(), m_sSharePath);
 
   m_pUploadModule = new Upload(this, m_pSession, m_pSettings->getInyokaUrl(),
                                m_pSettings->getInyokaConstructionArea());
 
-  m_pParser = new Parser(m_sSharePath, m_tmpPreviewImgDir,
-                         m_pSettings->getInyokaUrl(),
-                         m_pSettings->getCheckLinks(),
-                         m_pTemplates,
-                         m_pSettings->getInyokaCommunity(),
-                         m_pSettings->getPygmentize());
-  connect(m_pParser, &Parser::hightlightSyntaxError,
-          this, &InyokaEdit::highlightSyntaxError);
+  m_pParser = new Parser(
+      m_sSharePath, m_tmpPreviewImgDir, m_pSettings->getInyokaUrl(),
+      m_pSettings->getCheckLinks(), m_pTemplates,
+      m_pSettings->getInyokaCommunity(), m_pSettings->getPygmentize());
+  connect(m_pParser, &Parser::hightlightSyntaxError, this,
+          &InyokaEdit::highlightSyntaxError);
 
   m_pDocumentTabs = new QTabWidget;
   m_pDocumentTabs->setTabPosition(QTabWidget::North);
@@ -185,37 +183,35 @@ void InyokaEdit::createObjects() {
   // Attention: Currently tab order is fixed (same as m_pListEditors)
   m_pDocumentTabs->setMovable(false);
 
-  m_pFileOperations = new FileOperations(this, m_pDocumentTabs, m_pSettings,
-                                         m_sPreviewFile,
-                                         m_UserDataDir.absolutePath(),
-                                         m_pTemplates->getAllBoilerplates());
+  m_pFileOperations = new FileOperations(
+      this, m_pDocumentTabs, m_pSettings, m_sPreviewFile,
+      m_UserDataDir.absolutePath(), m_pTemplates->getAllBoilerplates());
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
 
-  connect(m_pFileOperations, &FileOperations::callPreview,
-          this, &InyokaEdit::previewInyokaPage);
-  connect(m_pFileOperations, &FileOperations::modifiedDoc,
-          this, &InyokaEdit::setWindowModified);
-  connect(m_pFileOperations, &FileOperations::changedCurrentEditor,
-          this, &InyokaEdit::setCurrentEditor);
+  connect(m_pFileOperations, &FileOperations::callPreview, this,
+          &InyokaEdit::previewInyokaPage);
+  connect(m_pFileOperations, &FileOperations::modifiedDoc, this,
+          &InyokaEdit::setWindowModified);
+  connect(m_pFileOperations, &FileOperations::changedCurrentEditor, this,
+          &InyokaEdit::setCurrentEditor);
 
-  m_pPlugins = new Plugins(this, m_pCurrentEditor,
-                           m_pSettings->getDisabledPlugins(),
-                           m_UserDataDir,
-                           m_sSharePath);
+  m_pPlugins =
+      new Plugins(this, m_pCurrentEditor, m_pSettings->getDisabledPlugins(),
+                  m_UserDataDir, m_sSharePath);
   connect(m_pSettings, &Settings::changeLang, m_pPlugins, &Plugins::changeLang);
-  connect(m_pPlugins, &Plugins::addMenuToolbarEntries,
-          this, &InyokaEdit::addPluginsButtons);
-  connect(m_pPlugins, &Plugins::availablePlugins,
-          m_pSettings, &Settings::availablePlugins);
+  connect(m_pPlugins, &Plugins::addMenuToolbarEntries, this,
+          &InyokaEdit::addPluginsButtons);
+  connect(m_pPlugins, &Plugins::availablePlugins, m_pSettings,
+          &Settings::availablePlugins);
 
   this->setCurrentEditor();
 
 #ifdef USEQTWEBKIT
   m_pWebview = new QWebView(this);
-  connect(m_pWebview->page(), &QWebPage::scrollRequested,
-          this, &InyokaEdit::syncScrollbarsWebview);
-  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar,
-          this, &InyokaEdit::syncScrollbarsEditor);
+  connect(m_pWebview->page(), &QWebPage::scrollRequested, this,
+          &InyokaEdit::syncScrollbarsWebview);
+  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar, this,
+          &InyokaEdit::syncScrollbarsEditor);
 
   m_pWebview->settings()->setDefaultTextEncoding(QStringLiteral("utf-8"));
 #endif
@@ -225,21 +221,21 @@ void InyokaEdit::createObjects() {
   m_pWebview->pageAction(QWebEnginePage::ViewSource)->setVisible(false);
   m_pWebview->pageAction(QWebEnginePage::OpenLinkInNewTab)->setVisible(false);
   m_pWebview->pageAction(QWebEnginePage::DownloadLinkToDisk)->setVisible(false);
-  m_pWebview->pageAction(
-        QWebEnginePage::OpenLinkInNewWindow)->setVisible(false);
+  m_pWebview->pageAction(QWebEnginePage::OpenLinkInNewWindow)
+      ->setVisible(false);
 
-  connect(m_pWebview->page(), &QWebEnginePage::scrollPositionChanged,
-          this, &InyokaEdit::syncScrollbarsWebview);
-  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar,
-          this, &InyokaEdit::syncScrollbarsEditor);
+  connect(m_pWebview->page(), &QWebEnginePage::scrollPositionChanged, this,
+          &InyokaEdit::syncScrollbarsWebview);
+  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar, this,
+          &InyokaEdit::syncScrollbarsEditor);
 #endif
 #ifndef NOPREVIEW
   m_pWebview->installEventFilter(this);
 #endif
 
   m_pUtils = new Utils(this);
-  connect(m_pUtils, &Utils::setWindowsUpdateCheck,
-          m_pSettings, &Settings::setWindowsCheckUpdate);
+  connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
+          &Settings::setWindowsCheckUpdate);
 }
 
 // ----------------------------------------------------------------------------
@@ -264,16 +260,16 @@ void InyokaEdit::setupEditor() {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   // Timed preview
-  connect(m_pPreviewTimer, &QTimer::timeout,
-          this, &InyokaEdit::previewInyokaPage);
+  connect(m_pPreviewTimer, &QTimer::timeout, this,
+          &InyokaEdit::previewInyokaPage);
 
 #ifdef USEQTWEBKIT
-  connect(m_pWebview, &QWebView::loadFinished,
-          this, &InyokaEdit::loadPreviewFinished);
+  connect(m_pWebview, &QWebView::loadFinished, this,
+          &InyokaEdit::loadPreviewFinished);
 #endif
 #ifdef USEQTWEBENGINE
-  connect(m_pWebview, &QWebEngineView::loadFinished,
-          this, &InyokaEdit::loadPreviewFinished);
+  connect(m_pWebview, &QWebEngineView::loadFinished, this,
+          &InyokaEdit::loadPreviewFinished);
 #endif
 
   m_pWidgetSplitter = new QSplitter;
@@ -285,10 +281,10 @@ void InyokaEdit::setupEditor() {
   setCentralWidget(m_pWidgetSplitter);
   m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
-  connect(m_pSettings, &Settings::updateEditorSettings,
-          this, &InyokaEdit::updateEditorSettings);
-  connect(m_pFileOperations, &FileOperations::changedNumberOfEditors,
-          this, &InyokaEdit::changedNumberOfEditors);
+  connect(m_pSettings, &Settings::updateEditorSettings, this,
+          &InyokaEdit::updateEditorSettings);
+  connect(m_pFileOperations, &FileOperations::changedNumberOfEditors, this,
+          &InyokaEdit::changedNumberOfEditors);
 
 #ifndef NOPREVIEW
   // Show an empty website after start
@@ -297,8 +293,8 @@ void InyokaEdit::setupEditor() {
   }
 #endif
 
-  connect(m_pDownloadModule, &Download::sendArticleText,
-          this, &InyokaEdit::displayArticleText);
+  connect(m_pDownloadModule, &Download::sendArticleText, this,
+          &InyokaEdit::displayArticleText);
 
   // Restore window and toolbar settings
   // Settings have to be restored after toolbars are created!
@@ -306,16 +302,16 @@ void InyokaEdit::setupEditor() {
   // Restore toolbar position etc.
   this->restoreState(m_pSettings->getWindowState());
 
-  m_pUi->aboutAct->setText(
-        m_pUi->aboutAct->text() + " " + qApp->applicationName());
+  m_pUi->aboutAct->setText(m_pUi->aboutAct->text() + " " +
+                           qApp->applicationName());
 
 #ifdef USEQTWEBKIT
-  connect(m_pUi->goBackBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebView::back);
-  connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebView::forward);
-  connect(m_pUi->reloadBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebView::reload);
+  connect(m_pUi->goBackBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebView::back);
+  connect(m_pUi->goForwardBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebView::forward);
+  connect(m_pUi->reloadBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebView::reload);
 
   connect(m_pWebview, &QWebView::urlChanged, this, &InyokaEdit::changedUrl);
 
@@ -323,15 +319,15 @@ void InyokaEdit::setupEditor() {
   connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
 #endif
 #ifdef USEQTWEBENGINE
-  connect(m_pUi->goBackBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebEngineView::back);
-  connect(m_pUi->goForwardBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebEngineView::forward);
-  connect(m_pUi->reloadBrowserAct, &QAction::triggered,
-          m_pWebview, &QWebEngineView::reload);
+  connect(m_pUi->goBackBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebEngineView::back);
+  connect(m_pUi->goForwardBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebEngineView::forward);
+  connect(m_pUi->reloadBrowserAct, &QAction::triggered, m_pWebview,
+          &QWebEngineView::reload);
 
-  connect(m_pWebview, &QWebEngineView::urlChanged,
-          this, &InyokaEdit::changedUrl);
+  connect(m_pWebview, &QWebEngineView::urlChanged, this,
+          &InyokaEdit::changedUrl);
 
   // TODO(volunteer): Find solution for QWebEngineView
   // QWebEngineUrlRequestInterceptor ?
@@ -355,28 +351,26 @@ void InyokaEdit::createActions() {
   // File menu
   // New file
   m_pUi->newAct->setShortcuts(QKeySequence::New);
-  connect(m_pUi->newAct, &QAction::triggered,
-          m_pFileOperations,
+  connect(m_pUi->newAct, &QAction::triggered, m_pFileOperations,
           [this]() { m_pFileOperations->newFile(QString()); });
   // Open file
   m_pUi->openAct->setShortcuts(QKeySequence::Open);
-  connect(m_pUi->openAct, &QAction::triggered,
-          this, &InyokaEdit::openFile);
+  connect(m_pUi->openAct, &QAction::triggered, this, &InyokaEdit::openFile);
   // Save file
   m_pUi->saveAct->setShortcuts(QKeySequence::Save);
-  connect(m_pUi->saveAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::save);
+  connect(m_pUi->saveAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::save);
   // Save file as...
   m_pUi->saveAsAct->setShortcuts(QKeySequence::SaveAs);
-  connect(m_pUi->saveAsAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::saveAs);
+  connect(m_pUi->saveAsAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::saveAs);
   // Print preview
   m_pUi->printPdfPreviewAct->setEnabled(false);
 #ifdef USEQTWEBENGINE
   m_pUi->printPdfPreviewAct->setEnabled(true);
   m_pUi->printPdfPreviewAct->setShortcut(QKeySequence::Print);
-  connect(m_pUi->printPdfPreviewAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::printPdfPreview);
+  connect(m_pUi->printPdfPreviewAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::printPdfPreview);
 #endif
 
   // Exit application
@@ -388,58 +382,58 @@ void InyokaEdit::createActions() {
 
   // Find
   m_pUi->searchAct->setShortcuts(QKeySequence::Find);
-  connect(m_pUi->searchAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::triggeredFind);
+  connect(m_pUi->searchAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::triggeredFind);
   // Replace
   m_pUi->replaceAct->setShortcuts(QKeySequence::Replace);
-  connect(m_pUi->replaceAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::triggeredReplace);
+  connect(m_pUi->replaceAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::triggeredReplace);
   // Find next
   m_pUi->findNextAct->setShortcuts(QKeySequence::FindNext);
-  connect(m_pUi->findNextAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::triggeredFindNext);
+  connect(m_pUi->findNextAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::triggeredFindNext);
   // Find previous
   m_pUi->findPreviousAct->setShortcuts(QKeySequence::FindPrevious);
-  connect(m_pUi->findPreviousAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::triggeredFindPrevious);
+  connect(m_pUi->findPreviousAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::triggeredFindPrevious);
 
   // Cut
   m_pUi->cutAct->setShortcuts(QKeySequence::Cut);
-  connect(m_pUi->cutAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::cut);
+  connect(m_pUi->cutAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::cut);
   // Copy
   m_pUi->copyAct->setShortcuts(QKeySequence::Copy);
-  connect(m_pUi->copyAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::copy);
+  connect(m_pUi->copyAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::copy);
   // Paste
   m_pUi->pasteAct->setShortcuts(QKeySequence::Paste);
-  connect(m_pUi->pasteAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::paste);
+  connect(m_pUi->pasteAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::paste);
 
-  connect(m_pFileOperations, &FileOperations::copyAvailable,
-          m_pUi->cutAct, &QAction::setEnabled);
-  connect(m_pFileOperations, &FileOperations::copyAvailable,
-          m_pUi->copyAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::copyAvailable, m_pUi->cutAct,
+          &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::copyAvailable, m_pUi->copyAct,
+          &QAction::setEnabled);
   m_pUi->cutAct->setEnabled(false);
   m_pUi->copyAct->setEnabled(false);
 
   // Undo
   m_pUi->undoAct->setShortcuts(QKeySequence::Undo);
-  connect(m_pUi->undoAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::undo);
+  connect(m_pUi->undoAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::undo);
   // Redo
   m_pUi->redoAct->setShortcuts(QKeySequence::Redo);
-  connect(m_pUi->redoAct, &QAction::triggered,
-          m_pFileOperations, &FileOperations::redo);
+  connect(m_pUi->redoAct, &QAction::triggered, m_pFileOperations,
+          &FileOperations::redo);
 
-  connect(m_pFileOperations, &FileOperations::undoAvailable,
-          m_pUi->undoAct, &QAction::setEnabled);
-  connect(m_pFileOperations, &FileOperations::redoAvailable,
-          m_pUi->redoAct, &QAction::setEnabled);
-  connect(m_pFileOperations, &FileOperations::undoAvailable2,
-          m_pUi->undoAct, &QAction::setEnabled);
-  connect(m_pFileOperations, &FileOperations::redoAvailable2,
-          m_pUi->redoAct, &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::undoAvailable, m_pUi->undoAct,
+          &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::redoAvailable, m_pUi->redoAct,
+          &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::undoAvailable2, m_pUi->undoAct,
+          &QAction::setEnabled);
+  connect(m_pFileOperations, &FileOperations::redoAvailable2, m_pUi->redoAct,
+          &QAction::setEnabled);
   m_pUi->undoAct->setEnabled(false);
   m_pUi->redoAct->setEnabled(false);
 
@@ -447,36 +441,35 @@ void InyokaEdit::createActions() {
   // TOOLS MENU
 
   // Clear temp. image download folder
-  connect(m_pUi->deleteTempImagesAct, &QAction::triggered,
-          this, &InyokaEdit::deleteTempImages);
+  connect(m_pUi->deleteTempImagesAct, &QAction::triggered, this,
+          &InyokaEdit::deleteTempImages);
 
   // Show settings dialog
-  connect(m_pUi->preferencesAct, &QAction::triggered,
-          m_pSettings, &Settings::showSettingsDialog);
+  connect(m_pUi->preferencesAct, &QAction::triggered, m_pSettings,
+          &Settings::showSettingsDialog);
 
   // ------------------------------------------------------------------------
 
   // Show html preview
-  connect(m_pUi->previewAct, &QAction::triggered,
-          this, &InyokaEdit::previewInyokaPage);
+  connect(m_pUi->previewAct, &QAction::triggered, this,
+          &InyokaEdit::previewInyokaPage);
 
   // Download Inyoka article
-  connect(m_pUi->downloadArticleAct, &QAction::triggered,
-          m_pDownloadModule, [this] () {
-    m_pDownloadModule->downloadArticle(QString()); });
+  connect(m_pUi->downloadArticleAct, &QAction::triggered, m_pDownloadModule,
+          [this]() { m_pDownloadModule->downloadArticle(QString()); });
 
   // Upload Inyoka article
-  connect(m_pUi->uploadArticleAct, &QAction::triggered,
-          m_pUploadModule, &Upload::clickUploadArticle);
+  connect(m_pUi->uploadArticleAct, &QAction::triggered, m_pUploadModule,
+          &Upload::clickUploadArticle);
 
   if (this->window()->palette().window().color().lightnessF() <
       m_pSettings->getDarkThreshold()) {
     m_pUi->previewAct->setIcon(
-          QIcon(QLatin1String(":/toolbar/dark/preview.png")));
+        QIcon(QLatin1String(":/toolbar/dark/preview.png")));
     m_pUi->downloadArticleAct->setIcon(
-          QIcon(QLatin1String(":/toolbar/dark/cloud_download.png")));
+        QIcon(QLatin1String(":/toolbar/dark/cloud_download.png")));
     m_pUi->uploadArticleAct->setIcon(
-          QIcon(QLatin1String(":/toolbar/dark/cloud_upload.png")));
+        QIcon(QLatin1String(":/toolbar/dark/cloud_upload.png")));
   }
 
   // ------------------------------------------------------------------------
@@ -486,17 +479,15 @@ void InyokaEdit::createActions() {
 #ifdef NOPREVIEW
   m_pUi->showSyntaxOverviewAct->setVisible(false);
 #else
-  connect(m_pUi->showSyntaxOverviewAct, &QAction::triggered,
-          this, &InyokaEdit::showSyntaxOverview);
+  connect(m_pUi->showSyntaxOverviewAct, &QAction::triggered, this,
+          &InyokaEdit::showSyntaxOverview);
 #endif
 
   // Report a bug
-  connect(m_pUi->reportBugAct, &QAction::triggered,
-          this, []() {
-    QDesktopServices::openUrl(
-          QUrl(
-            QStringLiteral(
-              "https://github.com/inyokaproject/inyokaedit/issues"))); });
+  connect(m_pUi->reportBugAct, &QAction::triggered, this, []() {
+    QDesktopServices::openUrl(QUrl(
+        QStringLiteral("https://github.com/inyokaproject/inyokaedit/issues")));
+  });
 
   // Open about window
   connect(m_pUi->aboutAct, &QAction::triggered, this, &InyokaEdit::showAbout);
@@ -527,19 +518,17 @@ void InyokaEdit::createMenus() {
 
   bool bFirstLoop(true);
   for (const auto &tplDir : qAsConst(listTplDirs)) {
-    const QFileInfoList fiListFiles = tplDir.entryInfoList(
-                                        QDir::NoDotAndDotDot | QDir::Files);
+    const QFileInfoList fiListFiles =
+        tplDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
     for (const auto &fi : fiListFiles) {
       if ("tpl" == fi.suffix()) {
         m_OpenTemplateFilesActions << new QAction(
-                                        fi.baseName().replace(
-                                          QLatin1String("_"),
-                                          QLatin1String(" ")),
-                                        this);
-        connect(m_OpenTemplateFilesActions.last(), &QAction::triggered,
-                this, [this, fi]() {
-          m_pFileOperations->loadFile(fi.absoluteFilePath());
-        });
+            fi.baseName().replace(QLatin1String("_"), QLatin1String(" ")),
+            this);
+        connect(m_OpenTemplateFilesActions.last(), &QAction::triggered, this,
+                [this, fi]() {
+                  m_pFileOperations->loadFile(fi.absoluteFilePath());
+                });
       }
     }
 
@@ -558,7 +547,7 @@ void InyokaEdit::createMenus() {
 
   // File menu (recent opened files)
   m_pUi->fileMenuLastOpened->addActions(
-        m_pFileOperations->getLastOpenedFiles());
+      m_pFileOperations->getLastOpenedFiles());
   if (m_pSettings->getRecentFiles().isEmpty()) {
     m_pUi->fileMenuLastOpened->setDisabled(true);
   }
@@ -615,9 +604,8 @@ void InyokaEdit::createXmlMenus() {
   QString sTmpPath;
   sListFolders << m_sSharePath << m_UserDataDir.absolutePath();
   QStringList sListObjects;
-  sListObjects << QStringLiteral("menu") <<
-                  QStringLiteral("dropdown") <<
-                  QStringLiteral("toolbar");
+  sListObjects << QStringLiteral("menu") << QStringLiteral("dropdown")
+               << QStringLiteral("toolbar");
   const int MAXFILES = 9;
 
   this->clearXmlMenus();
@@ -628,18 +616,17 @@ void InyokaEdit::createXmlMenus() {
     for (const auto &sObj : qAsConst(sListObjects)) {
       // Search for max 9 files
       for (int n = 1; n < MAXFILES; n++) {
-        sTmpPath = sPath + "/community/" +
-                   m_pSettings->getInyokaCommunity() + "/xml/";
+        sTmpPath =
+            sPath + "/community/" + m_pSettings->getInyokaCommunity() + "/xml/";
         // File name e.g. menu_1_de.xml
-        xmlFile.setFileName(
-              sTmpPath + sObj + "_" + QString::number(n) + "_" +
-              m_pSettings->getGuiLanguage() + ".xml");
+        xmlFile.setFileName(sTmpPath + sObj + "_" + QString::number(n) + "_" +
+                            m_pSettings->getGuiLanguage() + ".xml");
 
         if (!xmlFile.exists() &&
             m_pSettings->getGuiLanguage() != QLatin1String("en")) {
           if (1 == n && sPath == m_sSharePath) {
-            qWarning() << "Xml menu file not found:" << xmlFile.fileName() <<
-                          "- Trying to load English fallback.";
+            qWarning() << "Xml menu file not found:" << xmlFile.fileName()
+                       << "- Trying to load English fallback.";
           }
           // Try English fallback
           QString sTemp(xmlFile.fileName());
@@ -653,10 +640,9 @@ void InyokaEdit::createXmlMenus() {
           if (xmlParser.parseXml(xmlFile.fileName())) {
             QString sIconPath(xmlParser.getPath());
             if (this->window()->palette().window().color().lightnessF() <
-                m_pSettings->getDarkThreshold() &&
+                    m_pSettings->getDarkThreshold() &&
                 sIconPath.contains(QLatin1String("light"))) {
-              sIconPath.replace(QLatin1String("light"),
-                                QLatin1String("dark"),
+              sIconPath.replace(QLatin1String("light"), QLatin1String("dark"),
                                 Qt::CaseInsensitive);
             }
 
@@ -670,12 +656,12 @@ void InyokaEdit::createXmlMenus() {
               m_pXmlDropdowns.last()->addItem(xmlParser.getMenuName());
               m_pXmlDropdowns.last()->insertSeparator(1);
               connect(m_pXmlDropdowns.last(),
-                      static_cast<void(QComboBox::*)(int)>(
-                        &QComboBox::currentIndexChanged),
+                      static_cast<void (QComboBox::*)(int)>(
+                          &QComboBox::currentIndexChanged),
                       this, &InyokaEdit::dropdownXmlChanged);
             } else if ("toolbar" == sObj) {
               m_pXmlToolbars.append(
-                    new QToolBar(xmlParser.getMenuName(), this));
+                  new QToolBar(xmlParser.getMenuName(), this));
               m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbars.last());
             }
 
@@ -683,43 +669,40 @@ void InyokaEdit::createXmlMenus() {
             for (int i = 0; i < xmlParser.getGroupNames().size(); i++) {
               // qDebug() << "GROUP:" << xmlParser.getGroupNames()[i];
               tmplListActions.clear();
-              for (int j = 0;
-                   j < xmlParser.getElementNames().at(i).size();
+              for (int j = 0; j < xmlParser.getElementNames().at(i).size();
                    j++) {
                 // qDebug() << "ELEMENTS" << xmlParser.getElementNames()[i][j];
                 m_pXmlActions.append(
-                      new QAction(QIcon(
-                                    sTmpPath + sIconPath + "/" +
-                                    xmlParser.getElementIcons().at(i).at(j)),
-                                  xmlParser.getElementNames().at(i).at(j),
-                                  this));
+                    new QAction(QIcon(sTmpPath + sIconPath + "/" +
+                                      xmlParser.getElementIcons().at(i).at(j)),
+                                xmlParser.getElementNames().at(i).at(j), this));
                 tmplListActions.append(m_pXmlActions.last());
 
                 if ("dropdown" == sObj) {
                   m_pXmlDropdowns.last()->addItem(
-                        xmlParser.getElementNames().at(i).at(j),
-                        QVariant::fromValue(m_pXmlActions.last()));
+                      xmlParser.getElementNames().at(i).at(j),
+                      QVariant::fromValue(m_pXmlActions.last()));
                 }
 
                 // qDebug() << "INSERT" << xmlParser.getElementInserts()[i][j];
                 if (xmlParser.getElementInserts().at(i).at(j).endsWith(
-                      QLatin1String(".tpl"), Qt::CaseInsensitive) ||
+                        QLatin1String(".tpl"), Qt::CaseInsensitive) ||
                     xmlParser.getElementInserts().at(i).at(j).endsWith(
-                      QLatin1String(".macro"), Qt::CaseInsensitive)) {
+                        QLatin1String(".macro"), Qt::CaseInsensitive)) {
                   QFile tmp(sTmpPath + xmlParser.getPath() + "/" +
                             xmlParser.getElementInserts().at(i).at(j));
                   if (tmp.exists()) {
                     QString s(tmp.fileName());
-                    connect(m_pXmlActions.last(), &QAction::triggered,
-                            this, [this, s]() { insertMacro(s); });
+                    connect(m_pXmlActions.last(), &QAction::triggered, this,
+                            [this, s]() { insertMacro(s); });
                   } else {
-                    qWarning() << "Tpl/Macro file not found for XML menu:" <<
-                                  tmp.fileName();
+                    qWarning() << "Tpl/Macro file not found for XML menu:"
+                               << tmp.fileName();
                   }
                 } else {
                   QString s(xmlParser.getElementInserts().at(i).at(j));
-                  connect(m_pXmlActions.last(), &QAction::triggered,
-                          this, [this, s]() { insertMacro(s); });
+                  connect(m_pXmlActions.last(), &QAction::triggered, this,
+                          [this, s]() { insertMacro(s); });
                 }
               }
               if ("menu" == sObj) {
@@ -727,10 +710,10 @@ void InyokaEdit::createXmlMenus() {
                   m_pXmlMenus.last()->addActions(tmplListActions);
                 } else {
                   m_pXmlSubMenus.append(
-                        new QMenu(xmlParser.getGroupNames().at(i), this));
+                      new QMenu(xmlParser.getGroupNames().at(i), this));
                   m_pXmlSubMenus.last()->setIcon(
-                        QIcon(sTmpPath + sIconPath + "/" +
-                              xmlParser.getGroupIcons().at(i)));
+                      QIcon(sTmpPath + sIconPath + "/" +
+                            xmlParser.getGroupIcons().at(i)));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlMenus.last()->addMenu(m_pXmlSubMenus.last());
                 }
@@ -741,13 +724,12 @@ void InyokaEdit::createXmlMenus() {
                 } else {
                   m_pXmlToolbuttons.append(new QToolButton(this));
                   m_pXmlToolbuttons.last()->setIcon(
-                        QIcon(sTmpPath + sIconPath + "/" +
-                              xmlParser.getGroupIcons().at(i)));
+                      QIcon(sTmpPath + sIconPath + "/" +
+                            xmlParser.getGroupIcons().at(i)));
                   m_pXmlToolbuttons.last()->setPopupMode(
-                        QToolButton::InstantPopup);
-                  m_pXmlSubMenus.append(new QMenu(
-                                          xmlParser.getGroupNames().at(i),
-                                          this));
+                      QToolButton::InstantPopup);
+                  m_pXmlSubMenus.append(
+                      new QMenu(xmlParser.getGroupNames().at(i), this));
                   m_pXmlSubMenus.last()->addActions(tmplListActions);
                   m_pXmlToolbuttons.last()->setMenu(m_pXmlSubMenus.last());
                   m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbuttons.last());
@@ -819,8 +801,7 @@ void InyokaEdit::previewInyokaPage() {
   if (!tmphtmlfile.open(QFile::WriteOnly | QFile::Text)) {
     QMessageBox::warning(this, qApp->applicationName(),
                          tr("Could not create temporary HTML file!"));
-    qWarning() << "Could not create temporary HTML file:"
-               << m_sPreviewFile;
+    qWarning() << "Could not create temporary HTML file:" << m_sPreviewFile;
     return;
   }
 
@@ -848,14 +829,12 @@ void InyokaEdit::previewInyokaPage() {
   static bool bOpenedBrowser = false;
   if (!bOpenedBrowser) {
     QDesktopServices::openUrl(
-          QUrl::fromLocalFile(
-            QFileInfo(tmphtmlfile).absoluteFilePath()));
+        QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
     bOpenedBrowser = true;
   }
 #else
   m_pWebview->load(
-        QUrl::fromLocalFile(
-          QFileInfo(tmphtmlfile).absoluteFilePath()));
+      QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
 #endif
 }
 
@@ -881,10 +860,13 @@ void InyokaEdit::highlightSyntaxError(const QPair<int, QString> &error) {
     QFontMetrics fm1(QToolTip::font());
     QFontMetrics fm2(m_pSettings->getEditorFont());
     QPoint cur = m_pCurrentEditor->cursorRect().topLeft();
-    cur.setY(cur.y() + m_pCurrentEditor->viewport()->mapToGlobal(
-          m_pCurrentEditor->pos()).y() - fm1.height() - fm2.height() - 10);
-    cur.setX(cur.x() + m_pCurrentEditor->viewport()->mapToGlobal(
-          m_pCurrentEditor->pos()).x());
+    cur.setY(
+        cur.y() +
+        m_pCurrentEditor->viewport()->mapToGlobal(m_pCurrentEditor->pos()).y() -
+        fm1.height() - fm2.height() - 10);
+    cur.setX(
+        cur.x() +
+        m_pCurrentEditor->viewport()->mapToGlobal(m_pCurrentEditor->pos()).x());
     QString sError(error.second);
     if ("OPEN_PAR_MISSING" == sError) {
       sError = tr("Opening parenthesis missing!");
@@ -919,8 +901,10 @@ auto InyokaEdit::getHighlightErrorColor() -> QColor {
                      qApp->applicationName().toLower(),
                      qApp->applicationName().toLower());
 #endif
-  QString sStyle = settings.value(QStringLiteral("Plugin_highlighter/Style"),
-                                  "standard-style").toString();
+  QString sStyle =
+      settings
+          .value(QStringLiteral("Plugin_highlighter/Style"), "standard-style")
+          .toString();
 
 #if defined __linux__
   QSettings styleset(QSettings::NativeFormat, QSettings::UserScope,
@@ -929,11 +913,13 @@ auto InyokaEdit::getHighlightErrorColor() -> QColor {
   QSettings styleset(QSettings::IniFormat, QSettings::UserScope,
                      qApp->applicationName().toLower(), sStyle);
 #endif
-  sStyle = styleset.value(QStringLiteral("Style/SyntaxError"),
-                          "---|---|---|0xffff00").toString();
+  sStyle =
+      styleset
+          .value(QStringLiteral("Style/SyntaxError"), "---|---|---|0xffff00")
+          .toString();
 
-  QColor color(sStyle.right(8).replace(QLatin1String("0x"),
-                                       QLatin1String("#")));
+  QColor color(
+      sStyle.right(8).replace(QLatin1String("0x"), QLatin1String("#")));
   if (color.isValid()) {
     return color;
   }
@@ -946,8 +932,7 @@ auto InyokaEdit::getHighlightErrorColor() -> QColor {
 void InyokaEdit::dropdownXmlChanged(int nIndex) {
   auto *tmpCombo = qobject_cast<QComboBox *>(sender());
   if (tmpCombo != nullptr) {
-    auto *action = tmpCombo->itemData(nIndex,
-                                          Qt::UserRole).value<QAction *>();
+    auto *action = tmpCombo->itemData(nIndex, Qt::UserRole).value<QAction *>();
     if (action) {
       action->trigger();  // Triggering insertMacro() slot
     }
@@ -975,9 +960,9 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
       sMacro = sMacro.remove(QStringLiteral("## Macro="));
       tplFile.close();
     } else {
-      QMessageBox::warning(this, QStringLiteral("Warning"),
-                           "Could not open macro file: \n" +
-                           tplFile.fileName());
+      QMessageBox::warning(
+          this, QStringLiteral("Warning"),
+          "Could not open macro file: \n" + tplFile.fileName());
       qWarning() << "Could not open macro file:" << tplFile.fileName();
       return;
     }
@@ -1003,9 +988,8 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
     m_pCurrentEditor->insertPlainText(sMacro);
 
     // Select placeholder
-    if ((nPlaceholder1 != nPlaceholder2)
-        && nPlaceholder1 >= 0
-        && nPlaceholder2 >= 0) {
+    if ((nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 &&
+        nPlaceholder2 >= 0) {
       QTextCursor textCursor(m_pCurrentEditor->textCursor());
       textCursor.setPosition(nCurrentPos + nPlaceholder1);
       textCursor.setPosition(nCurrentPos + nPlaceholder2 - 2,
@@ -1015,9 +999,8 @@ void InyokaEdit::insertMacro(const QString &sInsert) {
   } else {
     // Some text is selected
     QString sTmp = sMacro;
-    if ((nPlaceholder1 != nPlaceholder2)
-        && nPlaceholder1 >= 0
-        && nPlaceholder2 >= 0) {
+    if ((nPlaceholder1 != nPlaceholder2) && nPlaceholder1 >= 0 &&
+        nPlaceholder2 >= 0) {
       sTmp.replace(nPlaceholder1, nPlaceholder2 - nPlaceholder1,
                    m_pCurrentEditor->textCursor().selectedText());
       m_pCurrentEditor->insertPlainText(sTmp.remove(QStringLiteral("%%")));
@@ -1076,10 +1059,9 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
 #endif
 #ifdef USEQTWEBENGINE
-    m_pWebview->page()->runJavaScript(
-          QStringLiteral("window.scrollTo(%1, %2);")
-          .arg(m_WebviewScrollPosition.x())
-          .arg(m_WebviewScrollPosition.y()));
+    m_pWebview->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2);")
+                                          .arg(m_WebviewScrollPosition.x())
+                                          .arg(m_WebviewScrollPosition.y()));
 #endif
     m_bReloadPreviewBlocked = false;
   } else {
@@ -1096,8 +1078,7 @@ void InyokaEdit::changedUrl() {
 }
 
 void InyokaEdit::clickedLink(const QUrl &newUrl) {
-  if (!newUrl.toString().contains(m_sPreviewFile)
-      && newUrl.isLocalFile()) {
+  if (!newUrl.toString().contains(m_sPreviewFile) && newUrl.isLocalFile()) {
     qDebug() << "Trying to open file:" << newUrl;
     QDesktopServices::openUrl(newUrl);
   } else {
@@ -1122,8 +1103,8 @@ void InyokaEdit::updateEditorSettings() {
 
   m_pPreviewTimer->stop();
   if (m_pSettings->getTimedPreview() != 0) {
-    m_pPreviewTimer->start(static_cast<int>(
-                             m_pSettings->getTimedPreview() * 1000));
+    m_pPreviewTimer->start(
+        static_cast<int>(m_pSettings->getTimedPreview() * 1000));
   }
 
   m_pSession->updateSettings(m_pSettings->getInyokaUrl(),
@@ -1139,8 +1120,7 @@ void InyokaEdit::updateEditorSettings() {
   m_colorSyntaxError = InyokaEdit::getHighlightErrorColor();
 
   // Setting proxy if available
-  Utils::setProxy(m_pSettings->getProxyHostName(),
-                  m_pSettings->getProxyPort(),
+  Utils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
                   m_pSettings->getProxyUserName(),
                   m_pSettings->getProxyPassword());
 }
@@ -1150,7 +1130,7 @@ void InyokaEdit::updateEditorSettings() {
 
 auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
   if (pObj == m_pCurrentEditor && pEvent->type() == QEvent::KeyPress) {
-    auto *keyEvent = static_cast<QKeyEvent*>(pEvent);
+    auto *keyEvent = static_cast<QKeyEvent *>(pEvent);
 
     if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return) {
       QString sBlock = m_pCurrentEditor->textCursor().block().text();
@@ -1200,8 +1180,8 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
       return true;
     }
     if ((Qt::Key_F5 == keyEvent->key() ||
-                m_pSettings->getReloadPreviewKey() == keyEvent->key()) &&
-               !m_bReloadPreviewBlocked) {  // Preview F5 or defined button
+         m_pSettings->getReloadPreviewKey() == keyEvent->key()) &&
+        !m_bReloadPreviewBlocked) {  // Preview F5 or defined button
       m_bReloadPreviewBlocked = true;
       previewInyokaPage();
     }
@@ -1209,7 +1189,7 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
 #ifndef NOPREVIEW
   else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
     // Forward / backward mouse button
-    auto *mouseEvent = static_cast<QMouseEvent*>(pEvent);
+    auto *mouseEvent = static_cast<QMouseEvent *>(pEvent);
 
     if (Qt::XButton1 == mouseEvent->button()) {
       m_pWebview->back();
@@ -1232,16 +1212,15 @@ void InyokaEdit::deleteTempImages() {
                                       "temporary article images?"),
                                    QMessageBox::Yes | QMessageBox::No);
 
-  if (QMessageBox::Yes== nRet) {
+  if (QMessageBox::Yes == nRet) {
     // Remove all files in current folder
-    const QFileInfoList fiListFiles = m_tmpPreviewImgDir.entryInfoList(
-                                        QDir::NoDotAndDotDot | QDir::Files);
+    const QFileInfoList fiListFiles =
+        m_tmpPreviewImgDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
     for (const auto &fi : fiListFiles) {
       if (!m_tmpPreviewImgDir.remove(fi.fileName())) {
         QMessageBox::warning(this, qApp->applicationName(),
                              tr("Could not delete file: ") + fi.fileName());
-        qWarning() << "Could not delete files:" <<
-                      fi.fileName();
+        qWarning() << "Could not delete files:" << fi.fileName();
         return;
       }
     }
@@ -1258,14 +1237,14 @@ void InyokaEdit::deleteTempImages() {
 // Delete old auto save backup files
 void InyokaEdit::deleteAutoSaveBackups() {
   QDir dir(m_UserDataDir.absolutePath());
-  const QFileInfoList fiListFiles = dir.entryInfoList(
-                                      QDir::NoDotAndDotDot | QDir::Files);
+  const QFileInfoList fiListFiles =
+      dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
   for (const auto &fi : fiListFiles) {
     if ("bak~" == fi.suffix() &&
         fi.baseName().startsWith(QLatin1String("AutoSave"))) {
       if (!dir.remove(fi.fileName())) {
-        qWarning() << "Could not delete auto save backup file:" <<
-                      fi.fileName();
+        qWarning() << "Could not delete auto save backup file:"
+                   << fi.fileName();
       }
     }
   }
@@ -1278,35 +1257,33 @@ void InyokaEdit::syncScrollbarsEditor() {
 #ifdef USEQTWEBKIT
   if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-    int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
-                            Qt::Vertical);
+    int nSizeWebviewBar =
+        m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
     auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
 
     m_bEditorScrolling = true;
-    m_pWebview->page()->mainFrame()->setScrollPosition(
-          QPoint(
-            0,
-            static_cast<int>(
-              m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
+    m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(
+        0, static_cast<int>(
+               m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
     m_bEditorScrolling = false;
   }
 #endif
 #ifdef USEQTWEBENGINE
   if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
     m_pWebview->page()->runJavaScript(
-          QStringLiteral("document.documentElement.scrollHeight"),
-          [this](const QVariant &v) {
-      int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-      int nSizeWebviewBar = v.toInt();
-      auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
-      nSizeWebviewBar = static_cast<int>(
-            m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR);
+        QStringLiteral("document.documentElement.scrollHeight"),
+        [this](const QVariant &v) {
+          int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
+          int nSizeWebviewBar = v.toInt();
+          auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
+          nSizeWebviewBar = static_cast<int>(
+              m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR);
 
-      m_bEditorScrolling = true;
-      m_pWebview->page()->runJavaScript(QStringLiteral("window.scrollTo(0,%1);")
-                                        .arg(nSizeWebviewBar));
-      m_bEditorScrolling = false;
-    });
+          m_bEditorScrolling = true;
+          m_pWebview->page()->runJavaScript(
+              QStringLiteral("window.scrollTo(0,%1);").arg(nSizeWebviewBar));
+          m_bEditorScrolling = false;
+        });
   }
 #endif
 }
@@ -1317,30 +1294,31 @@ void InyokaEdit::syncScrollbarsWebview() {
 #ifdef USEQTWEBKIT
   if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
     int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-    int nSizeWebviewBar = m_pWebview->page()->mainFrame()->scrollBarMaximum(
-                            Qt::Vertical);
+    int nSizeWebviewBar =
+        m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
     auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
     m_bWebviewScrolling = true;
     m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
-          m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio));
+        m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio));
     m_bWebviewScrolling = false;
   }
 #endif
 #ifdef USEQTWEBENGINE
   if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
     m_pWebview->page()->runJavaScript(
-          QStringLiteral("document.documentElement.scrollHeight"),
-          [this](const QVariant &v) {
-      int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-      int nSizeWebviewBar = v.toInt();
-      auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
+        QStringLiteral("document.documentElement.scrollHeight"),
+        [this](const QVariant &v) {
+          int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
+          int nSizeWebviewBar = v.toInt();
+          auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
 
-      m_bWebviewScrolling = true;
-      m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
-            m_pWebview->page()->scrollPosition().y() * nRatio));
-      m_bWebviewScrolling = false;
-    });
+          m_bWebviewScrolling = true;
+          m_pCurrentEditor->verticalScrollBar()->setSliderPosition(
+              static_cast<int>(m_pWebview->page()->scrollPosition().y() *
+                               nRatio));
+          m_bWebviewScrolling = false;
+        });
   }
 #endif
 }
@@ -1357,17 +1335,17 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
 #else
                                       QLibraryInfo::location(
 #endif
-                                        QLibraryInfo::TranslationsPath))) {
+                                          QLibraryInfo::TranslationsPath))) {
       InyokaEdit::switchTranslator(&m_translatorQt, "qt_" + sLang,
                                    m_sSharePath + "/lang");
     }
 
     if (!InyokaEdit::switchTranslator(
-          &m_translator,
-          ":/" + qApp->applicationName().toLower() + "_" + sLang + ".qm")) {
+            &m_translator,
+            ":/" + qApp->applicationName().toLower() + "_" + sLang + ".qm")) {
       InyokaEdit::switchTranslator(
-            &m_translator, qApp->applicationName().toLower() + "_" + sLang,
-            m_sSharePath + "/lang");
+          &m_translator, qApp->applicationName().toLower() + "_" + sLang,
+          m_sSharePath + "/lang");
     }
   }
   m_pUi->retranslateUi(this);
@@ -1376,8 +1354,7 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 
-auto InyokaEdit::switchTranslator(QTranslator *translator,
-                                  const QString &sFile,
+auto InyokaEdit::switchTranslator(QTranslator *translator, const QString &sFile,
                                   const QString &sPath) -> bool {
   qApp->removeTranslator(translator);
   if (translator->load(sFile, sPath)) {
@@ -1408,8 +1385,8 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
 
 #ifndef NOPREVIEW
 void InyokaEdit::showSyntaxOverview() {
-  auto *pDialog = new QDialog(this, this->windowFlags()
-                              & ~Qt::WindowContextHelpButtonHint);
+  auto *pDialog =
+      new QDialog(this, this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
   auto *pLayout = new QGridLayout(pDialog);
 #ifdef USEQTWEBKIT
   auto *pWebview = new QWebView();
@@ -1420,8 +1397,7 @@ void InyokaEdit::showSyntaxOverview() {
   auto *pTextDocument = new QTextDocument(this);
 
   QFile OverviewFile(m_sSharePath + "/community/" +
-                     m_pSettings->getInyokaCommunity() +
-                     "/SyntaxOverview.tpl");
+                     m_pSettings->getInyokaCommunity() + "/SyntaxOverview.tpl");
 
   QTextStream in(&OverviewFile);
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -1442,11 +1418,11 @@ void InyokaEdit::showSyntaxOverview() {
 
   QString sRet(m_pParser->genOutput(QLatin1String(""), pTextDocument));
   sRet.remove(
-        QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
-                           QRegularExpression::DotMatchesEverythingOption));
+      QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
+                         QRegularExpression::DotMatchesEverythingOption));
   sRet.remove(
-        QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
-                           QRegularExpression::DotMatchesEverythingOption));
+      QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
+                         QRegularExpression::DotMatchesEverythingOption));
   sRet.replace(QLatin1String("</style>"),
                QLatin1String("#page table{margin:0px;}</style>"));
   pTextDocument->setPlainText(sRet);
@@ -1467,29 +1443,27 @@ void InyokaEdit::showSyntaxOverview() {
 
 void InyokaEdit::showAbout() {
   QMessageBox::about(
-        this, tr("About")+ " " + qApp->applicationName(),
-        QString::fromLatin1("<big><b>%1 %2</b></big><br />"
-                            "%3<br />"
-                            "<small>%4</small><br /><br />"
-                            "%5<br />"
-                            "%6<br />"
-                            "<small>%7</small><br /><br />"
-                            "%8")
-        .arg(qApp->applicationName(),
-             qApp->applicationVersion(),
-             tr("Editor for Inyoka-based portals"),
-             APP_COPY,
-             "URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
-             "https://github.com/inyokaproject/inyokaedit</a>",
-             tr("License") +
-             ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
-             "GNU General Public License Version 3</a>",
-             tr("This application uses icons from Tango project of "
-                "<a href=\"https://www.freedesktop.org\">"
-                "freedesktop.org</a>."),
-             tr("Special thanks to all contributors and testers from "
-                "<a href=\"https://ubuntuusers.de\"> "
-                "ubuntuusers.de</a>.")));
+      this, tr("About") + " " + qApp->applicationName(),
+      QString::fromLatin1("<big><b>%1 %2</b></big><br />"
+                          "%3<br />"
+                          "<small>%4</small><br /><br />"
+                          "%5<br />"
+                          "%6<br />"
+                          "<small>%7</small><br /><br />"
+                          "%8")
+          .arg(qApp->applicationName(), qApp->applicationVersion(),
+               tr("Editor for Inyoka-based portals"), APP_COPY,
+               "URL: <a href=\"https://github.com/inyokaproject/inyokaedit\">"
+               "https://github.com/inyokaproject/inyokaedit</a>",
+               tr("License") +
+                   ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
+                   "GNU General Public License Version 3</a>",
+               tr("This application uses icons from Tango project of "
+                  "<a href=\"https://www.freedesktop.org\">"
+                  "freedesktop.org</a>."),
+               tr("Special thanks to all contributors and testers from "
+                  "<a href=\"https://ubuntuusers.de\"> "
+                  "ubuntuusers.de</a>.")));
 }
 
 // ----------------------------------------------------------------------------

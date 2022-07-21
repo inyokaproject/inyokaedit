@@ -54,57 +54,57 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                Settings *pSettings, const QString &sPreviewFile,
                                const QString &sUserDataDir,
                                const QStringList &sListTplMacros, QObject *pObj)
-  : m_pParent(pParent),
-    m_pDocumentTabs(pTabWidget),
-    m_pCurrentEditor(nullptr),
-    m_pSettings(pSettings),
-    m_sPreviewFile(sPreviewFile),
+    : m_pParent(pParent),
+      m_pDocumentTabs(pTabWidget),
+      m_pCurrentEditor(nullptr),
+      m_pSettings(pSettings),
+      m_sPreviewFile(sPreviewFile),
 #ifdef USEQTWEBENGINE
-    m_pPreviewWebView(nullptr),
+      m_pPreviewWebView(nullptr),
 #endif
-    m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;" +
-                  tr("Inyoka article + images") + " (*.inyzip);;" +
-                  tr("All files") + " (*)"),
-    m_bLoadPreview(false),
-    m_bCloseApp(false),
-    m_sUserDataDir(sUserDataDir),
-    m_sExtractDir(m_sUserDataDir + "/tmpImages"),
-    m_sListTplMacros(sListTplMacros) {
+      m_sFileFilter(tr("Inyoka article") + " (*.iny *.inyoka);;" +
+                    tr("Inyoka article + images") + " (*.inyzip);;" +
+                    tr("All files") + " (*)"),
+      m_bLoadPreview(false),
+      m_bCloseApp(false),
+      m_sUserDataDir(sUserDataDir),
+      m_sExtractDir(m_sUserDataDir + "/tmpImages"),
+      m_sListTplMacros(sListTplMacros) {
   Q_UNUSED(pObj)
   qDebug() << "Using miniz version:" << MZ_VERSION;
   m_pFindReplace = new FindReplace();
-  connect(this, &FileOperations::triggeredFind,
-          m_pFindReplace, &FindReplace::callFind);
-  connect(this, &FileOperations::triggeredReplace,
-          m_pFindReplace, &FindReplace::callReplace);
-  connect(this, &FileOperations::triggeredFindNext,
-          m_pFindReplace, &FindReplace::findNext);
-  connect(this, &FileOperations::triggeredFindPrevious,
-          m_pFindReplace, &FindReplace::findPrevious);
+  connect(this, &FileOperations::triggeredFind, m_pFindReplace,
+          &FindReplace::callFind);
+  connect(this, &FileOperations::triggeredReplace, m_pFindReplace,
+          &FindReplace::callReplace);
+  connect(this, &FileOperations::triggeredFindNext, m_pFindReplace,
+          &FindReplace::findNext);
+  connect(this, &FileOperations::triggeredFindPrevious, m_pFindReplace,
+          &FindReplace::findPrevious);
 
   // Install auto save timer
   m_pTimerAutosave = new QTimer(this);
-  connect(m_pTimerAutosave, &QTimer::timeout,
-          this, &FileOperations::saveDocumentAuto);
+  connect(m_pTimerAutosave, &QTimer::timeout, this,
+          &FileOperations::saveDocumentAuto);
 
   this->newFile(QString());
 
-  connect(m_pDocumentTabs, &QTabWidget::currentChanged,
-          this, &FileOperations::changedDocTab);
-  connect(m_pDocumentTabs, &QTabWidget::tabCloseRequested,
-          this, &FileOperations::closeDocument);
+  connect(m_pDocumentTabs, &QTabWidget::currentChanged, this,
+          &FileOperations::changedDocTab);
+  connect(m_pDocumentTabs, &QTabWidget::tabCloseRequested, this,
+          &FileOperations::closeDocument);
 
   // Generate recent files list
   for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
     if (i < m_pSettings->getRecentFiles().size()) {
-      m_LastOpenedFilesAct << new QAction(
-                                m_pSettings->getRecentFiles().at(i), this);
+      m_LastOpenedFilesAct << new QAction(m_pSettings->getRecentFiles().at(i),
+                                          this);
     } else {
       m_LastOpenedFilesAct << new QAction(QStringLiteral("EMPTY"), this);
       m_LastOpenedFilesAct.at(i)->setVisible(false);
     }
-    connect(m_LastOpenedFilesAct.at(i), &QAction::triggered,
-            this, [this, i]() { openRecentFile(i); });
+    connect(m_LastOpenedFilesAct.at(i), &QAction::triggered, this,
+            [this, i]() { openRecentFile(i); });
   }
 
   // Clear recent files list
@@ -113,19 +113,19 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
   m_pClearRecentFilesAct = new QAction(tr("Clear list"), this);
   m_LastOpenedFilesAct << m_pClearRecentFilesAct;
 
-  connect(m_pClearRecentFilesAct, &QAction::triggered,
-          this, &FileOperations::clearRecentFiles);
+  connect(m_pClearRecentFilesAct, &QAction::triggered, this,
+          &FileOperations::clearRecentFiles);
 
-  connect(m_pSettings, &Settings::updateEditorSettings,
-          this, &FileOperations::updateEditorSettings);
+  connect(m_pSettings, &Settings::updateEditorSettings, this,
+          &FileOperations::updateEditorSettings);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 void FileOperations::newFile(QString sFileName) {
-  m_pCurrentEditor = new TextEditor(m_sListTplMacros, tr("Template"),
-                                    m_pParent);
+  m_pCurrentEditor =
+      new TextEditor(m_sListTplMacros, tr("Template"), m_pParent);
   m_pListEditors << m_pCurrentEditor;
   m_pCurrentEditor->installEventFilter(m_pParent);
 
@@ -149,14 +149,14 @@ void FileOperations::newFile(QString sFileName) {
   m_pDocumentTabs->setTabToolTip(m_pDocumentTabs->count() - 1,
                                  m_pCurrentEditor->getFileName());
 
-  connect(m_pCurrentEditor, &TextEditor::documentChanged,
-          this, &FileOperations::modifiedDoc);
-  connect(m_pCurrentEditor, &TextEditor::copyAvailable,
-          this, &FileOperations::copyAvailable);
-  connect(m_pCurrentEditor, &TextEditor::undoAvailable,
-          this, &FileOperations::undoAvailable);
-  connect(m_pCurrentEditor, &TextEditor::redoAvailable,
-          this, &FileOperations::redoAvailable);
+  connect(m_pCurrentEditor, &TextEditor::documentChanged, this,
+          &FileOperations::modifiedDoc);
+  connect(m_pCurrentEditor, &TextEditor::copyAvailable, this,
+          &FileOperations::copyAvailable);
+  connect(m_pCurrentEditor, &TextEditor::undoAvailable, this,
+          &FileOperations::undoAvailable);
+  connect(m_pCurrentEditor, &TextEditor::redoAvailable, this,
+          &FileOperations::redoAvailable);
   connect(m_pCurrentEditor->verticalScrollBar(), &QScrollBar::valueChanged,
           this, &FileOperations::movedEditorScrollbar);
 
@@ -171,9 +171,8 @@ void FileOperations::newFile(QString sFileName) {
 void FileOperations::open() {
   // File dialog opens last used folder
   QString sFileName = QFileDialog::getOpenFileName(
-                        m_pParent, tr("Open file"),
-                        m_pSettings->getLastOpenedDir().absolutePath(),
-                        m_sFileFilter);
+      m_pParent, tr("Open file"),
+      m_pSettings->getLastOpenedDir().absolutePath(), m_sFileFilter);
   if (!sFileName.isEmpty()) {
     QFileInfo tmpFI(sFileName);
     m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
@@ -214,10 +213,8 @@ auto FileOperations::saveAs() -> bool {
 
   QFileDialog saveDialog(m_pParent);
   saveDialog.setDefaultSuffix(QStringLiteral("iny"));
-  QString sFileName = saveDialog.getSaveFileName(m_pParent,
-                                                 tr("Save file"),
-                                                 sCurFileName,
-                                                 m_sFileFilter);
+  QString sFileName = saveDialog.getSaveFileName(m_pParent, tr("Save file"),
+                                                 sCurFileName, m_sFileFilter);
   if (sFileName.isEmpty()) {
     return false;
   }
@@ -243,12 +240,13 @@ auto FileOperations::maybeSave() -> bool {
       sTempCurFileName = tempCurFile.fileName();
     }
 
-    ret = QMessageBox::warning(m_pParent, qApp->applicationName(),
-                               tr("The document \"%1\" has been modified.\n"
-                                  "Do you want to save your changes or "
-                                  "discard them?").arg(sTempCurFileName),
-                               QMessageBox::Save | QMessageBox::Discard
-                               | QMessageBox::Cancel);
+    ret = QMessageBox::warning(
+        m_pParent, qApp->applicationName(),
+        tr("The document \"%1\" has been modified.\n"
+           "Do you want to save your changes or "
+           "discard them?")
+            .arg(sTempCurFileName),
+        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
     if (QMessageBox::Save == ret) {
       return save();
@@ -264,8 +262,7 @@ auto FileOperations::maybeSave() -> bool {
 // ----------------------------------------------------------------------------
 
 void FileOperations::loadFile(const QString &sFileName,
-                              const bool bUpdateRecent,
-                              const bool bArchive) {
+                              const bool bUpdateRecent, const bool bArchive) {
   QString sTmpName(sFileName);
   if (sTmpName.endsWith(QLatin1String(".inyzip"))) {
     this->loadInyArchive(sTmpName);
@@ -277,9 +274,9 @@ void FileOperations::loadFile(const QString &sFileName,
   if (!file.open(QFile::ReadOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("The file \"%1\" could not be opened:\n%2.")
-                         .arg(sTmpName, file.errorString()));
-    qWarning() << "File" << sTmpName << "could not be opened:"
-               << file.errorString();
+                             .arg(sTmpName, file.errorString()));
+    qWarning() << "File" << sTmpName
+               << "could not be opened:" << file.errorString();
     return;
   }
 
@@ -328,11 +325,11 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   mz_zip_archive_file_stat file_stat;
 
   if (!mz_zip_reader_init_file(&archive, sArchive.toLatin1(), 0)) {
-    QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         tr("The file \"%1\" could not be opened.")
-                         .arg(sArchive));
-    qWarning() << "mz_zip_reader_init_file() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    QMessageBox::warning(
+        m_pParent, qApp->applicationName(),
+        tr("The file \"%1\" could not be opened.").arg(sArchive));
+    qWarning() << "mz_zip_reader_init_file() failed:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return;
   }
 
@@ -348,21 +345,21 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   if (!mz_zip_reader_file_stat(&archive, 0, &file_stat)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("Error reading \"%1\"").arg(sArchive));
-    qWarning() << "Error reading archive!" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    qWarning() << "Error reading archive!"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     mz_zip_reader_end(&archive);
     return;
   }
 
   // Go through each file from archive
   for (int i = 0; i < nFileCount; i++) {
-    if (!mz_zip_reader_file_stat(
-          &archive, static_cast<mz_uint>(i), &file_stat)) {
-      QMessageBox::critical(m_pParent, qApp->applicationName(),
-                            tr("Something went wrong while reading \"%1\"")
-                            .arg(sArchive));
-      qWarning() << "mz_zip_reader_file_stat() failed:" <<
-                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    if (!mz_zip_reader_file_stat(&archive, static_cast<mz_uint>(i),
+                                 &file_stat)) {
+      QMessageBox::critical(
+          m_pParent, qApp->applicationName(),
+          tr("Something went wrong while reading \"%1\"").arg(sArchive));
+      qWarning() << "mz_zip_reader_file_stat() failed:"
+                 << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
       mz_zip_reader_end(&archive);
       return;
     }
@@ -380,14 +377,14 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
       sOutput = m_sExtractDir + "/" + sOutput;
     }
 
-    if (!mz_zip_reader_extract_to_file(
-          &archive, static_cast<mz_uint>(i), sOutput.toLatin1(), 0)) {
+    if (!mz_zip_reader_extract_to_file(&archive, static_cast<mz_uint>(i),
+                                       sOutput.toLatin1(), 0)) {
       QMessageBox::critical(
-            m_pParent, qApp->applicationName(),
-            tr("Error while extracting \"%1\" from archive!")
-            .arg(QString::fromLatin1(file_stat.m_filename)));
-      qWarning() << "mz_zip_reader_extract_to_file() failed:" <<
-                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+          m_pParent, qApp->applicationName(),
+          tr("Error while extracting \"%1\" from archive!")
+              .arg(QString::fromLatin1(file_stat.m_filename)));
+      qWarning() << "mz_zip_reader_extract_to_file() failed:"
+                 << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     }
   }
 
@@ -395,8 +392,8 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
   if (!mz_zip_reader_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           tr("Error while extracting archive!"));
-    qWarning() << "mz_zip_reader_end() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    qWarning() << "mz_zip_reader_end() failed:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
   }
 
   this->loadFile(sArticle, true, true);
@@ -417,8 +414,8 @@ auto FileOperations::saveFile(QString sFileName) -> bool {
     sFileName.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
     QString sFile(sFileName);
-    file.setFileName(sFile.replace(QLatin1String(".inyzip"),
-                                   QLatin1String(".iny")));
+    file.setFileName(
+        sFile.replace(QLatin1String(".inyzip"), QLatin1String(".iny")));
   } else {
     file.setFileName(sFileName);
   }
@@ -427,9 +424,9 @@ auto FileOperations::saveFile(QString sFileName) -> bool {
   if (!file.open(QFile::WriteOnly | QFile::Text)) {
     QMessageBox::warning(m_pParent, qApp->applicationName(),
                          tr("The file \"%1\" could not be saved:\n%2.")
-                         .arg(sFileName, file.errorString()));
-    qWarning() << "File" << sFileName << "could not be saved:"
-               << file.errorString();
+                             .arg(sFileName, file.errorString()));
+    qWarning() << "File" << sFileName
+               << "could not be saved:" << file.errorString();
     return false;
   }
 
@@ -480,11 +477,11 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   memset(&archive, 0, sizeof(archive));
 
   if (!mz_zip_writer_init_file(&archive, sArchive.toLatin1(), 65537)) {
-    QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          tr("Error while creating archive \"%1\"")
-                          .arg(sArchive));
-    qWarning() << "mz_zip_writer_init_file() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    QMessageBox::critical(
+        m_pParent, qApp->applicationName(),
+        tr("Error while creating archive \"%1\"").arg(sArchive));
+    qWarning() << "mz_zip_writer_init_file() failed:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -492,9 +489,9 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   QFile html(m_sPreviewFile);
   // No permission to read
   if (!html.open(QFile::ReadOnly | QFile::Text)) {
-    QMessageBox::warning(m_pParent, qApp->applicationName(),
-                         tr("Error while packing image files:\n%1.")
-                         .arg(html.errorString()));
+    QMessageBox::warning(
+        m_pParent, qApp->applicationName(),
+        tr("Error while packing image files:\n%1.").arg(html.errorString()));
     qWarning() << "Error while packing image files:" << html.errorString();
     return false;
   }
@@ -508,10 +505,10 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   QString sHtml(in.readAll());
 
   QRegularExpression imgTagRegex(
-        QStringLiteral("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>"),
-        QRegularExpression::InvertedGreedinessOption |
-        QRegularExpression::DotMatchesEverythingOption |
-        QRegularExpression::CaseInsensitiveOption);
+      QStringLiteral("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>"),
+      QRegularExpression::InvertedGreedinessOption |
+          QRegularExpression::DotMatchesEverythingOption |
+          QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatchIterator it = imgTagRegex.globalMatch(sHtml);
 
   QFileInfo img;
@@ -520,7 +517,7 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   while (it.hasNext()) {
     QRegularExpressionMatch match = it.next();
     img.setFile(match.captured(1).remove(
-                  QStringLiteral("file:///")));  // (Windows file:///)
+        QStringLiteral("file:///")));  // (Windows file:///)
     if (sListFiles.contains(img.fileName()) ||
         img.absoluteFilePath().contains(QLatin1String("/community/"),
                                         Qt::CaseInsensitive)) {
@@ -529,32 +526,30 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
     sListFiles << img.fileName();
 
     if (!mz_zip_writer_add_file(&archive, img.fileName().toLatin1(),
-                                img.absoluteFilePath().toLatin1(),
-                                baComment,
+                                img.absoluteFilePath().toLatin1(), baComment,
                                 static_cast<mz_uint16>(baComment.size()),
                                 MZ_BEST_COMPRESSION)) {
       QMessageBox::critical(m_pParent, qApp->applicationName(),
                             tr("Error while adding \"%1\" to archive!")
-                            .arg(img.absoluteFilePath()));
-      qWarning() << "Error while adding" <<
-                    img.absoluteFilePath() << "to archive!:" <<
-                    mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+                                .arg(img.absoluteFilePath()));
+      qWarning() << "Error while adding" << img.absoluteFilePath()
+                 << "to archive!:"
+                 << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
       return false;
     }
   }
 
-  if (!mz_zip_writer_add_file(&archive, sArticle.toLatin1(),
-                              QString(file.absolutePath() + "/" +
-                                      sArticle.toLatin1()).toLatin1(),
-                              baComment,
-                              static_cast<mz_uint16>(baComment.size()),
-                              MZ_BEST_COMPRESSION)) {
-    QMessageBox::critical(m_pParent, qApp->applicationName(),
-                          tr("Error while adding \"%1\" to archive!")
-                          .arg(sArticle));
-    qWarning() << "Error while adding" <<
-                  img.absoluteFilePath() << "to archive!:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+  if (!mz_zip_writer_add_file(
+          &archive, sArticle.toLatin1(),
+          QString(file.absolutePath() + "/" + sArticle.toLatin1()).toLatin1(),
+          baComment, static_cast<mz_uint16>(baComment.size()),
+          MZ_BEST_COMPRESSION)) {
+    QMessageBox::critical(
+        m_pParent, qApp->applicationName(),
+        tr("Error while adding \"%1\" to archive!").arg(sArticle));
+    qWarning() << "Error while adding" << img.absoluteFilePath()
+               << "to archive!:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -563,8 +558,8 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
     QFile::remove(sArchive);
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           tr("Error while finalizing archive!"));
-    qWarning() << "mz_zip_writer_finalize_archive() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    qWarning() << "mz_zip_writer_finalize_archive() failed:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -572,8 +567,8 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   if (!mz_zip_writer_end(&archive)) {
     QMessageBox::critical(m_pParent, qApp->applicationName(),
                           tr("Error while creating archive!"));
-    qWarning() << "mz_zip_writer_end() failed:" <<
-                  mz_zip_get_error_string(mz_zip_get_last_error(&archive));
+    qWarning() << "mz_zip_writer_end() failed:"
+               << mz_zip_get_error_string(mz_zip_get_last_error(&archive));
     return false;
   }
 
@@ -593,14 +588,12 @@ void FileOperations::saveDocumentAuto() {
           fAutoSave.setFileName(m_sUserDataDir + "/AutoSave" +
                                 QString::number(i) + ".bak~");
         } else if (m_pListEditors.at(i)->getFileName().endsWith(
-                     QLatin1String(".inyzip"))) {
+                       QLatin1String(".inyzip"))) {
           QString sName(m_pListEditors.at(i)->getFileName().replace(
-                          QLatin1String(".inyzip"),
-                          QLatin1String(".iny.bak~")));
+              QLatin1String(".inyzip"), QLatin1String(".iny.bak~")));
           fAutoSave.setFileName(sName);
         } else {
-          fAutoSave.setFileName(
-                m_pListEditors.at(i)->getFileName() + ".bak~");
+          fAutoSave.setFileName(m_pListEditors.at(i)->getFileName() + ".bak~");
         }
         QTextStream outStream(&fAutoSave);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -611,8 +604,8 @@ void FileOperations::saveDocumentAuto() {
 
         // No write permission
         if (!fAutoSave.open(QFile::WriteOnly | QFile::Text)) {
-          qWarning() << "Could not open auto backup"
-                     << fAutoSave.fileName() << "file!";
+          qWarning() << "Could not open auto backup" << fAutoSave.fileName()
+                     << "file!";
           return;
         }
 
@@ -664,45 +657,44 @@ void FileOperations::printPdfPreview() {
   */
 
   // Add style format; remove unwanted div for printing
-  sHtml.replace(QLatin1String("</style>"),
-                QString::fromLatin1(
-                  "html{background-color:#ffffff; margin:40px;}\n"
-                  "body{background-color:#ffffff;\n</style>"));
+  sHtml.replace(
+      QLatin1String("</style>"),
+      QString::fromLatin1("html{background-color:#ffffff; margin:40px;}\n"
+                          "body{background-color:#ffffff;\n</style>"));
   sHtml.remove(QStringLiteral("<div class=\"wrap\">"));
 
   QFileDialog savePdfDialog(m_pParent);
   savePdfDialog.setDefaultSuffix(QStringLiteral("pdf"));
   QString sPreviewOut = savePdfDialog.getSaveFileName(
-        m_pParent, tr("Print preview to PDF"),
-        m_pSettings->getLastOpenedDir().absolutePath(),
-        tr("PDF document") + " (*.pdf)");
+      m_pParent, tr("Print preview to PDF"),
+      m_pSettings->getLastOpenedDir().absolutePath(),
+      tr("PDF document") + " (*.pdf)");
   if (sPreviewOut.isEmpty()) {
     return;
   }
 
-  connect(m_pPreviewWebView, &QWebEngineView::loadFinished,
-          this, [this, sPreviewOut]() {
-    m_pPreviewWebView->page()->printToPdf(
-          sPreviewOut, QPageLayout(QPageSize(QPageSize::A4),
-                                   QPageLayout::Portrait,
-                                   QMarginsF(0, 10, 0, 10),
-                                   QPageLayout::Millimeter));
-  });
-  connect(m_pPreviewWebView->page(), &QWebEnginePage::pdfPrintingFinished,
-          this, [this](const QString & sFilename, bool bSuccess) {
-    if (bSuccess) {
-      qDebug() << "PDF created:" << sFilename;
-    } else {
-      QMessageBox::warning(m_pParent, qApp->applicationName(),
-                           tr("PDF could not be created."));
-      qWarning() << "PDF could not be created:" << sFilename;
-    }
-    m_pPreviewWebView->deleteLater();
-  });
+  connect(m_pPreviewWebView, &QWebEngineView::loadFinished, this,
+          [this, sPreviewOut]() {
+            m_pPreviewWebView->page()->printToPdf(
+                sPreviewOut,
+                QPageLayout(QPageSize(QPageSize::A4), QPageLayout::Portrait,
+                            QMarginsF(0, 10, 0, 10), QPageLayout::Millimeter));
+          });
+  connect(m_pPreviewWebView->page(), &QWebEnginePage::pdfPrintingFinished, this,
+          [this](const QString &sFilename, bool bSuccess) {
+            if (bSuccess) {
+              qDebug() << "PDF created:" << sFilename;
+            } else {
+              QMessageBox::warning(m_pParent, qApp->applicationName(),
+                                   tr("PDF could not be created."));
+              qWarning() << "PDF could not be created:" << sFilename;
+            }
+            m_pPreviewWebView->deleteLater();
+          });
 
-  m_pPreviewWebView->setHtml(sHtml, QUrl::fromLocalFile(
-                               QFileInfo(m_sPreviewFile)
-                               .absoluteDir().absolutePath() + "/"));
+  m_pPreviewWebView->setHtml(
+      sHtml, QUrl::fromLocalFile(
+                 QFileInfo(m_sPreviewFile).absoluteDir().absolutePath() + "/"));
 
   /*
   m_pPreviewWebView->setContent(sHtml.toLocal8Bit(), "application/xhtml+xml",
@@ -717,7 +709,7 @@ void FileOperations::printPdfPreview() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto FileOperations::getLastOpenedFiles() const -> QList<QAction *>{
+auto FileOperations::getLastOpenedFiles() const -> QList<QAction *> {
   return m_LastOpenedFilesAct;
 }
 
@@ -737,8 +729,8 @@ void FileOperations::updateRecentFiles(const QString &sFileName) {
     sListTmp.push_front(sFileName);
 
     // Remove all entries from end, if list is too long
-    while (sListTmp.size() > m_pSettings->getMaxNumOfRecentFiles()
-           || sListTmp.size() > m_pSettings->getNumOfRecentFiles()) {
+    while (sListTmp.size() > m_pSettings->getMaxNumOfRecentFiles() ||
+           sListTmp.size() > m_pSettings->getNumOfRecentFiles()) {
       sListTmp.removeLast();
     }
 
@@ -790,21 +782,11 @@ void FileOperations::changedDocTab(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void FileOperations::copy() {
-  m_pCurrentEditor->copy();
-}
-void FileOperations::cut() {
-  m_pCurrentEditor->cut();
-}
-void FileOperations::paste() {
-  m_pCurrentEditor->paste();
-}
-void FileOperations::undo() {
-  m_pCurrentEditor->undo();
-}
-void FileOperations::redo() {
-  m_pCurrentEditor->redo();
-}
+void FileOperations::copy() { m_pCurrentEditor->copy(); }
+void FileOperations::cut() { m_pCurrentEditor->cut(); }
+void FileOperations::paste() { m_pCurrentEditor->paste(); }
+void FileOperations::undo() { m_pCurrentEditor->undo(); }
+void FileOperations::redo() { m_pCurrentEditor->redo(); }
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
@@ -812,13 +794,13 @@ void FileOperations::updateEditorSettings() {
   for (int i = 0; i < m_pListEditors.size(); i++) {
     m_pListEditors[i]->setFont(m_pSettings->getEditorFont());
     m_pListEditors[i]->updateTextEditorSettings(
-          m_pSettings->getCodeCompletion());
+        m_pSettings->getCodeCompletion());
   }
 
   m_pTimerAutosave->stop();
   if (0 != m_pSettings->getAutoSave()) {
     m_pTimerAutosave->setInterval(
-          static_cast<int>(m_pSettings->getAutoSave() * 1000));
+        static_cast<int>(m_pSettings->getAutoSave() * 1000));
     m_pTimerAutosave->start();
   }
 }
@@ -834,11 +816,10 @@ auto FileOperations::closeDocument(int nIndex) -> bool {
 
   if (this->maybeSave()) {
     if (m_pCurrentEditor->getFileName().endsWith(QLatin1String(".inyzip"))) {
-      if (!QFile::remove(
-            m_pCurrentEditor->getFileName().replace(QLatin1String(".inyzip"),
-                                                    QLatin1String(".iny")))) {
-        qWarning() << "Couldn't remove temp iny from archive" <<
-                      m_pCurrentEditor->getFileName();
+      if (!QFile::remove(m_pCurrentEditor->getFileName().replace(
+              QLatin1String(".inyzip"), QLatin1String(".iny")))) {
+        qWarning() << "Couldn't remove temp iny from archive"
+                   << m_pCurrentEditor->getFileName();
       }
     }
     m_pDocumentTabs->removeTab(nIndex);
@@ -893,7 +874,7 @@ void FileOperations::setCurrentEditor() {
   m_pFindReplace->setEditor(m_pCurrentEditor);
 }
 
-auto FileOperations::getCurrentEditor() -> TextEditor* {
+auto FileOperations::getCurrentEditor() -> TextEditor * {
   return m_pCurrentEditor;
 }
 

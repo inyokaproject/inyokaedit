@@ -45,39 +45,39 @@ class SettingsDialog : public QDialog {
   Q_OBJECT
 
  public:
-    SettingsDialog(Settings *pSettings, const QString &sSharePath,
-                   QWidget *pParent = nullptr);
-    virtual ~SettingsDialog();
+  SettingsDialog(Settings *pSettings, const QString &sSharePath,
+                 QWidget *pParent = nullptr);
+  virtual ~SettingsDialog();
 
  public slots:
-    void accept() override;
-    void reject() override;
-    void updateUiLang();
-    void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
-                             const QList<QObject *> &PluginObjList);
+  void accept() override;
+  void reject() override;
+  void updateUiLang();
+  void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
+                           const QList<QObject *> &PluginObjList);
 
  signals:
-    void changeLang(const QString &sLang);
-    void updatedSettings();
+  void changeLang(const QString &sLang);
+  void updatedSettings();
 
  protected:
-    auto eventFilter(QObject *obj, QEvent *event) -> bool override;
+  auto eventFilter(QObject *obj, QEvent *event) -> bool override;
 
  private slots:
-    void changedCommunity(int nIndex);
+  void changedCommunity(int nIndex);
 
  private:
-    auto searchTranslations() -> QStringList;
+  auto searchTranslations() -> QStringList;
 
-    Ui::SettingsDialog *m_pUi;
-    Settings *m_pSettings;
-    const QString m_sSharePath;
-    QString m_sGuiLang;
-    QString m_sCommunity;
+  Ui::SettingsDialog *m_pUi;
+  Settings *m_pSettings;
+  const QString m_sSharePath;
+  QString m_sGuiLang;
+  QString m_sCommunity;
 
-    QList<IEditorPlugin *> m_listPLugins;
-    QList<QPushButton *> m_listPluginSettingsButtons;
-    QList<QPushButton *> m_listPluginInfoButtons;
+  QList<IEditorPlugin *> m_listPLugins;
+  QList<QPushButton *> m_listPluginSettingsButtons;
+  QList<QPushButton *> m_listPluginInfoButtons;
 };
 
 #endif  // APPLICATION_SETTINGSDIALOG_H_

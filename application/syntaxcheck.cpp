@@ -30,18 +30,16 @@
 #include <QRegularExpression>
 #include <QTextDocument>
 
-SyntaxCheck::SyntaxCheck(QObject *pParent) {
-  Q_UNUSED(pParent)
-}
+SyntaxCheck::SyntaxCheck(QObject *pParent) { Q_UNUSED(pParent) }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkInyokaSyntax(
-    const QTextDocument *pRawDoc,
-    const QStringList &sListTplMacros,
-    const QStringList &sListSmilies,
-    const QStringList &sListTplTrans) -> QPair<int, QString> {
+auto SyntaxCheck::checkInyokaSyntax(const QTextDocument *pRawDoc,
+                                    const QStringList &sListTplMacros,
+                                    const QStringList &sListSmilies,
+                                    const QStringList &sListTplTrans)
+    -> QPair<int, QString> {
   QPair<int, QString> ret(-1, QLatin1String(""));
   ret = SyntaxCheck::checkParenthesis(pRawDoc, sListSmilies);
   if (-1 == ret.first) {
@@ -55,9 +53,9 @@ auto SyntaxCheck::checkInyokaSyntax(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkParenthesis(
-    const QTextDocument *pRawDoc,
-    const QStringList &sListSmilies) -> QPair<int, QString> {
+auto SyntaxCheck::checkParenthesis(const QTextDocument *pRawDoc,
+                                   const QStringList &sListSmilies)
+    -> QPair<int, QString> {
   QList<QChar> listParenthesis;
   QList<qint32> listPos;
   QString sDoc(pRawDoc->toPlainText());
@@ -104,8 +102,8 @@ auto SyntaxCheck::checkParenthesis(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
-                                       const QChar cRight) -> bool {
+auto SyntaxCheck::checkParenthesisPair(const QChar cLeft, const QChar cRight)
+    -> bool {
   if ('[' == cLeft && ']' == cRight) {
     return true;
   }
@@ -121,10 +119,10 @@ auto SyntaxCheck::checkParenthesisPair(const QChar cLeft,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SyntaxCheck::checkKnownTemplates(
-    const QTextDocument *pRawDoc,
-    const QStringList &sListTplMacros,
-    const QStringList &sListTplTrans) -> QPair<int, QString> {
+auto SyntaxCheck::checkKnownTemplates(const QTextDocument *pRawDoc,
+                                      const QStringList &sListTplMacros,
+                                      const QStringList &sListTplTrans)
+    -> QPair<int, QString> {
   QStringList sListTplRegExp;
   QStringList sListTrans;
   for (const auto &s : sListTplTrans) {
@@ -138,17 +136,15 @@ auto SyntaxCheck::checkKnownTemplates(
 
   for (int i = 0; i < sListTplRegExp.size(); i++) {
     QRegularExpression findTemplate(
-          sListTplRegExp[i],
-          QRegularExpression::InvertedGreedinessOption |
-          QRegularExpression::DotMatchesEverythingOption |
-          QRegularExpression::CaseInsensitiveOption);
+        sListTplRegExp[i], QRegularExpression::InvertedGreedinessOption |
+                               QRegularExpression::DotMatchesEverythingOption |
+                               QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatchIterator it = findTemplate.globalMatch(sDoc);
 
     while (it.hasNext()) {
       QRegularExpressionMatch match = it.next();
       QString sMacro = match.captured(0);
-      if (sMacro.startsWith("[[" + sListTrans[i],
-                            Qt::CaseInsensitive)) {
+      if (sMacro.startsWith("[[" + sListTrans[i], Qt::CaseInsensitive)) {
         sMacro.remove("[[" + sListTrans[i], Qt::CaseInsensitive);
         sMacro = sMacro.trimmed();
         sMacro.remove(0, 1);  // Remove (
@@ -165,8 +161,8 @@ auto SyntaxCheck::checkKnownTemplates(
         sMacro = sMacro.trimmed();
         if (-1 != sMacro.indexOf(QLatin1String(" ")) &&
             -1 != sMacro.indexOf(QLatin1String("\n"))) {
-          if (sMacro.indexOf(QLatin1String(" ")) < sMacro.indexOf(
-                QLatin1String("\n"))) {
+          if (sMacro.indexOf(QLatin1String(" ")) <
+              sMacro.indexOf(QLatin1String("\n"))) {
             sMacro = sMacro.left(sMacro.indexOf(QLatin1String(" "))).trimmed();
           } else {
             sMacro = sMacro.left(sMacro.indexOf(QLatin1String("\n"))).trimmed();
@@ -211,9 +207,9 @@ void SyntaxCheck::filterMonotype(QString *sDoc) {
         nIndex = nStart + sListMonotype[i].length();
       } else {
         nEnd = sDoc->indexOf(sListMonotype[i], nIndex);
-        sDoc->replace(nStart, nEnd - nStart + sListMonotype[i].length(),
-                     sReplace.fill('X',
-                                   nEnd - nStart + sListMonotype[i].length()));
+        sDoc->replace(
+            nStart, nEnd - nStart + sListMonotype[i].length(),
+            sReplace.fill('X', nEnd - nStart + sListMonotype[i].length()));
         nIndex = nEnd + sListMonotype[i].length();
         nStart = -1;
       }

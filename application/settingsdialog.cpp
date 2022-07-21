@@ -34,19 +34,14 @@
 #include <QSettings>
 
 #include "./settings.h"
-
 #include "ui_settingsdialog.h"
 
-SettingsDialog::SettingsDialog(Settings *pSettings,
-                               const QString &sSharePath,
+SettingsDialog::SettingsDialog(Settings *pSettings, const QString &sSharePath,
                                QWidget *pParent)
-  : QDialog(pParent),
-    m_pSettings(pSettings),
-    m_sSharePath(sSharePath) {
+    : QDialog(pParent), m_pSettings(pSettings), m_sSharePath(sSharePath) {
   m_pUi = new Ui::SettingsDialog();
   m_pUi->setupUi(this);
-  this->setWindowFlags(this->windowFlags()
-                       & ~Qt::WindowContextHelpButtonHint);
+  this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
   this->setModal(true);
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "general" at first start
 
@@ -60,11 +55,11 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->codeCompletionCheck->setChecked(m_pSettings->m_bCodeCompletion);
   m_pUi->syntaxCheck->setChecked(m_pSettings->m_bSyntaxCheck);
   m_pUi->splitHorizontalRadio->setChecked(
-        m_pSettings->m_bPreviewSplitHorizontal);
+      m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->splitVerticalRadio->setChecked(
-        !m_pSettings->m_bPreviewSplitHorizontal);
+      !m_pSettings->m_bPreviewSplitHorizontal);
   m_pUi->reloadPreviewKeyEdit->setText(
-        "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
+      "0x" + QString::number(m_pSettings->getReloadPreviewKey(), 16));
 #ifdef NOPREVIEW
   m_pUi->previewsplitlabel->setVisible(false);
   m_pUi->splitHorizontalRadio->setVisible(false);
@@ -76,7 +71,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->linkCheckingCheck->setChecked(m_pSettings->m_bCheckLinks);
   m_pUi->autosaveEdit->setValue(static_cast<int>(m_pSettings->m_nAutosave));
   m_pUi->timedPreviewsEdit->setValue(
-        static_cast<int>(m_pSettings->m_nTimedPreview));
+      static_cast<int>(m_pSettings->m_nTimedPreview));
   m_pUi->scrollbarSyncCheck->setChecked(m_pSettings->m_bSyncScrollbars);
 
   m_pUi->WindowsUpdateCheck->setChecked(m_pSettings->m_bWinCheckUpdate);
@@ -84,10 +79,10 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->GuiLangCombo->addItems(this->searchTranslations());
   if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
     m_pUi->GuiLangCombo->setCurrentIndex(
-          m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
+        m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
   } else {
     m_pUi->GuiLangCombo->setCurrentIndex(
-          m_pUi->GuiLangCombo->findText(QStringLiteral("auto")));
+        m_pUi->GuiLangCombo->findText(QStringLiteral("auto")));
   }
   m_sGuiLang = m_pUi->GuiLangCombo->currentText();
 
@@ -100,15 +95,15 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   // Recent files
   m_pUi->numberRecentFilesEdit->setValue(
-        static_cast<quint16>(m_pSettings->m_nMaxLastOpenedFiles));
+      static_cast<quint16>(m_pSettings->m_nMaxLastOpenedFiles));
   m_pUi->numberRecentFilesEdit->setMaximum(
-        static_cast<quint16>(m_pSettings->m_cMAXFILES));
+      static_cast<quint16>(m_pSettings->m_cMAXFILES));
 
   // Inyoka community
   QStringList sListCommunities;
   QDir extendedShareDir(m_sSharePath + "/community");
-  const QFileInfoList fiListFiles = extendedShareDir.entryInfoList(
-                                      QDir::NoDotAndDotDot | QDir::Dirs);
+  const QFileInfoList fiListFiles =
+      extendedShareDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs);
   sListCommunities.reserve(fiListFiles.size());
   for (const auto &fi : fiListFiles) {
     sListCommunities << fi.fileName();
@@ -116,10 +111,10 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   m_pUi->CommunityCombo->blockSignals(true);  // No change index signal emitted
   m_pUi->CommunityCombo->addItems(sListCommunities);
-  if (-1 != m_pUi->CommunityCombo->findText(
-        m_pSettings->getInyokaCommunity())) {
+  if (-1 !=
+      m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity())) {
     m_pUi->CommunityCombo->setCurrentIndex(
-          m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity()));
+        m_pUi->CommunityCombo->findText(m_pSettings->getInyokaCommunity()));
   } else if (!sListCommunities.isEmpty()) {
     m_pUi->CommunityCombo->setCurrentIndex(0);
   }
@@ -129,7 +124,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
 
   m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
   m_pUi->articleImageDownloadCheck->setChecked(
-        m_pSettings->m_bAutomaticImageDownload);
+      m_pSettings->m_bAutomaticImageDownload);
 
   m_pUi->inyokaUserEdit->setText(m_pSettings->getInyokaUser());
   m_pUi->inyokaPasswordEdit->setText(m_pSettings->getInyokaPassword());
@@ -140,14 +135,15 @@ SettingsDialog::SettingsDialog(Settings *pSettings,
   m_pUi->proxyUserNameEdit->setText(m_pSettings->m_sProxyUserName);
   m_pUi->proxyPasswordEdit->setText(m_pSettings->m_sProxyPassword);
 
-  connect(m_pUi->CommunityCombo,
-          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &SettingsDialog::changedCommunity);
+  connect(
+      m_pUi->CommunityCombo,
+      static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+      this, &SettingsDialog::changedCommunity);
 
-  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
-          this, &SettingsDialog::accept);
-  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
-          this, &SettingsDialog::reject);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this,
+          &SettingsDialog::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, this,
+          &SettingsDialog::reject);
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -208,7 +204,7 @@ void SettingsDialog::accept() {
   QStringList oldDisabledPlugins;
   oldDisabledPlugins = m_pSettings->m_sListDisabledPlugins;
   m_pSettings->m_sListDisabledPlugins.clear();
-  for (int i = 0; i < m_listPLugins.size(); i ++) {
+  for (int i = 0; i < m_listPLugins.size(); i++) {
     if (m_pUi->pluginsTable->item(i, 0)->checkState() != Qt::Checked) {
       m_pSettings->m_sListDisabledPlugins << m_listPLugins[i]->getPluginName();
     }
@@ -225,16 +221,16 @@ void SettingsDialog::accept() {
   // If the following settings have been changed, a restart is needed
   if (m_pUi->CommunityCombo->currentText() != m_sCommunity ||
       oldDisabledPlugins != m_pSettings->m_sListDisabledPlugins) {
-    QFile communityFile(
-          m_sSharePath + "/community/" +
-          m_pUi->CommunityCombo->currentText() + "/community.conf");
+    QFile communityFile(m_sSharePath + "/community/" +
+                        m_pUi->CommunityCombo->currentText() +
+                        "/community.conf");
     QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // Since Qt 6 UTF-8 is used by default
     communityConfig.setIniCodec("UTF-8");
 #endif
-    QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"),
-                                         "").toString());
+    QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"), "")
+                       .toString());
     if (sValue.isEmpty()) {
       qWarning() << "Inyoka construction area not found!";
     } else {
@@ -271,11 +267,11 @@ auto SettingsDialog::eventFilter(QObject *obj, QEvent *event) -> bool {
   // Enter Qt keycode automatically in text box
   if (m_pUi->reloadPreviewKeyEdit == obj) {
     if (QEvent::KeyPress == event->type()) {
-      auto *keyEvent = static_cast<QKeyEvent*>(event);
+      auto *keyEvent = static_cast<QKeyEvent *>(event);
       // Remove key with DEL
       if (Qt::Key_Delete != keyEvent->key()) {
         m_pUi->reloadPreviewKeyEdit->setText(
-              "0x" + QString::number(keyEvent->key(), 16));
+            "0x" + QString::number(keyEvent->key(), 16));
         return true;
       }
       m_pUi->reloadPreviewKeyEdit->setText(QStringLiteral("0x0"));
@@ -305,8 +301,7 @@ void SettingsDialog::changedCommunity(int nIndex) {
   communityConfig.setIniCodec("UTF-8");
 #endif
 
-  QString sUrl(communityConfig.value(QStringLiteral("WikiUrl"),
-                                     "").toString());
+  QString sUrl(communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
   if (sUrl.isEmpty()) {
     qWarning() << "Community Wiki URL not found!";
     QMessageBox::warning(nullptr, tr("Warning"),
@@ -319,9 +314,7 @@ void SettingsDialog::changedCommunity(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SettingsDialog::updateUiLang() {
-  m_pUi->retranslateUi(this);
-}
+void SettingsDialog::updateUiLang() { m_pUi->retranslateUi(this); }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -339,7 +332,7 @@ void SettingsDialog::getAvailablePlugins(
   m_pUi->pluginsTable->setColumnWidth(0, nWIDTH);
   m_pUi->pluginsTable->setColumnWidth(1, nWIDTH);
   m_pUi->pluginsTable->horizontalHeader()->setSectionResizeMode(
-        2, QHeaderView::Stretch);
+      2, QHeaderView::Stretch);
   m_pUi->pluginsTable->setColumnWidth(3, nWIDTH);
   m_pUi->pluginsTable->setColumnWidth(4, nWIDTH);
 
@@ -349,10 +342,10 @@ void SettingsDialog::getAvailablePlugins(
     }
 
     // Checkbox
-    m_pUi->pluginsTable->item(nRow, 0)->setFlags(
-          Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+    m_pUi->pluginsTable->item(nRow, 0)->setFlags(Qt::ItemIsUserCheckable |
+                                                 Qt::ItemIsEnabled);
     if (m_pSettings->m_sListDisabledPlugins.contains(
-          m_listPLugins.at(nRow)->getPluginName())) {
+            m_listPLugins.at(nRow)->getPluginName())) {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Unchecked);
     } else {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Checked);
@@ -361,45 +354,43 @@ void SettingsDialog::getAvailablePlugins(
     // Icon
     m_pUi->pluginsTable->setIconSize(QSize(22, 22));
     m_pUi->pluginsTable->item(nRow, 1)->setIcon(
-          m_listPLugins.at(nRow)->getIcon());
+        m_listPLugins.at(nRow)->getIcon());
     // Caption
     m_pUi->pluginsTable->item(nRow, 2)->setText(
-          m_listPLugins.at(nRow)->getCaption());
+        m_listPLugins.at(nRow)->getCaption());
 
     // Settings
     if (m_listPLugins.at(nRow)->hasSettings()) {
       m_listPluginInfoButtons << new QPushButton(
-                                   QIcon::fromTheme(
-                                     QStringLiteral("preferences-system"),
-                                     QIcon(
-                                       QLatin1String(
-                                         ":/menu/preferences-system.png"))),
-                                   QLatin1String(""));
+          QIcon::fromTheme(
+              QStringLiteral("preferences-system"),
+              QIcon(QLatin1String(":/menu/preferences-system.png"))),
+          QLatin1String(""));
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
               PluginObjList.at(nRow), [=]() {
-        qobject_cast<IEditorPlugin *>(PluginObjList.at(nRow))->showSettings(); });
+                qobject_cast<IEditorPlugin *>(PluginObjList.at(nRow))
+                    ->showSettings();
+              });
 
       m_pUi->pluginsTable->setCellWidget(nRow, 3,
                                          m_listPluginInfoButtons.last());
 
       if (m_pSettings->m_sListDisabledPlugins.contains(
-            m_listPLugins[nRow]->getPluginName())) {
+              m_listPLugins[nRow]->getPluginName())) {
         m_listPluginInfoButtons.last()->setEnabled(false);
       }
     }
 
     // Info
     m_listPluginInfoButtons << new QPushButton(
-                                 QIcon::fromTheme(
-                                   QStringLiteral("help-about"),
-                                   QIcon(QLatin1String(
-                                           ":/menu/help-browser.png"))),
-                                 QLatin1String(""));
+        QIcon::fromTheme(QStringLiteral("help-about"),
+                         QIcon(QLatin1String(":/menu/help-browser.png"))),
+        QLatin1String(""));
     connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
             PluginObjList[nRow], [=]() {
-      qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showAbout(); });
-    m_pUi->pluginsTable->setCellWidget(nRow, 4,
-                                       m_listPluginInfoButtons.last());
+              qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showAbout();
+            });
+    m_pUi->pluginsTable->setCellWidget(nRow, 4, m_listPluginInfoButtons.last());
   }
 }
 
@@ -420,9 +411,8 @@ auto SettingsDialog::searchTranslations() -> QStringList {
 
     if (sTmp.startsWith(qApp->applicationName().toLower() + "_") &&
         sTmp.endsWith(QLatin1String(".qm"))) {
-      sList << sTmp.remove(
-                 qApp->applicationName().toLower() + "_").remove(
-                 QStringLiteral(".qm"));
+      sList << sTmp.remove(qApp->applicationName().toLower() + "_")
+                   .remove(QStringLiteral(".qm"));
     }
   }
 
@@ -436,9 +426,8 @@ auto SettingsDialog::searchTranslations() -> QStringList {
     // qDebug() << sTmp;
 
     if (sTmp.startsWith(qApp->applicationName().toLower() + "_")) {
-      sTmp = sTmp.remove(
-               qApp->applicationName().toLower() + "_") .remove(
-               QStringLiteral(".qm"));
+      sTmp = sTmp.remove(qApp->applicationName().toLower() + "_")
+                 .remove(QStringLiteral(".qm"));
       if (!sList.contains(sTmp)) {
         sList << sTmp;
       }

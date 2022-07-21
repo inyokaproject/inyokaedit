@@ -35,26 +35,26 @@ class SyntaxCheck : public QObject {
   Q_OBJECT
 
  public:
-    explicit SyntaxCheck(QObject *pParent = nullptr);
+  explicit SyntaxCheck(QObject *pParent = nullptr);
 
-    static auto checkInyokaSyntax(
-        const QTextDocument *pRawDoc,
-        const QStringList &sListTplMacros,
-        const QStringList &sListSmilies,
-        const QStringList &sListTplTrans) -> QPair <int, QString>;
+  static auto checkInyokaSyntax(const QTextDocument *pRawDoc,
+                                const QStringList &sListTplMacros,
+                                const QStringList &sListSmilies,
+                                const QStringList &sListTplTrans)
+      -> QPair<int, QString>;
 
  private:
-    static auto checkParenthesis(
-        const QTextDocument *pRawDoc,
-        const QStringList &sListSmilies) -> QPair <int, QString>;
-    static auto checkParenthesisPair(const QChar cLeft,
-                                     const QChar cRight) -> bool;
-    static auto checkKnownTemplates(
-        const QTextDocument *pRawDoc,
-        const QStringList &sListTplMacros,
-        const QStringList &sListTplTrans) -> QPair <int, QString>;
+  static auto checkParenthesis(const QTextDocument *pRawDoc,
+                               const QStringList &sListSmilies)
+      -> QPair<int, QString>;
+  static auto checkParenthesisPair(const QChar cLeft, const QChar cRight)
+      -> bool;
+  static auto checkKnownTemplates(const QTextDocument *pRawDoc,
+                                  const QStringList &sListTplMacros,
+                                  const QStringList &sListTplTrans)
+      -> QPair<int, QString>;
 
-    static void filterMonotype(QString *sDoc);
+  static void filterMonotype(QString *sDoc);
 };
 
 #endif  // APPLICATION_SYNTAXCHECK_H_

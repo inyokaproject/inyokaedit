@@ -71,11 +71,11 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
       if (m_pXmlReader->name().toString() == QLatin1String("menu")) {
         if (!this->parseMenu()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
-          qCritical() << "XML contains multiple \"menu\" entries! Line:" <<
-                         m_pXmlReader->lineNumber();
-          QMessageBox::critical(nullptr, QStringLiteral("Error"),
-                                "Error while parsing \""
-                                + xmlFile.fileName() + "\".");
+          qCritical() << "XML contains multiple \"menu\" entries! Line:"
+                      << m_pXmlReader->lineNumber();
+          QMessageBox::critical(
+              nullptr, QStringLiteral("Error"),
+              "Error while parsing \"" + xmlFile.fileName() + "\".");
           return false;
         }
         m_bInMenu = true;
@@ -85,12 +85,12 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
       if (m_pXmlReader->name().toString() == QLatin1String("group")) {
         if (!this->parseGroup()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
-          qCritical() << "Found \"group\" outside of \"menu\" or" <<
-                         "\"group\" inside \"group\"! Line:" <<
-                         m_pXmlReader->lineNumber();
-          QMessageBox::critical(nullptr, QStringLiteral("Error"),
-                                "Error while parsing \""
-                                + xmlFile.fileName() + "\".");
+          qCritical() << "Found \"group\" outside of \"menu\" or"
+                      << "\"group\" inside \"group\"! Line:"
+                      << m_pXmlReader->lineNumber();
+          QMessageBox::critical(
+              nullptr, QStringLiteral("Error"),
+              "Error while parsing \"" + xmlFile.fileName() + "\".");
           return false;
         }
         m_bInGroup = true;
@@ -100,11 +100,11 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
       if (m_pXmlReader->name().toString() == QLatin1String("element")) {
         if (!this->parseElement()) {
           qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
-          qCritical() << "Found \"element\" outside of \"menu\" or" <<
-                         "\"group\"! Line:" << m_pXmlReader->lineNumber();
-          QMessageBox::critical(nullptr, QStringLiteral("Error"),
-                                "Error while parsing \""
-                                + xmlFile.fileName() + "\".");
+          qCritical() << "Found \"element\" outside of \"menu\" or"
+                      << "\"group\"! Line:" << m_pXmlReader->lineNumber();
+          QMessageBox::critical(
+              nullptr, QStringLiteral("Error"),
+              "Error while parsing \"" + xmlFile.fileName() + "\".");
           return false;
         }
         continue;
@@ -134,12 +134,12 @@ auto XmlParser::parseXml(const QString &sXmlFile) -> bool {
 
   if (m_pXmlReader->hasError()) {
     qCritical() << "ERROR: Parsing \"" << xmlFile.fileName() << "\"";
-    qCritical() << "Line:" << m_pXmlReader->lineNumber() <<
-                   "Column:" <<  m_pXmlReader->columnNumber();
+    qCritical() << "Line:" << m_pXmlReader->lineNumber()
+                << "Column:" << m_pXmlReader->columnNumber();
     qCritical() << m_pXmlReader->errorString();
-    QMessageBox::critical(nullptr, QStringLiteral("Error"),
-                          "Error while parsing \""
-                          + xmlFile.fileName() + "\".");
+    QMessageBox::critical(
+        nullptr, QStringLiteral("Error"),
+        "Error while parsing \"" + xmlFile.fileName() + "\".");
     return false;
   }
 
@@ -158,13 +158,12 @@ auto XmlParser::parseMenu() -> bool {
     return false;
   }
 
-  m_sMenuName = m_pXmlReader->attributes().value(
-                  QStringLiteral("name")).toString();
+  m_sMenuName =
+      m_pXmlReader->attributes().value(QStringLiteral("name")).toString();
   if (m_sMenuName.isEmpty()) {
     m_sMenuName = QStringLiteral("Unnamed");
   }
-  m_sPath = m_pXmlReader->attributes().value(
-              QStringLiteral("path")).toString();
+  m_sPath = m_pXmlReader->attributes().value(QStringLiteral("path")).toString();
 
   return true;
 }
@@ -173,15 +172,15 @@ auto XmlParser::parseMenu() -> bool {
 // ----------------------------------------------------------------------------
 
 auto XmlParser::parseGroup() -> bool {
-  if (!m_bInMenu || m_bInGroup ||
-      !m_sTmpGroupName.isEmpty() || !m_sTmpGroupIcon.isEmpty()) {
+  if (!m_bInMenu || m_bInGroup || !m_sTmpGroupName.isEmpty() ||
+      !m_sTmpGroupIcon.isEmpty()) {
     return false;
   }
 
-  m_sTmpGroupName = m_pXmlReader->attributes().value(
-                      QStringLiteral("name")).toString();
-  m_sTmpGroupIcon = m_pXmlReader->attributes().value(
-                      QStringLiteral("icon")).toString();
+  m_sTmpGroupName =
+      m_pXmlReader->attributes().value(QStringLiteral("name")).toString();
+  m_sTmpGroupIcon =
+      m_pXmlReader->attributes().value(QStringLiteral("icon")).toString();
 
   return true;
 }
@@ -194,18 +193,18 @@ auto XmlParser::parseElement() -> bool {
     return false;
   }
 
-  m_sListTmpNames << m_pXmlReader->attributes().value(
-                       QStringLiteral("name")).toString();
+  m_sListTmpNames
+      << m_pXmlReader->attributes().value(QStringLiteral("name")).toString();
   if (m_sListTmpNames.last().isEmpty()) {
     m_sListTmpNames.last() = QStringLiteral("NAME NOT FOUND");
   }
-  m_sListTmpInserts << m_pXmlReader->attributes().value(
-                         QStringLiteral("insert")).toString();
+  m_sListTmpInserts
+      << m_pXmlReader->attributes().value(QStringLiteral("insert")).toString();
   if (m_sListTmpInserts.last().isEmpty()) {
     m_sListTmpInserts.last() = QStringLiteral("INSERT NOT FOUND");
   }
-  m_sListTmpIcons << m_pXmlReader->attributes().value(
-                       QStringLiteral("icon")).toString();
+  m_sListTmpIcons
+      << m_pXmlReader->attributes().value(QStringLiteral("icon")).toString();
   if (m_sListTmpIcons.last().isEmpty()) {
     m_sListTmpIcons.last() = QStringLiteral("ICON NOT FOUND");
   }
@@ -216,16 +215,10 @@ auto XmlParser::parseElement() -> bool {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto XmlParser::getMenuName() const -> QString {
-  return m_sMenuName;
-}
-auto XmlParser::getPath() const -> QString {
-  return m_sPath;
-}
+auto XmlParser::getMenuName() const -> QString { return m_sMenuName; }
+auto XmlParser::getPath() const -> QString { return m_sPath; }
 
-auto XmlParser::getGroupNames() const -> QStringList {
-  return m_sListGroups;
-}
+auto XmlParser::getGroupNames() const -> QStringList { return m_sListGroups; }
 auto XmlParser::getGroupIcons() const -> QStringList {
   return m_sListGroupIcons;
 }

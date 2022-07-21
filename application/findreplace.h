@@ -42,33 +42,33 @@ class FindReplace : public QDialog {
   Q_OBJECT
 
  public:
-    explicit FindReplace(QWidget *parent = nullptr);
-    ~FindReplace();
+  explicit FindReplace(QWidget *parent = nullptr);
+  ~FindReplace();
 
-    void setEditor(QTextEdit *pEditor);
+  void setEditor(QTextEdit *pEditor);
 
  public slots:
-    void callFind();
-    void callReplace();
-    void findNext();
-    void findPrevious();
+  void callFind();
+  void callReplace();
+  void findNext();
+  void findPrevious();
 
  protected:
-    void showEvent(QShowEvent *event) override;
-    void closeEvent(QCloseEvent *event) override;
+  void showEvent(QShowEvent *event) override;
+  void closeEvent(QCloseEvent *event) override;
 
  private slots:
-    void textSearchChanged();
-    void replace();
-    void replaceAll();
+  void textSearchChanged();
+  void replace();
+  void replaceAll();
 
  private:
-    void find(const bool bForward);
-    void toggleSearchReplace(bool bReplace);
+  void find(const bool bForward);
+  void toggleSearchReplace(bool bReplace);
 
-    Ui::FindReplace *m_pUi;
-    QTextEdit *m_pEditor;
-    QTextCursor m_TextCursor;
+  Ui::FindReplace *m_pUi;
+  QTextEdit *m_pEditor;
+  QTextCursor m_TextCursor;
 };
 
 #endif  // APPLICATION_FINDREPLACE_H_

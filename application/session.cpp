@@ -37,10 +37,10 @@
 #include <QUrlQuery>
 
 Session::Session(QWidget *pParent, const QString &sHash, QObject *pObj)
-  : m_pParent(pParent),
-    m_State(REQUTOKEN),
-    m_sToken(QLatin1String("")),
-    m_sHash(sHash) {
+    : m_pParent(pParent),
+      m_State(REQUTOKEN),
+      m_sToken(QLatin1String("")),
+      m_sHash(sHash) {
   Q_UNUSED(pObj)
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   m_pNwManager->setCookieJar(this);
@@ -58,13 +58,12 @@ Session::Session(QWidget *pParent, const QString &sHash, QObject *pObj)
 void Session::updateSettings(const QString &sInyokaUrl,
                              const QString &sUsername,
                              const QString &sPassword) {
-  if (m_sInyokaUrl != sInyokaUrl ||
-      m_sUsername != sUsername ||
+  if (m_sInyokaUrl != sInyokaUrl || m_sUsername != sUsername ||
       m_sPassword != sPassword) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_State = REQUTOKEN;
-    for (auto& cookie : this->allCookies()) {
+    for (auto &cookie : this->allCookies()) {
       m_pNwManager->cookieJar()->deleteCookie(cookie);
     }
     m_ListCookies.clear();
@@ -105,16 +104,16 @@ void Session::requestToken() {
   QString sLoginUrl(m_sInyokaUrl);
   sLoginUrl = sLoginUrl.remove(QStringLiteral("wiki.")) + "/login/";
   QNetworkRequest request(sLoginUrl);
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
+  request.setRawHeader("User-Agent", QString(qApp->applicationName() + "/" +
+                                             qApp->applicationVersion())
+                                         .toLatin1());
   request.setAttribute(QNetworkRequest::User, QVariant("ReqestToken"));
 
   m_State = REQUTOKEN;
   QNetworkReply *pReply = m_pNwManager->get(request);
   QEventLoop loop;
-  connect(m_pNwManager, &QNetworkAccessManager::finished,
-          &loop, &QEventLoop::quit);
+  connect(m_pNwManager, &QNetworkAccessManager::finished, &loop,
+          &QEventLoop::quit);
   loop.exec();
   this->replyFinished(pReply);
 }
@@ -154,9 +153,8 @@ void Session::getTokenReply(const QString &sNWReply) {
     if (sSessionCookie.isEmpty()) {
       qWarning() << "No session cookie received.";
       qWarning() << "COOKIES" << m_ListCookies;
-      QMessageBox::warning(
-            m_pParent, tr("Error"),
-            tr("Login failed! No session cookie received."));
+      QMessageBox::warning(m_pParent, tr("Error"),
+                           tr("Login failed! No session cookie received."));
       m_State = REQUTOKEN;
       return;
     }
@@ -188,10 +186,11 @@ void Session::requestLogin() {
   QString sPassword(QLatin1String(""));
 
   if (m_sUsername.isEmpty()) {
-    sUsername = QInputDialog::getText(
-                  m_pParent, tr("Login user"),
-                  tr("Please insert your Inyoka user name:"),
-                  QLineEdit::Normal, QLatin1String(""), &bOk).trimmed();
+    sUsername =
+        QInputDialog::getText(m_pParent, tr("Login user"),
+                              tr("Please insert your Inyoka user name:"),
+                              QLineEdit::Normal, QLatin1String(""), &bOk)
+            .trimmed();
     if (!bOk || sUsername.isEmpty()) {
       return;
     }
@@ -200,10 +199,11 @@ void Session::requestLogin() {
   }
 
   if (m_sPassword.isEmpty()) {
-      sPassword = QInputDialog::getText(
-                  m_pParent, tr("Login password"),
-                  tr("Please insert your Inyoka password:"),
-                  QLineEdit::Password, QLatin1String(""), &bOk).trimmed();
+    sPassword =
+        QInputDialog::getText(m_pParent, tr("Login password"),
+                              tr("Please insert your Inyoka password:"),
+                              QLineEdit::Password, QLatin1String(""), &bOk)
+            .trimmed();
     if (!bOk || sPassword.isEmpty()) {
       return;
     }
@@ -223,9 +223,9 @@ void Session::requestLogin() {
   QString sReferer(m_sInyokaUrl);
   sReferer = sReferer.remove(QStringLiteral("wiki."));
   request.setRawHeader("Referer", sReferer.toLatin1());
-  request.setRawHeader("User-Agent",
-                       QString(qApp->applicationName() + "/"
-                               + qApp->applicationVersion()).toLatin1());
+  request.setRawHeader("User-Agent", QString(qApp->applicationName() + "/" +
+                                             qApp->applicationVersion())
+                                         .toLatin1());
   request.setAttribute(QNetworkRequest::User, QVariant("ReqestLogin"));
   m_State = REQULOGIN;
 
@@ -236,11 +236,11 @@ void Session::requestLogin() {
   params.addQueryItem(QStringLiteral("password"), sPassword);
   params.addQueryItem(QStringLiteral("redirect"), QLatin1String(""));
 
-  QNetworkReply *pReply = m_pNwManager->post(
-                            request, params.query(QUrl::FullyEncoded).toUtf8());
+  QNetworkReply *pReply =
+      m_pNwManager->post(request, params.query(QUrl::FullyEncoded).toUtf8());
   QEventLoop loop;
-  connect(m_pNwManager, &QNetworkAccessManager::finished,
-          &loop, &QEventLoop::quit);
+  connect(m_pNwManager, &QNetworkAccessManager::finished, &loop,
+          &QEventLoop::quit);
   loop.exec();
   this->replyFinished(pReply);
 }
@@ -274,8 +274,7 @@ void Session::getLoginReply(const QString &sNWReply) {
   if (RECLOGIN != m_State) {
     m_State = REQUTOKEN;
     qWarning() << "LOGIN FAILED! No success message cookie.";
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Login at Inyoka failed."));
+    QMessageBox::warning(m_pParent, tr("Error"), tr("Login at Inyoka failed."));
     return;
   }
 }
@@ -293,8 +292,8 @@ void Session::replyFinished(QNetworkReply *pReply) {
   if (QNetworkReply::NoError != pReply->error()) {
     QMessageBox::critical(m_pParent, QStringLiteral("Error"),
                           pData->errorString());
-    qCritical() << "Error (#" << pReply->error() << ") while NW reply:"
-                << pData->errorString();
+    qCritical() << "Error (#" << pReply->error()
+                << ") while NW reply:" << pData->errorString();
     qDebug() << "Reply content:" << pReply->readAll();
     pReply->close();
     pReply->deleteLater();
@@ -309,8 +308,8 @@ void Session::replyFinished(QNetworkReply *pReply) {
     qDebug() << "Login NW reply is empty.";
   }
 
-  QString sAttribute(pReply->request().attribute(
-                       QNetworkRequest::User).toString());
+  QString sAttribute(
+      pReply->request().attribute(QNetworkRequest::User).toString());
   if (sAttribute.contains(QLatin1String("ReqestToken"))) {
     this->getTokenReply(sReply);
   } else if (sAttribute.contains(QLatin1String("ReqestLogin"))) {
@@ -327,12 +326,8 @@ void Session::replyFinished(QNetworkReply *pReply) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Session::isLoggedIn() const -> bool {
-  return (RECLOGIN == m_State);
-}
+auto Session::isLoggedIn() const -> bool { return (RECLOGIN == m_State); }
 
 // ----------------------------------------------------------------------------
 
-auto Session::getNwManager() -> QNetworkAccessManager* {
-  return m_pNwManager;
-}
+auto Session::getNwManager() -> QNetworkAccessManager * { return m_pNwManager; }

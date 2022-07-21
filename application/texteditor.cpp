@@ -50,25 +50,21 @@
 #include <QScrollBar>
 
 TextEditor::TextEditor(const QStringList &sListTplMacros,
-                       const QString &sTransTemplate,
-                       QWidget *pParent)
-  : QTextEdit(pParent),
-    m_sFileName(QLatin1String("")),
-    m_bCodeCompletion(false),
-    m_sListCompleter(sListTplMacros) {
+                       const QString &sTransTemplate, QWidget *pParent)
+    : QTextEdit(pParent),
+      m_sFileName(QLatin1String("")),
+      m_bCodeCompletion(false),
+      m_sListCompleter(sListTplMacros) {
   m_listPosCompleter.reserve(m_sListCompleter.size() + 2);
   for (int i = 0; i < m_sListCompleter.size(); i++) {
     if (!m_sListCompleter[i].startsWith('[') &&
         !m_sListCompleter[i].startsWith('{')) {
       m_sListCompleter[i].clear();
     }
-    m_sListCompleter[i].replace(QLatin1String("\\n"),
-                                QLatin1String("\n"));
+    m_sListCompleter[i].replace(QLatin1String("\\n"), QLatin1String("\n"));
     m_listPosCompleter << QPoint(
-                            m_sListCompleter[i].indexOf(
-                              QLatin1String("%%")),
-                            m_sListCompleter[i].lastIndexOf(
-                              QLatin1String("%%")));
+        m_sListCompleter[i].indexOf(QLatin1String("%%")),
+        m_sListCompleter[i].lastIndexOf(QLatin1String("%%")));
     m_sListCompleter[i].remove(QStringLiteral("%%"));
   }
   m_sListCompleter.push_front("[[" + sTransTemplate + "(");
@@ -81,8 +77,8 @@ TextEditor::TextEditor(const QStringList &sListTplMacros,
   this->setAcceptRichText(false);  // Paste plain text only
 
   // Text changed
-  connect(this->document(), &QTextDocument::modificationChanged,
-          this, &TextEditor::documentChanged);
+  connect(this->document(), &QTextDocument::modificationChanged, this,
+          &TextEditor::documentChanged);
 }
 
 TextEditor::~TextEditor() = default;
@@ -111,7 +107,8 @@ void TextEditor::setCompleter(QCompleter *completer) {
   m_pCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   m_pCompleter->setWrapAround(false);
   connect(m_pCompleter,
-          static_cast<void(QCompleter::*)(const QString &)>(&QCompleter::activated),
+          static_cast<void (QCompleter::*)(const QString &)>(
+              &QCompleter::activated),
           this, &TextEditor::insertCompletion);
 }
 
@@ -134,16 +131,16 @@ void TextEditor::insertCompletion(const QString &sCompletion) {
 
   // Select placeholder
   int nIndex(m_sListCompleter.indexOf(sCompletion));
-  if (-1 != nIndex &&
-      nIndex < m_listPosCompleter.length()) {
-    if ((m_listPosCompleter.at(nIndex).x() != m_listPosCompleter.at(nIndex).y()) &&
+  if (-1 != nIndex && nIndex < m_listPosCompleter.length()) {
+    if ((m_listPosCompleter.at(nIndex).x() !=
+         m_listPosCompleter.at(nIndex).y()) &&
         m_listPosCompleter.at(nIndex).x() >= 0 &&
         m_listPosCompleter.at(nIndex).y() >= 0) {
-      tc.setPosition(
-            nCurrentPos - nPosInCompletion + m_listPosCompleter.at(nIndex).x());
-      tc.setPosition(
-            nCurrentPos - nPosInCompletion + m_listPosCompleter.at(nIndex).y() - 2,
-            QTextCursor::KeepAnchor);
+      tc.setPosition(nCurrentPos - nPosInCompletion +
+                     m_listPosCompleter.at(nIndex).x());
+      tc.setPosition(nCurrentPos - nPosInCompletion +
+                         m_listPosCompleter.at(nIndex).y() - 2,
+                     QTextCursor::KeepAnchor);
       setTextCursor(tc);
     }
   }
@@ -187,15 +184,15 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
     }
   }
 
-  bool isShortcut = ((e->modifiers() & Qt::ControlModifier)
-                     && e->key() == Qt::Key_E);  // CTRL+E
+  bool isShortcut = ((e->modifiers() & Qt::ControlModifier) &&
+                     e->key() == Qt::Key_E);  // CTRL+E
   // Do not process the shortcut when we have a completer
   if (!m_pCompleter || !isShortcut) {
     QTextEdit::keyPressEvent(e);
   }
 
-  const bool ctrlOrShift = e->modifiers() &
-                           (Qt::ControlModifier | Qt::ShiftModifier);
+  const bool ctrlOrShift =
+      e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
   if (!m_pCompleter || (ctrlOrShift && e->text().isEmpty())) {
     return;
   }
@@ -209,10 +206,9 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
     m_pCompleter->popup()->hide();
     return;
   }
-  if (!isShortcut && (hasModifier ||
-                      e->text().isEmpty() ||
-                      completionPrefix.length() < 3 ||
-                      eow.contains(e->text().right(1)))) {
+  if (!isShortcut &&
+      (hasModifier || e->text().isEmpty() || completionPrefix.length() < 3 ||
+       eow.contains(e->text().right(1)))) {
     m_pCompleter->popup()->hide();
     return;
   }
@@ -220,11 +216,11 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
   if (completionPrefix != m_pCompleter->completionPrefix()) {
     m_pCompleter->setCompletionPrefix(completionPrefix);
     m_pCompleter->popup()->setCurrentIndex(
-          m_pCompleter->completionModel()->index(0, 0));
+        m_pCompleter->completionModel()->index(0, 0));
   }
   QRect cr = cursorRect();
-  cr.setWidth(m_pCompleter->popup()->sizeHintForColumn(0)
-              + m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
+  cr.setWidth(m_pCompleter->popup()->sizeHintForColumn(0) +
+              m_pCompleter->popup()->verticalScrollBar()->sizeHint().width());
   m_pCompleter->complete(cr);  // Show popup
 }
 
@@ -234,9 +230,7 @@ void TextEditor::keyPressEvent(QKeyEvent *e) {
 void TextEditor::setFileName(const QString &sFileName) {
   m_sFileName = sFileName;
 }
-auto TextEditor::getFileName() -> QString {
-  return m_sFileName;
-}
+auto TextEditor::getFileName() -> QString { return m_sFileName; }
 
 auto TextEditor::isUndoAvailable() -> bool {
   return this->document()->isUndoAvailable();

@@ -36,39 +36,32 @@
 #include "ui_findreplace.h"
 
 FindReplace::FindReplace(QWidget *parent)
-  : QDialog(parent),
-    m_pUi(new Ui::FindReplace),
-    m_pEditor(nullptr) {
+    : QDialog(parent), m_pUi(new Ui::FindReplace), m_pEditor(nullptr) {
   m_pUi->setupUi(this);
-  this->setWindowFlags(this->windowFlags()
-                       & ~Qt::WindowContextHelpButtonHint);
+  this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
   m_pUi->lbl_Error->setStyleSheet(
-        QStringLiteral("font-weight: bold; color: red;"));
+      QStringLiteral("font-weight: bold; color: red;"));
   m_pUi->lbl_Error->clear();
 
-  connect(m_pUi->button_Find, &QPushButton::clicked,
-          this, [this]() { this->find(m_pUi->radio_Forward->isChecked()); });
-  connect(m_pUi->text_Search, &QLineEdit::textChanged,
-          this, &FindReplace::textSearchChanged);
-  connect(m_pUi->button_Replace, &QPushButton::clicked,
-          this, &FindReplace::replace);
-  connect(m_pUi->button_ReplaceAll, &QPushButton::clicked,
-          this, &FindReplace::replaceAll);
-  connect(m_pUi->button_Cancel, &QPushButton::clicked,
-          this, &FindReplace::close);
+  connect(m_pUi->button_Find, &QPushButton::clicked, this,
+          [this]() { this->find(m_pUi->radio_Forward->isChecked()); });
+  connect(m_pUi->text_Search, &QLineEdit::textChanged, this,
+          &FindReplace::textSearchChanged);
+  connect(m_pUi->button_Replace, &QPushButton::clicked, this,
+          &FindReplace::replace);
+  connect(m_pUi->button_ReplaceAll, &QPushButton::clicked, this,
+          &FindReplace::replaceAll);
+  connect(m_pUi->button_Cancel, &QPushButton::clicked, this,
+          &FindReplace::close);
 }
 
-FindReplace::~FindReplace() {
-  delete m_pUi;
-}
+FindReplace::~FindReplace() { delete m_pUi; }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void FindReplace::setEditor(QTextEdit *pEditor) {
-  m_pEditor = pEditor;
-}
+void FindReplace::setEditor(QTextEdit *pEditor) { m_pEditor = pEditor; }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -102,13 +95,9 @@ void FindReplace::showEvent(QShowEvent *event) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void FindReplace::callFind() {
-  this->toggleSearchReplace(false);
-}
+void FindReplace::callFind() { this->toggleSearchReplace(false); }
 
-void FindReplace::callReplace() {
-  this->toggleSearchReplace(true);
-}
+void FindReplace::callReplace() { this->toggleSearchReplace(true); }
 
 void FindReplace::toggleSearchReplace(bool bReplace) {
   if (!bReplace) {
@@ -130,9 +119,7 @@ void FindReplace::toggleSearchReplace(bool bReplace) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void FindReplace::closeEvent(QCloseEvent *event) {
-  event->accept();
-}
+void FindReplace::closeEvent(QCloseEvent *event) { event->accept(); }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -164,11 +151,10 @@ void FindReplace::textSearchChanged() {
   // Check regular expression syntax
   if (m_pUi->check_Regexp->isChecked() &&
       m_pUi->text_Search->text().size() > 0) {
-    QRegularExpression regexp(
-          m_pUi->text_Search->text(),
-          m_pUi->check_Case->isChecked() ?
-            QRegularExpression::NoPatternOption :
-            QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression regexp(m_pUi->text_Search->text(),
+                              m_pUi->check_Case->isChecked()
+                                  ? QRegularExpression::NoPatternOption
+                                  : QRegularExpression::CaseInsensitiveOption);
 
     if (!regexp.isValid()) {
       m_pUi->lbl_Error->setText(regexp.errorString());
@@ -180,13 +166,9 @@ void FindReplace::textSearchChanged() {
 
 // ----------------------------------------------------------------------------
 
-void FindReplace::findNext() {
-  this->find(true);
-}
+void FindReplace::findNext() { this->find(true); }
 
-void FindReplace::findPrevious() {
-  this->find(false);
-}
+void FindReplace::findPrevious() { this->find(false); }
 
 // ----------------------------------------------------------------------------
 
@@ -210,13 +192,11 @@ void FindReplace::find(const bool bForward) {
 
   if (bUseRegexp) {
     QRegularExpression searchExp(
-          sSearched,
-          (bCaseSens ?
-             QRegularExpression::NoPatternOption :
-             QRegularExpression::CaseInsensitiveOption));
+        sSearched, (bCaseSens ? QRegularExpression::NoPatternOption
+                              : QRegularExpression::CaseInsensitiveOption));
 
-    m_TextCursor = m_pEditor->document()->find(searchExp, m_TextCursor,
-                                               searchFlags);
+    m_TextCursor =
+        m_pEditor->document()->find(searchExp, m_TextCursor, searchFlags);
     m_pEditor->setTextCursor(m_TextCursor);
     bResult = (!m_TextCursor.isNull());
   } else {

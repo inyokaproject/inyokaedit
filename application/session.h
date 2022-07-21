@@ -41,38 +41,37 @@ class Session : public QNetworkCookieJar {
   Q_OBJECT
 
  public:
-    explicit Session(QWidget *pParent, const QString &sHash,
-                     QObject *pObj = nullptr);
+  explicit Session(QWidget *pParent, const QString &sHash,
+                   QObject *pObj = nullptr);
 
-    void checkSession();
-    auto isLoggedIn() const -> bool;
-    auto getNwManager() -> QNetworkAccessManager*;
+  void checkSession();
+  auto isLoggedIn() const -> bool;
+  auto getNwManager() -> QNetworkAccessManager *;
 
  public slots:
-    void updateSettings(const QString &sInyokaUrl,
-                        const QString &sUsername,
-                        const QString &sPassword);
+  void updateSettings(const QString &sInyokaUrl, const QString &sUsername,
+                      const QString &sPassword);
 
  private:
-    void requestToken();
-    void getTokenReply(const QString &sNWReply);
-    void requestLogin();
-    void getLoginReply(const QString &sNWReply);
-    void replyFinished(QNetworkReply *pReply);
+  void requestToken();
+  void getTokenReply(const QString &sNWReply);
+  void requestLogin();
+  void getLoginReply(const QString &sNWReply);
+  void replyFinished(QNetworkReply *pReply);
 
-    enum REQUESTSTATE {REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN};
+  enum REQUESTSTATE { REQUTOKEN, RECTOKEN, REQULOGIN, RECLOGIN };
 
-    QWidget *m_pParent;
-    QString m_sInyokaUrl;
-    QString m_sUsername;
-    QString m_sPassword;
-    QNetworkAccessManager *m_pNwManager;
+  QWidget *m_pParent;
+  QString m_sInyokaUrl;
+  QString m_sUsername;
+  QString m_sPassword;
+  QNetworkAccessManager *m_pNwManager;
 
-    REQUESTSTATE m_State;
-    QString m_sToken;
-    QString m_sHash;
-    QNetworkCookie m_SessionCookie;
-    QList<QNetworkCookie> m_ListCookies;
+  REQUESTSTATE m_State;
+  QString m_sToken;
+  QString m_sHash;
+  QNetworkCookie m_SessionCookie;
+  QList<QNetworkCookie> m_ListCookies;
 };
 
 #endif  // APPLICATION_SESSION_H_

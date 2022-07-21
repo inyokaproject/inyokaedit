@@ -36,22 +36,22 @@ class Utils : public QObject {
   Q_OBJECT
 
  public:
-    explicit Utils(QWidget *pParent, QObject *pParentObj = nullptr);
+  explicit Utils(QWidget *pParent, QObject *pParentObj = nullptr);
 
-    static auto getOnlineState() -> bool;
-    static void setProxy(const QString &sHostName, const quint16 nPort,
-                         const QString &sUser, const QString &sPassword);
-    void checkWindowsUpdate();
+  static auto getOnlineState() -> bool;
+  static void setProxy(const QString &sHostName, const quint16 nPort,
+                       const QString &sUser, const QString &sPassword);
+  void checkWindowsUpdate();
 
  private slots:
-    void replyFinished(QNetworkReply *pReply);
+  void replyFinished(QNetworkReply *pReply);
 
  signals:
-    void setWindowsUpdateCheck(const bool);
+  void setWindowsUpdateCheck(const bool);
 
  private:
-    QWidget *m_pParent;
-    QNetworkAccessManager *m_NwManager;
+  QWidget *m_pParent;
+  QNetworkAccessManager *m_NwManager;
 };
 
 #endif  // APPLICATION_UTILS_H_

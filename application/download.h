@@ -45,46 +45,45 @@ class Download : public QObject {
   Q_OBJECT
 
  public:
-    Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
-             const QString &sImgDir, const QString &sSharePath,
-             QObject *pObj = nullptr);
+  Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
+           const QString &sImgDir, const QString &sSharePath,
+           QObject *pObj = nullptr);
 
  public slots:
-    void downloadArticle(QString sUrl = QLatin1String(""));
-    void showArticle();
-    void updateSettings(const bool bDownloadImages,
-                        const QString &sInyokaUrl,
-                        const QString &sConstArea);
+  void downloadArticle(QString sUrl = QLatin1String(""));
+  void showArticle();
+  void updateSettings(const bool bDownloadImages, const QString &sInyokaUrl,
+                      const QString &sConstArea);
 
  private slots:
-    void replyFinished(QNetworkReply *pReply);
+  void replyFinished(QNetworkReply *pReply);
 
  signals:
-    void sendArticleText(const QString &, const QString &);
+  void sendArticleText(const QString &, const QString &);
 
  private:
-    auto redirectUrl(const QUrl &possibleRedirectUrl,
-                     const QUrl &oldRedirectUrl) -> QUrl;
-    void downloadImages();
+  auto redirectUrl(const QUrl &possibleRedirectUrl, const QUrl &oldRedirectUrl)
+      -> QUrl;
+  void downloadImages();
 
-    QWidget *m_pParent;
-    Session *m_pSession;
-    const QString m_sStylesDir;
-    const QString m_sImgDir;
+  QWidget *m_pParent;
+  Session *m_pSession;
+  const QString m_sStylesDir;
+  const QString m_sImgDir;
 
-    QList<QNetworkReply *> m_listDownloadReplies;
-    QUrl m_urlRedirectedTo;
-    QString m_sArticleText;
-    QString m_sSitename;
-    QString m_sRevision;
-    QString m_sSource;
-    QString m_sInyokaUrl;
-    QString m_sConstructionArea;
-    bool m_bAutomaticImageDownload;
-    const QString m_sSharePath;
+  QList<QNetworkReply *> m_listDownloadReplies;
+  QUrl m_urlRedirectedTo;
+  QString m_sArticleText;
+  QString m_sSitename;
+  QString m_sRevision;
+  QString m_sSource;
+  QString m_sInyokaUrl;
+  QString m_sConstructionArea;
+  bool m_bAutomaticImageDownload;
+  const QString m_sSharePath;
 
-    DownloadImg *m_DlImages;
-    bool m_bDownloadArticle;
+  DownloadImg *m_DlImages;
+  bool m_bDownloadArticle;
 };
 
 #endif  // APPLICATION_DOWNLOAD_H_
