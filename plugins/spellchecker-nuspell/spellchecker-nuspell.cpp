@@ -33,22 +33,23 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
@@ -60,14 +61,13 @@
 #include <QFile>
 #include <QIcon>
 #include <QMessageBox>
-#include <QTextStream>
 #include <QSettings>
 #include <QStringList>
-
+#include <QTextStream>
 #include <nuspell/finder.hxx>
 
-#include "./nuspellcheckdialog.h"
 #include "../../application/texteditor.h"
+#include "./nuspellcheckdialog.h"
 
 void SpellChecker_Nuspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                       const QDir &userDataDir,
@@ -90,10 +90,12 @@ void SpellChecker_Nuspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_sSharePath = sSharePath;
 
   m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
-  m_sDictLang = m_pSettings->value(QStringLiteral("SpellCheckerLanguage"),
-                                   "de_DE").toString();
-  m_sCommunity = m_pSettings->value(QStringLiteral("Inyoka/Community"),
-                                    "ubuntuusers_de").toString();
+  m_sDictLang =
+      m_pSettings->value(QStringLiteral("SpellCheckerLanguage"), "de_DE")
+          .toString();
+  m_sCommunity =
+      m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
+          .toString();
   m_pSettings->endGroup();
 }
 
@@ -114,16 +116,17 @@ auto SpellChecker_Nuspell::getPluginVersion() const -> QString {
 void SpellChecker_Nuspell::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
 
-  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                         "_" + sLang + ".qm")) {
-    qWarning() << "Could not load translation" <<
-                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                  "_" + sLang + ".qm";
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
+                         sLang + ".qm")) {
+    qWarning() << "Could not load translation"
+               << ":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                      ".qm";
     if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
-      qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" +
-                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
+      qWarning() << "Could not load translation"
+                 << m_sSharePath + "/lang/" +
+                        QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                        ".qm";
       return;
     }
   }
@@ -146,12 +149,8 @@ auto SpellChecker_Nuspell::getIcon() const -> QIcon {
   return QIcon(QLatin1String(":/spellchecker.png"));
 }
 
-auto SpellChecker_Nuspell::includeMenu() const -> bool{
-  return true;
-}
-auto SpellChecker_Nuspell::includeToolbar() const -> bool {
-  return true;
-}
+auto SpellChecker_Nuspell::includeMenu() const -> bool { return true; }
+auto SpellChecker_Nuspell::includeToolbar() const -> bool { return true; }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -164,7 +163,7 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
 
   // Add application folder to search folder for dictionaries
   std::filesystem::path app_path(
-        QString(qApp->applicationDirPath() + "/dicts/").toStdU16String());
+      QString(qApp->applicationDirPath() + "/dicts/").toStdU16String());
   auto appdirs = std::vector<std::filesystem::path>();
   appdirs.push_back(app_path);
   nuspell::search_dirs_for_dicts(appdirs, dict_list);
@@ -178,13 +177,13 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
     if (sTmp.contains('\\')) {
       sTmp = sTmp.right(sTmp.length() - sTmp.lastIndexOf('\\') - 1);
     } else {
-      sTmp = sTmp.right(sTmp.length() - sTmp.lastIndexOf('/') -1);
+      sTmp = sTmp.right(sTmp.length() - sTmp.lastIndexOf('/') - 1);
     }
     m_sListDicts << sTmp;
   }
 
-  auto dict_path = nuspell::search_dirs_for_one_dict(searchdirs,
-                                                     m_sDictLang.toStdString());
+  auto dict_path =
+      nuspell::search_dirs_for_one_dict(searchdirs, m_sDictLang.toStdString());
   if (std::empty(dict_path)) {
     qWarning() << "Can not find the requested dictionary:" << m_sDictLang;
     qDebug() << "Found dictionaries:";
@@ -198,8 +197,7 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
 
   try {
     m_Dict.load_aff_dic(dict_path);
-  }
-  catch (const nuspell::Dictionary_Loading_Error& e) {
+  } catch (const nuspell::Dictionary_Loading_Error &e) {
     qWarning() << e.what() << '\n';
     QMessageBox::warning(nullptr, qApp->applicationName(),
                          QString::fromLatin1(e.what()));
@@ -207,24 +205,24 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
   }
 
   // Init user dictionary
-  m_sUserDict = m_UserDataDir.absolutePath() + "/userDict_"
-                + m_sDictLang + ".txt";
+  m_sUserDict =
+      m_UserDataDir.absolutePath() + "/userDict_" + m_sDictLang + ".txt";
   if (!QFile::exists(m_sUserDict)) {
     QFile userDictFile(m_sUserDict);
     if (userDictFile.open(QIODevice::WriteOnly)) {
       userDictFile.close();
     } else {
       QMessageBox::warning(
-            nullptr, qApp->applicationName(),
-            QStringLiteral("User dictionary file couldn't be opened."));
+          nullptr, qApp->applicationName(),
+          QStringLiteral("User dictionary file couldn't be opened."));
       qWarning() << "User dictionary file could not be opened/created:"
                  << m_sUserDict;
     }
   }
 
   this->loadAdditionalDict(m_sUserDict);
-  this->loadAdditionalDict(m_sSharePath + "/community/" +
-                           m_sCommunity + "/ExtendedDict.txt");
+  this->loadAdditionalDict(m_sSharePath + "/community/" + m_sCommunity +
+                           "/ExtendedDict.txt");
   this->loadAdditionalDict(qApp->applicationDirPath() + "/ExtendedDict.txt");
   return true;
 }
@@ -237,8 +235,7 @@ void SpellChecker_Nuspell::loadAdditionalDict(const QString &sFilename) {
   if (DictonaryFile.exists()) {
     if (DictonaryFile.open(QIODevice::ReadOnly)) {
       QTextStream stream(&DictonaryFile);
-      for (QString sWord = stream.readLine();
-           !sWord.isEmpty();
+      for (QString sWord = stream.readLine(); !sWord.isEmpty();
            sWord = stream.readLine()) {
         putWord(sWord);
       }
@@ -286,9 +283,8 @@ void SpellChecker_Nuspell::callPlugin() {
 
     // Workaround for better recognition of words punctuation etc.
     // does not belong to words
-    while (!sWord.isEmpty()
-           && !sWord.at(0).isLetter()
-           && cursor.anchor() < cursor.position()) {
+    while (!sWord.isEmpty() && !sWord.at(0).isLetter() &&
+           cursor.anchor() < cursor.position()) {
       int cursorPos = cursor.position();
       cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
       cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
@@ -372,10 +368,8 @@ auto SpellChecker_Nuspell::suggest(const QString &sWord) -> QStringList {
 
   QStringList suggestions;
   std::transform(
-        sugs.begin(), sugs.end(), std::back_inserter(suggestions),
-        [](const std::string &v){
-    return QString::fromStdString(v);
-  });
+      sugs.begin(), sugs.end(), std::back_inserter(suggestions),
+      [](const std::string &v) { return QString::fromStdString(v); });
 
   return suggestions;
 }
@@ -386,16 +380,15 @@ auto SpellChecker_Nuspell::suggest(const QString &sWord) -> QStringList {
 void SpellChecker_Nuspell::replaceAll(const int nPos, const QString &sOld,
                                       const QString &sNew) {
   QTextCursor cursor(m_pEditor->document());
-  cursor.setPosition(nPos-sOld.length(), QTextCursor::MoveAnchor);
+  cursor.setPosition(nPos - sOld.length(), QTextCursor::MoveAnchor);
 
   while (!cursor.atEnd()) {
     QCoreApplication::processEvents();
     cursor.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
     QString word = cursor.selectedText();
 
-    while (!word.isEmpty()
-          && !word.at(0).isLetter()
-          && cursor.anchor() < cursor.position()) {
+    while (!word.isEmpty() && !word.at(0).isLetter() &&
+           cursor.anchor() < cursor.position()) {
       int cursorPos = cursor.position();
       cursor.setPosition(cursor.anchor() + 1, QTextCursor::MoveAnchor);
       cursor.setPosition(cursorPos, QTextCursor::KeepAnchor);
@@ -437,9 +430,9 @@ void SpellChecker_Nuspell::addToUserWordlist(const QString &sWord) {
       userDictonaryFile.close();
     } else {
       QMessageBox::warning(nullptr, QStringLiteral("Spell checker"),
-                           "User dictionary " + m_sUserDict
-                           + " could not be opened for appending a "
-                             "new word.");
+                           "User dictionary " + m_sUserDict +
+                               " could not be opened for appending a "
+                               "new word.");
       qWarning() << "User dictionary" << m_sUserDict
                  << "could not be opened for appending a new word.";
     }
@@ -451,12 +444,9 @@ void SpellChecker_Nuspell::addToUserWordlist(const QString &sWord) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto SpellChecker_Nuspell::hasSettings() const -> bool {
-  return false;
-}
+auto SpellChecker_Nuspell::hasSettings() const -> bool { return false; }
 
-void SpellChecker_Nuspell::showSettings() {
-}
+void SpellChecker_Nuspell::showSettings() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -477,22 +467,22 @@ void SpellChecker_Nuspell::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/spellchecker.png")));
-  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
-                                       "%2</p>"
-                                       "<p>%3<br />"
-                                       "%4</p>"
-                                       "<p><i>%5</i></p>")
-                   .arg(this->getCaption(),
-                        tr("Version") + ": " + PLUGIN_VERSION,
-                        PLUGIN_COPY,
-                        tr("Licence") + ": " +
-                        "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a> and<br />"
-                        "incorporates work covered by <a href=\""
-                        "https://opensource.org/licenses/BSD-2-Clause\">"
-                        "2-Clause BSD License</a>",
-                        tr("Spell checker based on "
-                           "<a href=\"https://nuspell.github.io/\">"
-                           "Nuspell</a>.")));
+  aboutbox.setText(
+      QString::fromLatin1("<p><b>%1</b><br />"
+                          "%2</p>"
+                          "<p>%3<br />"
+                          "%4</p>"
+                          "<p><i>%5</i></p>")
+          .arg(this->getCaption(), tr("Version") + ": " + PLUGIN_VERSION,
+               PLUGIN_COPY,
+               tr("Licence") + ": " +
+                   "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
+                   "GNU General Public License Version 3</a> and<br />"
+                   "incorporates work covered by <a href=\""
+                   "https://opensource.org/licenses/BSD-2-Clause\">"
+                   "2-Clause BSD License</a>",
+               tr("Spell checker based on "
+                  "<a href=\"https://nuspell.github.io/\">"
+                  "Nuspell</a>.")));
   aboutbox.exec();
 }

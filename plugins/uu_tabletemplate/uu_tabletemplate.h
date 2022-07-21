@@ -30,9 +30,9 @@
 
 #include <QDialog>
 #include <QDir>
-#include <QtPlugin>
 #include <QString>
 #include <QTranslator>
+#include <QtPlugin>
 
 #ifdef USEQTWEBKIT
 #include <QtWebKitWidgets/QWebView>
@@ -65,62 +65,61 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   Q_PLUGIN_METADATA(IID "InyokaEdit.uutabletemplate")
 
  public:
-    void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                    const QDir &userDataDir,
-                    const QString &sSharePath) override;
-    auto getPluginName() const -> QString override;
-    auto getPluginVersion() const -> QString override;
-    void installTranslator(const QString &sLang) override;
-    auto getCaption() const -> QString override;
-    auto getIcon() const -> QIcon override;
-    auto includeMenu() const -> bool override;
-    auto includeToolbar() const -> bool override;
-    bool hasSettings() const override;
-    void setCurrentEditor(TextEditor *pEditor) override;
-    void setEditorlist(const QList<TextEditor *> &listEditors) override;
+  void initPlugin(QWidget *pParent, TextEditor *pEditor,
+                  const QDir &userDataDir, const QString &sSharePath) override;
+  auto getPluginName() const -> QString override;
+  auto getPluginVersion() const -> QString override;
+  void installTranslator(const QString &sLang) override;
+  auto getCaption() const -> QString override;
+  auto getIcon() const -> QIcon override;
+  auto includeMenu() const -> bool override;
+  auto includeToolbar() const -> bool override;
+  bool hasSettings() const override;
+  void setCurrentEditor(TextEditor *pEditor) override;
+  void setEditorlist(const QList<TextEditor *> &listEditors) override;
 
  public slots:
-    void callPlugin() override;
-    void executePlugin() override;
-    void showSettings() override;
-    void showAbout() override;
+  void callPlugin() override;
+  void executePlugin() override;
+  void showSettings() override;
+  void showAbout() override;
 
  private slots:
-    void convertToBaseTemplate();
-    void convertToNewTemplate();
-    void accept();
+  void convertToBaseTemplate();
+  void convertToNewTemplate();
+  void accept();
 #ifndef NOPREVIEW
-    void preview();
+  void preview();
 #endif
 
  private:
-    auto generateTable() -> QString;
+  auto generateTable() -> QString;
 
-    QWidget *m_pParent;
-    Ui::Uu_TableTemplateClass *m_pUi;
-    QDialog *m_pDialog;
-    QSettings *m_pSettings;
-    TextEditor *m_pEditor;
-    Templates *m_pTemplates;
-    Parser *m_pParser;
-    QDir m_dirPreview;
-    QTextDocument *m_pTextDocument;
+  QWidget *m_pParent;
+  Ui::Uu_TableTemplateClass *m_pUi;
+  QDialog *m_pDialog;
+  QSettings *m_pSettings;
+  TextEditor *m_pEditor;
+  Templates *m_pTemplates;
+  Parser *m_pParser;
+  QDir m_dirPreview;
+  QTextDocument *m_pTextDocument;
 #ifdef USEQTWEBKIT
-    QWebView *m_pPreviewWebview;
+  QWebView *m_pPreviewWebview;
 #endif
 #ifdef USEQTWEBENGINE
-    QWebEngineView *m_pPreviewWebview;
+  QWebEngineView *m_pPreviewWebview;
 #endif
 
-    QTranslator m_translator;
-    QString m_sSharePath;
-    QStringList m_sListTableClasses;
-    QStringList m_sListTableStyles;
-    QStringList m_sListTableStylesPrefix;
-    QString m_sRowClassTitle;
-    QString m_sRowClassHead;
-    QString m_sRowClassHighlight;
-    bool m_bBaseToNew;
+  QTranslator m_translator;
+  QString m_sSharePath;
+  QStringList m_sListTableClasses;
+  QStringList m_sListTableStyles;
+  QStringList m_sListTableStylesPrefix;
+  QString m_sRowClassTitle;
+  QString m_sRowClassHead;
+  QString m_sRowClassHighlight;
+  bool m_bBaseToNew;
 };
 
 #endif  // PLUGINS_UU_TABLETEMPLATE_UU_TABLETEMPLATE_H_

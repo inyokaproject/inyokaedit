@@ -33,22 +33,23 @@
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
  * Original code form: https://wiki.qt.io/Spell-Checking-with-Hunspell
  */
@@ -58,48 +59,45 @@
 #include <QDebug>
 #include <QSettings>
 
-#include "ui_nuspellcheckdialog.h"
 #include "./spellchecker-nuspell.h"
+#include "ui_nuspellcheckdialog.h"
 
 NuspellCheckDialog::NuspellCheckDialog(SpellChecker_Nuspell *pSpellChecker,
                                        QWidget *pParent)
-  : QDialog(pParent),
-    m_pUi(new Ui::NuspellCheckDialog),
-    m_returnCode(None) {
+    : QDialog(pParent), m_pUi(new Ui::NuspellCheckDialog), m_returnCode(None) {
   qDebug() << "Calling" << Q_FUNC_INFO;
 
   m_pUi->setupUi(this);
   m_pSpellChecker = pSpellChecker;
 
-  this->setWindowFlags(this->windowFlags()
-                       & ~Qt::WindowContextHelpButtonHint);
+  this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
   connect(m_pUi->listWidget, &QListWidget::currentTextChanged,
           m_pUi->ledtReplaceWith, &QLineEdit::setText);
 
-  connect(m_pUi->btnAddToDict, &QPushButton::clicked,
-          this, &NuspellCheckDialog::addToDict);
-  connect(m_pUi->btnReplaceOnce, &QPushButton::clicked,
-          this, &NuspellCheckDialog::replaceOnce);
-  connect(m_pUi->btnReplaceAll, &QPushButton::clicked,
-          this, &NuspellCheckDialog::replaceAll);
-  connect(m_pUi->btnIgnoreOnce, &QPushButton::clicked,
-          this, &NuspellCheckDialog::ignoreOnce);
-  connect(m_pUi->btnIgnoreAll, &QPushButton::clicked,
-          this, &NuspellCheckDialog::ignoreAll);
-  connect(m_pUi->btnCancel, &QPushButton::clicked,
-          this, &NuspellCheckDialog::closeDialog);
+  connect(m_pUi->btnAddToDict, &QPushButton::clicked, this,
+          &NuspellCheckDialog::addToDict);
+  connect(m_pUi->btnReplaceOnce, &QPushButton::clicked, this,
+          &NuspellCheckDialog::replaceOnce);
+  connect(m_pUi->btnReplaceAll, &QPushButton::clicked, this,
+          &NuspellCheckDialog::replaceAll);
+  connect(m_pUi->btnIgnoreOnce, &QPushButton::clicked, this,
+          &NuspellCheckDialog::ignoreOnce);
+  connect(m_pUi->btnIgnoreAll, &QPushButton::clicked, this,
+          &NuspellCheckDialog::ignoreAll);
+  connect(m_pUi->btnCancel, &QPushButton::clicked, this,
+          &NuspellCheckDialog::closeDialog);
 
   // Add items before connect(), otherwise indexChanged is emitted!
   m_pUi->comboBoxLang->addItems(m_pSpellChecker->m_sListDicts);
-  connect(m_pUi->comboBoxLang,
-          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &NuspellCheckDialog::changeLanguage);
+  connect(
+      m_pUi->comboBoxLang,
+      static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+      this, &NuspellCheckDialog::changeLanguage);
 
   if (-1 != m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang)) {
     m_pUi->comboBoxLang->setCurrentIndex(
-          m_pUi->comboBoxLang->findText(
-            m_pSpellChecker->m_sDictLang));
+        m_pUi->comboBoxLang->findText(m_pSpellChecker->m_sDictLang));
   }
 }
 
@@ -115,7 +113,7 @@ NuspellCheckDialog::SpellCheckAction NuspellCheckDialog::checkWord(
     const QString &sWord) {
   m_sUnkownWord = sWord;
   m_pUi->lblUnknownWord->setText(
-        QStringLiteral("<b>%1</b>").arg(m_sUnkownWord));
+      QStringLiteral("<b>%1</b>").arg(m_sUnkownWord));
 
   m_pUi->ledtReplaceWith->clear();
 

@@ -47,17 +47,17 @@ class SyntaxHighlighter : public QSyntaxHighlighter {
   Q_OBJECT
 
  public:
-    explicit SyntaxHighlighter(QTextDocument *pDoc = nullptr,
-                               QObject *pParent = nullptr);
-    ~SyntaxHighlighter();
-    void setRules(const QVector<HighlightingRule> &rules);
+  explicit SyntaxHighlighter(QTextDocument *pDoc = nullptr,
+                             QObject *pParent = nullptr);
+  ~SyntaxHighlighter();
+  void setRules(const QVector<HighlightingRule> &rules);
 
  protected:
-    // Apply highlighting rules
-    void highlightBlock(const QString &sText) override;
+  // Apply highlighting rules
+  void highlightBlock(const QString &sText) override;
 
  private:
-    QVector<HighlightingRule> m_highlightingRules;
+  QVector<HighlightingRule> m_highlightingRules;
 };
 
 #endif  // PLUGINS_HIGHLIGHTER_SYNTAXHIGHLIGHTER_H_

@@ -36,7 +36,6 @@
 
 #include "../../application/templates/templates.h"
 #include "../../application/texteditor.h"
-
 #include "ui_highlighter.h"
 
 const QString Highlighter::sSEPARATOR = QStringLiteral("|");
@@ -64,7 +63,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   if (pParent->window()->palette().window().color().lightnessF() <
       m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble()) {
-      m_sStyleFile = QStringLiteral("dark-style");
+    m_sStyleFile = QStringLiteral("dark-style");
   } else {
     m_sStyleFile = QStringLiteral("standard-style");
   }
@@ -83,9 +82,9 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   m_pStyleSet = nullptr;
   m_pTemplates = new Templates(
-                   m_pSettings->value(QStringLiteral("Inyoka/Community"),
-                                      "ubuntuusers_de").toString(),
-                   m_sSharePath, userDataDir.absolutePath());
+      m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
+          .toString(),
+      m_sSharePath, userDataDir.absolutePath());
   this->getTranslations();
   this->readStyle(m_sStyleFile);
   this->defineRules();
@@ -110,17 +109,17 @@ auto Highlighter::getPluginVersion() const -> QString {
 void Highlighter::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
 
-  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                         "_" + sLang + ".qm")) {
-    qWarning() << "Could not load translation" <<
-                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                  "_" + sLang + ".qm";
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
+                         sLang + ".qm")) {
+    qWarning() << "Could not load translation"
+               << ":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                      ".qm";
     if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
-      qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" +
-                    QStringLiteral(PLUGIN_NAME).toLower() +
-                    "_" + sLang + ".qm";
+      qWarning() << "Could not load translation"
+                 << m_sSharePath + "/lang/" +
+                        QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                        ".qm";
       return;
     }
   }
@@ -129,17 +128,15 @@ void Highlighter::installTranslator(const QString &sLang) {
     m_pUi->retranslateUi(m_pDialog);
 
     QStringList sListHeader;
-    sListHeader << tr("Color") << tr("Bold")
-                << tr("Italic") << tr("Background");
+    sListHeader << tr("Color") << tr("Bold") << tr("Italic")
+                << tr("Background");
     m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
     sListHeader.clear();
-    sListHeader << tr("Background") << tr("Text color")
-                << tr("Text formatting") << tr("Heading")
-                << tr("Hyperlink") << tr("InterWiki")
-                << tr("Macro") << tr("Parser") << tr("List")
-                << tr("Table line") << tr("Table cell format")
-                << tr("ImgMap") << tr("Misc") << tr("Comment")
-                << tr("Syntax error");
+    sListHeader << tr("Background") << tr("Text color") << tr("Text formatting")
+                << tr("Heading") << tr("Hyperlink") << tr("InterWiki")
+                << tr("Macro") << tr("Parser") << tr("List") << tr("Table line")
+                << tr("Table cell format") << tr("ImgMap") << tr("Misc")
+                << tr("Comment") << tr("Syntax error");
     m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
   } else {
     qWarning() << "Translator could not be installed!";
@@ -157,12 +154,8 @@ auto Highlighter::getIcon() const -> QIcon {
   // return QIcon(":/highlighter.png");
 }
 
-auto Highlighter::includeMenu() const -> bool {
-  return false;
-}
-auto Highlighter::includeToolbar() const -> bool {
-  return false;
-}
+auto Highlighter::includeMenu() const -> bool { return false; }
+auto Highlighter::includeToolbar() const -> bool { return false; }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -173,8 +166,7 @@ void Highlighter::callPlugin() {
   m_pDialog->exec();
 }
 
-void Highlighter::executePlugin() {
-}
+void Highlighter::executePlugin() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -189,9 +181,9 @@ void Highlighter::copyDefaultStyles() {
   QFile stylefile(confDir.absolutePath() + "/standard-style" + m_sExt);
   if (!stylefile.exists()) {
     if (QFile::copy(QStringLiteral(":/standard-style.conf"),
-                     confDir.absolutePath() + "/standard-style" + m_sExt)) {
+                    confDir.absolutePath() + "/standard-style" + m_sExt)) {
       stylefile.setPermissions(stylefile.permissions() |
-                                     QFileDevice::WriteUser);
+                               QFileDevice::WriteUser);
     } else {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
@@ -200,9 +192,9 @@ void Highlighter::copyDefaultStyles() {
   stylefile.setFileName(confDir.absolutePath() + "/dark-style" + m_sExt);
   if (!stylefile.exists()) {
     if (QFile::copy(QStringLiteral(":/dark-style.conf"),
-                     confDir.absolutePath() + "/dark-style" + m_sExt)) {
+                    confDir.absolutePath() + "/dark-style" + m_sExt)) {
       stylefile.setPermissions(stylefile.permissions() |
-                                     QFileDevice::WriteUser);
+                               QFileDevice::WriteUser);
     } else {
       qWarning() << "Couldn't create style file: " << stylefile.fileName();
     }
@@ -216,17 +208,17 @@ void Highlighter::buildUi(QWidget *pParent) {
   m_pDialog = new QDialog(pParent);
   m_pUi = new Ui::HighlighterDialog();
   m_pUi->setupUi(m_pDialog);
-  m_pDialog->setWindowFlags(m_pDialog->windowFlags()
-                            & ~Qt::WindowContextHelpButtonHint);
+  m_pDialog->setWindowFlags(m_pDialog->windowFlags() &
+                            ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
   // m_pDialog->setWindowIcon(this->getIcon());
   m_pUi->styleTable->horizontalHeader()->setSectionResizeMode(
-        QHeaderView::Stretch);
+      QHeaderView::Stretch);
 
   QStringList sListStyleFiles;
   QFileInfo fiStyleFile(m_pSettings->fileName());
   const QFileInfoList fiListFiles(fiStyleFile.absoluteDir().entryInfoList(
-                                    QDir::NoDotAndDotDot | QDir::Files));
+      QDir::NoDotAndDotDot | QDir::Files));
   for (const auto &fi : fiListFiles) {
     if (fi.fileName().endsWith("-style" + m_sExt)) {
       sListStyleFiles << fi.fileName().remove(m_sExt);
@@ -237,19 +229,20 @@ void Highlighter::buildUi(QWidget *pParent) {
   m_pUi->styleFilesBox->insertSeparator(1);
 
   m_pUi->styleFilesBox->setCurrentIndex(
-        m_pUi->styleFilesBox->findText(m_sStyleFile));
+      m_pUi->styleFilesBox->findText(m_sStyleFile));
   this->loadHighlighting(m_sStyleFile);
 
-  connect(m_pUi->styleFilesBox,
-          static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &Highlighter::changedStyle);
-  connect(m_pUi->styleTable, &QTableWidget::cellDoubleClicked,
-          this, &Highlighter::clickedStyleCell);
+  connect(
+      m_pUi->styleFilesBox,
+      static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+      this, &Highlighter::changedStyle);
+  connect(m_pUi->styleTable, &QTableWidget::cellDoubleClicked, this,
+          &Highlighter::clickedStyleCell);
 
-  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
-          this, &Highlighter::accept);
-  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
-          m_pDialog, &QDialog::reject);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this,
+          &Highlighter::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
+          &QDialog::reject);
 }
 
 // ----------------------------------------------------------------------------
@@ -274,13 +267,13 @@ void Highlighter::readStyle(const QString &sStyle) {
 #endif
 
   if (!QFile::exists(m_pStyleSet->fileName())) {
-    qWarning() << "Could not find/open highlighting style file:" <<
-                  m_pStyleSet->fileName();
+    qWarning() << "Could not find/open highlighting style file:"
+               << m_pStyleSet->fileName();
   }
 
   m_colorForeground = QApplication::palette().color(QPalette::Text);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Foreground"), "System")
-            .toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("Foreground"), "System").toString();
   if (sTmpKey.toLower() != QLatin1String("system")) {
     tmpColor.setRgb(sTmpKey.toUInt(&bOk, 16));
     if (bOk) {
@@ -291,8 +284,8 @@ void Highlighter::readStyle(const QString &sStyle) {
   }
 
   m_colorBackground = QApplication::palette().color(QPalette::Base);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Background"), "System")
-            .toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("Background"), "System").toString();
   if (sTmpKey.toLower() != QLatin1String("system")) {
     tmpColor.setRgb(sTmpKey.toUInt(&bOk, 16));
     if (bOk) {
@@ -303,47 +296,47 @@ void Highlighter::readStyle(const QString &sStyle) {
   }
 
   m_pStyleSet->beginGroup(QStringLiteral("Style"));
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Heading"),
-                               "0x008000" + sSEPARATOR + "true")
-            .toString();
+  sTmpKey =
+      m_pStyleSet
+          ->value(QStringLiteral("Heading"), "0x008000" + sSEPARATOR + "true")
+          .toString();
   m_headingsFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Hyperlink"),
-                               "0x000080").toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("Hyperlink"), "0x000080").toString();
   m_linksFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("InterWiki"),
-                               "0x0000ff").toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("InterWiki"), "0x0000ff").toString();
   m_interwikiLinksFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Macro"),
-                               "0x008080").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("Macro"), "0x008080").toString();
   m_macrosFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Parser"),
-                               "0x800000" + sSEPARATOR + "true")
-            .toString();
+  sTmpKey =
+      m_pStyleSet
+          ->value(QStringLiteral("Parser"), "0x800000" + sSEPARATOR + "true")
+          .toString();
   m_parserFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Comment"),
-                               "0xa0a0a4").toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("Comment"), "0xa0a0a4").toString();
   m_commentFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("ImgMap"),
-                               "0x808000").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("ImgMap"), "0x808000").toString();
   m_imgMapFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("TableCellFormating"),
-                               "0x800080").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("TableCellFormating"), "0x800080")
+                .toString();
   m_tablecellsFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("TextFormating"),
-                               "0xff0000").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("TextFormating"), "0xff0000")
+                .toString();
   m_textformatFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("List"),
-                               "0xff0000").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("List"), "0xff0000").toString();
   m_listFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("NewTableLine"),
-                               "0xff0000").toString();
+  sTmpKey =
+      m_pStyleSet->value(QStringLiteral("NewTableLine"), "0xff0000").toString();
   m_newTableLineFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(QStringLiteral("Misc"),
-                               "0xff0000").toString();
+  sTmpKey = m_pStyleSet->value(QStringLiteral("Misc"), "0xff0000").toString();
   m_miscFormat = Highlighter::evalKey(sTmpKey);
-  sTmpKey = m_pStyleSet->value(
-              QStringLiteral("SyntaxError"), "---" + sSEPARATOR + "---" +
-              sSEPARATOR + "---" + sSEPARATOR + "0xffff00").toString();
+  sTmpKey = m_pStyleSet
+                ->value(QStringLiteral("SyntaxError"),
+                        "---" + sSEPARATOR + "---" + sSEPARATOR + "---" +
+                            sSEPARATOR + "0xffff00")
+                .toString();
   m_syntaxErrorFormat = Highlighter::evalKey(sTmpKey);
   m_pStyleSet->endGroup();
 }
@@ -415,16 +408,16 @@ void Highlighter::saveStyle() {
   if (m_bSystemForeground) {
     m_pStyleSet->setValue(QStringLiteral("Foreground"), "System");
   } else {
-    m_pStyleSet->setValue(QStringLiteral("Foreground"),
-                          "0x" + m_colorForeground.name()
-                          .remove(QStringLiteral("#")));
+    m_pStyleSet->setValue(
+        QStringLiteral("Foreground"),
+        "0x" + m_colorForeground.name().remove(QStringLiteral("#")));
   }
   if (m_bSystemBackground) {
     m_pStyleSet->setValue(QStringLiteral("Background"), "System");
   } else {
-    m_pStyleSet->setValue(QStringLiteral("Background"),
-                          "0x" + m_colorBackground.name()
-                          .remove(QStringLiteral("#")));
+    m_pStyleSet->setValue(
+        QStringLiteral("Background"),
+        "0x" + m_colorBackground.name().remove(QStringLiteral("#")));
   }
 
   m_pStyleSet->beginGroup(QStringLiteral("Style"));
@@ -442,10 +435,10 @@ void Highlighter::saveStyle() {
   this->writeFormat(QStringLiteral("Comment"), m_commentFormat);
   if (m_syntaxErrorFormat.background().isOpaque()) {
     m_pStyleSet->setValue(
-          QStringLiteral("SyntaxError"), "---" + sSEPARATOR + "---" +
-          sSEPARATOR + "---" + sSEPARATOR + "0x" +
-          m_syntaxErrorFormat.background().color().name().remove(
-            QStringLiteral("#")));
+        QStringLiteral("SyntaxError"),
+        "---" + sSEPARATOR + "---" + sSEPARATOR + "---" + sSEPARATOR + "0x" +
+            m_syntaxErrorFormat.background().color().name().remove(
+                QStringLiteral("#")));
   }
   m_pStyleSet->endGroup();
 }
@@ -456,8 +449,8 @@ void Highlighter::saveStyle() {
 void Highlighter::writeFormat(const QString &sKey,
                               const QTextCharFormat &charFormat) {
   // Foreground color
-  QString sValue = "0x" + charFormat.foreground().color().name().remove(
-                     QStringLiteral("#"));
+  QString sValue =
+      "0x" + charFormat.foreground().color().name().remove(QStringLiteral("#"));
 
   // Font weight
   if (QFont::Bold == charFormat.fontWeight()) {
@@ -475,9 +468,9 @@ void Highlighter::writeFormat(const QString &sKey,
 
   // Background color
   if (charFormat.background().isOpaque()) {
-    sValue += sSEPARATOR +
-              "0x" + charFormat.background().color().name().remove(
-                QStringLiteral("#"));
+    sValue +=
+        sSEPARATOR + "0x" +
+        charFormat.background().color().name().remove(QStringLiteral("#"));
   }
 
   m_pStyleSet->setValue(sKey, sValue);
@@ -532,20 +525,18 @@ void Highlighter::loadHighlighting(const QString &sStyleFile) {
   if (this->m_bSystemBackground) {
     m_pUi->styleTable->item(0, 0)->setText(QStringLiteral("System"));
     m_pUi->styleTable->item(0, 0)->setBackground(
-          QBrush(QApplication::palette().color(QPalette::Base)));
+        QBrush(QApplication::palette().color(QPalette::Base)));
   } else {
-    m_pUi->styleTable->item(0, 0)->setText(
-          this->m_colorBackground.name());
+    m_pUi->styleTable->item(0, 0)->setText(this->m_colorBackground.name());
     m_pUi->styleTable->item(0, 0)->setBackground(QBrush(m_colorBackground));
   }
   // Foreground
   if (this->m_bSystemForeground) {
     m_pUi->styleTable->item(1, 0)->setText(QStringLiteral("System"));
     m_pUi->styleTable->item(1, 0)->setBackground(
-          QBrush(QApplication::palette().color(QPalette::Text)));
+        QBrush(QApplication::palette().color(QPalette::Text)));
   } else {
-    m_pUi->styleTable->item(1, 0)->setText(
-          this->m_colorForeground.name());
+    m_pUi->styleTable->item(1, 0)->setText(this->m_colorForeground.name());
     m_pUi->styleTable->item(1, 0)->setBackground(QBrush(m_colorForeground));
   }
 
@@ -562,9 +553,9 @@ void Highlighter::loadHighlighting(const QString &sStyleFile) {
   this->readValue(12, this->m_miscFormat);           // Misc
   this->readValue(13, this->m_commentFormat);        // Comment
   m_pUi->styleTable->item(14, 3)->setText(
-        m_syntaxErrorFormat.background().color().name());  // Syntax error
+      m_syntaxErrorFormat.background().color().name());  // Syntax error
   m_pUi->styleTable->item(14, 3)->setBackground(
-        m_syntaxErrorFormat.background());
+      m_syntaxErrorFormat.background());
 }
 
 // ----------------------------------------------------------------------------
@@ -574,7 +565,7 @@ void Highlighter::readValue(const quint16 nRow,
                             const QTextCharFormat &charFormat) {
   // Foreground
   m_pUi->styleTable->item(nRow, 0)->setText(
-        charFormat.foreground().color().name());
+      charFormat.foreground().color().name());
   m_pUi->styleTable->item(nRow, 0)->setBackground(charFormat.foreground());
   // Bold
   if (charFormat.font().bold()) {
@@ -591,7 +582,7 @@ void Highlighter::readValue(const quint16 nRow,
   // Background
   if (charFormat.background().color() != Qt::transparent) {
     m_pUi->styleTable->item(nRow, 3)->setText(
-          charFormat.background().color().name());
+        charFormat.background().color().name());
     m_pUi->styleTable->item(nRow, 3)->setBackground(charFormat.background());
   } else {
     m_pUi->styleTable->item(nRow, 3)->setText(QLatin1String(""));
@@ -671,10 +662,14 @@ auto Highlighter::createValues(const quint16 nRow) -> QString {
   sReturn += sTmp;
   if (m_pUi->styleTable->item(nRow, 1)->checkState() == Qt::Checked) {
     sReturn += QLatin1String("true|");
-  } else { sReturn += QLatin1String("false|"); }
+  } else {
+    sReturn += QLatin1String("false|");
+  }
   if (m_pUi->styleTable->item(nRow, 2)->checkState() == Qt::Checked) {
     sReturn += QLatin1String("true|");
-  } else { sReturn += QLatin1String("false|"); }
+  } else {
+    sReturn += QLatin1String("false|");
+  }
   sTmp = m_pUi->styleTable->item(nRow, 3)->text();
   sTmp.remove(0, 1).push_front(QStringLiteral("0x"));
   sReturn += sTmp;
@@ -691,16 +686,15 @@ void Highlighter::changedStyle(int nIndex) {
     bool bOk;
     QFileInfo fiStyle(m_pStyleSet->fileName());
 
-    sFileName = QInputDialog::getText(nullptr, tr("New style"),
-                                      tr("Please insert name of "
-                                         "new style file:"),
-                                      QLineEdit::Normal,
-                                      QLatin1String(""),
-                                      &bOk);
+    sFileName =
+        QInputDialog::getText(nullptr, tr("New style"),
+                              tr("Please insert name of "
+                                 "new style file:"),
+                              QLineEdit::Normal, QLatin1String(""), &bOk);
     if (!bOk || sFileName.isEmpty()) {
       // Reset selection
       m_pUi->styleFilesBox->setCurrentIndex(
-            m_pUi->styleFilesBox->findText(fiStyle.baseName()));
+          m_pUi->styleFilesBox->findText(fiStyle.baseName()));
       return;
     }
 
@@ -710,18 +704,17 @@ void Highlighter::changedStyle(int nIndex) {
     if (fileStyle.exists()) {
       // Reset selection
       m_pUi->styleFilesBox->setCurrentIndex(
-            m_pUi->styleFilesBox->findText(fiStyle.baseName()));
+          m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
       QMessageBox::warning(nullptr, tr("Error"), tr("File already exists."));
       qWarning() << "Style file already exists:" << fileStyle.fileName();
       return;
     }
-    bOk = QFile::copy(fiStyle.absoluteFilePath(),
-                      fileStyle.fileName());
+    bOk = QFile::copy(fiStyle.absoluteFilePath(), fileStyle.fileName());
     if (!bOk) {
       // Reset selection
       m_pUi->styleFilesBox->setCurrentIndex(
-            m_pUi->styleFilesBox->findText(fiStyle.baseName()));
+          m_pUi->styleFilesBox->findText(fiStyle.baseName()));
 
       QMessageBox::warning(nullptr, tr("Error"),
                            tr("Could not create new style."));
@@ -732,7 +725,7 @@ void Highlighter::changedStyle(int nIndex) {
     }
     m_pUi->styleFilesBox->addItem(sFileName);
     m_pUi->styleFilesBox->setCurrentIndex(
-          m_pUi->styleFilesBox->findText(sFileName));
+        m_pUi->styleFilesBox->findText(sFileName));
   } else {  // Load existing style file
     sFileName = m_pUi->styleFilesBox->currentText();
   }
@@ -753,9 +746,9 @@ void Highlighter::defineRules() {
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   rule.format = m_headingsFormat;
   for (int i = 5; i > 0; i--) {
-    rule.regexp = QRegularExpression("^\\s*={" + QString::number(i) +
-                                     "}[^=]+={" + QString::number(i) +
-                                     "}\\s*$");
+    rule.regexp =
+        QRegularExpression("^\\s*={" + QString::number(i) + "}[^=]+={" +
+                           QString::number(i) + "}\\s*$");
     m_highlightingRules.append(rule);
   }
 
@@ -767,14 +760,14 @@ void Highlighter::defineRules() {
 
   // Cell style in tables
   rule.format = m_tablecellsFormat;
-  rule.regexp = QRegularExpression(
-                  QStringLiteral("^[<]{1,1}.*[>]{1,1}"),
-                  QRegularExpression::MultilineOption |
-                  QRegularExpression::DotMatchesEverythingOption);
+  rule.regexp =
+      QRegularExpression(QStringLiteral("^[<]{1,1}.*[>]{1,1}"),
+                         QRegularExpression::MultilineOption |
+                             QRegularExpression::DotMatchesEverythingOption);
   m_highlightingRules.append(rule);
-  rule.regexp = QRegularExpression(
-                  QStringLiteral("[|][|] *[<]{1,1}.*[>]{1,1}"),
-                  QRegularExpression::DotMatchesEverythingOption);
+  rule.regexp =
+      QRegularExpression(QStringLiteral("[|][|] *[<]{1,1}.*[>]{1,1}"),
+                         QRegularExpression::DotMatchesEverythingOption);
   m_highlightingRules.append(rule);
 
   // New table line
@@ -838,8 +831,8 @@ void Highlighter::defineRules() {
   for (const auto &tmpStr : qAsConst(m_sListParserKeywords)) {
     sListRegExpPatterns << QRegularExpression::escape("{{{#!" + tmpStr);
   }
-  sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("{{{")) <<
-                         QRegularExpression::escape(QStringLiteral("}}}"));
+  sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("{{{"))
+                      << QRegularExpression::escape(QStringLiteral("}}}"));
   rule.regexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
     rule.format = m_parserFormat;
@@ -847,7 +840,7 @@ void Highlighter::defineRules() {
     m_highlightingRules.append(rule);
   }
 
-  // Define textformat keywords (bold, italic, etc.)
+  // Define text format keywords (bold, italic, etc.)
   sListRegExpPatterns.clear();
   sListRegExpPatterns.reserve(m_pTemplates->getFormatStartMap().first.size() +
                               m_pTemplates->getFormatEndMap().first.size());
@@ -884,8 +877,8 @@ void Highlighter::defineRules() {
   // Misc
   sListRegExpPatterns.clear();
   sListRegExpPatterns.reserve(2);
-  sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("[[BR]]")) <<
-                         QRegularExpression::escape(QStringLiteral("\\\\"));
+  sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("[[BR]]"))
+                      << QRegularExpression::escape(QStringLiteral("\\\\"));
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
   for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
     rule.regexp = QRegularExpression(sPattern);
@@ -915,9 +908,7 @@ void Highlighter::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Highlighter::hasSettings() const -> bool {
-  return true;
-}
+auto Highlighter::hasSettings() const -> bool { return true; }
 
 void Highlighter::showSettings() {
   m_pDialog->show();
@@ -927,9 +918,7 @@ void Highlighter::showSettings() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Highlighter::setCurrentEditor(TextEditor *pEditor) {
-  Q_UNUSED(pEditor)
-}
+void Highlighter::setCurrentEditor(TextEditor *pEditor) { Q_UNUSED(pEditor) }
 
 void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
   QList<TextEditor *> tmpEditorList;
@@ -938,7 +927,7 @@ void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
   QList<int> nToBeDeleted;
   int index = -1;
   // Collect editors, which to not exist anymore
-  // and create temp. list for comparisson in next loop
+  // and create temp. list for comparison in next loop
   for (auto EditHlight : qAsConst(m_ListEditorsAndHighighters)) {
     index++;
     tmpEditorList << EditHlight.first;
@@ -952,8 +941,8 @@ void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
   pal.setColor(QPalette::Text, m_colorForeground);
   for (auto *pEd : listEditors) {
     if (!tmpEditorList.contains(pEd)) {
-      m_ListEditorsAndHighighters << QPair<TextEditor *,
-          SyntaxHighlighter *>(pEd, new SyntaxHighlighter(pEd->document()));
+      m_ListEditorsAndHighighters << QPair<TextEditor *, SyntaxHighlighter *>(
+          pEd, new SyntaxHighlighter(pEd->document()));
       // Run highlighter for new editor
       m_ListEditorsAndHighighters.last().first->setPalette(pal);
       m_ListEditorsAndHighighters.last().second->setRules(m_highlightingRules);
@@ -991,17 +980,17 @@ void Highlighter::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   // aboutbox.setIconPixmap(QPixmap(":/highlighter.png"));
-  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
-                                       "%2</p>"
-                                       "<p>%3<br />"
-                                       "%4</p>"
-                                       "<p><i>%5</i></p>")
-                   .arg(this->getCaption(),
-                        tr("Version") + ": " + PLUGIN_VERSION,
-                        PLUGIN_COPY,
-                        tr("Licence") + ": " +
-                        "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a>",
-                        tr("Inyoka markup syntax highlighter plugin.")));
+  aboutbox.setText(
+      QString::fromLatin1("<p><b>%1</b><br />"
+                          "%2</p>"
+                          "<p>%3<br />"
+                          "%4</p>"
+                          "<p><i>%5</i></p>")
+          .arg(this->getCaption(), tr("Version") + ": " + PLUGIN_VERSION,
+               PLUGIN_COPY,
+               tr("Licence") + ": " +
+                   "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
+                   "GNU General Public License Version 3</a>",
+               tr("Inyoka markup syntax highlighter plugin.")));
   aboutbox.exec();
 }

@@ -27,7 +27,7 @@
 #include "./syntaxhighlighter.h"
 
 SyntaxHighlighter::SyntaxHighlighter(QTextDocument *pDoc, QObject *pParent)
-  : QSyntaxHighlighter(pDoc) {
+    : QSyntaxHighlighter(pDoc) {
   Q_UNUSED(pParent)
 }
 
@@ -50,16 +50,17 @@ void SyntaxHighlighter::highlightBlock(const QString &sText) {
   QRegularExpressionMatchIterator i;
   QRegularExpressionMatch match;
   for (const auto &rule : qAsConst(m_highlightingRules)) {
-    QRegularExpression express(rule.regexp.pattern(),
-                               rule.regexp.patternOptions() |
-                               QRegularExpression::InvertedGreedinessOption);
+    QRegularExpression express(
+        rule.regexp.pattern(),
+        rule.regexp.patternOptions() |
+            QRegularExpression::InvertedGreedinessOption);
     i = express.globalMatch(sText);
     while (i.hasNext()) {
-        match = i.next();
-        if (match.hasMatch()) {
-             this->setFormat(match.capturedStart(), match.capturedLength(),
-                             rule.format);
-        }
+      match = i.next();
+      if (match.hasMatch()) {
+        this->setFormat(match.capturedStart(), match.capturedLength(),
+                        rule.format);
+      }
     }
   }
   setCurrentBlockState(0);

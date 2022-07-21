@@ -28,14 +28,13 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QTextDocument>
 #include <QMessageBox>
 #include <QSettings>
+#include <QTextDocument>
 
 #include "../../application/parser/parser.h"
 #include "../../application/templates/templates.h"
 #include "../../application/texteditor.h"
-
 #include "ui_uu_tabletemplate.h"
 
 void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
@@ -59,22 +58,22 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pTextDocument = new QTextDocument(this);
   m_sSharePath = sSharePath;
   m_pTemplates = new Templates(
-                   m_pSettings->value(QStringLiteral("Inyoka/Community"),
-                                      "ubuntuusers_de").toString(),
-                   m_sSharePath, m_dirPreview.absolutePath());
-  m_pParser = new Parser(m_sSharePath, QDir(QLatin1String("")),
-                         QLatin1String(""), false, m_pTemplates,
-                         m_pSettings->value(QStringLiteral("Inyoka/Community"),
-                                            "ubuntuusers_de").toString(),
-                         m_pSettings->value(QStringLiteral("Pygmentize"),
-                                            "").toString());
+      m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
+          .toString(),
+      m_sSharePath, m_dirPreview.absolutePath());
+  m_pParser = new Parser(
+      m_sSharePath, QDir(QLatin1String("")), QLatin1String(""), false,
+      m_pTemplates,
+      m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
+          .toString(),
+      m_pSettings->value(QStringLiteral("Pygmentize"), "").toString());
 
   // Build UI
   m_pDialog = new QDialog(m_pParent);
   m_pUi = new Ui::Uu_TableTemplateClass();
   m_pUi->setupUi(m_pDialog);
-  m_pDialog->setWindowFlags(m_pDialog->windowFlags()
-                            & ~Qt::WindowContextHelpButtonHint);
+  m_pDialog->setWindowFlags(m_pDialog->windowFlags() &
+                            ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
   m_pDialog->setWindowIcon(this->getIcon());
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
@@ -102,32 +101,34 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   // Load table styles
   m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
-  m_sListTableClasses << QStringLiteral("zebra") <<
-                         QStringLiteral("zebra_start2") <<
-                         QStringLiteral("zebra_start3");
-  m_sListTableClasses = m_pSettings->value(QStringLiteral("TableClasses"),
-                                           m_sListTableClasses).toStringList();
-  m_sListTableStyles << QStringLiteral("Human") << QStringLiteral("KDE") <<
-                        QStringLiteral("Xfce") << QStringLiteral("Edubuntu") <<
-                        QStringLiteral("Ubuntu Studio") <<
-                        QStringLiteral("Lubuntu");
-  m_sListTableStyles = m_pSettings->value(QStringLiteral("TableStyles"),
-                                          m_sListTableStyles).toStringList();
-  m_sListTableStylesPrefix << QLatin1String("") << QStringLiteral("kde-") <<
-                              QStringLiteral("xfce-") <<
-                              QStringLiteral("edu-") <<
-                              QStringLiteral("studio-") <<
-                              QStringLiteral("lxde-");
-  m_sListTableStylesPrefix = m_pSettings->value(
-                               QStringLiteral("TableStylesPrefix"),
-                               m_sListTableStylesPrefix).toStringList();
-  m_sRowClassTitle = m_pSettings->value(QStringLiteral("RowClassTitle"),
-                                        "titel").toString();
-  m_sRowClassHead = m_pSettings->value(QStringLiteral("RowClassHead"),
-                                       "kopf").toString();
-  m_sRowClassHighlight = m_pSettings->value(
-                           QStringLiteral("RowClassHighlight"),
-                           "highlight").toString();
+  m_sListTableClasses << QStringLiteral("zebra")
+                      << QStringLiteral("zebra_start2")
+                      << QStringLiteral("zebra_start3");
+  m_sListTableClasses =
+      m_pSettings->value(QStringLiteral("TableClasses"), m_sListTableClasses)
+          .toStringList();
+  m_sListTableStyles << QStringLiteral("Human") << QStringLiteral("KDE")
+                     << QStringLiteral("Xfce") << QStringLiteral("Edubuntu")
+                     << QStringLiteral("Ubuntu Studio")
+                     << QStringLiteral("Lubuntu");
+  m_sListTableStyles =
+      m_pSettings->value(QStringLiteral("TableStyles"), m_sListTableStyles)
+          .toStringList();
+  m_sListTableStylesPrefix << QLatin1String("") << QStringLiteral("kde-")
+                           << QStringLiteral("xfce-") << QStringLiteral("edu-")
+                           << QStringLiteral("studio-")
+                           << QStringLiteral("lxde-");
+  m_sListTableStylesPrefix =
+      m_pSettings
+          ->value(QStringLiteral("TableStylesPrefix"), m_sListTableStylesPrefix)
+          .toStringList();
+  m_sRowClassTitle =
+      m_pSettings->value(QStringLiteral("RowClassTitle"), "titel").toString();
+  m_sRowClassHead =
+      m_pSettings->value(QStringLiteral("RowClassHead"), "kopf").toString();
+  m_sRowClassHighlight =
+      m_pSettings->value(QStringLiteral("RowClassHighlight"), "highlight")
+          .toString();
 
   m_pSettings->setValue(QStringLiteral("TableClasses"), m_sListTableClasses);
   m_pSettings->setValue(QStringLiteral("TableStyles"), m_sListTableStyles);
@@ -141,26 +142,25 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   if (m_sListTableStyles.size() != m_sListTableStylesPrefix.size()) {
     qWarning() << "Different size: TableStyles size ="
-               << m_sListTableStyles.size()
-               << "  TableStylesPrefix size ="
+               << m_sListTableStyles.size() << "  TableStylesPrefix size ="
                << m_sListTableStylesPrefix.size();
   } else {
     m_pUi->tableStyleBox->addItems(m_sListTableStyles);
   }
 
   m_bBaseToNew = false;
-  connect(m_pUi->BaseToNewButton, &QPushButton::pressed,
-          this, &Uu_TableTemplate::convertToNewTemplate);
-  connect(m_pUi->NewToBaseButton, &QPushButton::pressed,
-          this, &Uu_TableTemplate::convertToBaseTemplate);
+  connect(m_pUi->BaseToNewButton, &QPushButton::pressed, this,
+          &Uu_TableTemplate::convertToNewTemplate);
+  connect(m_pUi->NewToBaseButton, &QPushButton::pressed, this,
+          &Uu_TableTemplate::convertToBaseTemplate);
 #ifndef NOPREVIEW
-  connect(m_pUi->previewButton, &QPushButton::pressed,
-          this, &Uu_TableTemplate::preview);
+  connect(m_pUi->previewButton, &QPushButton::pressed, this,
+          &Uu_TableTemplate::preview);
 #endif
-  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted,
-          this, &Uu_TableTemplate::accept);
-  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected,
-          m_pDialog, &QDialog::reject);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this,
+          &Uu_TableTemplate::accept);
+  connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
+          &QDialog::reject);
 }
 
 // ----------------------------------------------------------------------------
@@ -180,16 +180,17 @@ auto Uu_TableTemplate::getPluginVersion() const -> QString {
 void Uu_TableTemplate::installTranslator(const QString &sLang) {
   qApp->removeTranslator(&m_translator);
 
-  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                         "_" + sLang + ".qm")) {
-    qWarning() << "Could not load translation" <<
-                  ":/" + QStringLiteral(PLUGIN_NAME).toLower() +
-                  "_" + sLang + ".qm";
+  if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
+                         sLang + ".qm")) {
+    qWarning() << "Could not load translation"
+               << ":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                      ".qm";
     if (!m_translator.load(QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang,
                            m_sSharePath + "/lang")) {
-      qWarning() << "Could not load translation" <<
-                    m_sSharePath + "/lang/" +
-                    QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang + ".qm";
+      qWarning() << "Could not load translation"
+                 << m_sSharePath + "/lang/" +
+                        QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
+                        ".qm";
       return;
     }
   }
@@ -214,12 +215,8 @@ auto Uu_TableTemplate::getIcon() const -> QIcon {
   return QIcon(QLatin1String(":/tabletemplate.png"));
 }
 
-auto Uu_TableTemplate::includeMenu() const -> bool {
-  return true;
-}
-auto Uu_TableTemplate::includeToolbar() const -> bool {
-  return true;
-}
+auto Uu_TableTemplate::includeMenu() const -> bool { return true; }
+auto Uu_TableTemplate::includeToolbar() const -> bool { return true; }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -238,12 +235,11 @@ void Uu_TableTemplate::callPlugin() {
   m_pUi->baseTextEdit->clear();
   m_pUi->newTextEdit->clear();
   if (m_pEditor->textCursor().selectedText().startsWith(
-        QLatin1String("{{{#!"))) {
-    m_pUi->newTextEdit->insertPlainText(
-          m_pEditor->textCursor().selectedText());
+          QLatin1String("{{{#!"))) {
+    m_pUi->newTextEdit->insertPlainText(m_pEditor->textCursor().selectedText());
   } else {
     m_pUi->baseTextEdit->insertPlainText(
-          m_pEditor->textCursor().selectedText());
+        m_pEditor->textCursor().selectedText());
   }
   m_pDialog->show();
   m_pDialog->exec();
@@ -261,17 +257,16 @@ void Uu_TableTemplate::preview() {
   QString sRetHtml(m_pParser->genOutput(QLatin1String(""), m_pTextDocument));
   // Remove for preview useless elements
   sRetHtml.remove(
-        QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
-                           QRegularExpression::DotMatchesEverythingOption));
+      QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
+                         QRegularExpression::DotMatchesEverythingOption));
   sRetHtml.remove(
-        QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
-                           QRegularExpression::DotMatchesEverythingOption));
+      QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
+                         QRegularExpression::DotMatchesEverythingOption));
   sRetHtml.replace(QLatin1String("</style>"),
                    QLatin1String("#page table{margin:0px;}</style>"));
 
-  m_pPreviewWebview->setHtml(sRetHtml,
-                             QUrl::fromLocalFile(m_dirPreview.absolutePath()
-                                                 + "/"));
+  m_pPreviewWebview->setHtml(
+      sRetHtml, QUrl::fromLocalFile(m_dirPreview.absolutePath() + "/"));
 }
 #endif
 
@@ -290,7 +285,7 @@ auto Uu_TableTemplate::generateTable() -> QString {
     if (m_pUi->showTitleBox->isChecked() && m_pUi->showHeadBox->isChecked()) {
       sTableClass = "tableclass=\"" + m_sListTableClasses[2] + "\" ";
     } else if ((m_pUi->showTitleBox->isChecked() &&
-               !m_pUi->showHeadBox->isChecked()) ||
+                !m_pUi->showHeadBox->isChecked()) ||
                (!m_pUi->showTitleBox->isChecked() &&
                 m_pUi->showHeadBox->isChecked())) {
       sTableClass = "tableclass=\"" + m_sListTableClasses[1] + "\" ";
@@ -301,23 +296,24 @@ auto Uu_TableTemplate::generateTable() -> QString {
 
   // Create title if set
   if (m_pUi->showTitleBox->isChecked()) {
-    sTab += QString("<" + sTableClass + "rowclass=\"%1%2\"-%3> %4\n+++\n")
+    sTab +=
+        QString("<" + sTableClass + "rowclass=\"%1%2\"-%3> %4\n+++\n")
             .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
-        m_sRowClassTitle, QString::number(colsNum), tr("Title"));
+                 m_sRowClassTitle, QString::number(colsNum), tr("Title"));
   }
 
   // Create head if set
   if (m_pUi->showHeadBox->isChecked()) {
     if (m_pUi->showTitleBox->isChecked()) {
       sTab += QStringLiteral("<rowclass=\"%1%2\"> ")
-              .arg(
-                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
-          m_sRowClassHead);
+                  .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox
+                                                    ->currentIndex()],
+                       m_sRowClassHead);
     } else {
       sTab += QString("<" + sTableClass + "rowclass=\"%1%2\"> ")
-              .arg(
-                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
-          m_sRowClassHead);
+                  .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox
+                                                    ->currentIndex()],
+                       m_sRowClassHead);
     }
 
     for (int i = 0; i < colsNum; i++) {
@@ -331,16 +327,16 @@ auto Uu_TableTemplate::generateTable() -> QString {
   for (int i = 0; i < rowsNum; i++) {
     if (m_pUi->HighlightSecondBox->isChecked() &&
         // Use only, if non-default style is used; otherwiese use "zebra" class.
-        0 != m_pUi->tableStyleBox->currentIndex() &&
-        1 == i % 2) {
-      sTab += QStringLiteral("<rowclass=\"%1%2\">").arg(
-                m_sListTableStylesPrefix[m_pUi->tableStyleBox->currentIndex()],
-          m_sRowClassHighlight);
+        0 != m_pUi->tableStyleBox->currentIndex() && 1 == i % 2) {
+      sTab += QStringLiteral("<rowclass=\"%1%2\">")
+                  .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox
+                                                    ->currentIndex()],
+                       m_sRowClassHighlight);
     }
     for (int j = 0; j < colsNum; j++) {
       sTab += QLatin1String("\n");
     }
-    if (i != rowsNum-1) {
+    if (i != rowsNum - 1) {
       sTab += QLatin1String("+++\n");
     }
   }
@@ -394,12 +390,11 @@ void Uu_TableTemplate::convertToNewTemplate() {
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-                  QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
-                  QString::SkipEmptyParts);
+      QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
+      QString::SkipEmptyParts);
 #else
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-                  QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
-                  Qt::SkipEmptyParts);
+      QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")), Qt::SkipEmptyParts);
 #endif
 
   for (int i = 0; i < sListInput.size(); i++) {
@@ -443,12 +438,9 @@ void Uu_TableTemplate::accept() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Uu_TableTemplate::hasSettings() const -> bool {
-  return false;
-}
+auto Uu_TableTemplate::hasSettings() const -> bool { return false; }
 
-void Uu_TableTemplate::showSettings() {
-}
+void Uu_TableTemplate::showSettings() {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -468,18 +460,18 @@ void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
   aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/tabletemplate.png")));
-  aboutbox.setText(QString::fromLatin1("<p><b>%1</b><br />"
-                                       "%2</p>"
-                                       "<p>%3<br />"
-                                       "%4</p>"
-                                       "<p><i>%5</i></p>")
-                   .arg(this->getCaption(),
-                        tr("Version") + ": " + PLUGIN_VERSION,
-                        PLUGIN_COPY,
-                        tr("Licence") + ": " +
-                        "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
-                        "GNU General Public License Version 3</a>",
-                        tr("Plugin for generating ubuntuusers.de styled "
-                           "Inyoka tables.")));
+  aboutbox.setText(
+      QString::fromLatin1("<p><b>%1</b><br />"
+                          "%2</p>"
+                          "<p>%3<br />"
+                          "%4</p>"
+                          "<p><i>%5</i></p>")
+          .arg(this->getCaption(), tr("Version") + ": " + PLUGIN_VERSION,
+               PLUGIN_COPY,
+               tr("Licence") + ": " +
+                   "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
+                   "GNU General Public License Version 3</a>",
+               tr("Plugin for generating ubuntuusers.de styled "
+                  "Inyoka tables.")));
   aboutbox.exec();
 }
