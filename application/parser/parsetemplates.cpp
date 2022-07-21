@@ -32,22 +32,16 @@
 
 #include "./provisionaltplparser.h"
 
-ParseTemplates::ParseTemplates(const QStringList &sListTransTpl,
-                               const QStringList &sListTplNames,
-                               const QStringList &sListHtmlStart,
-                               const QString &sSharePath,
-                               const QDir &tmpImgDir,
-                               const QHash<QString, QString> &TestedWithMap,
-                               const QHash<QString, QString> &TestedWithTouchMap,
-                               const QString &sCommunity)
-  : m_sListTransTpl(sListTransTpl),
-    m_sListTplNames(sListTplNames) {
-  m_pProvTplTarser = new ProvisionalTplParser(sListHtmlStart,
-                                              sSharePath,
-                                              tmpImgDir,
-                                              TestedWithMap,
-                                              TestedWithTouchMap,
-                                              sCommunity);
+ParseTemplates::ParseTemplates(
+    const QStringList &sListTransTpl, const QStringList &sListTplNames,
+    const QStringList &sListHtmlStart, const QString &sSharePath,
+    const QDir &tmpImgDir, const QHash<QString, QString> &TestedWithMap,
+    const QHash<QString, QString> &TestedWithTouchMap,
+    const QString &sCommunity)
+    : m_sListTransTpl(sListTransTpl), m_sListTplNames(sListTplNames) {
+  m_pProvTplTarser =
+      new ProvisionalTplParser(sListHtmlStart, sSharePath, tmpImgDir,
+                               TestedWithMap, TestedWithTouchMap, sCommunity);
 }
 
 // ----------------------------------------------------------------------------
@@ -69,10 +63,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
     QRegularExpression findTemplate(
-          sListTplRegExp[k],
-          QRegularExpression::InvertedGreedinessOption |  // Only smallest match
-          QRegularExpression::DotMatchesEverythingOption |
-          QRegularExpression::CaseInsensitiveOption);
+        sListTplRegExp[k],
+        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+            QRegularExpression::DotMatchesEverythingOption |
+            QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match;
     int nPos = 0;
 
@@ -88,16 +82,15 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
       // Check if macro exists
       for (int i = 0; i < m_sListTplNames.size(); i++) {
-        if (sMacro.startsWith("(" + m_sListTplNames[i],
-                              Qt::CaseInsensitive)) {
+        if (sMacro.startsWith("(" + m_sListTplNames[i], Qt::CaseInsensitive)) {
           sMacro.remove(0, 1);  // Remove (
           sMacro.remove(QStringLiteral("\n)]]"));
           sMacro.remove(QStringLiteral(")]]"));
 
           // Extract arguments
           // Split by ',' but don't split quoted strings with comma
-          const QStringList tmpList = sMacro.split(
-                QRegularExpression(QStringLiteral("\"")));
+          const QStringList tmpList =
+              sMacro.split(QRegularExpression(QStringLiteral("\"")));
           bool bInside = false;
           for (const auto &s : tmpList) {
             if (bInside) {
@@ -106,13 +99,13 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
             } else {
               // If 's' is outside quotes, get the split string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-              sListArguments.append(s.split(
-                                      QRegularExpression(QStringLiteral(",+")),
-                                      QString::SkipEmptyParts));
+              sListArguments.append(
+                  s.split(QRegularExpression(QStringLiteral(",+")),
+                          QString::SkipEmptyParts));
 #else
-              sListArguments.append(s.split(
-                                      QRegularExpression(QStringLiteral(",+")),
-                                      Qt::SkipEmptyParts));
+              sListArguments.append(
+                  s.split(QRegularExpression(QStringLiteral(",+")),
+                          Qt::SkipEmptyParts));
 #endif
             }
             bInside = !bInside;
@@ -137,11 +130,10 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               sListArguments.removeAt(m);
             }
           }
-        } else if (sMacro.startsWith("{{{#!" + sListTrans[k] + " "
-                                     + m_sListTplNames[i],
-                                     Qt::CaseInsensitive)) {
-          sMacro.remove("{{{#!" + sListTrans[k] + " ",
-                        Qt::CaseInsensitive);
+        } else if (sMacro.startsWith(
+                       "{{{#!" + sListTrans[k] + " " + m_sListTplNames[i],
+                       Qt::CaseInsensitive)) {
+          sMacro.remove("{{{#!" + sListTrans[k] + " ", Qt::CaseInsensitive);
           sMacro.remove(QStringLiteral("\n\\}}}"));
           sMacro.remove(QStringLiteral("\\}}}"));
           sMacro.remove(QStringLiteral("\n}}}"));
@@ -149,14 +141,14 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
           sListArguments.clear();
 
           // Extract arguments
-          sListArguments = sMacro.split(
-                QRegularExpression(QStringLiteral("\\n")));
+          sListArguments =
+              sMacro.split(QRegularExpression(QStringLiteral("\\n")));
 
           if (!sListArguments.isEmpty()) {
             // Split by ' ' - don't split quoted strings with space
             QStringList sList;
             const QStringList sL = sListArguments[0].split(
-                  QRegularExpression(QStringLiteral("\"")));
+                QRegularExpression(QStringLiteral("\"")));
             bool bInside = false;
             for (const auto &s : sL) {
               if (bInside) {
@@ -183,8 +175,8 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               }
             }
             if (sListArguments[0].endsWith(QLatin1String(","))) {
-              sListArguments[0] = sListArguments[0].remove(
-                                    sListArguments[0].size() - 1, 1);
+              sListArguments[0] =
+                  sListArguments[0].remove(sListArguments[0].size() - 1, 1);
             }
           }
         }

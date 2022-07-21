@@ -34,9 +34,9 @@ class QTextDocument;
 
 class ParseTxtMap {
  public:
-    ParseTxtMap();
-    static void startParsing(QTextDocument *pRawDoc,
-                             const QPair<QStringList, QStringList> &map);
+  ParseTxtMap();
+  static void startParsing(QTextDocument *pRawDoc,
+                           const QPair<QStringList, QStringList> &map);
 };
 
 #endif  // APPLICATION_PARSER_PARSETXTMAP_H_

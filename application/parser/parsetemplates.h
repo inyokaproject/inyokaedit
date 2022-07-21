@@ -37,22 +37,21 @@ class ProvisionalTplParser;
 
 class ParseTemplates {
  public:
-    ParseTemplates(const QStringList &sListTransTpl,
-                   const QStringList &sListTplNames,
-                   const QStringList &sListHtmlStart,
-                   const QString &sSharePath,
-                   const QDir &tmpImgDir,
-                   const QHash<QString, QString> &TestedWithMap,
-                   const QHash<QString, QString> &TestedWithTouchMap,
-                   const QString &sCommunity);
+  ParseTemplates(const QStringList &sListTransTpl,
+                 const QStringList &sListTplNames,
+                 const QStringList &sListHtmlStart, const QString &sSharePath,
+                 const QDir &tmpImgDir,
+                 const QHash<QString, QString> &TestedWithMap,
+                 const QHash<QString, QString> &TestedWithTouchMap,
+                 const QString &sCommunity);
 
-    void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
+  void startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile);
 
  private:
-    ProvisionalTplParser *m_pProvTplTarser;
-    QStringList m_sListTransTpl;
-    QStringList m_sListTplNames;
-    QString m_sCurrentFile;
+  ProvisionalTplParser *m_pProvTplTarser;
+  QStringList m_sListTransTpl;
+  QStringList m_sListTplNames;
+  QString m_sCurrentFile;
 };
 
 #endif  // APPLICATION_PARSER_PARSETEMPLATES_H_

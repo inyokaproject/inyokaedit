@@ -35,19 +35,16 @@
 #include <QRegularExpression>
 
 ProvisionalTplParser::ProvisionalTplParser(
-    const QStringList &sListHtmlStart,
-    const QString &sSharePath,
-    const QDir &tmpImgDir,
-    const QHash<QString, QString> &TestedWithMap,
+    const QStringList &sListHtmlStart, const QString &sSharePath,
+    const QDir &tmpImgDir, const QHash<QString, QString> &TestedWithMap,
     const QHash<QString, QString> &TestedWithTouchMap,
     const QString &sCommunity)
-  : m_sListHtmlStart(sListHtmlStart),
-    m_sSharePath(sSharePath),
-    m_tmpImgDir(tmpImgDir),
-    m_TestedWithMap(TestedWithMap),
-    m_TestedWithTouchMap(TestedWithTouchMap),
-    m_sCommunity(sCommunity) {
-}
+    : m_sListHtmlStart(sListHtmlStart),
+      m_sSharePath(sSharePath),
+      m_tmpImgDir(tmpImgDir),
+      m_TestedWithMap(TestedWithMap),
+      m_TestedWithTouchMap(TestedWithTouchMap),
+      m_sCommunity(sCommunity) {}
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -125,8 +122,8 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return ProvisionalTplParser::parseIkhayaImage(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Ikhaya-Projektvorstellung").toLower()) {
+    if (sArgs[0].toLower() ==
+        QString::fromUtf8("Ikhaya-Projektvorstellung").toLower()) {
       sArgs.removeFirst();
       return ProvisionalTplParser::parseIkhayaProjectPresentation();
     }
@@ -166,8 +163,7 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return ProvisionalTplParser::parseOBS(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Uebersicht").toLower()) {
+    if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht").toLower()) {
       sArgs.removeFirst();
       return ProvisionalTplParser::parseOverview(sArgs);
     }
@@ -183,13 +179,13 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return this->parsePipInstall(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8(
-                 "Paketinstallation").toLower()) {
+    if (sArgs[0].toLower() ==
+        QString::fromUtf8("Paketinstallation").toLower()) {
       sArgs.removeFirst();
       return ProvisionalTplParser::parsePkgInstall(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-                 "Installbutton").toLower()) {
+    if (sArgs[0].trimmed().toLower() ==
+        QString::fromUtf8("Installbutton").toLower()) {
       sArgs.removeFirst();
       return this->parsePkgInstallBut(sArgs);
     }
@@ -221,8 +217,8 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return this->parseTestedUT(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() == QString::fromUtf8(
-          "Baustelle").toLower()) {
+    if (sArgs[0].trimmed().toLower() ==
+        QString::fromUtf8("Baustelle").toLower()) {
       sArgs.removeFirst();
       return ProvisionalTplParser::parseUnderConst(sArgs);
     }
@@ -243,42 +239,43 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
 
 auto ProvisionalTplParser::parseAdvanced() -> QString {
   return ProvisionalTplParser::insertBox(
-        "box advanced",
-        QString::fromUtf8("Artikel für fortgeschrittene Anwender"),
-        QString::fromUtf8("Dieser Artikel erfordert mehr Erfahrung im Umgang "
-                          "mit Linux und ist daher nur für fortgeschrittene "
-                          "Benutzer gedacht."));
+      "box advanced",
+      QString::fromUtf8("Artikel für fortgeschrittene Anwender"),
+      QString::fromUtf8(
+          "Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist "
+          "daher nur für fortgeschrittene Benutzer gedacht."));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseArchived(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseArchived(const QStringList &sListArgs)
+    -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
   return ProvisionalTplParser::insertBox(
-        "box improvable", QString::fromUtf8("Archivierte Anleitung"),
-        QString::fromUtf8("Dieser Artikel wurde archiviert. Das bedeutet, dass "
-                          "er nicht mehr auf Richtigkeit überprüft oder "
-                          "anderweitig gepflegt wird. Der Inhalt wurde für "
-                          "keine aktuell unterstützte Ubuntu-Version getestet. "
-                          "Wenn du Gründe für eine Wiederherstellung siehst, "
-                          "melde dich bitte in der Diskussion zum Artikel. "
-                          "Bis dahin bleibt die Seite für weitere Änderungen "
-                          "gesperrt."), sRemark);
+      "box improvable", QString::fromUtf8("Archivierte Anleitung"),
+      QString::fromUtf8(
+          "Dieser Artikel wurde archiviert. Das bedeutet, dass er nicht mehr "
+          "auf Richtigkeit überprüft oder anderweitig gepflegt wird. Der "
+          "Inhalt wurde für keine aktuell unterstützte Ubuntu-Version "
+          "getestet. Wenn du Gründe für eine Wiederherstellung siehst, melde "
+          "dich bitte in der Diskussion zum Artikel. Bis dahin bleibt die "
+          "Seite für weitere Änderungen gesperrt."),
+      sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
 auto ProvisionalTplParser::parseBash(const QStringList &sListArgs) -> QString {
-  QString sOutput("<div class=\"bash\">\n"
-                  "<div class=\"contents\">\n"
-                  "<pre>");
+  QString sOutput(
+      "<div class=\"bash\">\n"
+      "<div class=\"contents\">\n"
+      "<pre>");
   for (auto s : sListArgs) {
     sOutput += s.replace("<", "&lt;") + "\n";
   }
@@ -288,18 +285,19 @@ auto ProvisionalTplParser::parseBash(const QStringList &sListArgs) -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseBuilddeps(
-    const QStringList &sListArgs) -> QString {
-  return QString::fromUtf8("<div class=\"package-list\">\n"
-                           "<div class=\"contents\">\n"
-                           "<p>"
-                           "Befehl zum Installieren der Build-Abhängigkeiten: "
-                           "'''[#dummy apt-get]''' [#dummy aptitude]</p>\n"
-                           "<div class=\"bash\">"
-                           "<div class=\"contents\">\n"
-                           "<pre class=\"notranslate\"> "
-                           "sudo apt-get build-dep ") +
-      sListArgs.join(' ') + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
+auto ProvisionalTplParser::parseBuilddeps(const QStringList &sListArgs)
+    -> QString {
+  return QString::fromUtf8(
+             "<div class=\"package-list\">\n"
+             "<div class=\"contents\">\n"
+             "<p>"
+             "Befehl zum Installieren der Build-Abhängigkeiten: "
+             "'''[#dummy apt-get]''' [#dummy aptitude]</p>\n"
+             "<div class=\"bash\">"
+             "<div class=\"contents\">\n"
+             "<pre class=\"notranslate\"> "
+             "sudo apt-get build-dep ") +
+         sListArgs.join(' ') + "</pre>\n</div>\n</div>\n</div>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------
@@ -319,25 +317,24 @@ auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
   }
 
   return ProvisionalTplParser::insertBox(
-        "box warning", QString::fromUtf8("Achtung!"),
-        QString::fromUtf8("Dieser Artikel wird aktuell in %1 überarbeitet. "
-                          "Daher kann es sein, dass diese Seite hier veraltete "
-                          "oder nicht (mehr) zutreffende Informationen enthält."
-                          " Vergleiche beide Versionen und wende dich im "
-                          "Zweifelsfall mit deinem konkreten Anliegen an das "
-                          "Support-Forum. Änderungen am Artikel bitte nur in "
-                          "%1!"))
+             "box warning", QString::fromUtf8("Achtung!"),
+             QString::fromUtf8(
+                 "Dieser Artikel wird aktuell in %1 überarbeitet. Daher kann "
+                 "es sein, dass diese Seite hier veraltete oder nicht (mehr) "
+                 "zutreffende Informationen enthält. Vergleiche beide "
+                 "Versionen und wende dich im Zweifelsfall mit deinem "
+                 "konkreten Anliegen an das Support-Forum. Änderungen am "
+                 "Artikel bitte nur in %1!"))
       .arg("[:Baustelle/" + sLink.replace(" ", "_") + ":]");
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseExperts(
-    const QStringList &sListArgs) -> QString {
-  return ProvisionalTplParser::insertBox("box experts",
-                                         QString::fromUtf8("Experten-Info:"),
-                                         sListArgs.join(' '));
+auto ProvisionalTplParser::parseExperts(const QStringList &sListArgs)
+    -> QString {
+  return ProvisionalTplParser::insertBox(
+      "box experts", QString::fromUtf8("Experten-Info:"), sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -350,17 +347,18 @@ auto ProvisionalTplParser::parseFixme(const QStringList &sListArgs) -> QString {
   }
 
   return ProvisionalTplParser::insertBox(
-        "box fixme", QString::fromUtf8("Fehlerhafte Anleitung"),
-        QString::fromUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie "
-                          "du sie ausbessern kannst, nimm dir bitte die Zeit "
-                          "und bessere sie aus."), sRemark);
+      "box fixme", QString::fromUtf8("Fehlerhafte Anleitung"),
+      QString::fromUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie "
+                        "du sie ausbessern kannst, nimm dir bitte die Zeit "
+                        "und bessere sie aus."),
+      sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseForeignAuth(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseForeignAuth(const QStringList &sListArgs)
+    -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput("");
 
@@ -371,31 +369,37 @@ auto ProvisionalTplParser::parseForeignAuth(
       sArgs[0].remove(" ");
 
       sOutput = QString::fromUtf8(
-                  "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, "
-                  "muss man den Signierungsschlüssel mit folgendem Befehl "
-                  "importieren:");
-      sOutput += "</p>\n"
-                 "<div class=\"bash\">\n"
-                 "<div class=\"contents\">\n"
-                 "<pre> sudo apt-key adv --recv-keys --keyserver "
-                 "keyserver.ubuntu.com " + sArgs[0]
-          + " </pre>\n"
-            "</div>\n"
-            "</div>\n";
+          "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, muss man "
+          "den Signierungsschlüssel mit folgendem Befehl importieren:");
+      sOutput +=
+          "</p>\n"
+          "<div class=\"bash\">\n"
+          "<div class=\"contents\">\n"
+          "<pre> sudo apt-key adv --recv-keys --keyserver "
+          "keyserver.ubuntu.com " +
+          sArgs[0] +
+          " </pre>\n"
+          "</div>\n"
+          "</div>\n";
     } else {  // Url
-      sOutput = QString::fromUtf8(
-                  "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, "
-                  "muss man den [%1 Signierungsschlüssel herunterladen] und "
-                  "in der [:Paketquellen_freischalten: Paketverwaltung "
-                  "hinzufügen]. Alternativ dazu kann man auch im Terminal "
-                  "den folgenden Befehl ausführen:"
-                  "</p>\n").arg(sArgs[0]);
-      sOutput += "<div class=\"bash\">\n"
-                 "<div class=\"contents\">\n"
-                 "<pre>wget -q -O \"-\" " + sArgs[0] + " | sudo "
-                                              "apt-key add - </pre>\n"
-                                              "</div>\n"
-                                              "</div>\n";
+      sOutput =
+          QString::fromUtf8(
+              "<p>Um die [:Fremdquellen:Fremdquelle] zu authentifizieren, "
+              "muss man den [%1 Signierungsschlüssel herunterladen] und "
+              "in der [:Paketquellen_freischalten: Paketverwaltung "
+              "hinzufügen]. Alternativ dazu kann man auch im Terminal "
+              "den folgenden Befehl ausführen:"
+              "</p>\n")
+              .arg(sArgs[0]);
+      sOutput +=
+          "<div class=\"bash\">\n"
+          "<div class=\"contents\">\n"
+          "<pre>wget -q -O \"-\" " +
+          sArgs[0] +
+          " | sudo "
+          "apt-key add - </pre>\n"
+          "</div>\n"
+          "</div>\n";
     }
   }
   return sOutput;
@@ -404,51 +408,52 @@ auto ProvisionalTplParser::parseForeignAuth(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseForeignPackage(
-    const QStringList &sListArg) -> QString {
+auto ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg)
+    -> QString {
   QString sOutput("");
 
   if (sListArg.size() >= 2) {
     // 1: [[Vorlage(Fremdpaket, Projekthoster, Projektname, Ubuntuversion(en))]]
-    if (!(sListArg[1].startsWith("http"))
-        && sListArg[1] != "dl") {  // LAUNCHPAD
+    if (!(sListArg[1].startsWith("http")) &&
+        sListArg[1] != "dl") {  // LAUNCHPAD
       if (sListArg[0].toLower() == "launchpad") {
         sOutput = QString::fromUtf8(
-                    "<p>Beim [:Launchpad:]-Projekt [launchpad:%1:] werden "
-                    "[launchpad:%2/+download:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1], sListArg[1]);
+                      "<p>Beim [:Launchpad:]-Projekt [launchpad:%1:] werden "
+                      "[launchpad:%2/+download:DEB-Pakete] angeboten. ")
+                      .arg(sListArg[1], sListArg[1]);
       } else if (sListArg[0].toLower() == "sourceforge") {  // SOURCEFORGE
-        sOutput = QString::fromUtf8(
-                    "<p>Beim [wikipedia:SourceForge:]-Projekt [sourceforge:%1:]"
-                    " werden [sourceforge:%2/files/:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1], sListArg[1]);
+        sOutput =
+            QString::fromUtf8(
+                "<p>Beim [wikipedia:SourceForge:]-Projekt [sourceforge:%1:]"
+                " werden [sourceforge:%2/files/:DEB-Pakete] angeboten. ")
+                .arg(sListArg[1], sListArg[1]);
       } else if (sListArg[0].toLower() == "googlecode") {  // GOOGLE CODE
         sOutput = QString::fromUtf8(
-                    "<p>Beim [http://code.google.com/intl/de/ Google Code]"
-                    " {de} -Projekt [googlecode:%1:] werden [googlecode:"
-                    "%2/downloads/:DEB-Pakete] angeboten. ")
-                  .arg(sListArg[1], sListArg[1]);
+                      "<p>Beim [http://code.google.com/intl/de/ Google Code]"
+                      " {de} -Projekt [googlecode:%1:] werden [googlecode:"
+                      "%2/downloads/:DEB-Pakete] angeboten. ")
+                      .arg(sListArg[1], sListArg[1]);
       }
     } else if (sListArg[1].startsWith("dl")) {
       // 2: [[Vorlage(Fremdpaket, "Anbieter", dl, URL, Ubuntuversion(en))]]
-      sOutput = QString::fromUtf8("<p>Von %1 werden folgende DEB-Pakete "
-                                  "angeboten:</p>\n * [%2] {dl}\n")
-                .arg(sListArg[0], sListArg[2]);
+      sOutput = QString::fromUtf8(
+                    "<p>Von %1 werden folgende DEB-Pakete "
+                    "angeboten:</p>\n * [%2] {dl}\n")
+                    .arg(sListArg[0], sListArg[2]);
     } else {
       // 3: [[Vorlage(Fremdpaket, "Anbieter", URL, Ubuntuversion(en))]]
-      sOutput = QString::fromUtf8("<p>Von %1 werden [%2 DEB-Pakete] {dl} "
-                                  "angeboten. ")
-                .arg(sListArg[0], sListArg[1]);
+      sOutput =
+          QString::fromUtf8("<p>Von %1 werden [%2 DEB-Pakete] {dl} angeboten. ")
+              .arg(sListArg[0], sListArg[1]);
     }
   }
 
   // No ubuntu version
-  if ((sListArg.size() == 2
-       && !sListArg[1].startsWith("dl"))
-      || (sListArg.size() == 3
-          && sListArg[1].startsWith("dl"))) {
-    sOutput += QString::fromUtf8("Die unterstützten Ubuntuversionen und "
-                                 "Architekturen werden aufgelistet. ");
+  if ((sListArg.size() == 2 && !sListArg[1].startsWith("dl")) ||
+      (sListArg.size() == 3 && sListArg[1].startsWith("dl"))) {
+    sOutput += QString::fromUtf8(
+        "Die unterstützten Ubuntuversionen und Architekturen werden "
+        "aufgelistet. ");
   } else {
     if (sListArg.size() >= 2) {
       int i = 2;
@@ -459,49 +464,47 @@ auto ProvisionalTplParser::parseForeignPackage(
       for (int j = i; j < sListArg.size(); j++) {
         sUbuntuVersions += sListArg[j] + " ";
       }
-      sOutput += QString::fromUtf8("Die Pakete können für %1 "
-                                   "heruntergeladen werden. ")
-                 .arg(sUbuntuVersions);
+      sOutput +=
+          QString::fromUtf8("Die Pakete können für %1 heruntergeladen werden. ")
+              .arg(sUbuntuVersions);
     }
   }
 
-  sOutput += QString::fromUtf8("Nachdem man sie für die korrekte Ubuntuversion "
-                               "und Architektur geladen hat, müssen die "
-                               "[:Paketinstallation_DEB:DEB-Pakete noch "
-                               "installiert werden].</p>\n");
+  sOutput += QString::fromUtf8(
+      "Nachdem man sie für die korrekte Ubuntuversion und Architektur geladen "
+      "hat, müssen die [:Paketinstallation_DEB:DEB-Pakete noch installiert "
+      "werden].</p>\n");
 
   // Warning box
-  sOutput += ProvisionalTplParser::insertBox("box warning",
-                                             QString::fromUtf8("Hinweis!"),
-                                             QString::fromUtf8(
-                                               "[:Fremdquellen:Fremdpakete] "
-                                               "können das System gefährden."));
+  sOutput += ProvisionalTplParser::insertBox(
+      "box warning", QString::fromUtf8("Hinweis!"),
+      QString::fromUtf8(
+          "[:Fremdquellen:Fremdpakete] können das System gefährden."));
   return sOutput;
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseForeignSource(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseForeignSource(const QStringList &sListArgs)
+    -> QString {
   QStringList sArgs(sListArgs);
   QString sOutput("");
 
-  sOutput = QString::fromUtf8("<p>Um aus der [:Fremdquellen:Fremdquelle] zu "
-                              "installieren, muss man unabhängig von der "
-                              "Ubuntu-Version die folgende "
-                              "[:Paketquellen_freischalten:]:</p>\n");
+  sOutput = QString::fromUtf8(
+      "<p>Um aus der [:Fremdquellen:Fremdquelle] zu installieren, muss man "
+      "unabhängig von der Ubuntu-Version die folgende "
+      "[:Paketquellen_freischalten:]:</p>\n");
 
-  sOutput += ProvisionalTplParser::insertBox("box warning",
-                                             QString::fromUtf8("Hinweis!"),
-                                             QString::fromUtf8(
-                                               "Zusätzliche [:Fremdquellen:] "
-                                               "können das System gefährden."));
+  sOutput += ProvisionalTplParser::insertBox(
+      "box warning", QString::fromUtf8("Hinweis!"),
+      QString::fromUtf8(
+          "Zusätzliche [:Fremdquellen:] können das System gefährden."));
 
   if (sArgs.size() >= 2) {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList sListVersions(sArgs[1].split(" ",
-                                                   QString::SkipEmptyParts));
+    const QStringList sListVersions(
+        sArgs[1].split(" ", QString::SkipEmptyParts));
 #else
     const QStringList sListVersions(sArgs[1].split(" ", Qt::SkipEmptyParts));
 #endif
@@ -513,11 +516,14 @@ auto ProvisionalTplParser::parseForeignSource(
     }
     sVersions.remove(sVersions.size() - 2, 2);
 
-    sOutput += "<div class=\"thirpartyrepo-outer\">\n"
-               "<div class=\"contents\">\n"
-               "<div class=\"selector\">\n"
-               "'''Version:''' " + sVersions + "\n"
-                                               "</div>\n";
+    sOutput +=
+        "<div class=\"thirpartyrepo-outer\">\n"
+        "<div class=\"contents\">\n"
+        "<div class=\"selector\">\n"
+        "'''Version:''' " +
+        sVersions +
+        "\n"
+        "</div>\n";
 
     if (sArgs.size() == 2) {
       sOutput += "<pre> deb " + sArgs[0] + " " + sListVersions[0] + " </pre>";
@@ -525,12 +531,13 @@ auto ProvisionalTplParser::parseForeignSource(
       if (sArgs[2].startsWith(" ")) {
         sArgs[2].remove(0, 1);
       }
-      sOutput += "<pre> deb " + sArgs[0] + " "
-          + sArgs[1] + " " + sListVersions[0] + "</pre>";
+      sOutput += "<pre> deb " + sArgs[0] + " " + sArgs[1] + " " +
+                 sListVersions[0] + "</pre>";
     }
 
-    sOutput += "</div>\n"
-               "</div>\n";
+    sOutput +=
+        "</div>\n"
+        "</div>\n";
   }
   return sOutput;
 }
@@ -538,26 +545,25 @@ auto ProvisionalTplParser::parseForeignSource(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseForeignWarning(
-    const QStringList &sListArg) -> QString {
+auto ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg)
+    -> QString {
   QString sRemark("");
   QString sOutput("");
 
   if (!sListArg.isEmpty()) {
     // Package
     if (sListArg[0].toLower() == QString::fromUtf8("Paket").toLower()) {
-      sOutput = QString::fromUtf8("<p>[:Fremdquellen:Fremdpakete] können "
-                                  "das System gefährden.</p>\n");
-    } else if (sListArg[0].toLower() == QString::fromUtf8(
-                 "Quelle").toLower()) {
+      sOutput = QString::fromUtf8(
+          "<p>[:Fremdquellen:Fremdpakete] können das System gefährden.</p>\n");
+    } else if (sListArg[0].toLower() == QString::fromUtf8("Quelle").toLower()) {
       // Source
-      sOutput = QString::fromUtf8("<p>Zusätzliche [:Fremdquellen:] können "
-                                  "das System gefährden.</p>\n");
-    } else if (sListArg[0].toLower() == QString::fromUtf8(
-                 "Software").toLower()) {
+      sOutput = QString::fromUtf8(
+          "<p>Zusätzliche [:Fremdquellen:] können das System gefährden.</p>\n");
+    } else if (sListArg[0].toLower() ==
+               QString::fromUtf8("Software").toLower()) {
       // Software
-      sOutput = QString::fromUtf8("<p>[:Fremdsoftware:] kann das System "
-                                  "gefährden.</p>\n");
+      sOutput = QString::fromUtf8(
+          "<p>[:Fremdsoftware:] kann das System gefährden.</p>\n");
     }
     // Remark available
     if (sListArg.size() >= 2) {
@@ -565,16 +571,15 @@ auto ProvisionalTplParser::parseForeignWarning(
     }
   }
 
-  return ProvisionalTplParser::insertBox("box warning",
-                                         QString::fromUtf8("Hinweis!"),
-                                         sOutput, sRemark);
+  return ProvisionalTplParser::insertBox(
+      "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseIconOverview(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseIconOverview(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("<table style=\"width:95%\">\n<tbody>\n");
   QStringList sListTitle;
   QString sStyle("");
@@ -591,19 +596,20 @@ auto ProvisionalTplParser::parseIconOverview(
       sOutput += "<tr class=\"" + sStyle +
                  "titel\">\n"
                  "<td colspan=\"4\">" +
-                 sListTitle[0] + "</td>\n</tr>\n<tr class=\"" +
-          sStyle + "kopf\">\n"
-                   "<td style=\"width: 24%\">Icon</td>\n"
-                   "<td style=\"width: 25%\">Dateiname</td>\n"
-                   "<td style=\"width: 24%\">Icon</td>\n"
-                   "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
+                 sListTitle[0] + "</td>\n</tr>\n<tr class=\"" + sStyle +
+                 "kopf\">\n"
+                 "<td style=\"width: 24%\">Icon</td>\n"
+                 "<td style=\"width: 25%\">Dateiname</td>\n"
+                 "<td style=\"width: 24%\">Icon</td>\n"
+                 "<td style=\"width: 25%\">Dateiname</td>\n</tr>";
     } else {
       if (1 == i % 2) {
         sOutput += "<tr>\n";
       }
       sOutput += "<td>[[Bild(Wiki/Icons/" + sListArgs[i] +
                  ", x32, center)]]</td>"
-                 "<td><strong>" + sListArgs[i] + "</strong></td>\n";
+                 "<td><strong>" +
+                 sListArgs[i] + "</strong></td>\n";
 
       if (0 == i % 2) {
         sOutput += "</tr>\n";
@@ -621,8 +627,8 @@ auto ProvisionalTplParser::parseIconOverview(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseIkhayaAuthor(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseIkhayaAuthor(const QStringList &sListArgs)
+    -> QString {
   return ProvisionalTplParser::insertBox("box tested_for",
                                          QString::fromUtf8("Über den Autor"),
                                          sListArgs.join(' '));
@@ -631,18 +637,17 @@ auto ProvisionalTplParser::parseIkhayaAuthor(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseIkhayaAward(
-    const QStringList &sListArgs) -> QString {
-  return ProvisionalTplParser::insertBox("box award",
-                                         QString::fromUtf8("Award:"),
-                                         sListArgs.join(' '));
+auto ProvisionalTplParser::parseIkhayaAward(const QStringList &sListArgs)
+    -> QString {
+  return ProvisionalTplParser::insertBox(
+      "box award", QString::fromUtf8("Award:"), sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseIkhayaImage(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseIkhayaImage(const QStringList &sListArgs)
+    -> QString {
   QString sImage("");
   QString sText("");
   QString sStyle("float:left; margin-right:1em;");
@@ -658,12 +663,11 @@ auto ProvisionalTplParser::parseIkhayaImage(
   }
 
   return "<table style=\"" + sStyle +
-      "\">\n<tbody>\n<tr class=\"title\">\n"
-      "<td style=\"text-align: center\">\n"
-      "<img class=\"image-default\" src=\"" + sImage +
-      "\" alt=\"" + sImage +
-      "\" >\n</td>\n</tr>\n<tr>\n<td>" + sText +
-      "</td>\n</tr>\n</tbody></table\n";
+         "\">\n<tbody>\n<tr class=\"title\">\n"
+         "<td style=\"text-align: center\">\n"
+         "<img class=\"image-default\" src=\"" +
+         sImage + "\" alt=\"" + sImage + "\" >\n</td>\n</tr>\n<tr>\n<td>" +
+         sText + "</td>\n</tr>\n</tbody></table\n";
 }
 
 // ----------------------------------------------------------------------------
@@ -671,22 +675,21 @@ auto ProvisionalTplParser::parseIkhayaImage(
 
 auto ProvisionalTplParser::parseIkhayaProjectPresentation() -> QString {
   return ProvisionalTplParser::insertBox(
-        "box notice", QString::fromUtf8("Hinweis"),
-        QString::fromUtf8("Dieser Artikel gehört zur Reihe der "
-                          "Projektvorstellungen, die in unregelmäßigen "
-                          "Abständen vergleichsweise unbekannte Projekte "
-                          "vorstellt, um sie so einem breiteren Publikum näher "
-                          "zu bringen. Diese Artikelreihe existiert seit 2008. "
-                          "Alle Projektvorstellungen können im Wikiartikel "
-                          "[:ubuntuusers/Ikhayateam/Projektvorstellungen:"
-                          "Projektvorstellungen] eingesehen werden."));
+      "box notice", QString::fromUtf8("Hinweis"),
+      QString::fromUtf8(
+          "Dieser Artikel gehört zur Reihe der Projektvorstellungen, die in "
+          "unregelmäßigen Abständen vergleichsweise unbekannte Projekte "
+          "vorstellt, um sie so einem breiteren Publikum näher zu bringen. "
+          "Diese Artikelreihe existiert seit 2008. Alle Projektvorstellungen "
+          "können im Wikiartikel [:ubuntuusers/Ikhayateam/Projektvorstellungen:"
+          "Projektvorstellungen] eingesehen werden."));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseImageCollect(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   QString sImageUrl("");
   QString sDescription("");
@@ -720,12 +723,13 @@ auto ProvisionalTplParser::parseImageCollect(
   }
 
   if (sImageCollAlign.isEmpty()) {  // With word wrap
-    sOutput += "<div style=\"overflow: auto;\">\n<div "
-               "class=\"contents\"> </div>\n</div>";
-  } else {  // In continuous text (sImageCollAlign = left | rigth)
-    sOutput += "<table style=\"float: " + sImageCollAlign
-               + "; border: none\">\n<tbody>\n<tr "
-                 "style=\"background-color: #E2C889\">\n";
+    sOutput +=
+        "<div style=\"overflow: auto;\">\n<div "
+        "class=\"contents\"> </div>\n</div>";
+  } else {  // In continuous text (sImageCollAlign = left | right)
+    sOutput += "<table style=\"float: " + sImageCollAlign +
+               "; border: none\">\n<tbody>\n<tr "
+               "style=\"background-color: #E2C889\">\n";
   }
 
   for (int i = 0; i < sListArgs.length(); i++) {
@@ -744,8 +748,8 @@ auto ProvisionalTplParser::parseImageCollect(
 
     sImageUrl = sListArgs[i];
     if (sImageUrl.startsWith("Wiki/")) {
-      sImageUrl = m_sSharePath + "/community/" +
-                  m_sCommunity + "/web/" + sImageUrl;
+      sImageUrl =
+          m_sSharePath + "/community/" + m_sCommunity + "/web/" + sImageUrl;
     } else if (!sImagePath.isEmpty() &&
                QFile(sImagePath + "/" + sImageUrl).exists()) {
       sImageUrl = sImagePath + "/" + sImageUrl;
@@ -754,43 +758,46 @@ auto ProvisionalTplParser::parseImageCollect(
     }
 
     iImgHeight = QImage(sImageUrl).height();
-    iImgWidth = static_cast<double>(
-                  QImage(sImageUrl).width())/(iImgHeight/sColHeight.toDouble());
+    iImgWidth = static_cast<double>(QImage(sImageUrl).width()) /
+                (iImgHeight / sColHeight.toDouble());
 
     if (sImageCollAlign.isEmpty()) {  // With word wrap
-      if ((i+1) < sListArgs.size()) {
-        sDescription = sListArgs[i+1];
+      if ((i + 1) < sListArgs.size()) {
+        sDescription = sListArgs[i + 1];
         bContinue = true;
       } else {
         sDescription.clear();
       }
 
-      sOutput += "<table style=\"float: left; margin: 10px 5px; border: none\">"
-                 "\n<tbody>\n<tr>\n<td style=\"text-align: center; background-"
-                 "color: #E2C889; border: none\"><a href=\"" + sImageUrl +
-                 "\" class=\"crosslink\"><img src=\"" + sImageUrl +
-                 "\" alt=\"" + sImageUrl +
-                 "\" class=\"image-default\" width=\"" +
-                 QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
-                 sColHeight + "\"/></a></td>\n</tr>\n<tr>\n<td style=\"text-"
-                              "align: center; background-color: #F9EAAF; "
-                              "border: none\">" + sDescription +
-                 "</td>\n</tr>\n</tbody>\n</table>\n";
-    } else {  // In continuous text (sImageCollAlign = left | rigth)
-      sOutput += "<td style=\"text-align: center; border-width: 0 10px 0 0; "
-                 "border-color: #FFFFFF \">\n<img src=\"" + sImageUrl +
-                 "\" alt=\"" + sImageUrl +
-                 "\" class=\"image-default\" width=\"" +
-                 QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
-                 sColHeight + "\"/></td>\n";
+      sOutput +=
+          "<table style=\"float: left; margin: 10px 5px; border: none\">"
+          "\n<tbody>\n<tr>\n<td style=\"text-align: center; background-"
+          "color: #E2C889; border: none\"><a href=\"" +
+          sImageUrl + "\" class=\"crosslink\"><img src=\"" + sImageUrl +
+          "\" alt=\"" + sImageUrl + "\" class=\"image-default\" width=\"" +
+          QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
+          sColHeight +
+          "\"/></a></td>\n</tr>\n<tr>\n<td style=\"text-"
+          "align: center; background-color: #F9EAAF; "
+          "border: none\">" +
+          sDescription + "</td>\n</tr>\n</tbody>\n</table>\n";
+    } else {  // In continuous text (sImageCollAlign = left | right)
+      sOutput +=
+          "<td style=\"text-align: center; border-width: 0 10px 0 0; "
+          "border-color: #FFFFFF \">\n<img src=\"" +
+          sImageUrl + "\" alt=\"" + sImageUrl +
+          "\" class=\"image-default\" width=\"" +
+          QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
+          sColHeight + "\"/></td>\n";
       bContinue = true;
     }
   }
 
   if (sImageCollAlign.isEmpty()) {  // With word wrap
-    sOutput += "<div style=\"overflow: auto;\">\n<div class=\"contents\"> "
-               "</div>\n</div>";
-  } else {  // In continuous text (sImageCollAlign = left | rigth)
+    sOutput +=
+        "<div style=\"overflow: auto;\">\n<div class=\"contents\"> "
+        "</div>\n</div>";
+  } else {  // In continuous text (sImageCollAlign = left | right)
     sOutput += "</tr>\n<tr style=\"background-color: #F9EAAF\">";
 
     for (int i = 0; i < sListArgs.length(); i++) {
@@ -807,16 +814,17 @@ auto ProvisionalTplParser::parseImageCollect(
         }
       }
 
-      if ((i+1) < sListArgs.size()) {
-        sDescription = sListArgs[i+1];
+      if ((i + 1) < sListArgs.size()) {
+        sDescription = sListArgs[i + 1];
         bContinue = true;
       } else {
         sDescription.clear();
       }
 
-      sOutput += "<td style=\"text-align: center; border-width: "
-                 "0 10px 0 0; border-color: #FFFFFF\">\n"
-                 + sDescription + "</td>\n";
+      sOutput +=
+          "<td style=\"text-align: center; border-width: "
+          "0 10px 0 0; border-color: #FFFFFF\">\n" +
+          sDescription + "</td>\n";
     }
     sOutput += "</tr></tbody>\n</table>\n";
 
@@ -831,8 +839,8 @@ auto ProvisionalTplParser::parseImageCollect(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseImageSub(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseImageSub(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   QString sImageUrl("");
   QString sImageWidth("");
@@ -850,8 +858,8 @@ auto ProvisionalTplParser::parseImageSub(
 
   sImageUrl = sListArgs[0].trimmed();
   if (sImageUrl.startsWith("Wiki/")) {
-    sImageUrl = m_sSharePath + "/community/" +
-                m_sCommunity + "/web/" + sImageUrl;
+    sImageUrl =
+        m_sSharePath + "/community/" + m_sCommunity + "/web/" + sImageUrl;
   } else if (!sImagePath.isEmpty() &&
              QFile(sImagePath + "/" + sImageUrl).exists()) {
     sImageUrl = sImagePath + "/" + sImageUrl;
@@ -863,15 +871,15 @@ auto ProvisionalTplParser::parseImageSub(
     // Found integer -> width
     if (sListArgs[i].trimmed().toUInt() != 0) {
       sImageWidth = sListArgs[i].trimmed();
-    } else if (sListArgs[i].trimmed() == "left"
-               || sListArgs[i].trimmed() == "right") {
+    } else if (sListArgs[i].trimmed() == "left" ||
+               sListArgs[i].trimmed() == "right") {
       // Alignment
       sImageAlign = sListArgs[i].trimmed();
-    } else if (sListArgs[i].trimmed() == "xfce-style"
-               || sListArgs[i].trimmed() == "kde-style"
-               || sListArgs[i].trimmed() == "edu-style"
-               || sListArgs[i].trimmed() == "lxde-style"
-               || sListArgs[i].trimmed() == "studio-style") {
+    } else if (sListArgs[i].trimmed() == "xfce-style" ||
+               sListArgs[i].trimmed() == "kde-style" ||
+               sListArgs[i].trimmed() == "edu-style" ||
+               sListArgs[i].trimmed() == "lxde-style" ||
+               sListArgs[i].trimmed() == "studio-style") {
       // Style
       sImageStyle = sListArgs[i].trimmed().remove("-style");
     } else {
@@ -882,18 +890,17 @@ auto ProvisionalTplParser::parseImageSub(
 
   iImgWidth = QImage(sImageUrl).width();
   if (!sImageWidth.isEmpty()) {
-    iImgHeight = static_cast<double>(
-                   QImage(
-                     sImageUrl).height()) / (iImgWidth/sImageWidth.toDouble());
+    iImgHeight = static_cast<double>(QImage(sImageUrl).height()) /
+                 (iImgWidth / sImageWidth.toDouble());
   } else {
     // Default
     sImageWidth = "140";
-    iImgHeight = static_cast<double>(
-                   QImage(sImageUrl).height()) / (iImgWidth / 140);
+    iImgHeight =
+        static_cast<double>(QImage(sImageUrl).height()) / (iImgWidth / 140);
   }
 
-  sOutput = "<table style=\"float: " + sImageAlign
-            + "; clear: both; border: none\">\n<tbody>\n";
+  sOutput = "<table style=\"float: " + sImageAlign +
+            "; clear: both; border: none\">\n<tbody>\n";
 
   // No style info -> default
   if (sImageStyle.isEmpty()) {
@@ -902,9 +909,9 @@ auto ProvisionalTplParser::parseImageSub(
     sOutput += "<tr class=\"" + sImageStyle + "-titel\">\n";
   }
 
-  sOutput += "<td>\n<a href=\"" + sImageUrl +
-             "\" class=\"crosslink\">\n" + "<img src=\"" + sImageUrl +
-             "\" alt=\"" + sImageUrl + "\" class=\"image-default\" height=\"" +
+  sOutput += "<td>\n<a href=\"" + sImageUrl + "\" class=\"crosslink\">\n" +
+             "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl +
+             "\" class=\"image-default\" height=\"" +
              QString::number(static_cast<int>(iImgHeight)) + "\" width=\"" +
              sImageWidth + "\"/>\n</a>\n</td>\n</tr>\n";
 
@@ -915,8 +922,8 @@ auto ProvisionalTplParser::parseImageSub(
     sOutput += "<tr class=\"" + sImageStyle + "-kopf\">\n";
   }
 
-  sOutput += "<td style=\"text-align: center\">" + sImageDescription
-             + "</td>\n</tr>" + "</tbody>\n</table>\n";
+  sOutput += "<td style=\"text-align: center\">" + sImageDescription +
+             "</td>\n</tr>" + "</tbody>\n</table>\n";
 
   return sOutput;
 }
@@ -924,26 +931,27 @@ auto ProvisionalTplParser::parseImageSub(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseImprovable(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseImprovable(const QStringList &sListArgs)
+    -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
     sRemark = sListArgs[0];
   }
 
   return ProvisionalTplParser::insertBox(
-        "box improvable", QString::fromUtf8("Ausbaufähige Anleitung"),
-        QString::fromUtf8("Dieser Anleitung fehlen noch einige Informationen. "
-                          "Wenn Du etwas verbessern kannst, dann editiere den "
-                          "Beitrag, um die Qualität des Wikis noch weiter zu "
-                          "verbessern."), sRemark);
+      "box improvable", QString::fromUtf8("Ausbaufähige Anleitung"),
+      QString::fromUtf8(
+          "Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas "
+          "verbessern kannst, dann editiere den Beitrag, um die Qualität des "
+          "Wikis noch weiter zu verbessern."),
+      sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseInfobox(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseInfobox(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
 
   QStringList sList;
@@ -954,10 +962,14 @@ auto ProvisionalTplParser::parseInfobox(
   }
 
   if (sList.size() >= 3) {
-    sOutput = "||<-2 tablestyle=\"float:right; clear:right; margin-top: 1em; "
-              "margin-left: 1.5em;\" rowclass=\"verlauf\">" + sList[0] + "||\n";
-    sOutput += "||<-2 cellstyle=\"text-align: center; line-height: 2.2em;\">"
-               " " + sList[1];
+    sOutput =
+        "||<-2 tablestyle=\"float:right; clear:right; margin-top: 1em; "
+        "margin-left: 1.5em;\" rowclass=\"verlauf\">" +
+        sList[0] + "||\n";
+    sOutput +=
+        "||<-2 cellstyle=\"text-align: center; line-height: 2.2em;\">"
+        " " +
+        sList[1];
     if (sList[2].endsWith("png") || sList[2].endsWith("jpg")) {
       sOutput += "[[BR]][[Bild(" + sList[2] + ", 260, )]]";
     }
@@ -971,8 +983,10 @@ auto ProvisionalTplParser::parseInfobox(
       }
     }
 
-    sOutput += "||<-3 rowclass=\"highlight\">||\n"
-               "||Installation: ||" + sList[3] + "||";
+    sOutput +=
+        "||<-3 rowclass=\"highlight\">||\n"
+        "||Installation: ||" +
+        sList[3] + "||";
   }
 
   return sOutput;
@@ -996,14 +1010,14 @@ auto ProvisionalTplParser::parseHowto(const QStringList &sListArgs) -> QString {
     sUsers += "[user:" + sListArgs.at(i) + ":]";
   }
 
-  QString sOutput("Dieses Howto wurde von " + sUsers + " erstellt. "
+  QString sOutput("Dieses Howto wurde von " + sUsers +
+                  " erstellt. "
                   "Bei Problemen mit der Anleitung melde dies bitte in der "
                   "dazugehörigen Diskussion und wende dich gegebenenfalls "
                   "zusätzlich an den/die Verfasser des Howtos.");
 
-  return ProvisionalTplParser::insertBox("box notice",
-                                         QString::fromUtf8("Hinweis:"),
-                                         sOutput);
+  return ProvisionalTplParser::insertBox(
+      "box notice", QString::fromUtf8("Hinweis:"), sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -1027,79 +1041,64 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
     sListTmpKeys[i] = sListTmpKeys[i].trimmed();
     sListTmpKeys[i][0] = sListTmpKeys[i][0].toLower();
 
-    if (sListTmpKeys[i] == "altgr"
-        || sListTmpKeys[i] == "alt gr") {
+    if (sListTmpKeys[i] == "altgr" || sListTmpKeys[i] == "alt gr") {
       sTmpKeyCode = "Alt Gr";
-    } else if (sListTmpKeys[i] == "backspace"
-               || sListTmpKeys[i] == QString::fromUtf8("löschen")
-               || sListTmpKeys[i] == QString::fromUtf8("rückschritt")) {
+    } else if (sListTmpKeys[i] == "backspace" ||
+               sListTmpKeys[i] == QString::fromUtf8("löschen") ||
+               sListTmpKeys[i] == QString::fromUtf8("rückschritt")) {
       sTmpKeyCode = "&#9003;";
-    } else if (sListTmpKeys[i] == "ctrl"
-               || sListTmpKeys[i] == "steuerung") {
+    } else if (sListTmpKeys[i] == "ctrl" || sListTmpKeys[i] == "steuerung") {
       sTmpKeyCode = "Strg";
-    } else if (sListTmpKeys[i] == "del"
-               || sListTmpKeys[i] == "delete"
-               || sListTmpKeys[i] == "entfernen") {
+    } else if (sListTmpKeys[i] == "del" || sListTmpKeys[i] == "delete" ||
+               sListTmpKeys[i] == "entfernen") {
       sTmpKeyCode = "Entf";
-    } else if (sListTmpKeys[i] == "return"
-               || sListTmpKeys[i] == "enter"
-               || sListTmpKeys[i] == "eingabe") {
+    } else if (sListTmpKeys[i] == "return" || sListTmpKeys[i] == "enter" ||
+               sListTmpKeys[i] == "eingabe") {
       sTmpKeyCode = "&#9166;";
     } else if (sListTmpKeys[i] == "escape") {
       sTmpKeyCode = "Esc";
-    } else if (sListTmpKeys[i] == "eckig_auf"
-               || sListTmpKeys[i] == "eckig auf"
-               || sListTmpKeys[i] == "squared open"
-               || sListTmpKeys[i] == "squared-open") {
+    } else if (sListTmpKeys[i] == "eckig_auf" ||
+               sListTmpKeys[i] == "eckig auf" ||
+               sListTmpKeys[i] == "squared open" ||
+               sListTmpKeys[i] == "squared-open") {
       sTmpKeyCode = "&#91;";
-    } else if (sListTmpKeys[i] == "geschweift_auf"
-               || sListTmpKeys[i] == "curly open"
-               || sListTmpKeys[i] == "curly-open") {
+    } else if (sListTmpKeys[i] == "geschweift_auf" ||
+               sListTmpKeys[i] == "curly open" ||
+               sListTmpKeys[i] == "curly-open") {
       sTmpKeyCode = "&#123;";
-    } else if (sListTmpKeys[i] == "bild auf"
-               || sListTmpKeys[i] == "bild-auf"
-               || sListTmpKeys[i] == "bild rauf"
-               || sListTmpKeys[i] == "bild-rauf") {
+    } else if (sListTmpKeys[i] == "bild auf" || sListTmpKeys[i] == "bild-auf" ||
+               sListTmpKeys[i] == "bild rauf" ||
+               sListTmpKeys[i] == "bild-rauf") {
       sTmpKeyCode = "Bild &uarr;";
-    } else if (sListTmpKeys[i] == "bild ab"
-               || sListTmpKeys[i] == "bild-ab"
-               || sListTmpKeys[i] == "bild runter"
-               || sListTmpKeys[i] == "bild-runter") {
+    } else if (sListTmpKeys[i] == "bild ab" || sListTmpKeys[i] == "bild-ab" ||
+               sListTmpKeys[i] == "bild runter" ||
+               sListTmpKeys[i] == "bild-runter") {
       sTmpKeyCode = "Bild &darr;";
-    } else if (sListTmpKeys[i] == "print"
-               || sListTmpKeys[i] == "prtsc"
-               || sListTmpKeys[i] == "sysrq") {
+    } else if (sListTmpKeys[i] == "print" || sListTmpKeys[i] == "prtsc" ||
+               sListTmpKeys[i] == "sysrq") {
       sTmpKeyCode = "Druck";
-    } else if (sListTmpKeys[i] == "shift"
-               || sListTmpKeys[i] == "umschalt"
-               || sListTmpKeys[i] == "umsch") {
+    } else if (sListTmpKeys[i] == "shift" || sListTmpKeys[i] == "umschalt" ||
+               sListTmpKeys[i] == "umsch") {
       sTmpKeyCode = "&uArr;";
-    } else if (sListTmpKeys[i] == "shift2"
-               || sListTmpKeys[i] == "umschalt2"
-               || sListTmpKeys[i] == "umsch2") {
+    } else if (sListTmpKeys[i] == "shift2" || sListTmpKeys[i] == "umschalt2" ||
+               sListTmpKeys[i] == "umsch2") {
       sTmpKeyCode = "&uArr;&nbsp;&nbsp;&nbsp;";
-    } else if (sListTmpKeys[i] == "home"
-               || sListTmpKeys[i] == "pos 1") {
+    } else if (sListTmpKeys[i] == "home" || sListTmpKeys[i] == "pos 1") {
       sTmpKeyCode = "Pos1";
-    } else if (sListTmpKeys[i] == "mac"
-               || sListTmpKeys[i] == "apple"
-               || sListTmpKeys[i] == "apfel"
-               || sListTmpKeys[i] == "cmd") {
+    } else if (sListTmpKeys[i] == "mac" || sListTmpKeys[i] == "apple" ||
+               sListTmpKeys[i] == "apfel" || sListTmpKeys[i] == "cmd") {
       sTmpKeyCode = "&#8984;";
-    } else if (sListTmpKeys[i] == "wahl"
-               || sListTmpKeys[i] == "alternate"
-               || sListTmpKeys[i] == "optionen") {
+    } else if (sListTmpKeys[i] == "wahl" || sListTmpKeys[i] == "alternate" ||
+               sListTmpKeys[i] == "optionen") {
       sTmpKeyCode = "&#8997;";
-    } else if (sListTmpKeys[i] == "gleich"
-               || sListTmpKeys[i] == "equal") {
+    } else if (sListTmpKeys[i] == "gleich" || sListTmpKeys[i] == "equal") {
       sTmpKeyCode = "=";
-    } else if (sListTmpKeys[i] == QString::fromUtf8("schrägstrich")
-               || sListTmpKeys[i] == "slash") {
+    } else if (sListTmpKeys[i] == QString::fromUtf8("schrägstrich") ||
+               sListTmpKeys[i] == "slash") {
       sTmpKeyCode = "/";
-    } else if (sListTmpKeys[i] == "caps"
-               || sListTmpKeys[i] == "feststell"
-               || sListTmpKeys[i] == "feststelltaste"
-               || sListTmpKeys[i] == QString::fromUtf8("groß")) {
+    } else if (sListTmpKeys[i] == "caps" || sListTmpKeys[i] == "feststell" ||
+               sListTmpKeys[i] == "feststelltaste" ||
+               sListTmpKeys[i] == QString::fromUtf8("groß")) {
       sTmpKeyCode = "&dArr;";
     } else if (sListTmpKeys[i] == "doppelpunkt") {
       sTmpKeyCode = ":";
@@ -1109,140 +1108,123 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
       sTmpKeyCode = "!";
     } else if (sListTmpKeys[i] == "und") {
       sTmpKeyCode = "&#38";
-    } else if (sListTmpKeys[i] == QString::fromUtf8("rückstrich")
-               || sListTmpKeys[i] == "backslash"
-               || sListTmpKeys[i] == "\\") {
+    } else if (sListTmpKeys[i] == QString::fromUtf8("rückstrich") ||
+               sListTmpKeys[i] == "backslash" || sListTmpKeys[i] == "\\") {
       sTmpKeyCode = "&#92";
-    } else if (sListTmpKeys[i] == "space"
-               || sListTmpKeys[i] == "leer"
-               || sListTmpKeys[i] == "leertaste"
-               || sListTmpKeys[i] == "leerzeichen"
-               || sListTmpKeys[i] == "leerschritt") {
-      sTmpKeyCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    } else if (sListTmpKeys[i] == "tab"
-               || sListTmpKeys[i] == "tabulator") {
+    } else if (sListTmpKeys[i] == "space" || sListTmpKeys[i] == "leer" ||
+               sListTmpKeys[i] == "leertaste" ||
+               sListTmpKeys[i] == "leerzeichen" ||
+               sListTmpKeys[i] == "leerschritt") {
+      sTmpKeyCode =
+          "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+          "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    } else if (sListTmpKeys[i] == "tab" || sListTmpKeys[i] == "tabulator") {
       sTmpKeyCode = "Tab &#8644;";
     } else if (sListTmpKeys[i] == "win") {
       sTmpKeyCode = "Windows";
-    } else if (sListTmpKeys[i] == "hoch"
-               || sListTmpKeys[i] == "auf"
-               || sListTmpKeys[i] == "up"
-               || sListTmpKeys[i] == "rauf"
-               || sListTmpKeys[i] == "pfeil-hoch"
-               || sListTmpKeys[i] == "pfeil hoch"
-               || sListTmpKeys[i] == "oben"
-               || sListTmpKeys[i] == "pfeil auf") {
+    } else if (sListTmpKeys[i] == "hoch" || sListTmpKeys[i] == "auf" ||
+               sListTmpKeys[i] == "up" || sListTmpKeys[i] == "rauf" ||
+               sListTmpKeys[i] == "pfeil-hoch" ||
+               sListTmpKeys[i] == "pfeil hoch" || sListTmpKeys[i] == "oben" ||
+               sListTmpKeys[i] == "pfeil auf") {
       sTmpKeyCode = "&uarr;";
-    } else if (sListTmpKeys[i] == "runter"
-               || sListTmpKeys[i] == "ab"
-               || sListTmpKeys[i] == "down"
-               || sListTmpKeys[i] == "pfeil-runter"
-               || sListTmpKeys[i] == "pfeil-ab"
-               || sListTmpKeys[i] == "pfeil runter"
-               || sListTmpKeys[i] == "pfeil ab"
-               || sListTmpKeys[i] == "pfeil-unten"
-               || sListTmpKeys[i] == "pfeil unten"
-               || sListTmpKeys[i] == "unten") {
+    } else if (sListTmpKeys[i] == "runter" || sListTmpKeys[i] == "ab" ||
+               sListTmpKeys[i] == "down" || sListTmpKeys[i] == "pfeil-runter" ||
+               sListTmpKeys[i] == "pfeil-ab" ||
+               sListTmpKeys[i] == "pfeil runter" ||
+               sListTmpKeys[i] == "pfeil ab" ||
+               sListTmpKeys[i] == "pfeil-unten" ||
+               sListTmpKeys[i] == "pfeil unten" || sListTmpKeys[i] == "unten") {
       sTmpKeyCode = "&darr;";
-    } else if (sListTmpKeys[i] == "links"
-               || sListTmpKeys[i] == "left"
-               || sListTmpKeys[i] == "pfeil-links"
-               || sListTmpKeys[i] == "pfeil links") {
+    } else if (sListTmpKeys[i] == "links" || sListTmpKeys[i] == "left" ||
+               sListTmpKeys[i] == "pfeil-links" ||
+               sListTmpKeys[i] == "pfeil links") {
       sTmpKeyCode = "&larr;";
-    } else if (sListTmpKeys[i] == "rechts"
-               || sListTmpKeys[i] == "right"
-               || sListTmpKeys[i] == "pfeil-rechts"
-               || sListTmpKeys[i] == "pfeil rechts") {
+    } else if (sListTmpKeys[i] == "rechts" || sListTmpKeys[i] == "right" ||
+               sListTmpKeys[i] == "pfeil-rechts" ||
+               sListTmpKeys[i] == "pfeil rechts") {
       sTmpKeyCode = "&rarr;";
-    } else if (sListTmpKeys[i] == "\",\""
-               || sListTmpKeys[i] == "\',\'") {
+    } else if (sListTmpKeys[i] == "\",\"" || sListTmpKeys[i] == "\',\'") {
       sTmpKeyCode = ",";
     } else if (sListTmpKeys[i] == "minus") {
       sTmpKeyCode = "-";
-    } else if (sListTmpKeys[i] == "raute"
-               || sListTmpKeys[i] == "rautenzeichen"
-               || sListTmpKeys[i] == "hash") {
+    } else if (sListTmpKeys[i] == "raute" ||
+               sListTmpKeys[i] == "rautenzeichen" ||
+               sListTmpKeys[i] == "hash") {
       sTmpKeyCode = "#";
-    } else if (sListTmpKeys[i] == "eckig_zu"
-               || sListTmpKeys[i] == "eckig zu"
-               || sListTmpKeys[i] == "squared close"
-               || sListTmpKeys[i] == "squared-close") {
+    } else if (sListTmpKeys[i] == "eckig_zu" || sListTmpKeys[i] == "eckig zu" ||
+               sListTmpKeys[i] == "squared close" ||
+               sListTmpKeys[i] == "squared-close") {
       sTmpKeyCode = "&#93;";
-    } else if (sListTmpKeys[i] == "geschweift_zu"
-               || sListTmpKeys[i] == "curly close"
-               || sListTmpKeys[i] == "curly-close") {
+    } else if (sListTmpKeys[i] == "geschweift_zu" ||
+               sListTmpKeys[i] == "curly close" ||
+               sListTmpKeys[i] == "curly-close") {
       sTmpKeyCode = "&#125;";
     } else if (sListTmpKeys[i] == "plus") {
       sTmpKeyCode = "+";
-    } else if (sListTmpKeys[i] == "gravis"
-               || sListTmpKeys[i] == "grave"
-               || sListTmpKeys[i] == "'") {
+    } else if (sListTmpKeys[i] == "gravis" || sListTmpKeys[i] == "grave" ||
+               sListTmpKeys[i] == "'") {
       sTmpKeyCode = "&#96;";
     } else if (sListTmpKeys[i] == "sz") {
       sTmpKeyCode = "&szlig;";
     } else if (sListTmpKeys[i] == "end") {
       sTmpKeyCode = "Ende";
-    } else if (sListTmpKeys[i] == "ins"
-               || sListTmpKeys[i] == QString::fromUtf8("einfügen")
-               || sListTmpKeys[i] == "insert") {
+    } else if (sListTmpKeys[i] == "ins" ||
+               sListTmpKeys[i] == QString::fromUtf8("einfügen") ||
+               sListTmpKeys[i] == "insert") {
       sTmpKeyCode = "Einfg";
-    } else if (sListTmpKeys[i] == "num"
-               || sListTmpKeys[i] == "num-taste"
-               || sListTmpKeys[i] == "num-lock-taste") {
+    } else if (sListTmpKeys[i] == "num" || sListTmpKeys[i] == "num-taste" ||
+               sListTmpKeys[i] == "num-lock-taste") {
       sTmpKeyCode = "num &dArr;";
-    } else if (sListTmpKeys[i] == "fragezeichen"
-               || sListTmpKeys[i] == "question mark"
-               || sListTmpKeys[i] == "question-mark") {
+    } else if (sListTmpKeys[i] == "fragezeichen" ||
+               sListTmpKeys[i] == "question mark" ||
+               sListTmpKeys[i] == "question-mark") {
       sTmpKeyCode = "?";
     } else if (sListTmpKeys[i] == "break") {
       sTmpKeyCode = "Pause";
-    } else if (sListTmpKeys[i] == "rollen"
-               || sListTmpKeys[i] == "bildlauf") {
+    } else if (sListTmpKeys[i] == "rollen" || sListTmpKeys[i] == "bildlauf") {
       sTmpKeyCode = "&dArr; Rollen";
-    } else if (sListTmpKeys[i] == "akut"
-               || sListTmpKeys[i] == "acute") {
+    } else if (sListTmpKeys[i] == "akut" || sListTmpKeys[i] == "acute") {
       sTmpKeyCode = "&#146;";
-    } else if (sListTmpKeys[i] == "anfuehrungsstriche"
-               || sListTmpKeys[i] == "doublequote") {
+    } else if (sListTmpKeys[i] == "anfuehrungsstriche" ||
+               sListTmpKeys[i] == "doublequote") {
       sTmpKeyCode = "&#34;";
     } else if (sListTmpKeys[i] == "prozent") {
       sTmpKeyCode = "%";
     } else if (sListTmpKeys[i] == "compose") {
       sTmpKeyCode = "&#9092;";
-    } else if (sListTmpKeys[i] == "rstrg"
-               || sListTmpKeys[i] == "rctrl"
-               || sListTmpKeys[i] == "rsteuerung") {
+    } else if (sListTmpKeys[i] == "rstrg" || sListTmpKeys[i] == "rctrl" ||
+               sListTmpKeys[i] == "rsteuerung") {
       sTmpKeyCode = "RStrg";
-    } else if (sListTmpKeys[i] == "lmt"
-               || sListTmpKeys[i] == "lmb") {
+    } else if (sListTmpKeys[i] == "lmt" || sListTmpKeys[i] == "lmb") {
       bImage = true;
-      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_left.png,"
-                 "alt=\"linke Maustaste\")]]";
-    } else if (sListTmpKeys[i] == "rmt"
-               || sListTmpKeys[i] == "rmb") {
+      sTmpKey +=
+          "[[Bild(Wiki/Vorlagen/Tasten/mouse_left.png,"
+          "alt=\"linke Maustaste\")]]";
+    } else if (sListTmpKeys[i] == "rmt" || sListTmpKeys[i] == "rmb") {
       bImage = true;
-      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_right.png, "
-                 "alt=\"rechte Maustaste\")]]";
-    } else if (sListTmpKeys[i] == "mmt"
-               || sListTmpKeys[i] == "mmb") {
+      sTmpKey +=
+          "[[Bild(Wiki/Vorlagen/Tasten/mouse_right.png, "
+          "alt=\"rechte Maustaste\")]]";
+    } else if (sListTmpKeys[i] == "mmt" || sListTmpKeys[i] == "mmb") {
       bImage = true;
-      sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/mouse_midd.png, "
-                 "alt=\"mittlere Maustaste\")]]";
+      sTmpKey +=
+          "[[Bild(Wiki/Vorlagen/Tasten/mouse_midd.png, "
+          "alt=\"mittlere Maustaste\")]]";
     } else if (sListTmpKeys[i] == "pfeiltasten") {
       bImage = true;
-      sTmpKey += "[[Bild(Wiki/Icons/pfeiltasten.png, 66, "
-                 "alt=\"Pfeiltasten\")]]";
+      sTmpKey +=
+          "[[Bild(Wiki/Icons/pfeiltasten.png, 66, "
+          "alt=\"Pfeiltasten\")]]";
     } else if (sListTmpKeys[i] == "wasd") {
       bImage = true;
-      sTmpKey += "[[Bild(Wiki/Icons/tasten_wasd.png, 66, "
-                 "alt=\"W A S D Tasten\")]]";
-    } else if (sListTmpKeys[i] == "menue"
-               || sListTmpKeys[i] == "menue-taste") {
+      sTmpKey +=
+          "[[Bild(Wiki/Icons/tasten_wasd.png, 66, "
+          "alt=\"W A S D Tasten\")]]";
+    } else if (sListTmpKeys[i] == "menue" || sListTmpKeys[i] == "menue-taste") {
       bImage = true;
       sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/menu.png, alt=\"Menü\")]]";
-    } else if (sListTmpKeys[i] == "power"
-               || sListTmpKeys[i] == "an") {
+    } else if (sListTmpKeys[i] == "power" || sListTmpKeys[i] == "an") {
       bImage = true;
       sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/power.png, alt=\"Power\")]]";
     } else if (sListTmpKeys[i] == "tux") {
@@ -1253,22 +1235,18 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
       sTmpKey += "[[Bild(Wiki/Vorlagen/Tasten/ubuntu.png, alt=\"Ubuntu\")]]";
     } else if (sListTmpKeys[i] == "at") {
       sTmpKeyCode = "&#64;";
-    } else if (sListTmpKeys[i] == "cherry"
-               || sListTmpKeys[i] == "keyman") {
+    } else if (sListTmpKeys[i] == "cherry" || sListTmpKeys[i] == "keyman") {
       sTmpKeyCode = "Keym&#64;n";
-    } else if (sListTmpKeys[i] == "vol"
-               || sListTmpKeys[i] == "lauter") {
+    } else if (sListTmpKeys[i] == "vol" || sListTmpKeys[i] == "lauter") {
       sTmpKeyCode = "Vol+";
-    } else if (sListTmpKeys[i] == "vol-"
-               || sListTmpKeys[i] == "leiser") {
+    } else if (sListTmpKeys[i] == "vol-" || sListTmpKeys[i] == "leiser") {
       sTmpKeyCode = "Vol-";
-    } else if (sListTmpKeys[i] == "anykey"
-               || sListTmpKeys[i] == "any") {
+    } else if (sListTmpKeys[i] == "anykey" || sListTmpKeys[i] == "any") {
       sTmpKeyCode = "ANY";
     } else if (sListTmpKeys[i] == "panic") {
       sTmpKeyCode = "PANIC";
-    } else if (sListTmpKeys[i] == "koelsch"
-               || sListTmpKeys[i] == QString::fromUtf8("kölsch")) {
+    } else if (sListTmpKeys[i] == "koelsch" ||
+               sListTmpKeys[i] == QString::fromUtf8("kölsch")) {
       sTmpKeyCode = "K&ouml;lsch";
     } else {
       // Everything else: First character to Upper
@@ -1282,7 +1260,7 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
     }
 
     // "+" between keys
-    if (i != sListTmpKeys.size()-1) {
+    if (i != sListTmpKeys.size() - 1) {
       sTmpKey += " + ";
     }
   }
@@ -1292,16 +1270,17 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseKnowledge(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   QString sTmp;
   for (int i = 0; i < sListArgs.length(); i++) {
     sOutput += "\n 1. [[Anker(source-" + QString::number(i + 1) + ")]]";
     if (sListArgs[i].contains(",")) {
       sOutput += sListArgs[i].left(sListArgs[i].indexOf(",")).trimmed();
-      sTmp = sListArgs[i].right(sListArgs[i].length()
-                                - sListArgs[i].indexOf(",")).trimmed();
+      sTmp = sListArgs[i]
+                 .right(sListArgs[i].length() - sListArgs[i].indexOf(","))
+                 .trimmed();
       sOutput += sTmp;
     } else {
       sOutput += sListArgs[i];
@@ -1309,10 +1288,10 @@ auto ProvisionalTplParser::parseKnowledge(
   }
 
   return ProvisionalTplParser::insertBox(
-        "box knowledge",
-        QString::fromUtf8("Zum Verständnis dieses Artikels sind "
-                          "folgende Seiten hilfreich:"),
-        sOutput);
+      "box knowledge",
+      QString::fromUtf8(
+          "Zum Verständnis dieses Artikels sind folgende Seiten hilfreich:"),
+      sOutput);
 }
 
 // ----------------------------------------------------------------------------
@@ -1325,21 +1304,21 @@ auto ProvisionalTplParser::parseLeft(const QStringList &sListArgs) -> QString {
   }
 
   return ProvisionalTplParser::insertBox(
-        "box left", QString::fromUtf8("Verlassene Anleitung"),
-        QString::fromUtf8("Dieser Artikel wurde von seinem Ersteller verlassen "
-                          "und wird nicht mehr weiter von ihm gepflegt. Wenn "
-                          "Du den Artikel fertigstellen oder erweitern kannst, "
-                          "dann bessere ihn bitte aus."), sRemark);
+      "box left", QString::fromUtf8("Verlassene Anleitung"),
+      QString::fromUtf8("Dieser Artikel wurde von seinem Ersteller verlassen "
+                        "und wird nicht mehr weiter von ihm gepflegt. Wenn "
+                        "Du den Artikel fertigstellen oder erweitern kannst, "
+                        "dann bessere ihn bitte aus."),
+      sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseNotice(
-    const QStringList &sListArgs) -> QString {
-  return ProvisionalTplParser::insertBox("box notice",
-                                         QString::fromUtf8("Hinweis:"),
-                                         sListArgs.join(' '));
+auto ProvisionalTplParser::parseNotice(const QStringList &sListArgs)
+    -> QString {
+  return ProvisionalTplParser::insertBox(
+      "box notice", QString::fromUtf8("Hinweis:"), sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
@@ -1347,41 +1326,46 @@ auto ProvisionalTplParser::parseNotice(
 
 auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
   QString sOutput("");
-  sOutput = QString::fromUtf8("<p>Um das Paket aus einer vom "
-                              "[:Open_Build_Service:Open Build Service] "
-                              "generierten Paketquelle zu installieren, muss "
-                              "man zuerst die [:Paketquellen_freischalten:"
-                              "Paketquelle freischalten], indem man folgenden"
-                              " Befehl mit [:sudo:root-Rechten] im "
-                              "[:Terminal:] ausführt: </p>\n");
+  sOutput = QString::fromUtf8(
+      "<p>Um das Paket aus einer vom "
+      "[:Open_Build_Service:Open Build Service] "
+      "generierten Paketquelle zu installieren, muss "
+      "man zuerst die [:Paketquellen_freischalten:"
+      "Paketquelle freischalten], indem man folgenden"
+      " Befehl mit [:sudo:root-Rechten] im "
+      "[:Terminal:] ausführt: </p>\n");
 
   if (!sListArgs.isEmpty()) {
-    sOutput += "<div class=\"thirdpartyrepo-outer "
-               "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
-               "</p><div class=\"bash\"><div class=\"contents\"><pre "
-               "class=\"notranslate\">sudo add-apt-repository 'deb http://"
-               "download.opensuse.org/repositories/" + sListArgs[0] +
+    sOutput +=
+        "<div class=\"thirdpartyrepo-outer "
+        "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
+        "</p><div class=\"bash\"><div class=\"contents\"><pre "
+        "class=\"notranslate\">sudo add-apt-repository 'deb http://"
+        "download.opensuse.org/repositories/" +
+        sListArgs[0] +
         "/xUbuntu_VERSION/ /'</pre></div></div><p></p></div></div>";
   }
 
   sOutput += ProvisionalTplParser::insertBox(
-               "box warning",
-               QString::fromUtf8("Hinweis!"),
-               QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
-                                 " das System gefährden."));
+      "box warning", QString::fromUtf8("Hinweis!"),
+      QString::fromUtf8("Zusätzliche [:Fremdquellen:] können"
+                        " das System gefährden."));
 
-  sOutput += QString::fromUtf8("<p>Anschließend sollte die [:Fremdquelle:] "
-                               "authentifiziert werden. Dazu lädt man sich "
-                               "mit dem folgenden Befehlen den benötigten "
-                               "Schlüssel herunter und fügt diesen dem "
-                               "Schlüsselbund hinzu:</p>");
+  sOutput += QString::fromUtf8(
+      "<p>Anschließend sollte die [:Fremdquelle:] "
+      "authentifiziert werden. Dazu lädt man sich "
+      "mit dem folgenden Befehlen den benötigten "
+      "Schlüssel herunter und fügt diesen dem "
+      "Schlüsselbund hinzu:</p>");
 
   if (!sListArgs.isEmpty()) {
-    sOutput += "<div class=\"thirdpartyrepo-outer "
-               "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
-               "</p><div class=\"bash\"><div class=\"contents\"><pre "
-               "class=\"notranslate\">wget http://download.opensuse.org"
-               "/repositories/" + sListArgs[0] +
+    sOutput +=
+        "<div class=\"thirdpartyrepo-outer "
+        "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
+        "</p><div class=\"bash\"><div class=\"contents\"><pre "
+        "class=\"notranslate\">wget http://download.opensuse.org"
+        "/repositories/" +
+        sListArgs[0] +
         "/xUbuntu_VERSION/Release.key<br />sudo apt-key add - &lt; Release.key "
         "</pre></div></div><p></p></div></div>";
   }
@@ -1392,12 +1376,13 @@ auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseOverview(
-    const QStringList &sListArgs) -> QString {
-  QList <QStringList> sListList;
+auto ProvisionalTplParser::parseOverview(const QStringList &sListArgs)
+    -> QString {
+  QList<QStringList> sListList;
   QStringList sListTmp;
-  QString sOutput("<table style=\"border: none; margin-top: 0; "
-                  "margin-right: 0\">\n<tbody>");
+  QString sOutput(
+      "<table style=\"border: none; margin-top: 0; "
+      "margin-right: 0\">\n<tbody>");
 
   // Split arguments by 'empty line'
   for (int j = 0; j < sListArgs.size(); j++) {
@@ -1418,28 +1403,31 @@ auto ProvisionalTplParser::parseOverview(
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k && 0 == i) {
         if (!sListList[i].isEmpty()) {
-          sOutput += "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
-                     "background-color: #E2C889; font-size: 1.1em; "
-                     "border-width: 0 10px 0 0; border-color: #FFFFFF\">"
-                     + sListList[i][k].trimmed() +
-                     "</td>\n</tr>\n";
+          sOutput +=
+              "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
+              "background-color: #E2C889; font-size: 1.1em; "
+              "border-width: 0 10px 0 0; border-color: #FFFFFF\">" +
+              sListList[i][k].trimmed() + "</td>\n</tr>\n";
         }
       } else if (sListList[i].size() > 1) {
         if (0 == k) {
           sOutput += "<tr>\n";
         }
-        sOutput += "<td style=\"text-align: center; background-color: #F9EAAF; "
-                   "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
-                   "width: 32%\">" + sListList[i][k] + "</td>\n";
+        sOutput +=
+            "<td style=\"text-align: center; background-color: #F9EAAF; "
+            "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
+            "width: 32%\">" +
+            sListList[i][k] + "</td>\n";
         if (2 == k) {
           sOutput += "</tr>\n";
           continue;
         }
       } else {
-        sOutput += "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
-                   "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
-                   "background-color: #F9EAAF; \">" +
-                   sListList[i][k].trimmed() + "</td>\n</tr>\n";
+        sOutput +=
+            "<tr>\n<td colspan=\"3\" style=\"text-align: center; "
+            "border-width: 0 10px 10px 0; border-color: #FFFFFF; "
+            "background-color: #F9EAAF; \">" +
+            sListList[i][k].trimmed() + "</td>\n</tr>\n";
       }
     }
   }
@@ -1450,9 +1438,9 @@ auto ProvisionalTplParser::parseOverview(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseOverview2(
-    const QStringList &sListArgs) -> QString {
-  QList <QStringList> sListList;
+auto ProvisionalTplParser::parseOverview2(const QStringList &sListArgs)
+    -> QString {
+  QList<QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table style=\"width: 98%; border: none;\">\n<tbody>");
   QString sStyle;
@@ -1476,11 +1464,11 @@ auto ProvisionalTplParser::parseOverview2(
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k && 0 == i) {
         if (!sListList[i].isEmpty()) {
-          sOutput += "<tr>\n<td colspan=\"6\" style=\"text-align: center; "
-                     "background-color: #E2C889; font-size: 1.1em; "
-                     "border-width: 0 10px 10px 0; border-color: #FFFFFF\">"
-                     + sListList[i][k].trimmed() +
-                     "</td>\n</tr>\n";
+          sOutput +=
+              "<tr>\n<td colspan=\"6\" style=\"text-align: center; "
+              "background-color: #E2C889; font-size: 1.1em; "
+              "border-width: 0 10px 10px 0; border-color: #FFFFFF\">" +
+              sListList[i][k].trimmed() + "</td>\n</tr>\n";
         }
       } else if (sListList[i].size() > 1) {
         if (0 == k) {
@@ -1508,35 +1496,38 @@ auto ProvisionalTplParser::parseOverview2(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parsePackage(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parsePackage(const QStringList &sListArgs)
+    -> QString {
   return QString::fromUtf8(
-        "<p>Paketliste zum Kopieren:</p>\n"
-        "<div class=\"bash\">\n<pre class=\"notranslate\"> "
-        "sudo apt-get install ") + sListArgs.join(' ')  + "</pre>\n</div>\n";
+             "<p>Paketliste zum Kopieren:</p>\n"
+             "<div class=\"bash\">\n<pre class=\"notranslate\"> "
+             "sudo apt-get install ") +
+         sListArgs.join(' ') + "</pre>\n</div>\n";
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parsePipInstall(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs)
+    -> QString {
   return QString::fromUtf8(
-        "Wer die neueste Version installieren möchte, kann das Programm über "
-        "den Python Paketmanager [:pip:] installieren:\n"
-        "<div class=\"bash\">\n"
-        "<div class=\"contents\">\n"
-        "<pre>pip3 install ") +
-      sListArgs.join(' ') + "     # Programm wird nur für den aktuellen Nutzer "
-                            "installiert</pre>\n</div>\n</div>\n" +
-      this->parseForeignWarning(QStringList() << "Software");
+             "Wer die neueste Version installieren möchte, kann das Programm "
+             "über "
+             "den Python Paketmanager [:pip:] installieren:\n"
+             "<div class=\"bash\">\n"
+             "<div class=\"contents\">\n"
+             "<pre>pip3 install ") +
+         sListArgs.join(' ') +
+         "     # Programm wird nur für den aktuellen Nutzer "
+         "installiert</pre>\n</div>\n</div>\n" +
+         this->parseForeignWarning(QStringList() << "Software");
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parsePkgInstall(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs)
+    -> QString {
   QStringList sListPackages;
   sListPackages.reserve(sListArgs.length());
   QStringList sListPackagesTMP;
@@ -1549,8 +1540,8 @@ auto ProvisionalTplParser::parsePkgInstall(
 
     // Package with source
     if (sListPackagesTMP.length() >= 2) {
-      sOutput += "\n * '''" + sListPackagesTMP[0].trimmed() + "'''"
-          + " (''" + sListPackagesTMP[1].trimmed() + "'')";
+      sOutput += "\n * '''" + sListPackagesTMP[0].trimmed() + "'''" + " (''" +
+                 sListPackagesTMP[1].trimmed() + "'')";
     } else {  // Only package
       sOutput += "\n * '''" + sListPackagesTMP[0].trimmed() + "'''";
     }
@@ -1563,12 +1554,15 @@ auto ProvisionalTplParser::parsePkgInstall(
   }
 
   sOutput += "\n<p>" +
-      QString::fromUtf8("Befehl zum Installieren der Pakete:") + "</p>\n";
-  sOutput += "<div class=\"bash\">\n"
-             "<pre class=\"notranslate\"> sudo apt-get install " +
+             QString::fromUtf8("Befehl zum Installieren der Pakete:") +
+             "</p>\n";
+  sOutput +=
+      "<div class=\"bash\">\n"
+      "<pre class=\"notranslate\"> sudo apt-get install " +
       sListPackages.join(' ') + "</pre>\n</div>\n";
-  sOutput += "<p>" + QString::fromUtf8("Oder mit [:apturl:] installieren, "
-                                       "Link: [apt://");
+  sOutput += "<p>" + QString::fromUtf8(
+                         "Oder mit [:apturl:] installieren, "
+                         "Link: [apt://");
   sOutput += sPackages;
   return sOutput + "]</p>\n";
 }
@@ -1576,14 +1570,14 @@ auto ProvisionalTplParser::parsePkgInstall(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parsePkgInstallBut(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parsePkgInstallBut(const QStringList &sListArgs)
+    -> QString {
   return "<p>\n<a href=\"apt://" + sListArgs.join(',') +
-      "\" rel=\"nofollow\" class=\"external\"><img src=\"" + m_sSharePath +
-      "/community/" + m_sCommunity +
-      "/web/Wiki/Vorlagen/Installbutton/button.png\" "
-      "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
-      "mit [:apturl:]</p>";
+         "\" rel=\"nofollow\" class=\"external\"><img src=\"" + m_sSharePath +
+         "/community/" + m_sCommunity +
+         "/web/Wiki/Vorlagen/Installbutton/button.png\" "
+         "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
+         "mit [:apturl:]</p>";
 }
 
 // ----------------------------------------------------------------------------
@@ -1615,30 +1609,32 @@ auto ProvisionalTplParser::parsePPA(const QStringList &sListArgs) -> QString {
 
     // Generate output
     sOutsideBox = QString::fromUtf8(
-                    "<p>Adresszeile zum [:Paketquellen_freischalten/PPA#PPA-"
-                    "hinzufuegen:Hinzufügen] des PPAs:</p>");
+        "<p>Adresszeile zum [:Paketquellen_freischalten/PPA#PPA-"
+        "hinzufuegen:Hinzufügen] des PPAs:</p>");
     sOutsideBox += "\n * <strong>ppa:" + sUser + "/" + sPPA + "</strong>\n";
 
-    sOutput = QString::fromUtf8("Zusätzliche [:Fremdquellen:] können das "
-                                "System gefährden.");
-    sRemark = QString::fromUtf8(
-          "Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. "
-          "Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]]"
-          " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
-          "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
-        .arg(sUser, sPPA, sUser);
+    sOutput = QString::fromUtf8(
+        "Zusätzliche [:Fremdquellen:] können das System gefährden.");
+    sRemark =
+        QString::fromUtf8(
+            "Ein PPA unterstützt nicht zwangsläufig alle Ubuntu-Versionen. "
+            "Weitere Informationen sind der [[Bild(Wiki/Vorlagen/PPA/ppa.png)]]"
+            " [https://launchpad.net/~%1/+archive/%2 PPA-Beschreibung] des "
+            "Eigentümers/Teams [lpuser:%3:] zu entnehmen.")
+            .arg(sUser, sPPA, sUser);
   }
 
-  return sOutsideBox + ProvisionalTplParser::insertBox(
-        "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark);
+  return sOutsideBox +
+         ProvisionalTplParser::insertBox(
+             "box warning", QString::fromUtf8("Hinweis!"), sOutput, sRemark);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseProjects(
-    const QStringList &sListArgs) -> QString {
-  QList <QStringList> sListList;
+auto ProvisionalTplParser::parseProjects(const QStringList &sListArgs)
+    -> QString {
+  QList<QStringList> sListList;
   QStringList sListTmp;
   QString sOutput("<table>\n<tbody>");
   QString sImage("");
@@ -1664,8 +1660,8 @@ auto ProvisionalTplParser::parseProjects(
   for (int i = 0; i < sListList.size(); i++) {
     if (0 == i) {
       if (!sListList[i].isEmpty()) {
-        sOutput += "<tr class=\"verlauf\">\n<td colspan=\"2\">"
-                   + sListList[i][0] + "</td>\n</tr>";
+        sOutput += "<tr class=\"verlauf\">\n<td colspan=\"2\">" +
+                   sListList[i][0] + "</td>\n</tr>";
       }
     } else {
       sImage.clear();
@@ -1684,14 +1680,19 @@ auto ProvisionalTplParser::parseProjects(
           sLinks.replace(", ", " | ");
         }
       }
-      sOutput += "<tr style=\"background-color: #f2f2f2\">"
-                 "<td style=\"text-align: center; border-right-color: #f2f2f2; "
-                 "font-weight: bold\">[[Bild(" + sImage + ", 32)]][[BR]]" +
-                 sTitle + "</td><td style=\"padding-top: 0.8em; border-left-"
-                          "color: #f2f2f2\">" +
-                 sText + "\n<div style=\"color: #000000; margin-left: 1em\">\n"
-                           "<div class=\"contents\">\n<p>" + sLinks +
-                 "</p>\n</div>\n</div>""</td></tr>";
+      sOutput +=
+          "<tr style=\"background-color: #f2f2f2\">"
+          "<td style=\"text-align: center; border-right-color: #f2f2f2; "
+          "font-weight: bold\">[[Bild(" +
+          sImage + ", 32)]][[BR]]" + sTitle +
+          "</td><td style=\"padding-top: 0.8em; border-left-"
+          "color: #f2f2f2\">" +
+          sText +
+          "\n<div style=\"color: #000000; margin-left: 1em\">\n"
+          "<div class=\"contents\">\n<p>" +
+          sLinks +
+          "</p>\n</div>\n</div>"
+          "</td></tr>";
     }
   }
 
@@ -1701,12 +1702,13 @@ auto ProvisionalTplParser::parseProjects(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseSidebar(
-    const QStringList &sListArgs) -> QString {
-  QList <QStringList> sListList;
+auto ProvisionalTplParser::parseSidebar(const QStringList &sListArgs)
+    -> QString {
+  QList<QStringList> sListList;
   QStringList sListTmp;
-  QString sOutput("<table style=\"float: right; clear: right; border: none; "
-                  "margin-top: 0; margin-left: 5px\">\n<tbody>");
+  QString sOutput(
+      "<table style=\"float: right; clear: right; border: none; "
+      "margin-top: 0; margin-left: 5px\">\n<tbody>");
 
   // Split arguments by 'empty line'
   for (int j = 0; j < sListArgs.size(); j++) {
@@ -1726,27 +1728,29 @@ auto ProvisionalTplParser::parseSidebar(
     for (int k = 0; k < sListList[i].size(); k++) {
       if (0 == k) {
         if (!sListList[i].isEmpty()) {
-          sOutput += "<tr>\n<td style=\"text-align: center; "
-                     "background-color: #E2C889; font-size: 1.1em; "
-                     "border: none\">" + sListList[i][k].trimmed() +
-                     "</td>\n</tr>\n";
+          sOutput +=
+              "<tr>\n<td style=\"text-align: center; "
+              "background-color: #E2C889; font-size: 1.1em; "
+              "border: none\">" +
+              sListList[i][k].trimmed() + "</td>\n</tr>\n";
         }
-      } else if (sListList[i][k].contains("[[BR]]")
-                 || k == sListList[i].size() - 1) {
+      } else if (sListList[i][k].contains("[[BR]]") ||
+                 k == sListList[i].size() - 1) {
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         sListTmp = sListList[i][k].split("[[BR]]", QString::SkipEmptyParts);
 #else
         sListTmp = sListList[i][k].split("[[BR]]", Qt::SkipEmptyParts);
 #endif
         for (const auto &s : qAsConst(sListTmp)) {
-          sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
-                     "border-width: 0 0 10px 0; border-color: #FFFFFF\">"
-                     + s + "</td>\n</tr>\n";
+          sOutput +=
+              "<tr>\n<td style=\"background-color: #F9EAAF; "
+              "border-width: 0 0 10px 0; border-color: #FFFFFF\">" +
+              s + "</td>\n</tr>\n";
         }
       } else {
-        sOutput += "<tr>\n<td style=\"background-color: #F9EAAF; "
-                   "border: none\">" + sListList[i][k].trimmed() +
-                   "</td>\n</tr>\n";
+        sOutput +=
+            "<tr>\n<td style=\"background-color: #F9EAAF; border: none\">" +
+            sListList[i][k].trimmed() + "</td>\n</tr>\n";
       }
     }
   }
@@ -1757,8 +1761,8 @@ auto ProvisionalTplParser::parseSidebar(
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseStatusIcon(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseStatusIcon(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   QString sTmp;
   for (int i = 0; i < sListArgs.size(); i++) {
@@ -1768,20 +1772,17 @@ auto ProvisionalTplParser::parseStatusIcon(
         sTmp.replace("ja", "[[Bild(Wiki/Vorlagen/StatusIcon/ja.png)]] ");
         sOutput += sTmp + " ";
       } else if (sListArgs[i].contains("nein")) {
-        sTmp.replace("nein",
-                     "[[Bild(Wiki/Vorlagen/StatusIcon/nein.png)]] ");
+        sTmp.replace("nein", "[[Bild(Wiki/Vorlagen/StatusIcon/nein.png)]] ");
         sOutput += sTmp + " ";
       } else if (sListArgs[i].contains("bedingt")) {
         sTmp.replace("bedingt",
                      "[[Bild(Wiki/Vorlagen/StatusIcon/bedingt.png)]] ");
         sOutput += sTmp + " ";
       } else if (sListArgs[i].contains("alpha")) {
-        sTmp.replace("alpha",
-                     "[[Bild(Wiki/Vorlagen/StatusIcon/alpha.png)]] ");
+        sTmp.replace("alpha", "[[Bild(Wiki/Vorlagen/StatusIcon/alpha.png)]] ");
         sOutput += sTmp + " ";
       } else if (sListArgs[i].contains("buggy")) {
-        sTmp.replace("buggy",
-                     "[[Bild(Wiki/Vorlagen/StatusIcon/buggy.png)]] ");
+        sTmp.replace("buggy", "[[Bild(Wiki/Vorlagen/StatusIcon/buggy.png)]] ");
         sOutput += sTmp + " ";
       } else if (sListArgs[i].contains("manuell")) {
         sTmp.replace("manuell",
@@ -1812,22 +1813,22 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   sArgs.prepend("DUMMY");  // "Needed" because of usage i-1 !!!
   QRegularExpressionMatch match;
   QRegularExpression tablePattern(
-        QStringLiteral("\\<{1,1}[\\w\\s=.\\-\":;^|()]+\\>{1,1}"));
+      QStringLiteral("\\<{1,1}[\\w\\s=.\\-\":;^|()]+\\>{1,1}"));
   QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
   QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
   QRegularExpression rowclassPattern(
-        QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
+      QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
   QRegularExpression cellclassPattern(
-        QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
+      QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
   QRegularExpression tableClassPattern(
-        QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-]+\\\""));
+      QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-]+\\\""));
 
   QRegularExpression cellStylePattern(
-        QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
+      QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
   QRegularExpression rowStylePattern(
-        QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
+      QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
   QRegularExpression tableStylePattern(
-        QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-]+\\\""));
+      QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-]+\\\""));
 
   int nLength;
   QString sTmpCellStyle;
@@ -1867,15 +1868,14 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
       // Found style info && pattern which was found is not
       // a <span class=...> element or html text format
       if ((match = tablePattern.match(sArgs[i])).hasMatch() &&
-          !sArgs[i].trimmed().startsWith("<span") &&
-          !bTextformat) {
+          !sArgs[i].trimmed().startsWith("<span") && !bTextformat) {
         int nIndex = match.capturedStart();
         bool bCellStyleWasSet = false;
         nLength = match.capturedLength();
         sStyleInfo = match.captured();
 
         // Start tr
-        if (i == 1 || sArgs[i-1] == "+++" ||
+        if (i == 1 || sArgs[i - 1] == "+++" ||
             rowclassPattern.match(sStyleInfo).hasMatch() ||
             rowStylePattern.match(sStyleInfo).hasMatch()) {
           sOutput += "<tr";
@@ -1890,11 +1890,11 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
         if ((match = rowStylePattern.match(sStyleInfo)).hasMatch()) {
           sTmpCellStyle = match.captured();
           sOutput += " style=\"" +
-              sTmpCellStyle.remove("rowstyle=").remove("\"") + "\"";
+                     sTmpCellStyle.remove("rowstyle=").remove("\"") + "\"";
         }
 
         // Close tr
-        if (i == 1 || sArgs[i-1] == "+++" ||
+        if (i == 1 || sArgs[i - 1] == "+++" ||
             rowclassPattern.match(sStyleInfo).hasMatch() ||
             rowStylePattern.match(sStyleInfo).hasMatch()) {
           sOutput += ">\n";
@@ -1921,14 +1921,13 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 
         // Cell style attributs
         if ((match = cellStylePattern.match(sStyleInfo)).hasMatch()) {
-          sTmpTD += " style=\"" +
-              match.captured().remove("cellstyle=").remove("\"");
+          sTmpTD +=
+              " style=\"" + match.captured().remove("cellstyle=").remove("\"");
           bCellStyleWasSet = true;
         }
 
         // Text align center
-        if (sStyleInfo.contains("<:") ||
-            sStyleInfo.contains(" : ") ||
+        if (sStyleInfo.contains("<:") || sStyleInfo.contains(" : ") ||
             sStyleInfo.contains(":>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: center;";
@@ -1938,8 +1937,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text align left
-        if (sStyleInfo.contains("<(") ||
-            sStyleInfo.contains("(") ||
+        if (sStyleInfo.contains("<(") || sStyleInfo.contains("(") ||
             sStyleInfo.contains("(>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: left;";
@@ -1949,8 +1947,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text align center
-        if (sStyleInfo.contains("<)") ||
-            sStyleInfo.contains(" ) ") ||
+        if (sStyleInfo.contains("<)") || sStyleInfo.contains(" ) ") ||
             sStyleInfo.contains(")>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: right;";
@@ -1960,8 +1957,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text vertical align top
-        if (sStyleInfo.contains("<^") ||
-            sStyleInfo.contains(" ^ ") ||
+        if (sStyleInfo.contains("<^") || sStyleInfo.contains(" ^ ") ||
             sStyleInfo.contains("^>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: top;";
@@ -1971,8 +1967,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           bCellStyleWasSet = true;
         }
         // Text vertical align bottom
-        if (sStyleInfo.contains("<v") ||
-            sStyleInfo.contains(" v ") ||
+        if (sStyleInfo.contains("<v") || sStyleInfo.contains(" v ") ||
             sStyleInfo.contains("v>")) {
           if (bCellStyleWasSet) {
             sTmpTD += " text-align: bottom;";
@@ -1998,7 +1993,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
         if (i == 1) {
           sOutput += "<tr>\n";
         }
-        if (sArgs[i-1] == "+++") {
+        if (sArgs[i - 1] == "+++") {
           sOutput += "<tr>\n";
         }
         sOutput += "<td>" + sArgs[i] + "</td>\n";
@@ -2011,70 +2006,64 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseTested(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseTested(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
-      sOutput = QString::fromUtf8("Dieser Artikel ist größtenteils für "
-                                  "alle Ubuntu-Versionen gültig.");
+      sOutput = QString::fromUtf8(
+          "Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.");
     } else {  // Article tested with Ubuntu versions
       QStringList sListTmp;
       sListTmp = sListArgs;
       sListTmp.sort();
-      for (int i = sListArgs.size()-1; i >= 0; i--) {
+      for (int i = sListArgs.size() - 1; i >= 0; i--) {
         if (m_TestedWithMap.contains(sListTmp[i].toLower())) {
           sOutput += "\n * " + m_TestedWithMap.value(sListTmp[i].toLower());
         }
       }
       if (sOutput.isEmpty()) {
-        sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
-                                    "unterstützten Ubuntu-Version getestet! "
-                                    "Bitte teste diesen Artikel für eine "
-                                    "Ubuntu-Version, welche aktuell "
-                                    "unterstützt wird. Dazu sind die Hinweise "
-                                    "[:Wiki/FAQ_-_häufig_gestellte_Fragen/"
-                                    "#Wikiartikel-testen:zum Testen von "
-                                    "Artikeln] zu beachten.");
+        sOutput = QString::fromUtf8(
+            "Dieser Artikel ist mit keiner aktuell unterstützten "
+            "Ubuntu-Version getestet! Bitte teste diesen Artikel für eine "
+            "Ubuntu-Version, welche aktuell unterstützt wird. Dazu sind die "
+            "Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:"
+            "zum Testen von Artikeln] zu beachten.");
       } else {
-        sOutput += QString::fromUtf8("\n<hr>\n~-(Du möchtest den Artikel für "
-                                     "eine weitere Ubuntu-Version testen? "
-                                     "Mitarbeit im Wiki ist immer willkommen! "
-                                     "Dazu sind die Hinweise [:Wiki/FAQ_-_"
-                                     "häufig_gestellte_Fragen/#Wikiartikel-"
-                                     "testen:zum Testen von Artikeln] zu "
-                                     "beachten.)-~");
+        sOutput += QString::fromUtf8(
+            "\n<hr>\n~-(Du möchtest den Artikel für eine weitere "
+            "Ubuntu-Version testen? Mitarbeit im Wiki ist immer willkommen! "
+            "Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/"
+            "#Wikiartikel-testen:zum Testen von Artikeln] zu beachten.)-~");
       }
       sOutput += "\n";
     }
   } else {
-    sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner aktuell "
-                                "unterstützten Ubuntu-Version getestet! "
-                                "Bitte teste diesen Artikel für eine "
-                                "Ubuntu-Version, welche aktuell "
-                                "unterstützt wird. Dazu sind die Hinweise "
-                                "[:Wiki/FAQ_-_häufig_gestellte_Fragen/"
-                                "#Wikiartikel-testen:zum Testen von "
-                                "Artikeln] zu beachten.");
+    sOutput = QString::fromUtf8(
+        "Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version "
+        "getestet! Bitte teste diesen Artikel für eine Ubuntu-Version, welche "
+        "aktuell unterstützt wird. Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_"
+        "gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu "
+        "beachten.");
   }
 
   return ProvisionalTplParser::insertBox(
-        "box tested_for",
-        QString::fromUtf8("Dieser Artikel wurde für die folgenden "
-                          "Ubuntu-Versionen getestet:"),
-        sOutput);
+      "box tested_for",
+      QString::fromUtf8(
+          "Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:"),
+      sOutput);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseTestedUT(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs)
+    -> QString {
   QString sOutput("");
   if (!sListArgs.isEmpty()) {
     if (sListArgs[0].toLower() == QString("general").toLower()) {
-      sOutput = QString::fromUtf8("Dieser Artikel gilt für alle "
-                                  "Versionen von Ubuntu Touch.");
+      sOutput = QString::fromUtf8(
+          "Dieser Artikel gilt für alle Versionen von Ubuntu Touch.");
     } else {  // Article tested with Ubuntu versions
       for (int i = 0; i < sListArgs.size(); i++) {
         sOutput += "\n * ";
@@ -2087,24 +2076,24 @@ auto ProvisionalTplParser::parseTestedUT(
       sOutput += "\n";
     }
   } else {
-    sOutput = QString::fromUtf8("Dieser Artikel ist mit keiner derzeit "
-                                "unterstützten Ubuntu-Touch-Version "
-                                "getestet! Bitte diesen Artikel testen!");
+    sOutput = QString::fromUtf8(
+        "Dieser Artikel ist mit keiner derzeit unterstützten Ubuntu-Touch-"
+        "Version getestet! Bitte diesen Artikel testen!");
   }
 
   return ProvisionalTplParser::insertBox(
-        "box ut_box",
-        QString::fromUtf8("Dieser Artikel bezieht sich auf Ubuntu Touch, die "
-                          "Variante von Ubuntu für mobile Geräte mit "
-                          "Touchscreen."),
-        sOutput);
+      "box ut_box",
+      QString::fromUtf8(
+          "Dieser Artikel bezieht sich auf Ubuntu Touch, die Variante von "
+          "Ubuntu für mobile Geräte mit Touchscreen."),
+      sOutput);
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseUnderConst(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseUnderConst(const QStringList &sListArgs)
+    -> QString {
   QStringList sArgs = sListArgs;
   QString sOutput("");
   // Get and check date
@@ -2117,21 +2106,18 @@ auto ProvisionalTplParser::parseUnderConst(
       sDate.clear();
     } else {  // Correct number of date elements
       // Wrong date
-      if (sListDate[0].toInt() <= 0
-          || sListDate[0].toInt() > 31
-          || sListDate[1].toInt() <= 0
-          || sListDate[1].toInt() > 12
-          || sListDate[2].toInt() <= 0) {
+      if (sListDate[0].toInt() <= 0 || sListDate[0].toInt() > 31 ||
+          sListDate[1].toInt() <= 0 || sListDate[1].toInt() > 12 ||
+          sListDate[2].toInt() <= 0) {
         sDate.clear();
       } else {  // Correct date
         // Add 0 to date if < 10
         for (int i = 0; i < sListDate.size(); i++) {
-          if (sListDate[i].toInt() < 10
-              && !sListDate[i].startsWith("0")) {
+          if (sListDate[i].toInt() < 10 && !sListDate[i].startsWith("0")) {
             sListDate[i] = "0" + sListDate[i];
           }
         }
-        sDate = sListDate[0] +"."+ sListDate[1] +"."+ sListDate[2];
+        sDate = sListDate[0] + "." + sListDate[1] + "." + sListDate[2];
       }
     }
 
@@ -2155,58 +2141,52 @@ auto ProvisionalTplParser::parseUnderConst(
         sUsers += ", ";
       }
     }
-    sOutput = QString::fromUtf8("Dieser Artikel wird momentan von %1 "
-                                "erstellt.").arg(sUsers);
+    sOutput = QString::fromUtf8("Dieser Artikel wird momentan von %1 erstellt.")
+                  .arg(sUsers);
 
     if (!sDate.isEmpty()) {
-      sOutput += " "
-                 + QString::fromUtf8("Als Fertigstellungsdatum wurde der %1 "
-                                     "angegeben.").arg(sDate);
+      sOutput += " " + QString::fromUtf8(
+                           "Als Fertigstellungsdatum wurde der %1 angegeben.")
+                           .arg(sDate);
     } else {
-      sOutput += " "
-                 + QString::fromUtf8("Solltest du dir nicht sicher sein, "
-                                     "ob an dieser Anleitung noch gearbeitet "
-                                     "wird, kontrolliere das Datum der "
-                                     "letzten Änderung und entscheide, wie "
-                                     "du weiter vorgehst.");
+      sOutput += " " + QString::fromUtf8(
+                           "Solltest du dir nicht sicher sein, ob an dieser "
+                           "Anleitung noch gearbeitet wird, kontrolliere das "
+                           "Datum der letzten Änderung und entscheide, wie du "
+                           "weiter vorgehst.");
     }
   } else {  // No parameter given
-    sOutput = QString::fromUtf8("Dieser Artikel wird momentan erstellt. "
-                                "Solltest du dir nicht sicher sein, ob an "
-                                "dieser Anleitung noch gearbeitet wird, "
-                                "kontrolliere das Datum der letzten "
-                                "Änderung und entscheide, wie du weiter "
-                                "vorgehst.");
+    sOutput = QString::fromUtf8(
+        "Dieser Artikel wird momentan erstellt. Solltest du dir nicht sicher "
+        "sein, ob an dieser Anleitung noch gearbeitet wird, kontrolliere das "
+        "Datum der letzten Änderung und entscheide, wie du weiter vorgehst.");
   }
 
   return ProvisionalTplParser::insertBox(
-        "box workinprogress",
-        QString::fromUtf8("Artikel in Arbeit"),
-        sOutput,
-        QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
-                          "nicht fertig ist und dass wichtige Teile fehlen, "
-                          "oder sogar falsch sein können. Bitte diesen Artikel "
-                          "nicht als Anleitung für Problemlösungen benutzen."));
+      "box workinprogress", QString::fromUtf8("Artikel in Arbeit"), sOutput,
+      QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
+                        "nicht fertig ist und dass wichtige Teile fehlen, "
+                        "oder sogar falsch sein können. Bitte diesen Artikel "
+                        "nicht als Anleitung für Problemlösungen benutzen."));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseWarning(
-    const QStringList &sListArgs) -> QString {
-  return ProvisionalTplParser::insertBox("box warning",
-                                         QString::fromUtf8("Achtung!"),
-                                         sListArgs.join(' '));
+auto ProvisionalTplParser::parseWarning(const QStringList &sListArgs)
+    -> QString {
+  return ProvisionalTplParser::insertBox(
+      "box warning", QString::fromUtf8("Achtung!"), sListArgs.join(' '));
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseWorkInProgr(
-    const QStringList &sListArgs) -> QString {
+auto ProvisionalTplParser::parseWorkInProgr(const QStringList &sListArgs)
+    -> QString {
   QStringList sArgs(sListArgs);
-  QString sOutput = QString::fromUtf8(
-                      "Dieser Artikel wird momentan überarbeitet.");
+  QString sOutput =
+      QString::fromUtf8("Dieser Artikel wird momentan überarbeitet.");
 
   // Correct number of elements?
   if (sArgs.size() >= 3) {
@@ -2215,10 +2195,10 @@ auto ProvisionalTplParser::parseWorkInProgr(
       sArgs[i].replace(" ", "_");
     }
 
-    sOutput += QString::fromUtf8(
-                 "\n * Geplante Fertigstellung: %1").arg(sArgs[0]);
-    sOutput += QString::fromUtf8(
-                 "\n * Derzeit gültiger Artikel: [:%1:]").arg(sArgs[1]);
+    sOutput +=
+        QString::fromUtf8("\n * Geplante Fertigstellung: %1").arg(sArgs[0]);
+    sOutput += QString::fromUtf8("\n * Derzeit gültiger Artikel: [:%1:]")
+                   .arg(sArgs[1]);
 
     // Generate user list
     QString sUsers("");
@@ -2232,21 +2212,21 @@ auto ProvisionalTplParser::parseWorkInProgr(
       }
     }
     sOutput += QString::fromUtf8("\n * Bearbeiter: %1\n").arg(sUsers);
-    sOutput += QString::fromUtf8("<p>Solltest du dir nicht sicher sein, ob "
-                                 "an dieser Anleitung noch gearbeitet wird, "
-                                 "kontrolliere das Datum der [:Baustelle/%1"
-                                 "/a/log/:letzten Änderung] und entscheide, "
-                                 "wie du weiter vorgehst.</p>\n").arg(sArgs[1]);
+    sOutput += QString::fromUtf8(
+                   "<p>Solltest du dir nicht sicher sein, ob an dieser "
+                   "Anleitung noch gearbeitet wird, kontrolliere das Datum der "
+                   "[:Baustelle/%1/a/log/:letzten Änderung] und entscheide, "
+                   "wie du weiter vorgehst.</p>\n")
+                   .arg(sArgs[1]);
   }
 
   return ProvisionalTplParser::insertBox(
-        "box workinprogress",
-        QString::fromUtf8("Artikel wird überarbeitet"),
-        sOutput,
-        QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
-                          "nicht fertig ist und dass wichtige Teile fehlen "
-                          "oder sogar falsch sein können. Bitte diesen Artikel "
-                          "nicht als Anleitung für Problemlösungen benutzen!"));
+      "box workinprogress", QString::fromUtf8("Artikel wird überarbeitet"),
+      sOutput,
+      QString::fromUtf8("Insbesondere heißt das, dass dieser Artikel noch "
+                        "nicht fertig ist und dass wichtige Teile fehlen "
+                        "oder sogar falsch sein können. Bitte diesen Artikel "
+                        "nicht als Anleitung für Problemlösungen benutzen!"));
 }
 
 // ----------------------------------------------------------------------------
@@ -2266,11 +2246,12 @@ auto ProvisionalTplParser::insertBox(const QString &sClass,
   sReturn += "<p>" + sContents + "</p>\n";
   // Remark available
   if (!sRemark.isEmpty() && sRemark != " ") {
-    sReturn += QString::fromUtf8("<hr />\n<p><strong>Anmerkung:</strong> ")
-               + sRemark + "</p>\n";
+    sReturn += QString::fromUtf8("<hr />\n<p><strong>Anmerkung:</strong> ") +
+               sRemark + "</p>\n";
   }
-  sReturn += "</div>\n"
-             "</div>\n";
+  sReturn +=
+      "</div>\n"
+      "</div>\n";
 
   return sReturn;
 }

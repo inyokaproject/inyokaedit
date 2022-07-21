@@ -31,8 +31,8 @@ class QTextDocument;
 
 class ParseList {
  public:
-    ParseList();
-    static void startParsing(QTextDocument *pRawDoc);
+  ParseList();
+  static void startParsing(QTextDocument *pRawDoc);
 };
 
 #endif  // APPLICATION_PARSER_PARSELIST_H_

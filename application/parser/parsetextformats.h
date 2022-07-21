@@ -33,11 +33,11 @@ class QTextDocument;
 
 class ParseTextformats {
  public:
-    ParseTextformats();
-    static void startParsing(
-        QTextDocument *pRawDoc,
-        const QPair<QStringList, QStringList> &FormatStartMap,
-        const QPair<QStringList, QStringList> &FormatEndMap);
+  ParseTextformats();
+  static void startParsing(
+      QTextDocument *pRawDoc,
+      const QPair<QStringList, QStringList> &FormatStartMap,
+      const QPair<QStringList, QStringList> &FormatEndMap);
 };
 
 #endif  // APPLICATION_PARSER_PARSETEXTFORMATS_H_

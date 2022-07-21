@@ -34,11 +34,11 @@ class QTextDocument;
 
 class ParseImgMap {
  public:
-    ParseImgMap();
-    static void startParsing(QTextDocument *pRawDoc,
-                             const QHash<QString, QString> &map,
-                             const QString &sSharePath,
-                             const QString &sCommunity);
+  ParseImgMap();
+  static void startParsing(QTextDocument *pRawDoc,
+                           const QHash<QString, QString> &map,
+                           const QString &sSharePath,
+                           const QString &sCommunity);
 };
 
 #endif  // APPLICATION_PARSER_PARSEIMGMAP_H_

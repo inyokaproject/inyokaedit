@@ -42,9 +42,9 @@ void ParseTextformats::startParsing(
   int nLength;
 
   patternTextformat.setPatternOptions(
-        QRegularExpression::InvertedGreedinessOption |  // Only smallest match
-        QRegularExpression::DotMatchesEverythingOption |
-        QRegularExpression::CaseInsensitiveOption);
+      QRegularExpression::InvertedGreedinessOption |  // Only smallest match
+      QRegularExpression::DotMatchesEverythingOption |
+      QRegularExpression::CaseInsensitiveOption);
 
   for (int i = 0; i < FormatStartMap.first.size(); i++) {
     bool bFoundStart = true;
@@ -95,8 +95,7 @@ void ParseTextformats::startParsing(
             sDoc.replace(nIndex, nLength, FormatEndMap.second.at(i));
             nIndex += FormatEndMap.second.at(i).length();
           } else {
-            sDoc.replace(nIndex, nLength,
-                         FormatEndMap.second.at(i).arg(sCap));
+            sDoc.replace(nIndex, nLength, FormatEndMap.second.at(i).arg(sCap));
             nIndex += FormatEndMap.second.at(i).arg(sCap).length();
           }
         }

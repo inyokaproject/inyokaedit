@@ -25,20 +25,21 @@
  */
 
 // #include <QDebug>
+#include "./parselinks.h"
+
 #include <QEventLoop>
 #include <QRegularExpression>
 #include <QTextDocument>
 
-#include "./parselinks.h"
 #include "../utils.h"
 
 ParseLinks::ParseLinks(const QString &sUrlToWiki,
                        const QHash<QString, QString> &IwlMap,
                        const bool bCheckLinks, QObject *pParent)
-  : m_sWikiUrl(sUrlToWiki),
-    m_IwlMap(IwlMap),
-    m_bCheckLinks(bCheckLinks),
-    m_NWreply(nullptr) {
+    : m_sWikiUrl(sUrlToWiki),
+      m_IwlMap(IwlMap),
+      m_bCheckLinks(bCheckLinks),
+      m_NWreply(nullptr) {
   Q_UNUSED(pParent)
   m_NWAManager = new QNetworkAccessManager(this);
 }
@@ -70,9 +71,9 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 // External Urls not in square brackets
 void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
   QRegularExpression findUrl(
-        // Skip file:// with " in front, which is used on Windows for image path
-        // Skip apt:// with " in front, which is used for e.g. for installbutton
-        QString::fromLatin1(
+      // Skip file:// with " in front, which is used on Windows for image path
+      // Skip apt:// with " in front, which is used for e.g. for installbutton
+      QString::fromLatin1(
           "(?:(?:https?|ftps?|[^\"]file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|"
           "ircs?|rsync|smb|[^\"]apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
           "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
@@ -107,8 +108,8 @@ void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
 // External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   QRegularExpression findHyperlink(
-        QString::fromLatin1("\\[{1,1}\\b(https?|ftps?|file|ssh|mms|svn"
-                            "|git|dict|nntp|ircs?|rsync|smb|apt)\\b://"));
+      QString::fromLatin1("\\[{1,1}\\b(https?|ftps?|file|ssh|mms|svn"
+                          "|git|dict|nntp|ircs?|rsync|smb|apt)\\b://"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
@@ -133,12 +134,12 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
       if (nSpace != -1) {
         QString sHref = sLink;
         sLink = "<a href=\"" + sHref.remove(nSpace, nLength) +
-            "\" rel=\"nofollow\" class=\"external\">" +
-            sLink.remove(0, nSpace + 1) + "</a>";
+                "\" rel=\"nofollow\" class=\"external\">" +
+                sLink.remove(0, nSpace + 1) + "</a>";
       } else {
         // Plain link
         sLink = "<a href=\"" + sLink +
-            "\" rel=\"nofollow\" class=\"external\">" + sLink + "</a>";
+                "\" rel=\"nofollow\" class=\"external\">" + sLink + "</a>";
       }
       sDoc.replace(nIndex, nLength, sLink);
 
@@ -159,7 +160,7 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
 // Inyoka wiki links [:Wikipage:]
 void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   QRegularExpression findInyokaWikiLink(
-        QStringLiteral("\\[{1,1}\\:[0-9A-Za-z:.]"));
+      QStringLiteral("\\[{1,1}\\:[0-9A-Za-z:.]"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
@@ -198,11 +199,10 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           m_sLinkClassAddition = QLatin1String("");
           if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
-                          QNetworkRequest(
-                            QUrl(sLinkURL + "/a/export/meta/")));
+                QNetworkRequest(QUrl(sLinkURL + "/a/export/meta/")));
             QEventLoop loop;  // Workaround getting synchron reply
-            connect(m_NWreply, &QNetworkReply::finished,
-                    &loop, &QEventLoop::quit);
+            connect(m_NWreply, &QNetworkReply::finished, &loop,
+                    &QEventLoop::quit);
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {
@@ -213,21 +213,20 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           }
 
           sLink = "<a href=\"" + sLinkURL + "\" class=\"internal" +
-              m_sLinkClassAddition + "\">" + sLink2 + sAnchor + "</a>";
+                  m_sLinkClassAddition + "\">" + sLink2 + sAnchor + "</a>";
         } else {
           sLink.remove(QStringLiteral("]"));
           // qDebug() << sLink.mid(0, sLink.indexOf(":"))
           //          << " - "
           //          << sLink.mid(sLink.indexOf(":") + 1, nLength);
-          sLinkURL = m_sWikiUrl + "/"
-                     + sLink.mid(0, sLink.indexOf(QLatin1String(":")));
+          sLinkURL = m_sWikiUrl + "/" +
+                     sLink.mid(0, sLink.indexOf(QLatin1String(":")));
           if (bIsOnline && m_bCheckLinks) {
             m_NWreply = m_NWAManager->get(
-                          QNetworkRequest(
-                            QUrl(sLinkURL + "/a/export/meta/")));
+                QNetworkRequest(QUrl(sLinkURL + "/a/export/meta/")));
             QEventLoop loop;
-            connect(m_NWreply, &QNetworkReply::finished,
-                    &loop, &QEventLoop::quit);
+            connect(m_NWreply, &QNetworkReply::finished, &loop,
+                    &QEventLoop::quit);
             loop.exec();
 
             if (QNetworkReply::NoError == m_NWreply->error()) {
@@ -238,9 +237,10 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
           }
 
           sLink = "<a href=\"" + sLinkURL + "\" class=\"internal" +
-              m_sLinkClassAddition + "\">" + sLink.mid(
-                sLink.indexOf(QLatin1String(":")) + 1,
-                nLength).trimmed() + "</a>";
+                  m_sLinkClassAddition + "\">" +
+                  sLink.mid(sLink.indexOf(QLatin1String(":")) + 1, nLength)
+                      .trimmed() +
+                  "</a>";
         }
         sDoc.replace(nIndex, nLength, sLink);
       }
@@ -312,7 +312,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
             // Check for iWikilink with PAGE
             if (sTmpUrl.contains(QLatin1String("PAGE"), Qt::CaseSensitive)) {
               sTmpUrl.replace(QLatin1String("PAGE"), sListLink[1],
-                  Qt::CaseSensitive);
+                              Qt::CaseSensitive);
             } else {
               sTmpUrl.append(sListLink[1]);
             }
@@ -331,7 +331,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
             // Replace link
             sLink = "<a href=\"" + sTmpUrl + "\" class=\"" + sClass + "\">" +
-                sTmpDescr + "</a>";
+                    sTmpDescr + "</a>";
             sDoc.replace(nIndex, nLength, sLink);
           }
         }
@@ -378,12 +378,12 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
       // With description
       if (nSplit != -1) {
         sLink = "<a href=\"#" + sLink.mid(0, nSplit) +
-            "\" class=\"crosslink\">" + sLink.mid(nSplit + 1 ,
-                                                  nLength) + "</a>";
+                "\" class=\"crosslink\">" + sLink.mid(nSplit + 1, nLength) +
+                "</a>";
       } else {
         // Without descrition
         sLink = "<a href=\"#" + sLink.mid(0, nSplit) +
-            "\" class=\"crosslink\">#" + sLink.mid(0, nSplit) + "</a>";
+                "\" class=\"crosslink\">#" + sLink.mid(0, nSplit) + "</a>";
       }
       sDoc.replace(nIndex, nLength, sLink);
 
@@ -404,7 +404,7 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
 // Link to knowledge box entry
 void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
   QRegularExpression findKnowledgeBoxLink(
-        QStringLiteral("\\[{1,1}[0-9]{1,}\\]{1,1}"));
+      QStringLiteral("\\[{1,1}[0-9]{1,}\\]{1,1}"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
@@ -419,8 +419,8 @@ void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
     sLink.remove(QStringLiteral("]"));
 
     if (sLink.toUShort() != 0) {
-      sLink = "<sup><a href=\"#source-" + sLink + "\">&#091;" +
-          sLink + "&#093;</a></sup>";
+      sLink = "<sup><a href=\"#source-" + sLink + "\">&#091;" + sLink +
+              "&#093;</a></sup>";
       sDoc.replace(nIndex, match.capturedLength(), sLink);
     }
 
