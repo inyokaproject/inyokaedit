@@ -30,10 +30,10 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 <@ if $arguments as lowercase contain 'general' @>
 #getestet: general
 <@ else @>
-<@ if $arguemnts as lowercase contain 'jelly' @>
-#getestet: jelly
+<@ if $arguments as lowercase contain 'jammy' @>
+#getestet: jammy
 <@ endif @>
-<@ if $arguemnts as lowercase contain 'impish' @>
+<@ if $arguments as lowercase contain 'impish' @>
 #getestet: impish
 <@ endif @>
 <@ if $arguments as lowercase contain 'focal' @>
