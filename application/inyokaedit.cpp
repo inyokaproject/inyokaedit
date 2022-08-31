@@ -1400,6 +1400,10 @@ void InyokaEdit::showSyntaxOverview() {
                      m_pSettings->getInyokaCommunity() + "/SyntaxOverview.tpl");
 
   QTextStream in(&OverviewFile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  // Since Qt 6 UTF-8 is used by default
+  in.setCodec("UTF-8");
+#endif
   if (!OverviewFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(nullptr, QStringLiteral("Warning"),
                          tr("Could not open syntax overview file!"));
