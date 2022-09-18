@@ -66,9 +66,11 @@
 <@ elseif ['shift2','umschalt2','umsch2'] contains ($key as stripped) as lowercase @>⇧   
 <@ elseif ['akut','acute','´'] contains ($key as stripped) as lowercase @>´
 <@ elseif [':','doppelpunkt'] contains ($key as stripped) as lowercase @>:
+<@ elseif [';','semikolon'] contains ($key as stripped) as lowercase @>;
 <@ elseif ['!','ausrufezeichen'] contains ($key as stripped) as lowercase @>!
 <@ elseif ['%','prozent'] contains ($key as stripped) as lowercase @>%
 <@ elseif ['&','und'] contains ($key as stripped) as lowercase @>&
+<@ elseif ['$'] contains ($key as stripped) as lowercase @>$
 <@ elseif ['compose'] contains ($key as stripped) as lowercase @>⎄
 <@ elseif ['anfuehrungsstriche','doublequote'] contains ($key as stripped) as lowercase @>\"
 <@ endif @>"class_='key')]] 
