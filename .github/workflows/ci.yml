@@ -42,7 +42,7 @@ jobs:
       run: |
        ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
-       make DESTDIR=appdir -j$(nproc) install
+       make DESTDIR=appdir install
        find appdir
 
     - name: Create AppImage
@@ -68,7 +68,6 @@ jobs:
        sudo add-apt-repository ppa:beineri/opt-qt-5.15.2-bionic -y
        sudo apt-get update -qq
        sudo apt-get -y install qt515base qt515tools qt515webengine libhunspell-dev
-       source /opt/qt*/bin/qt*-env.sh || true
 
     - name: Download linuxdeployqt
       run: |
@@ -90,9 +89,11 @@ jobs:
 
     - name: Compile
       run: |
+       source /opt/qt*/bin/qt*-env.sh
+       export PATH=/opt/qt515/bin:${PATH}
        ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
-       make DESTDIR=appdir -j$(nproc) install
+       make DESTDIR=appdir install
        find appdir
 
     - name: Create AppImage
