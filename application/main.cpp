@@ -40,6 +40,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
+#include <QSslSocket>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QTime>
@@ -162,6 +163,8 @@ void setupLogger(const QString &sDebugFilePath) {
   qDebug() << "Compiled with Qt" << QT_VERSION_STR << "WITHOUT preview!";
 #endif
   qDebug() << "Qt runtime" << qVersion();
+  qDebug() << "Compiled with:" << QSslSocket::sslLibraryBuildVersionString();
+  qDebug() << "Run-time:" << QSslSocket::sslLibraryVersionString();
 }
 
 // ----------------------------------------------------------------------------
