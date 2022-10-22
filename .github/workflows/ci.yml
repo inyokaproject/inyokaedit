@@ -90,6 +90,7 @@ jobs:
     - name: Compile
       run: |
        source /opt/qt*/bin/qt*-env.sh
+       export QTHOME=/opt/qt515
        export PATH=/opt/qt515/bin:${PATH}
        ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
