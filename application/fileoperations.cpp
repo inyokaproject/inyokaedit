@@ -217,6 +217,8 @@ auto FileOperations::saveAs() -> bool {
                                                  sCurFileName, m_sFileFilter);
   if (sFileName.isEmpty()) {
     return false;
+  } else if (!sFileName.contains('.')) {
+    sFileName = sFileName + "." + saveDialog.defaultSuffix();
   }
 
   QFileInfo tmpFI(sFileName);
