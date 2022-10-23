@@ -142,8 +142,8 @@ void Macros::replaceAnchors(QTextDocument *pRawDoc, const QString &sTrans) {
     sAnchor.replace(QStringLiteral("ü"), QLatin1String("ue"));
     sAnchor.replace(QStringLiteral("ö"), QLatin1String("oe"));
 
-    sAnchor = "<a id=\"" + sAnchor + "\" href=\"#" + sAnchor +
-              "\" class=\"crosslink anchor\"> </a>";
+    sAnchor = "<a id=\"" + sAnchor + "\" class=\"crosslink anchor\" href=\"#" +
+              sAnchor + "\">&#9875;</a>";
     sDoc.replace(nIndex, match.capturedLength(), sAnchor);
     // Go on with RegExp-Search
     nIndex += sAnchor.length();
