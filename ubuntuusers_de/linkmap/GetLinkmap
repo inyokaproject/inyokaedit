@@ -48,7 +48,7 @@ for i in "${imgurls[@]}"; do wget -nv "https://$i"; done
 
 # "Special" IWLs / build-in features
 wget -nv https://static-cdn.ubuntu-de.org/img/favicon.ico -O favicon.ico
-wget -nv https://static-cdn.ubuntu-de.org/img/icons/small/ikhaya.png -O ikhaya.png
+wget -nv https://static-cdn.ubuntu-de.org/img/icons/ikhaya.svg -O ikhaya.svg
 wget -nv https://static-cdn.ubuntu-de.org/img/interwiki/user.png -O user.png
 cp user.png user-xmas.png
 

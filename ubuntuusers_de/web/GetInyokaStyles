@@ -87,9 +87,8 @@ url=${markupcss%/*}
 url="https://${url}/"
 
 echo "Downloading images ..."
-wget -nv "${url}../img/anchor.png" -O anchor.png
-wget -nv "${url}../img/icon-sprite.png" -O icon-sprite.png
 wget -nv "${url}../img/favicon.ico" -O favicon.ico
+wget -nv "${url}../img/wiki.svg" -O wiki.svg
 
 
 if [ ! -d icons ]
@@ -98,14 +97,12 @@ if [ ! -d icons ]
     mkdir icons
 fi
 cd icons
-if [ ! -d small ]
-  then
-    echo "Creating folder \"small\" ..."
-    mkdir small
-fi
-cd small
-wget -nv "${url}../img/icons/small/ikhaya.png" -O ikhaya.png
-cd ..
+wget -nv "${url}../img/icons/ikhaya.svg" -O ikhaya.svg
+wget -nv "${url}../img/icons/portal.svg" -O portal.svg
+wget -nv "${url}../img/icons/search.svg" -O search.svg
+wget -nv "${url}../img/icons/forum.svg" -O forum.svg
+wget -nv "${url}../img/icons/planet.svg" -O planet.svg
+wget -nv "${url}../img/icons/actions.svg" -O actions.svg
 cd ..
 
 if [ ! -d interwiki ]
@@ -117,6 +114,24 @@ cd interwiki
 wget -nv "${url}../img/interwiki/search.png" -O search.png
 wget -nv "${url}../img/interwiki/team.png" -O team.png
 wget -nv "${url}../img/interwiki/user.png" -O user.png
+cd ..
+
+if [ ! -d smiley_icons ]
+  then
+    echo "Creating folder \"smiley_icons\" ..."
+    mkdir smiley_icons
+fi
+cd smiley_icons
+wget -nv "${url}../img/smiley_icons/frog-xmas.png" -O frog-xmas.png
+wget -nv "${url}../img/smiley_icons/tux.png" -O tux.png
+wget -nv "${url}../img/smiley_icons/ubuntu.png" -O ubuntu.png
+wget -nv "${url}../img/smiley_icons/ubuntugnome.png" -O ubuntugnome.png
+wget -nv "${url}../img/smiley_icons/kubuntu.png" -O kubuntu.png
+wget -nv "${url}../img/smiley_icons/lubuntu.png" -O lubuntu.png
+wget -nv "${url}../img/smiley_icons/ubuntumate.png" -O ubuntumate.png
+wget -nv "${url}../img/smiley_icons/mythbuntu.png" -O mythbuntu.png
+wget -nv "${url}../img/smiley_icons/ubuntutouch.png" -O ubuntutouch.png
+wget -nv "${url}../img/smiley_icons/xubuntu.png" -O xubuntu.png
 cd ..
 cd ..
 

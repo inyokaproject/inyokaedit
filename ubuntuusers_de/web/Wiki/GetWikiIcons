@@ -63,5 +63,9 @@ do
   cd ..
 done
 
+echo "Copy LICENSE files..."
+cp ../COPYING-ICONS_Breeze Breeze/COPYING-ICONS
+cp ../COPYING-ICONS_Oxygen Oxygen/COPYING-ICONS
+
 cd ..
 echo "DOWNLOAD OF WIKI ICONS FINISHED"

@@ -1,7 +1,8 @@
 ## Macro=[[Vorlage(Fremdquelle, %%URL, Ubuntuversion(en), Komponente(n)%%)]]
 
 Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
-<@ if $arguments as lowercase contain 'jammy' or
+<@ if $arguments as lowercase contain 'kinetic' or
+      $arguments as lowercase contain 'jammy' or
       $arguments as lowercase contain 'impish' or
       $arguments as lowercase contain 'focal' or
       $arguments as lowercase contain 'bionic' @> die folgenden [:Paketquellen freischalten:]:
@@ -17,12 +18,14 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ endif @>
 <@if $arguments as lowercase contain 'jammy' @> thirdpartyrepo-version-jammy
 <@ endif @>
+<@if $arguments as lowercase contain 'kinetic' @> thirdpartyrepo-version-kinetic
+<@ endif @>
 ">
 {{{
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['jammy', 'impish', 'focal', 'bionic'] contains $arg @>
+<@ if ['kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
