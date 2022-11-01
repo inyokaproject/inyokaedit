@@ -40,7 +40,7 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments conrain 'kinetic' or if $arguments contain 'jammy' or $arguments contain 'impish' or $arguments contain 'focal' or $arguments contain 'bionic' @>
+<@ if $arguments contain 'kinetic' or if $arguments contain 'jammy' or $arguments contain 'impish' or $arguments contain 'focal' or $arguments contain 'bionic' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
 <@ if ['kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains $arg @>
