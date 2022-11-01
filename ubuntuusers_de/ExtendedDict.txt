@@ -109,6 +109,9 @@ Jellyfish
 kinetic
 Kinetic
 Kudu
+lunar
+Lunar
+Lobster
 Ubuntu
 Kubuntu
 Xubuntu
