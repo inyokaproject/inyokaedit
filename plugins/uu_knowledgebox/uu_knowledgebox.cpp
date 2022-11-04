@@ -66,6 +66,8 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
           &Uu_KnowledgeBox::accept);
   connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
           &QDialog::reject);
+  connect(m_pUi->buttonBox->button(QDialogButtonBox::RestoreDefaults),
+          &QPushButton::clicked, this, &Uu_KnowledgeBox::loadTemplateDefaults);
 }
 
 // ----------------------------------------------------------------------------
@@ -168,7 +170,7 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
       m_pSettings->value(QStringLiteral("NumOfEntries"), 0).toUInt();
 
   if (0 == nNumOfEntries) {
-    this->loadTemplateDefaults();
+    this->loadTemplateDefaults(true);
   } else {
     qDebug() << "Reading knowledge box entries from config file";
     QString sTmpEntry;
@@ -188,11 +190,19 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_KnowledgeBox::loadTemplateDefaults() {
+void Uu_KnowledgeBox::loadTemplateDefaults(bool bStartup) {
   qDebug() << Q_FUNC_INFO;
   QFile fiDefault(QStringLiteral(":/uu_knowledgebox.default"));
   m_bListEntryActive.clear();
   m_sListEntries.clear();
+  for (int i = m_listDelRowButtons.size() - 1; i >= 0; i--) {
+    QPushButton *tmpButton;
+    tmpButton = m_listDelRowButtons[i];
+    delete tmpButton;
+    tmpButton = nullptr;
+    m_listDelRowButtons.removeAt(i);
+    m_pUi->entriesTable->removeRow(i);
+  }
 
   if (!fiDefault.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open uu_knowledgebox.default";
@@ -224,6 +234,12 @@ void Uu_KnowledgeBox::loadTemplateDefaults() {
     qWarning() << "Knowledgebox defaults are empty!";
     QMessageBox::warning(nullptr, tr("Error"),
                          tr("ubuntuusers.de knowledgebox defaults are empty!"));
+  }
+
+  if (!bStartup) {
+    for (int nRow = 0; nRow < m_sListEntries.size(); nRow++) {
+      this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
+    }
   }
 
   this->writeSettings();

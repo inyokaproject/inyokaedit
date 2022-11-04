@@ -75,11 +75,11 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
 
  private slots:
   void accept();
+  void loadTemplateDefaults(bool bStartup = false);
   void addRow();
   void deleteRow();
 
  private:
-  void loadTemplateDefaults();
   void loadTemplateEntries();
   void buildUi(QWidget *pParent);
   void writeSettings();
