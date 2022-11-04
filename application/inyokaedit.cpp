@@ -102,7 +102,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   this->setupEditor();
   this->createActions();
   this->createMenus();
-  this->createXmlMenus();
+  // this->createXmlMenus();  // Already called by LanguageChange event
   this->setUnifiedTitleAndToolBarOnMac(true);
 
   if (!QFile(m_UserDataDir.absolutePath() + "/community/" +
@@ -560,17 +560,21 @@ void InyokaEdit::createMenus() {
 
 void InyokaEdit::clearXmlMenus() {
   for (auto *m : qAsConst(m_pXmlSubMenus)) {
+    m->disconnect();
     m->clear();
   }
   for (auto *m : qAsConst(m_pXmlMenus)) {
+    m->disconnect();
     m->clear();
     m->deleteLater();
   }
   for (auto *q : qAsConst(m_pXmlDropdowns)) {
+    q->disconnect();
     q->clear();
   }
 
   for (auto *t : qAsConst(m_pXmlToolbars)) {
+    t->disconnect();
     t->clear();
   }
 
@@ -597,6 +601,7 @@ void InyokaEdit::clearXmlMenus() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::createXmlMenus() {
+  qDebug() << "Calling" << Q_FUNC_INFO;
   XmlParser xmlParser;
   QFile xmlFile;
   QList<QAction *> tmplListActions;
