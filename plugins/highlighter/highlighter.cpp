@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QSettings>
 
 #include "../../application/templates/templates.h"
@@ -59,7 +60,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 #endif
   m_sSharePath = sSharePath;
 
-  this->copyDefaultStyles();
+  this->loadDefaultStyles(false);
 
   if (pParent->window()->palette().window().color().lightnessF() <
       m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble()) {
@@ -171,33 +172,47 @@ void Highlighter::executePlugin() {}
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Highlighter::copyDefaultStyles() {
+void Highlighter::loadDefaultStyles(bool bReset) {
   QFileInfo fi(m_pSettings->fileName());
   QDir confDir(fi.absolutePath());
   if (!confDir.exists()) {
     confDir.mkpath(confDir.absolutePath());
   }
+  QStringList sDefaultFiles;
+  sDefaultFiles << QStringLiteral("standard-style")
+                << QStringLiteral("dark-style");
 
-  QFile stylefile(confDir.absolutePath() + "/standard-style" + m_sExt);
-  if (!stylefile.exists()) {
-    if (QFile::copy(QStringLiteral(":/standard-style.conf"),
-                    confDir.absolutePath() + "/standard-style" + m_sExt)) {
-      stylefile.setPermissions(stylefile.permissions() |
-                               QFileDevice::WriteUser);
-    } else {
-      qWarning() << "Couldn't create style file: " << stylefile.fileName();
+  if (bReset) {
+    int iRet = QMessageBox::question(
+        nullptr, tr("Reset highlighting"),
+        tr("Shall the default styles %1 be reset?")
+            .arg(sDefaultFiles.join(QStringLiteral(" & "))),
+        QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (iRet != QMessageBox::Yes) {
+      return;
     }
   }
 
-  stylefile.setFileName(confDir.absolutePath() + "/dark-style" + m_sExt);
-  if (!stylefile.exists()) {
-    if (QFile::copy(QStringLiteral(":/dark-style.conf"),
-                    confDir.absolutePath() + "/dark-style" + m_sExt)) {
-      stylefile.setPermissions(stylefile.permissions() |
-                               QFileDevice::WriteUser);
-    } else {
-      qWarning() << "Couldn't create style file: " << stylefile.fileName();
+  for (const auto &sFile : qAsConst(sDefaultFiles)) {
+    QFile stylefile(confDir.absolutePath() + "/" + sFile + m_sExt);
+    if (bReset && stylefile.exists()) {
+      if (!stylefile.remove()) {
+        qWarning() << "Couldn't delete style file: " << stylefile.fileName();
+      }
     }
+    if (!stylefile.exists()) {
+      if (QFile::copy(":/" + sFile + ".conf",
+                      confDir.absolutePath() + "/" + sFile + m_sExt)) {
+        stylefile.setPermissions(stylefile.permissions() |
+                                 QFileDevice::WriteUser);
+      } else {
+        qWarning() << "Couldn't create style file: " << stylefile.fileName();
+      }
+    }
+  }
+
+  if (bReset) {
+    this->loadHighlighting(m_sStyleFile);
   }
 }
 
@@ -243,6 +258,9 @@ void Highlighter::buildUi(QWidget *pParent) {
           &Highlighter::accept);
   connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
           &QDialog::reject);
+  connect(m_pUi->buttonBox->button(QDialogButtonBox::RestoreDefaults),
+          &QPushButton::clicked, this,
+          [this]() { this->loadDefaultStyles(true); });
 }
 
 // ----------------------------------------------------------------------------
@@ -483,7 +501,7 @@ void Highlighter::getTranslations() {
   QFile fiMacros(QStringLiteral(":/macros.conf"));
   if (!fiMacros.open(QIODevice::ReadOnly)) {
     qWarning() << "Could not open macros.conf";
-    QMessageBox::warning(nullptr, QStringLiteral("Error"),
+    QMessageBox::warning(nullptr, tr("Error"),
                          QStringLiteral("Could not open macros.conf"));
   } else {
     QTextStream in(&fiMacros);

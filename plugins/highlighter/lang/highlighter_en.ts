@@ -4,12 +4,12 @@
 <context>
     <name>Highlighter</name>
     <message>
-        <location filename="../highlighter.cpp" line="153"/>
+        <location filename="../highlighter.cpp" line="151"/>
         <source>Syntax highlighter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="235"/>
+        <location filename="../highlighter.cpp" line="253"/>
         <source>Create new style...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,7 +24,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="133"/>
+        <location filename="../highlighter.cpp" line="132"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -45,108 +45,119 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="137"/>
+        <location filename="../highlighter.cpp" line="136"/>
         <source>Text formatting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="138"/>
+        <location filename="../highlighter.cpp" line="137"/>
         <source>Hyperlink</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="138"/>
+        <location filename="../highlighter.cpp" line="137"/>
         <source>InterWiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="139"/>
+        <location filename="../highlighter.cpp" line="138"/>
         <source>Macro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="139"/>
+        <location filename="../highlighter.cpp" line="138"/>
         <source>Parser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="139"/>
+        <location filename="../highlighter.cpp" line="138"/>
         <source>List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="140"/>
+        <location filename="../highlighter.cpp" line="138"/>
         <source>Table line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="140"/>
+        <location filename="../highlighter.cpp" line="139"/>
         <source>Table cell format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="141"/>
+        <location filename="../highlighter.cpp" line="139"/>
         <source>ImgMap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="141"/>
+        <location filename="../highlighter.cpp" line="139"/>
         <source>Misc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="141"/>
+        <location filename="../highlighter.cpp" line="140"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="142"/>
+        <location filename="../highlighter.cpp" line="140"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="694"/>
+        <location filename="../highlighter.cpp" line="184"/>
+        <source>Reset highlighting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highlighter.cpp" line="719"/>
         <source>New style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="695"/>
+        <location filename="../highlighter.cpp" line="720"/>
         <source>Please insert name of new style file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="715"/>
-        <location filename="../highlighter.cpp" line="726"/>
+        <location filename="../highlighter.cpp" line="515"/>
+        <location filename="../highlighter.cpp" line="738"/>
+        <location filename="../highlighter.cpp" line="748"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="715"/>
+        <location filename="../highlighter.cpp" line="185"/>
+        <source>Shall the default styles %1 be reset?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../highlighter.cpp" line="738"/>
         <source>File already exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="727"/>
+        <location filename="../highlighter.cpp" line="749"/>
         <source>Could not create new style.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="992"/>
+        <location filename="../highlighter.cpp" line="1010"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="1000"/>
+        <location filename="../highlighter.cpp" line="1018"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="1002"/>
+        <location filename="../highlighter.cpp" line="1020"/>
         <source>Licence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../highlighter.cpp" line="1005"/>
+        <location filename="../highlighter.cpp" line="1023"/>
         <source>Inyoka markup syntax highlighter plugin.</source>
         <translation type="unfinished"></translation>
     </message>

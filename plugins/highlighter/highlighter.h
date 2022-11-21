@@ -78,9 +78,9 @@ class Highlighter : public QObject, IEditorPlugin {
   void changedStyle(int nIndex);
   void clickedStyleCell(int nRow, int nCol);
   void accept();
+  void loadDefaultStyles(bool bReset);
 
  private:
-  void copyDefaultStyles();
   void buildUi(QWidget *pParent);
   void loadHighlighting(const QString &sStyleFile);
   void readValue(const quint16 nRow, const QTextCharFormat &charFormat);

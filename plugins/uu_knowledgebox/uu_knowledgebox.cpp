@@ -67,7 +67,8 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
   connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
           &QDialog::reject);
   connect(m_pUi->buttonBox->button(QDialogButtonBox::RestoreDefaults),
-          &QPushButton::clicked, this, &Uu_KnowledgeBox::loadTemplateDefaults);
+          &QPushButton::clicked, this,
+          [this]() { this->loadTemplateDefaults(true); });
 }
 
 // ----------------------------------------------------------------------------
@@ -170,7 +171,7 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
       m_pSettings->value(QStringLiteral("NumOfEntries"), 0).toUInt();
 
   if (0 == nNumOfEntries) {
-    this->loadTemplateDefaults(true);
+    this->loadTemplateDefaults(false);
   } else {
     qDebug() << "Reading knowledge box entries from config file";
     QString sTmpEntry;
@@ -190,7 +191,7 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_KnowledgeBox::loadTemplateDefaults(bool bStartup) {
+void Uu_KnowledgeBox::loadTemplateDefaults(bool bReset) {
   qDebug() << Q_FUNC_INFO;
   QFile fiDefault(QStringLiteral(":/uu_knowledgebox.default"));
   m_bListEntryActive.clear();
@@ -236,7 +237,7 @@ void Uu_KnowledgeBox::loadTemplateDefaults(bool bStartup) {
                          tr("ubuntuusers.de knowledgebox defaults are empty!"));
   }
 
-  if (!bStartup) {
+  if (bReset) {
     for (int nRow = 0; nRow < m_sListEntries.size(); nRow++) {
       this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
     }
