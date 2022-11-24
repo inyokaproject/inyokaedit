@@ -14,7 +14,6 @@
 ## paket6, ppa
 ## paket7, playdeb
 ## paket8, getdeb, ab karmic; hier noch weitere Angaben
-## paket9, partner ab karmic
 ## }}}
 ##
 #############################################################
@@ -36,10 +35,8 @@
 <@ if $loop.index==2 @> (
 <@ endif @>
 <@ for $word in $col split_by ' '@>
-<@ if ['main','restricted','universe','multiverse','security','ppa','partner'] contains $word @>
+<@ if ['main','restricted','universe','multiverse','security','ppa'] contains $word @>
 <@ if ['main','restricted','universe','multiverse','security','ppa'] contains $word @>''<@ $word @>''
-<@ endif @>
-<@ if ['partner'] contains $word @>''[:Canonical_Partner:]''
 <@ endif @>
 <@ else @><@ $word @>
 <@ endif @>
