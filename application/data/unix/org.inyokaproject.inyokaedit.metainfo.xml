@@ -10,7 +10,7 @@
   <summary xml:lang="de">Inyoka Markup Editor</summary>
   
   <description>
-    <p>InyokaEdit is a markup editor to create and preview Inyoka articles. Besides down- and upload of the raw article, the editor provides code completion for templates and additional optional extensions. </p>
+    <p>InyokaEdit is a markup editor to create and preview Inyoka articles. Besides down- and upload of the raw article, the editor provides code completion for templates and additional optional extensions.</p>
     <p xml:lang="de">InyokaEdit ist ein Markup-Editor zum bearbeiten und ansehen von Inyoka-Artikeln. Neben dem Herunter- und Hochladen des Rohtextes bietet der Editor Codevervollständigung für Vorlagen, sowie zusätzliche optionale Erweiterungen.</p>
   </description>
   
@@ -35,6 +35,19 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.27.2" date="2022-11-25">
+      <description>
+        <p>Changes:</p>
+        <ul>
+          <li>Add alternative spellchecker plugin based on Nuspell</li>
+          <li>Add button to restore knowledgebox and highlighting defaults</li>
+          <li>Alignment with latest Inyoka changes</li>
+          <li>Replace core5compat with pure Qt 6 implementation</li>
+          <li>Fix version check and Utf-8 issues on Windows</li>
+          <li>Fix crash with Qt 6.4</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.27.1" date="2022-06-12">
       <description>
         <p>Bug fixes:</p>
