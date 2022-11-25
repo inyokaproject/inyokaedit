@@ -62,7 +62,7 @@ cd ..
 
 echo "Replace static paths..."
 ## Paths
-_r1="//media-cdn.ubuntu-de.org/linkmap/"
+_r1="https://media-cdn.ubuntu-de.org/linkmap/"
 _r2=""
 ## Escape path for sed using bash find and replace
 _r1="${_r1//\//\\/}"
