@@ -1,4 +1,4 @@
-inyokaedit (0.27.2-0) focal; urgency=low
+inyokaedit (0.27.2-1) focal; urgency=low
 
   [ Thorsten Roth ]
   * Add alternative spellchecker plugin based on Nuspell
@@ -8,7 +8,7 @@ inyokaedit (0.27.2-0) focal; urgency=low
   * Fix version check and Utf-8 issues on Windows
   * Fix crash with Qt 6.4
 
- -- Thorsten Roth <elthoro@gmx.de>  Fri, 22 Nov 2022 17:24:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Fri, 22 Nov 2022 18:23:00 +0200
 
 inyokaedit (0.27.1-0) focal; urgency=low
 
