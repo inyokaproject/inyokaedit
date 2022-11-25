@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
-OpenSSL v1.1.1o Win64 for ICS, http://www.overbyte.be
+OpenSSL v1.1.1s Win64 for ICS, http://www.overbyte.be
 -----------------------------------------------------------------------
 
 Only supports Windows Vista/Server 2008, and later, not Windows XP.
