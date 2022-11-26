@@ -195,6 +195,7 @@ void Highlighter::loadDefaultStyles(bool bReset) {
 
   for (const auto &sFile : qAsConst(sDefaultFiles)) {
     QFile stylefile(confDir.absolutePath() + "/" + sFile + m_sExt);
+    stylefile.setPermissions(stylefile.permissions() | QFileDevice::WriteUser);
     if (bReset && stylefile.exists()) {
       if (!stylefile.remove()) {
         qWarning() << "Couldn't delete style file: " << stylefile.fileName();
@@ -741,6 +742,7 @@ void Highlighter::changedStyle(int nIndex) {
       qWarning() << "Copy:" << fileStyle.fileName();
       return;
     }
+    fileStyle.setPermissions(fileStyle.permissions() | QFileDevice::WriteUser);
     m_pUi->styleFilesBox->addItem(sFileName);
     m_pUi->styleFilesBox->setCurrentIndex(
         m_pUi->styleFilesBox->findText(sFileName));

@@ -102,7 +102,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
   this->setupEditor();
   this->createActions();
   this->createMenus();
-  // this->createXmlMenus();  // Already called by LanguageChange event
+  this->createXmlMenus();
   this->setUnifiedTitleAndToolBarOnMac(true);
 
   if (!QFile(m_UserDataDir.absolutePath() + "/community/" +
