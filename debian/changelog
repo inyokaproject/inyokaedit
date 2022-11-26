@@ -1,4 +1,4 @@
-inyokaedit (0.27.2-1) focal; urgency=low
+inyokaedit (0.27.2-2) focal; urgency=low
 
   [ Thorsten Roth ]
   * Add alternative spellchecker plugin based on Nuspell
