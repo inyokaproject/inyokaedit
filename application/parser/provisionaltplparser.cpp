@@ -1511,9 +1511,9 @@ auto ProvisionalTplParser::parsePackage(const QStringList &sListArgs)
 auto ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs)
     -> QString {
   return QString::fromUtf8(
-             "Wer die neueste Version installieren möchte, kann das Programm "
-             "über "
-             "den Python Paketmanager [:pip:] installieren:\n"
+             "Der Python Paketmanager [:pip:] stellt häufig aktuellere "
+             "Versionen von Programmen als in den Paketquellen bereit. "
+             "Folgendermaßen lässt sich das Programm darüber installieren:\n"
              "<div class=\"bash\">\n"
              "<div class=\"contents\">\n"
              "<pre>pip3 install ") +
