@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2022 The InyokaEdit developers
+#  Copyright (C) 2011-present The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ project(spellchecker-hunspell
     DESCRIPTION "Hunspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
-set(PROJECT_COPYRIGHT "(C) 2011 Volker Götz, 2014-2022 - Thorsten Roth")
+set(PROJECT_COPYRIGHT "(C) 2011 Volker Götz, 2014-present - Thorsten Roth")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)

@@ -3,7 +3,7 @@
  *
  * \section LICENSE
  *
- * Copyright (C) 2011-2022 The InyokaEdit developers
+ * Copyright (C) 2011-present The InyokaEdit developers
  *
  * This file is part of InyokaEdit.
  *
@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Class definition for seesion functions.
+ * Class definition for session functions.
  */
 
 #ifndef APPLICATION_SESSION_H_

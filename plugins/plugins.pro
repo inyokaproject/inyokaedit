@@ -1,5 +1,5 @@
 #  This file is part of InyokaEdit.
-#  Copyright (C) 2011-2022 The InyokaEdit developers
+#  Copyright (C) 2011-present The InyokaEdit developers
 #
 #  InyokaEdit is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 TEMPLATE = subdirs
 CONFIG  += ordered
 SUBDIRS  = spellchecker-hunspell \
-#          spellchecker-nuspell \
+          spellchecker-nuspell \
            uu_tabletemplate \
            uu_knowledgebox \
            highlighter \

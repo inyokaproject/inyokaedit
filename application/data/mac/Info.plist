@@ -23,6 +23,6 @@
 	<key>CFBundleVersion</key>
 	<string>0.27.2</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>(c) 2011-2022, The InyokaEdit developers</string>
+	<string>(c) 2011-present, The InyokaEdit developers</string>
 </dict>
 </plist>
