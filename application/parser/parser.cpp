@@ -233,7 +233,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
                 // If 's' is inside quotes, get the whole string
                 sListArguments.append(s);
               } else {
-                // If 's' is outside quotes, get the splitted string
+                // If 's' is outside quotes, get the split string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                 sListArguments.append(s.split(QRegularExpression(
                                                 QStringLiteral(",+")),

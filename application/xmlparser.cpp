@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Xml parser for importing menus/dropdown/toolbars.
+ * Xml parser for importing menus/drop-down/toolbars.
  */
 
 #include "./xmlparser.h"

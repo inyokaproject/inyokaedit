@@ -21,7 +21,7 @@
  * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
  *
  * \section DESCRIPTION
- * Settings gui.
+ * Settings GUI.
  */
 
 #include "./settingsdialog.h"
@@ -86,7 +86,7 @@ SettingsDialog::SettingsDialog(Settings *pSettings, const QString &sSharePath,
   }
   m_sGuiLang = m_pUi->GuiLangCombo->currentText();
 
-  // Enter Qt keycode automatically in text box
+  // Enter Qt key-code automatically in text box
   m_pUi->reloadPreviewKeyEdit->installEventFilter(this);
 
   // Font
@@ -264,7 +264,7 @@ void SettingsDialog::reject() {
 // ----------------------------------------------------------------------------
 
 auto SettingsDialog::eventFilter(QObject *obj, QEvent *event) -> bool {
-  // Enter Qt keycode automatically in text box
+  // Enter Qt key-code automatically in text box
   if (m_pUi->reloadPreviewKeyEdit == obj) {
     if (QEvent::KeyPress == event->type()) {
       auto *keyEvent = static_cast<QKeyEvent *>(event);

@@ -82,6 +82,12 @@ isEmpty(PREVIEW) {
   }
 }
 
+unix: !macx {
+  # Required for miniz
+  DEFINES     += __USE_LARGEFILE64
+  DEFINES     += _LARGEFILE64_SOURCE
+}
+
 include(templates/templates.pri)
 include(parser/parser.pri)
 
@@ -99,7 +105,8 @@ HEADERS       += inyokaedit.h \
                  upload.h \
                  utils.h \
                  xmlparser.h \
-                 ieditorplugin.h
+                 ieditorplugin.h \
+                 3rdparty/miniz/miniz.h
 
 SOURCES       += main.cpp \
                  inyokaedit.cpp \
@@ -115,7 +122,8 @@ SOURCES       += main.cpp \
                  syntaxcheck.cpp \
                  upload.cpp \
                  xmlparser.cpp \
-                 utils.cpp
+                 utils.cpp \
+                 3rdparty/miniz/miniz.c
 
 FORMS         += inyokaedit.ui \
                  findreplace.ui \

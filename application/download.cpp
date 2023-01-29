@@ -287,7 +287,7 @@ auto Download::redirectUrl(const QUrl &possibleRedirectUrl,
     if (m_sSitename.endsWith('/')) {
       m_sSitename.remove(m_sSitename.length() - 1, 1);
     }
-    qDebug() << "Set new sitename:" << m_sSitename;
+    qDebug() << "Set new site name:" << m_sSitename;
   } else {
     m_urlRedirectedTo.clear();
   }

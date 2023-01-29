@@ -39,7 +39,7 @@ class SettingsDialog;
 
 /**
  * \class SettingsDialog
- * \brief Graphcal interface to settings
+ * \brief Graphical interface to settings
  */
 class SettingsDialog : public QDialog {
   Q_OBJECT

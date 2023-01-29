@@ -155,7 +155,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
                 // If 's' is inside quotes, get the whole string
                 sList.append(s);
               } else {
-                // If 's' is outside quotes, get splitted string
+                // If 's' is outside quotes, get split string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                 sList.append(s.split(QRegularExpression(QStringLiteral("\\s+")),
                                      QString::SkipEmptyParts));

@@ -148,7 +148,7 @@ class InyokaEdit : public QMainWindow {
 
   QList<QAction *> m_OpenTemplateFilesActions;
 
-  // Dynamically created menus/dropdowns/toolbuttons via XML file
+  // Dynamically created menus/drop-downs/tool-buttons via XML file
   QList<QMenu *> m_pXmlMenus;
   QList<QMenu *> m_pXmlSubMenus;
   QList<QComboBox *> m_pXmlDropdowns;

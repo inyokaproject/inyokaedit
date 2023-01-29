@@ -40,15 +40,10 @@
 #include <QWebEngineView>
 #endif
 
+#include "./3rdparty/miniz/miniz.h"
 #include "./findreplace.h"
 #include "./settings.h"
 #include "./texteditor.h"
-
-#if defined __linux__
-#define _LARGEFILE64_SOURCE 1
-#endif
-#define MINIZ_HEADER_FILE_ONLY
-#include "./3rdparty/miniz/miniz.c"
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                                Settings *pSettings, const QString &sPreviewFile,
@@ -407,7 +402,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
 auto FileOperations::saveFile(QString sFileName) -> bool {
   QFile file;
   if (sFileName.endsWith(QLatin1String(".inyzip"))) {
-    // Special characters not allowed for miniz achives
+    // Special characters not allowed for miniz archives
     sFileName.replace(QStringLiteral("Ä"), QLatin1String("Ae"));
     sFileName.replace(QStringLiteral("Ü"), QLatin1String("Ue"));
     sFileName.replace(QStringLiteral("Ö"), QLatin1String("Oe"));

@@ -69,6 +69,7 @@ set(HEADERS
     utils.h
     xmlparser.h
     ieditorplugin.h
+    3rdparty/miniz/miniz.h
 )
 
 set(SOURCES
@@ -87,6 +88,7 @@ set(SOURCES
     upload.cpp
     xmlparser.cpp
     utils.cpp
+    3rdparty/miniz/miniz.c
 )
 
 set(FORMS
@@ -119,4 +121,11 @@ if(LINUX)
     install(FILES data/unix/org.inyokaproject.inyokaedit.metainfo.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
     install(FILES data/unix/inyokaedit.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
     install(DIRECTORY icons/hicolor DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+    
+    # Required for miniz
+    target_compile_definitions(inyokaedit
+        PRIVATE
+            __USE_LARGEFILE64
+            _LARGEFILE64_SOURCE
+    )
 endif()
