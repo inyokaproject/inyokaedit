@@ -18,6 +18,16 @@ build_script:
 - cmd: >-
     %VCPKG_DIR%\vcpkg.exe version
 
+    cd "C:\Tools\vcpkg"
+
+    git pull
+
+    .\bootstrap-vcpkg.bat
+
+    cd %APPVEYOR_BUILD_FOLDER%
+
+    %VCPKG_DIR%\vcpkg.exe version
+
     echo set(VCPKG_BUILD_TYPE release) >> %VCPKG_DIR%\triplets\%BUILD%-windows.cmake
 
     type %VCPKG_DIR%\triplets\%BUILD%-windows.cmake
