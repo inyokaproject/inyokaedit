@@ -2,10 +2,13 @@
 
 {{|<title="Dieser Artikel wurde für die folgenden
 Ubuntu-Versionen getestet:" class="box tested_for">
-<@ if ['general', 'kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase) or ($arguments.5 as lowercase)@> 
+<@ if ['general', 'lunar', 'kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase) or ($arguments.5 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 Dieser Artikel ist größtenteils für alle Ubuntu-Versionen gültig.
 <@ else @>
+<@ if $arguments as lowercase contain 'lunar' @>
+  * [:Lunar_Lobster:Ubuntu 23.04] Lunar Lobster
+<@ endif @>
 <@ if $arguments as lowercase contain 'kinetic' @>
   * [:Kinetic_Kudu:Ubuntu 22.10] Kinetic Kudu
 <@ endif @>
@@ -29,10 +32,13 @@ Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version getestet! Bi
 #tag: ungetestet
 <@ endif @>
 |}}
-<@ if ['general', 'kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase) or ($arguments.5 as lowercase)@> 
+<@ if ['general', 'lunar', 'kinetic', 'jammy', 'impish', 'focal', 'bionic'] contains ($arguments.0 as lowercase) or ($arguments.1 as lowercase) or ($arguments.2 as lowercase) or ($arguments.3 as lowercase) or ($arguments.4 as lowercase) or ($arguments.5 as lowercase)@> 
 <@ if $arguments as lowercase contain 'general' @>
 #getestet: general
 <@ else @>
+<@ if $arguments as lowercase contain 'lunar' @>
+#getestet: lunar
+<@ endif @>
 <@ if $arguments as lowercase contain 'kinetic' @>
 #getestet: kinetic
 <@ endif @>
