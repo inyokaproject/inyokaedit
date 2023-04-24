@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = hotkey
 DESTDIR       = ../
 
-VERSION       = 1.2.5
+VERSION       = 1.2.6
 QMAKE_TARGET_DESCRIPTION = "Hotkey plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2015-present - Thorsten Roth"
 
@@ -38,7 +38,7 @@ DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
 }
 
 HEADERS      += hotkey.h

@@ -85,7 +85,7 @@ class Settings : public QObject {
   auto getWindowState() const -> QByteArray;
   auto getWindowGeometry() const -> QByteArray;
   auto getSplitterState() const -> QByteArray;
-  auto getDarkThreshold() const -> double;
+  auto isDarkScheme() const -> bool;
 
   // Recent files
   auto getNumOfRecentFiles() const -> quint16;
@@ -121,6 +121,7 @@ class Settings : public QObject {
 
   QSettings *m_pSettings;
   SettingsDialog *m_pSettingsDialog;
+  QWidget *m_pParent;
 
   // General
   QString m_sGuiLanguage;

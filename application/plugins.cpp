@@ -36,12 +36,13 @@
 Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
                  const QStringList &sListDisabledPlugins,
                  const QDir &userDataDir, const QString &sSharePath,
-                 QObject *pObj)
+                 const bool bDarkScheme, QObject *pObj)
     : m_pParent(pParent),
       m_pEditor(pEditor),
       m_sListDisabledPlugins(sListDisabledPlugins),
       m_userDataDir(userDataDir),
-      m_sSharePath(sSharePath) {
+      m_sSharePath(sSharePath),
+      m_bDarkScheme(bDarkScheme) {
   Q_UNUSED(pObj)
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
@@ -126,9 +127,14 @@ void Plugins::loadPlugins(const QString &sLang) {
     m_listPlugins.at(i)->installTranslator(sLang);
 
     QString sMenu(m_listPlugins.at(i)->getCaption());
+    QPair<QIcon, QIcon> icons = m_listPlugins.at(i)->getIcons();
+    QIcon ico = icons.first;
+    if (m_bDarkScheme) {
+      ico = icons.second;
+    }
+
     if (!sMenu.isEmpty() && m_listPlugins.at(i)->includeMenu()) {
-      m_PluginMenuEntries << new QAction(m_listPlugins.at(i)->getIcon(),
-                                         m_listPlugins.at(i)->getCaption(),
+      m_PluginMenuEntries << new QAction(ico, m_listPlugins.at(i)->getCaption(),
                                          m_pParent);
       connect(m_PluginMenuEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
@@ -138,8 +144,7 @@ void Plugins::loadPlugins(const QString &sLang) {
     }
     if (m_listPlugins.at(i)->includeToolbar()) {
       m_PluginToolbarEntries
-          << new QAction(m_listPlugins.at(i)->getIcon(),
-                         m_listPlugins.at(i)->getCaption(), m_pParent);
+          << new QAction(ico, m_listPlugins.at(i)->getCaption(), m_pParent);
       connect(m_PluginToolbarEntries.last(), &QAction::triggered,
               m_listPluginObjects.at(i), [=]() {
                 qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))

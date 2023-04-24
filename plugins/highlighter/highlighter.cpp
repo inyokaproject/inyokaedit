@@ -34,6 +34,9 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
+#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#include <QStyleHints>
+#endif
 
 #include "../../application/templates/templates.h"
 #include "../../application/texteditor.h"
@@ -62,8 +65,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   this->loadDefaultStyles(false);
 
-  if (pParent->window()->palette().window().color().lightnessF() <
-      m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble()) {
+  if (isDarkScheme(pParent)) {
     m_sStyleFile = QStringLiteral("dark-style");
   } else {
     m_sStyleFile = QStringLiteral("standard-style");
@@ -91,6 +93,31 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->defineRules();
 
   this->buildUi(pParent);  // After loading template entries
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto Highlighter::isDarkScheme(QWidget *pParent) const -> bool {
+  const double nUserThreshold =
+      m_pSettings->value(QStringLiteral("DarkThreshold"), -1).toDouble();
+
+#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+  if (-1 == nUserThreshold &&
+      Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
+    return true;
+  }
+#endif
+
+  double nThreshold = 0.5;
+  if (-1 != nUserThreshold) {
+    nThreshold = nUserThreshold;
+  }
+  if (pParent->window()->palette().window().color().lightnessF() < nThreshold) {
+    return true;
+  }
+
+  return false;
 }
 
 // ----------------------------------------------------------------------------
@@ -150,9 +177,11 @@ void Highlighter::installTranslator(const QString &sLang) {
 auto Highlighter::getCaption() const -> QString {
   return tr("Syntax highlighter");
 }
-auto Highlighter::getIcon() const -> QIcon {
-  return QIcon();
-  // return QIcon(":/highlighter.png");
+auto Highlighter::getIcons() const -> QPair<QIcon, QIcon> {
+  QPair<QIcon, QIcon> icons;
+  // icons.first = QIcon(QLatin1String(":/highlighter.png"));
+  // icons.second = QIcon(QLatin1String(":/highlighter_dark.png"));
+  return icons;
 }
 
 auto Highlighter::includeMenu() const -> bool { return false; }

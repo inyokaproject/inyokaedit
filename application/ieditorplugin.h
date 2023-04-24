@@ -46,7 +46,7 @@ class IEditorPlugin {
   virtual QString getPluginVersion() const = 0;
   virtual void installTranslator(const QString &sLang) = 0;
   virtual QString getCaption() const = 0;
-  virtual QIcon getIcon() const = 0;
+  virtual QPair<QIcon, QIcon> getIcons() const = 0;  // T1: Light, T2: Dark
   virtual bool includeMenu() const = 0;
   virtual bool includeToolbar() const = 0;
   virtual bool hasSettings() const = 0;

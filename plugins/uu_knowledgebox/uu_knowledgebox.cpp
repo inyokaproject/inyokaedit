@@ -116,11 +116,11 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
 auto Uu_KnowledgeBox::getCaption() const -> QString {
   return tr("Ubuntuusers.de knowledge box");
 }
-auto Uu_KnowledgeBox::getIcon() const -> QIcon {
-  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(QLatin1String(":/list_alt_dark.png"));
-  }
-  return QIcon(QLatin1String(":/list_alt.png"));
+auto Uu_KnowledgeBox::getIcons() const -> QPair<QIcon, QIcon> {
+  QPair<QIcon, QIcon> icons;
+  icons.first = QIcon(QLatin1String(":/list_alt.png"));
+  icons.second = QIcon(QLatin1String(":/list_alt_dark.png"));
+  return icons;
 }
 
 auto Uu_KnowledgeBox::includeMenu() const -> bool { return true; }
@@ -136,7 +136,6 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
   m_pDialog->setWindowFlags(m_pDialog->windowFlags() &
                             ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
-  m_pDialog->setWindowIcon(this->getIcon());
 
   m_pUi->entriesTable->setColumnCount(3);
   m_pUi->entriesTable->setRowCount(0);

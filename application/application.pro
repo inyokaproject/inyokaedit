@@ -24,8 +24,8 @@ unix: !macx {
 
 DESTDIR       = ../
 
-win32:VERSION = 0.27.2.0
-else:VERSION  = 0.27.2
+win32:VERSION = 0.27.3.0
+else:VERSION  = 0.27.3
 
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
@@ -47,7 +47,7 @@ DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
 }
 
 isEmpty(PREVIEW) {

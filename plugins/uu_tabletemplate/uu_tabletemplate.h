@@ -71,7 +71,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   auto getPluginVersion() const -> QString override;
   void installTranslator(const QString &sLang) override;
   auto getCaption() const -> QString override;
-  auto getIcon() const -> QIcon override;
+  auto getIcons() const -> QPair<QIcon, QIcon> override;
   auto includeMenu() const -> bool override;
   auto includeToolbar() const -> bool override;
   bool hasSettings() const override;

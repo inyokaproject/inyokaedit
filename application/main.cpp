@@ -58,6 +58,10 @@ void LoggingHandler(QtMsgType type, const QMessageLogContext &context,
 // ----------------------------------------------------------------------------
 
 auto main(int argc, char *argv[]) -> int {
+#if defined(Q_OS_WIN) && QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+  QApplication::setStyle("Fusion");  // Supports dark scheme on Win 10/11
+#endif
+
   QApplication app(argc, argv);
   app.setApplicationName(QStringLiteral(APP_NAME));
   app.setApplicationVersion(QStringLiteral(APP_VERSION));

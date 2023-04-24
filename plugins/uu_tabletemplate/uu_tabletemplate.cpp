@@ -75,7 +75,6 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pDialog->setWindowFlags(m_pDialog->windowFlags() &
                             ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
-  m_pDialog->setWindowIcon(this->getIcon());
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
 
 #ifdef USEQTWEBKIT
@@ -208,11 +207,11 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
 auto Uu_TableTemplate::getCaption() const -> QString {
   return tr("Ubuntuusers.de table generator");
 }
-auto Uu_TableTemplate::getIcon() const -> QIcon {
-  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(QLatin1String(":/tabletemplate_dark.png"));
-  }
-  return QIcon(QLatin1String(":/tabletemplate.png"));
+auto Uu_TableTemplate::getIcons() const -> QPair<QIcon, QIcon> {
+  QPair<QIcon, QIcon> icons;
+  icons.first = QIcon(QLatin1String(":/tabletemplate.png"));
+  icons.second = QIcon(QLatin1String(":/tabletemplate_dark.png"));
+  return icons;
 }
 
 auto Uu_TableTemplate::includeMenu() const -> bool { return true; }

@@ -30,11 +30,15 @@
 #include <QDebug>
 #include <QSettings>
 #include <QStandardPaths>
+#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#include <QStyleHints>
+#endif
 
 #include "./settingsdialog.h"
 
 Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
   Q_UNUSED(pObj)
+  m_pParent = pParent;
 #if defined __linux__
   m_pSettings = new QSettings(QSettings::NativeFormat, QSettings::UserScope,
                               qApp->applicationName().toLower(),
@@ -51,7 +55,7 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
 
   this->readSettings(sSharePath);
 
-  m_pSettingsDialog = new SettingsDialog(this, sSharePath, pParent);
+  m_pSettingsDialog = new SettingsDialog(this, sSharePath, m_pParent);
 
   connect(this, &Settings::availablePlugins, m_pSettingsDialog,
           &SettingsDialog::getAvailablePlugins);
@@ -248,7 +252,7 @@ void Settings::readSettings(const QString &sSharePath) {
   m_aSplitterState =
       m_pSettings->value(QStringLiteral("SplitterState")).toByteArray();
   m_nDarkThreshold =
-      m_pSettings->value(QStringLiteral("DarkThreshold"), 0.5).toDouble();
+      m_pSettings->value(QStringLiteral("DarkThreshold"), -1).toDouble();
   m_pSettings->endGroup();
 }
 
@@ -343,7 +347,6 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
   m_pSettings->setValue(QStringLiteral("Geometry"), WinGeometry);
   m_pSettings->setValue(QStringLiteral("WindowState"), WinState);
   m_pSettings->setValue(QStringLiteral("SplitterState"), SplitterState);
-  // m_pSettings->setValue(QStringLiteral("DarkThreshold"), m_nDarkThreshold);
   m_pSettings->endGroup();
 }
 
@@ -493,11 +496,32 @@ void Settings::setWindowsCheckUpdate(const bool bValue) {
 auto Settings::getWindowGeometry() const -> QByteArray {
   return m_aWindowGeometry;
 }
+
 auto Settings::getWindowState() const -> QByteArray { return m_aWindowState; }
+
 auto Settings::getSplitterState() const -> QByteArray {
   return m_aSplitterState;
 }
-auto Settings::getDarkThreshold() const -> double { return m_nDarkThreshold; }
+
+auto Settings::isDarkScheme() const -> bool {
+#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+  if (-1 == m_nDarkThreshold &&
+      Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
+    return true;
+  }
+#endif
+
+  double nThreshold = 0.5;
+  if (-1 != m_nDarkThreshold) {
+    nThreshold = m_nDarkThreshold;
+  }
+  if (m_pParent->window()->palette().window().color().lightnessF() <
+      nThreshold) {
+    return true;
+  }
+
+  return false;
+}
 
 // ----------------------------------------------------
 

@@ -353,8 +353,12 @@ void SettingsDialog::getAvailablePlugins(
 
     // Icon
     m_pUi->pluginsTable->setIconSize(QSize(22, 22));
-    m_pUi->pluginsTable->item(nRow, 1)->setIcon(
-        m_listPLugins.at(nRow)->getIcon());
+    QPair<QIcon, QIcon> icons = m_listPLugins.at(nRow)->getIcons();
+    QIcon ico = icons.first;
+    if (m_pSettings->isDarkScheme()) {
+      ico = icons.second;
+    }
+    m_pUi->pluginsTable->item(nRow, 1)->setIcon(ico);
     // Caption
     m_pUi->pluginsTable->item(nRow, 2)->setText(
         m_listPLugins.at(nRow)->getCaption());

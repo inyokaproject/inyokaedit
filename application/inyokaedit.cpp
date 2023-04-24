@@ -197,7 +197,7 @@ void InyokaEdit::createObjects() {
 
   m_pPlugins =
       new Plugins(this, m_pCurrentEditor, m_pSettings->getDisabledPlugins(),
-                  m_UserDataDir, m_sSharePath);
+                  m_UserDataDir, m_sSharePath, m_pSettings->isDarkScheme());
   connect(m_pSettings, &Settings::changeLang, m_pPlugins, &Plugins::changeLang);
   connect(m_pPlugins, &Plugins::addMenuToolbarEntries, this,
           &InyokaEdit::addPluginsButtons);
@@ -462,8 +462,7 @@ void InyokaEdit::createActions() {
   connect(m_pUi->uploadArticleAct, &QAction::triggered, m_pUploadModule,
           &Upload::clickUploadArticle);
 
-  if (this->window()->palette().window().color().lightnessF() <
-      m_pSettings->getDarkThreshold()) {
+  if (m_pSettings->isDarkScheme()) {
     m_pUi->previewAct->setIcon(
         QIcon(QLatin1String(":/toolbar/dark/preview.png")));
     m_pUi->downloadArticleAct->setIcon(
@@ -644,8 +643,7 @@ void InyokaEdit::createXmlMenus() {
           // qDebug() << "Read XML" << xmlFile.fileName();
           if (xmlParser.parseXml(xmlFile.fileName())) {
             QString sIconPath(xmlParser.getPath());
-            if (this->window()->palette().window().color().lightnessF() <
-                    m_pSettings->getDarkThreshold() &&
+            if (m_pSettings->isDarkScheme() &&
                 sIconPath.contains(QLatin1String("light"))) {
               sIconPath.replace(QLatin1String("light"), QLatin1String("dark"),
                                 Qt::CaseInsensitive);

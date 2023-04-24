@@ -41,7 +41,8 @@ class Plugins : public QObject {
  public:
   Plugins(QWidget *pParent, TextEditor *pEditor,
           const QStringList &sListDisabledPlugins, const QDir &userDataDir,
-          const QString &sSharePath, QObject *pObj = nullptr);
+          const QString &sSharePath, const bool bDarkScheme,
+          QObject *pObj = nullptr);
   void loadPlugins(const QString &sLang);
   void setCurrentEditor(TextEditor *pEditor);
   void setEditorlist(const QList<TextEditor *> &listEditors);
@@ -61,6 +62,7 @@ class Plugins : public QObject {
   QStringList m_sListDisabledPlugins;
   const QDir m_userDataDir;
   const QString m_sSharePath;
+  const bool m_bDarkScheme;
 
   QList<IEditorPlugin *> m_listPlugins;
   QList<QObject *> m_listPluginObjects;

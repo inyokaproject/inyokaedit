@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = highlighter
 DESTDIR       = ../
 
-VERSION       = 1.4.0
+VERSION       = 1.4.1
 QMAKE_TARGET_DESCRIPTION = "Syntax highlighter plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2014-present - Thorsten Roth"
 
@@ -39,7 +39,7 @@ DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
 }
 
 HEADERS      += highlighter.h \

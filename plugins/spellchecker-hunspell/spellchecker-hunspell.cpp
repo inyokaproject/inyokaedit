@@ -149,11 +149,11 @@ void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
 auto SpellChecker_Hunspell::getCaption() const -> QString {
   return tr("Spell checker") + QStringLiteral(" (Hunspell)");
 }
-auto SpellChecker_Hunspell::getIcon() const -> QIcon {
-  if (m_pParent->window()->palette().window().color().lightnessF() < 0.5) {
-    return QIcon(QLatin1String(":/spellchecker_dark.png"));
-  }
-  return QIcon(QLatin1String(":/spellchecker.png"));
+auto SpellChecker_Hunspell::getIcons() const -> QPair<QIcon, QIcon> {
+  QPair<QIcon, QIcon> icons;
+  icons.first = QIcon(QLatin1String(":/spellchecker.png"));
+  icons.second = QIcon(QLatin1String(":/spellchecker_dark.png"));
+  return icons;
 }
 
 auto SpellChecker_Hunspell::includeMenu() const -> bool { return true; }
@@ -337,7 +337,6 @@ void SpellChecker_Hunspell::callPlugin() {
   }
 
   m_pCheckDialog = new HunspellCheckDialog(this, nullptr);
-  m_pCheckDialog->setWindowIcon(this->getIcon());
 
   QTextCharFormat highlightFormat;
   highlightFormat.setBackground(QBrush(QColor(255, 96, 96)));

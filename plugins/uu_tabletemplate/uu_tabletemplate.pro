@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = uu_tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.4.1
+VERSION       = 1.4.2
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2012-present - Christian Schärf, Thorsten Roth"
 
@@ -38,7 +38,7 @@ DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060400
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
 }
 
 isEmpty(PREVIEW) {
