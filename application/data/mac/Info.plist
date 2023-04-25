@@ -19,9 +19,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.27.2</string>
+	<string>0.27.3</string>
 	<key>CFBundleVersion</key>
-	<string>0.27.2</string>
+	<string>0.27.3</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>(c) 2011-present, The InyokaEdit developers</string>
 </dict>
