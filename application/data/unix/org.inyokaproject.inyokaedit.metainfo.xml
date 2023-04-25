@@ -35,13 +35,13 @@
   <content_rating type="oars-1.0" />
   
   <releases>
-    <release version="0.27.3" date="2023-04-25">
+    <release version="0.27.3" date="2023-04-26">
       <description>
         <p>Changes:</p>
         <ul>
           <li>Add support for dark scheme on Windows with Qt 6.5</li>
           <li>Bump miniz and nuspell versions</li>
-          <li>Minor fixes</li>
+          <li>Fix up/download, other minor fixes</li>
         </ul>
       </description>
     </release>

@@ -74,7 +74,8 @@ class Settings : public QObject {
   auto getInyokaCommunity() const -> QString;
   auto getInyokaUrl() const -> QString;
   auto getInyokaConstructionArea() const -> QString;
-  auto getInyokaHash() const -> QString;
+  auto getInyokaCookieDomain() const -> QString;
+  auto getInyokaLoginUrl() const -> QString;
   auto getInyokaUser() const -> QString;
   auto getInyokaPassword() const -> QString;
 
@@ -141,8 +142,9 @@ class Settings : public QObject {
   // Inyoka community
   QString m_sInyokaCommunity;
   QString m_sInyokaUrl;
+  QString m_sInyokaLoginUrl;
   QString m_sInyokaConstArea;
-  QString m_sInyokaHash;
+  QString m_sInyokaCookieDomain;
   QString m_sInyokaUser;
   QString m_sInyokaPassword;
 

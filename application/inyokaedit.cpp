@@ -160,11 +160,14 @@ void InyokaEdit::createObjects() {
   m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(), m_sSharePath,
                                m_UserDataDir.absolutePath());
 
-  m_pSession = new Session(this, m_pSettings->getInyokaHash());
+  m_pSession = new Session(this, m_pSettings->getInyokaLoginUrl(),
+                           m_pSettings->getInyokaUrl(),
+                           m_pSettings->getInyokaCookieDomain());
 
-  m_pDownloadModule =
-      new Download(this, m_pSession, m_UserDataDir.absolutePath(),
-                   m_tmpPreviewImgDir.absolutePath(), m_sSharePath);
+  m_pDownloadModule = new Download(
+      this, m_pSession, m_UserDataDir.absolutePath(),
+      m_tmpPreviewImgDir.absolutePath(), m_sSharePath,
+      m_pSettings->getInyokaUrl(), m_pSettings->getInyokaConstructionArea());
 
   m_pUploadModule = new Upload(this, m_pSession, m_pSettings->getInyokaUrl(),
                                m_pSettings->getInyokaConstructionArea());
@@ -1094,8 +1097,7 @@ void InyokaEdit::clickedLink(const QUrl &newUrl) {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::updateEditorSettings() {
-  m_pParser->updateSettings(m_pSettings->getInyokaUrl(),
-                            m_pSettings->getCheckLinks(),
+  m_pParser->updateSettings(m_pSettings->getCheckLinks(),
                             m_pSettings->getTimedPreview());
 
   if (m_pSettings->getPreviewHorizontal()) {
@@ -1110,13 +1112,10 @@ void InyokaEdit::updateEditorSettings() {
         static_cast<int>(m_pSettings->getTimedPreview() * 1000));
   }
 
-  m_pSession->updateSettings(m_pSettings->getInyokaUrl(),
-                             m_pSettings->getInyokaUser(),
+  m_pSession->updateSettings(m_pSettings->getInyokaUser(),
                              m_pSettings->getInyokaPassword());
 
-  m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload(),
-                                    m_pSettings->getInyokaUrl(),
-                                    m_pSettings->getInyokaConstructionArea());
+  m_pDownloadModule->updateSettings(m_pSettings->getAutomaticImageDownload());
 
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 

@@ -146,41 +146,38 @@ void Settings::readSettings(const QString &sSharePath) {
   communityConfig.setIniCodec("UTF-8");
 #endif
 
-  m_sInyokaUrl = m_pSettings->value(QStringLiteral("WikiUrl"), "").toString();
-  if (m_sInyokaUrl.isEmpty()) {
-    QString sValue(
-        communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
-    if (sValue.isEmpty()) {
-      qWarning() << "Inyoka wiki URL not found!";
-    } else {
-      m_sInyokaUrl = sValue;
-    }
+  QString sValue(
+      communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
+  if (sValue.isEmpty()) {
+    qWarning() << "Inyoka wiki URL not found!";
+  } else {
+    m_sInyokaUrl = sValue;
   }
+
   if (m_sInyokaUrl.endsWith(QLatin1String("/"))) {
     m_sInyokaUrl = m_sInyokaUrl.remove(m_sInyokaUrl.length() - 1, 1);
   }
 
-  m_sInyokaConstArea =
-      m_pSettings->value(QStringLiteral("ConstructionArea"), "").toString();
-  if (m_sInyokaConstArea.isEmpty()) {
-    QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"), "")
-                       .toString());
-    if (sValue.isEmpty()) {
-      qWarning() << "Inyoka construction area not found!";
-    } else {
-      m_sInyokaConstArea = sValue;
-    }
+  sValue = communityConfig.value(QStringLiteral("LoginUrl"), "").toString();
+  if (sValue.isEmpty()) {
+    qWarning() << "Inyoka login URL not found!";
+  } else {
+    m_sInyokaLoginUrl = sValue;
   }
 
-  m_sInyokaHash = m_pSettings->value(QStringLiteral("Hash"), "").toString();
-  if (m_sInyokaHash.isEmpty()) {
-    QString sValue(
-        communityConfig.value(QStringLiteral("Hash"), "").toString());
-    if (sValue.isEmpty()) {
-      qWarning() << "Inyoka hash is empty!";
-    } else {
-      m_sInyokaHash = sValue;
-    }
+  sValue =
+      communityConfig.value(QStringLiteral("ConstructionArea"), "").toString();
+  if (sValue.isEmpty()) {
+    qWarning() << "Inyoka construction area not found!";
+  } else {
+    m_sInyokaConstArea = sValue;
+  }
+
+  sValue = communityConfig.value(QStringLiteral("CookieDomain"), "").toString();
+  if (sValue.isEmpty()) {
+    qWarning() << "Inyoka session cookie domain not found!";
+  } else {
+    m_sInyokaCookieDomain = sValue;
   }
 
   m_sInyokaUser = m_pSettings->value(QStringLiteral("UserName"), "").toString();
@@ -290,9 +287,6 @@ void Settings::writeSettings(const QByteArray &WinGeometry,
   // Inyoka community settings
   m_pSettings->beginGroup(QStringLiteral("Inyoka"));
   m_pSettings->setValue(QStringLiteral("Community"), m_sInyokaCommunity);
-  m_pSettings->setValue(QStringLiteral("WikiUrl"), m_sInyokaUrl);
-  m_pSettings->setValue(QStringLiteral("ConstructionArea"), m_sInyokaConstArea);
-  m_pSettings->setValue(QStringLiteral("Hash"), m_sInyokaHash);
   m_pSettings->setValue(QStringLiteral("UserName"), m_sInyokaUser);
   QByteArray ba;
   ba.append(m_sInyokaPassword.toUtf8());
@@ -363,8 +357,11 @@ void Settings::removeObsolete() {
   m_pSettings->remove(QStringLiteral("TemplateLanguage"));
   m_pSettings->remove(QStringLiteral("InyokaCommunity"));
   m_pSettings->remove(QStringLiteral("Hash"));
+  m_pSettings->remove(QStringLiteral("Inyoka/Hash"));
   m_pSettings->remove(QStringLiteral("InyokaUrl"));
+  m_pSettings->remove(QStringLiteral("Inyoka/WikiUrl"));
   m_pSettings->remove(QStringLiteral("ConstructionArea"));
+  m_pSettings->remove(QStringLiteral("Inyoka/ConstructionArea"));
   m_pSettings->beginGroup(QStringLiteral("FindDialog"));
   m_pSettings->remove(QLatin1String(""));
   m_pSettings->endGroup();
@@ -438,11 +435,17 @@ auto Settings::getInyokaCommunity() const -> QString {
 
 auto Settings::getInyokaUrl() const -> QString { return m_sInyokaUrl; }
 
+auto Settings::getInyokaLoginUrl() const -> QString {
+  return m_sInyokaLoginUrl;
+}
+
 auto Settings::getInyokaConstructionArea() const -> QString {
   return m_sInyokaConstArea;
 }
 
-auto Settings::getInyokaHash() const -> QString { return m_sInyokaHash; }
+auto Settings::getInyokaCookieDomain() const -> QString {
+  return m_sInyokaCookieDomain;
+}
 
 auto Settings::getInyokaUser() const -> QString { return m_sInyokaUser; }
 

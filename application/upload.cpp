@@ -209,19 +209,14 @@ void Upload::requestUpload() {
       m_pSession->getNwManager()->cookieJar()->cookiesForUrl(QUrl(sUrl)));
   // qDebug() << "COOKIES FOR URL:" << listCookies;
 
-  QString sCookie(QLatin1String(""));
+  QString sToken(QLatin1String(""));
   for (const auto &cookie : listCookies) {
-    if (!cookie.isSessionCookie() && sCookie.isEmpty()) {
-      // Use first cookie
-      sCookie = QString::fromLatin1(cookie.toRawForm());
-      break;
+    if (!cookie.isSessionCookie() && "csrftoken" == cookie.name()) {
+      sToken = cookie.value();
+      break;  // Use first cookie
     }
   }
-  // qDebug() << "COOKIE:" << sCookie;
 
-  QString sToken(QStringLiteral("csrftoken="));
-  int nInd = sCookie.indexOf(sToken) + sToken.length();
-  sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
   if (sToken.isEmpty()) {
     qWarning() << "Upload failed! Empty CSRFTOKEN.";
     QMessageBox::warning(m_pParent, tr("Error"),
@@ -300,7 +295,7 @@ void Upload::requestUpload() {
 void Upload::getUploadReply(const QString &sNWReply) {
   m_State = RECUPLOAD;
 
-  if (sNWReply.isEmpty()) {
+  if (sNWReply.contains(QStringLiteral("Die Seite wurde bearbeitet."))) {
     qDebug() << "UPLOAD SUCCESSFUL!";
     QMessageBox::information(m_pParent, QStringLiteral("Upload"),
                              tr("Upload successful!"));

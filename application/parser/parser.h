@@ -57,8 +57,7 @@ class Parser : public QObject {
                     const bool bSyntaxCheck = false);
 
  public slots:
-  void updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
-                      const quint32 nTimedPreview);
+  void updateSettings(const bool bCheckLinks, const quint32 nTimedPreview);
 
  signals:
   void hightlightSyntaxError(const QPair<int, QString>);

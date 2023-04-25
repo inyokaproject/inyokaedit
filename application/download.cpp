@@ -39,13 +39,14 @@
 
 Download::Download(QWidget *pParent, Session *pSession,
                    const QString &sStylesDir, const QString &sImgDir,
-                   const QString &sSharePath, QObject *pObj)
+                   const QString &sSharePath, const QString &sInyokaUrl,
+                   const QString &sConstArea, QObject *pObj)
     : m_pParent(pParent),
       m_pSession(pSession),
       m_sStylesDir(sStylesDir),
       m_sImgDir(sImgDir),
-      m_sInyokaUrl(QStringLiteral("https://wiki.ubuntuusers.de")),
-      m_sConstructionArea(QLatin1String("")),
+      m_sInyokaUrl(sInyokaUrl),
+      m_sConstructionArea(sConstArea),
       m_bAutomaticImageDownload(false),
       m_sSharePath(sSharePath),
       m_bDownloadArticle(true) {
@@ -61,12 +62,8 @@ Download::Download(QWidget *pParent, Session *pSession,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Download::updateSettings(const bool bDownloadImages,
-                              const QString &sInyokaUrl,
-                              const QString &sConstArea) {
+void Download::updateSettings(const bool bDownloadImages) {
   m_bAutomaticImageDownload = bDownloadImages;
-  m_sInyokaUrl = sInyokaUrl;
-  m_sConstructionArea = sConstArea;
 }
 
 // ----------------------------------------------------------------------------

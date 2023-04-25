@@ -47,7 +47,7 @@ class ParseLinks : public QObject {
   void startParsing(QTextDocument *pRawDoc);
 
  public slots:
-  void updateSettings(const QString &sUrlToWiki, const bool bCheckLinks);
+  void updateSettings(const bool bCheckLinks);
 
  private:
   static void replaceUrls(QTextDocument *pRawDoc);

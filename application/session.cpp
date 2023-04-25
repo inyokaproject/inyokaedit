@@ -36,30 +36,27 @@
 #include <QUrl>
 #include <QUrlQuery>
 
-Session::Session(QWidget *pParent, const QString &sHash, QObject *pObj)
+Session::Session(QWidget *pParent, const QString &sLoginUrl,
+                 const QString &sInyokaUrl, const QString &sCookieDomain,
+                 QObject *pObj)
     : m_pParent(pParent),
+      m_sInyokaUrl(sInyokaUrl),
+      m_sInyokaLoginUrl(sLoginUrl),
       m_State(REQUTOKEN),
       m_sToken(QLatin1String("")),
-      m_sHash(sHash) {
+      m_sCookieDomain(sCookieDomain) {
   Q_UNUSED(pObj)
   m_pNwManager = new QNetworkAccessManager(m_pParent);
   m_pNwManager->setCookieJar(this);
   this->setParent(m_pParent);
-
-  if (m_sHash.isEmpty()) {
-    QMessageBox::warning(m_pParent, tr("Error"),
-                         tr("Inyoka community hash not defined!"));
-  }
 }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Session::updateSettings(const QString &sInyokaUrl,
-                             const QString &sUsername,
+void Session::updateSettings(const QString &sUsername,
                              const QString &sPassword) {
-  if (m_sInyokaUrl != sInyokaUrl || m_sUsername != sUsername ||
-      m_sPassword != sPassword) {
+  if (m_sUsername != sUsername || m_sPassword != sPassword) {
     qDebug() << "Calling" << Q_FUNC_INFO;
 
     m_State = REQUTOKEN;
@@ -69,7 +66,6 @@ void Session::updateSettings(const QString &sInyokaUrl,
     m_ListCookies.clear();
     m_sToken.clear();
 
-    m_sInyokaUrl = sInyokaUrl;
     m_sUsername = sUsername;
     m_sPassword = sPassword;
   }
@@ -128,19 +124,14 @@ void Session::getTokenReply(const QString &sNWReply) {
   if (!m_ListCookies.isEmpty()) {
     // qDebug() << "COOKIES:" << m_ListCookies;
 
-    QString sCookie(QLatin1String(""));
     for (const auto &cookie : qAsConst(m_ListCookies)) {
-      if (cookie.isSessionCookie()) {
+      if (cookie.isSessionCookie() && cookie.isSecure() &&
+          m_sCookieDomain == cookie.domain()) {
         sSessionCookie = QString::fromLatin1(cookie.toRawForm());
-        m_SessionCookie = cookie;
-      } else if (sCookie.isEmpty()) {  // Use first found cookie
-        sCookie = QString::fromLatin1(cookie.toRawForm());
+      } else if (!cookie.isSessionCookie() && "csrftoken" == cookie.name()) {
+        m_sToken = cookie.value();
       }
     }
-
-    m_sToken = QStringLiteral("csrftoken=");
-    int nInd = sCookie.indexOf(m_sToken) + m_sToken.length();
-    m_sToken = sCookie.mid(nInd, sCookie.indexOf(';', nInd) - nInd);
 
     if (m_sToken.isEmpty()) {
       qWarning() << "Token request failed. No CSRFTOKEN received.";
@@ -249,7 +240,7 @@ void Session::requestLogin() {
 
 void Session::getLoginReply(const QString &sNWReply) {
   // If "$IS_LOGGED_IN = false" is found in reply --> login failed
-  if (-1 != sNWReply.indexOf(QLatin1String("$IS_LOGGED_IN = false"))) {
+  if (sNWReply.contains(QLatin1String("$IS_LOGGED_IN = false"))) {
     m_State = REQUTOKEN;
     qWarning() << "LOGIN FAILED! Wrong credentials?";
     QMessageBox::warning(m_pParent, tr("Error"),
@@ -258,16 +249,12 @@ void Session::getLoginReply(const QString &sNWReply) {
   }
 
   for (const auto &cookie : qAsConst(m_ListCookies)) {
-    if (cookie.isSessionCookie()) {
-      // E.g. uu includes message "153cae855e0ae527d6dc2434f3eb8ef60b782570"
-      // --> "Du hast dich erfolgreich angemeldet"
-      // See raw debug output:
-      // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
-      if (cookie.toRawForm().contains(m_sHash.toLatin1())) {
-        m_State = RECLOGIN;
-        qDebug() << "LOGIN SUCCESSFUL!";
-        break;
-      }
+    // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
+    if (cookie.isSessionCookie() && cookie.isSecure() &&
+        m_sCookieDomain == cookie.domain()) {
+      m_State = RECLOGIN;
+      qDebug() << "LOGIN SUCCESSFUL!";
+      break;
     }
   }
 

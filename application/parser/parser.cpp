@@ -80,10 +80,9 @@ Parser::~Parser() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Parser::updateSettings(const QString &sInyokaUrl, const bool bCheckLinks,
+void Parser::updateSettings(const bool bCheckLinks,
                             const quint32 nTimedPreview) {
-  m_sInyokaUrl = sInyokaUrl;
-  m_pLinkParser->updateSettings(sInyokaUrl, bCheckLinks);
+  m_pLinkParser->updateSettings(bCheckLinks);
 #ifdef NOPREVIEW
   m_nTimedPreview = nTimedPreview;
 #else

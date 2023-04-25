@@ -47,13 +47,13 @@ class Download : public QObject {
  public:
   Download(QWidget *pParent, Session *pSession, const QString &sStylesDir,
            const QString &sImgDir, const QString &sSharePath,
+           const QString &sInyokaUrl, const QString &sConstArea,
            QObject *pObj = nullptr);
 
  public slots:
   void downloadArticle(QString sUrl = QLatin1String(""));
   void showArticle();
-  void updateSettings(const bool bDownloadImages, const QString &sInyokaUrl,
-                      const QString &sConstArea);
+  void updateSettings(const bool bDownloadImages);
 
  private slots:
   void replyFinished(QNetworkReply *pReply);

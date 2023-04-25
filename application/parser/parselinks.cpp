@@ -47,9 +47,7 @@ ParseLinks::ParseLinks(const QString &sUrlToWiki,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void ParseLinks::updateSettings(const QString &sUrlToWiki,
-                                const bool bCheckLinks) {
-  m_sWikiUrl = sUrlToWiki;
+void ParseLinks::updateSettings(const bool bCheckLinks) {
   m_bCheckLinks = bCheckLinks;
 }
 

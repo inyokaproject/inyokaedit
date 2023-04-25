@@ -2,18 +2,13 @@ version: 0.27.3-{build}
 branches:
   only:
   - main
+image: Visual Studio 2022
 environment:
   matrix:
-  - BUILD: x86
-    QTDIR: C:\Qt\5.15\msvc2019
-    VCPKG_DIR: C:\Tools\vcpkg
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-    VSVER: 2019
   - BUILD: x64
-    QTDIR: C:\Qt\6.5\msvc2022_64
+    QTDIR: C:\Qt\6.5\msvc2019_64
     VCPKG_DIR: C:\Tools\vcpkg
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-    VSVER: 2022
+    VCVARSALL_BAT: '"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"'
 install:
 - ps: (Get-Content plugins/plugins.pro).replace("spellchecker-hunspell ", "spellchecker-nuspell ") | Set-Content plugins/plugins.pro
 cache: '%VCPKG_DIR%\installed\ -> vcpkg.json'
@@ -51,7 +46,7 @@ build_script:
 
     set PATH=%QTDIR%\bin;%PATH%
 
-    call "C:\Program Files (x86)\Microsoft Visual Studio\%VSVER%\Community\VC\Auxiliary\Build\vcvarsall.bat" %BUILD%
+    call %VCVARSALL_BAT% %BUILD%
 
     qmake inyokaedit.pro
 

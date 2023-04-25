@@ -122,7 +122,6 @@ SettingsDialog::SettingsDialog(Settings *pSettings, const QString &sSharePath,
   m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
   m_pUi->CommunityCombo->blockSignals(false);
 
-  m_pUi->inyokaUrlEdit->setText(m_pSettings->getInyokaUrl());
   m_pUi->articleImageDownloadCheck->setChecked(
       m_pSettings->m_bAutomaticImageDownload);
 
@@ -180,7 +179,6 @@ void SettingsDialog::accept() {
 
   // Inyoka community
   m_pSettings->m_sInyokaCommunity = m_pUi->CommunityCombo->currentText();
-  m_pSettings->m_sInyokaUrl = m_pUi->inyokaUrlEdit->text();
   m_pSettings->m_sInyokaUser = m_pUi->inyokaUserEdit->text();
   m_pSettings->m_sInyokaPassword = m_pUi->inyokaPasswordEdit->text();
 
@@ -235,12 +233,6 @@ void SettingsDialog::accept() {
       qWarning() << "Inyoka construction area not found!";
     } else {
       m_pSettings->m_sInyokaConstArea = sValue;
-    }
-    sValue = communityConfig.value(QStringLiteral("Hash"), "").toString();
-    if (sValue.isEmpty()) {
-      qWarning() << "Inyoka hash is empty!";
-    } else {
-      m_pSettings->m_sInyokaHash = sValue;
     }
 
     QMessageBox::information(nullptr, this->windowTitle(),
@@ -302,12 +294,17 @@ void SettingsDialog::changedCommunity(int nIndex) {
 #endif
 
   QString sUrl(communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
-  if (sUrl.isEmpty()) {
-    qWarning() << "Community Wiki URL not found!";
+  QString sLoginUrl(
+      communityConfig.value(QStringLiteral("LoginUrl"), "").toString());
+  QString sConstArea(
+      communityConfig.value(QStringLiteral("ConstructionArea"), "").toString());
+  QString sCookieDomain(
+      communityConfig.value(QStringLiteral("CookieDomain"), "").toString());
+  if (sUrl.isEmpty() || sLoginUrl.isEmpty() || sConstArea.isEmpty() ||
+      sCookieDomain.isEmpty()) {
+    qWarning() << "Community.conf not complete!";
     QMessageBox::warning(nullptr, tr("Warning"),
-                         tr("No community url defined!"));
-  } else {
-    m_pUi->inyokaUrlEdit->setText(sUrl);
+                         tr("Community.conf not complete!"));
   }
 }
 
