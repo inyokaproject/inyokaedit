@@ -275,9 +275,8 @@ void Templates::initTextformats(const QString &sFilename) {
     // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
 #endif
-    QString tmpLine;
     while (!in.atEnd()) {
-      tmpLine = in.readLine().trimmed();
+      QString tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) && !tmpLine.isEmpty()) {
         sListInput << tmpLine;
       }

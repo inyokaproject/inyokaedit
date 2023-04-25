@@ -455,13 +455,12 @@ void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
   QRegularExpression pattern(QStringLiteral("\\\\."),
                              QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatch match;
-  QString sEscChar;
   int nIndex = 0;
   unsigned int nNoTranslate;
 
   while ((match = pattern.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
-    sEscChar = match.captured(0);
+    QString sEscChar = match.captured(0);
     if ("\\\\" != sEscChar) {
       sEscChar.remove(0, 1);  // Remove escape char
       nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
@@ -790,9 +789,7 @@ void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
       QRegularExpression::InvertedGreedinessOption |  // Only smallest match
           QRegularExpression::DotMatchesEverythingOption |
           QRegularExpression::CaseInsensitiveOption);
-  QString sNote;
   int nIndex = 0;
-  QString sCount;
   quint16 nCount = 0;
   QString sFootnotes(QLatin1String(""));
   QRegularExpressionMatch match;
@@ -801,7 +798,7 @@ void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
     nIndex = match.capturedStart();
     nCount++;
 
-    sNote = match.captured(0);
+    QString sNote = match.captured(0);
     sNote.remove(QStringLiteral("(("));
     sNote.remove(QStringLiteral("))"));
     sFootnotes += "<li><a id=\"fn-" + QString::number(nCount) +
@@ -810,13 +807,13 @@ void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
                   QString::number(nCount) + "\">" + QString::number(nCount) +
                   "</a>: " + sNote + "</li>\n";
 
-    sCount = "<a id=\"bfn-" + QString::number(nCount) +
-             "\" class=\""
-             "footnote\" href=\"#fn-" +
-             QString::number(nCount) +
-             "\">"
-             "&#091;" +
-             QString::number(nCount) + "&#093;</a>";
+    QString sCount = "<a id=\"bfn-" + QString::number(nCount) +
+                     "\" class=\""
+                     "footnote\" href=\"#fn-" +
+                     QString::number(nCount) +
+                     "\">"
+                     "&#091;" +
+                     QString::number(nCount) + "&#093;</a>";
 
     sDoc.replace(nIndex, match.capturedLength(), sCount);
     // Go on with new start position

@@ -407,11 +407,10 @@ void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  QString sLink;
 
   while ((match = findKnowledgeBoxLink.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
-    sLink = match.captured();
+    QString sLink = match.captured();
     // qDebug() << sLink;
 
     sLink.remove(QStringLiteral("["));

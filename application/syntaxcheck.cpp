@@ -199,14 +199,13 @@ void SyntaxCheck::filterMonotype(QString *sDoc) {
   sListMonotype << QStringLiteral("`");
   for (int i = 0; i < sListMonotype.size(); i++) {
     int nStart = -1;
-    int nEnd = -1;
     int nIndex = 0;
     while (-1 != sDoc->indexOf(sListMonotype[i], nIndex)) {
       if (-1 == nStart) {
         nStart = sDoc->indexOf(sListMonotype[i], nIndex);
         nIndex = nStart + sListMonotype[i].length();
       } else {
-        nEnd = sDoc->indexOf(sListMonotype[i], nIndex);
+        int nEnd = sDoc->indexOf(sListMonotype[i], nIndex);
         sDoc->replace(
             nStart, nEnd - nStart + sListMonotype[i].length(),
             sReplace.fill('X', nEnd - nStart + sListMonotype[i].length()));

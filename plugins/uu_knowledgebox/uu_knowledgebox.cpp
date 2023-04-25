@@ -173,9 +173,8 @@ void Uu_KnowledgeBox::loadTemplateEntries() {
     this->loadTemplateDefaults(false);
   } else {
     qDebug() << "Reading knowledge box entries from config file";
-    QString sTmpEntry;
     for (uint i = 0; i < nNumOfEntries; i++) {
-      sTmpEntry =
+      QString sTmpEntry =
           m_pSettings->value("Entry_" + QString::number(i), "").toString();
       if (!sTmpEntry.isEmpty()) {
         m_sListEntries << sTmpEntry;
@@ -215,10 +214,8 @@ void Uu_KnowledgeBox::loadTemplateDefaults(bool bReset) {
     // Since Qt 6 UTF-8 is used by default
     in.setCodec("UTF-8");
 #endif
-    QString tmpLine;
-
     while (!in.atEnd()) {
-      tmpLine = in.readLine().trimmed();
+      QString tmpLine = in.readLine().trimmed();
       if (!tmpLine.trimmed().isEmpty()) {
         m_sListEntries << tmpLine.trimmed();
       }

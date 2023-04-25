@@ -34,7 +34,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
-#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
 #include <QStyleHints>
 #endif
 
@@ -102,7 +102,7 @@ auto Highlighter::isDarkScheme(QWidget *pParent) const -> bool {
   const double nUserThreshold =
       m_pSettings->value(QStringLiteral("DarkThreshold"), -1).toDouble();
 
-#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
   if (-1 == nUserThreshold &&
       Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
     return true;

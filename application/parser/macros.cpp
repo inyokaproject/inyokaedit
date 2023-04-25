@@ -164,10 +164,9 @@ void Macros::replaceAttachments(QTextDocument *pRawDoc, const QString &sTrans) {
           QRegularExpression::CaseInsensitiveOption);
   int nIndex = 0;
   QRegularExpressionMatch match;
-  QString sMacro;
 
   while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
-    sMacro = match.captured(0);
+    QString sMacro = match.captured(0);
     nIndex = match.capturedStart();
     sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
@@ -196,12 +195,11 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
           QRegularExpression::CaseInsensitiveOption);
   int nIndex = 0;
   QRegularExpressionMatch match;
-  QString sMacro;
   QDateTime datetime;
   bool bConversionOk;
 
   while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
-    sMacro = match.captured(0);
+    QString sMacro = match.captured(0);
     nIndex = match.capturedStart();
     sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
@@ -373,7 +371,6 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
   QString sMacro;
   QString sSpaces;
   QString sTmp;
-  quint16 nTOCLevel;
   quint16 nCurrentLevel;
 
   // Replace characters for valid links (ä, ü, ö, spaces)
@@ -400,7 +397,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     sMacro.remove("[[" + sTrans + "(", Qt::CaseInsensitive);
     sMacro.remove(QStringLiteral(")]]"));
 
-    nTOCLevel = sMacro.trimmed().toUShort();
+    quint16 nTOCLevel = sMacro.trimmed().toUShort();
     if (0 == nTOCLevel || nTOCLevel > 5) {
       nTOCLevel = 3;  // Default
     }

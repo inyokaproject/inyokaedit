@@ -314,7 +314,6 @@ void FileOperations::loadFile(const QString &sFileName,
 
 void FileOperations::loadInyArchive(const QString &sArchive) {
   QString sArticle(QLatin1String(""));
-  QString sOutput;
   QFileInfo file(sArchive);
 
   mz_zip_archive archive;
@@ -362,7 +361,7 @@ void FileOperations::loadInyArchive(const QString &sArchive) {
     }
     // qDebug() << "Extracting:" << file_stat.m_filename;
 
-    sOutput = QString::fromLatin1(file_stat.m_filename);
+    QString sOutput = QString::fromLatin1(file_stat.m_filename);
 
     if (sOutput.endsWith(QLatin1String(".iny")) ||
         sOutput.endsWith(QLatin1String(".inyoka"))) {
@@ -619,7 +618,9 @@ void FileOperations::saveDocumentAuto() {
 #ifndef NOPREVIEW
 #ifndef USEQTWEBKIT  // QtWebkit doesn't support print to PDF out of the box
 void FileOperations::printPdfPreview() {
-  m_pPreviewWebView = new QWebEngineView();
+  if (nullptr == m_pPreviewWebView) {
+    m_pPreviewWebView = new QWebEngineView();
+  }
   QFile previewFile(m_sPreviewFile);
   QString sHtml(QLatin1String(""));
 
@@ -636,11 +637,9 @@ void FileOperations::printPdfPreview() {
   // Since Qt 6 UTF-8 is used by default
   in.setCodec("UTF-8");
 #endif
-  QString sTmpLine1;
-  QString sTmpLine2;
   while (!in.atEnd()) {
-    sTmpLine1 = in.readLine() + "\n";
-    sTmpLine2 = in.readLine() + "\n";
+    QString sTmpLine1 = in.readLine() + "\n";
+    QString sTmpLine2 = in.readLine() + "\n";
     // If line == </body> skip previous line
     // See below: <div class=\"wrap\">...</div>\n</body>)
     if ("</body>" == sTmpLine2.trimmed()) {

@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <QSettings>
 #include <QStandardPaths>
-#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
 #include <QStyleHints>
 #endif
 
@@ -214,9 +214,9 @@ void Settings::readSettings(const QString &sSharePath) {
   if (m_nMaxLastOpenedFiles > m_cMAXFILES) {
     m_nMaxLastOpenedFiles = m_cMAXFILES;
   }
-  QString sTmpFile;
   for (int i = 0; i < m_nMaxLastOpenedFiles; i++) {
-    sTmpFile = m_pSettings->value("File_" + QString::number(i), "").toString();
+    QString sTmpFile =
+        m_pSettings->value("File_" + QString::number(i), "").toString();
     if (!sTmpFile.isEmpty()) {
       m_sListRecentFiles << sTmpFile;
     }
@@ -504,7 +504,7 @@ auto Settings::getSplitterState() const -> QByteArray {
 }
 
 auto Settings::isDarkScheme() const -> bool {
-#if QT_VERSION > QT_VERSION_CHECK(6, 4, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
   if (-1 == m_nDarkThreshold &&
       Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
     return true;

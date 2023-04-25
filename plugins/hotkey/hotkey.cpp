@@ -172,10 +172,9 @@ void Hotkey::loadHotkeyEntries() {
     this->writeSettings();
   } else {
     qDebug() << "Reading hotkey entries from config file";
-    QString sTmpEntry;
     m_pSettings->beginGroup(QStringLiteral("Hotkey"));
     for (uint i = 0; i < nNumOfEntries; i++) {
-      sTmpEntry =
+      QString sTmpEntry =
           m_pSettings->value("Entry_" + QString::number(i), "").toString();
       if (!sTmpEntry.isEmpty()) {
         m_sListEntries << sTmpEntry;

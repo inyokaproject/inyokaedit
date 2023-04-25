@@ -262,10 +262,9 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
     QRegularExpression enc_detector(
         QStringLiteral("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*"),
         QRegularExpression::CaseInsensitiveOption);
-    QString sLine;
     QRegularExpressionMatch match;
     while (!stream.atEnd()) {
-      sLine = stream.readLine();
+      QString sLine = stream.readLine();
       if (sLine.isEmpty()) {
         continue;
       }
