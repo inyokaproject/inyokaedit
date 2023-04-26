@@ -80,8 +80,6 @@ build_script:
 
     copy packaging\Windows\Nuspell_License.txt InyokaEdit\
 
-    copy packaging\Windows\OpenSSL_%BUILD%\* InyokaEdit\
-
     xcopy /y /d %VCPKG_DIR%\installed\%BUILD%-windows\bin\*.dll InyokaEdit\
 
     xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
@@ -89,12 +87,6 @@ build_script:
     copy release\..\plugins\*.dll InyokaEdit\plugins\
 
     chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
-
-    rmdir /S /Q InyokaEdit\iconengines
-
-    rmdir /S /Q InyokaEdit\imageformats
-
-    rmdir /S /Q InyokaEdit\position
 
     7z a InyokaEdit-%APPVEYOR_BUILD_VERSION%-Windows_%BUILD%.zip .\InyokaEdit\
 
