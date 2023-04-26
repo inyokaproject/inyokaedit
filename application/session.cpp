@@ -97,9 +97,10 @@ void Session::requestToken() {
   QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
 
-  QString sLoginUrl(m_sInyokaUrl);
-  sLoginUrl = sLoginUrl.remove(QStringLiteral("wiki.")) + "/login/";
-  QNetworkRequest request(sLoginUrl);
+  QNetworkRequest request(m_sInyokaLoginUrl);
+  if (!m_sInyokaLoginUrl.endsWith('/')) {
+    request.setUrl(m_sInyokaLoginUrl + "/");
+  }
   request.setRawHeader("User-Agent", QString(qApp->applicationName() + "/" +
                                              qApp->applicationVersion())
                                          .toLatin1());
@@ -171,7 +172,6 @@ void Session::requestLogin() {
   qDebug() << "Calling" << Q_FUNC_INFO;
   m_State = REQULOGIN;
 
-  QString sUrl(m_sInyokaUrl);
   bool bOk = false;
   QString sUsername(QLatin1String(""));
   QString sPassword(QLatin1String(""));
@@ -202,7 +202,8 @@ void Session::requestLogin() {
     sPassword = m_sPassword;
   }
 
-  sUrl = sUrl.remove(QStringLiteral("wiki.")) + "/login/?next=" + m_sInyokaUrl;
+  QString sUrl(m_sInyokaLoginUrl);
+  sUrl = sUrl + "/?next=" + m_sInyokaUrl;
 
 #ifndef QT_NO_CURSOR
   QApplication::setOverrideCursor(Qt::WaitCursor);

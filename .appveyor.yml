@@ -70,7 +70,7 @@ build_script:
 
     copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
 
-    windeployqt --release --no-translations --no-angle --no-opengl-sw InyokaEdit\InyokaEdit.exe
+    windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
 
     copy COPYING InyokaEdit\
 
