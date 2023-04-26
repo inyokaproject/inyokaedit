@@ -295,7 +295,8 @@ void Upload::requestUpload() {
 void Upload::getUploadReply(const QString &sNWReply) {
   m_State = RECUPLOAD;
 
-  if (sNWReply.isEmpty()) {
+  if (sNWReply.isEmpty() ||
+      sNWReply.contains(QStringLiteral("Die Seite wurde bearbeitet."))) {
     qDebug() << "UPLOAD SUCCESSFUL!";
     QMessageBox::information(m_pParent, QStringLiteral("Upload"),
                              tr("Upload successful!"));

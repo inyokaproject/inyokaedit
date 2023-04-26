@@ -72,6 +72,8 @@ build_script:
 
     windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
 
+    lconvert -o InyokaEdit\translations\qt_de.qm %QTDIR%\translations\qtbase_de.qm %QTDIR%\translations\qtwebengine_de.qm
+
     copy COPYING InyokaEdit\
 
     copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
