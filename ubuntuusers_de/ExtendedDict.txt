@@ -112,6 +112,9 @@ Kudu
 lunar
 Lunar
 Lobster
+mantic
+Mantic
+Minotaur
 Ubuntu
 Kubuntu
 Xubuntu
