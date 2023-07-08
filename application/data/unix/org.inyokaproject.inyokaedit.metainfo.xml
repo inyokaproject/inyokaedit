@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2021 The InyokaEdit developers -->
 <component type="desktop-application">
-  <id>org.inyokaproject.inyokaedit.desktop</id>
+  <id>org.inyokaproject.inyokaedit</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>InyokaEdit</name>

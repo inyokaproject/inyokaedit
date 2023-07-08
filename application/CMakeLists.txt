@@ -119,7 +119,7 @@ if(LINUX)
     install(TARGETS inyokaedit DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(FILES data/unix/org.inyokaproject.inyokaedit.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES data/unix/org.inyokaproject.inyokaedit.metainfo.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
-    install(FILES data/unix/inyokaedit.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
+    install(FILES data/unix/org.inyokaproject.inyokaedit.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
     install(DIRECTORY icons/hicolor DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
     
     # Required for miniz

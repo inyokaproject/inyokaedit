@@ -63,7 +63,7 @@ install-inyokaedit: infiles
 	$(INSTALL_PROGRAM) inyokaedit       $(DESTDIR)$(bindir)
 	$(INSTALL_FILE) application/data/unix/org.inyokaproject.inyokaedit.desktop      $(DESTDIR)$(dataroot)/applications
 	$(INSTALL_FILE) application/data/unix/org.inyokaproject.inyokaedit.metainfo.xml $(DESTDIR)$(dataroot)/metainfo
-	$(INSTALL_FILE) application/data/unix/inyokaedit.xml $(DESTDIR)$(dataroot)/mime/packages
+	$(INSTALL_FILE) application/data/unix/org.inyokaproject.inyokaedit.xml $(DESTDIR)$(dataroot)/mime/packages
 	$(INSTALL_FILE) man/inyokaedit.1    $(DESTDIR)$(mandir)/man1
 	$(INSTALL_FILE) man/de/inyokaedit.1 $(DESTDIR)$(mandir)/de/man1
 	$(CP) application/icons/hicolor     $(DESTDIR)$(dataroot)/icons
@@ -93,11 +93,11 @@ uninstall:
 	$(RM) $(DESTDIR)$(bindir)/inyokaedit
 	$(RM) $(DESTDIR)$(dataroot)/applications/org.inyokaproject.inyokaedit.desktop
 	$(RM) $(DESTDIR)$(dataroot)/metainfo/org.inyokaproject.inyokaedit.metainfo.xml
-	$(RM) $(DESTDIR)$(dataroot)/mime/packages/inyokaedit.xml
+	$(RM) $(DESTDIR)$(dataroot)/mime/packages/org.inyokaproject.inyokaedit.xml
 	$(RM) $(DESTDIR)$(mandir)/man1/inyokaedit.1*
 	$(RM) $(DESTDIR)$(mandir)/de/man1/inyokaedit.1*
-	$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/scalable/apps/inyokaedit.svg
-	$(foreach SIZE,$(ICON_SIZES),$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/$(SIZE)x$(SIZE)/apps/inyokaedit.png ;)
+	$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/scalable/apps/org.inyokaproject.inyokaedit.svg
+	$(foreach SIZE,$(ICON_SIZES),$(RM) $(DESTDIR)$(dataroot)/icons/hicolor/$(SIZE)x$(SIZE)/apps/org.inyokaproject.inyokaedit.png ;)
 
 clean:
 	[ ! -f application/$(MAKEFILE) ] || $(MAKE) -C application -f $(MAKEFILE) clean
