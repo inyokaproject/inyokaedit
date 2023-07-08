@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="inyokaedit.png">../icons/hicolor/64x64/apps/inyokaedit.png</file>
+        <file alias="inyokaedit.png">../icons/hicolor/64x64/apps/org.inyokaproject.inyokaedit.png</file>
         <file>macros.conf</file>
         <file>menu/bug.png</file>
         <file>menu/document-new.png</file>
