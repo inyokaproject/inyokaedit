@@ -1,0 +1,36 @@
+id: org.inyokaproject.inyokaedit
+runtime: org.kde.Platform
+runtime-version: '6.5'
+sdk: org.kde.Sdk
+base: io.qt.qtwebengine.BaseApp
+base-version: '6.5'
+command: inyokaedit
+finish-args:
+  - --env=QTWEBENGINEPROCESS_PATH=/app/bin/QtWebEngineProcess
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --share=network
+  - --device=dri
+  - --share=ipc
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+
+modules:
+  - name: inyokaedit
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCOMMUNITY=community/ubuntuusers_de
+      - -DQT6=ON
+    sources:
+      - type: git
+        url: https://github.com/inyokaproject/inyokaedit.git
+        commit: 92598ffbe16c10e31ae14b215b647bd2bddf4070
+      - type: archive
+        dest: community
+        url: https://github.com/inyokaproject/inyokaedit/releases/download/v0.27.3/inyokaedit-community-0.27.3.zip
+        sha256: 3a79e2379abd4e1aea375e2e537d2606740f0a8be571d151d94da9bad95598ff
+        x-checker-data:
+            type: json
+            url: https://api.github.com/repos/inyokaproject/inyokaedit/releases/latest
+            version-query: .tag_name
+            url-query: .assets[] | select(.name | startswith("inyokaedit-community")) | .browser_download_url
