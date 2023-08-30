@@ -619,7 +619,7 @@ void InyokaEdit::createXmlMenus() {
 
   // Check share and user path
   for (const auto &sPath : qAsConst(sListFolders)) {
-    // Search for menu/dropdown/toolbar
+    // Search for menu/drop-down/toolbar
     for (const auto &sObj : qAsConst(sListObjects)) {
       // Search for max 9 files
       for (int n = 1; n < MAXFILES; n++) {
@@ -671,7 +671,7 @@ void InyokaEdit::createXmlMenus() {
               m_pUi->inyokaeditorBar->addWidget(m_pXmlToolbars.last());
             }
 
-            // Create action and menu/dropdown/toolbar entry for each element
+            // Create action and menu/drop-down/toolbar entry for each element
             for (int i = 0; i < xmlParser.getGroupNames().size(); i++) {
               // qDebug() << "GROUP:" << xmlParser.getGroupNames()[i];
               tmplListActions.clear();
@@ -949,7 +949,7 @@ void InyokaEdit::dropdownXmlChanged(int nIndex) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// Insert macro/template/IWL/text from XML menu/toolbar/dropdown
+// Insert macro/template/IWL/text from XML menu/toolbar/drop-down
 void InyokaEdit::insertMacro(const QString &sInsert) {
   QString sMacro(QLatin1String(""));
 
@@ -1216,20 +1216,18 @@ void InyokaEdit::deleteTempImages() {
 
   if (QMessageBox::Yes == nRet) {
     // Remove all files in current folder
-    const QFileInfoList fiListFiles =
-        m_tmpPreviewImgDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
-    for (const auto &fi : fiListFiles) {
-      if (!m_tmpPreviewImgDir.remove(fi.fileName())) {
-        QMessageBox::warning(this, qApp->applicationName(),
-                             tr("Could not delete file: ") + fi.fileName());
-        qWarning() << "Could not delete files:" << fi.fileName();
-        return;
-      }
+    if (!m_tmpPreviewImgDir.removeRecursively()) {
+      QMessageBox::warning(this, qApp->applicationName(),
+                           tr("Could not delete all temporary files!"));
+      qWarning() << "Could not delete tmp files in:"
+                 << m_tmpPreviewImgDir.absolutePath();
+      return;
     }
+
+    // Create folder including possible parent directories (mkPATH)!
+    m_tmpPreviewImgDir.mkpath(m_tmpPreviewImgDir.absolutePath());
     QMessageBox::information(this, qApp->applicationName(),
                              tr("Images successfully deleted."));
-  } else {
-    return;
   }
 }
 
@@ -1423,12 +1421,14 @@ void InyokaEdit::showSyntaxOverview() {
   OverviewFile.close();
 
   QString sRet(m_pParser->genOutput(QLatin1String(""), pTextDocument));
-  sRet.remove(
-      QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
-                         QRegularExpression::DotMatchesEverythingOption));
-  sRet.remove(
-      QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
-                         QRegularExpression::DotMatchesEverythingOption));
+  static QRegularExpression rmPagetitle(
+      QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
+      QRegularExpression::DotMatchesEverythingOption);
+  sRet.remove(rmPagetitle);
+  static QRegularExpression rmClassMeta(
+      QStringLiteral("<p class=\"meta\">.*</p>"),
+      QRegularExpression::DotMatchesEverythingOption);
+  sRet.remove(rmClassMeta);
   sRet.replace(QLatin1String("</style>"),
                QLatin1String("#page table{margin:0px;}</style>"));
   pTextDocument->setPlainText(sRet);

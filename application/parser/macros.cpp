@@ -372,6 +372,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
   QString sSpaces;
   QString sTmp;
   quint16 nCurrentLevel;
+  static QRegularExpression rmHead(QStringLiteral("#{1,5}\\d#{1,5}"));
 
   // Replace characters for valid links (ä, ü, ö, spaces)
   QStringList sListHeadlines_Links;
@@ -385,8 +386,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     sMacro.replace(QStringLiteral("ä"), QLatin1String("ae"));
     sMacro.replace(QStringLiteral("ü"), QLatin1String("ue"));
     sMacro.replace(QStringLiteral("ö"), QLatin1String("oe"));
-    sListHeadlines_Links << sMacro.remove(
-        QRegularExpression(QStringLiteral("#{1,5}\\d#{1,5}")));
+    sListHeadlines_Links << sMacro.remove(rmHead);
   }
 
   int nIndex = 0;
@@ -406,7 +406,7 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
     sMacro = "<div class=\"toc\">\n<div class=\"head\">" + sTrans + "</div>\n";
     for (int i = 0; i < sListHeadlines.size(); i++) {
       sTmp = sListHeadlines[i];
-      sTmp.remove(QRegularExpression(QStringLiteral("#{1,5}\\d#{1,5}")));
+      sTmp.remove(rmHead);
       sListHeadlines[i]
           .remove(sListHeadlines[i].length() - sTmp.length(), sTmp.length())
           .remove(QStringLiteral("#"));
@@ -448,6 +448,8 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 
   int nIndex = 0;
   QRegularExpressionMatch match;
+  static QRegularExpression splitQuote(QStringLiteral("\""));
+  static QRegularExpression splitComma(QStringLiteral(",+"));
   while ((match = findMacro.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
     sMacro = match.captured(0);
@@ -459,8 +461,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
 
     // Extract arguments
     // Split by ',' but don't split quoted strings with comma
-    const QStringList tmpList =
-        sMacro.split(QRegularExpression(QStringLiteral("\"")));
+    const QStringList tmpList = sMacro.split(splitQuote);
     bool bInside = false;
     for (const auto &s : tmpList) {
       if (bInside) {
@@ -469,11 +470,9 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
       } else {
         // If 's' is outside quotes, get the split string
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        sArgs.append(s.split(QRegularExpression(QStringLiteral(",+")),
-                             QString::SkipEmptyParts));
+        sArgs.append(s.split(splitComma, QString::SkipEmptyParts));
 #else
-        sArgs.append(s.split(QRegularExpression(QStringLiteral(",+")),
-                             Qt::SkipEmptyParts));
+        sArgs.append(s.split(splitComma, Qt::SkipEmptyParts));
 #endif
       }
       bInside = !bInside;

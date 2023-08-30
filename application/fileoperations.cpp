@@ -500,7 +500,7 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   in.setAutoDetectUnicode(true);
   QString sHtml(in.readAll());
 
-  QRegularExpression imgTagRegex(
+  static QRegularExpression imgTagRegex(
       QStringLiteral("\\<img[^\\>]*src\\s*=\\s*\"([^\"]*)\"[^\\>]*\\>"),
       QRegularExpression::InvertedGreedinessOption |
           QRegularExpression::DotMatchesEverythingOption |

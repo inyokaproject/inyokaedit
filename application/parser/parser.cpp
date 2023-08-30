@@ -280,6 +280,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
   // Search for {{{#!code ...}}} and {{{ ... without #!X ...}}}
   sListTplRegExp << QStringLiteral("\\{\\{\\{#!code .+\\}\\}\\}")
                  << QStringLiteral("\\{\\{\\{(?!#!\\S).+\\}\\}\\}");
+  static QRegularExpression splitNewline(QStringLiteral("\\n"));
   QStringList sListLines;
 
   for (int k = 0; k < sListTplRegExp.size(); k++) {
@@ -305,7 +306,7 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
       sMacro.remove(QStringLiteral("}}}"));
 
       sListLines.clear();
-      sListLines = sMacro.split(QRegularExpression(QStringLiteral("\\n")));
+      sListLines = sMacro.split(splitNewline);
 
       // Only plain code
       if (!bFormated) {
@@ -451,8 +452,8 @@ auto Parser::highlightCode(const QString &sLanguage, const QString &sCode)
 
 void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QRegularExpression pattern(QStringLiteral("\\\\."),
-                             QRegularExpression::CaseInsensitiveOption);
+  static QRegularExpression pattern(QStringLiteral("\\\\."),
+                                    QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatch match;
   int nIndex = 0;
   unsigned int nNoTranslate;
@@ -597,7 +598,8 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
 
 #ifdef USEQTWEBENGINE
 void Parser::replaceFlags(QTextDocument *pRawDoc) {
-  QRegularExpression findFlag(QStringLiteral("\\{([a-z]{2}|[A-Z]{2})\\}"));
+  static QRegularExpression findFlag(
+      QStringLiteral("\\{([a-z]{2}|[A-Z]{2})\\}"));
   QString sDoc(pRawDoc->toPlainText());
   QString sCountry;
   QString sHtml(QLatin1String(""));
@@ -636,6 +638,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
   QString sDoc(QLatin1String(""));
   QString sLine;
   quint16 nQuotes;
+  static QRegularExpression rmQuote(QStringLiteral("^>*"));
 
   // Go through each text block
   for (QTextBlock block = pRawDoc->firstBlock();
@@ -644,7 +647,7 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
     if (block.text().startsWith(QLatin1String(">"))) {
       sLine = block.text().trimmed();
       nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
-      sLine.remove(QRegularExpression(QStringLiteral("^>*")));
+      sLine.remove(rmQuote);
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";
       }
@@ -783,7 +786,7 @@ auto Parser::replaceHeadlines(QTextDocument *pRawDoc) -> QStringList {
 
 void Parser::replaceFootnotes(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
-  QRegularExpression findMacro(
+  static QRegularExpression findMacro(
       QStringLiteral("\\(\\(.*\\)\\)"),
       QRegularExpression::InvertedGreedinessOption |  // Only smallest match
           QRegularExpression::DotMatchesEverythingOption |

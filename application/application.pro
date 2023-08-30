@@ -24,8 +24,8 @@ unix: !macx {
 
 DESTDIR       = ../
 
-win32:VERSION = 0.27.3.0
-else:VERSION  = 0.27.3
+win32:VERSION = 0.27.4.0
+else:VERSION  = 0.27.4
 
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"

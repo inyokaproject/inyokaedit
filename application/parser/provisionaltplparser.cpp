@@ -1812,22 +1812,22 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   QStringList sArgs(sListArgs);
   sArgs.prepend("DUMMY");  // "Needed" because of usage i-1 !!!
   QRegularExpressionMatch match;
-  QRegularExpression tablePattern(
+  static QRegularExpression tablePattern(
       QStringLiteral("\\<{1,1}[\\w\\s=.\\-\":;^|()]+\\>{1,1}"));
-  QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
-  QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
-  QRegularExpression rowclassPattern(
+  static QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
+  static QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
+  static QRegularExpression rowclassPattern(
       QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
-  QRegularExpression cellclassPattern(
+  static QRegularExpression cellclassPattern(
       QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
-  QRegularExpression tableClassPattern(
+  static QRegularExpression tableClassPattern(
       QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-]+\\\""));
 
-  QRegularExpression cellStylePattern(
+  static QRegularExpression cellStylePattern(
       QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
-  QRegularExpression rowStylePattern(
+  static QRegularExpression rowStylePattern(
       QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-]+\\\""));
-  QRegularExpression tableStylePattern(
+  static QRegularExpression tableStylePattern(
       QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-]+\\\""));
 
   int nLength;
@@ -1886,7 +1886,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           sTmpCellStyle = match.captured();
           sOutput += " class=" + sTmpCellStyle.remove("rowclass=");
         }
-        // Found row sytle info --> in tr
+        // Found row style info --> in tr
         if ((match = rowStylePattern.match(sStyleInfo)).hasMatch()) {
           sTmpCellStyle = match.captured();
           sOutput += " style=\"" +
@@ -1919,7 +1919,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           sTmpTD += " rowspan=\"" + match.captured().remove("|") + "\"";
         }
 
-        // Cell style attributs
+        // Cell style attributes
         if ((match = cellStylePattern.match(sStyleInfo)).hasMatch()) {
           sTmpTD +=
               " style=\"" + match.captured().remove("cellstyle=").remove("\"");

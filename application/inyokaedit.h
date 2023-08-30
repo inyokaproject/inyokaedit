@@ -60,7 +60,7 @@ class InyokaEdit;
 
 /**
  * \class InyokaEdit
- * \brief Main application definition (gui, objects, etc.)
+ * \brief Main application definition (GUI, objects, etc.)
  */
 class InyokaEdit : public QMainWindow {
   Q_OBJECT

@@ -80,23 +80,23 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QString sTmpStyle(QLatin1String(""));
   QRegularExpressionMatch match;
 
-  QRegularExpression formatPattern(QStringLiteral("\\<{1,1}.+\\>{1,1}"));
-  QRegularExpression tableClassPattern(
+  static QRegularExpression formatPattern(QStringLiteral("\\<{1,1}.+\\>{1,1}"));
+  static QRegularExpression tableClassPattern(
       QStringLiteral("tableclass=\\\"[\\w\\s:;%#\\-=]+\\\""));
-  QRegularExpression tableStylePattern(
+  static QRegularExpression tableStylePattern(
       QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
-  QRegularExpression rowClassPattern(
+  static QRegularExpression rowClassPattern(
       QStringLiteral("rowclass=\\\"[\\w.%\\-]+\\\""));
-  QRegularExpression rowStylePattern(
+  static QRegularExpression rowStylePattern(
       QStringLiteral("rowstyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
-  QRegularExpression cellClassPattern(
+  static QRegularExpression cellClassPattern(
       QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
-  QRegularExpression cellStylePattern(
+  static QRegularExpression cellStylePattern(
       QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
   bool bCellStyle;
 
-  QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
-  QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
+  static QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
+  static QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
 
   for (int nLine = 0; nLine < sListLines.size(); nLine++) {
     sLine = sListLines[nLine];
@@ -108,7 +108,7 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
       sCell = sListCells[nCell];
       bCellStyle = false;
 
-      // Look for formating
+      // Look for formatting
       if ((match = formatPattern.match(sCell)).hasMatch()) {
         sFormating = match.captured();
         sCell.remove(sFormating);
@@ -140,7 +140,7 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
           sTmpStyle = match.captured();
           sRet += " class=" + sTmpStyle.remove(QStringLiteral("rowclass="));
         }
-        // Found row sytle info --> in tr
+        // Found row style info --> in tr
         if ((match = rowStylePattern.match(sFormating)).hasMatch()) {
           sTmpStyle = match.captured();
           sRet += " style=\"" +
@@ -172,7 +172,7 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
             " rowspan=\"" + match.captured().remove(QStringLiteral("|")) + "\"";
       }
 
-      // Found cell sytle info --> in td
+      // Found cell style info --> in td
       if ((match = cellStylePattern.match(sFormating)).hasMatch()) {
         sTmpStyle = match.captured();
         sRet += " style=\"" + sTmpStyle.remove(QStringLiteral("cellstyle="))

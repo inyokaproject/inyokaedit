@@ -259,7 +259,7 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
   QFile _affixFile(sAffixFile);
   if (_affixFile.open(QIODevice::ReadOnly)) {
     QTextStream stream(&_affixFile);
-    QRegularExpression enc_detector(
+    static QRegularExpression enc_detector(
         QStringLiteral("^\\s*SET\\s+([A-Z0-9\\-]+)\\s*"),
         QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match;

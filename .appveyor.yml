@@ -1,4 +1,4 @@
-version: 0.27.3-{build}
+version: 0.27.4-{build}
 branches:
   only:
   - main
@@ -14,13 +14,11 @@ install:
 cache: '%VCPKG_DIR%\installed\ -> vcpkg.json'
 build_script:
 - cmd: >-
-    %VCPKG_DIR%\vcpkg.exe version
-
     cd "C:\Tools\vcpkg"
 
     git pull
 
-    .\bootstrap-vcpkg.bat
+    .\bootstrap-vcpkg.bat -disableMetrics
 
     cd %APPVEYOR_BUILD_FOLDER%
 

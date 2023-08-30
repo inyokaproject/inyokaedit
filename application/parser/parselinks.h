@@ -57,8 +57,8 @@ class ParseLinks : public QObject {
   static void replaceAnchorLinks(QTextDocument *pRawDoc);
   static void replaceKnowledgeBoxLinks(QTextDocument *pRawDoc);
 
-  QString m_sWikiUrl;                // Inyoka wiki url
-  QHash<QString, QString> m_IwlMap;  // Interwiki link keys/urls
+  QString m_sWikiUrl;                // Inyoka wiki URL
+  QHash<QString, QString> m_IwlMap;  // Interwiki link keys/URLs
 
   bool m_bCheckLinks;
   QString m_sLinkClassAddition;

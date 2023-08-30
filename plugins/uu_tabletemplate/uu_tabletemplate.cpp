@@ -255,12 +255,14 @@ void Uu_TableTemplate::preview() {
 
   QString sRetHtml(m_pParser->genOutput(QLatin1String(""), m_pTextDocument));
   // Remove for preview useless elements
-  sRetHtml.remove(
-      QRegularExpression(QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
-                         QRegularExpression::DotMatchesEverythingOption));
-  sRetHtml.remove(
-      QRegularExpression(QStringLiteral("<p class=\"meta\">.*</p>"),
-                         QRegularExpression::DotMatchesEverythingOption));
+  static QRegularExpression rmPagetitle(
+      QStringLiteral("<h1 class=\"pagetitle\">.*</h1>"),
+      QRegularExpression::DotMatchesEverythingOption);
+  sRetHtml.remove(rmPagetitle);
+  static QRegularExpression rmMetaClass(
+      QStringLiteral("<p class=\"meta\">.*</p>"),
+      QRegularExpression::DotMatchesEverythingOption);
+  sRetHtml.remove(rmMetaClass);
   sRetHtml.replace(QLatin1String("</style>"),
                    QLatin1String("#page table{margin:0px;}</style>"));
 
@@ -325,7 +327,7 @@ auto Uu_TableTemplate::generateTable() -> QString {
   // Create body
   for (int i = 0; i < rowsNum; i++) {
     if (m_pUi->HighlightSecondBox->isChecked() &&
-        // Use only, if non-default style is used; otherwiese use "zebra" class.
+        // Use only, if non-default style is used; otherwise use "zebra" class.
         0 != m_pUi->tableStyleBox->currentIndex() && 1 == i % 2) {
       sTab += QStringLiteral("<rowclass=\"%1%2\">")
                   .arg(m_sListTableStylesPrefix[m_pUi->tableStyleBox
@@ -386,14 +388,14 @@ void Uu_TableTemplate::convertToNewTemplate() {
   QString sTableCode(QStringLiteral("{{{#!vorlage Tabelle"));
   QStringList sListInput;
   QStringList sListRow;
+  static QRegularExpression splitRows(QStringLiteral("\\|\\|\\s*\\n"));
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
   sListInput << m_pUi->baseTextEdit->toPlainText().split(
-      QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")),
-      QString::SkipEmptyParts);
+      splitRows, QString::SkipEmptyParts);
 #else
-  sListInput << m_pUi->baseTextEdit->toPlainText().split(
-      QRegularExpression(QStringLiteral("\\|\\|\\s*\\n")), Qt::SkipEmptyParts);
+  sListInput << m_pUi->baseTextEdit->toPlainText().split(splitRows,
+                                                         Qt::SkipEmptyParts);
 #endif
 
   for (int i = 0; i < sListInput.size(); i++) {

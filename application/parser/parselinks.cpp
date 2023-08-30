@@ -66,9 +66,9 @@ void ParseLinks::startParsing(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// External Urls not in square brackets
+// External URLs not in square brackets
 void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
-  QRegularExpression findUrl(
+  static QRegularExpression findUrl(
       // Skip file:// with " in front, which is used on Windows for image path
       QString::fromLatin1(
           "(?:(?:https?|ftps?|[^\"]file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|"
@@ -104,7 +104,7 @@ void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
 
 // External links [https://www.ubuntu.com]
 void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
-  QRegularExpression findHyperlink(
+  static QRegularExpression findHyperlink(
       QString::fromLatin1("\\[{1,1}\\b(https?|ftps?|file|ssh|mms|svn"
                           "|git|dict|nntp|ircs?|rsync|smb|apt)\\b://"));
   QString sDoc(pRawDoc->toPlainText());
@@ -156,7 +156,7 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
 
 // Inyoka wiki links [:Wikipage:]
 void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
-  QRegularExpression findInyokaWikiLink(
+  static QRegularExpression findInyokaWikiLink(
       QStringLiteral("\\[{1,1}\\:[0-9A-Za-z:.]"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
@@ -278,7 +278,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
   }
   sPattern += QLatin1String(")\\b:");
 
-  QRegularExpression findInterwikiLink(sPattern);
+  static QRegularExpression findInterwikiLink(sPattern);
   // qDebug() << sPattern;
   while ((match = findInterwikiLink.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
@@ -350,7 +350,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
 // Anchor [#Headline Text]
 void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
-  QRegularExpression findAnchorLink(QStringLiteral("\\[{1,1}\\#"));
+  static QRegularExpression findAnchorLink(QStringLiteral("\\[{1,1}\\#"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
@@ -378,7 +378,7 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
                 "\" class=\"crosslink\">" + sLink.mid(nSplit + 1, nLength) +
                 "</a>";
       } else {
-        // Without descrition
+        // Without description
         sLink = "<a href=\"#" + sLink.mid(0, nSplit) +
                 "\" class=\"crosslink\">#" + sLink.mid(0, nSplit) + "</a>";
       }
@@ -400,7 +400,7 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
 
 // Link to knowledge box entry
 void ParseLinks::replaceKnowledgeBoxLinks(QTextDocument *pRawDoc) {
-  QRegularExpression findKnowledgeBoxLink(
+  static QRegularExpression findKnowledgeBoxLink(
       QStringLiteral("\\[{1,1}[0-9]{1,}\\]{1,1}"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
