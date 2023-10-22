@@ -1,11 +1,13 @@
 ## Bitte hier den eigenen Benutzernamen und das geplante Fertigstellungsdatum eintragen.
-[[Vorlage(Baustelle, 31.12.2035, VERFASSER)]]
+[[Vorlage(Baustelle, 22.02.2222, VERFASSER)]]
 
 ## Bitte den / die Autoren eintragen, der / die das Howto erstellt und durchgetestet habe:
 [[Vorlage(Howto, VERFASSER)]]
 
 ## Howtos bekommen eine getestet-Box wie Wikiartikel auch:
 [[Vorlage(getestet, UBUNTUVERSION/VERSIONEN)]]
+
+[[Inhaltsverzeichnis()]]
 
 = Problembeschreibung =
 ## Einleitender Text, der das Problem beschreibt, welches man mit Hilfe des HowTos beheben kann.
