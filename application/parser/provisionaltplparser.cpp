@@ -427,12 +427,6 @@ auto ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg)
                 "<p>Beim [wikipedia:SourceForge:]-Projekt [sourceforge:%1:]"
                 " werden [sourceforge:%2/files/:DEB-Pakete] angeboten. ")
                 .arg(sListArg[1], sListArg[1]);
-      } else if (sListArg[0].toLower() == "googlecode") {  // GOOGLE CODE
-        sOutput = QString::fromUtf8(
-                      "<p>Beim [http://code.google.com/intl/de/ Google Code]"
-                      " {de} -Projekt [googlecode:%1:] werden [googlecode:"
-                      "%2/downloads/:DEB-Pakete] angeboten. ")
-                      .arg(sListArg[1], sListArg[1]);
       }
     } else if (sListArg[1].startsWith("dl")) {
       // 2: [[Vorlage(Fremdpaket, "Anbieter", dl, URL, Ubuntuversion(en))]]
@@ -452,7 +446,7 @@ auto ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg)
   if ((sListArg.size() == 2 && !sListArg[1].startsWith("dl")) ||
       (sListArg.size() == 3 && sListArg[1].startsWith("dl"))) {
     sOutput += QString::fromUtf8(
-        "Die unterstützten Ubuntuversionen und Architekturen werden "
+        "Die unterstützten Ubuntu-Versionen und Architekturen werden "
         "aufgelistet. ");
   } else {
     if (sListArg.size() >= 2) {
@@ -471,7 +465,7 @@ auto ProvisionalTplParser::parseForeignPackage(const QStringList &sListArg)
   }
 
   sOutput += QString::fromUtf8(
-      "Nachdem man sie für die korrekte Ubuntuversion und Architektur geladen "
+      "Nachdem man sie für die korrekte Ubuntu-Version und Architektur geladen "
       "hat, müssen die [:Paketinstallation_DEB:DEB-Pakete noch installiert "
       "werden].</p>\n");
 
