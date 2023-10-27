@@ -115,6 +115,9 @@ Lobster
 mantic
 Mantic
 Minotaur
+noble
+Noble
+Numbat
 Ubuntu
 Kubuntu
 Xubuntu
