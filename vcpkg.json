@@ -4,11 +4,11 @@
     "dependencies": [
         "nuspell"
     ], 
-    "builtin-baseline": "d987016d042be166239d6978bd8c8203d8710c81",
+    "builtin-baseline": "7085a5eaf2fc38c838a0b962a247251695ff4564",
     "overrides": [
         {
             "name": "nuspell",
-            "version": "5.1.2#0"
+            "version": "5.1.4#0"
         }
     ]
 }
