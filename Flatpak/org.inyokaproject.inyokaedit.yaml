@@ -24,6 +24,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/inyokaproject/inyokaedit.git
+        branch: main
         # commit: bd06341d9b146fe4b50fd9da6bcb8a659cb43752
       - type: git
         dest: community
