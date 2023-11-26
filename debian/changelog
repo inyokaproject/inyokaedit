@@ -1,3 +1,12 @@
+inyokaedit (0.27.4-0) jammy; urgency=low
+
+  [ Thorsten Roth ]
+  * Create Flatpak
+  * Bump nuspell version
+  * Minor Clazy fixes
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 26 Nov 2023 17:56:00 +0200
+
 inyokaedit (0.27.3-2) focal; urgency=low
 
   [ Thorsten Roth ]
