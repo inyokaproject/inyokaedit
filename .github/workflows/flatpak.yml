@@ -17,7 +17,8 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Get Flatpak yaml
-      run: wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
+      run: |
+       wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
         
     - name: Download ffsend
       run: |
