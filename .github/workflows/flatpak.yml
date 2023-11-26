@@ -16,6 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Dependencies
+      run: sudo apt install wget
+    
     - name: Get Flatpak yaml
       run: |
        wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
