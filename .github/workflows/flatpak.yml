@@ -1,0 +1,37 @@
+name: "Flatpak"
+
+# manual trigger
+on:
+  workflow_dispatch:
+
+jobs:
+  flatpak:
+    name: "Flatpak"
+    runs-on: ubuntu-latest
+    env:
+      QT_SELECT: qt5
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:kde-6.5
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get Flatpak yaml
+      run: wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
+        
+    - name: Download ffsend
+      run: |
+       FFSEND_VERSION=$(curl --silent https://api.github.com/repos/timvisee/ffsend/releases/latest | sed -Ene '/^ *"tag_name": *"(v.+)",$/s//\1/p')
+       wget -c -nv "https://github.com/timvisee/ffsend/releases/download/$FFSEND_VERSION/ffsend-$FFSEND_VERSION-linux-x64-static"
+       mv ./ffsend-* ./ffsend
+       chmod a+x ./ffsend
+
+    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+      with:
+        bundle: org.inyokaproject.inyokaedit.flatpak
+        manifest-path: org.inyokaproject.inyokaedit.yaml
+        cache-key: flatpak-builder-${{ github.sha }}
+
+    - name: Upload Flatpak
+      run: |
+       ./ffsend upload org.inyokaproject.inyokaedit.flatpak
