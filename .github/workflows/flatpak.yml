@@ -34,7 +34,3 @@ jobs:
         bundle: org.inyokaproject.inyokaedit.flatpak
         manifest-path: org.inyokaproject.inyokaedit.yaml
         cache-key: flatpak-builder-${{ github.sha }}
-
-    - name: Upload Flatpak
-      run: |
-       ./ffsend upload org.inyokaproject.inyokaedit.flatpak
