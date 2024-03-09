@@ -666,14 +666,24 @@ void Highlighter::saveHighlighting() {
     m_bSystemBackground = true;
   } else {
     m_bSystemBackground = false;
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
     m_colorBackground.setNamedColor(m_pUi->styleTable->item(0, 0)->text());
+#else
+    m_colorBackground =
+        QColor::fromString(m_pUi->styleTable->item(0, 0)->text());
+#endif
   }
   // Foreground
   if ("system" == m_pUi->styleTable->item(1, 0)->text().toLower()) {
     m_bSystemForeground = true;
   } else {
     m_bSystemForeground = false;
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
     m_colorForeground.setNamedColor(m_pUi->styleTable->item(1, 0)->text());
+#else
+    m_colorForeground =
+        QColor::fromString(m_pUi->styleTable->item(1, 0)->text());
+#endif
   }
 
   m_textformatFormat = Highlighter::evalKey(this->createValues(2));
