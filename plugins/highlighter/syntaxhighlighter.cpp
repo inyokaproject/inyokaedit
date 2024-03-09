@@ -49,7 +49,7 @@ void SyntaxHighlighter::highlightBlock(const QString &sText) {
   // rules for every syntax element had been appended in constructor
   QRegularExpressionMatchIterator i;
   QRegularExpressionMatch match;
-  for (const auto &rule : qAsConst(m_highlightingRules)) {
+  for (const auto &rule : std::as_const(m_highlightingRules)) {
     QRegularExpression express(
         rule.regexp.pattern(),
         rule.regexp.patternOptions() |

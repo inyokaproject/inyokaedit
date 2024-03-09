@@ -207,7 +207,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
         QRegularExpression::DotMatchesEverythingOption |
         QRegularExpression::CaseInsensitiveOption);
 
-  for (const auto &sRegExp : qAsConst(sListTplRegExp)) {
+  for (const auto &sRegExp : std::as_const(sListTplRegExp)) {
     findTemplate.setPattern(sRegExp);
 
     while ((match = findTemplate.match(sDoc, nIndex)).hasMatch()) {
@@ -227,7 +227,7 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
                   QRegularExpression(QStringLiteral("\"")));  // Split at "
             bool bInside = false;
             sListArguments.clear();
-            for (const auto &s : qAsConst(tmpList)) {
+            for (const auto &s : std::as_const(tmpList)) {
               if (bInside) {
                 // If 's' is inside quotes, get the whole string
                 sListArguments.append(s);
@@ -615,7 +615,7 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
     if ("en" == sCountry) {
       sCountry = QStringLiteral("gb");
     }
-    for (const auto ch : qAsConst(sCountry)) {
+    for (const auto ch : std::as_const(sCountry)) {
       // Unicode char - (Unicode 'a' 97) + (Unicode reg. indicator 'a' 127462)
       // qDebug() << (int)ch.unicode() - 97 + 127462;
       sHtml += "&#" +

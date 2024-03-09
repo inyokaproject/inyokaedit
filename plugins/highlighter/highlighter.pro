@@ -34,12 +34,12 @@ RCC_DIR       = ./.rcc
 
 include(../../application/templates/templates.pri)
 
-CONFIG       += c++11
+CONFIG       += c++17
 DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060600
 }
 
 HEADERS      += highlighter.h \

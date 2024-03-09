@@ -24,8 +24,8 @@ unix: !macx {
 
 DESTDIR       = ../
 
-win32:VERSION = 0.27.4.0
-else:VERSION  = 0.27.4
+win32:VERSION = 0.28.0.0
+else:VERSION  = 0.28.0
 
 QMAKE_TARGET_PRODUCT     = "InyokaEdit"
 QMAKE_TARGET_DESCRIPTION = "Editor for Inyoka based portals"
@@ -42,12 +42,12 @@ UI_DIR        = ./.ui
 RCC_DIR       = ./.rcc
 
 QT           += core gui widgets network printsupport xml
-CONFIG       += c++11
+CONFIG       += c++17
 DEFINES      += QT_NO_FOREACH
 
 CONFIG(debug, debug|release) {
   CONFIG     += warn_on
-  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060500
+  DEFINES    += QT_DISABLE_DEPRECATED_BEFORE=0x060600
 }
 
 isEmpty(PREVIEW) {

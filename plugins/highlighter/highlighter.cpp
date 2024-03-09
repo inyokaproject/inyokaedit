@@ -222,7 +222,7 @@ void Highlighter::loadDefaultStyles(bool bReset) {
     }
   }
 
-  for (const auto &sFile : qAsConst(sDefaultFiles)) {
+  for (const auto &sFile : std::as_const(sDefaultFiles)) {
     QFile stylefile(confDir.absolutePath() + "/" + sFile + m_sExt);
     stylefile.setPermissions(stylefile.permissions() | QFileDevice::WriteUser);
     if (bReset && stylefile.exists()) {
@@ -850,7 +850,7 @@ void Highlighter::defineRules() {
     sListRegExpPatterns << QRegularExpression::escape(tmpStr);
   }
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
-  for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
+  for (const auto &sPattern : std::as_const(sListRegExpPatterns)) {
     rule.format = m_imgMapFormat;
     rule.regexp = QRegularExpression(sPattern);
     m_highlightingRules.append(rule);
@@ -864,7 +864,7 @@ void Highlighter::defineRules() {
     sListRegExpPatterns << "\\[{1,1}\\b" + tmpStr + "\\b:.+\\]{1,1}";
   }
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
-  for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
+  for (const auto &sPattern : std::as_const(sListRegExpPatterns)) {
     rule.format = m_interwikiLinksFormat;
     rule.regexp = QRegularExpression(sPattern);
     m_highlightingRules.append(rule);
@@ -873,12 +873,12 @@ void Highlighter::defineRules() {
   // Macros ([[Vorlage(...) etc.)
   sListRegExpPatterns.clear();
   sListRegExpPatterns.reserve(m_sListMacroKeywords.size() + 1);
-  for (const auto &tmpStr : qAsConst(m_sListMacroKeywords)) {
+  for (const auto &tmpStr : std::as_const(m_sListMacroKeywords)) {
     sListRegExpPatterns << "\\[\\[" + tmpStr + "\\ *\\(";
   }
   sListRegExpPatterns << QStringLiteral("\\)\\]\\]");
   rule.regexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
+  for (const auto &sPattern : std::as_const(sListRegExpPatterns)) {
     rule.format = m_macrosFormat;
     rule.regexp.setPattern(sPattern);
     m_highlightingRules.append(rule);
@@ -887,13 +887,13 @@ void Highlighter::defineRules() {
   // Parser ({{{#!code etc.)
   sListRegExpPatterns.clear();
   sListRegExpPatterns.reserve(m_sListParserKeywords.size() + 2);
-  for (const auto &tmpStr : qAsConst(m_sListParserKeywords)) {
+  for (const auto &tmpStr : std::as_const(m_sListParserKeywords)) {
     sListRegExpPatterns << QRegularExpression::escape("{{{#!" + tmpStr);
   }
   sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("{{{"))
                       << QRegularExpression::escape(QStringLiteral("}}}"));
   rule.regexp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
+  for (const auto &sPattern : std::as_const(sListRegExpPatterns)) {
     rule.format = m_parserFormat;
     rule.regexp.setPattern(sPattern);
     m_highlightingRules.append(rule);
@@ -907,7 +907,7 @@ void Highlighter::defineRules() {
   sListRegExpPatterns.append(m_pTemplates->getFormatEndMap().first);
   sListRegExpPatterns.removeDuplicates();
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
-  for (auto sPattern : qAsConst(sListRegExpPatterns)) {
+  for (auto sPattern : std::as_const(sListRegExpPatterns)) {
     rule.format = m_textformatFormat;
     if (sPattern.startsWith(QLatin1String("RegExp="))) {
       sTmpRegExp = sPattern.remove(QStringLiteral("RegExp="));
@@ -939,7 +939,7 @@ void Highlighter::defineRules() {
   sListRegExpPatterns << QRegularExpression::escape(QStringLiteral("[[BR]]"))
                       << QRegularExpression::escape(QStringLiteral("\\\\"));
   rule.regexp.setPatternOptions(QRegularExpression::NoPatternOption);
-  for (const auto &sPattern : qAsConst(sListRegExpPatterns)) {
+  for (const auto &sPattern : std::as_const(sListRegExpPatterns)) {
     rule.regexp = QRegularExpression(sPattern);
     rule.format = m_miscFormat;
     m_highlightingRules.append(rule);
@@ -987,7 +987,7 @@ void Highlighter::setEditorlist(const QList<TextEditor *> &listEditors) {
   int index = -1;
   // Collect editors, which to not exist anymore
   // and create temp. list for comparison in next loop
-  for (auto EditHlight : qAsConst(m_ListEditorsAndHighighters)) {
+  for (auto EditHlight : std::as_const(m_ListEditorsAndHighighters)) {
     index++;
     tmpEditorList << EditHlight.first;
     if (!listEditors.contains(EditHlight.first)) {
@@ -1025,7 +1025,7 @@ void Highlighter::rehighlightAll() {
   pal.setColor(QPalette::Base, m_colorBackground);
   pal.setColor(QPalette::Text, m_colorForeground);
 
-  for (auto EditHlight : qAsConst(m_ListEditorsAndHighighters)) {
+  for (auto EditHlight : std::as_const(m_ListEditorsAndHighighters)) {
     EditHlight.first->setPalette(pal);
     EditHlight.second->setRules(m_highlightingRules);
     EditHlight.second->rehighlight();

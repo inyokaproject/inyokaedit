@@ -53,7 +53,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
 
   QStringList sListTplRegExp;
   QStringList sListTrans;
-  for (const auto &s : qAsConst(m_sListTransTpl)) {
+  for (const auto &s : std::as_const(m_sListTransTpl)) {
     sListTplRegExp << "\\{\\{\\{#!" + s + " .+\\}\\}\\}"
                    << "\\[\\[" + s + "\\s*\\(.+\\)\\]\\]";
     sListTrans << s << s;

@@ -1,4 +1,4 @@
-version: 0.27.4-{build}
+version: 0.28.0-{build}
 branches:
   only:
   - main

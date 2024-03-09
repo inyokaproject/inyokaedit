@@ -280,7 +280,7 @@ void Hotkey::deleteRow() {
 
 void Hotkey::registerHotkeys() {
   qDebug() << Q_FUNC_INFO;
-  for (const auto act : qAsConst(m_listActionsOld)) {
+  for (const auto act : std::as_const(m_listActionsOld)) {
     m_pParent->removeAction(act);
   }
 

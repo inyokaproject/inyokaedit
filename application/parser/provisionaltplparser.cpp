@@ -1735,7 +1735,7 @@ auto ProvisionalTplParser::parseSidebar(const QStringList &sListArgs)
 #else
         sListTmp = sListList[i][k].split("[[BR]]", Qt::SkipEmptyParts);
 #endif
-        for (const auto &s : qAsConst(sListTmp)) {
+        for (const auto &s : std::as_const(sListTmp)) {
           sOutput +=
               "<tr>\n<td style=\"background-color: #F9EAAF; "
               "border-width: 0 0 10px 0; border-color: #FFFFFF\">" +
@@ -1853,7 +1853,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
     } else {  // New cell
       // Check if found style info is in reality a html text format
       bool bTextformat = false;
-      for (const auto &sTmp : qAsConst(m_sListHtmlStart)) {
+      for (const auto &sTmp : std::as_const(m_sListHtmlStart)) {
         if (sArgs[i].trimmed().startsWith(sTmp)) {
           bTextformat = true;
         }

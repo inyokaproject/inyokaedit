@@ -125,7 +125,7 @@ void Session::getTokenReply(const QString &sNWReply) {
   if (!m_ListCookies.isEmpty()) {
     // qDebug() << "COOKIES:" << m_ListCookies;
 
-    for (const auto &cookie : qAsConst(m_ListCookies)) {
+    for (const auto &cookie : std::as_const(m_ListCookies)) {
       if (cookie.isSessionCookie() && cookie.isSecure() &&
           m_sCookieDomain == cookie.domain()) {
         sSessionCookie = QString::fromLatin1(cookie.toRawForm());
@@ -249,7 +249,7 @@ void Session::getLoginReply(const QString &sNWReply) {
     return;
   }
 
-  for (const auto &cookie : qAsConst(m_ListCookies)) {
+  for (const auto &cookie : std::as_const(m_ListCookies)) {
     // qDebug() << "RawSessionCookie:" << cookie.toRawForm();
     if (cookie.isSessionCookie() && cookie.isSecure() &&
         m_sCookieDomain == cookie.domain()) {

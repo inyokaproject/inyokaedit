@@ -83,7 +83,7 @@ Macros::Macros(const QString &sSharePath, const QDir &tmpImgDir)
 void Macros::startParsing(QTextDocument *pRawDoc, const QString &sCurrentFile,
                           const QString &sCommunity,
                           QStringList &sListHeadlines) {
-  for (const auto &macro : qAsConst(m_listMacros)) {
+  for (const auto &macro : std::as_const(m_listMacros)) {
     for (const auto &s : macro.translations) {
       if ("Anchor" == macro.name) {
         Macros::replaceAnchors(pRawDoc, s);

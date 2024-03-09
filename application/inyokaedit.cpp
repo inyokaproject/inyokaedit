@@ -517,7 +517,7 @@ void InyokaEdit::createMenus() {
   }
 
   bool bFirstLoop(true);
-  for (const auto &tplDir : qAsConst(listTplDirs)) {
+  for (const auto &tplDir : std::as_const(listTplDirs)) {
     const QFileInfoList fiListFiles =
         tplDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
     for (const auto &fi : fiListFiles) {
@@ -559,30 +559,30 @@ void InyokaEdit::createMenus() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::clearXmlMenus() {
-  for (auto *m : qAsConst(m_pXmlSubMenus)) {
+  for (auto *m : std::as_const(m_pXmlSubMenus)) {
     m->disconnect();
     m->clear();
   }
-  for (auto *m : qAsConst(m_pXmlMenus)) {
+  for (auto *m : std::as_const(m_pXmlMenus)) {
     m->disconnect();
     m->clear();
     m->deleteLater();
   }
-  for (auto *q : qAsConst(m_pXmlDropdowns)) {
+  for (auto *q : std::as_const(m_pXmlDropdowns)) {
     q->disconnect();
     q->clear();
   }
 
-  for (auto *t : qAsConst(m_pXmlToolbars)) {
+  for (auto *t : std::as_const(m_pXmlToolbars)) {
     t->disconnect();
     t->clear();
   }
 
-  for (auto *a : qAsConst(m_pXmlActions)) {
+  for (auto *a : std::as_const(m_pXmlActions)) {
     m_pUi->inyokaeditorBar->removeAction(a);
     m_pUi->menuBar->removeAction(a);
     m_pUi->samplesmacrosBar->removeAction(a);
-    for (auto *b : qAsConst(m_pXmlToolbuttons)) {
+    for (auto *b : std::as_const(m_pXmlToolbuttons)) {
       b->removeAction(a);
     }
     a->deleteLater();
@@ -616,9 +616,9 @@ void InyokaEdit::createXmlMenus() {
   this->clearXmlMenus();
 
   // Check share and user path
-  for (const auto &sPath : qAsConst(sListFolders)) {
+  for (const auto &sPath : std::as_const(sListFolders)) {
     // Search for menu/drop-down/toolbar
-    for (const auto &sObj : qAsConst(sListObjects)) {
+    for (const auto &sObj : std::as_const(sListObjects)) {
       // Search for max 9 files
       for (int n = 1; n < MAXFILES; n++) {
         sTmpPath =
