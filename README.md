@@ -32,7 +32,7 @@ AppImage, Flatpak and build for Windows: https://github.com/inyokaproject/inyoka
 Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 
 ## Build instructions
-* InyokaEdit can be compiled with Qt >= 5.9 or Qt >= 6.0 (optional, but recommended for integrated preview: Including webkitwidgets or webenginewidgets)
+* InyokaEdit can be compiled with Qt >= 5.11 or Qt >= 6.0 (optional, but recommended for integrated preview: Including webkitwidgets or webenginewidgets)
 * For compiling spell checker plugin "spellchecker-hunspell" *libhunspell-dev* or for "spellchecker-nuspell" *libnuspell-dev* is needed.
 * For running InyokaEdit, community files have to be included. Because of this it is recommended to include the community files during **make/cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
 

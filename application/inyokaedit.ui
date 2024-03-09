@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -45,8 +45,7 @@
       <string>Open &amp;recent</string>
      </property>
      <property name="icon">
-      <iconset theme="document-open-recent">
-       <normaloff>.</normaloff>.</iconset>
+      <iconset theme="document-open-recent"/>
      </property>
     </widget>
     <widget class="QMenu" name="fileMenuFromTemplate">
@@ -199,9 +198,7 @@
   </widget>
   <action name="reportBugAct">
    <property name="icon">
-    <iconset>
-     <normalon>:/menu/bug.png</normalon>
-    </iconset>
+    <iconset theme="bug"/>
    </property>
    <property name="text">
     <string>Report &amp;bug</string>
@@ -209,9 +206,7 @@
   </action>
   <action name="aboutAct">
    <property name="icon">
-    <iconset theme="help-about">
-     <normalon>:/menu/help-browser.png</normalon>
-    </iconset>
+    <iconset theme="help-about"/>
    </property>
    <property name="text">
     <string>&amp;About</string>
@@ -222,9 +217,7 @@
   </action>
   <action name="newAct">
    <property name="icon">
-    <iconset theme="document-new">
-     <normalon>:/menu/document-new.png</normalon>
-    </iconset>
+    <iconset theme="document-new"/>
    </property>
    <property name="text">
     <string>&amp;New</string>
@@ -235,9 +228,7 @@
   </action>
   <action name="openAct">
    <property name="icon">
-    <iconset theme="document-open">
-     <normalon>:/menu/document-open.png</normalon>
-    </iconset>
+    <iconset theme="document-open"/>
    </property>
    <property name="text">
     <string>&amp;Open...</string>
@@ -248,9 +239,7 @@
   </action>
   <action name="saveAct">
    <property name="icon">
-    <iconset theme="document-save">
-     <normalon>:/menu/document-save.png</normalon>
-    </iconset>
+    <iconset theme="document-save"/>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -261,9 +250,7 @@
   </action>
   <action name="saveAsAct">
    <property name="icon">
-    <iconset theme="document-save-as">
-     <normalon>:/menu/document-save-as.png</normalon>
-    </iconset>
+    <iconset theme="document-save-as"/>
    </property>
    <property name="text">
     <string>Save &amp;as...</string>
@@ -274,8 +261,7 @@
   </action>
   <action name="exitAct">
    <property name="icon">
-    <iconset theme="application-exit">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset theme="application-exit"/>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -286,9 +272,7 @@
   </action>
   <action name="undoAct">
    <property name="icon">
-    <iconset theme="edit-undo">
-     <normalon>:/menu/edit-undo.png</normalon>
-    </iconset>
+    <iconset theme="edit-undo"/>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -299,9 +283,7 @@
   </action>
   <action name="redoAct">
    <property name="icon">
-    <iconset theme="edit-redo">
-     <normalon>:/menu/edit-redo.png</normalon>
-    </iconset>
+    <iconset theme="edit-redo"/>
    </property>
    <property name="text">
     <string>&amp;Redo</string>
@@ -312,9 +294,7 @@
   </action>
   <action name="cutAct">
    <property name="icon">
-    <iconset theme="edit-cut">
-     <normalon>:/menu/edit-cut.png</normalon>
-    </iconset>
+    <iconset theme="edit-cut"/>
    </property>
    <property name="text">
     <string>&amp;Cut</string>
@@ -325,9 +305,7 @@
   </action>
   <action name="copyAct">
    <property name="icon">
-    <iconset theme="edit-copy">
-     <normalon>:/menu/edit-copy.png</normalon>
-    </iconset>
+    <iconset theme="edit-copy"/>
    </property>
    <property name="text">
     <string>C&amp;opy</string>
@@ -338,9 +316,7 @@
   </action>
   <action name="pasteAct">
    <property name="icon">
-    <iconset theme="edit-paste">
-     <normalon>:/menu/edit-paste.png</normalon>
-    </iconset>
+    <iconset theme="edit-paste"/>
    </property>
    <property name="text">
     <string>&amp;Paste</string>
@@ -351,9 +327,7 @@
   </action>
   <action name="searchAct">
    <property name="icon">
-    <iconset theme="edit-find">
-     <normalon>:/menu/edit-find.png</normalon>
-    </iconset>
+    <iconset theme="edit-find"/>
    </property>
    <property name="text">
     <string>&amp;Find...</string>
@@ -364,9 +338,7 @@
   </action>
   <action name="replaceAct">
    <property name="icon">
-    <iconset theme="edit-find-replace">
-     <normalon>:/menu/edit-find-replace.png</normalon>
-    </iconset>
+    <iconset theme="edit-find-replace"/>
    </property>
    <property name="text">
     <string>R&amp;eplace...</string>
@@ -377,9 +349,7 @@
   </action>
   <action name="findNextAct">
    <property name="icon">
-    <iconset theme="go-down">
-     <normalon>:/menu/go-down.png</normalon>
-    </iconset>
+    <iconset theme="go-down"/>
    </property>
    <property name="text">
     <string>Find &amp;next</string>
@@ -390,9 +360,7 @@
   </action>
   <action name="findPreviousAct">
    <property name="icon">
-    <iconset theme="go-up">
-     <normalon>:/menu/go-up.png</normalon>
-    </iconset>
+    <iconset theme="go-up"/>
    </property>
    <property name="text">
     <string>F&amp;ind previous</string>
@@ -403,9 +371,7 @@
   </action>
   <action name="previewAct">
    <property name="icon">
-    <iconset>
-     <normalon>:/toolbar/light/preview.png</normalon>
-    </iconset>
+    <iconset theme="preview"/>
    </property>
    <property name="text">
     <string>Generate preview</string>
@@ -416,9 +382,7 @@
   </action>
   <action name="downloadArticleAct">
    <property name="icon">
-    <iconset>
-     <normalon>:/toolbar/light/cloud_download.png</normalon>
-    </iconset>
+    <iconset theme="cloud-download"/>
    </property>
    <property name="text">
     <string>Download raw format</string>
@@ -429,9 +393,7 @@
   </action>
   <action name="deleteTempImagesAct">
    <property name="icon">
-    <iconset theme="edit-delete">
-     <normalon>:/menu/edit-delete.png</normalon>
-    </iconset>
+    <iconset theme="edit-delete"/>
    </property>
    <property name="text">
     <string>Delete temporarily &amp;images</string>
@@ -439,9 +401,7 @@
   </action>
   <action name="goBackBrowserAct">
    <property name="icon">
-    <iconset theme="go-previous">
-     <normalon>:/menu/go-previous.png</normalon>
-    </iconset>
+    <iconset theme="go-previous"/>
    </property>
    <property name="text">
     <string>Back</string>
@@ -449,9 +409,7 @@
   </action>
   <action name="goForwardBrowserAct">
    <property name="icon">
-    <iconset theme="go-next">
-     <normalon>:/menu/go-next.png</normalon>
-    </iconset>
+    <iconset theme="go-next"/>
    </property>
    <property name="text">
     <string>Forward</string>
@@ -459,9 +417,7 @@
   </action>
   <action name="reloadBrowserAct">
    <property name="icon">
-    <iconset theme="view-refresh">
-     <normalon>:/menu/view-refresh.png</normalon>
-    </iconset>
+    <iconset theme="view-refresh"/>
    </property>
    <property name="text">
     <string>Reload</string>
@@ -472,9 +428,7 @@
   </action>
   <action name="printPdfPreviewAct">
    <property name="icon">
-    <iconset theme="document-print">
-     <normalon>:/menu/document-print.png</normalon>
-    </iconset>
+    <iconset theme="document-print"/>
    </property>
    <property name="text">
     <string>&amp;Print preview to PDF</string>
@@ -487,15 +441,16 @@
    </property>
   </action>
   <action name="showSyntaxOverviewAct">
+   <property name="icon">
+    <iconset theme="help-browser"/>
+   </property>
    <property name="text">
     <string>&amp;Syntax overview</string>
    </property>
   </action>
   <action name="preferencesAct">
    <property name="icon">
-    <iconset theme="preferences-system">
-     <normalon>:/menu/preferences-system.png</normalon>
-    </iconset>
+    <iconset theme="preferences-system"/>
    </property>
    <property name="text">
     <string>Preference&amp;s</string>
@@ -506,9 +461,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normalon>:/toolbar/light/cloud_upload.png</normalon>
-    </iconset>
+    <iconset theme="cloud-upload"/>
    </property>
    <property name="text">
     <string>Upload article</string>

@@ -137,6 +137,17 @@ InyokaEdit::~InyokaEdit() {
 
 void InyokaEdit::createObjects() {
   m_pSettings = new Settings(this, m_sSharePath);
+  m_pUtils = new Utils(this);
+  connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
+          &Settings::setWindowsCheckUpdate);
+  if (m_pSettings->isDarkScheme()) {
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
+                                  << QStringLiteral(":/fallback-icons/dark"));
+  } else {
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
+                                  << QStringLiteral(":/fallback-icons/light"));
+  }
+
   qDebug() << "Inyoka Community:" << m_pSettings->getInyokaCommunity();
   if (m_pSettings->getInyokaCommunity().isEmpty() ||
       !QDir(m_sSharePath + "/community/" + m_pSettings->getInyokaCommunity())
@@ -235,10 +246,6 @@ void InyokaEdit::createObjects() {
 #ifndef NOPREVIEW
   m_pWebview->installEventFilter(this);
 #endif
-
-  m_pUtils = new Utils(this);
-  connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
-          &Settings::setWindowsCheckUpdate);
 }
 
 // ----------------------------------------------------------------------------
@@ -464,15 +471,6 @@ void InyokaEdit::createActions() {
   // Upload Inyoka article
   connect(m_pUi->uploadArticleAct, &QAction::triggered, m_pUploadModule,
           &Upload::clickUploadArticle);
-
-  if (m_pSettings->isDarkScheme()) {
-    m_pUi->previewAct->setIcon(
-        QIcon(QLatin1String(":/toolbar/dark/preview.png")));
-    m_pUi->downloadArticleAct->setIcon(
-        QIcon(QLatin1String(":/toolbar/dark/cloud_download.png")));
-    m_pUi->uploadArticleAct->setIcon(
-        QIcon(QLatin1String(":/toolbar/dark/cloud_upload.png")));
-  }
 
   // ------------------------------------------------------------------------
   // ABOUT MENU
