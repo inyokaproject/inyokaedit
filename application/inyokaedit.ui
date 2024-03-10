@@ -52,6 +52,9 @@
      <property name="title">
       <string>New from &amp;template</string>
      </property>
+     <property name="icon">
+      <iconset theme="document-new-from-template"/>
+     </property>
     </widget>
     <addaction name="newAct"/>
     <addaction name="fileMenuFromTemplate"/>
@@ -198,7 +201,7 @@
   </widget>
   <action name="reportBugAct">
    <property name="icon">
-    <iconset theme="bug"/>
+    <iconset theme="tools-report-bug"/>
    </property>
    <property name="text">
     <string>Report &amp;bug</string>
@@ -428,7 +431,7 @@
   </action>
   <action name="printPdfPreviewAct">
    <property name="icon">
-    <iconset theme="document-print"/>
+    <iconset theme="viewpdf"/>
    </property>
    <property name="text">
     <string>&amp;Print preview to PDF</string>
@@ -441,16 +444,13 @@
    </property>
   </action>
   <action name="showSyntaxOverviewAct">
-   <property name="icon">
-    <iconset theme="help-browser"/>
-   </property>
    <property name="text">
     <string>&amp;Syntax overview</string>
    </property>
   </action>
   <action name="preferencesAct">
    <property name="icon">
-    <iconset theme="preferences-system"/>
+    <iconset theme="configure"/>
    </property>
    <property name="text">
     <string>Preference&amp;s</string>

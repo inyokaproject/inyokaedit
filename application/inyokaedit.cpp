@@ -141,11 +141,9 @@ void InyokaEdit::createObjects() {
   connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
           &Settings::setWindowsCheckUpdate);
   if (m_pSettings->isDarkScheme()) {
-    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
-                                  << QStringLiteral(":/fallback-icons/dark"));
+    QIcon::setThemeName(QStringLiteral("dark"));
   } else {
-    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
-                                  << QStringLiteral(":/fallback-icons/light"));
+    QIcon::setThemeName(QStringLiteral("light"));
   }
 
   qDebug() << "Inyoka Community:" << m_pSettings->getInyokaCommunity();
@@ -1462,9 +1460,9 @@ void InyokaEdit::showAbout() {
                tr("License") +
                    ": <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
                    "GNU General Public License Version 3</a>",
-               tr("This application uses icons from Tango project of "
-                  "<a href=\"https://www.freedesktop.org\">"
-                  "freedesktop.org</a>."),
+               tr("This application uses "
+                  "<a href=\"https://invent.kde.org/frameworks/breeze-icons\">"
+                  "Breeze icons from KDE</a>."),
                tr("Special thanks to all contributors and testers from "
                   "<a href=\"https://ubuntuusers.de\"> "
                   "ubuntuusers.de</a>.")));
