@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res/uu_tabletemplate_resources.qrc">
-    <normaloff>:/tabletemplate.png</normaloff>:/tabletemplate.png</iconset>
+    <normaloff>:/folder-table.png</normaloff>:/folder-table.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedKingdom"/>
@@ -156,22 +156,12 @@
            <property name="text">
             <string>Base to ubuntuusers.de</string>
            </property>
-           <property name="icon">
-            <iconset theme="go-down">
-             <normalon>:/keyboard_arrow_down.png</normalon>
-            </iconset>
-           </property>
           </widget>
          </item>
          <item row="2" column="1">
           <widget class="QPushButton" name="NewToBaseButton">
            <property name="text">
             <string>ubuntuusers.de to base</string>
-           </property>
-           <property name="icon">
-            <iconset theme="go-up">
-             <normalon>:/keyboard_arrow_up.png</normalon>
-            </iconset>
            </property>
           </widget>
          </item>

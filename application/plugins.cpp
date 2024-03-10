@@ -123,15 +123,11 @@ void Plugins::loadPlugins(const QString &sLang) {
     }
 
     m_listPlugins.at(i)->initPlugin(m_pParent, m_pEditor, m_userDataDir,
-                                    m_sSharePath);
+                                    m_sSharePath, m_bDarkScheme);
     m_listPlugins.at(i)->installTranslator(sLang);
 
     QString sMenu(m_listPlugins.at(i)->getCaption());
-    QPair<QIcon, QIcon> icons = m_listPlugins.at(i)->getIcons();
-    QIcon ico = icons.first;
-    if (m_bDarkScheme) {
-      ico = icons.second;
-    }
+    QIcon ico(m_listPlugins.at(i)->getIcon());
 
     if (!sMenu.isEmpty() && m_listPlugins.at(i)->includeMenu()) {
       m_PluginMenuEntries << new QAction(ico, m_listPlugins.at(i)->getCaption(),

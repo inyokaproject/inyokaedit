@@ -40,13 +40,13 @@ class IEditorPlugin {
 
   // ALL FUNCTIONS PURE VIRTUAL !!!
   virtual void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                          const QDir &userDataDir,
-                          const QString &sSharePath) = 0;
+                          const QDir &userDataDir, const QString &sSharePath,
+                          const bool &bIsDarkTheme) = 0;
   virtual QString getPluginName() const = 0;
   virtual QString getPluginVersion() const = 0;
   virtual void installTranslator(const QString &sLang) = 0;
   virtual QString getCaption() const = 0;
-  virtual QPair<QIcon, QIcon> getIcons() const = 0;  // T1: Light, T2: Dark
+  virtual QIcon getIcon() const = 0;
   virtual bool includeMenu() const = 0;
   virtual bool includeToolbar() const = 0;
   virtual bool hasSettings() const = 0;

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>spellchecker.png</file>
-        <file>spellchecker_dark.png</file>
+        <file>tools-check-spelling.png</file>
+        <file>tools-check-spelling_dark.png</file>
     </qresource>
 </RCC>

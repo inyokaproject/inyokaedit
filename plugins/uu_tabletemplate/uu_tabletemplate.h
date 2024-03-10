@@ -66,12 +66,13 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir &userDataDir, const QString &sSharePath) override;
+                  const QDir &userDataDir, const QString &sSharePath,
+                  const bool &bIsDarkTheme) override;
   auto getPluginName() const -> QString override;
   auto getPluginVersion() const -> QString override;
   void installTranslator(const QString &sLang) override;
   auto getCaption() const -> QString override;
-  auto getIcons() const -> QPair<QIcon, QIcon> override;
+  auto getIcon() const -> QIcon override;
   auto includeMenu() const -> bool override;
   auto includeToolbar() const -> bool override;
   bool hasSettings() const override;
@@ -98,6 +99,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   QWidget *m_pParent;
   Ui::Uu_TableTemplateClass *m_pUi;
   QDialog *m_pDialog;
+  bool m_bIsDarkTheme;
   QSettings *m_pSettings;
   TextEditor *m_pEditor;
   Templates *m_pTemplates;

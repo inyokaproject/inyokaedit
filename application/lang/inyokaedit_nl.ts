@@ -300,269 +300,269 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
         <translation>&amp;Recent bestand openen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="70"/>
+        <location filename="../inyokaedit.ui" line="72"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bewerken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="88"/>
+        <location filename="../inyokaedit.ui" line="90"/>
         <source>&amp;Help</source>
         <translation>&amp;Hulp</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="54"/>
+        <location filename="../inyokaedit.ui" line="53"/>
         <source>New from &amp;template</source>
         <translation>Nieuw uit &amp;sjabloon</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="99"/>
+        <location filename="../inyokaedit.ui" line="101"/>
         <source>&amp;Tools</source>
         <translation>Hulp&amp;middelen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="110"/>
+        <location filename="../inyokaedit.ui" line="112"/>
         <source>File</source>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="124"/>
+        <location filename="../inyokaedit.ui" line="126"/>
         <source>Edit</source>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="141"/>
+        <location filename="../inyokaedit.ui" line="143"/>
         <source>Preview / Download</source>
         <translation>Voorbeeld / Downloaden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="155"/>
+        <location filename="../inyokaedit.ui" line="157"/>
         <source>Inyoka editor</source>
         <translation>Inyoka-bewerker</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="166"/>
+        <location filename="../inyokaedit.ui" line="168"/>
         <source>Samples and macros</source>
         <translation>Voorbeelden en macro&apos;s</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="177"/>
+        <location filename="../inyokaedit.ui" line="179"/>
         <source>Browser toolbar</source>
         <translation>Browser-werkbalk</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="191"/>
+        <location filename="../inyokaedit.ui" line="193"/>
         <source>Plugins toolBar</source>
         <translation>Plug-ins-werkbalk</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="220"/>
+        <location filename="../inyokaedit.ui" line="218"/>
         <source>Shows the about box of this application</source>
         <translation>Toont het Over-scherm van deze applicatie</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="230"/>
+        <location filename="../inyokaedit.ui" line="226"/>
         <source>&amp;New</source>
         <translation>&amp;Nieuw</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="233"/>
+        <location filename="../inyokaedit.ui" line="229"/>
         <source>Create a new file</source>
         <translation>Een nieuw bestand creëren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="243"/>
+        <location filename="../inyokaedit.ui" line="237"/>
         <source>&amp;Open...</source>
         <translation>&amp;Openen...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="246"/>
+        <location filename="../inyokaedit.ui" line="240"/>
         <source>Open a file</source>
         <translation>Een bestand openen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="256"/>
+        <location filename="../inyokaedit.ui" line="248"/>
         <source>&amp;Save</source>
         <translation>Op&amp;slaan</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="259"/>
+        <location filename="../inyokaedit.ui" line="251"/>
         <source>Save current document</source>
         <translation>Het huidige document opslaan</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="272"/>
+        <location filename="../inyokaedit.ui" line="262"/>
         <source>Save current document under a new name</source>
         <translation>Huidige document opslaan onder nieuwe naam</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="281"/>
+        <location filename="../inyokaedit.ui" line="270"/>
         <source>&amp;Quit</source>
         <translation>Afsl&amp;uiten</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="284"/>
+        <location filename="../inyokaedit.ui" line="273"/>
         <source>Quit the application</source>
         <translation>De applicatie afsluiten</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="297"/>
+        <location filename="../inyokaedit.ui" line="284"/>
         <source>Undo changes</source>
         <translation>Wijzigingen ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="310"/>
+        <location filename="../inyokaedit.ui" line="295"/>
         <source>Redo changes</source>
         <translation>Wijzigingen opnieuw toepassen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="323"/>
+        <location filename="../inyokaedit.ui" line="306"/>
         <source>Cut highlighted text</source>
         <translation>Gemarkeerde tekst knippen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="336"/>
+        <location filename="../inyokaedit.ui" line="317"/>
         <source>Copy highlighted text</source>
         <translation>Gemarkeerde tekst kopiëren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="349"/>
+        <location filename="../inyokaedit.ui" line="328"/>
         <source>Paste text from clipboard</source>
         <translation>Tekst plakken vanuit klembord</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="362"/>
+        <location filename="../inyokaedit.ui" line="339"/>
         <source>Find text</source>
         <translation>Tekst zoeken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="375"/>
+        <location filename="../inyokaedit.ui" line="350"/>
         <source>Replace text</source>
         <translation>Tekst vervangen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="388"/>
+        <location filename="../inyokaedit.ui" line="361"/>
         <source>Find next (search forward)</source>
         <translation>Volgende zoeken (vooruit zoeken)</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="269"/>
+        <location filename="../inyokaedit.ui" line="259"/>
         <source>Save &amp;as...</source>
         <translation>Opslaan &amp;als...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="294"/>
+        <location filename="../inyokaedit.ui" line="281"/>
         <source>&amp;Undo</source>
         <translation>&amp;Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="307"/>
+        <location filename="../inyokaedit.ui" line="292"/>
         <source>&amp;Redo</source>
         <translation>&amp;Opnieuw toepassen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="320"/>
+        <location filename="../inyokaedit.ui" line="303"/>
         <source>&amp;Cut</source>
         <translation>&amp;Knippen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="333"/>
+        <location filename="../inyokaedit.ui" line="314"/>
         <source>C&amp;opy</source>
         <translation>K&amp;opiëren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="346"/>
+        <location filename="../inyokaedit.ui" line="325"/>
         <source>&amp;Paste</source>
         <translation>&amp;Plakken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="359"/>
+        <location filename="../inyokaedit.ui" line="336"/>
         <source>&amp;Find...</source>
         <translation>&amp;Zoeken...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="372"/>
+        <location filename="../inyokaedit.ui" line="347"/>
         <source>R&amp;eplace...</source>
         <translation>V&amp;ervangen...</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="385"/>
+        <location filename="../inyokaedit.ui" line="358"/>
         <source>Find &amp;next</source>
         <translation>Volge&amp;nde zoeken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="398"/>
+        <location filename="../inyokaedit.ui" line="369"/>
         <source>F&amp;ind previous</source>
         <translation>Vor&amp;ige zoeken</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="401"/>
+        <location filename="../inyokaedit.ui" line="372"/>
         <source>Find previous (search backward)</source>
         <translation>Vorige zoeken (achteruit zoeken)</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="424"/>
+        <location filename="../inyokaedit.ui" line="391"/>
         <source>Download raw format</source>
         <translation>Raw-formaat downloaden</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="427"/>
+        <location filename="../inyokaedit.ui" line="394"/>
         <source>Downloads raw format of an existing Inyoka article</source>
         <translation>Download een Inyoka-artikel in raw-formaat</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="437"/>
+        <location filename="../inyokaedit.ui" line="402"/>
         <source>Delete temporarily &amp;images</source>
         <translation>Tijdelijke afbeeld&amp;ingen verwijderen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="447"/>
+        <location filename="../inyokaedit.ui" line="410"/>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="457"/>
+        <location filename="../inyokaedit.ui" line="418"/>
         <source>Forward</source>
         <translation>Vooruit</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="467"/>
-        <location filename="../inyokaedit.ui" line="470"/>
+        <location filename="../inyokaedit.ui" line="426"/>
+        <location filename="../inyokaedit.ui" line="429"/>
         <source>Reload</source>
         <translation>Herladen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="501"/>
+        <location filename="../inyokaedit.ui" line="456"/>
         <source>Preference&amp;s</source>
         <translation>In&amp;stellingen</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="411"/>
+        <location filename="../inyokaedit.ui" line="380"/>
         <source>Generate preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="414"/>
+        <location filename="../inyokaedit.ui" line="383"/>
         <source>Generate preview of current article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="480"/>
+        <location filename="../inyokaedit.ui" line="437"/>
         <source>&amp;Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="483"/>
-        <location filename="../inyokaedit.ui" line="486"/>
+        <location filename="../inyokaedit.ui" line="440"/>
+        <location filename="../inyokaedit.ui" line="443"/>
         <source>Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="491"/>
+        <location filename="../inyokaedit.ui" line="448"/>
         <source>&amp;Syntax overview</source>
         <translation>&amp;Syntax-overzicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="514"/>
+        <location filename="../inyokaedit.ui" line="467"/>
         <source>Upload article</source>
         <translation>Artikel uploaden</translation>
     </message>
@@ -572,94 +572,94 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
         <translation>Fout (&amp;bug) rapporteren</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="217"/>
+        <location filename="../inyokaedit.ui" line="215"/>
         <source>&amp;About</source>
         <translation>&amp;Over</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="149"/>
+        <location filename="../inyokaedit.cpp" line="158"/>
         <source>No Inyoka community files found/installed!
 Please check your installation and restart the application.</source>
         <translation>Er zijn geen Inyoka-gemeenschapsbestanden gevonden en/of geïnstalleerd!
 Controleer uw installatie en herstart de applicatie.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="809"/>
+        <location filename="../inyokaedit.cpp" line="805"/>
         <source>Could not create temporary HTML file!</source>
         <translation>Kan geen tijdelijk HTML-bestand creëren!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="878"/>
+        <location filename="../inyokaedit.cpp" line="874"/>
         <source>Opening parenthesis missing!</source>
         <translation>Haakje openen ontbreekt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="880"/>
+        <location filename="../inyokaedit.cpp" line="876"/>
         <source>Closing parenthesis missing!</source>
         <translation>Haakje sluiten ontbreekt!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="883"/>
+        <location filename="../inyokaedit.cpp" line="879"/>
         <source>Unknown template:</source>
         <translation>Onbekend sjabloon:</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="886"/>
+        <location filename="../inyokaedit.cpp" line="882"/>
         <source>Syntax error</source>
         <translation>Syntaxfout</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1075"/>
+        <location filename="../inyokaedit.cpp" line="1071"/>
         <source>Error while loading preview.</source>
         <translation>Fout tijdens laden van voorbeeld.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1213"/>
+        <location filename="../inyokaedit.cpp" line="1209"/>
         <source>Do you really want to delete all temporary article images?</source>
         <translation>Weet u zeker dat u alle tijdelijke artikelafbeeldingen wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1224"/>
-        <source>Could not delete file: </source>
-        <translation>Bestand kan niet worden verwijderd: </translation>
+        <location filename="../inyokaedit.cpp" line="1217"/>
+        <source>Could not delete all temporary files!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1230"/>
+        <location filename="../inyokaedit.cpp" line="1463"/>
+        <source>This application uses &lt;a href=&quot;https://invent.kde.org/frameworks/breeze-icons&quot;&gt;Breeze icons from KDE&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.cpp" line="1226"/>
         <source>Images successfully deleted.</source>
         <translation>De afbeeldingen zijn succesvol verwijderd.</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1411"/>
+        <location filename="../inyokaedit.cpp" line="1405"/>
         <source>Could not open syntax overview file!</source>
         <translation>Het syntax-overzichtsbestand kan niet worden geopend!</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1439"/>
+        <location filename="../inyokaedit.cpp" line="1435"/>
         <source>Syntax overview</source>
         <translation>Syntax-overzicht</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1452"/>
+        <location filename="../inyokaedit.cpp" line="1448"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1461"/>
+        <location filename="../inyokaedit.cpp" line="1457"/>
         <source>Editor for Inyoka-based portals</source>
         <translation>Bewerker voor Inyoka-gebaseerde portals</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1464"/>
+        <location filename="../inyokaedit.cpp" line="1460"/>
         <source>License</source>
         <translation>Licentie</translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1467"/>
-        <source>This application uses icons from Tango project of &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</source>
-        <translation>Deze applicatie gebruikt pictogrammen van het Tango-project van &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <location filename="../inyokaedit.cpp" line="1470"/>
+        <location filename="../inyokaedit.cpp" line="1466"/>
         <source>Special thanks to all contributors and testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation>Veel dank aan alle bijdragers en testers van &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</translation>
     </message>
@@ -675,26 +675,26 @@ Controleer uw installatie en herstart de applicatie.</translation>
 <context>
     <name>Session</name>
     <message>
-        <location filename="../session.cpp" line="139"/>
-        <location filename="../session.cpp" line="147"/>
-        <location filename="../session.cpp" line="161"/>
-        <location filename="../session.cpp" line="246"/>
-        <location filename="../session.cpp" line="264"/>
+        <location filename="../session.cpp" line="140"/>
+        <location filename="../session.cpp" line="148"/>
+        <location filename="../session.cpp" line="162"/>
+        <location filename="../session.cpp" line="247"/>
+        <location filename="../session.cpp" line="265"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="140"/>
+        <location filename="../session.cpp" line="141"/>
         <source>Login failed! No CSRFTOKEN received.</source>
         <translation>Inloggen mislukt! Geen CSRFTOKEN ontvangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="148"/>
+        <location filename="../session.cpp" line="149"/>
         <source>Login failed! No session cookie received.</source>
         <translation>Inloggen mislukt! Geen sessiecookie ontvangen.</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="162"/>
+        <location filename="../session.cpp" line="163"/>
         <source>Login failed! No cookies received.</source>
         <translation>Inloggen mislukt! Geen cookies ontvangen.</translation>
     </message>
@@ -719,12 +719,12 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <translation>Voer uw Inyoka-wachtwoord in:</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="247"/>
+        <location filename="../session.cpp" line="248"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation>Het inloggen op Inyoka is mislukt. Heeft u verkeerde inloggegevens gebruikt?</translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="264"/>
+        <location filename="../session.cpp" line="265"/>
         <source>Login at Inyoka failed.</source>
         <translation>Het inloggen op Inyoka is mislukt.</translation>
     </message>
@@ -918,7 +918,7 @@ Controleer uw installatie en herstart de applicatie.</translation>
         <location filename="../upload.cpp" line="180"/>
         <location filename="../upload.cpp" line="222"/>
         <location filename="../upload.cpp" line="238"/>
-        <location filename="../upload.cpp" line="310"/>
+        <location filename="../upload.cpp" line="311"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
@@ -950,17 +950,17 @@ Het is alleen mogelijk om te uploaden naar &quot;%1&quot;!</translation>
         <translation>Uploaden mislukt! Geen CSRFTOKEN ontvangen.</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="306"/>
+        <location filename="../upload.cpp" line="307"/>
         <source>Upload failed</source>
         <translation>Uploaden mislukt</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="307"/>
+        <location filename="../upload.cpp" line="308"/>
         <source>The page content was not changed!</source>
         <translation>De pagina-inhoud is niet gewijzigd!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="310"/>
+        <location filename="../upload.cpp" line="311"/>
         <source>Upload failed!</source>
         <translation>Uploaden mislukt!</translation>
     </message>
@@ -985,7 +985,7 @@ Het is alleen mogelijk om te uploaden naar &quot;%1&quot;!</translation>
         <translation>Het uploaden van een artikel zonder wijzigingsbericht is niet toegestaan!</translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="301"/>
+        <location filename="../upload.cpp" line="302"/>
         <source>Upload successful!</source>
         <translation>Uploaden voltooid!</translation>
     </message>

@@ -45,8 +45,8 @@
 const QString Highlighter::sSEPARATOR = QStringLiteral("|");
 
 void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                             const QDir &userDataDir,
-                             const QString &sSharePath) {
+                             const QDir &userDataDir, const QString &sSharePath,
+                             const bool &bIsDarkTheme) {
   Q_UNUSED(pEditor)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -62,10 +62,11 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_sExt = QStringLiteral(".ini");
 #endif
   m_sSharePath = sSharePath;
+  m_bIsDarkTheme = bIsDarkTheme;
 
   this->loadDefaultStyles(false);
 
-  if (isDarkScheme(pParent)) {
+  if (m_bIsDarkTheme) {
     m_sStyleFile = QStringLiteral("dark-style");
   } else {
     m_sStyleFile = QStringLiteral("standard-style");
@@ -93,31 +94,6 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->defineRules();
 
   this->buildUi(pParent);  // After loading template entries
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-auto Highlighter::isDarkScheme(QWidget *pParent) const -> bool {
-  const double nUserThreshold =
-      m_pSettings->value(QStringLiteral("DarkThreshold"), -1).toDouble();
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-  if (-1 == nUserThreshold &&
-      Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
-    return true;
-  }
-#endif
-
-  double nThreshold = 0.5;
-  if (-1 != nUserThreshold) {
-    nThreshold = nUserThreshold;
-  }
-  if (pParent->window()->palette().window().color().lightnessF() < nThreshold) {
-    return true;
-  }
-
-  return false;
 }
 
 // ----------------------------------------------------------------------------
@@ -177,11 +153,15 @@ void Highlighter::installTranslator(const QString &sLang) {
 auto Highlighter::getCaption() const -> QString {
   return tr("Syntax highlighter");
 }
-auto Highlighter::getIcons() const -> QPair<QIcon, QIcon> {
-  QPair<QIcon, QIcon> icons;
-  // icons.first = QIcon(QLatin1String(":/highlighter.png"));
-  // icons.second = QIcon(QLatin1String(":/highlighter_dark.png"));
-  return icons;
+auto Highlighter::getIcon() const -> QIcon {
+  /*
+  if (m_bIsDarkTheme) {
+    return QIcon(QLatin1String(":/highlighter_dark.png"));
+  } else {
+    return QIcon(QLatin1String(":/highlighter.png"));
+  }
+  */
+  return QIcon();
 }
 
 auto Highlighter::includeMenu() const -> bool { return false; }
@@ -1038,7 +1018,13 @@ void Highlighter::rehighlightAll() {
 void Highlighter::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  // aboutbox.setIconPixmap(QPixmap(":/highlighter.png"));
+  /*
+  if (m_bIsDarkTheme) {
+    aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/highlighter_dark.png")));
+  } else {
+    aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/highlighter.png")));
+  }
+  */
   aboutbox.setText(
       QString::fromLatin1("<p><b>%1</b><br />"
                           "%2</p>"

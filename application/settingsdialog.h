@@ -75,7 +75,7 @@ class SettingsDialog : public QDialog {
   QString m_sGuiLang;
   QString m_sCommunity;
 
-  QList<IEditorPlugin *> m_listPLugins;
+  QList<IEditorPlugin *> m_listPlugins;
   QList<QPushButton *> m_listPluginSettingsButtons;
   QList<QPushButton *> m_listPluginInfoButtons;
 };

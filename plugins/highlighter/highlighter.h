@@ -56,12 +56,13 @@ class Highlighter : public QObject, IEditorPlugin {
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir &userDataDir, const QString &sSharePath) override;
+                  const QDir &userDataDir, const QString &sSharePath,
+                  const bool &bIsDarkTheme) override;
   auto getPluginName() const -> QString override;
   auto getPluginVersion() const -> QString override;
   void installTranslator(const QString &sLang) override;
   auto getCaption() const -> QString override;
-  auto getIcons() const -> QPair<QIcon, QIcon> override;
+  auto getIcon() const -> QIcon override;
   auto includeMenu() const -> bool override;
   auto includeToolbar() const -> bool override;
   auto hasSettings() const -> bool override;
@@ -82,7 +83,6 @@ class Highlighter : public QObject, IEditorPlugin {
 
  private:
   void buildUi(QWidget *pParent);
-  auto isDarkScheme(QWidget *pParent) const -> bool;
   void loadHighlighting(const QString &sStyleFile);
   void readValue(const quint16 nRow, const QTextCharFormat &charFormat);
   void saveHighlighting();
@@ -102,6 +102,7 @@ class Highlighter : public QObject, IEditorPlugin {
   QSettings *m_pSettings;
   QList<QPair<TextEditor *, SyntaxHighlighter *>> m_ListEditorsAndHighighters;
   Templates *m_pTemplates;
+  bool m_bIsDarkTheme;
 
   QString m_sStyleFile;
   QString m_sExt;

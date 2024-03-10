@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normalon>:/list_alt.png</normalon>
+    <normalon>:/view-list-details.png</normalon>
    </iconset>
   </property>
   <property name="locale">

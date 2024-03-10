@@ -46,7 +46,7 @@ CONFIG       += plugin
 TARGET        = spellchecker-hunspell
 DESTDIR       = ../
 
-VERSION       = 1.3.1
+VERSION       = 1.4.0
 QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-present - Thorsten Roth"
 

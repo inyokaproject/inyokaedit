@@ -202,9 +202,9 @@ void SettingsDialog::accept() {
   QStringList oldDisabledPlugins;
   oldDisabledPlugins = m_pSettings->m_sListDisabledPlugins;
   m_pSettings->m_sListDisabledPlugins.clear();
-  for (int i = 0; i < m_listPLugins.size(); i++) {
+  for (int i = 0; i < m_listPlugins.size(); i++) {
     if (m_pUi->pluginsTable->item(i, 0)->checkState() != Qt::Checked) {
-      m_pSettings->m_sListDisabledPlugins << m_listPLugins[i]->getPluginName();
+      m_pSettings->m_sListDisabledPlugins << m_listPlugins[i]->getPluginName();
     }
   }
   oldDisabledPlugins.sort();  // Sort for comparison
@@ -319,12 +319,12 @@ void SettingsDialog::updateUiLang() { m_pUi->retranslateUi(this); }
 void SettingsDialog::getAvailablePlugins(
     const QList<IEditorPlugin *> &Plugins,
     const QList<QObject *> &PluginObjList) {
-  m_listPLugins = Plugins;
+  m_listPlugins = Plugins;
   const quint8 nNUMCOLS = 5;
   const quint8 nWIDTH = 40;
 
   m_pUi->pluginsTable->setColumnCount(nNUMCOLS);
-  m_pUi->pluginsTable->setRowCount(m_listPLugins.size());
+  m_pUi->pluginsTable->setRowCount(m_listPlugins.size());
 
   m_pUi->pluginsTable->setColumnWidth(0, nWIDTH);
   m_pUi->pluginsTable->setColumnWidth(1, nWIDTH);
@@ -333,7 +333,7 @@ void SettingsDialog::getAvailablePlugins(
   m_pUi->pluginsTable->setColumnWidth(3, nWIDTH);
   m_pUi->pluginsTable->setColumnWidth(4, nWIDTH);
 
-  for (int nRow = 0; nRow < m_listPLugins.size(); nRow++) {
+  for (int nRow = 0; nRow < m_listPlugins.size(); nRow++) {
     for (int nCol = 0; nCol < nNUMCOLS; nCol++) {
       m_pUi->pluginsTable->setItem(nRow, nCol, new QTableWidgetItem());
     }
@@ -342,7 +342,7 @@ void SettingsDialog::getAvailablePlugins(
     m_pUi->pluginsTable->item(nRow, 0)->setFlags(Qt::ItemIsUserCheckable |
                                                  Qt::ItemIsEnabled);
     if (m_pSettings->m_sListDisabledPlugins.contains(
-            m_listPLugins.at(nRow)->getPluginName())) {
+            m_listPlugins.at(nRow)->getPluginName())) {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Unchecked);
     } else {
       m_pUi->pluginsTable->item(nRow, 0)->setCheckState(Qt::Checked);
@@ -350,23 +350,16 @@ void SettingsDialog::getAvailablePlugins(
 
     // Icon
     m_pUi->pluginsTable->setIconSize(QSize(22, 22));
-    QPair<QIcon, QIcon> icons = m_listPLugins.at(nRow)->getIcons();
-    QIcon ico = icons.first;
-    if (m_pSettings->isDarkScheme()) {
-      ico = icons.second;
-    }
-    m_pUi->pluginsTable->item(nRow, 1)->setIcon(ico);
+    m_pUi->pluginsTable->item(nRow, 1)->setIcon(
+        m_listPlugins.at(nRow)->getIcon());
     // Caption
     m_pUi->pluginsTable->item(nRow, 2)->setText(
-        m_listPLugins.at(nRow)->getCaption());
+        m_listPlugins.at(nRow)->getCaption());
 
     // Settings
-    if (m_listPLugins.at(nRow)->hasSettings()) {
+    if (m_listPlugins.at(nRow)->hasSettings()) {
       m_listPluginInfoButtons << new QPushButton(
-          QIcon::fromTheme(
-              QStringLiteral("preferences-system"),
-              QIcon(QLatin1String(":/menu/preferences-system.png"))),
-          QLatin1String(""));
+          QIcon::fromTheme(QStringLiteral("configure")), QLatin1String(""));
       connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
               PluginObjList.at(nRow), [=]() {
                 qobject_cast<IEditorPlugin *>(PluginObjList.at(nRow))
@@ -377,16 +370,14 @@ void SettingsDialog::getAvailablePlugins(
                                          m_listPluginInfoButtons.last());
 
       if (m_pSettings->m_sListDisabledPlugins.contains(
-              m_listPLugins[nRow]->getPluginName())) {
+              m_listPlugins[nRow]->getPluginName())) {
         m_listPluginInfoButtons.last()->setEnabled(false);
       }
     }
 
     // Info
     m_listPluginInfoButtons << new QPushButton(
-        QIcon::fromTheme(QStringLiteral("help-about"),
-                         QIcon(QLatin1String(":/menu/help-browser.png"))),
-        QLatin1String(""));
+        QIcon::fromTheme(QStringLiteral("help-about")), QLatin1String(""));
     connect(m_listPluginInfoButtons.last(), &QPushButton::pressed,
             PluginObjList[nRow], [=]() {
               qobject_cast<IEditorPlugin *>(PluginObjList[nRow])->showAbout();

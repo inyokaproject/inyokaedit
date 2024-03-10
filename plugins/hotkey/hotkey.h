@@ -58,12 +58,13 @@ class Hotkey : public QObject, IEditorPlugin {
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir &userDataDir, const QString &sSharePath) override;
+                  const QDir &userDataDir, const QString &sSharePath,
+                  const bool &bIsDarkTheme) override;
   auto getPluginName() const -> QString override;
   auto getPluginVersion() const -> QString override;
   void installTranslator(const QString &sLang) override;
   auto getCaption() const -> QString override;
-  auto getIcons() const -> QPair<QIcon, QIcon> override;
+  auto getIcon() const -> QIcon override;
   auto includeMenu() const -> bool override;
   auto includeToolbar() const -> bool override;
   bool hasSettings() const override;
@@ -98,6 +99,7 @@ class Hotkey : public QObject, IEditorPlugin {
   TextEditor *m_pEditor;
   QTranslator m_translator;
   QString m_sSharePath;
+  bool m_bIsDarkTheme;
   QList<QKeySequenceEdit *> m_listSequenceEdit;
   QStringList m_sListEntries;
   QList<QAction *> m_listActions;

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normalon>:/spellchecker.png</normalon>
+    <normalon>:/tools-check-spelling.png</normalon>
    </iconset>
   </property>
   <property name="locale">

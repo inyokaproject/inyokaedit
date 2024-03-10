@@ -36,7 +36,8 @@
 #include "ui_hotkey.h"
 
 void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
-                        const QDir &userDataDir, const QString &sSharePath) {
+                        const QDir &userDataDir, const QString &sSharePath,
+                        const bool &bIsDarkTheme) {
   Q_UNUSED(userDataDir)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -57,6 +58,7 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;
+  m_bIsDarkTheme = bIsDarkTheme;
   m_listActions.clear();
 
   this->loadHotkeyEntries();
@@ -109,11 +111,12 @@ void Hotkey::installTranslator(const QString &sLang) {
 // ----------------------------------------------------------------------------
 
 auto Hotkey::getCaption() const -> QString { return tr("Hotkey selector"); }
-auto Hotkey::getIcons() const -> QPair<QIcon, QIcon> {
-  QPair<QIcon, QIcon> icons;
-  icons.first = QIcon(QLatin1String(":/hotkey.png"));
-  icons.second = QIcon(QLatin1String(":/hotkey_dark.png"));
-  return icons;
+auto Hotkey::getIcon() const -> QIcon {
+  if (m_bIsDarkTheme) {
+    return QIcon(QLatin1String(":/configure-shortcuts_dark.png"));
+  } else {
+    return QIcon(QLatin1String(":/configure-shortcuts.png"));
+  }
 }
 
 auto Hotkey::includeMenu() const -> bool { return true; }
@@ -148,8 +151,11 @@ void Hotkey::buildUi(QWidget *pParent) {
     this->createRow(m_listSequenceEdit.at(nRow), m_sListEntries.at(nRow));
   }
 
-  m_pUi->addButton->setIcon(QIcon::fromTheme(
-      QStringLiteral("list-add"), QIcon(QLatin1String(":/add.png"))));
+  QIcon addIcon(QIcon(QLatin1String(":/list-add.png")));
+  if (m_bIsDarkTheme) {
+    addIcon = QIcon(QLatin1String(":/list-add_dark.png"));
+  }
+  m_pUi->addButton->setIcon(addIcon);
   connect(m_pUi->addButton, &QPushButton::pressed, this, &Hotkey::addRow);
 }
 
@@ -230,6 +236,11 @@ void Hotkey::addRow() {
 // ----------------------------------------------------------------------------
 
 void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
+  QIcon rmIcon(QIcon(QLatin1String(":/list-remove.png")));
+  if (m_bIsDarkTheme) {
+    rmIcon = QIcon(QLatin1String(":/list-remove_dark.png"));
+  }
+
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -244,10 +255,7 @@ void Hotkey::createRow(QKeySequenceEdit *sequenceEdit, const QString &sText) {
   m_pUi->entriesTable->item(nRow, 1)->setText(sText);
 
   // Delete row button
-  m_listDelRowButtons << new QPushButton(
-      QIcon::fromTheme(QStringLiteral("list-remove"),
-                       QIcon(QLatin1String(":/remove.png"))),
-      QLatin1String(""));
+  m_listDelRowButtons << new QPushButton(rmIcon, QLatin1String(""));
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed, this,
@@ -360,8 +368,13 @@ void Hotkey::setEditorlist(const QList<TextEditor *> &listEditors) {
 void Hotkey::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  aboutbox.setIconPixmap(
-      QPixmap(QStringLiteral(":/preferences-desktop-keyboard-shortcuts.png")));
+  if (m_bIsDarkTheme) {
+    aboutbox.setIconPixmap(
+        QPixmap(QStringLiteral(":/configure-shortcuts_dark.png")));
+  } else {
+    aboutbox.setIconPixmap(
+        QPixmap(QStringLiteral(":/configure-shortcuts.png")));
+  }
   aboutbox.setText(
       QString::fromLatin1("<p><b>%1</b><br />"
                           "%2</p>"

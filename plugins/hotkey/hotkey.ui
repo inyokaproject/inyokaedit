@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normalon>:/hotkey.png</normalon>
+    <normalon>:/configure-shortcuts.png</normalon>
    </iconset>
   </property>
   <property name="locale">

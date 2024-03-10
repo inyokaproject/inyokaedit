@@ -17,7 +17,7 @@
 TEMPLATE = subdirs
 CONFIG  += ordered
 SUBDIRS  = spellchecker-hunspell \
-#         spellchecker-nuspell \
+         spellchecker-nuspell \
            uu_tabletemplate \
            uu_knowledgebox \
            highlighter \

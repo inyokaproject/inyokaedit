@@ -39,7 +39,8 @@
 
 void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                   const QDir &userDataDir,
-                                  const QString &sSharePath) {
+                                  const QString &sSharePath,
+                                  const bool &bIsDarkTheme) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined __linux__
@@ -57,6 +58,7 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_dirPreview = userDataDir;
   m_pTextDocument = new QTextDocument(this);
   m_sSharePath = sSharePath;
+  m_bIsDarkTheme = bIsDarkTheme;
   m_pTemplates = new Templates(
       m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
           .toString(),
@@ -76,6 +78,16 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
                             ~Qt::WindowContextHelpButtonHint);
   m_pDialog->setModal(true);
   m_pUi->tabWidget->setCurrentIndex(0);  // Load tab "generator" at first start
+  QIcon downIcon(QIcon(QLatin1String(":/go-down.png")));
+  if (m_bIsDarkTheme) {
+    downIcon = QIcon(QLatin1String(":/go-down_dark.png"));
+  }
+  m_pUi->BaseToNewButton->setIcon(downIcon);
+  QIcon upIcon(QIcon(QLatin1String(":/go-up.png")));
+  if (m_bIsDarkTheme) {
+    upIcon = QIcon(QLatin1String(":/go-up_dark.png"));
+  }
+  m_pUi->NewToBaseButton->setIcon(upIcon);
 
 #ifdef USEQTWEBKIT
   m_pPreviewWebview = new QWebView();
@@ -207,11 +219,12 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
 auto Uu_TableTemplate::getCaption() const -> QString {
   return tr("Ubuntuusers.de table generator");
 }
-auto Uu_TableTemplate::getIcons() const -> QPair<QIcon, QIcon> {
-  QPair<QIcon, QIcon> icons;
-  icons.first = QIcon(QLatin1String(":/tabletemplate.png"));
-  icons.second = QIcon(QLatin1String(":/tabletemplate_dark.png"));
-  return icons;
+auto Uu_TableTemplate::getIcon() const -> QIcon {
+  if (m_bIsDarkTheme) {
+    return QIcon(QLatin1String(":/folder-table_dark.png"));
+  } else {
+    return QIcon(QLatin1String(":/folder-table.png"));
+  }
 }
 
 auto Uu_TableTemplate::includeMenu() const -> bool { return true; }
@@ -460,7 +473,11 @@ void Uu_TableTemplate::setEditorlist(const QList<TextEditor *> &listEditors) {
 void Uu_TableTemplate::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/tabletemplate.png")));
+  if (m_bIsDarkTheme) {
+    aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/folder-table_dark.png")));
+  } else {
+    aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/folder-table.png")));
+  }
   aboutbox.setText(
       QString::fromLatin1("<p><b>%1</b><br />"
                           "%2</p>"

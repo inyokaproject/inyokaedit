@@ -55,12 +55,13 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
 
  public:
   void initPlugin(QWidget *pParent, TextEditor *pEditor,
-                  const QDir &userDataDir, const QString &sSharePath) override;
+                  const QDir &userDataDir, const QString &sSharePath,
+                  const bool &bIsDarkTheme) override;
   auto getPluginName() const -> QString override;
   auto getPluginVersion() const -> QString override;
   void installTranslator(const QString &sLang) override;
   auto getCaption() const -> QString override;
-  auto getIcons() const -> QPair<QIcon, QIcon> override;
+  auto getIcon() const -> QIcon override;
   auto includeMenu() const -> bool override;
   auto includeToolbar() const -> bool override;
   bool hasSettings() const override;
@@ -89,6 +90,7 @@ class Uu_KnowledgeBox : public QObject, IEditorPlugin {
   Ui::Uu_KnowledgeBoxClass *m_pUi;
   QTranslator m_translator;
   QString m_sSharePath;
+  bool m_bIsDarkTheme;
   QDialog *m_pDialog;
   QSettings *m_pSettings;
   TextEditor *m_pEditor;

@@ -37,7 +37,8 @@
 
 void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                  const QDir &userDataDir,
-                                 const QString &sSharePath) {
+                                 const QString &sSharePath,
+                                 const bool &bIsDarkTheme) {
   Q_UNUSED(userDataDir)
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
@@ -58,6 +59,7 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;
+  m_bIsDarkTheme = bIsDarkTheme;
 
   this->loadTemplateEntries();
   this->buildUi(m_pParent);  // After loading template entries
@@ -116,11 +118,12 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
 auto Uu_KnowledgeBox::getCaption() const -> QString {
   return tr("Ubuntuusers.de knowledge box");
 }
-auto Uu_KnowledgeBox::getIcons() const -> QPair<QIcon, QIcon> {
-  QPair<QIcon, QIcon> icons;
-  icons.first = QIcon(QLatin1String(":/list_alt.png"));
-  icons.second = QIcon(QLatin1String(":/list_alt_dark.png"));
-  return icons;
+auto Uu_KnowledgeBox::getIcon() const -> QIcon {
+  if (m_bIsDarkTheme) {
+    return QIcon(QLatin1String(":/view-list-details_dark.png"));
+  } else {
+    return QIcon(QLatin1String(":/view-list-details.png"));
+  }
 }
 
 auto Uu_KnowledgeBox::includeMenu() const -> bool { return true; }
@@ -153,8 +156,11 @@ void Uu_KnowledgeBox::buildUi(QWidget *pParent) {
     this->createRow(m_bListEntryActive[nRow], m_sListEntries[nRow]);
   }
 
-  m_pUi->addButton->setIcon(QIcon::fromTheme(
-      QStringLiteral("list-add"), QIcon(QLatin1String(":/add.png"))));
+  QIcon addIcon(QIcon(QLatin1String(":/list-add.png")));
+  if (m_bIsDarkTheme) {
+    addIcon = QIcon(QLatin1String(":/list-add_dark.png"));
+  }
+  m_pUi->addButton->setIcon(addIcon);
   connect(m_pUi->addButton, &QPushButton::pressed, this,
           &Uu_KnowledgeBox::addRow);
 }
@@ -308,6 +314,11 @@ void Uu_KnowledgeBox::addRow() {
 // ----------------------------------------------------------------------------
 
 void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
+  QIcon rmIcon(QIcon(QLatin1String(":/list-remove.png")));
+  if (m_bIsDarkTheme) {
+    rmIcon = QIcon(QLatin1String(":/list-remove_dark.png"));
+  }
+
   int nRow = m_pUi->entriesTable->rowCount();  // Before setRowCount!
   m_pUi->entriesTable->setRowCount(m_pUi->entriesTable->rowCount() + 1);
 
@@ -328,10 +339,7 @@ void Uu_KnowledgeBox::createRow(const bool bActive, const QString &sText) {
   m_pUi->entriesTable->item(nRow, 1)->setText(sText);
 
   // Delete row button
-  m_listDelRowButtons << new QPushButton(
-      QIcon::fromTheme(QStringLiteral("list-remove"),
-                       QIcon(QLatin1String(":/remove.png"))),
-      QLatin1String(""));
+  m_listDelRowButtons << new QPushButton(rmIcon, QLatin1String(""));
   m_pUi->entriesTable->setCellWidget(nRow, 2, m_listDelRowButtons.last());
 
   connect(m_listDelRowButtons.last(), &QPushButton::pressed, this,
@@ -399,7 +407,12 @@ void Uu_KnowledgeBox::setEditorlist(const QList<TextEditor *> &listEditors) {
 void Uu_KnowledgeBox::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  // aboutbox.setIconPixmap(QPixmap(":/knowledgebox.png"));
+  if (m_bIsDarkTheme) {
+    aboutbox.setIconPixmap(
+        QPixmap(QStringLiteral(":/view-list-details_dark.png")));
+  } else {
+    aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/view-list-details.png")));
+  }
   aboutbox.setText(
       QString::fromLatin1("<p><b>%1</b><br />"
                           "%2</p>"

@@ -19,7 +19,7 @@ CONFIG       += plugin
 TARGET        = uu_tabletemplate
 DESTDIR       = ../
 
-VERSION       = 1.4.2
+VERSION       = 1.5.0
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2012-present - Christian Schärf, Thorsten Roth"
 

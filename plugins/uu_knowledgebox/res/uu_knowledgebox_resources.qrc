@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>uu_knowledgebox.default</file>
-        <file>add.png</file>
-        <file>list_alt.png</file>
-        <file>remove.png</file>
-        <file>list_alt_dark.png</file>
+        <file>list-add_dark.png</file>
+        <file>list-add.png</file>
+        <file>list-remove_dark.png</file>
+        <file>list-remove.png</file>
+        <file>view-list-details.png</file>
+        <file>view-list-details_dark.png</file>
     </qresource>
 </RCC>

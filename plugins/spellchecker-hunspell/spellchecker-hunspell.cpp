@@ -74,7 +74,8 @@
 
 void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
                                        const QDir &userDataDir,
-                                       const QString &sSharePath) {
+                                       const QString &sSharePath,
+                                       const bool &bIsDarkTheme) {
   qDebug() << "initPlugin()" << PLUGIN_NAME << PLUGIN_VERSION;
 
 #if defined __linux__
@@ -92,6 +93,7 @@ void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pParent = pParent;
   m_UserDataDir = userDataDir;
   m_sSharePath = sSharePath;
+  m_bIsDarkTheme = bIsDarkTheme;
 
   m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
   m_sDictPath =
@@ -149,11 +151,12 @@ void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
 auto SpellChecker_Hunspell::getCaption() const -> QString {
   return tr("Spell checker") + QStringLiteral(" (Hunspell)");
 }
-auto SpellChecker_Hunspell::getIcons() const -> QPair<QIcon, QIcon> {
-  QPair<QIcon, QIcon> icons;
-  icons.first = QIcon(QLatin1String(":/spellchecker.png"));
-  icons.second = QIcon(QLatin1String(":/spellchecker_dark.png"));
-  return icons;
+auto SpellChecker_Hunspell::getIcon() const -> QIcon {
+  if (m_bIsDarkTheme) {
+    return QIcon(QLatin1String(":/tools-check-spelling_dark.png"));
+  } else {
+    return QIcon(QLatin1String(":/tools-check-spelling.png"));
+  }
 }
 
 auto SpellChecker_Hunspell::includeMenu() const -> bool { return true; }
@@ -565,7 +568,13 @@ void SpellChecker_Hunspell::setEditorlist(
 void SpellChecker_Hunspell::showAbout() {
   QMessageBox aboutbox(nullptr);
   aboutbox.setWindowTitle(tr("Info"));
-  aboutbox.setIconPixmap(QPixmap(QStringLiteral(":/spellchecker.png")));
+  if (m_bIsDarkTheme) {
+    aboutbox.setIconPixmap(
+        QPixmap(QStringLiteral(":/tools-check-spelling_dark.png")));
+  } else {
+    aboutbox.setIconPixmap(
+        QPixmap(QStringLiteral(":/tools-check-spelling.png")));
+  }
   aboutbox.setText(
       QString::fromLatin1("<p><b>%1</b><br />"
                           "%2</p>"

@@ -296,57 +296,57 @@ Do you want to save your changes or discard them?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="54"/>
+        <location filename="../inyokaedit.ui" line="53"/>
         <source>New from &amp;template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="70"/>
+        <location filename="../inyokaedit.ui" line="72"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="88"/>
+        <location filename="../inyokaedit.ui" line="90"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="99"/>
+        <location filename="../inyokaedit.ui" line="101"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="110"/>
+        <location filename="../inyokaedit.ui" line="112"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="124"/>
+        <location filename="../inyokaedit.ui" line="126"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="141"/>
+        <location filename="../inyokaedit.ui" line="143"/>
         <source>Preview / Download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="155"/>
+        <location filename="../inyokaedit.ui" line="157"/>
         <source>Inyoka editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="166"/>
+        <location filename="../inyokaedit.ui" line="168"/>
         <source>Samples and macros</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="177"/>
+        <location filename="../inyokaedit.ui" line="179"/>
         <source>Browser toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="191"/>
+        <location filename="../inyokaedit.ui" line="193"/>
         <source>Plugins toolBar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,305 +356,305 @@ Do you want to save your changes or discard them?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="217"/>
+        <location filename="../inyokaedit.ui" line="215"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="220"/>
+        <location filename="../inyokaedit.ui" line="218"/>
         <source>Shows the about box of this application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="230"/>
+        <location filename="../inyokaedit.ui" line="226"/>
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="233"/>
+        <location filename="../inyokaedit.ui" line="229"/>
         <source>Create a new file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="243"/>
+        <location filename="../inyokaedit.ui" line="237"/>
         <source>&amp;Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="246"/>
+        <location filename="../inyokaedit.ui" line="240"/>
         <source>Open a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="256"/>
+        <location filename="../inyokaedit.ui" line="248"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="259"/>
+        <location filename="../inyokaedit.ui" line="251"/>
         <source>Save current document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="269"/>
+        <location filename="../inyokaedit.ui" line="259"/>
         <source>Save &amp;as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="272"/>
+        <location filename="../inyokaedit.ui" line="262"/>
         <source>Save current document under a new name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="281"/>
+        <location filename="../inyokaedit.ui" line="270"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="284"/>
+        <location filename="../inyokaedit.ui" line="273"/>
         <source>Quit the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="294"/>
+        <location filename="../inyokaedit.ui" line="281"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="297"/>
+        <location filename="../inyokaedit.ui" line="284"/>
         <source>Undo changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="307"/>
+        <location filename="../inyokaedit.ui" line="292"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="310"/>
+        <location filename="../inyokaedit.ui" line="295"/>
         <source>Redo changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="320"/>
+        <location filename="../inyokaedit.ui" line="303"/>
         <source>&amp;Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="323"/>
+        <location filename="../inyokaedit.ui" line="306"/>
         <source>Cut highlighted text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="333"/>
+        <location filename="../inyokaedit.ui" line="314"/>
         <source>C&amp;opy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="336"/>
+        <location filename="../inyokaedit.ui" line="317"/>
         <source>Copy highlighted text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="346"/>
+        <location filename="../inyokaedit.ui" line="325"/>
         <source>&amp;Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="349"/>
+        <location filename="../inyokaedit.ui" line="328"/>
         <source>Paste text from clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="359"/>
+        <location filename="../inyokaedit.ui" line="336"/>
         <source>&amp;Find...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="362"/>
+        <location filename="../inyokaedit.ui" line="339"/>
         <source>Find text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="372"/>
+        <location filename="../inyokaedit.ui" line="347"/>
         <source>R&amp;eplace...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="375"/>
+        <location filename="../inyokaedit.ui" line="350"/>
         <source>Replace text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="385"/>
+        <location filename="../inyokaedit.ui" line="358"/>
         <source>Find &amp;next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="388"/>
+        <location filename="../inyokaedit.ui" line="361"/>
         <source>Find next (search forward)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="398"/>
+        <location filename="../inyokaedit.ui" line="369"/>
         <source>F&amp;ind previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="401"/>
+        <location filename="../inyokaedit.ui" line="372"/>
         <source>Find previous (search backward)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="411"/>
+        <location filename="../inyokaedit.ui" line="380"/>
         <source>Generate preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="414"/>
+        <location filename="../inyokaedit.ui" line="383"/>
         <source>Generate preview of current article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="424"/>
+        <location filename="../inyokaedit.ui" line="391"/>
         <source>Download raw format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="427"/>
+        <location filename="../inyokaedit.ui" line="394"/>
         <source>Downloads raw format of an existing Inyoka article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="437"/>
+        <location filename="../inyokaedit.ui" line="402"/>
         <source>Delete temporarily &amp;images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="447"/>
+        <location filename="../inyokaedit.ui" line="410"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="457"/>
+        <location filename="../inyokaedit.ui" line="418"/>
         <source>Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="467"/>
-        <location filename="../inyokaedit.ui" line="470"/>
+        <location filename="../inyokaedit.ui" line="426"/>
+        <location filename="../inyokaedit.ui" line="429"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="480"/>
+        <location filename="../inyokaedit.ui" line="437"/>
         <source>&amp;Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="483"/>
-        <location filename="../inyokaedit.ui" line="486"/>
+        <location filename="../inyokaedit.ui" line="440"/>
+        <location filename="../inyokaedit.ui" line="443"/>
         <source>Print preview to PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="491"/>
+        <location filename="../inyokaedit.ui" line="448"/>
         <source>&amp;Syntax overview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="501"/>
+        <location filename="../inyokaedit.ui" line="456"/>
         <source>Preference&amp;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.ui" line="514"/>
+        <location filename="../inyokaedit.ui" line="467"/>
         <source>Upload article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="149"/>
+        <location filename="../inyokaedit.cpp" line="158"/>
         <source>No Inyoka community files found/installed!
 Please check your installation and restart the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="809"/>
+        <location filename="../inyokaedit.cpp" line="805"/>
         <source>Could not create temporary HTML file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="878"/>
+        <location filename="../inyokaedit.cpp" line="874"/>
         <source>Opening parenthesis missing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="880"/>
+        <location filename="../inyokaedit.cpp" line="876"/>
         <source>Closing parenthesis missing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="883"/>
+        <location filename="../inyokaedit.cpp" line="879"/>
         <source>Unknown template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="886"/>
+        <location filename="../inyokaedit.cpp" line="882"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1075"/>
+        <location filename="../inyokaedit.cpp" line="1071"/>
         <source>Error while loading preview.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1213"/>
+        <location filename="../inyokaedit.cpp" line="1209"/>
         <source>Do you really want to delete all temporary article images?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1224"/>
-        <source>Could not delete file: </source>
+        <location filename="../inyokaedit.cpp" line="1217"/>
+        <source>Could not delete all temporary files!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1230"/>
+        <location filename="../inyokaedit.cpp" line="1463"/>
+        <source>This application uses &lt;a href=&quot;https://invent.kde.org/frameworks/breeze-icons&quot;&gt;Breeze icons from KDE&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inyokaedit.cpp" line="1226"/>
         <source>Images successfully deleted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1411"/>
+        <location filename="../inyokaedit.cpp" line="1405"/>
         <source>Could not open syntax overview file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1439"/>
+        <location filename="../inyokaedit.cpp" line="1435"/>
         <source>Syntax overview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1452"/>
+        <location filename="../inyokaedit.cpp" line="1448"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1461"/>
+        <location filename="../inyokaedit.cpp" line="1457"/>
         <source>Editor for Inyoka-based portals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1464"/>
+        <location filename="../inyokaedit.cpp" line="1460"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inyokaedit.cpp" line="1467"/>
-        <source>This application uses icons from Tango project of &lt;a href=&quot;https://www.freedesktop.org&quot;&gt;freedesktop.org&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inyokaedit.cpp" line="1470"/>
+        <location filename="../inyokaedit.cpp" line="1466"/>
         <source>Special thanks to all contributors and testers from &lt;a href=&quot;https://ubuntuusers.de&quot;&gt; ubuntuusers.de&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -670,26 +670,26 @@ Please check your installation and restart the application.</source>
 <context>
     <name>Session</name>
     <message>
-        <location filename="../session.cpp" line="139"/>
-        <location filename="../session.cpp" line="147"/>
-        <location filename="../session.cpp" line="161"/>
-        <location filename="../session.cpp" line="246"/>
-        <location filename="../session.cpp" line="264"/>
+        <location filename="../session.cpp" line="140"/>
+        <location filename="../session.cpp" line="148"/>
+        <location filename="../session.cpp" line="162"/>
+        <location filename="../session.cpp" line="247"/>
+        <location filename="../session.cpp" line="265"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="140"/>
+        <location filename="../session.cpp" line="141"/>
         <source>Login failed! No CSRFTOKEN received.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="148"/>
+        <location filename="../session.cpp" line="149"/>
         <source>Login failed! No session cookie received.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="162"/>
+        <location filename="../session.cpp" line="163"/>
         <source>Login failed! No cookies received.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -714,12 +714,12 @@ Please check your installation and restart the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="247"/>
+        <location filename="../session.cpp" line="248"/>
         <source>Login at Inyoka failed. Wrong credentials?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../session.cpp" line="264"/>
+        <location filename="../session.cpp" line="265"/>
         <source>Login at Inyoka failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,7 +913,7 @@ Please check your installation and restart the application.</source>
         <location filename="../upload.cpp" line="180"/>
         <location filename="../upload.cpp" line="222"/>
         <location filename="../upload.cpp" line="238"/>
-        <location filename="../upload.cpp" line="310"/>
+        <location filename="../upload.cpp" line="311"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -964,22 +964,22 @@ It is only possible to upload into the &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="301"/>
+        <location filename="../upload.cpp" line="302"/>
         <source>Upload successful!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="306"/>
+        <location filename="../upload.cpp" line="307"/>
         <source>Upload failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="307"/>
+        <location filename="../upload.cpp" line="308"/>
         <source>The page content was not changed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../upload.cpp" line="310"/>
+        <location filename="../upload.cpp" line="311"/>
         <source>Upload failed!</source>
         <translation type="unfinished"></translation>
     </message>
