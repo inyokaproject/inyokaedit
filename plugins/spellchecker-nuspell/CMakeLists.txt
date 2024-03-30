@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(spellchecker-nuspell
-    VERSION 1.0.0
+    VERSION 1.1.0
     DESCRIPTION "Nuspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
@@ -42,7 +42,7 @@ target_compile_definitions(spellchecker-nuspell
 )
 target_compile_options(spellchecker-nuspell
     PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
         -fno-sized-deallocation
 )
 target_link_libraries(spellchecker-nuspell

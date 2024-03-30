@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(hotkey
-    VERSION 1.2.5
+    VERSION 1.3.0
     DESCRIPTION "Hotkey plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
@@ -31,7 +31,7 @@ find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
 
 add_library(hotkey SHARED)
 
-target_compile_features(hotkey PUBLIC cxx_std_11)
+target_compile_features(hotkey PUBLIC cxx_std_17)
 target_compile_definitions(hotkey
     PRIVATE
         PLUGIN_NAME="${PROJECT_NAME}"
@@ -41,7 +41,7 @@ target_compile_definitions(hotkey
 )
 target_compile_options(hotkey
     PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
         -fno-sized-deallocation
 )
 target_link_libraries(hotkey

@@ -24,7 +24,7 @@ set(CMAKE_AUTORCC ON)
 
 add_executable(inyokaedit)
 
-target_compile_features(inyokaedit PUBLIC cxx_std_11)
+target_compile_features(inyokaedit PUBLIC cxx_std_17)
 target_compile_definitions(inyokaedit
     PRIVATE
         APP_NAME="${PROJECT_NAME}"
@@ -35,7 +35,7 @@ target_compile_definitions(inyokaedit
 )
 target_compile_options(inyokaedit
     PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
         -fno-sized-deallocation
 )
 target_link_libraries(inyokaedit

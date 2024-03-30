@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(spellchecker-hunspell
-    VERSION 1.3.0
+    VERSION 1.4.0
     DESCRIPTION "Hunspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
@@ -32,7 +32,7 @@ find_package(HUNSPELL REQUIRED)
 
 add_library(spellchecker-hunspell SHARED)
 
-target_compile_features(spellchecker-hunspell PUBLIC cxx_std_11)
+target_compile_features(spellchecker-hunspell PUBLIC cxx_std_17)
 target_compile_definitions(spellchecker-hunspell
     PRIVATE
         PLUGIN_NAME="${PROJECT_NAME}"
@@ -42,7 +42,7 @@ target_compile_definitions(spellchecker-hunspell
 )
 target_compile_options(spellchecker-hunspell
     PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
         -fno-sized-deallocation
 )
 target_link_libraries(spellchecker-hunspell

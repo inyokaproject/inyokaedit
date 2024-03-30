@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(uu_knowledgebox
-    VERSION 1.1.4
+    VERSION 1.3.0
     DESCRIPTION "ubuntuusers.de knowledge box selection plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
@@ -31,7 +31,7 @@ find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
 
 add_library(uu_knowledgebox SHARED)
 
-target_compile_features(uu_knowledgebox PUBLIC cxx_std_11)
+target_compile_features(uu_knowledgebox PUBLIC cxx_std_17)
 target_compile_definitions(uu_knowledgebox
     PRIVATE
         PLUGIN_NAME="${PROJECT_NAME}"
@@ -41,7 +41,7 @@ target_compile_definitions(uu_knowledgebox
 )
 target_compile_options(uu_knowledgebox
     PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060000>
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
         -fno-sized-deallocation
 )
 target_link_libraries(uu_knowledgebox
