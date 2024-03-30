@@ -91,7 +91,7 @@ void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
   m_pHunspell = nullptr;
   m_pEditor = pEditor;
   m_pParent = pParent;
-  m_UserDataDir = userDataDir;
+  m_UserDataDir.setPath(userDataDir.absolutePath());
   m_sSharePath = sSharePath;
   m_bIsDarkTheme = bIsDarkTheme;
 

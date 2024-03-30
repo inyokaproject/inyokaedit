@@ -25,7 +25,9 @@
   <url type="homepage">https://github.com/inyokaproject/inyokaedit</url>
   <url type="bugtracker">https://github.com/inyokaproject/inyokaedit/issues</url>
   
-  <developer_name>Thorsten Roth</developer_name>
+  <developer id="org.inyokaproject.inyokaedit">
+    <name>Thorsten Roth</name>
+  </developer>
   <update_contact>elthoro@gmx.de</update_contact>
   
   <provides>
@@ -35,13 +37,14 @@
   <content_rating type="oars-1.0" />
   
   <releases>
-    <release version="0.28.0" date="2024-03-10">
+    <release version="0.28.0" date="2024-03-30">
       <description>
         <p>Changes:</p>
         <ul>
           <li>Bundle Breeze light/dark icon themes</li>
           <li>Switch to c++17</li>
           <li>Fix Qt deprecations</li>
+          <li>Change AUR build to Qt6 and cmake</li>
         </ul>
       </description>
     </release>

@@ -53,7 +53,7 @@ class Settings : public QObject {
   void writeSettings(const QByteArray &WinGeometry, const QByteArray &WinState,
                      const QByteArray &SplitterState = nullptr);
 
-  void setLastOpenedDir(const QDir &LastDir);
+  void setLastOpenedDir(const QString &sLastDir);
 
   // General
   auto getGuiLanguage() const -> QString;

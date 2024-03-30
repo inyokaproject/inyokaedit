@@ -407,8 +407,8 @@ auto Settings::getPreviewHorizontal() const -> bool {
 
 auto Settings::getLastOpenedDir() const -> QDir { return m_LastOpenedDir; }
 
-void Settings::setLastOpenedDir(const QDir &LastDir) {
-  m_LastOpenedDir = LastDir;
+void Settings::setLastOpenedDir(const QString &sLastDir) {
+  m_LastOpenedDir.setPath(sLastDir);
 }
 
 auto Settings::getCheckLinks() const -> bool { return m_bCheckLinks; }

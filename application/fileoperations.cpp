@@ -170,7 +170,7 @@ void FileOperations::open() {
       m_pSettings->getLastOpenedDir().absolutePath(), m_sFileFilter);
   if (!sFileName.isEmpty()) {
     QFileInfo tmpFI(sFileName);
-    m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
+    m_pSettings->setLastOpenedDir(tmpFI.absolutePath());
     this->loadFile(sFileName, true);
   }
 }
@@ -217,7 +217,7 @@ auto FileOperations::saveAs() -> bool {
   }
 
   QFileInfo tmpFI(sFileName);
-  m_pSettings->setLastOpenedDir(tmpFI.absoluteDir());
+  m_pSettings->setLastOpenedDir(tmpFI.absolutePath());
 
   return this->saveFile(sFileName);
 }

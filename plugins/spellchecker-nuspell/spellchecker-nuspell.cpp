@@ -87,7 +87,7 @@ void SpellChecker_Nuspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   m_pEditor = pEditor;
   m_pParent = pParent;
-  m_UserDataDir = userDataDir;
+  m_UserDataDir.setPath(userDataDir.absolutePath());
   m_sSharePath = sSharePath;
   m_bIsDarkTheme = bIsDarkTheme;
 
@@ -173,7 +173,7 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
   searchdirs.push_back(app_path);
 
   QString sTmp;
-  for (auto s : dict_list) {
+  for (const auto &s : dict_list) {
     sTmp = QString::fromUtf16(s.u16string().c_str());
     // qDebug() << sTmp;
     sTmp.remove(QStringLiteral(".aff"));
@@ -190,7 +190,7 @@ auto SpellChecker_Nuspell::initDictionaries() -> bool {
   if (std::empty(dict_path)) {
     qWarning() << "Can not find the requested dictionary:" << m_sDictLang;
     qDebug() << "Found dictionaries:";
-    for (auto s : dict_list) {
+    for (const auto &s : dict_list) {
       qDebug() << QString::fromUtf16(s.u16string().c_str());
     }
     QMessageBox::warning(nullptr, qApp->applicationName(),

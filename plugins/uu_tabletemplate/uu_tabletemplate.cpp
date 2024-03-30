@@ -55,7 +55,7 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   m_pParent = pParent;
   m_pEditor = pEditor;
-  m_dirPreview = userDataDir;
+  m_dirPreview.setPath(userDataDir.absolutePath());
   m_pTextDocument = new QTextDocument(this);
   m_sSharePath = sSharePath;
   m_bIsDarkTheme = bIsDarkTheme;
