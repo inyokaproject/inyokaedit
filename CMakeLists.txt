@@ -24,6 +24,7 @@ project(InyokaEdit
 set(PROJECT_COPYRIGHT "(C) 2011-present The InyokaEdit developers")
 
 option(QT6 "Use Qt6" OFF)
+option(BUILD_APPLICATION "Build main application" ON)
 
 if (QT6)
     set(QT_MAIN_VERSION Qt6)
@@ -46,10 +47,11 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(LINUX ON)
 endif()
 
-
 add_subdirectory(plugins)
-add_subdirectory(application)
-
+if (BUILD_APPLICATION)
+    add_subdirectory(application)
+endif()
+    
 if(LINUX)
     add_subdirectory(man)
 
