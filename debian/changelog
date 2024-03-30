@@ -1,3 +1,12 @@
+inyokaedit (0.28.0-0) jammy; urgency=low
+
+  [ Thorsten Roth ]
+  * Bundle Breeze light/dark icon themes
+  * Require c++17
+  * Fix Qt deprecations
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sat, 30 Mar 2024 19:52:00 +0200
+
 inyokaedit (0.27.4-0) jammy; urgency=low
 
   [ Thorsten Roth ]
