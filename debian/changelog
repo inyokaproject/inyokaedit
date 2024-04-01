@@ -1,3 +1,10 @@
+inyokaedit (0.28.1-0) jammy; urgency=low
+
+  [ Thorsten Roth ]
+  * Fix hunspell/nuspell linking
+
+ -- Thorsten Roth <elthoro@gmx.de>  Mon, 04 Apr 2024 15:03:00 +0200
+
 inyokaedit (0.28.0-0) jammy; urgency=low
 
   [ Thorsten Roth ]
