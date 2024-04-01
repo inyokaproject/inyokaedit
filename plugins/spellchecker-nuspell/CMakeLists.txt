@@ -49,6 +49,7 @@ target_link_libraries(spellchecker-nuspell
     PRIVATE
         ${QT_MAIN_VERSION}::Core
         ${QT_MAIN_VERSION}::Widgets
+        ${NUSPELL_LIBRARIES}
 )
 
 set(HEADERS

@@ -49,6 +49,7 @@ target_link_libraries(spellchecker-hunspell
     PRIVATE
         ${QT_MAIN_VERSION}::Core
         ${QT_MAIN_VERSION}::Widgets
+        ${HUNSPELL_LIBRARIES}
 )
 
 set(HEADERS
