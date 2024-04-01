@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(spellchecker-nuspell
-    VERSION 1.1.0
+    VERSION 1.1.1
     DESCRIPTION "Nuspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

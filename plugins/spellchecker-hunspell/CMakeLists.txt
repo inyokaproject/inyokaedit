@@ -15,7 +15,7 @@
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
 project(spellchecker-hunspell
-    VERSION 1.4.0
+    VERSION 1.4.1
     DESCRIPTION "Hunspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

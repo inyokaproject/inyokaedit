@@ -46,7 +46,7 @@ CONFIG       += plugin
 TARGET        = spellchecker-nuspell
 DESTDIR       = ../
 
-VERSION       = 1.1.0
+VERSION       = 1.1.1
 QMAKE_TARGET_DESCRIPTION = "Nuspell based spell checker plugin for InyokaEdit"
 QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-present - Thorsten Roth"
 

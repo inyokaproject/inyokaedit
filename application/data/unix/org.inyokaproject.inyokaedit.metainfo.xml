@@ -37,6 +37,14 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.28.1" date="2024-04-01">
+      <description>
+        <p>Changes:</p>
+        <ul>
+          <li>Fix hunspell/nuspell linking (Flatpak and AUR)</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.28.0" date="2024-03-30">
       <description>
         <p>Changes:</p>
