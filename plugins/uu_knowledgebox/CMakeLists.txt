@@ -38,12 +38,9 @@ target_compile_definitions(uu_knowledgebox
         PLUGIN_VERSION="${PROJECT_VERSION}"
         PLUGIN_COPY="${PROJECT_COPYRIGHT}"
         QT_NO_FOREACH
+        $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060600>
 )
-target_compile_options(uu_knowledgebox
-    PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
-        -fno-sized-deallocation
-)
+
 target_link_libraries(uu_knowledgebox
     PRIVATE
         ${QT_MAIN_VERSION}::Core

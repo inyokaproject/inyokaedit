@@ -22,7 +22,16 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(inyokaedit)
+if(WINDOWS)
+    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/data/win.rc")
+    qt_add_executable(inyokaedit ${app_icon_resource_windows})
+    set_target_properties(inyokaedit PROPERTIES
+        OUTPUT_NAME InyokaEdit
+        WIN32_EXECUTABLE TRUE
+    )
+else()
+    qt_add_executable(inyokaedit)
+endif()
 
 target_compile_features(inyokaedit PUBLIC cxx_std_17)
 target_compile_definitions(inyokaedit
@@ -32,12 +41,9 @@ target_compile_definitions(inyokaedit
         APP_COPY="${PROJECT_COPYRIGHT}"
         APP_DESC="${PROJECT_DESCRIPTION}"
         QT_NO_FOREACH
+        $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060600>
 )
-target_compile_options(inyokaedit
-    PRIVATE
-        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_DEPRECATED_WARNINGS QT_DISABLE_DEPRECATED_BEFORE=0x060600>
-        -fno-sized-deallocation
-)
+
 target_link_libraries(inyokaedit
     PRIVATE
         ${QT_MAIN_VERSION}::Core
