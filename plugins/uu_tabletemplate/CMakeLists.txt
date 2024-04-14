@@ -38,7 +38,7 @@ target_compile_definitions(uu_tabletemplate
         PLUGIN_VERSION="${PROJECT_VERSION}"
         PLUGIN_COPY="${PROJECT_COPYRIGHT}"
         QT_NO_FOREACH
-        $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060600>
+        $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060700>
 )
 
 target_link_libraries(uu_tabletemplate
