@@ -48,7 +48,7 @@ DESTDIR       = ../
 
 VERSION       = 1.4.1
 QMAKE_TARGET_DESCRIPTION = "Hunspell based spell checker plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker Götz, 2014-present - Thorsten Roth"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2011 Volker G&ouml;tz, 2014-present - Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \

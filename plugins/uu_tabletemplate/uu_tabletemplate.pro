@@ -21,7 +21,7 @@ DESTDIR       = ../
 
 VERSION       = 1.5.0
 QMAKE_TARGET_DESCRIPTION = "ubuntuusers.de table template plugin for InyokaEdit"
-QMAKE_TARGET_COPYRIGHT   = "(C) 2012-present - Christian Schärf, Thorsten Roth"
+QMAKE_TARGET_COPYRIGHT   = "(C) 2012-present - Christian Sch&auml;rf, Thorsten Roth"
 
 DEFINES      += PLUGIN_NAME=\\\"$$TARGET\\\" \
                 PLUGIN_VERSION=\"\\\"$$VERSION\\\"\" \

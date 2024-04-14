@@ -19,7 +19,7 @@ project(uu_tabletemplate
     DESCRIPTION "ubuntuusers.de table template plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
-set(PROJECT_COPYRIGHT "(C) 2012-present - Christian Schärf, Thorsten Roth")
+set(PROJECT_COPYRIGHT "(C) 2012-present - Christian Sch&auml;rf, Thorsten Roth")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
