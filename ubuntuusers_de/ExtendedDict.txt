@@ -118,6 +118,9 @@ Minotaur
 noble
 Noble
 Numbat
+oracular
+Oracular
+Oriole
 Ubuntu
 Kubuntu
 Xubuntu
