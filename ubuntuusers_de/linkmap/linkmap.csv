@@ -1,6 +1,5 @@
 archwiki,https://wiki.archlinux.org/index.php/
 askubuntu,https://askubuntu.com/questions/
-behind,https://behind.ubuntuusers.de/
 bitbucket,https://bitbucket.org/
 blogspot,https://PAGE.blogspot.de/
 box,https://app.box.com/
@@ -9,7 +8,6 @@ calendar,https://ubuntuusers.de/calendar/
 canonical,https://www.canonical.com/
 canonicalblog,https://blog.canonical.com/
 canonicalsubdomain,https://PAGE.canonical.com/
-canonicalvoices,https://voices.canonical.com/
 category,https://forum.ubuntuusers.de/category/
 debian,https://wiki.debian.org/
 debianbug,https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=
@@ -77,7 +75,6 @@ ean,https://www.google.de/search?q=
 googlecode,https://code.google.com/archive/p/
 steam,https://store.steampowered.com/PAGE?l=german
 tag,https://wiki.ubuntuusers.de/wiki/tags/
-ticket,https://trac.ubuntuusers.de/ticket/
 topic,https://forum.ubuntuusers.de/topic/
 twitter,https://twitter.com/
 uappexplorer,https://uappexplorer.com/app/
@@ -111,3 +108,6 @@ youtube,https://www.youtube.com/watch?v=
 libera,https://web.libera.chat/?channels=#PAGE
 kdeapps,https://apps.kde.org/
 kdeproject,https://PAGE.kde.org/
+budgie,https://ubuntubudgie.org/
+cinnamon,https://ubuntucinnamon.org/
+unity,https://ubuntuunity.org/

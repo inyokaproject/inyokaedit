@@ -26,7 +26,6 @@
     <element name="Canonical" insert="[canonical:%%Seitenname%%:]" icon="canonical.png" />
     <element name="Canonical (Unterseite)" insert="[canonicalsubdomain:%%Seitenname%%:]" icon="canonicalsubdomain_.png" />
     <element name="Canonical Blog" insert="[canonicalblog:%%Seitenname%%:]" icon="canonicalblog.png" />
-    <element name="Canonical Voices" insert="[canonicalvoices:%%Seitenname%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Paketname%%:]" icon="packages.png" />
     <element name="Ubuntu Wiki" insert="[ubuntu:%%Seitenname%%:]" icon="ubuntu.png" />
     <element name="Ubuntu.com Unterseite" insert="[ubuntusub:%%Seitenname%%:]" icon="ubuntusub.png" />
@@ -52,12 +51,15 @@
     <element name="Kubuntu" insert="[kubuntu:%%Seitenname%%:]" icon="kubuntu.png" />
     <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Seitenname%%:]" icon="kubuntu.png" />
     <element name="Dt. Kubuntuwiki" insert="[kubuntu-de:%%Seitenname%%:]" icon="kubuntu-de.png" />
+    <element name="Xubuntu" insert="[xubuntu:%%Seitenname%%:]" icon="xubuntu.png" />
     <element name="Lubuntu" insert="[lubuntu:%%Seitenname%%:]" icon="lubuntu.png" />
     <element name="Mythbuntu" insert="[mythbuntu:%%Seitenname%%:]" icon="mythbuntu.png" />
     <element name="Ubuntu GNOME" insert="[ubuntugnome:%%Seitenname%%:]" icon="ubuntugnome.png" />
     <element name="Ubuntu MATE" insert="[ubuntumate:%%Seitenname%%:]" icon="ubuntumate.png" />
     <element name="Ubuntu Studio" insert="[ubuntustudio:%%Seitenname%%:]" icon="ubuntustudio.png" />
-    <element name="Xubuntu" insert="[xubuntu:%%Seitenname%%:]" icon="xubuntu.png" />
+    <element name="Ubuntu Budgie" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-budgie_gu6fss0.png" />
+    <element name="Ubuntu Cinnamon" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-cinnamon_7HKD7rG.png" />
+    <element name="Ubuntu Unity" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-unity_EzNXOXR.png" />
   </group>
   <group name="Andere Distributionen, OSS Projekte" icon="debian.png">
     <element name="ArchWiki" insert="[archwiki:%%Seitenname%%:]" icon="archwiki.png" />

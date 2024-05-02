@@ -26,7 +26,6 @@
     <element name="Canonical" insert="[canonical:%%Sitename%%:]" icon="canonical.png" />
     <element name="Canonical (subdomain)" insert="[canonicalsubdomain:%%Sitename%%:]" icon="canonicalsubdomain_.png" />
     <element name="Canonical Blog" insert="[canonicalblog:%%Sitename%%:]" icon="canonicalblog.png" />
-    <element name="Canonical Voices" insert="[canonicalvoices:%%Sitename%%:]" icon="canonicalvoices.png" />
     <element name="Ubuntu Packages" insert="[packages:%%Package name%%:]" icon="packages.png" />
     <element name="Ubuntu Wiki" insert="[ubuntu:%%Sitename%%:]" icon="ubuntu.png" />
     <element name="Ubuntu.com sub page" insert="[ubuntusub:%%Sitename%%:]" icon="ubuntusub.png" />
@@ -52,12 +51,15 @@
     <element name="Kubuntu" insert="[kubuntu:%%Sitename%%:]" icon="kubuntu.png" />
     <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Sitename%%:]" icon="kubuntu.png" />
     <element name="German Kubuntuwiki" insert="[kubuntu-de:%%Sitename%%:]" icon="kubuntu-de.png" />
+    <element name="Xubuntu" insert="[xubuntu:%%Sitename%%:]" icon="xubuntu.png" />
     <element name="Lubuntu" insert="[lubuntu:%%Sitename%%:]" icon="lubuntu.png" />
     <element name="Mythbuntu" insert="[mythbuntu:%%Sitename%%:]" icon="mythbuntu.png" />
     <element name="Ubuntu GNOME" insert="[ubuntugnome:%%Sitename%%:]" icon="ubuntugnome.png" />
     <element name="Ubuntu MATE" insert="[ubuntumate:%%Sitename%%:]" icon="ubuntumate.png" />
     <element name="Ubuntu Studio" insert="[ubuntustudio:%%Sitename%%:]" icon="ubuntustudio.png" />
-    <element name="Xubuntu" insert="[xubuntu:%%Sitename%%:]" icon="xubuntu.png" />
+    <element name="Ubuntu Budgie" insert="[xubuntu:%%Sitename%%:]" icon="ubuntu-budgie_gu6fss0.png" />
+    <element name="Ubuntu Cinnamon" insert="[xubuntu:%%Sitename%%:]" icon="ubuntu-cinnamon_7HKD7rG.png" />
+    <element name="Ubuntu Unity" insert="[xubuntu:%%Sitename%%:]" icon="ubuntu-unity_EzNXOXR.png" />
   </group>
   <group name="Other distributions, OSS projects" icon="debian.png">
     <element name="ArchWiki" insert="[archwiki:%%Sitename%%:]" icon="archwiki.png" />
