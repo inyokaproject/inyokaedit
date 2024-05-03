@@ -34,7 +34,6 @@
     <element name="Ubuntu Manpage (deutsch)" insert="[man_de:%%Seitenname%%:]" icon="man_de.png" />
     <element name="Ubuntu Mailinglist" insert="[ml:%%Seitenname%%:]" icon="ml.png" />
     <element name="Ubuntu Fridge" insert="[ubuntufridge:%%Seitenname%%:]" icon="ubuntufridge.png" />
-    <element name="Ubuntu Resources" insert="[ubunturesources:%%Seitenname%%:]" icon="ubunturesources.png" />
     <element name="Ubuntu Apps Directory" insert="[ubuntuapps:%%Programmname%%:]" icon="ubuntuapps.png" />
     <element name="uApp Explorer (unofficial)" insert="[uappexplorer:%%Programmname%%:]" icon="uappexplorer.png" />
     <element name="OpenStore (unofficial)" insert="[openstore:%%Programmname%%:]" icon="OpenStore.png" />
@@ -50,16 +49,15 @@
     <element name="Edubuntu" insert="[edubuntu:%%Seitenname%%:]" icon="edubuntu.png" />
     <element name="Kubuntu" insert="[kubuntu:%%Seitenname%%:]" icon="kubuntu.png" />
     <element name="Kubuntuwiki" insert="[kubuntu_doc:%%Seitenname%%:]" icon="kubuntu.png" />
-    <element name="Dt. Kubuntuwiki" insert="[kubuntu-de:%%Seitenname%%:]" icon="kubuntu-de.png" />
     <element name="Xubuntu" insert="[xubuntu:%%Seitenname%%:]" icon="xubuntu.png" />
     <element name="Lubuntu" insert="[lubuntu:%%Seitenname%%:]" icon="lubuntu.png" />
     <element name="Mythbuntu" insert="[mythbuntu:%%Seitenname%%:]" icon="mythbuntu.png" />
     <element name="Ubuntu GNOME" insert="[ubuntugnome:%%Seitenname%%:]" icon="ubuntugnome.png" />
     <element name="Ubuntu MATE" insert="[ubuntumate:%%Seitenname%%:]" icon="ubuntumate.png" />
     <element name="Ubuntu Studio" insert="[ubuntustudio:%%Seitenname%%:]" icon="ubuntustudio.png" />
-    <element name="Ubuntu Budgie" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-budgie_gu6fss0.png" />
-    <element name="Ubuntu Cinnamon" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-cinnamon_7HKD7rG.png" />
-    <element name="Ubuntu Unity" insert="[xubuntu:%%Seitenname%%:]" icon="ubuntu-unity_EzNXOXR.png" />
+    <element name="Ubuntu Budgie" insert="[ubuntubudgie:%%Seitenname%%:]" icon="ubuntu-budgie_gu6fss0.png" />
+    <element name="Ubuntu Cinnamon" insert="[ubuntucinnamon:%%Seitenname%%:]" icon="ubuntu-cinnamon_7HKD7rG.png" />
+    <element name="Ubuntu Unity" insert="[ubuntuunity:%%Seitenname%%:]" icon="ubuntu-unity_EzNXOXR.png" />
   </group>
   <group name="Andere Distributionen, OSS Projekte" icon="debian.png">
     <element name="ArchWiki" insert="[archwiki:%%Seitenname%%:]" icon="archwiki.png" />
@@ -106,7 +104,6 @@
     <element name="Humble Bundle Store" insert="[humble:%%Seitenname%%:]" icon="humble.png" />
     <element name="Indie DB Video Games" insert="[indiedb:%%Seitenname%%:]" icon="indiedb.png" />
     <element name="Linux Installers" insert="[liflg:%%Seitenname%%:]" icon="liflg.jpg" />
-    <element name="Linux game database" insert="[lgdb:%%Seitenname%%:]" icon="lgdb.png" />
     <element name="Linux Gaming" insert="[linuxgaming:%%Seitenname%%:]" icon="linuxgaming.png" />
     <element name="Moby Games" insert="[moby:%%Seitenname%%:]" icon="moby.png" />
     <element name="Mod DB" insert="[moddb:%%Seitenname%%:]" icon="moddb.png" />
@@ -115,8 +112,6 @@
   <group name="Sonstiges" icon="youtube_2.png">
     <element name="Blogspot" insert="[blogspot:%%Seitenname%%:]" icon="blogspot.png" />
     <element name="box.com" insert="[box:%%Seitenname%%:]" icon="" />
-    <element name="derStandard" insert="[derstandard:%%Seitenname%%:]" icon="derstandard.png" />
-    <element name="Diaspora" insert="[diaspora:%%Seitenname%%:]" icon="diaspora.png" />
     <element name="DuckDuckGo" insert="[duckduckgo:%%Suchbegriff%%:]" icon="duckduckgo.png" />
     <element name="Dropbox" insert="[dropbox:%%Seitenname%%:]" icon="dropbox.png" />
     <element name="EAN" insert="[ean:%%EAN%%:]" icon="ean.png" />
