@@ -30,6 +30,7 @@
     <element name="Ubuntu Wiki" insert="[ubuntu:%%Seitenname%%:]" icon="ubuntu.png" />
     <element name="Ubuntu.com Unterseite" insert="[ubuntusub:%%Seitenname%%:]" icon="ubuntusub.png" />
     <element name="Ubuntu Help" insert="[ubuntu_doc:%%Seitenname%%:]" icon="ubuntu_doc.png" />
+    <element name="Ubuntu Discourse" insert="[ubuntu_discourse:%%Seitenname%%:]" icon="ubuntu_discourse.png" />
     <element name="Ubuntu Manpage" insert="[man:%%Seitenname%%:]" icon="man.png" />
     <element name="Ubuntu Manpage (deutsch)" insert="[man_de:%%Seitenname%%:]" icon="man_de.png" />
     <element name="Ubuntu Mailinglist" insert="[ml:%%Seitenname%%:]" icon="ml.png" />
