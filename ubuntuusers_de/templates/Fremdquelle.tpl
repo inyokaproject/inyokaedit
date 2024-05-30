@@ -22,7 +22,7 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['noble', 'jammy', 'mantic, 'focal'] contains $arg @>
+<@ if ['noble', 'jammy', 'mantic', 'focal'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
