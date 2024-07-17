@@ -1446,12 +1446,12 @@ void InyokaEdit::showSyntaxOverview() {
 void InyokaEdit::showAbout() {
   QMessageBox::about(
       this, tr("About") + " " + qApp->applicationName(),
-      QString::fromLatin1("<big><b>%1 %2</b></big><br />"
-                          "%3<br />"
-                          "<small>%4</small><br /><br />"
-                          "%5<br />"
-                          "%6<br />"
-                          "<small>%7</small><br /><br />"
+      QString::fromLatin1("<big><b>%1 %2</b></big><br>"
+                          "%3<br>"
+                          "<small>%4</small><br><br>"
+                          "%5<br>"
+                          "%6<br>"
+                          "<small>%7</small><br><br>"
                           "%8")
           .arg(qApp->applicationName(), qApp->applicationVersion(),
                tr("Editor for Inyoka-based portals"), APP_COPY,

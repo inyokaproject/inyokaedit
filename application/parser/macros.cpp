@@ -231,8 +231,8 @@ void Macros::replaceDates(QTextDocument *pRawDoc, const QString &sTrans) {
 
 void Macros::replaceNewline(QTextDocument *pRawDoc, const QString &sTrans) {
   QString sDoc(pRawDoc->toPlainText());
-  sDoc.replace("[[" + sTrans + "]]", QLatin1String("<br />"));
-  sDoc.replace(QLatin1String("\\\\"), QLatin1String("<br />"));
+  sDoc.replace("[[" + sTrans + "]]", QLatin1String("<br>"));
+  sDoc.replace(QLatin1String("\\\\"), QLatin1String("<br>"));
   pRawDoc->setPlainText(sDoc);
 }
 
@@ -346,7 +346,7 @@ void Macros::replacePictures(QTextDocument *pRawDoc, const QString &sTrans,
     sTmpImage += "<img src=\"" + sExt + sImageUrl + "\" alt=\"" + sImageUrl +
                  "\" height=\"" + QString::number(tmpH) + "\" width=\"" +
                  QString::number(tmpW) + "\" ";
-    sTmpImage += "class=\"image-" + sImageAlign + "\" /></a>";
+    sTmpImage += "class=\"image-" + sImageAlign + "\"></a>";
 
     sDoc.replace(nIndex, match.capturedLength(), sTmpImage);
     // Go on with RegExp-Search

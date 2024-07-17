@@ -382,8 +382,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Parser::highlightCode(const QString &sLanguage, const QString &sCode)
-    -> QString {
+auto Parser::highlightCode(const QString &sLanguage,
+                           const QString &sCode) -> QString {
   static bool bChecked(false);
   static bool bPygmentize(false);
   static QFile sPygmentize(m_sPygmentize);
@@ -543,7 +543,7 @@ void Parser::replaceHorLines(QTextDocument *pRawDoc) {
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if ("----" == block.text()) {
-      sDoc += QLatin1String("\n<hr />\n");
+      sDoc += QLatin1String("\n<hr>\n");
     } else {
       sDoc += block.text() + "\n";
     }

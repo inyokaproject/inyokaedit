@@ -576,16 +576,16 @@ void SpellChecker_Hunspell::showAbout() {
         QPixmap(QStringLiteral(":/tools-check-spelling.png")));
   }
   aboutbox.setText(
-      QString::fromLatin1("<p><b>%1</b><br />"
+      QString::fromLatin1("<p><b>%1</b><br>"
                           "%2</p>"
-                          "<p>%3<br />"
+                          "<p>%3<br>"
                           "%4</p>"
                           "<p><i>%5</i></p>")
           .arg(this->getCaption(), tr("Version") + ": " + PLUGIN_VERSION,
                PLUGIN_COPY,
                tr("Licence") + ": " +
                    "<a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">"
-                   "GNU General Public License Version 3</a> and<br />"
+                   "GNU General Public License Version 3</a> and<br>"
                    "incorporates work covered by <a href=\""
                    "https://opensource.org/licenses/BSD-2-Clause\">"
                    "2-Clause BSD License</a>",

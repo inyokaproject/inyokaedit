@@ -179,6 +179,10 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
       sArgs.removeFirst();
       return this->parsePipInstall(sArgs);
     }
+    if (sArgs[0].toLower() == QString::fromUtf8("PipxInstallation").toLower()) {
+      sArgs.removeFirst();
+      return this->parsePipxInstall(sArgs);
+    }
     if (sArgs[0].toLower() ==
         QString::fromUtf8("Paketinstallation").toLower()) {
       sArgs.removeFirst();
@@ -548,16 +552,16 @@ auto ProvisionalTplParser::parseForeignWarning(const QStringList &sListArg)
     // Package
     if (sListArg[0].toLower() == QString::fromUtf8("Paket").toLower()) {
       sOutput = QString::fromUtf8(
-          "<p>[:Fremdquellen:Fremdpakete] können das System gefährden.</p>\n");
+          "[:Fremdquellen:Fremdpakete] können das System gefährden.\n");
     } else if (sListArg[0].toLower() == QString::fromUtf8("Quelle").toLower()) {
       // Source
       sOutput = QString::fromUtf8(
-          "<p>Zusätzliche [:Fremdquellen:] können das System gefährden.</p>\n");
+          "Zusätzliche [:Fremdquellen:] können das System gefährden.\n");
     } else if (sListArg[0].toLower() ==
                QString::fromUtf8("Software").toLower()) {
       // Software
-      sOutput = QString::fromUtf8(
-          "<p>[:Fremdsoftware:] kann das System gefährden.</p>\n");
+      sOutput =
+          QString::fromUtf8("[:Fremdsoftware:] kann das System gefährden.\n");
     }
     // Remark available
     if (sListArg.size() >= 2) {
@@ -771,7 +775,7 @@ auto ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs)
           "\" alt=\"" + sImageUrl + "\" class=\"image-default\" width=\"" +
           QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
           sColHeight +
-          "\"/></a></td>\n</tr>\n<tr>\n<td style=\"text-"
+          "\"></a></td>\n</tr>\n<tr>\n<td style=\"text-"
           "align: center; background-color: #F9EAAF; "
           "border: none\">" +
           sDescription + "</td>\n</tr>\n</tbody>\n</table>\n";
@@ -782,7 +786,7 @@ auto ProvisionalTplParser::parseImageCollect(const QStringList &sListArgs)
           sImageUrl + "\" alt=\"" + sImageUrl +
           "\" class=\"image-default\" width=\"" +
           QString::number(static_cast<int>(iImgWidth)) + "\" height=\"" +
-          sColHeight + "\"/></td>\n";
+          sColHeight + "\"></td>\n";
       bContinue = true;
     }
   }
@@ -907,7 +911,7 @@ auto ProvisionalTplParser::parseImageSub(const QStringList &sListArgs)
              "<img src=\"" + sImageUrl + "\" alt=\"" + sImageUrl +
              "\" class=\"image-default\" height=\"" +
              QString::number(static_cast<int>(iImgHeight)) + "\" width=\"" +
-             sImageWidth + "\"/>\n</a>\n</td>\n</tr>\n";
+             sImageWidth + "\">\n</a>\n</td>\n</tr>\n";
 
   // No style info -> default
   if (sImageStyle.isEmpty()) {
@@ -1360,7 +1364,7 @@ auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
         "class=\"notranslate\">wget http://download.opensuse.org"
         "/repositories/" +
         sListArgs[0] +
-        "/xUbuntu_VERSION/Release.key<br />sudo apt-key add - &lt; Release.key "
+        "/xUbuntu_VERSION/Release.key<br>sudo apt-key add - &lt; Release.key "
         "</pre></div></div><p></p></div></div>";
   }
 
@@ -1505,16 +1509,52 @@ auto ProvisionalTplParser::parsePackage(const QStringList &sListArgs)
 auto ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs)
     -> QString {
   return QString::fromUtf8(
-             "Der Python Paketmanager [:pip:] stellt häufig aktuellere "
+             "<p>Der Python-Paketmanager [:pip:] stellt häufig aktuellere "
              "Versionen von Programmen als in den Paketquellen bereit. "
-             "Folgendermaßen lässt sich das Programm darüber installieren:\n"
+             "Folgendermaßen lässt sich das Programm darüber "
+             "installieren:</p>\n"
              "<div class=\"bash\">\n"
              "<div class=\"contents\">\n"
-             "<pre>pip3 install ") +
+             "<pre class=\"notranslate\">pip3 install ") +
          sListArgs.join(' ') +
-         "     # Programm wird nur für den aktuellen Nutzer "
-         "installiert</pre>\n</div>\n</div>\n" +
+         QString::fromUtf8(
+             "     # Programm wird nur für den aktuellen Nutzer "
+             "installiert</pre>\n</div>\n</div>\n"
+             "<p>[:pip#Ab-Ubuntu-23-04:Ab Ubuntu 23.04] muss in eine "
+             "[:venv:virtuelle "
+             "Umgebung für Python] installiert werden:</p>\n"
+             "<div class=\"bash\">\n"
+             "<div class=\"contents\">\n"
+             "<pre class=\"notranslate\">"
+             "python3 -m venv venv-name && source venv-name/bin/activate # "
+             "venv-name durch den gewünschten Namen ersetzen\n"
+             "pip3 install ") +
+         sListArgs.join(' ') +
+         QString::fromUtf8(
+             "     # Programm wird nur für den aktuellen Nutzer "
+             "installiert</pre>\n</div>\n</div>\n") +
          this->parseForeignWarning(QStringList() << "Software");
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto ProvisionalTplParser::parsePipxInstall(const QStringList &sListArgs)
+    -> QString {
+  return QString::fromUtf8(
+             "<p>[:pipx:], als [wikipedia:Wrapper_(Software):Wrapper-Programm] "
+             "des Python-Paketmanagers [:pip:], stellt eine einfache "
+             "Möglichkeit dar, in Python geschriebene "
+             "Kommandozeilen-Applikationen in [:venv:isolierten Umgebungen] zu "
+             "installieren:</p>\n"
+             "<div class=\"bash\">\n"
+             "<div class=\"contents\">\n"
+             "<pre class=\"notranslate\">"
+             "pipx install ") +
+         sListArgs.join(' ') +
+         QString::fromUtf8(
+             "     # Programm wird nur für den aktuellen Nutzer "
+             "installiert</pre>\n</div>\n</div>\n");
 }
 
 // ----------------------------------------------------------------------------
@@ -1570,7 +1610,7 @@ auto ProvisionalTplParser::parsePkgInstallBut(const QStringList &sListArgs)
          "\" rel=\"nofollow\" class=\"external\"><img src=\"" + m_sSharePath +
          "/community/" + m_sCommunity +
          "/web/Wiki/Vorlagen/Installbutton/button.png\" "
-         "alt=\"Wiki-Installbutton\" class=\"image-default\" /></a> "
+         "alt=\"Wiki-Installbutton\" class=\"image-default\"></a> "
          "mit [:apturl:]</p>";
 }
 
@@ -2240,7 +2280,7 @@ auto ProvisionalTplParser::insertBox(const QString &sClass,
   sReturn += "<p>" + sContents + "</p>\n";
   // Remark available
   if (!sRemark.isEmpty() && sRemark != " ") {
-    sReturn += QString::fromUtf8("<hr />\n<p><strong>Anmerkung:</strong> ") +
+    sReturn += QString::fromUtf8("<hr>\n<p><strong>Anmerkung:</strong> ") +
                sRemark + "</p>\n";
   }
   sReturn +=

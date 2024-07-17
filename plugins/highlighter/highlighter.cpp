@@ -1026,9 +1026,9 @@ void Highlighter::showAbout() {
   }
   */
   aboutbox.setText(
-      QString::fromLatin1("<p><b>%1</b><br />"
+      QString::fromLatin1("<p><b>%1</b><br>"
                           "%2</p>"
-                          "<p>%3<br />"
+                          "<p>%3<br>"
                           "%4</p>"
                           "<p><i>%5</i></p>")
           .arg(this->getCaption(), tr("Version") + ": " + PLUGIN_VERSION,

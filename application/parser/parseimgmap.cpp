@@ -43,7 +43,7 @@ void ParseImgMap::startParsing(QTextDocument *pRawDoc,
     while (i.hasNext()) {
       i.next();
       sDoc.replace(i.key(), "<img src=\"" + sSharePath + "/community/" +
-                                sCommunity + "/" + i.value() + "\" />");
+                                sCommunity + "/" + i.value() + "\">");
     }
   } else {
     qCritical() << "Error while parsing image map - map is empty!";

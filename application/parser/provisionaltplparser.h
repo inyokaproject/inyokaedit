@@ -40,8 +40,8 @@ class ProvisionalTplParser {
                        const QHash<QString, QString> &TestedWithTouchMap,
                        const QString &sCommunity);
 
-  auto parseTpl(const QStringList &sListArgs, const QString &sCurrentFile)
-      -> QString;
+  auto parseTpl(const QStringList &sListArgs,
+                const QString &sCurrentFile) -> QString;
 
  private:
   static auto parseAdvanced() -> QString;
@@ -75,6 +75,7 @@ class ProvisionalTplParser {
   static auto parseOverview2(const QStringList &sListArgs) -> QString;
   static auto parsePackage(const QStringList &sListArgs) -> QString;
   auto parsePipInstall(const QStringList &sListArgs) -> QString;
+  auto parsePipxInstall(const QStringList &sListArgs) -> QString;
   static auto parsePkgInstall(const QStringList &sListArgs) -> QString;
   auto parsePkgInstallBut(const QStringList &sListArgs) -> QString;
   static auto parsePPA(const QStringList &sListArgs) -> QString;
