@@ -157,7 +157,6 @@ class Settings : public QObject {
   QByteArray m_aWindowState;
   QByteArray m_aWindowGeometry;
   QByteArray m_aSplitterState;
-  double m_nDarkThreshold;
 
   // Last opened
   static const quint16 m_cMAXFILES = 10;

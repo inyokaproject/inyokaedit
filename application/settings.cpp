@@ -248,8 +248,6 @@ void Settings::readSettings(const QString &sSharePath) {
       m_pSettings->value(QStringLiteral("WindowState")).toByteArray();
   m_aSplitterState =
       m_pSettings->value(QStringLiteral("SplitterState")).toByteArray();
-  m_nDarkThreshold =
-      m_pSettings->value(QStringLiteral("DarkThreshold"), -1).toDouble();
   m_pSettings->endGroup();
 }
 
@@ -362,6 +360,7 @@ void Settings::removeObsolete() {
   m_pSettings->remove(QStringLiteral("Inyoka/WikiUrl"));
   m_pSettings->remove(QStringLiteral("ConstructionArea"));
   m_pSettings->remove(QStringLiteral("Inyoka/ConstructionArea"));
+  m_pSettings->remove(QStringLiteral("Window/DarkThreshold"));
   m_pSettings->beginGroup(QStringLiteral("FindDialog"));
   m_pSettings->remove(QLatin1String(""));
   m_pSettings->endGroup();
@@ -508,18 +507,14 @@ auto Settings::getSplitterState() const -> QByteArray {
 
 auto Settings::isDarkScheme() const -> bool {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-  if (-1 == m_nDarkThreshold &&
-      Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
+  if (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
     return true;
   }
 #endif
 
-  double nThreshold = 0.5;
-  if (-1 != m_nDarkThreshold) {
-    nThreshold = m_nDarkThreshold;
-  }
+  // Fallback: If window is darker than text
   if (m_pParent->window()->palette().window().color().lightnessF() <
-      nThreshold) {
+      m_pParent->window()->palette().windowText().color().lightnessF()) {
     return true;
   }
 
