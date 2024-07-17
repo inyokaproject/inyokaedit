@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="de-de">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InyokaEdit - %filename%</title>
-    <link rel="stylesheet" type="text/css" href="%folder%/style/main.css" />
-    <link rel="stylesheet" type="text/css" href="%folder%/style/markup.css" />
-    <link rel="stylesheet" type="text/css" href="%folder%/style/wiki.css" />
-    <link rel="stylesheet" type="text/css" href="%folder%/style/highlight.css" />
-    <link rel="stylesheet" type="text/css" href="%folder%/../linkmap/linkmap.css" />
+    <link rel="stylesheet" type="text/css" href="%folder%/style/main.css">
+    <link rel="stylesheet" type="text/css" href="%folder%/style/markup.css">
+    <link rel="stylesheet" type="text/css" href="%folder%/style/wiki.css">
+    <link rel="stylesheet" type="text/css" href="%folder%/style/highlight.css">
+    <link rel="stylesheet" type="text/css" href="%folder%/../linkmap/linkmap.css">
     <link rel="shortcut icon" type="image/x-icon" href="%folder%/style/inyokaedit.ico">
     <style type="text/css">
       body{display:inline;}
     </style>
-    <meta name="theme-color" content="#2b2929" />%refresh%
+    <meta name="theme-color" content="#2b2929">%refresh%
   </head>
   <body>
   <main id="main" class="content">
@@ -23,7 +23,7 @@
     </div>
     <p class="meta">
       Diese Revision wurde am %date% um %time% Uhr erstellt.
-      <br />Die folgenden Schlagworte wurden dem Artikel zugewiesen: %tags%
+      <br>Die folgenden Schlagworte wurden dem Artikel zugewiesen: %tags%
     </p>
   </main>
   </body>

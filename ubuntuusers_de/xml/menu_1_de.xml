@@ -41,6 +41,8 @@
     <element name="Build-Abhängigkeiten" insert="Builddeps.tpl" icon="" />
     <element name="Open Build Service" insert="OBS.tpl" icon="" />
     <element name="Pakete-Makro (veraltet)" insert="Pakete.tpl" icon="" />
+    <element name="Python-Paket (pip)" insert="PipInstallation.tpl" icon="" />
+    <element name="Python-Paket (pipx)" insert="PipxInstallation.tpl" icon="" />
   </group>
   <group name="&amp;Sonstige Bausteine">
     <element name="Ausbaufähig-Markierung" insert="Ausbaufähig.tpl" icon="" />
