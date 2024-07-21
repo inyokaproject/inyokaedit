@@ -1531,8 +1531,8 @@ auto ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs)
              "pip3 install ") +
          sListArgs.join(' ') +
          QString::fromUtf8(
-             "     # Programm wird nur für den aktuellen Nutzer "
-             "installiert</pre>\n</div>\n</div>\n") +
+             "     # Programm ist nur bei aktiver virtueller Umgebung "
+             "nutzbar</pre>\n</div>\n</div>\n") +
          this->parseForeignWarning(QStringList() << "Software");
 }
 
