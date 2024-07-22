@@ -1544,9 +1544,8 @@ auto ProvisionalTplParser::parsePipxInstall(const QStringList &sListArgs)
   return QString::fromUtf8(
              "<p>[:pipx:], als [wikipedia:Wrapper_(Software):Wrapper-Programm] "
              "des Python-Paketmanagers [:pip:], stellt eine einfache "
-             "Möglichkeit dar, in Python geschriebene "
-             "Kommandozeilen-Applikationen in [:venv:isolierten Umgebungen] zu "
-             "installieren:</p>\n"
+             "Möglichkeit dar, in Python geschriebene Applikationen in "
+             "[:venv:isolierten Umgebungen] zu installieren:</p>\n"
              "<div class=\"bash\">\n"
              "<div class=\"contents\">\n"
              "<pre class=\"notranslate\">"
