@@ -64,6 +64,8 @@
     <element name="ArchWiki" insert="[archwiki:%%Sitename%%:]" icon="archwiki.png" />
     <element name="Debianwiki" insert="[debian:%%Sitename%%:]" icon="debian.png" />
     <element name="German Debianwiki" insert="[debian_de:%%Sitename%%:]" icon="debian_de.png" />
+    <element name="LinuxMintUsers.de Forum" insert="[lmu:%%Thread%%:]" icon="linuxmintusers_YJyraMv.png" />
+    <element name="LinuxMintUsers.de Wiki" insert="[lmu_wiki:%%Sitename%%:]" icon="linuxmintusers.png" />
     <element name="GNOME apps" insert="[gnomeapps:%%Sitename%%:]" icon="gnomeapps.png" />
     <element name="GNOME projects" insert="[gnomeprojects:%%Sitename%%:]" icon="gnomeprojects.png" />
     <element name="KDE apps" insert="[kdeapps:%%Sitename%%:]" icon="kdeapps.png" />
