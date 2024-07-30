@@ -4,4 +4,5 @@ Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, ni
 ----
 '''Anmerkung:''' <@ $arguments.0 @>
 <@ endif @>
+#tag: fehlerhaft
 |}}
