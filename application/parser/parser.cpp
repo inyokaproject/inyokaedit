@@ -582,7 +582,7 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
   sTags.clear();
   for (int i = 0; i < sListTags.size(); i++) {
     sListTags[i].remove(QStringLiteral(" "));
-    sTags += " <a href=\"" + m_sInyokaUrl + "/Wiki/Tags?tag=" + sListTags[i] +
+    sTags += " <a href=\"" + m_sInyokaUrl + "/wiki/tags/" + sListTags[i] +
              "\">" + sListTags[i] + "</a>";
     if (i < sListTags.size() - 1) {
       sTags += QLatin1String(",");

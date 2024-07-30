@@ -351,11 +351,13 @@ auto ProvisionalTplParser::parseFixme(const QStringList &sListArgs) -> QString {
   }
 
   return ProvisionalTplParser::insertBox(
-      "box fixme", QString::fromUtf8("Fehlerhafte Anleitung"),
-      QString::fromUtf8("Diese Anleitung ist fehlerhaft. Wenn du weißt, wie "
-                        "du sie ausbessern kannst, nimm dir bitte die Zeit "
-                        "und bessere sie aus."),
-      sRemark);
+             "box fixme", QString::fromUtf8("Fehlerhafte Anleitung"),
+             QString::fromUtf8(
+                 "Diese Anleitung ist fehlerhaft. Wenn du weißt, wie "
+                 "du sie ausbessern kannst, nimm dir bitte die Zeit "
+                 "und bessere sie aus."),
+             sRemark) +
+         "\n#tag: fehlerhaft";
 }
 
 // ----------------------------------------------------------------------------
@@ -2056,12 +2058,16 @@ auto ProvisionalTplParser::parseTested(const QStringList &sListArgs)
         }
       }
       if (sOutput.isEmpty()) {
-        sOutput = QString::fromUtf8(
-            "Dieser Artikel ist mit keiner aktuell unterstützten "
-            "Ubuntu-Version getestet! Bitte teste diesen Artikel für eine "
-            "Ubuntu-Version, welche aktuell unterstützt wird. Dazu sind die "
-            "Hinweise [:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:"
-            "zum Testen von Artikeln] zu beachten.");
+        sOutput =
+            QString::fromUtf8(
+                "Dieser Artikel ist mit keiner aktuell unterstützten "
+                "Ubuntu-Version getestet! Bitte teste diesen Artikel für eine "
+                "Ubuntu-Version, welche aktuell unterstützt wird. Dazu sind "
+                "die "
+                "Hinweise "
+                "[:Wiki/FAQ_-_häufig_gestellte_Fragen/#Wikiartikel-testen:"
+                "zum Testen von Artikeln] zu beachten.") +
+            "\n#tag: ungetestet\n";
       } else {
         sOutput += QString::fromUtf8(
             "\n<hr>\n~-(Du möchtest den Artikel für eine weitere "
@@ -2072,12 +2078,17 @@ auto ProvisionalTplParser::parseTested(const QStringList &sListArgs)
       sOutput += "\n";
     }
   } else {
-    sOutput = QString::fromUtf8(
-        "Dieser Artikel ist mit keiner aktuell unterstützten Ubuntu-Version "
-        "getestet! Bitte teste diesen Artikel für eine Ubuntu-Version, welche "
-        "aktuell unterstützt wird. Dazu sind die Hinweise [:Wiki/FAQ_-_häufig_"
-        "gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu "
-        "beachten.");
+    sOutput =
+        QString::fromUtf8(
+            "Dieser Artikel ist mit keiner aktuell unterstützten "
+            "Ubuntu-Version "
+            "getestet! Bitte teste diesen Artikel für eine Ubuntu-Version, "
+            "welche "
+            "aktuell unterstützt wird. Dazu sind die Hinweise "
+            "[:Wiki/FAQ_-_häufig_"
+            "gestellte_Fragen/#Wikiartikel-testen:zum Testen von Artikeln] zu "
+            "beachten.") +
+        "\n#tag: ungetestet\n";
   }
 
   return ProvisionalTplParser::insertBox(
