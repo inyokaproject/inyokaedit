@@ -1325,25 +1325,56 @@ auto ProvisionalTplParser::parseNotice(const QStringList &sListArgs)
 // ----------------------------------------------------------------------------
 
 auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
+  QRegularExpressionMatch match;
+  static QRegularExpression findVersion(
+      QStringLiteral("\\s\\d{1,2}\\.\\d{2}\\]"));
+
   QString sOutput("");
   sOutput = QString::fromUtf8(
-      "<p>Um das Paket aus einer vom "
-      "[:Open_Build_Service:Open Build Service] "
-      "generierten Paketquelle zu installieren, muss "
-      "man zuerst die [:Paketquellen_freischalten:"
-      "Paketquelle freischalten], indem man folgenden"
-      " Befehl mit [:sudo:root-Rechten] im "
-      "[:Terminal:] ausführt: </p>\n");
+      "<p>Um das Paket aus einer vom [:Open Build Service:] generierten "
+      "Paketquelle zu installieren, muss man zuerst die "
+      "[:Paketquellen_freischalten:Paketquelle freischalten], indem man "
+      "folgenden Befehl mit [:sudo:root-Rechten] im [:Terminal:] ausführt:"
+      "</p>\n");
 
-  if (!sListArgs.isEmpty()) {
+  QString sClass = "thirdpartyrepo-outer";
+  QStringList sListVersions;
+  for (const auto &sArg : sListArgs) {
+    if (m_TestedWithMap.contains(sArg.toLower())) {
+      if ((match = findVersion.match(m_TestedWithMap.value(sArg))).hasMatch()) {
+        sListVersions << match.captured().trimmed().remove(']');
+        sClass += " thirdpartyrepo-version-" + sListVersions.last();
+      }
+    }
+  }
+  sListVersions.sort();
+
+  if (!sListVersions.isEmpty()) {
+    sOutput += "<div class=\"" + sClass +
+               "\"><div class=\"contents\"><p>"
+               "</p><div class=\"bash\"><div class=\"contents\"><div "
+               "class=\"selector\"><strong>Version:</strong> ";
+    for (int i = 0; i < sListVersions.size(); i++) {
+      if (0 == i) {
+        sOutput +=
+            "<a class=\"active\" href=\"#\">" + sListVersions.at(i) + "</a>";
+      } else {
+        sOutput += "<a class=\"\" href=\"#\">" + sListVersions.at(i) + "</a>";
+      }
+      if (i < sListVersions.size() - 1) {
+        sOutput += "<span class=\"linklist\"> | </span>";
+      }
+    }
     sOutput +=
-        "<div class=\"thirdpartyrepo-outer "
-        "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
-        "</p><div class=\"bash\"><div class=\"contents\"><pre "
-        "class=\"notranslate\">sudo add-apt-repository 'deb http://"
-        "download.opensuse.org/repositories/" +
-        sListArgs[0] +
-        "/xUbuntu_VERSION/ /'</pre></div></div><p></p></div></div>";
+        "</div><pre class=\"notranslate\">sudo cat &lt;EOF &gt; "
+        "/etc/apt/sources.list.d/" +
+        sListArgs.constFirst() +
+        ".sources\nTypes: deb\nURIs: "
+        "http://download.opensuse.org/repositories/" +
+        sListArgs.constFirst() + "/xUbuntu_" + sListVersions.constFirst() +
+        "/\nSuites: /\nSigned-By: /etc/apt/keyrings/" + sListArgs.constFirst() +
+        ".gpg\nEOF</pre></div></div><p></p></"
+        "div></div>";
   }
 
   sOutput += ProvisionalTplParser::insertBox(
@@ -1352,21 +1383,35 @@ auto ProvisionalTplParser::parseOBS(const QStringList &sListArgs) -> QString {
                         " das System gefährden."));
 
   sOutput += QString::fromUtf8(
-      "<p>Anschließend sollte die [:Fremdquelle:] "
-      "authentifiziert werden. Dazu lädt man sich "
-      "mit dem folgenden Befehlen den benötigten "
-      "Schlüssel herunter und fügt diesen dem "
-      "Schlüsselbund hinzu:</p>");
+      "<p>Anschließend sollte die [:Fremdquelle:] authentifiziert werden. Dazu "
+      "lädt man sich mit den folgenden Befehlen den benötigten Schlüssel "
+      "herunter und legt diesen an dem dafür vorgesehenen Ort ab:</p>");
 
-  if (!sListArgs.isEmpty()) {
+  if (!sListVersions.isEmpty()) {
+    sOutput += "<div class=\"" + sClass +
+               "\"><div class=\"contents\"><p>"
+               "</p><div class=\"bash\"><div class=\"contents\"><div "
+               "class=\"selector\"><strong>Version:</strong> ";
+    for (int i = 0; i < sListVersions.size(); i++) {
+      if (0 == i) {
+        sOutput +=
+            "<a class=\"active\" href=\"#\">" + sListVersions.at(i) + "</a>";
+      } else {
+        sOutput += "<a class=\"\" href=\"#\">" + sListVersions.at(i) + "</a>";
+      }
+      if (i < sListVersions.size() - 1) {
+        sOutput += "<span class=\"linklist\"> | </span>";
+      }
+    }
     sOutput +=
-        "<div class=\"thirdpartyrepo-outer "
-        "thirdpartyrepo-version-14.04\"><div class=\"contents\"><p>"
-        "</p><div class=\"bash\"><div class=\"contents\"><pre "
-        "class=\"notranslate\">wget http://download.opensuse.org"
-        "/repositories/" +
-        sListArgs[0] +
-        "/xUbuntu_VERSION/Release.key<br>sudo apt-key add - &lt; Release.key "
+        "</div><pre "
+        "class=\"notranslate\">wget -q -O - "
+        "http://download.opensuse.org/repositories/" +
+        sListArgs.constFirst() + "/xUbuntu_" + sListVersions.constFirst() +
+        "/Release.key | gpg --dearmor | sudo tee "
+        "/etc/apt/keyrings/" +
+        sListArgs.constFirst() +
+        ".gpg > /dev/null "
         "</pre></div></div><p></p></div></div>";
   }
 

@@ -70,7 +70,7 @@ class ProvisionalTplParser {
   static auto parseKnowledge(const QStringList &sListArgs) -> QString;
   static auto parseLeft(const QStringList &sListArgs) -> QString;
   static auto parseNotice(const QStringList &sListArgs) -> QString;
-  static auto parseOBS(const QStringList &sListArgs) -> QString;
+  auto parseOBS(const QStringList &sListArgs) -> QString;
   static auto parseOverview(const QStringList &sListArgs) -> QString;
   static auto parseOverview2(const QStringList &sListArgs) -> QString;
   static auto parsePackage(const QStringList &sListArgs) -> QString;
