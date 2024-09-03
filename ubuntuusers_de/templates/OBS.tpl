@@ -1,30 +1,34 @@
-## Macro=[[Vorlage(OBS, %%OBS Repository%%, xUbuntu)]]
-Um das Paket aus einer vom [:Open Build Service:] generierten Paketquelle zu installieren, muss man zuerst die [:Paketquellen_freischalten:Paketquelle freischalten], indem man folgenden Befehl mit [:root:root-Rechten] im [:Terminal:] ausführt:
+## Macro=[[Vorlage(OBS, %%OBS Repository%%, Ubuntu-Version)]]
+Um das Paket aus einer vom [:Open Build Service:] generierten Paketquelle zu installieren, muss man zuerst die [:Paketquellen_freischalten:Paketquelle freischalten], indem man folgenden Befehl mit [:sudo:root-Rechten] im [:Terminal:] ausführt:
 
 {{|<class="thirdpartyrepo-outer
-<@ if $arguments as lowercase contain 'precise' @> thirdpartyrepo-version-12.04
+<@ if $arguments as lowercase contain 'focal' @> thirdpartyrepo-version-20.04
 <@ endif @>
-<@if $arguments as lowercase contain 'trusty' @> thirdpartyrepo-version-14.04
+<@if $arguments as lowercase contain 'jammy' @> thirdpartyrepo-version-22.04
 <@ endif @>
-<@if $arguments as lowercase contain 'wily' @> thirdpartyrepo-version-15.10
+<@if $arguments as lowercase contain 'noble' @> thirdpartyrepo-version-24.04
 <@ endif @>">
 {{{#!vorlage Befehl
-sudo add-apt-repository 'deb http://download.opensuse.org/repositories/<@ $arguments.0 @>/<@ $arguments.1 @>_VERSION/ /'
+sudo cat <EOF > /etc/apt/sources.list.d/<@ $arguments.0 @>.sources
+Types: deb 
+URIs: http://download.opensuse.org/repositories/<@ $arguments.0 @>/<@ $arguments.1 @>_VERSION/
+Suites: /
+Signed-By: /etc/apt/keyrings/<@ $arguments.0 @>.gpg
+EOF
 }}}
 |}}
 
 [[Vorlage(Fremd, Quelle)]] 
 
-Anschließend sollte die [:Fremdquelle:] authentifiziert werden. Dazu lädt man sich mit dem folgenden Befehlen den benötigten Schlüssel herunter und fügt diesen dem Schlüsselbund hinzu:
+Anschließend sollte die [:Fremdquelle:] authentifiziert werden. Dazu lädt man sich mit den folgenden Befehlen den benötigten Schlüssel herunter und legt diesen an dem dafür vorgesehenen Ort ab:
 {{|<class="thirdpartyrepo-outer
-<@ if $arguments as lowercase contain 'precise' @> thirdpartyrepo-version-12.04
+<@ if $arguments as lowercase contain 'focal' @> thirdpartyrepo-version-20.04
 <@ endif @>
-<@if $arguments as lowercase contain 'trusty' @> thirdpartyrepo-version-14.04
+<@if $arguments as lowercase contain 'jammy' @> thirdpartyrepo-version-22.04
 <@ endif @>
-<@if $arguments as lowercase contain 'wily' @> thirdpartyrepo-version-15.10
+<@if $arguments as lowercase contain 'noble' @> thirdpartyrepo-version-24.04
 <@ endif @>">
 {{{#!vorlage Befehl
-wget http://download.opensuse.org/repositories/<@ $arguments.0 @>/xUbuntu_VERSION/Release.key
-sudo apt-key add - < Release.key
+wget -q -O - http://download.opensuse.org/repositories/<@ $arguments.0 @>/xUbuntu_VERSION/Release.key | gpg --dearmor | sudo tee /etc/apt/keyrings/<@ $arguments.0 @>.gpg > /dev/null
 }}}
 |}}
