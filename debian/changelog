@@ -1,3 +1,10 @@
+inyokaedit (0.28.2-0) jammy; urgency=low
+
+  [ Thorsten Roth ]
+  * Minor template fixes.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 08 Sep 2024 17:50:00 +0200
+
 inyokaedit (0.28.1-0) jammy; urgency=low
 
   [ Thorsten Roth ]
