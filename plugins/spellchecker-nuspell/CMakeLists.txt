@@ -19,7 +19,7 @@ project(spellchecker-nuspell
     DESCRIPTION "Nuspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )
-set(PROJECT_COPYRIGHT "(C) 2011 Volker G&ouml;tz, 2014-present - Thorsten Roth")
+set(PROJECT_COPYRIGHT "(C) 2011 Volker Goetz, 2014-present - Thorsten Roth")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
