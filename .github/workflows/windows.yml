@@ -8,61 +8,62 @@ env:
   BUILD_TYPE: Release
   
 jobs:
-  name: Win 2019 Qt 6.5
-  runs-on: windows-2019
-  steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
-
-  - name: Install Qt
-    uses: jurplel/install-qt-action@v4
-    with:
-      version: '6.5.*'
-      modules: 'qtwebengine'
-
-  - name: Install NuSpell using vcpkg
-    run: |
-     C:\vcpkg\vcpkg.exe install
-     C:\vcpkg\vcpkg.exe list
-     tree /f /a vcpkg_installed\lib
-     tree /f /a vcpkg_installed\bin
-     tree /f /a vcpkg_installed\include
-
-  - name: Clone additional repositories
-    run: |
-     git clone -b packaging --single-branch https://github.com/inyokaproject/inyokaedit.git packaging
-     git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
-
-  - name: Compile
-    run: |
-     cmake -B build-cmake ${{github.workspace}}/release -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DSPELLCHECKER_HUNSPELL=OFF -DSPELLCHECKER_NUSPELL=ON
-     cmake --build ${{github.workspace}}/release --config ${{env.BUILD_TYPE}}
-
-  - name: Create Package
-    run: |
-     mkdir InyokaEdit\plugins
-     mkdir InyokaEdit\community
-     copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
-     windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
-     lconvert -o InyokaEdit\translations\qt_de.qm ${env:QT_ROOT_DIR}\translations\qtbase_de.qm ${env:QT_ROOT_DIR}\translations\qtwebengine_de.qm
-     copy COPYING InyokaEdit\
-     copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
-     copy packaging\Windows\ICU_License.txt InyokaEdit\
-     copy packaging\Windows\Nuspell_License.txt InyokaEdit\
-     xcopy /y /d vcpkg_installed\*.dll InyokaEdit\
-     xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
-     copy release\..\plugins\*.dll InyokaEdit\plugins\
-     chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
-     $buildnr = git rev-parse --short main
-     7z a "InyokaEdit-Windows_$($buildnr).zip" .\InyokaEdit\
-     copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
-     copy packaging\Windows\inyokaedit.ico inyokaedit.ico
-     makensis inyokaedit.nsi
-     ren InyokaEdit_Installer.exe "InyokaEdit-Windows_$($buildnr).exe"
-     
-  - uses: actions/upload-artifact@v4
-    with:
-      name: Upload files
-      path: InyokaEdit-Windows_*.*
-      retention-days: 3
-      overwrite: true
+  Windows_Qt6:
+    name: Win 2019 Qt 6.5
+    runs-on: windows-2019
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.5.*'
+        modules: 'qtwebengine'
+    
+    - name: Install NuSpell using vcpkg
+      run: |
+       C:\vcpkg\vcpkg.exe install
+       C:\vcpkg\vcpkg.exe list
+       tree /f /a vcpkg_installed\lib
+       tree /f /a vcpkg_installed\bin
+       tree /f /a vcpkg_installed\include
+    
+    - name: Clone additional repositories
+      run: |
+       git clone -b packaging --single-branch https://github.com/inyokaproject/inyokaedit.git packaging
+       git clone -b community --single-branch https://github.com/inyokaproject/inyokaedit.git community
+    
+    - name: Compile
+      run: |
+       cmake -B build-cmake ${{github.workspace}}/release -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DSPELLCHECKER_HUNSPELL=OFF -DSPELLCHECKER_NUSPELL=ON
+       cmake --build ${{github.workspace}}/release --config ${{env.BUILD_TYPE}}
+    
+    - name: Create Package
+      run: |
+       mkdir InyokaEdit\plugins
+       mkdir InyokaEdit\community
+       copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
+       windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
+       lconvert -o InyokaEdit\translations\qt_de.qm ${env:QT_ROOT_DIR}\translations\qtbase_de.qm ${env:QT_ROOT_DIR}\translations\qtwebengine_de.qm
+       copy COPYING InyokaEdit\
+       copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
+       copy packaging\Windows\ICU_License.txt InyokaEdit\
+       copy packaging\Windows\Nuspell_License.txt InyokaEdit\
+       xcopy /y /d vcpkg_installed\*.dll InyokaEdit\
+       xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
+       copy release\..\plugins\*.dll InyokaEdit\plugins\
+       chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
+       $buildnr = git rev-parse --short main
+       7z a "InyokaEdit-Windows_$($buildnr).zip" .\InyokaEdit\
+       copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
+       copy packaging\Windows\inyokaedit.ico inyokaedit.ico
+       makensis inyokaedit.nsi
+       ren InyokaEdit_Installer.exe "InyokaEdit-Windows_$($buildnr).exe"
+       
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Upload files
+        path: InyokaEdit-Windows_*.*
+        retention-days: 3
+        overwrite: true
