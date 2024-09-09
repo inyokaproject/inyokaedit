@@ -9,7 +9,7 @@ env:
   
 jobs:
   Windows_Qt6:
-    name: Win 2019 Qt 6.5
+    name: Win 2019 Qt 6.7
     runs-on: windows-2019
     steps:
     - name: Checkout repository
@@ -18,7 +18,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.5.*'
+        version: '6.7.*'
         modules: 'qtwebengine'
     
     - name: Install NuSpell using vcpkg
