@@ -22,6 +22,7 @@ jobs:
         modules: 'qtwebengine'
     
     - name: Install NuSpell using vcpkg
+      shell: cmd
       run: |
        echo set(VCPKG_BUILD_TYPE release) >> C:\vcpkg\triplets\x64-windows.cmake
        C:\vcpkg\vcpkg.exe install
@@ -41,6 +42,7 @@ jobs:
        cmake --build ${{github.workspace}}/release --config ${{env.BUILD_TYPE}}
     
     - name: Create Package
+      shell: cmd
       run: |
        mkdir InyokaEdit\plugins
        mkdir InyokaEdit\community
