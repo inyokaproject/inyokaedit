@@ -19,7 +19,7 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.*'
-        modules: 'qtwebengine'
+        modules: 'qtwebchannel qtwebengine qtwebsockets qtwebview'
     
     - name: Install NuSpell using vcpkg
       shell: cmd
