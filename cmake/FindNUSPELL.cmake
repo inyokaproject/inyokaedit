@@ -9,7 +9,7 @@ find_package(PkgConfig)
 pkg_check_modules(PKG_NUSPELL QUIET nuspell)
 
 find_path(NUSPELL_INCLUDE_DIRS
-          NAMES dictionary.hxx
+          NAMES nuspell/dictionary.hxx
           PATH_SUFFIXES nuspell
           HINTS ${PKG_NUSPELL_INCLUDE_DIRS}
 )
@@ -17,6 +17,7 @@ find_library(NUSPELL_LIBRARIES
              NAMES ${PKG_NUSPELL_LIBRARIES} nuspell nuspell-5.1 hunspell-5.0 libnuspell
              HINTS ${PKG_NUSPELL_LIBRARY_DIRS}
 )
+message(STATUS "nuspell/include => ${NUSPELL_INCLUDE_DIRS}")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(NUSPELL

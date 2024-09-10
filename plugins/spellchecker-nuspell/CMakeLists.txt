@@ -49,6 +49,8 @@ target_link_libraries(spellchecker-nuspell
         ${NUSPELL_LIBRARIES}
 )
 
+include_directories(${NUSPELL_INCLUDE_DIRS})
+
 set(HEADERS
     nuspellcheckdialog.h
     spellchecker-nuspell.h

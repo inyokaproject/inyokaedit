@@ -38,32 +38,40 @@ jobs:
     
     - name: Compile
       run: |
-       mkdir release
-       cmake -S ${{github.workspace}} -B ${{github.workspace}}/release -DCMAKE_PREFIX_PATH=${{github.workspace}}/vcpkg_installed/x64-windows -DSPELLCHECKER_HUNSPELL=OFF -DSPELLCHECKER_NUSPELL=ON
-       cmake --build ${{github.workspace}}/release --config ${{env.BUILD_TYPE}}
+       mkdir build-cmake
+       cmake -S ${{github.workspace}} -B ${{github.workspace}}/build-cmake -DCMAKE_PREFIX_PATH=${{github.workspace}}/vcpkg_installed/x64-windows -DSPELLCHECKER_HUNSPELL=OFF -DSPELLCHECKER_NUSPELL=ON
+       cmake --build ${{github.workspace}}/build-cmake --config ${{env.BUILD_TYPE}}
     
     - name: Create Package
       shell: cmd
       run: |
        mkdir InyokaEdit\plugins
        mkdir InyokaEdit\community
-       copy release\..\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
+       copy build-cmake\application\Release\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
        windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
        lconvert -o InyokaEdit\translations\qt_de.qm ${env:QT_ROOT_DIR}\translations\qtbase_de.qm ${env:QT_ROOT_DIR}\translations\qtwebengine_de.qm
        copy COPYING InyokaEdit\
        copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
        copy packaging\Windows\ICU_License.txt InyokaEdit\
        copy packaging\Windows\Nuspell_License.txt InyokaEdit\
-       xcopy /y /d vcpkg_installed\*.dll InyokaEdit\
+       xcopy /y /d vcpkg_installed\x64-windows\bin\*.dll InyokaEdit\
        xcopy /i /e /s packaging\Windows\dicts InyokaEdit\dicts\
-       copy release\..\plugins\*.dll InyokaEdit\plugins\
+       copy build-cmake\plugins\highlighter\Release\*.dll InyokaEdit\plugins\
+       copy build-cmake\plugins\hotkey\Release\*.dll InyokaEdit\plugins\
+       copy build-cmake\plugins\spellchecker-nuspell\Release\*.dll InyokaEdit\plugins\
+       copy build-cmake\plugins\uu_knowledgebox\Release\*.dll InyokaEdit\plugins\
+       copy build-cmake\plugins\uu_tabletemplate\Release\*.dll InyokaEdit\plugins\
        chcp 65001 && xcopy /i /e /s community\* InyokaEdit\community\
-       $buildnr = git rev-parse --short main
-       7z a "InyokaEdit-Windows_$($buildnr).zip" .\InyokaEdit\
+       git rev-parse --short main > buildnr.txt
+       set /p buildnr= < buildnr.txt
+       del buildnr.txt
+       set output_zip=InyokaEdit-Windows_%buildnr%.zip
+       set output_exe=InyokaEdit-Windows_%buildnr%.exe
+       7z a %output_zip% .\InyokaEdit\
        copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
        copy packaging\Windows\inyokaedit.ico inyokaedit.ico
        makensis inyokaedit.nsi
-       ren InyokaEdit_Installer.exe "InyokaEdit-Windows_$($buildnr).exe"
+       ren InyokaEdit_Installer.exe %output_exe%
        
     - uses: actions/upload-artifact@v4
       with:

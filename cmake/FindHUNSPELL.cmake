@@ -12,10 +12,12 @@ find_package(PkgConfig)
 pkg_check_modules(PKG_HUNSPELL QUIET hunspell)
 
 find_path(HUNSPELL_INCLUDE_DIRS
-          NAMES hunspell.hxx
+          NAMES hunspell/hunspell.hxx
           PATH_SUFFIXES hunspell
           HINTS ${PKG_HUNSPELL_INCLUDE_DIRS}
 )
+message(STATUS "hunspell/include => ${HUNSPELL_INCLUDE_DIRS}")
+
 find_library(HUNSPELL_LIBRARIES
              NAMES ${PKG_HUNSPELL_LIBRARIES} hunspell hunspell-1.7 hunspell-1.6 hunspell-1.5 hunspell-1.4 hunspell-1.3 hunspell-1.2 libhunspell
              HINTS ${PKG_HUNSPELL_LIBRARY_DIRS}

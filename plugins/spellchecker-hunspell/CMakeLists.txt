@@ -49,6 +49,8 @@ target_link_libraries(spellchecker-hunspell
         ${HUNSPELL_LIBRARIES}
 )
 
+include_directories(${HUNSPELL_INCLUDE_DIRS})
+
 set(HEADERS
     hunspellcheckdialog.h
     spellchecker-hunspell.h
