@@ -19,7 +19,7 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.*'
-        modules: 'qtpositioning qtwebchannel qtwebengine qtwebview'
+        modules: 'qtpositioning qtserialport qtwebchannel qtwebengine qtwebview'
     
     - name: Install NuSpell using vcpkg
       shell: cmd
@@ -43,13 +43,15 @@ jobs:
        cmake --build ${{github.workspace}}/build-cmake --config ${{env.BUILD_TYPE}}
     
     - name: Create Package
+      env:
+        VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
       shell: cmd
       run: |
        mkdir InyokaEdit\plugins
        mkdir InyokaEdit\community
        copy build-cmake\application\Release\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
        windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
-       lconvert -o InyokaEdit\translations\qt_de.qm ${env:QT_ROOT_DIR}\translations\qtbase_de.qm ${env:QT_ROOT_DIR}\translations\qtwebengine_de.qm
+       lconvert -o InyokaEdit\translations\qt_de.qm %QT_ROOT_DIR%\translations\qtbase_de.qm %QT_ROOT_DIR%\translations\qtwebengine_de.qm
        copy COPYING InyokaEdit\
        copy application\3rdparty\miniz\LICENSE InyokaEdit\Miniz_License.txt
        copy packaging\Windows\ICU_License.txt InyokaEdit\
