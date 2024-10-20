@@ -121,6 +121,9 @@ Numbat
 oracular
 Oracular
 Oriole
+plucky
+Plucky
+Puffin
 Ubuntu
 Kubuntu
 Xubuntu
