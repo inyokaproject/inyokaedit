@@ -235,7 +235,7 @@ void SettingsDialog::accept() {
       m_pSettings->m_sInyokaConstArea = sValue;
     }
 
-    QMessageBox::information(nullptr, this->windowTitle(),
+    QMessageBox::information(this, this->windowTitle(),
                              tr("The editor has to be restarted for "
                                 "applying the changes."));
   }
@@ -281,7 +281,7 @@ void SettingsDialog::changedCommunity(int nIndex) {
                       "/community.conf");
 
   if (!communityFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    QMessageBox::critical(nullptr, tr("Error"),
+    QMessageBox::critical(this, tr("Error"),
                           tr("Could not open/find community file!"));
     qCritical() << "Could not open/find community file:"
                 << communityFile.fileName();
@@ -303,7 +303,7 @@ void SettingsDialog::changedCommunity(int nIndex) {
   if (sUrl.isEmpty() || sLoginUrl.isEmpty() || sConstArea.isEmpty() ||
       sCookieDomain.isEmpty()) {
     qWarning() << "Community.conf not complete!";
-    QMessageBox::warning(nullptr, tr("Warning"),
+    QMessageBox::warning(this, tr("Warning"),
                          tr("Community.conf not complete!"));
   }
 }

@@ -939,12 +939,14 @@ auto ProvisionalTplParser::parseImprovable(const QStringList &sListArgs)
   }
 
   return ProvisionalTplParser::insertBox(
-      "box improvable", QString::fromUtf8("Ausbaufähige Anleitung"),
-      QString::fromUtf8(
-          "Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas "
-          "verbessern kannst, dann editiere den Beitrag, um die Qualität des "
-          "Wikis noch weiter zu verbessern."),
-      sRemark);
+             "box improvable", QString::fromUtf8("Ausbaufähige Anleitung"),
+             QString::fromUtf8("Dieser Anleitung fehlen noch einige "
+                               "Informationen. Wenn Du etwas "
+                               "verbessern kannst, dann editiere den Beitrag, "
+                               "um die Qualität des "
+                               "Wikis noch weiter zu verbessern."),
+             sRemark) +
+         "\n#tag: ausbaufaehig";
 }
 
 // ----------------------------------------------------------------------------
