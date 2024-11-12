@@ -23,7 +23,7 @@ Von <@ $arguments.0 @> werden
 <@ if $arguments.1 == 'dl' @>
 folgende DEB-Pakete angeboten:
 <@ for $arg in $arguments @>
-<@ if $loop.index < 3 or ['noble', 'jammy', 'focal', 'mantic'] contains $arg @>
+<@ if $loop.index < 3 or ['noble', 'jammy', 'focal', 'oracular'] contains $arg @>
 ##nichts tun
 <@ else @>
  * [<@ $arg @> <@ for $arg2 in $arg split_by "/"@><@ if $loop.last @><@ $arg2 @><@ endif @><@ endfor @>] {dl}
@@ -39,10 +39,10 @@ folgende DEB-Pakete angeboten:
 <@ if $arguments contain 'noble' or $arguments contain 'jammy' or $arguments contain 'mantic' or $arguments contain 'focal' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
-<@ if ['noble', 'jammy', 'mantic', 'focal'] contains $arg @>
+<@ if ['oracular', 'noble', 'jammy', 'focal'] contains $arg @>
+<@ if $arg == 'oracular' @>[:Oracular Oriole: Ubuntu 24.10]<@ endif @>
 <@ if $arg == 'noble' @>[:Noble Numbat: Ubuntu 24.04]<@ endif @>
 <@ if $arg == 'jammy' @>[:Jammy_Jellyfish: Ubuntu 22.04]<@ endif @>
-<@ if $arg == 'mantic' @>[:Mantic_Minotaur: Ubuntu 23.10]<@ endif @>
 <@ if $arg == 'focal' @>[:Focal_Fossa: Ubuntu 20.04]<@ endif @>
 <@ if $loop.revindex > 2 @>, <@ endif @>
 <@ if $loop.revindex == 2 @> und <@ endif @>

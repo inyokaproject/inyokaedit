@@ -4,4 +4,5 @@ Dieser Anleitung fehlen noch einige Informationen. Wenn Du etwas verbessern kann
 ----
 '''Anmerkung:''' <@ $arguments.0 @>
 <@ endif @>
+#tag: ausbaufaehig
 |}}
