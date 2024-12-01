@@ -347,7 +347,7 @@ auto ProvisionalTplParser::parseExperts(const QStringList &sListArgs)
 auto ProvisionalTplParser::parseFixme(const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
-    sRemark = sListArgs[0];
+    sRemark = sListArgs.join("\n\n");
   }
 
   return ProvisionalTplParser::insertBox(
