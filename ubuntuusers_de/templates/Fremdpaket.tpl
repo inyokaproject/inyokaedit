@@ -36,7 +36,7 @@ folgende DEB-Pakete angeboten:
 #############################################################
 ## Der folgende Block dient zum Erzeugen eines Satzes, der die unterstützten Version auflistet und mit "," bzw. "und" verknüpft.
 #############################################################
-<@ if $arguments contain 'noble' or $arguments contain 'jammy' or $arguments contain 'mantic' or $arguments contain 'focal' @>
+<@ if $arguments contain 'noble' or $arguments contain 'jammy' or $arguments contain 'oracular' or $arguments contain 'focal' @>
 Die Pakete können für 
 <@ for $arg in $arguments @>
 <@ if ['oracular', 'noble', 'jammy', 'focal'] contains $arg @>
