@@ -2173,7 +2173,7 @@ auto ProvisionalTplParser::parseTestedUT(const QStringList &sListArgs)
   }
 
   return ProvisionalTplParser::insertBox(
-      "box ut_box",
+      "box tested_for",
       QString::fromUtf8(
           "Dieser Artikel bezieht sich auf Ubuntu Touch, die Variante von "
           "Ubuntu für mobile Geräte mit Touchscreen."),
