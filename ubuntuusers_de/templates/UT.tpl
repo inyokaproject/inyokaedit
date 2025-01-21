@@ -24,7 +24,7 @@ Dieser Artikel ist mit keiner derzeit unterstützten Ubuntu-Touch-Version getest
 #getestet: xenialut
 <@ else @>
 <@ endif @><@ if $arguments as lowercase contain 'focal' @>
-#getetet: focalut
+#getestet: focalut
 <@ endif @>
 <@ endif @>
 <@ else @>

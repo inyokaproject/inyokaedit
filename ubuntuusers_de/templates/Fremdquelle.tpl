@@ -4,14 +4,14 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 <@ if $arguments as lowercase contain 'noble' or
       $arguments as lowercase contain 'jammy' or
       $arguments as lowercase contain 'focal' or
-      $arguments as lowercase contain 'mantic' @> die folgenden [:Paketquellen freischalten:]:
+      $arguments as lowercase contain 'oracular' @> die folgenden [:Paketquellen freischalten:]:
 [[Vorlage(Fremd, Quelle)]] 
 
 
 {{|<class="thirdpartyrepo-outer
 <@if $arguments as lowercase contain 'focal' @> thirdpartyrepo-version-focal
 <@ endif @>
-<@if $arguments as lowercase contain 'mantic' @> thirdpartyrepo-version-mantic
+<@if $arguments as lowercase contain 'oracular' @> thirdpartyrepo-version-oracular
 <@ endif @>
 <@if $arguments as lowercase contain 'jammy' @> thirdpartyrepo-version-jammy
 <@ endif @>
@@ -22,7 +22,7 @@ Um aus der [:Fremdquellen: Fremdquelle] zu installieren, muss man
 deb <@ $arguments.0 @> VERSION
 <@ for $arg in $arguments @>
 <@ if $loop.index > 1 @>
-<@ if ['noble', 'jammy', 'mantic', 'focal'] contains $arg @>
+<@ if ['oracular', 'noble', 'jammy', 'focal'] contains $arg @>
 <@ else @> <@ $arg @>
 <@ endif @>
 <@ endif @>
