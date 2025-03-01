@@ -1614,7 +1614,6 @@ auto ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs)
   sListPackages.reserve(sListArgs.length());
   QStringList sListPackagesTMP;
   QString sOutput("");
-  QString sPackages("");
 
   for (int i = 0; i < sListArgs.length(); i++) {
     sListPackagesTMP.clear();
@@ -1629,10 +1628,6 @@ auto ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs)
     }
 
     sListPackages << sListPackagesTMP[0].trimmed();
-    sPackages += sListPackagesTMP[0].trimmed();
-    if (i < sListArgs.size() - 1) {
-      sPackages += ",";
-    }
   }
 
   sOutput += "\n<p>" +
@@ -1642,11 +1637,8 @@ auto ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs)
       "<div class=\"bash\">\n"
       "<pre class=\"notranslate\"> sudo apt-get install " +
       sListPackages.join(' ') + "</pre>\n</div>\n";
-  sOutput += "<p>" + QString::fromUtf8(
-                         "Oder mit [:apturl:] installieren, "
-                         "Link: [apt://");
-  sOutput += sPackages;
-  return sOutput + "]</p>\n";
+
+  return sOutput;
 }
 
 // ----------------------------------------------------------------------------
