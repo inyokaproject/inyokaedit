@@ -74,15 +74,3 @@ Befehl zum Installieren der Pakete:
 <@ endif @>
 <@ endif @>
 <@ endfor @>
-##
-## Jetzt Installieren - Button
-##
-Oder mit [:apturl:] installieren, Link: [apt://<@ for $row in $arguments split_by '
-' @>
-<@ for $col in $row split_by "," @>
-<@ if $loop.first @><@ $col @>
-<@ endif @>
-<@ endfor @>
-<@ if $loop.revindex > 1 @>,
-<@ endif @>
-<@ endfor @>]
