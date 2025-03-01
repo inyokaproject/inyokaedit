@@ -71,6 +71,7 @@ jobs:
        set output_exe=InyokaEdit-Windows_%buildnr%.exe
        7z a %output_zip% .\InyokaEdit\
        copy packaging\Windows\inyokaedit.nsi inyokaedit.nsi
+       copy packaging\Windows\removeprevious.nsh removeprevious.nsh
        copy packaging\Windows\inyokaedit.ico inyokaedit.ico
        makensis inyokaedit.nsi
        ren InyokaEdit_Installer.exe %output_exe%
