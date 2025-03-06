@@ -44,7 +44,7 @@ class ProvisionalTplParser {
                 const QString &sCurrentFile) -> QString;
 
  private:
-  static auto parseAdvanced() -> QString;
+  static auto parseAdvanced(const QStringList &sListArgs) -> QString;
   static auto parseArchived(const QStringList &sListArgs) -> QString;
   static auto parseBash(const QStringList &sListArgs) -> QString;
   static auto parseBuilddeps(const QStringList &sListArgs) -> QString;

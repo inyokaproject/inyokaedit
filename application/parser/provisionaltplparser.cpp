@@ -55,183 +55,139 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
 
   QStringList sArgs = sListArgs;
   if (!sArgs.isEmpty()) {
-    if (sArgs[0].toLower() == QString::fromUtf8("Fortgeschritten").toLower()) {
-      return ProvisionalTplParser::parseAdvanced();
+    QString sTemplate = sArgs[0].trimmed().toLower();
+    sArgs.removeFirst();
+
+    if (sTemplate == QString::fromUtf8("Fortgeschritten").toLower()) {
+      return ProvisionalTplParser::parseAdvanced(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Archiviert").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Archiviert").toLower()) {
       return ProvisionalTplParser::parseArchived(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Befehl").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Befehl").toLower()) {
       return ProvisionalTplParser::parseBash(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Builddeps").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Builddeps").toLower()) {
       return ProvisionalTplParser::parseBuilddeps(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Code").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Code").toLower()) {
       return ProvisionalTplParser::parseCode(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Kopie").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Kopie").toLower()) {
       return ProvisionalTplParser::parseCopy(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Experten").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Experten").toLower()) {
       return ProvisionalTplParser::parseExperts(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Fehlerhaft").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Fehlerhaft").toLower()) {
       return ProvisionalTplParser::parseFixme(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Fremdquelle-auth").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Fremdquelle-auth").toLower()) {
       return ProvisionalTplParser::parseForeignAuth(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Fremdquelle").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Fremdquelle").toLower()) {
       return ProvisionalTplParser::parseForeignSource(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Fremdpaket").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Fremdpaket").toLower()) {
       return ProvisionalTplParser::parseForeignPackage(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Fremd").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Fremd").toLower()) {
       return ProvisionalTplParser::parseForeignWarning(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Howto").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Howto").toLower()) {
       return ProvisionalTplParser::parseHowto(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Icon-Übersicht").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Icon-Übersicht").toLower()) {
       return ProvisionalTplParser::parseIconOverview(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("IkhayaAutor").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("IkhayaAutor").toLower()) {
       return ProvisionalTplParser::parseIkhayaAuthor(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Ikhaya-Award").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Ikhaya-Award").toLower()) {
       return ProvisionalTplParser::parseIkhayaAward(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Ikhayabild").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Ikhayabild").toLower()) {
       return ProvisionalTplParser::parseIkhayaImage(sArgs);
     }
-    if (sArgs[0].toLower() ==
-        QString::fromUtf8("Ikhaya-Projektvorstellung").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Ikhaya-Projektvorstellung").toLower()) {
       return ProvisionalTplParser::parseIkhayaProjectPresentation();
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Bildersammlung").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Bildersammlung").toLower()) {
       return this->parseImageCollect(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Bildunterschrift").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Bildunterschrift").toLower()) {
       return this->parseImageSub(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Ausbaufähig").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Ausbaufähig").toLower()) {
       return ProvisionalTplParser::parseImprovable(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Infobox").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Infobox").toLower()) {
       return ProvisionalTplParser::parseInfobox(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Tasten").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Tasten").toLower()) {
       return ProvisionalTplParser::parseKeys(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("Wissen").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Wissen").toLower()) {
       return ProvisionalTplParser::parseKnowledge(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Verlassen").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Verlassen").toLower()) {
       return ProvisionalTplParser::parseLeft(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Hinweis").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Hinweis").toLower()) {
       return ProvisionalTplParser::parseNotice(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("OBS").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("OBS").toLower()) {
       return ProvisionalTplParser::parseOBS(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Uebersicht").toLower()) {
       return ProvisionalTplParser::parseOverview(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Uebersicht2").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Uebersicht2").toLower()) {
       return ProvisionalTplParser::parseOverview2(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Pakete").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Pakete").toLower()) {
       return ProvisionalTplParser::parsePackage(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("PipInstallation").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("PipInstallation").toLower()) {
       return this->parsePipInstall(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("PipxInstallation").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("PipxInstallation").toLower()) {
       return this->parsePipxInstall(sArgs);
     }
-    if (sArgs[0].toLower() ==
-        QString::fromUtf8("Paketinstallation").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Paketinstallation").toLower()) {
       return ProvisionalTplParser::parsePkgInstall(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() ==
-        QString::fromUtf8("Installbutton").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Installbutton").toLower()) {
       return this->parsePkgInstallBut(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("PPA").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("PPA").toLower()) {
       return ProvisionalTplParser::parsePPA(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Projekte").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Projekte").toLower()) {
       return ProvisionalTplParser::parseProjects(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Seitenleiste").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Seitenleiste").toLower()) {
       return ProvisionalTplParser::parseSidebar(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("StatusIcon").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("StatusIcon").toLower()) {
       return ProvisionalTplParser::parseStatusIcon(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Tabelle").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Tabelle").toLower()) {
       return this->parseTable(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Getestet").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Getestet").toLower()) {
       return this->parseTested(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() == QString::fromUtf8("UT").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("UT").toLower()) {
       return this->parseTestedUT(sArgs);
     }
-    if (sArgs[0].trimmed().toLower() ==
-        QString::fromUtf8("Baustelle").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Baustelle").toLower()) {
       return ProvisionalTplParser::parseUnderConst(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Warnung").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Warnung").toLower()) {
       return ProvisionalTplParser::parseWarning(sArgs);
     }
-    if (sArgs[0].toLower() == QString::fromUtf8("Überarbeitung").toLower()) {
-      sArgs.removeFirst();
+    if (sTemplate == QString::fromUtf8("Überarbeitung").toLower()) {
       return ProvisionalTplParser::parseWorkInProgr(sArgs);
     }
   }
@@ -241,13 +197,20 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto ProvisionalTplParser::parseAdvanced() -> QString {
+auto ProvisionalTplParser::parseAdvanced(const QStringList &sListArgs)
+    -> QString {
+  QString sRemark("");
+  if (!sListArgs.isEmpty()) {
+    sRemark = sListArgs.join("\n\n");
+  }
+
   return ProvisionalTplParser::insertBox(
       "box advanced",
       QString::fromUtf8("Artikel für fortgeschrittene Anwender"),
       QString::fromUtf8(
           "Dieser Artikel erfordert mehr Erfahrung im Umgang mit Linux und ist "
-          "daher nur für fortgeschrittene Benutzer gedacht."));
+          "daher nur für fortgeschrittene Benutzer gedacht."),
+      sRemark);
 }
 
 // ----------------------------------------------------------------------------
