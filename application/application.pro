@@ -136,7 +136,7 @@ TRANSLATIONS  += lang/inyokaedit_de.ts \
                  lang/inyokaedit_en.ts \
                  lang/inyokaedit_nl.ts
 
-win32:RC_ICONS = icons/inyokaedit.ico
+win32:RC_FILE  = data/win.rc
 
 macx {
   ICON             = icons/icon.icns
