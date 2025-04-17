@@ -13,16 +13,18 @@ Diese Anleitung ist fehlerhaft. Wenn du weißt, wie du sie ausbessern kannst, ni
 <@ endfor @>
 |}}
 
-## Setze Metadatum, aber nur außerhalb bestimmter Namensräume um Übersichten frei von unsinnigen Einträgen zu halten:
+## ToDO: Setze Metadatum nur außerhalb bestimmter Namensräume um Übersichten frei von unsinnigen Einträgen zu halten:
 ## Wiki/: Beschreibungen dieser Vorlage und dies Vorlage selbst sind nicht fehlerhaft.
 ## Baustelle/: Unfertiges ist noch nicht fehlerhaft.
 ## Archiv/: Archiviertes mag fehlerhaft sein, soll aber nicht ausgebessert werden.
 ## Trash/: Gelöschtes mag fehlerhaft sein, ist aber nicht mehr relevant und muss daher nicht ausgebessert werden.
 
-## <@ if '[[PageName]]' contains '/Vorlagen/' @><@ else @>#tag: fehlerhaft<@ endif @>
-<@     if '[[PageName]]' starts_with 'Wiki/' @>
-<@ elseif '[[PageName]]' starts_with 'Baustelle/' @>
-<@ elseif '[[PageName]]' starts_with 'Archiv/' @>
-<@ elseif '[[PageName]]' starts_with 'Trash/' @>
-<@ else @>#tag: fehlerhaft
-<@ endif @>
+## So funktioniert es nicht richtig: (Makro [[PageName]] arbeitet jetzt anders?)
+## <@     if '[[PageName]]' contains 'Wiki/' @>
+## <@ elseif '[[PageName]]' starts_with 'Baustelle/' @>
+## <@ elseif '[[PageName]]' starts_with 'Archiv/' @>
+## <@ elseif '[[PageName]]' contains 'Trash/' @>
+## <@ else @>#tag: fehlerhaft
+## <@ endif @>
+
+#tag: fehlerhaft
