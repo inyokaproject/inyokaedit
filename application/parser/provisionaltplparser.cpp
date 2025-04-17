@@ -201,7 +201,7 @@ auto ProvisionalTplParser::parseAdvanced(const QStringList &sListArgs)
     -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
-    sRemark = sListArgs.join("\n\n");
+    sRemark = sListArgs.join("[[BR]]");
   }
 
   return ProvisionalTplParser::insertBox(
@@ -310,7 +310,7 @@ auto ProvisionalTplParser::parseExperts(const QStringList &sListArgs)
 auto ProvisionalTplParser::parseFixme(const QStringList &sListArgs) -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
-    sRemark = sListArgs.join("\n\n");
+    sRemark = sListArgs.join("[[BR]]");
   }
 
   return ProvisionalTplParser::insertBox(
@@ -898,7 +898,7 @@ auto ProvisionalTplParser::parseImprovable(const QStringList &sListArgs)
     -> QString {
   QString sRemark("");
   if (!sListArgs.isEmpty()) {
-    sRemark = sListArgs[0];
+    sRemark = sListArgs.join("[[BR]]");
   }
 
   return ProvisionalTplParser::insertBox(
