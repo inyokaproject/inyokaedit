@@ -9,24 +9,26 @@ jobs:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
-      #image: bilelmoussaoui/flatpak-github-actions:kde-6.8
+      #image: bilelmoussaoui/flatpak-github-actions:kde-6.5
       image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.8
       options: --privileged
     steps:
     - uses: actions/checkout@v4
 
-    # Fedora docker container missing wget
-    - name: Install Dependencies
-      run: dnf -y install wget
+    ## bilelmoussaoui: Fedora docker container missing wget
+    #- name: Install Dependencies
+    #  run: sudo dnf -y install wget
     
     - name: Get Flatpak yaml
       run: |
-       wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
+       #wget -c -nv "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
+       curl -C - -O --silent "https://github.com/inyokaproject/inyokaedit/raw/packaging/Flatpak/org.inyokaproject.inyokaedit.yaml"
         
     - name: Download ffsend
       run: |
        FFSEND_VERSION=$(curl --silent https://api.github.com/repos/timvisee/ffsend/releases/latest | sed -Ene '/^ *"tag_name": *"(v.+)",$/s//\1/p')
-       wget -c -nv "https://github.com/timvisee/ffsend/releases/download/$FFSEND_VERSION/ffsend-$FFSEND_VERSION-linux-x64-static"
+       #wget -c -nv "https://github.com/timvisee/ffsend/releases/download/$FFSEND_VERSION/ffsend-$FFSEND_VERSION-linux-x64-static"
+       curl -C - -O --silent "https://github.com/timvisee/ffsend/releases/download/$FFSEND_VERSION/ffsend-$FFSEND_VERSION-linux-x64-static"
        mv ./ffsend-* ./ffsend
        chmod a+x ./ffsend
 
