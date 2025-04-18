@@ -9,6 +9,7 @@ jobs:
     name: "Flatpak"
     runs-on: ubuntu-latest
     container:
+      #image: bilelmoussaoui/flatpak-github-actions:kde-6.8
       image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.8
       options: --privileged
     steps:
@@ -16,7 +17,7 @@ jobs:
 
     # Fedora docker container missing wget
     - name: Install Dependencies
-      run: sudo dnf -y install wget
+      run: dnf -y install wget
     
     - name: Get Flatpak yaml
       run: |
