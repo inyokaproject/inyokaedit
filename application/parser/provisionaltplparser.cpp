@@ -1541,10 +1541,10 @@ auto ProvisionalTplParser::parsePipInstall(const QStringList &sListArgs)
              "python3 -m venv venv-name && source venv-name/bin/activate # "
              "venv-name durch den gewünschten Namen ersetzen\n"
              "pip3 install ") +
-         sListArgs.join(' ') +
-         QString::fromUtf8(
-             "     # Programm ist nur bei aktiver virtueller Umgebung "
-             "nutzbar</pre>\n</div>\n</div>\n") +
+         sListArgs.join(' ') + QString::fromUtf8("</pre>\n</div>\n</div>\n") +
+         "<p>Die von dem Paket zur Verfügung gestellten Module können nur bei "
+         "aktivierter Umgebung bzw. direktem Aufruf des zugehörigen "
+         "Python-Interpreters genutzt werden.</p>\n" +
          this->parseForeignWarning(QStringList() << "Software");
 }
 
@@ -1598,7 +1598,7 @@ auto ProvisionalTplParser::parsePkgInstall(const QStringList &sListArgs)
              "</p>\n";
   sOutput +=
       "<div class=\"bash\">\n"
-      "<pre class=\"notranslate\"> sudo apt-get install " +
+      "<pre class=\"notranslate\">sudo apt-get install " +
       sListPackages.join(' ') + "</pre>\n</div>\n";
 
   return sOutput;
