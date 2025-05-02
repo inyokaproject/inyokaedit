@@ -6,8 +6,10 @@ Der Python-Paketmanager [:pip:] stellt häufig aktuellere Versionen von Programm
 
 {{|<class="bash">{{{
 python3 -m venv venv-name && source venv-name/bin/activate # venv-name durch den gewünschten Namen ersetzen
-pip3 install <@ $arguments @>       # Programm ist nur bei aktiver virtueller Umgebung nutzbar
+pip3 install <@ $arguments @>
 }}}
 |}}
+
+Die von dem Paket zur Verfügung gestellten Module können nur bei aktivierter Umgebung bzw. direktem Aufruf des zugehörigen Python-Interpreters genutzt werden.
 
 [[Vorlage(Fremd, Software)]]
