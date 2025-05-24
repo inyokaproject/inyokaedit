@@ -35,8 +35,8 @@ jobs:
       run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev
 
     - run: |
-       cmake -B . -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6
-       cmake --build . -- -j$(nproc)
+       ./configure --prefix=/usr --community=none
+       make all
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3

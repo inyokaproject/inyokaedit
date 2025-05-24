@@ -35,9 +35,9 @@ jobs:
 
     - name: Compile
       run: |
-       cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6 -DCOMMUNITY=community/ubuntuusers_de
-       cmake --build build-cmake -- -j$(nproc)
-       DESTDIR=appdir cmake --install build-cmake
+       ./configure --prefix=/usr --community=ubuntuusers_de
+       make all -j$(nproc)
+       make DESTDIR=appdir install
        find appdir
 
     - name: Create AppImage
