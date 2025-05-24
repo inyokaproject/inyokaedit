@@ -34,9 +34,6 @@
 #include <QTranslator>
 #include <QtPlugin>
 
-#ifdef USEQTWEBKIT
-#include <QtWebKitWidgets/QWebView>
-#endif
 #ifdef USEQTWEBENGINE
 #include <QMenu>  // Needed to compile with Qt 6.2 ?!
 #include <QWebEngineView>
@@ -89,7 +86,7 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   void convertToBaseTemplate();
   void convertToNewTemplate();
   void accept();
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
   void preview();
 #endif
 
@@ -106,9 +103,6 @@ class Uu_TableTemplate : public QObject, IEditorPlugin {
   Parser *m_pParser;
   QDir m_dirPreview;
   QTextDocument *m_pTextDocument;
-#ifdef USEQTWEBKIT
-  QWebView *m_pPreviewWebview;
-#endif
 #ifdef USEQTWEBENGINE
   QWebEngineView *m_pPreviewWebview;
 #endif

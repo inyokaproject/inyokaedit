@@ -14,10 +14,9 @@ options:
   --community=COMMUNITY    install specified Inyoka community [ubuntuusers_de]
                            for installation without any community files,
                            define --community=none
-  --preview=PREVIEW        compile with Qt WebKit [useqtwebkit], Qt WebEngine
-                           [useqtwebengine] or none of them [none] for the
-                           integrated article preview. Omit parameter completly
-                           for automatic detection.
+  --preview=PREVIEW        compile with Qt WebEngine [useqtwebengine] for the
+                           integrated article preview or [none] for no preview.
+                           Omit parameter for automatic detection.
 EOF
 exit 1
 fi

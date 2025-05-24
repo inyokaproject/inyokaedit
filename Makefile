@@ -2,8 +2,6 @@ ifneq ($(wildcard config.mak),)
 include config.mak
 endif
 
-export QT_SELECT = qt5
-
 INSTALL_FILE := install -m644 -D
 INSTALL_PROGRAM := install -m755 -D
 INSTALL_DIR := install -m755 -d
@@ -12,8 +10,8 @@ CP := cp -rf
 RM := rm -f
 LN := ln -s
 GZIP := gzip -f9
-QMAKE := qmake
-LRELEASE := lrelease
+QMAKE := qmake6
+LRELEASE := /usr/lib/qt6/bin/lrelease
 MAKE := make
 
 ICON_SIZES = 16 24 32 48 64 96 128 256 512

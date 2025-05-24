@@ -599,8 +599,7 @@ void FileOperations::saveDocumentAuto() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-#ifndef NOPREVIEW
-#ifndef USEQTWEBKIT  // QtWebkit doesn't support print to PDF out of the box
+#ifdef USEQTWEBENGINE
 void FileOperations::printPdfPreview() {
   if (nullptr == m_pPreviewWebView) {
     m_pPreviewWebView = new QWebEngineView();
@@ -683,7 +682,6 @@ void FileOperations::printPdfPreview() {
                                                     .absolutePath() + "/"));
   */
 }
-#endif
 #endif
 
 // ----------------------------------------------------------------------------

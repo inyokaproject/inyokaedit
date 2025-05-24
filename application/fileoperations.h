@@ -72,7 +72,7 @@ class FileOperations : public QObject {
   void loadInyArchive(const QString &sArchive);
   bool saveFile(QString sFileName);
   bool saveInyArchive(const QString &sArchive);
-#ifdef USEQTWEBENGINE  // QtWebkit doesn't support print to PDF out of the box
+#ifdef USEQTWEBENGINE
   void printPdfPreview();
 #endif
 

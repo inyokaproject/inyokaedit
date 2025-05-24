@@ -47,29 +47,17 @@ isEmpty(PREVIEW) {
     DEFINES    += USEQTWEBENGINE
     message("Qt webenginewidgetswebkitwidgets module found!")
   } else {
-    qtHaveModule(webkitwidgets) {
-      QT       += webkitwidgets
-      DEFINES  += USEQTWEBKIT
-      message("Qt webkitwidgets module found!")
-    } else {
-      DEFINES  += NOPREVIEW
-      message("Neither QtWebKit nor QtWebEngine installation found!")
-      message("Building without included preview.")
-    }
+    DEFINES  += NOPREVIEW
+    message("QtWebEngine not found! Building without included preview.")
   }
 } else {
   message("Preview set to \"$$PREVIEW\"")
-  equals(PREVIEW, "useqtwebkit") {
-    QT         += webkitwidgets
-    DEFINES    += USEQTWEBKIT
+  equals(PREVIEW, "useqtwebengine") {
+    QT         += webenginewidgets
+    DEFINES    += USEQTWEBENGINE
   } else {
-    equals(PREVIEW, "useqtwebengine") {
-      QT         += webenginewidgets
-      DEFINES    += USEQTWEBENGINE
-    } else {
-      DEFINES  += NOPREVIEW
-      message("Building without included preview.")
-    }
+    DEFINES  += NOPREVIEW
+    message("Building without included preview.")
   }
 }
 

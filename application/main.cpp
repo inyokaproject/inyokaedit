@@ -157,9 +157,6 @@ void setupLogger(const QString &sDebugFilePath) {
 
   qDebug() << qApp->applicationName() << qApp->applicationVersion();
 
-#ifdef USEQTWEBKIT
-  qDebug() << "Compiled with Qt" << QT_VERSION_STR << "+ webkitwidgets";
-#endif
 #ifdef USEQTWEBENGINE
   qDebug() << "Compiled with Qt" << QT_VERSION_STR << "+ webenginewidgets";
 #endif

@@ -40,11 +40,6 @@
 #include <QToolButton>
 #include <QToolTip>
 
-#ifdef USEQTWEBKIT
-#include <QWebFrame>
-#include <QWebHistory>
-#include <QtWebKitWidgets/QWebView>
-#endif
 #ifdef USEQTWEBENGINE
 #include <QWebEngineHistory>
 #include <QWebEngineView>
@@ -218,15 +213,6 @@ void InyokaEdit::createObjects() {
 
   this->setCurrentEditor();
 
-#ifdef USEQTWEBKIT
-  m_pWebview = new QWebView(this);
-  connect(m_pWebview->page(), &QWebPage::scrollRequested, this,
-          &InyokaEdit::syncScrollbarsWebview);
-  connect(m_pFileOperations, &FileOperations::movedEditorScrollbar, this,
-          &InyokaEdit::syncScrollbarsEditor);
-
-  m_pWebview->settings()->setDefaultTextEncoding(QStringLiteral("utf-8"));
-#endif
 #ifdef USEQTWEBENGINE
   m_pWebview = new QWebEngineView(this);
   m_pWebview->pageAction(QWebEnginePage::SavePage)->setVisible(false);
@@ -240,8 +226,7 @@ void InyokaEdit::createObjects() {
           &InyokaEdit::syncScrollbarsWebview);
   connect(m_pFileOperations, &FileOperations::movedEditorScrollbar, this,
           &InyokaEdit::syncScrollbarsEditor);
-#endif
-#ifndef NOPREVIEW
+
   m_pWebview->installEventFilter(this);
 #endif
 }
@@ -271,19 +256,13 @@ void InyokaEdit::setupEditor() {
   connect(m_pPreviewTimer, &QTimer::timeout, this,
           &InyokaEdit::previewInyokaPage);
 
-#ifdef USEQTWEBKIT
-  connect(m_pWebview, &QWebView::loadFinished, this,
-          &InyokaEdit::loadPreviewFinished);
-#endif
+  m_pWidgetSplitter = new QSplitter;
+  m_pWidgetSplitter->addWidget(m_pDocumentTabs);
+
 #ifdef USEQTWEBENGINE
   connect(m_pWebview, &QWebEngineView::loadFinished, this,
           &InyokaEdit::loadPreviewFinished);
-#endif
 
-  m_pWidgetSplitter = new QSplitter;
-
-  m_pWidgetSplitter->addWidget(m_pDocumentTabs);
-#ifndef NOPREVIEW
   m_pWidgetSplitter->addWidget(m_pWebview);
 #endif
   setCentralWidget(m_pWidgetSplitter);
@@ -294,7 +273,7 @@ void InyokaEdit::setupEditor() {
   connect(m_pFileOperations, &FileOperations::changedNumberOfEditors, this,
           &InyokaEdit::changedNumberOfEditors);
 
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
   // Show an empty website after start
   if (!m_bOpenFileAfterStart) {
     this->previewInyokaPage();
@@ -313,19 +292,6 @@ void InyokaEdit::setupEditor() {
   m_pUi->aboutAct->setText(m_pUi->aboutAct->text() + " " +
                            qApp->applicationName());
 
-#ifdef USEQTWEBKIT
-  connect(m_pUi->goBackBrowserAct, &QAction::triggered, m_pWebview,
-          &QWebView::back);
-  connect(m_pUi->goForwardBrowserAct, &QAction::triggered, m_pWebview,
-          &QWebView::forward);
-  connect(m_pUi->reloadBrowserAct, &QAction::triggered, m_pWebview,
-          &QWebView::reload);
-
-  connect(m_pWebview, &QWebView::urlChanged, this, &InyokaEdit::changedUrl);
-
-  m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-  connect(m_pWebview, &QWebView::linkClicked, this, &InyokaEdit::clickedLink);
-#endif
 #ifdef USEQTWEBENGINE
   connect(m_pUi->goBackBrowserAct, &QAction::triggered, m_pWebview,
           &QWebEngineView::back);
@@ -342,8 +308,7 @@ void InyokaEdit::setupEditor() {
   // m_pWebview->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   // connect(m_pWebview, &QWebView::linkClicked,
   //         this, &InyokaEdit::clickedLink);
-#endif
-#ifdef NOPREVIEW
+#else  // NOPREVIEW
   m_pUi->browserBar->clear();
   this->removeToolBar(m_pUi->browserBar);
 #endif
@@ -773,9 +738,6 @@ void InyokaEdit::addPluginsButtons(const QList<QAction *> &ToolbarEntries,
 
 void InyokaEdit::openFile() {
   // Reset scroll position
-#ifdef USEQTWEBKIT
-  m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
-#endif
 #ifdef USEQTWEBENGINE
   m_pWebview->scroll(0, 0);
 #endif
@@ -787,7 +749,7 @@ void InyokaEdit::openFile() {
 
 // Call parser
 void InyokaEdit::previewInyokaPage() {
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
   m_pWebview->history()->clear();  // Clear history (clicked links)
 #endif
 
@@ -816,23 +778,18 @@ void InyokaEdit::previewInyokaPage() {
   tmphtmlfile.close();
 
   // Store scroll position
-#ifdef USEQTWEBKIT
-  m_WebviewScrollPosition = m_pWebview->page()->mainFrame()->scrollPosition();
-#endif
 #ifdef USEQTWEBENGINE
   m_WebviewScrollPosition = m_pWebview->page()->scrollPosition().toPoint();
-#endif
 
-#ifdef NOPREVIEW
+  m_pWebview->load(
+      QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
+#else
   static bool bOpenedBrowser = false;
   if (!bOpenedBrowser) {
     QDesktopServices::openUrl(
         QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
     bOpenedBrowser = true;
   }
-#else
-  m_pWebview->load(
-      QUrl::fromLocalFile(QFileInfo(tmphtmlfile).absoluteFilePath()));
 #endif
 }
 
@@ -1019,9 +976,6 @@ void InyokaEdit::displayArticleText(const QString &sArticleText,
 
   // Reset scroll position
   m_WebviewScrollPosition = QPoint(0, 0);
-#ifdef USEQTWEBKIT
-  m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(0, 0));
-#endif
 #ifdef USEQTWEBENGINE
   m_pWebview->scroll(0, 0);
 #endif
@@ -1030,7 +984,7 @@ void InyokaEdit::displayArticleText(const QString &sArticleText,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
 // Wait until loading has finished
 void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
   if (bSuccess) {
@@ -1049,14 +1003,9 @@ void InyokaEdit::loadPreviewFinished(const bool bSuccess) {
     }
 
     // Restore scroll position
-#ifdef USEQTWEBKIT
-    m_pWebview->page()->mainFrame()->setScrollPosition(m_WebviewScrollPosition);
-#endif
-#ifdef USEQTWEBENGINE
     m_pWebview->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2);")
                                           .arg(m_WebviewScrollPosition.x())
                                           .arg(m_WebviewScrollPosition.y()));
-#endif
     m_bReloadPreviewBlocked = false;
   } else {
     QMessageBox::warning(this, qApp->applicationName(),
@@ -1176,7 +1125,7 @@ auto InyokaEdit::eventFilter(QObject *pObj, QEvent *pEvent) -> bool {
       previewInyokaPage();
     }
   }
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
   else if (pObj == m_pWebview && pEvent->type() == QEvent::MouseButtonPress) {
     // Forward / backward mouse button
     auto *mouseEvent = static_cast<QMouseEvent *>(pEvent);
@@ -1242,20 +1191,6 @@ void InyokaEdit::deleteAutoSaveBackups() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsEditor() {
-#ifdef USEQTWEBKIT
-  if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
-    int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-    int nSizeWebviewBar =
-        m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    auto nR = static_cast<float>(nSizeWebviewBar) / nSizeEditorBar;
-
-    m_bEditorScrolling = true;
-    m_pWebview->page()->mainFrame()->setScrollPosition(QPoint(
-        0, static_cast<int>(
-               m_pCurrentEditor->verticalScrollBar()->sliderPosition() * nR)));
-    m_bEditorScrolling = false;
-  }
-#endif
 #ifdef USEQTWEBENGINE
   if (!m_bWebviewScrolling && m_pSettings->getSyncScrollbars()) {
     m_pWebview->page()->runJavaScript(
@@ -1279,19 +1214,6 @@ void InyokaEdit::syncScrollbarsEditor() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::syncScrollbarsWebview() {
-#ifdef USEQTWEBKIT
-  if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
-    int nSizeEditorBar = m_pCurrentEditor->verticalScrollBar()->maximum();
-    int nSizeWebviewBar =
-        m_pWebview->page()->mainFrame()->scrollBarMaximum(Qt::Vertical);
-    auto nRatio = static_cast<float>(nSizeEditorBar) / nSizeWebviewBar;
-
-    m_bWebviewScrolling = true;
-    m_pCurrentEditor->verticalScrollBar()->setSliderPosition(static_cast<int>(
-        m_pWebview->page()->mainFrame()->scrollPosition().y() * nRatio));
-    m_bWebviewScrolling = false;
-  }
-#endif
 #ifdef USEQTWEBENGINE
   if (!m_bEditorScrolling && m_pSettings->getSyncScrollbars()) {
     m_pWebview->page()->runJavaScript(
@@ -1367,17 +1289,12 @@ void InyokaEdit::changeEvent(QEvent *pEvent) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
 void InyokaEdit::showSyntaxOverview() {
   auto *pDialog =
       new QDialog(this, this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
   auto *pLayout = new QGridLayout(pDialog);
-#ifdef USEQTWEBKIT
-  auto *pWebview = new QWebView();
-#endif
-#ifdef USEQTWEBENGINE
   auto *pWebview = new QWebEngineView();
-#endif
   auto *pTextDocument = new QTextDocument(this);
 
   QFile OverviewFile(m_sSharePath + "/community/" +

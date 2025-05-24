@@ -36,9 +36,6 @@ class QComboBox;
 class QFile;
 class QSplitter;
 class QToolButton;
-#ifdef USEQTWEBKIT
-class QWebView;
-#endif
 #ifdef USEQTWEBENGINE
 class QWebEngineView;
 #endif
@@ -101,7 +98,7 @@ class InyokaEdit : public QMainWindow {
   void syncScrollbarsEditor();
   void syncScrollbarsWebview();
   void showAbout();
-#ifndef NOPREVIEW
+#ifdef USEQTWEBENGINE
   void loadPreviewFinished(const bool bSuccess);
   void clickedLink(const QUrl &newUrl);
   void changedUrl();
@@ -139,9 +136,6 @@ class InyokaEdit : public QMainWindow {
   QSplitter *m_pWidgetSplitter{};
   QTabWidget *m_pDocumentTabs{};
   QPoint m_WebviewScrollPosition;
-#ifdef USEQTWEBKIT
-  QWebView *m_pWebview{};
-#endif
 #ifdef USEQTWEBENGINE
   QWebEngineView *m_pWebview{};
 #endif
