@@ -10,7 +10,7 @@ CP := cp -rf
 RM := rm -f
 LN := ln -s
 GZIP := gzip -f9
-QMAKE := qmake6
+QMAKE := /usr/lib/qt6/bin/qmake
 LRELEASE := /usr/lib/qt6/bin/lrelease
 MAKE := make
 
