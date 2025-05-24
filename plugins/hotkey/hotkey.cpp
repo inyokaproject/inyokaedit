@@ -51,10 +51,6 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               QStringLiteral(PLUGIN_NAME));
 #endif
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  m_pSettings->setIniCodec("UTF-8");
-#endif
   m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;

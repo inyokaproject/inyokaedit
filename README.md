@@ -1,5 +1,5 @@
 # InyokaEdit [![CodeQL](https://github.com/inyokaproject/inyokaedit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/inyokaproject/inyokaedit/actions/workflows/codeql-analysis.yml)
-InyokaEdit is a markup editor for Inyoka articles.
+InyokaEdit is a markup editor for [Inyoka](https://github.com/inyokaproject/inyoka) articles.
 
 ![Screenshot](https://user-images.githubusercontent.com/26674558/110246608-8df67e00-7f68-11eb-93b5-a6802b2f37a7.png)
 
@@ -34,7 +34,7 @@ Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 ## Build instructions
 * InyokaEdit can be compiled with Qt >= 5.11 or Qt >= 6.0 (optional, but recommended for integrated preview: Including webkitwidgets or webenginewidgets)
 * For compiling spell checker plugin "spellchecker-hunspell" *libhunspell-dev* or for "spellchecker-nuspell" *libnuspell-dev* is needed.
-* For running InyokaEdit, community files have to be included. Because of this it is recommended to include the community files during **make/cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
+* For running InyokaEdit, community files have to be included. Because of this, it is recommended to include the community files during **make/cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
 
 ### make / qmake (Qt 5 or Qt 6)
 If Qt 6 shall be used, change export `QT_SELECT = qt5` in make file accordingly.

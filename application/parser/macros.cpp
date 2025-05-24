@@ -43,10 +43,6 @@ Macros::Macros(const QString &sSharePath, const QDir &tmpImgDir)
                          QStringLiteral("Could not open macros.conf"));
   } else {
     QTextStream in(&fiMacros);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Since Qt 6 UTF-8 is used by default
-    in.setCodec("UTF-8");
-#endif
     QString tmpLine;
     QStringList tmpList;
     MACRO tmpMacro;
@@ -469,11 +465,7 @@ void Macros::replaceSpan(QTextDocument *pRawDoc, const QString &sTrans) {
         sArgs.append(s);
       } else {
         // If 's' is outside quotes, get the split string
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        sArgs.append(s.split(splitComma, QString::SkipEmptyParts));
-#else
         sArgs.append(s.split(splitComma, Qt::SkipEmptyParts));
-#endif
       }
       bInside = !bInside;
     }

@@ -223,10 +223,7 @@ void SettingsDialog::accept() {
                         m_pUi->CommunityCombo->currentText() +
                         "/community.conf");
     QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Since Qt 6 UTF-8 is used by default
-    communityConfig.setIniCodec("UTF-8");
-#endif
+
     QString sValue(communityConfig.value(QStringLiteral("ConstructionArea"), "")
                        .toString());
     if (sValue.isEmpty()) {
@@ -288,10 +285,6 @@ void SettingsDialog::changedCommunity(int nIndex) {
   }
 
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  communityConfig.setIniCodec("UTF-8");
-#endif
 
   QString sUrl(communityConfig.value(QStringLiteral("WikiUrl"), "").toString());
   QString sLoginUrl(

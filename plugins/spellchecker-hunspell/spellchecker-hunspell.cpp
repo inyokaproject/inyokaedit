@@ -65,9 +65,6 @@
 #include <QSettings>
 #include <QStringList>
 #include <QTextStream>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QTextCodec>
-#endif
 
 #include "../../application/texteditor.h"
 #include "./hunspellcheckdialog.h"
@@ -286,9 +283,6 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
     return false;
   }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  m_pCodec = QTextCodec::codecForName(this->m_sEncoding.toLatin1().constData());
-#else
   m_Decoder = QStringDecoder(this->m_sEncoding.toLatin1().constData());
   m_Encoder = QStringEncoder(this->m_sEncoding.toLatin1().constData());
   if (!m_Decoder.isValid() || !m_Encoder.isValid()) {
@@ -297,7 +291,6 @@ auto SpellChecker_Hunspell::initDictionaries() -> bool {
     qWarning() << "Invalid string converter! Decoder:" << m_Decoder.name()
                << "- Encoder: " << m_Encoder.name();
   }
-#endif
 
   delete m_pHunspell;
   m_pHunspell = nullptr;
@@ -436,11 +429,7 @@ void SpellChecker_Hunspell::executePlugin() {}
 // ----------------------------------------------------------------------------
 
 auto SpellChecker_Hunspell::spell(const QString &sWord) -> bool {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  return m_pHunspell->spell(m_pCodec->fromUnicode(sWord).toStdString());
-#else
   return m_pHunspell->spell(QByteArray(m_Encoder(sWord)).toStdString());
-#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -450,22 +439,13 @@ auto SpellChecker_Hunspell::suggest(const QString &sWord) -> QStringList {
   int nSuggestions = 0;
   QStringList sListSuggestions;
   std::vector<std::string> wordlist;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  wordlist = m_pHunspell->suggest(m_pCodec->fromUnicode(sWord).toStdString());
-#else
   wordlist = m_pHunspell->suggest(QByteArray(m_Encoder(sWord)).toStdString());
-#endif
 
   nSuggestions = static_cast<int>(wordlist.size());
   if (nSuggestions > 0) {
     sListSuggestions.reserve(nSuggestions);
     for (int i = 0; i < nSuggestions; i++) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-      sListSuggestions << m_pCodec->toUnicode(
-          QByteArray::fromStdString(wordlist[i]));
-#else
       sListSuggestions << m_Decoder(wordlist[i]);
-#endif
     }
   }
 
@@ -512,11 +492,7 @@ void SpellChecker_Hunspell::ignoreWord(const QString &sWord) {
 // ----------------------------------------------------------------------------
 
 void SpellChecker_Hunspell::putWord(const QString &sWord) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  m_pHunspell->add(m_pCodec->fromUnicode(sWord).constData());
-#else
   m_pHunspell->add(QByteArray(m_Encoder(sWord)).constData());
-#endif
 }
 
 // ----------------------------------------------------------------------------

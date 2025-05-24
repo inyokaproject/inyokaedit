@@ -62,6 +62,8 @@
 #include <QDir>
 #include <QObject>
 #include <QString>
+#include <QStringDecoder>
+#include <QStringEncoder>
 #include <QTextCursor>
 #include <QTranslator>
 #include <QtPlugin>
@@ -69,12 +71,6 @@
 
 #include "../../application/ieditorplugin.h"
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-class QTextCodec;
-#else
-#include <QStringDecoder>
-#include <QStringEncoder>
-#endif
 class QSettings;
 
 class TextEditor;
@@ -141,12 +137,8 @@ class SpellChecker_Hunspell : public QObject, IEditorPlugin {
   QString m_sSharePath;
   QString m_sCommunity;
   QString m_sEncoding;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  QTextCodec *m_pCodec;
-#else
   QStringDecoder m_Decoder;
   QStringEncoder m_Encoder;
-#endif
 };
 
 #endif  // PLUGINS_SPELLCHECKER_HUNSPELL_SPELLCHECKER_HUNSPELL_H_

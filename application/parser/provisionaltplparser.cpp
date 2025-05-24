@@ -465,12 +465,7 @@ auto ProvisionalTplParser::parseForeignSource(const QStringList &sListArgs)
           "Zusätzliche [:Fremdquellen:] können das System gefährden."));
 
   if (sArgs.size() >= 2) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList sListVersions(
-        sArgs[1].split(" ", QString::SkipEmptyParts));
-#else
     const QStringList sListVersions(sArgs[1].split(" ", Qt::SkipEmptyParts));
-#endif
     QString sVersions("");
     for (auto s : sListVersions) {
       s = s.toLower();
@@ -1773,11 +1768,7 @@ auto ProvisionalTplParser::parseSidebar(const QStringList &sListArgs)
         }
       } else if (sListList[i][k].contains("[[BR]]") ||
                  k == sListList[i].size() - 1) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        sListTmp = sListList[i][k].split("[[BR]]", QString::SkipEmptyParts);
-#else
         sListTmp = sListList[i][k].split("[[BR]]", Qt::SkipEmptyParts);
-#endif
         for (const auto &s : std::as_const(sListTmp)) {
           sOutput +=
               "<tr>\n<td style=\"background-color: #F9EAAF; "

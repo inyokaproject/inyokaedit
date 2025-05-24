@@ -403,13 +403,8 @@ void Uu_TableTemplate::convertToNewTemplate() {
   QStringList sListRow;
   static QRegularExpression splitRows(QStringLiteral("\\|\\|\\s*\\n"));
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-  sListInput << m_pUi->baseTextEdit->toPlainText().split(
-      splitRows, QString::SkipEmptyParts);
-#else
   sListInput << m_pUi->baseTextEdit->toPlainText().split(splitRows,
                                                          Qt::SkipEmptyParts);
-#endif
 
   for (int i = 0; i < sListInput.size(); i++) {
     sListInput[i] = sListInput[i].trimmed();

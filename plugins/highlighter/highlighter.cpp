@@ -515,10 +515,6 @@ void Highlighter::getTranslations() {
                          QStringLiteral("Could not open macros.conf"));
   } else {
     QTextStream in(&fiMacros);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Since Qt 6 UTF-8 is used by default
-    in.setCodec("UTF-8");
-#endif
     QString tmpLine;
     QStringList tmpList;
 

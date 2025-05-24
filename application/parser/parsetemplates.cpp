@@ -101,12 +101,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
               sListArguments.append(s);
             } else {
               // If 's' is outside quotes, get the split string
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-              sListArguments.append(
-                  s.split(splitComma, QString::SkipEmptyParts));
-#else
               sListArguments.append(s.split(splitComma, Qt::SkipEmptyParts));
-#endif
             }
             bInside = !bInside;
           }
@@ -117,11 +112,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
             if (sListArguments[m].contains(QLatin1String("\n"))) {
               QString sTmp = sListArguments[m];
               QStringList tmpArgs;
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-              tmpArgs << sTmp.split(splitNewline, QString::SkipEmptyParts);
-#else
               tmpArgs << sTmp.split(splitNewline, Qt::SkipEmptyParts);
-#endif
               for (int j = 0; j < tmpArgs.size(); j++) {
                 sListArguments.insert(m + j + 1, tmpArgs[j]);
               }
@@ -152,11 +143,7 @@ void ParseTemplates::startParsing(QTextDocument *pRawDoc,
                 sList.append(s);
               } else {
                 // If 's' is outside quotes, get split string
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                sList.append(s.split(splitSpace, QString::SkipEmptyParts));
-#else
                 sList.append(s.split(splitSpace, Qt::SkipEmptyParts));
-#endif
               }
               bInside = !bInside;
             }

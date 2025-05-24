@@ -278,10 +278,6 @@ void FileOperations::loadFile(const QString &sFileName,
   }
 
   QTextStream in(&file);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  in.setCodec("UTF-8");
-#endif
   in.setAutoDetectUnicode(true);
 
 #ifndef QT_NO_CURSOR
@@ -427,10 +423,6 @@ auto FileOperations::saveFile(QString sFileName) -> bool {
   }
 
   QTextStream out(&file);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  out.setCodec("UTF-8");
-#endif
   out.setAutoDetectUnicode(true);
 
 #ifndef QT_NO_CURSOR
@@ -493,10 +485,6 @@ auto FileOperations::saveInyArchive(const QString &sArchive) -> bool {
   }
 
   QTextStream in(&html);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  in.setCodec("UTF-8");
-#endif
   in.setAutoDetectUnicode(true);
   QString sHtml(in.readAll());
 
@@ -592,10 +580,6 @@ void FileOperations::saveDocumentAuto() {
           fAutoSave.setFileName(m_pListEditors.at(i)->getFileName() + ".bak~");
         }
         QTextStream outStream(&fAutoSave);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        // Since Qt 6 UTF-8 is used by default
-        outStream.setCodec("UTF-8");
-#endif
         outStream.setAutoDetectUnicode(true);
 
         // No write permission
@@ -633,10 +617,6 @@ void FileOperations::printPdfPreview() {
   }
 
   QTextStream in(&previewFile);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  in.setCodec("UTF-8");
-#endif
   while (!in.atEnd()) {
     QString sTmpLine1 = in.readLine() + "\n";
     QString sTmpLine2 = in.readLine() + "\n";

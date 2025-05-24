@@ -52,10 +52,6 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
                               QStringLiteral(PLUGIN_NAME));
 #endif
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  m_pSettings->setIniCodec("UTF-8");
-#endif
   m_pParent = pParent;
   m_pEditor = pEditor;
   m_sSharePath = sSharePath;
@@ -216,10 +212,6 @@ void Uu_KnowledgeBox::loadTemplateDefaults(bool bReset) {
         tr("Could not open %1").arg(QStringLiteral("uu_knowledgebox.default")));
   } else {
     QTextStream in(&fiDefault);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Since Qt 6 UTF-8 is used by default
-    in.setCodec("UTF-8");
-#endif
     while (!in.atEnd()) {
       QString tmpLine = in.readLine().trimmed();
       if (!tmpLine.trimmed().isEmpty()) {

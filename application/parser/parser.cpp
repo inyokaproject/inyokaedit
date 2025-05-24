@@ -233,15 +233,9 @@ void Parser::replaceTemplates(QTextDocument *pRawDoc) {
                 sListArguments.append(s);
               } else {
                 // If 's' is outside quotes, get the split string
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                sListArguments.append(s.split(QRegularExpression(
-                                                QStringLiteral(",+")),
-                                              QString::SkipEmptyParts));
-#else
                 sListArguments.append(s.split(QRegularExpression(
                                                 QStringLiteral(",+")),
                                               Qt::SkipEmptyParts));
-#endif
               }
               bInside = !bInside;
             }
@@ -382,8 +376,8 @@ void Parser::replaceCodeblocks(QTextDocument *pRawDoc) {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-auto Parser::highlightCode(const QString &sLanguage,
-                           const QString &sCode) -> QString {
+auto Parser::highlightCode(const QString &sLanguage, const QString &sCode)
+    -> QString {
   static bool bChecked(false);
   static bool bPygmentize(false);
   static QFile sPygmentize(m_sPygmentize);

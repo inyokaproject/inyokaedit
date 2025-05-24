@@ -48,10 +48,6 @@ Settings::Settings(QWidget *pParent, const QString &sSharePath, QObject *pObj) {
                               qApp->applicationName().toLower(),
                               qApp->applicationName().toLower());
 #endif
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  m_pSettings->setIniCodec("UTF-8");
-#endif
 
   this->readSettings(sSharePath);
 
@@ -141,10 +137,6 @@ void Settings::readSettings(const QString &sSharePath) {
   QFile communityFile(sSharePath + "/community/" + m_sInyokaCommunity +
                       "/community.conf");
   QSettings communityConfig(communityFile.fileName(), QSettings::IniFormat);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  // Since Qt 6 UTF-8 is used by default
-  communityConfig.setIniCodec("UTF-8");
-#endif
 
   QString sValue(
       communityConfig.value(QStringLiteral("WikiUrl"), "").toString());

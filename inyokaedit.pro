@@ -14,11 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-lessThan(QT_MAJOR_VERSION, 5) {
-  error("InyokaEdit requires Qt 5.11 or greater")
-}
-equals(QT_MAJOR_VERSION, 5):lessThan(QT_MINOR_VERSION, 11) {
-  error("InyokaEdit requires Qt 5.11 or greater")
+lessThan(QT_MAJOR_VERSION, 6) {
+  error("InyokaEdit requires Qt 6.0 or greater")
 }
 
 TEMPLATE = subdirs
