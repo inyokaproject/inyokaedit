@@ -2,7 +2,7 @@
 [[Vorlage(Baustelle, 22.2.2222, Bearbeiter)]]
 Wenn der Artikel fertig ist, auf ''"Diskussion"'' klicken und dort mitteilen, dass der Artikel zu einem Korrekturlesen bereit ist. Das Wikiteam wird nach Diskussion den Artikel dann ins Wiki verschieben und die "Baustelle"-Zeile herauslöschen.
 ## Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, jammy, focal)]]
+[[Vorlage(Getestet, noble, jammy)]]
 
 
 ## Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird.

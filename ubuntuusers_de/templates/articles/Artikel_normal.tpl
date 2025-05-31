@@ -2,7 +2,7 @@
 [[Vorlage(Baustelle, 31.12.2050, Bearbeiter)]]
 
 ## Bitte hier die Versionen kommagetrennt eintragen, mit denen getestet wurde.
-[[Vorlage(Getestet, jammy, focal)]]
+[[Vorlage(Getestet, noble, jammy)]]
 
 ## Bitte hier alle wesentlichen Wikiartikel auflisten, deren Kenntnis vorausgesetzt wird.
 {{{#!vorlage Wissen
