@@ -21,7 +21,7 @@ jobs:
        echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Install Dependencies
-      run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev libfuse2
+      run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev qt6-wayland libfuse2
 
     - name: Download linuxdeploy
       run: |
