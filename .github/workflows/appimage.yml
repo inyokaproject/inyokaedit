@@ -18,10 +18,10 @@ jobs:
     - name: Set global env
       run: |
        echo "BASE_DIR=$(pwd)" >> $GITHUB_ENV
-       echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+       echo "LINUXDEPLOY_OUTPUT_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Install Dependencies
-      run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev qt6-wayland libfuse2
+      run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev qt6-wayland appstream libfuse2
 
     - name: Download linuxdeploy
       run: |
@@ -63,8 +63,8 @@ jobs:
        export EXTRA_QT_MODULES="waylandcompositor"
        export QMAKE=/usr/lib/qt6/bin/qmake
        ${PWD}/linuxdeploy-"$ARCH".AppImage --appdir ${PWD}/AppDir --plugin qt --output appimage
-       mv -v *AppImage ${BASE_DIR}/out/InyokaEdit-${VERSION}-${ARCH}.AppImage
+       mv -v *AppImage ${BASE_DIR}/out
 
     - name: Upload AppImage
       run: |
-       ./ffsend upload ${BASE_DIR}/out/InyokaEdit-*-${ARCH}.AppImage
+       ./ffsend upload ${BASE_DIR}/out/InyokaEdit-*.AppImage
