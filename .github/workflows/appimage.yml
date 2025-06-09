@@ -4,6 +4,9 @@ name: "AppImage"
 on:
   workflow_dispatch:
 
+env:
+  ARCH: "x86_64"
+
 jobs:
   AppImage_Ubuntu22-04:
     name: AppImage Ubuntu 22.04 Qt 6.2
@@ -12,21 +15,29 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Set global env
+      run: |
+       echo "BASE_DIR=$(pwd)" >> $GITHUB_ENV
+       echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
     - name: Install Dependencies
       run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev libfuse2
 
-    - name: Download linuxdeployqt
+    - name: Download linuxdeploy
       run: |
-       wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-       chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-       unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
-       export VERSION=$(git rev-parse --short HEAD)  # linuxdeployqt uses this for naming the file
+       wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-"$ARCH".AppImage"
+       chmod a+x linuxdeploy-"$ARCH".AppImage
+       LINUXDEPLOY_BIN=${PWD}/linuxdeploy-"$ARCH".AppImage
+
+    - name: Download linuxdeployqt-plugin-appimage
+      run: |
+       wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-"$ARCH".AppImage"
+       chmod a+x linuxdeploy-plugin-appimage-"$ARCH".AppImage
 
     - name: Download linuxdeployqt-plugin-qt
       run: |
-       RELEASE_VERSION=$(curl --silent https://api.github.com/repos/linuxdeploy/linuxdeploy-plugin-qt/releases/latest | sed -Ene '/^ *"tag_name": *"(.+)",$/s//\1/p')
-       wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/$RELEASE_VERSION/linuxdeploy-plugin-qt-x86_64.AppImage"
-       chmod a+x linuxdeploy-plugin-qt-x86_64.AppImage
+       wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage"
+       chmod a+x linuxdeploy-plugin-qt-"$ARCH".AppImage
 
     - name: Download ffsend
       run: |
@@ -43,14 +54,17 @@ jobs:
       run: |
        ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
-       make DESTDIR=appdir install
+       make DESTDIR=${PWD}/AppDir install
        find appdir
 
     - name: Create AppImage
       run: |
-       ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage -bundle-non-qt-libs -extra-plugins=iconengines,platformthemes/libqgtk3.so -qmake=/usr/lib/qt6/bin/qmake --plugin qt
-       find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
+       mkdir -p ${BASE_DIR}/out
+       export EXTRA_PLATFORM_PLUGINS="libqwayland-generic.so"
+       export EXTRA_QT_MODULES="waylandcompositor"
+       ${PWD}/linuxdeploy-"$ARCH".AppImage --appdir ${PWD}/AppDir --plugin qt --output appimage
+       mv -v *AppImage ${BASE_DIR}/out/InyokaEdit-${VERSION}-${ARCH}.AppImage
 
     - name: Upload AppImage
       run: |
-       ./ffsend upload InyokaEdit-*-x86_64.AppImage
+       ./ffsend upload ${BASE_DIR}/out/InyokaEdit-*-${ARCH}.AppImage
