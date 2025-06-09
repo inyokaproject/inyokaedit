@@ -61,6 +61,7 @@ jobs:
        mkdir -p ${BASE_DIR}/out
        export EXTRA_PLATFORM_PLUGINS="libqwayland-generic.so"
        export EXTRA_QT_MODULES="waylandcompositor"
+       export QMAKE=/usr/lib/qt6/bin/qmake
        ${PWD}/linuxdeploy-"$ARCH".AppImage --appdir ${PWD}/AppDir --plugin qt --output appimage
        mv -v *AppImage ${BASE_DIR}/out/InyokaEdit-${VERSION}-${ARCH}.AppImage
 

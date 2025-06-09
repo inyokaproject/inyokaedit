@@ -32,7 +32,9 @@ jobs:
         languages: ${{ matrix.language }}
           
     - name: Install Dependencies
-      run: sudo apt update && sudo apt install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev
+      run: |
+       sudo apt-get update && sudo apt-get upgrade 
+       sudo apt-get install qt6-base-dev qmake6 qt6-l10n-tools qt6-webengine-dev libhunspell-dev
 
     - run: |
        ./configure --prefix=/usr --community=none
