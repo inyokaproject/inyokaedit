@@ -55,7 +55,6 @@ jobs:
        ./configure --prefix=/usr --community=ubuntuusers_de
        make all -j$(nproc)
        make DESTDIR=${PWD}/AppDir install
-       find appdir
 
     - name: Create AppImage
       run: |
