@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="spellchecker-hunspell_de.qm">../lang/spellchecker-hunspell_de.qm</file>
-        <file alias="spellchecker-hunspell_en.qm">../lang/spellchecker-hunspell_en.qm</file>
-        <file alias="spellchecker-hunspell_nl.qm">../lang/spellchecker-hunspell_nl.qm</file>
-    </qresource>
-</RCC>

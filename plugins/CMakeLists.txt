@@ -14,32 +14,32 @@
 #  You should have received a copy of the GNU General Public License
 #  along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
 
-option(SPELLCHECKER_NUSPELL "Enable nuspell spellchecker plugin" OFF)
-if(SPELLCHECKER_NUSPELL)
+option(PLUGIN_SPELLCHECKER_NUSPELL "Enable nuspell spellchecker plugin" OFF)
+if(PLUGIN_SPELLCHECKER_NUSPELL)
     add_subdirectory(spellchecker-nuspell)
 endif()
 
-option(SPELLCHECKER_HUNSPELL "Enable hunspell spellchecker plugin" ON)
-if(SPELLCHECKER_HUNSPELL)
+option(PLUGIN_SPELLCHECKER_HUNSPELL "Enable hunspell spellchecker plugin" ON)
+if(PLUGIN_SPELLCHECKER_HUNSPELL)
     add_subdirectory(spellchecker-hunspell)
 endif()
 
-option(UU_TABLETEMPLATE "Enable uu_tabletemplate plugin" ON)
-if(UU_TABLETEMPLATE)
+option(PLUGIN_UU_TABLETEMPLATE "Enable uu_tabletemplate plugin" ON)
+if(PLUGIN_UU_TABLETEMPLATE)
     add_subdirectory(uu_tabletemplate)
 endif()
 
-option(UU_KNOWLEDGEBOX "Enable uu_knowledgebox plugin" ON)
-if(UU_KNOWLEDGEBOX)
+option(PLUGIN_UU_KNOWLEDGEBOX "Enable uu_knowledgebox plugin" ON)
+if(PLUGIN_UU_KNOWLEDGEBOX)
     add_subdirectory(uu_knowledgebox)
 endif()
 
-option(HIGHLIGHTER "Enable highlighter plugin" ON)
-if(HIGHLIGHTER)
+option(PLUGIN_HIGHLIGHTER "Enable highlighter plugin" ON)
+if(PLUGIN_HIGHLIGHTER)
     add_subdirectory(highlighter)
 endif()
 
-option(HOTKEY "Enable hotkey plugin" ON)
-if(HOTKEY)
+option(PLUGIN_HOTKEY "Enable hotkey plugin" ON)
+if(PLUGIN_HOTKEY)
     add_subdirectory(hotkey)
 endif()

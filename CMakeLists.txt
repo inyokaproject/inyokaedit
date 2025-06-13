@@ -23,8 +23,8 @@ project(InyokaEdit
 )
 set(PROJECT_COPYRIGHT "(C) 2011-present The InyokaEdit developers")
 
-option(BUILD_APPLICATION "Build main application" ON)
-option(BUILD_COMMUNITY_ONLY "Build community package only" OFF)
+option(INY_BUILD_APPLICATION "Build main application" ON)
+option(INY_BUILD_COMMUNITY_ONLY "Build community package only" OFF)
 
 set(QT_MAIN_VERSION Qt6)
 set(QT_MINIMUM_VERSION 6.0)
@@ -35,22 +35,22 @@ elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     set(WINDOWS ON)
 endif()
 
-if (NOT BUILD_COMMUNITY_ONLY)
+if (NOT INY_BUILD_COMMUNITY_ONLY)
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
     include(cmake/preview-deps.cmake)
 
     add_subdirectory(plugins)
-    if (BUILD_APPLICATION)
+    if (INY_BUILD_APPLICATION)
         add_subdirectory(application)
     endif()
 endif()
 
 if(LINUX)
-    if (BUILD_APPLICATION)
+    if (INY_BUILD_APPLICATION)
         add_subdirectory(man)
     endif()        
 
-    if(COMMUNITY STREQUAL "community/ubuntuusers_de")
+    if(INY_COMMUNITY STREQUAL "community/ubuntuusers_de")
         include(GNUInstallDirs)
         install(DIRECTORY community/ubuntuusers_de DESTINATION ${CMAKE_INSTALL_DATADIR}/inyokaedit/community)
     endif()

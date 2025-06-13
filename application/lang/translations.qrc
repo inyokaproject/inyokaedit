@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>inyokaedit_de.qm</file>
-        <file>inyokaedit_en.qm</file>
-        <file>inyokaedit_nl.qm</file>
-    </qresource>
-</RCC>

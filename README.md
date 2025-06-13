@@ -34,19 +34,12 @@ Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 ## Build instructions
 * InyokaEdit can be compiled with Qt >= 6.0 (optional, but recommended for integrated preview: Including webenginewidgets)
 * For compiling spell checker plugin "spellchecker-hunspell" *libhunspell-dev* or for "spellchecker-nuspell" *libnuspell-dev* is needed.
-* For running InyokaEdit, community files have to be included. Because of this, it is recommended to include the community files during **make/cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
-
-### make / qmake
-```
-./configure   # Execute ./configure --help to see all config options
-make -j8      # Adjust -j8 according to your available cores.
-make install
-```
+* For running InyokaEdit, community files have to be included. Because of this, it is recommended to include the community files during **cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
 
 ### cmake
-Adjust CMAKE_PREFIX_PATH according to your Qt installation. Optionally set `-DPREVIEW=[none/useqtwebengine]` to disable preview / use Qt WebEngine.
+Adjust CMAKE_PREFIX_PATH according to your Qt installation. Optionally set `-DINY_PREVIEW=[none/useqtwebengine]` to disable preview / use Qt WebEngine.
 ```
-cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/qt6 -DCOMMUNITY=community/ubuntuusers_de
+cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/qt6 -DINY_COMMUNITY=community/ubuntuusers_de
 cmake --build build-cmake -- -j8  # Adjust -j8 according to your available cores.
 sudo cmake --install build-cmake  # or DESTDIR=foobar cmake --install build-cmake
 ```

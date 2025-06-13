@@ -4,32 +4,32 @@
 <context>
     <name>Hotkey</name>
     <message>
-        <location filename="../hotkey.cpp" line="115"/>
+        <location filename="../hotkey.cpp" line="109"/>
         <source>Hotkey selector</source>
         <translation>Tastenkombinationen</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="239"/>
+        <location filename="../hotkey.cpp" line="223"/>
         <source>&apos;&apos;&apos;Bold&apos;&apos;&apos;</source>
         <translation>&apos;&apos;&apos;Fett&apos;&apos;&apos;</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="387"/>
+        <location filename="../hotkey.cpp" line="366"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="397"/>
+        <location filename="../hotkey.cpp" line="380"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="399"/>
+        <location filename="../hotkey.cpp" line="382"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../hotkey.cpp" line="402"/>
+        <location filename="../hotkey.cpp" line="385"/>
         <source>Plugin for defining custom hotkeys.</source>
         <translation>Plugin zum Anlegen eigener Tastenkombinationen.</translation>
     </message>

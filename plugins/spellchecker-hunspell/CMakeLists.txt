@@ -32,6 +32,11 @@ find_package(HUNSPELL REQUIRED)
 
 add_library(spellchecker-hunspell SHARED)
 
+set_target_properties(spellchecker-hunspell
+    PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+)
+
 target_compile_features(spellchecker-hunspell PUBLIC cxx_std_17)
 target_compile_definitions(spellchecker-hunspell
     PRIVATE
@@ -67,7 +72,6 @@ set(FORMS
 
 set(RESOURCES
     res/spellchecker-hunspell_resources.qrc
-    res/translations.qrc
 )
 
 set(TRANSLATIONS
@@ -78,6 +82,17 @@ set(TRANSLATIONS
 
 qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
+foreach(qm_file ${QM_FILES})
+    get_filename_component(qm_filename "${qm_file}" NAME)
+    set_source_files_properties(
+        "${qm_file}"
+        PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
+    )
+endforeach()
+qt_add_resources(spellchecker-hunspell
+    PREFIX "/"
+    FILES ${QM_FILES}
+)
 
 target_sources(spellchecker-hunspell PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
 

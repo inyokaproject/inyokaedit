@@ -62,37 +62,37 @@
 <context>
     <name>SpellChecker_Nuspell</name>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="148"/>
+        <location filename="../spellchecker-nuspell.cpp" line="145"/>
         <source>Spell checker</source>
         <translation>Rechtschreibung</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="202"/>
+        <location filename="../spellchecker-nuspell.cpp" line="197"/>
         <source>Can not find the requested dictionary!</source>
         <translation>Das gewünschte Wörterbuch kann nicht gefunden werden!</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="357"/>
+        <location filename="../spellchecker-nuspell.cpp" line="348"/>
         <source>Spell check has finished.</source>
         <translation>Rechtschreibüberprüfung abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="485"/>
+        <location filename="../spellchecker-nuspell.cpp" line="470"/>
         <source>Info</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="493"/>
+        <location filename="../spellchecker-nuspell.cpp" line="484"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="495"/>
+        <location filename="../spellchecker-nuspell.cpp" line="486"/>
         <source>Licence</source>
         <translation>Lizenz</translation>
     </message>
     <message>
-        <location filename="../spellchecker-nuspell.cpp" line="501"/>
+        <location filename="../spellchecker-nuspell.cpp" line="492"/>
         <source>Spell checker based on &lt;a href=&quot;https://nuspell.github.io/&quot;&gt;Nuspell&lt;/a&gt;.</source>
         <translation>Rechtschreibprüfung basierend auf &lt;a href=&quot;http://nuspell.github.io/&quot;&gt;Nuspell&lt;/a&gt;.</translation>
     </message>

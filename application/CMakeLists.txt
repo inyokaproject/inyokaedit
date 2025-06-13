@@ -33,6 +33,11 @@ else()
     qt_add_executable(inyokaedit)
 endif()
 
+set_target_properties(inyokaedit
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
 target_compile_features(inyokaedit PUBLIC cxx_std_17)
 target_compile_definitions(inyokaedit
     PRIVATE
@@ -105,7 +110,6 @@ set(FORMS
 
 set(RESOURCES
     data/data.qrc
-    lang/translations.qrc
 )
 
 set(TRANSLATIONS
@@ -115,7 +119,18 @@ set(TRANSLATIONS
 )
 
 qt_add_translation(QM_FILES ${TRANSLATIONS})
-add_custom_target(translations ALL DEPENDS ${QM_FILES})
+add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
+foreach(qm_file ${QM_FILES})
+    get_filename_component(qm_filename "${qm_file}" NAME)
+    set_source_files_properties(
+        "${qm_file}"
+        PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
+    )
+endforeach()
+qt_add_resources(inyokaedit
+    PREFIX "/"
+    FILES ${QM_FILES}
+)
 
 target_sources(inyokaedit PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
 

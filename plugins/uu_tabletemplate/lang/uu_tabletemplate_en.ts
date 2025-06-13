@@ -2,65 +2,39 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
-    <name>ParseLinks</name>
-    <message>
-        <location filename="../../../application/parser/parselinks.cpp" line="196"/>
-        <source>Section</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Utils</name>
-    <message>
-        <location filename="../../../application/utils.cpp" line="137"/>
-        <source>Update found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../application/utils.cpp" line="138"/>
-        <source>Found a new version of %1.&lt;br&gt;Do you want to download the latest version?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../application/utils.cpp" line="143"/>
-        <source>No, don&apos;t ask again!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Uu_TableTemplate</name>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="208"/>
+        <location filename="../uu_tabletemplate.cpp" line="214"/>
         <source>Ubuntuusers.de table generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="306"/>
+        <location filename="../uu_tabletemplate.cpp" line="310"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="324"/>
+        <location filename="../uu_tabletemplate.cpp" line="328"/>
         <source>Head</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="469"/>
+        <location filename="../uu_tabletemplate.cpp" line="464"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="477"/>
+        <location filename="../uu_tabletemplate.cpp" line="476"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="479"/>
+        <location filename="../uu_tabletemplate.cpp" line="478"/>
         <source>Licence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.cpp" line="482"/>
+        <location filename="../uu_tabletemplate.cpp" line="481"/>
         <source>Plugin for generating ubuntuusers.de styled Inyoka tables.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -128,12 +102,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.ui" line="169"/>
+        <location filename="../uu_tabletemplate.ui" line="164"/>
         <source>ubuntuusers.de to base</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../uu_tabletemplate.ui" line="181"/>
+        <location filename="../uu_tabletemplate.ui" line="171"/>
         <source>ubuntuusers.de table template:</source>
         <translation type="unfinished"></translation>
     </message>

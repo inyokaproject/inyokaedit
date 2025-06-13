@@ -31,6 +31,11 @@ find_package(${QT_MAIN_VERSION} ${QT_MINIMUM_VERSION}
 
 add_library(uu_tabletemplate SHARED)
 
+set_target_properties(uu_tabletemplate
+    PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+)
+
 target_compile_features(uu_tabletemplate PUBLIC cxx_std_17)
 target_compile_definitions(uu_tabletemplate
     PRIVATE
@@ -70,7 +75,6 @@ set(FORMS
 
 set(RESOURCES
     res/uu_tabletemplate_resources.qrc
-    res/translations.qrc
 )
 
 set(TRANSLATIONS
@@ -81,6 +85,17 @@ set(TRANSLATIONS
 
 qt_add_translation(QM_FILES ${TRANSLATIONS})
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
+foreach(qm_file ${QM_FILES})
+    get_filename_component(qm_filename "${qm_file}" NAME)
+    set_source_files_properties(
+        "${qm_file}"
+        PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
+    )
+endforeach()
+qt_add_resources(uu_tabletemplate
+    PREFIX "/"
+    FILES ${QM_FILES}
+)
 
 target_sources(uu_tabletemplate PRIVATE ${HEADERS} ${SOURCES} ${FORMS} ${RESOURCES})
 
