@@ -16,7 +16,7 @@
 
 TEMPLATE      = app
 
-unix: !macx {
+unix: {
     TARGET    = inyokaedit
 } else {
     TARGET    = InyokaEdit
@@ -70,7 +70,7 @@ isEmpty(PREVIEW) {
   }
 }
 
-unix: !macx {
+unix: {
   # Required for miniz
   DEFINES     += __USE_LARGEFILE64
   DEFINES     += _LARGEFILE64_SOURCE
@@ -125,8 +125,3 @@ TRANSLATIONS  += lang/inyokaedit_de.ts \
                  lang/inyokaedit_nl.ts
 
 win32:RC_FILE  = data/win.rc
-
-macx {
-  ICON             = icons/icon.icns
-  QMAKE_INFO_PLIST = data/mac/Info.plist
-}
