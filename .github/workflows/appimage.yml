@@ -52,9 +52,9 @@ jobs:
 
     - name: Compile
       run: |
-       ./configure --prefix=/usr --community=ubuntuusers_de
-       make all -j$(nproc)
-       make DESTDIR=${PWD}/AppDir install
+       cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6/ -DINY_COMMUNITY=community/ubuntuusers_de
+       cmake --build build-cmake -- -j$(nproc)
+       DESTDIR=${PWD}/AppDir cmake --install build-cmake
 
     - name: Create AppImage
       run: |
@@ -63,7 +63,7 @@ jobs:
        export EXTRA_QT_MODULES="waylandcompositor"
        export QMAKE=/usr/lib/qt6/bin/qmake
        ${PWD}/linuxdeploy-"$ARCH".AppImage --appdir ${PWD}/AppDir --plugin qt --output appimage
-       mv -v *AppImage ${BASE_DIR}/out
+       mv -v InyokaEdit-*.AppImage ${BASE_DIR}/out
 
     - name: Upload AppImage
       run: |
