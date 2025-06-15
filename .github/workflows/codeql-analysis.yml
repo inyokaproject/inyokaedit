@@ -33,10 +33,10 @@ jobs:
           
     - name: Install Dependencies
       run: |
-       sudo apt-get update && sudo apt-get install qt6-base-dev qmake6 qt6-l10n-tools qt6-tools-dev qt6-webengine-dev libgl-dev libhunspell-dev
+       sudo apt-get update && sudo apt-get install qt6-base-dev qmake6 qt6-l10n-tools qt6-tools-dev qt6-tools-dev-tools qt6-webengine-dev libgl-dev libhunspell-dev libnuspell-dev
 
     - run: |
-       cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6/ -DINY_COMMUNITY=none
+       cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6/ -DINY_COMMUNITY=none -DSPELLCHECKER_NUSPELL=ON
        cmake --build build-cmake -- -j$(nproc)
 
     - name: Perform CodeQL Analysis
