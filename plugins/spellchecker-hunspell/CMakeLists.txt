@@ -89,7 +89,7 @@ foreach(qm_file ${QM_FILES})
         PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
     )
 endforeach()
-qt_add_resources(spellchecker-hunspell
+qt_add_resources(spellchecker-hunspell translations_hunspell
     PREFIX "/"
     FILES ${QM_FILES}
 )

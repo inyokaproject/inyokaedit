@@ -87,7 +87,7 @@ foreach(qm_file ${QM_FILES})
         PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
     )
 endforeach()
-qt_add_resources(highlighter
+qt_add_resources(highlighter translations_highlighter
     PREFIX "/"
     FILES ${QM_FILES}
 )

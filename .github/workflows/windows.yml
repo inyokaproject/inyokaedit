@@ -18,9 +18,21 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.8.*'
+        version: '6.9.1'  # Change cache key accordingly
+        cache: 'true'
+        cache-key-prefix: 'install-qt-action-691'
+        target: 'desktop'
+        arch: 'win64_msvc2022_64'
         modules: 'qtpositioning qtserialport qtwebchannel qtwebengine qtwebview'
-    
+
+    - name: Cache vcpkg installed
+      uses: actions/cache@4
+      with:
+        path: vcpkg_installed
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-
+
     - name: Install NuSpell using vcpkg
       shell: cmd
       run: |

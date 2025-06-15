@@ -92,7 +92,7 @@ foreach(qm_file ${QM_FILES})
         PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
     )
 endforeach()
-qt_add_resources(uu_tabletemplate
+qt_add_resources(uu_tabletemplate translations_uu_table
     PREFIX "/"
     FILES ${QM_FILES}
 )

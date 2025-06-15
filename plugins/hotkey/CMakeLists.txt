@@ -85,7 +85,7 @@ foreach(qm_file ${QM_FILES})
         PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
     )
 endforeach()
-qt_add_resources(hotkey
+qt_add_resources(hotkey translations_hotkey
     PREFIX "/"
     FILES ${QM_FILES}
 )

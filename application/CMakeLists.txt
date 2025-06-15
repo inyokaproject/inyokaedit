@@ -127,7 +127,7 @@ foreach(qm_file ${QM_FILES})
         PROPERTIES QT_RESOURCE_ALIAS "${qm_filename}"
     )
 endforeach()
-qt_add_resources(inyokaedit
+qt_add_resources(inyokaedit translations_iny
     PREFIX "/"
     FILES ${QM_FILES}
 )
