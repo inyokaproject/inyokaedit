@@ -6,6 +6,7 @@ on:
 
 env:
   BUILD_TYPE: Release
+  QT_VERSION: '6.9.1'
   
 jobs:
   Windows_Qt6:
@@ -18,9 +19,9 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
-        version: '6.9.1'  # Change cache key accordingly
+        version: ${{ env.QT_VERSION }}
         cache: 'true'
-        cache-key-prefix: 'install-qt-action-691'
+        cache-key-prefix: install-qt-action-${{ env.QT_VERSION }}
         target: 'desktop'
         arch: 'win64_msvc2022_64'
         modules: 'qtpositioning qtserialport qtwebchannel qtwebengine qtwebview'
