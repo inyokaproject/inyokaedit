@@ -52,7 +52,7 @@ jobs:
 
     - name: Compile
       run: |
-       cmake -B build-cmake -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6/ -DINY_COMMUNITY=community/ubuntuusers_de
+       cmake -B build-cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_PREFIX_PATH=/usr/include/x86_64-linux-gnu/qt6/ -DINY_COMMUNITY=community/ubuntuusers_de
        cmake --build build-cmake -- -j$(nproc)
        DESTDIR=${PWD}/AppDir cmake --install build-cmake
 

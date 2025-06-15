@@ -28,7 +28,7 @@ jobs:
     - name: Cache vcpkg installed
       uses: actions/cache@v4
       with:
-        path: vcpkg_installed
+        path: D:\A\INYOKAEDIT\INYOKAEDIT\VCPKG_INSTALLED
         key: ${{ runner.os }}-vcpkg-${{ hashFiles('vcpkg.json') }}
         restore-keys: |
           ${{ runner.os }}-vcpkg-
