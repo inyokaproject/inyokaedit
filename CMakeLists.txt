@@ -25,9 +25,10 @@ set(PROJECT_COPYRIGHT "(C) 2011-present The InyokaEdit developers")
 
 option(INY_BUILD_APPLICATION "Build main application" ON)
 option(INY_BUILD_COMMUNITY_ONLY "Build community package only" OFF)
+option(GENERATE_TS "Regenerate translation source files" OFF)
 
 set(QT_MAIN_VERSION Qt6)
-set(QT_MINIMUM_VERSION 6.0)
+set(QT_MINIMUM_VERSION 6.2)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     set(LINUX ON)

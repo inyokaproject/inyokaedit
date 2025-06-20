@@ -78,7 +78,11 @@ set(TRANSLATIONS
     lang/highlighter_nl.ts
 )
 
-qt_add_translation(QM_FILES ${TRANSLATIONS})
+if (GENERATE_TS)
+    qt6_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/plugins/highlighter/ ${TRANSLATIONS} OPTIONS -no-obsolete)
+else ()
+    qt6_add_translation(QM_FILES ${TRANSLATIONS})
+endif ()
 add_custom_target(translations_${PROJECT_NAME} ALL DEPENDS ${QM_FILES})
 foreach(qm_file ${QM_FILES})
     get_filename_component(qm_filename "${qm_file}" NAME)
