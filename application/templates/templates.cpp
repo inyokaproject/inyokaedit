@@ -242,7 +242,6 @@ void Templates::initTxtMap(const QString &sFile, const QChar cSplit,
 
 void Templates::initTextformats(const QString &sFilename) {
   QFile formatsFile(sFilename);
-  QStringList sListInput;
 
   if (!formatsFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QMessageBox::warning(nullptr, QStringLiteral("Warning"),
@@ -250,6 +249,7 @@ void Templates::initTextformats(const QString &sFilename) {
     qWarning() << "Could not open text formats config file:"
                << formatsFile.fileName();
   } else {
+    QStringList sListInput;
     QTextStream in(&formatsFile);
     while (!in.atEnd()) {
       QString tmpLine = in.readLine().trimmed();

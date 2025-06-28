@@ -77,6 +77,14 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
       listPluginsDir << pluginsDir;
     }
   }
+  // Plugins in standard installation folder (Linux / Debian / Ubuntu)
+  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/x86_64-linux-gnu/" +
+                     qApp->applicationName().toLower());
+  if (pluginsDir.cd(QStringLiteral("plugins"))) {
+    if (!listPluginsDir.contains(pluginsDir)) {
+      listPluginsDir << pluginsDir;
+    }
+  }
 
   // Look for available plugins
   for (const auto &dir : std::as_const(listPluginsDir)) {
