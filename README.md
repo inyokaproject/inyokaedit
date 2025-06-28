@@ -27,12 +27,12 @@ sudo apt-get update
 sudo apt-get install inyokaedit inyokaedit-data-ubuntuusersde inyokaedit-plugins
 ```
 
-AppImage, Flatpak and build for Windows: https://github.com/inyokaproject/inyokaedit/releases
+AppImage and build for Windows: https://github.com/inyokaproject/inyokaedit/releases
 
 Packages in Arch AUR: https://aur.archlinux.org/packages/?K=inyokaedit
 
 ## Build instructions
-* InyokaEdit can be compiled with Qt >= 6.0 (optional, but recommended for integrated preview: Including webenginewidgets)
+* InyokaEdit can be compiled with Qt >= 6.2 (optional, but recommended for integrated preview: Including webenginewidgets)
 * For compiling spell checker plugin "spellchecker-hunspell" *libhunspell-dev* or for "spellchecker-nuspell" *libnuspell-dev* is needed.
 * For running InyokaEdit, community files have to be included. Because of this, it is recommended to include the community files during **cmake install**. For this, the [community branch](https://github.com/inyokaproject/inyokaedit/tree/community) has to be included inside the main branch root folder.
 

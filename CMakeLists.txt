@@ -47,11 +47,12 @@ if (NOT INY_BUILD_COMMUNITY_ONLY)
 endif()
 
 if(LINUX)
-    if (INY_BUILD_APPLICATION)
+    if (INY_BUILD_APPLICATION AND NOT INY_BUILD_COMMUNITY_ONLY)
         add_subdirectory(man)
     endif()        
 
     if(INY_COMMUNITY STREQUAL "community/ubuntuusers_de")
+        message(STATUS "Including community/ubuntuusers_de")
         include(GNUInstallDirs)
         install(DIRECTORY community/ubuntuusers_de DESTINATION ${CMAKE_INSTALL_DATADIR}/inyokaedit/community)
     endif()
