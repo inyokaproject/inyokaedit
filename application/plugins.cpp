@@ -87,9 +87,13 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
   }
 
   // Look for available plugins
+  QStringList filters;
+  filters << "*.dll"
+          << "*.so"
+          << "*.dylib";
   for (const auto &dir : std::as_const(listPluginsDir)) {
     qDebug() << "Plugins folder:" << dir.absolutePath();
-    const QStringList entryList(dir.entryList(QDir::Files));
+    const QStringList entryList(dir.entryList(filters, QDir::Files));
     for (const auto &sFile : entryList) {
       qDebug() << "Plugin file:" << sFile;
       QPluginLoader loader(dir.absoluteFilePath(sFile));
