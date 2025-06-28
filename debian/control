@@ -8,10 +8,14 @@ Uploaders:
    djcj <djcj@gmx.de>
 Build-Depends:
    debhelper (>= 9),
-   qtbase5-dev,
-   qt5-qmake,
-   qttools5-dev-tools,
-   qtwebengine5-dev,
+   qt6-base-dev,
+   qmake6,
+   qt6-tools-dev,
+   qt6-tools-dev-tools,
+   qt6-webengine-dev,
+   qt6-webengine-dev-tools,
+   qt6-l10n-tools,
+   libgl-dev,
    libhunspell-dev,
    pkg-config
 Standards-Version: 4.1.1
@@ -24,7 +28,6 @@ Architecture: any
 Depends:
    ${shlibs:Depends},
    ${misc:Depends},
-   wget
 Suggests:
    inyokaedit-plugins,
    inyokaedit-data-ubuntuusersde,

@@ -4,7 +4,7 @@
   !define DESCRIPTION "A markup editor for Inyoka articles"
   !define VERSIONMAJOR 0
   !define VERSIONMINOR 28
-  !define VERSIONPATCH 2
+  !define VERSIONPATCH 3
   !define APPVERSION "${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONPATCH}.0"
   !define ABOUTURL "https://github.com/inyokaproject/inyokaedit"
 
