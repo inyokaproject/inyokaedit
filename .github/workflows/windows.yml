@@ -62,7 +62,7 @@ jobs:
       run: |
        mkdir InyokaEdit\plugins
        mkdir InyokaEdit\community
-       copy build-cmake\application\Release\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
+       copy build-cmake\Release\InyokaEdit.exe InyokaEdit\InyokaEdit.exe
        windeployqt --release --no-translations --no-opengl-sw InyokaEdit\InyokaEdit.exe
        lconvert -o InyokaEdit\translations\qt_de.qm %QT_ROOT_DIR%\translations\qtbase_de.qm %QT_ROOT_DIR%\translations\qtwebengine_de.qm
        copy COPYING InyokaEdit\
