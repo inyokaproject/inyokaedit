@@ -1,23 +1,20 @@
 #!/usr/bin/make -f
 
-CFLAGS += $(CPPFLAGS)
-CXXFLAGS += $(CPPFLAGS)
-LDFLAGS += -Wl,-z,defs
-
-BUILDFLAGS = \
-	QMAKE_CFLAGS="$(CFLAGS)" \
-	QMAKE_CXXFLAGS="$(CXXFLAGS)" \
-	QMAKE_LFLAGS="$(LDFLAGS)"
-
-export QT_SELECT = qt5
-
 %:
-	dh ${@} --parallel
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_C_FLAGS="$(CFLAGS)" \
+		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
+		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -Wl,-z,defs"
 
 override_dh_auto_build:
-	dh_auto_build -- QMAKE='qmake $(BUILDFLAGS)'
+	dh_auto_build
 
 override_dh_auto_install:
+	dh_auto_install
 
 override_dh_install:
 	$(MAKE) install-inyokaedit DESTDIR=$(CURDIR)/debian/inyokaedit
