@@ -10,15 +10,5 @@ override_dh_auto_configure:
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -Wl,-z,defs"
 
-override_dh_auto_build:
-	dh_auto_build
-
-override_dh_auto_install:
-
-override_dh_install:
-	$(MAKE) install-inyokaedit DESTDIR=$(CURDIR)/debian/inyokaedit
-	$(MAKE) install-plugins DESTDIR=$(CURDIR)/debian/inyokaedit-plugins
-	$(MAKE) install-data-ubuntuusersde DESTDIR=$(CURDIR)/debian/inyokaedit-data-ubuntuusersde
-
 override_dh_builddeb:
 	dh_builddeb -- -Zxz -z9
