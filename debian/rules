@@ -8,7 +8,7 @@ override_dh_auto_configure:
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_FLAGS="$(CFLAGS)" \
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
-		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -Wl,-z,defs"
+		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -Wl,-z,defs" \
 		-DINY_COMMUNITY=community/ubuntuusers_de
 
 override_dh_auto_build:
