@@ -1,8 +1,8 @@
 IDI_ICON1   ICON    DISCARDABLE    "../icons/inyokaedit.ico"
 
 1 VERSIONINFO
-    FILEVERSION    0,28,2,0
-    PRODUCTVERSION 0,28,2,0
+    FILEVERSION    0,28,3,0
+    PRODUCTVERSION 0,28,3,0
 {
     BLOCK "StringFileInfo"
     {
@@ -13,8 +13,8 @@ IDI_ICON1   ICON    DISCARDABLE    "../icons/inyokaedit.ico"
             VALUE "LegalCopyright",     "(c) 2011-present The InyokaEdit developers\0"
             VALUE "OriginalFilename",   "InyokaEdit.exe\0"
             VALUE "ProductName",        "InyokaEdit\0"
-            VALUE "ProductVersion",     "0.28.2.0\0"
-            VALUE "FileVersion",        "0.28.2.0\0"
+            VALUE "ProductVersion",     "0.28.3.0\0"
+            VALUE "FileVersion",        "0.28.3.0\0"
         }
     }
     BLOCK "VarFileInfo"

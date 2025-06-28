@@ -37,6 +37,17 @@
   <content_rating type="oars-1.0" />
   
   <releases>
+    <release version="0.28.3" date="2025-06-28">
+      <description>
+        <p>Changes:</p>
+        <ul>
+          <li>Minor template fixes.</li>
+          <li>CI updates.</li>
+          <li>Drop support for Qt 5.</li>
+          <li>Drop support for qmake/pro files.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.28.2" date="2024-09-08">
       <description>
         <p>Changes:</p>
