@@ -1,4 +1,4 @@
-id: org.inyokaproject.inyokaedit
+app-id: org.inyokaproject.inyokaedit
 runtime: org.kde.Platform
 runtime-version: '6.5'
 sdk: org.kde.Sdk
