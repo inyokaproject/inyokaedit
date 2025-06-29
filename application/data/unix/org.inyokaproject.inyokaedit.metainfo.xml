@@ -47,6 +47,7 @@
           <li>Drop support for qmake/pro files.</li>
           <li>Plugin search folder adjustments.</li>
           <li>Fix download of renamed image attachments.</li>
+          <li>Improvements for table styles.</li>
         </ul>
       </description>
     </release>
