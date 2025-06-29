@@ -209,7 +209,6 @@ void Download::replyFinished(QNetworkReply *pReply) {
       // Download article images metadata
       QStringList sListTmp;
       QStringList sListMetadata;
-      QStringList sListSaveFolder;
 
       // Site does not exist etc.
       if (sTmpArticle.isEmpty()) {
@@ -232,7 +231,6 @@ void Download::replyFinished(QNetworkReply *pReply) {
           sListMetadata.last().remove(QStringLiteral("\r"));
           sListMetadata.last() =
               m_sInyokaUrl + "/_image?target=" + sListMetadata.last();
-          sListSaveFolder << m_sImgDir;
 
           // qDebug() << sListMetadata.last();
         }
@@ -256,7 +254,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
 
         if (iRet != QMessageBox::No) {
           qDebug() << "Starting image download...";
-          m_DlImages->setDLs(sListMetadata, sListSaveFolder);
+          m_DlImages->setDLs(sListMetadata, m_sImgDir);
           QTimer::singleShot(0, m_DlImages, &DownloadImg::startDownloads);
         } else {
           this->showArticle();

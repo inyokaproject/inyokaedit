@@ -27,6 +27,7 @@
 #ifndef APPLICATION_DOWNLOADIMG_H_
 #define APPLICATION_DOWNLOADIMG_H_
 
+#include <QHash>
 #include <QObject>
 #include <QStringList>
 #include <QUrl>
@@ -41,7 +42,7 @@ class DownloadImg : public QObject {
  public:
   explicit DownloadImg(QNetworkAccessManager *pNwManager,
                        QObject *pObj = nullptr);
-  void setDLs(const QStringList &sListUrls, const QStringList &sListSavePath);
+  void setDLs(const QStringList &sListUrls, const QString &sSavePath);
 
  public slots:
   void startDownloads();
@@ -54,13 +55,12 @@ class DownloadImg : public QObject {
   void finsihedImageDownload();
 
  private:
-  void doDownload(const QUrl &url, const QString &sSavePath,
-                  const QString &sBase = QLatin1String(""));
+  void doDownload(const QUrl &url, const QString &sBase);
   static auto redirectUrl(const QUrl &possibleRedirectUrl,
                           const QUrl &oldRedirectUrl) -> QUrl;
 
   QNetworkAccessManager *m_pNwManager;
-  QList<QNetworkReply *> m_listDownloadReplies;
+  QHash<QNetworkReply *, QString> m_listDownloadReplies;
 
   QProgressDialog *m_pProgessDialog;
   quint16 m_nProgress;
@@ -68,10 +68,7 @@ class DownloadImg : public QObject {
 
   QUrl m_urlRedirectedTo;
   QStringList m_sListUrls;
-  QStringList m_sListSavePath;
-
-  QStringList m_sListRepliesPath;
-  QStringList m_sListBasename;
+  QString m_sSavePath;
 };
 
 #endif  // APPLICATION_DOWNLOADIMG_H_
