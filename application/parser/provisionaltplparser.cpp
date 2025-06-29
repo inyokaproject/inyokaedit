@@ -1863,24 +1863,28 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   QString sStyleInfo;
   QString sTmpTD;
 
-  if (sArgs.length() >= 2) {
-    QString sTmpClass("");
-    if ((match = tableClassPattern.match(sArgs[1])).hasMatch()) {
-      sTmpClass = match.captured();
-      sTmpClass = " class=" + sTmpClass.remove("tableclass=");
-    }
-    sTmpCellStyle.clear();
-    if ((match = tableStylePattern.match(sArgs[1])).hasMatch()) {
-      sTmpCellStyle = match.captured();
-      sTmpCellStyle = " style=" + sTmpCellStyle.remove("tablestyle=");
-    }
-    sOutput = "<table" + sTmpClass + sTmpCellStyle + ">\n<tbody>\n";
-  } else {
-    sOutput = "<table>\n<tbody>\n";
-  }
-
   for (int i = 1; i < sArgs.length(); i++) {
     sTmpTD.clear();
+
+    if (i == 1) {  // Check for table style/class
+      QString sTmpClass("");
+      if ((match = tableClassPattern.match(sArgs[i])).hasMatch()) {
+        sTmpClass = match.captured();
+        sTmpClass = " class=" + sTmpClass.remove("tableclass=");
+      }
+      if ((match = tableStylePattern.match(sArgs[i])).hasMatch()) {
+        sTmpCellStyle = match.captured();
+        sTmpCellStyle = " style=" + sTmpCellStyle.remove("tablestyle=");
+      }
+
+      if (!sTmpClass.isEmpty() || !sTmpCellStyle.isEmpty()) {
+        sOutput = "<table" + sTmpClass + sTmpCellStyle + ">\n<tbody>\n";
+      } else {
+        sOutput = "<table>\n<tbody>\n";
+      }
+      sArgs[i].remove(tableClassPattern);
+      sArgs[i].remove(tableStylePattern);
+    }
 
     if (sArgs[i] == "+++") {  // New line
       sOutput += "</tr>\n";
@@ -1940,11 +1944,13 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
         // Connect cells info (-integer, e.g. -3)
         if ((match = connectCells.match(sStyleInfo)).hasMatch()) {
           sTmpTD += " colspan=\"" + match.captured().remove("-") + "\"";
+          sStyleInfo.remove(connectCells);
         }
 
         // Connect ROWS info (|integer, e.g. |2)
         if ((match = connectRows.match(sStyleInfo)).hasMatch()) {
           sTmpTD += " rowspan=\"" + match.captured().remove("|") + "\"";
+          sStyleInfo.remove(connectRows);
         }
 
         // Cell style attributes
