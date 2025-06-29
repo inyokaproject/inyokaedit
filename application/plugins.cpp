@@ -46,6 +46,7 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
   Q_UNUSED(pObj)
   QStringList sListAvailablePlugins;
   QList<QDir> listPluginsDir;
+  QStringList sListSearchPaths;
 
   // If share folder start parameter is used
   QDir pluginsDir = sSharePath;
@@ -55,34 +56,23 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
       listPluginsDir << pluginsDir;
     }
   }
+
   // Plugins in user folder
-  pluginsDir.setPath(m_userDataDir.absolutePath());
-  if (pluginsDir.cd(QStringLiteral("plugins"))) {
-    if (!listPluginsDir.contains(pluginsDir)) {
-      listPluginsDir << pluginsDir;
-    }
-  }
+  sListSearchPaths << m_userDataDir.absolutePath();
   // Plugins in app folder (Windows and debugging)
-  pluginsDir.setPath(qApp->applicationDirPath());
-  if (pluginsDir.cd(QStringLiteral("plugins"))) {
-    if (!listPluginsDir.contains(pluginsDir)) {
-      listPluginsDir << pluginsDir;
-    }
-  }
+  sListSearchPaths << qApp->applicationDirPath();
   // Plugins in standard installation folder (Linux)
-  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/" +
-                     qApp->applicationName().toLower());
-  if (pluginsDir.cd(QStringLiteral("plugins"))) {
-    if (!listPluginsDir.contains(pluginsDir)) {
-      listPluginsDir << pluginsDir;
-    }
-  }
+  sListSearchPaths << qApp->applicationDirPath() + "/../lib/" +
+                          qApp->applicationName().toLower();
   // Plugins in standard installation folder (Linux / Debian / Ubuntu)
-  pluginsDir.setPath(qApp->applicationDirPath() + "/../lib/x86_64-linux-gnu/" +
-                     qApp->applicationName().toLower());
-  if (pluginsDir.cd(QStringLiteral("plugins"))) {
-    if (!listPluginsDir.contains(pluginsDir)) {
-      listPluginsDir << pluginsDir;
+  sListSearchPaths << qApp->applicationDirPath() + "/../lib/x86_64-linux-gnu/" +
+                          qApp->applicationName().toLower();
+  for (const auto &searchDir : std::as_const(sListSearchPaths)) {
+    pluginsDir.setPath(searchDir);
+    if (pluginsDir.cd(QStringLiteral("plugins"))) {
+      if (!listPluginsDir.contains(pluginsDir)) {
+        listPluginsDir << pluginsDir;
+      }
     }
   }
 
