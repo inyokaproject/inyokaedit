@@ -37,7 +37,7 @@
   <content_rating type="oars-1.0" />
   
   <releases>
-    <release version="0.28.3" date="2025-06-28">
+    <release version="0.28.3" date="2025-06-29">
       <description>
         <p>Changes:</p>
         <ul>
@@ -45,6 +45,8 @@
           <li>CI updates.</li>
           <li>Drop support for Qt 5.</li>
           <li>Drop support for qmake/pro files.</li>
+          <li>Plugin search folder adjustments.</li>
+          <li>Fix download of renamed image attachments.</li>
         </ul>
       </description>
     </release>
