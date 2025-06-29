@@ -1,12 +1,14 @@
-inyokaedit (0.28.3-5) noble; urgency=low
+inyokaedit (0.28.3-6) noble; urgency=low
 
   [ Thorsten Roth ]
   * Minor template fixes.
   * CI updates.
   * Drop support for Qt 5.
   * Drop support for qmake/pro files.
+  * Plugin search folder adjustments.
+  * Fix download of renamed image attachments.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 28 Jul 2025 16:59:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Jul 2025 15:47:00 +0200
 
 inyokaedit (0.28.2-0) jammy; urgency=low
 
