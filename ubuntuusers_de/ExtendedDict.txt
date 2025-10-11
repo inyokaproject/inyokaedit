@@ -127,6 +127,9 @@ Puffin
 questing
 Questing
 Quokka
+resolute
+Resolute
+Raccoon
 Ubuntu
 Kubuntu
 Xubuntu
