@@ -49,6 +49,11 @@ target_compile_definitions(inyokaedit
         $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060900>
 )
 
+target_compile_options(inyokaedit
+    PRIVATE
+        $<$<CONFIG:DEBUG>:-Wall -Wextra -pedantic>
+)
+
 target_link_libraries(inyokaedit
     PRIVATE
         ${QT_MAIN_VERSION}::Core

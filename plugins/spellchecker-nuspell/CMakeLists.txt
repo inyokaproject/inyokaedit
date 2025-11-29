@@ -47,6 +47,11 @@ target_compile_definitions(spellchecker-nuspell
         $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060900>
 )
 
+target_compile_options(spellchecker-nuspell
+    PRIVATE
+        $<$<CONFIG:DEBUG>:-Wall -Wextra -pedantic>
+)
+
 target_link_libraries(spellchecker-nuspell
     PRIVATE
         ${QT_MAIN_VERSION}::Core

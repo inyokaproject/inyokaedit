@@ -46,6 +46,11 @@ target_compile_definitions(hotkey
         $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060900>
 )
 
+target_compile_options(hotkey
+    PRIVATE
+        $<$<CONFIG:DEBUG>:-Wall -Wextra -pedantic>
+)
+
 target_link_libraries(hotkey
     PRIVATE
         ${QT_MAIN_VERSION}::Core
