@@ -49,10 +49,17 @@ target_compile_definitions(inyokaedit
         $<$<CONFIG:DEBUG>:QT_DISABLE_DEPRECATED_BEFORE=0x060900>
 )
 
-target_compile_options(inyokaedit
-    PRIVATE
-        $<$<CONFIG:DEBUG>:-Wall -Wextra -pedantic>
-)
+if(MSVC)
+    target_compile_options(inyokaedit
+        PRIVATE
+            $<$<CONFIG:DEBUG>:/W4 /permissive->
+    )
+else()
+    target_compile_options(inyokaedit
+        PRIVATE
+            $<$<CONFIG:DEBUG>:-Wall -Wextra -pedantic>
+    )
+endif()
 
 target_link_libraries(inyokaedit
     PRIVATE
