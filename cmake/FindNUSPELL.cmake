@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2011-2025 The InyokaEdit developers
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # - Try to find NUSPELL
 # Once done this will define
 #

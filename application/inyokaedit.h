@@ -1,28 +1,5 @@
-/**
- * \file inyokaedit.h
- *
- * \section LICENSE
- *
- * Copyright (C) 2011-present The InyokaEdit developers
- *
- * This file is part of InyokaEdit.
- *
- * InyokaEdit is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * InyokaEdit is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with InyokaEdit.  If not, see <https://www.gnu.org/licenses/>.
- *
- * \section DESCRIPTION
- * Class definition main application.
- */
+// SPDX-FileCopyrightText: 2011-2025 The InyokaEdit developers
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #ifndef APPLICATION_INYOKAEDIT_H_
 #define APPLICATION_INYOKAEDIT_H_
@@ -55,10 +32,6 @@ namespace Ui {
 class InyokaEdit;
 }
 
-/**
- * \class InyokaEdit
- * \brief Main application definition (GUI, objects, etc.)
- */
 class InyokaEdit : public QMainWindow {
   Q_OBJECT
 
