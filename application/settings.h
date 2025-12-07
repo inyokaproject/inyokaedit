@@ -43,7 +43,6 @@ class Settings : public QObject {
   auto getSyncScrollbars() const -> bool;
   void setSyncScrollbars(const bool bSyncScrollbars);
   auto getWindowsCheckUpdate() const -> bool;
-  void setWindowsCheckUpdate(const bool bWinCheckUpdate);
   auto getPygmentize() const -> QString;
   void setPygmentize(const QString &sPygmentize);
 
@@ -93,6 +92,9 @@ class Settings : public QObject {
   void setDisabledPlugins(const QStringList &sListDisabledPlugins);
 
   static const quint16 MAX_RECENT_FILES = 10;
+
+ public slots:
+  void setWindowsCheckUpdate(const bool bWinCheckUpdate);
 
  private:
   void removeObsolete();

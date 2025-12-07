@@ -109,6 +109,8 @@ InyokaEdit::~InyokaEdit() {
 
 void InyokaEdit::createObjects() {
   m_pUtils = new Utils(this);
+  connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
+          &Settings::setWindowsCheckUpdate);
   if (m_pSettings->isDarkScheme()) {
     QIcon::setThemeName(QStringLiteral("dark"));
   } else {
@@ -1041,7 +1043,9 @@ void InyokaEdit::updateEditorSettings() {
   m_colorSyntaxError = InyokaEdit::getHighlightErrorColor();
 
   // Setting proxy if available
-  Utils::setProxy();
+  Utils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
+                  m_pSettings->getProxyUserName(),
+                  m_pSettings->getProxyPassword());
 }
 
 // ----------------------------------------------------------------------------

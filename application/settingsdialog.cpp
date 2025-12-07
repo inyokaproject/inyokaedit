@@ -59,6 +59,15 @@ SettingsDialog::~SettingsDialog() {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+void SettingsDialog::showEvent(QShowEvent *pEvent) {
+  this->readSettings();
+  m_pUi->tabWidget->setCurrentIndex(0);
+  QDialog::showEvent(pEvent);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void SettingsDialog::readSettings() {
   // General settings
   m_pUi->GuiLangCombo->addItems(this->searchTranslations());

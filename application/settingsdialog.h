@@ -33,6 +33,7 @@ class SettingsDialog : public QDialog {
  protected:
   auto eventFilter(QObject *obj, QEvent *event) -> bool override;
   void changeEvent(QEvent *pEvent) override;
+  void showEvent(QShowEvent *pEvent) override;
 
  private:
   auto searchTranslations() -> QStringList;

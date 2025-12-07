@@ -49,7 +49,7 @@ void ParseLinks::replaceUrls(QTextDocument *pRawDoc) {
       // Skip file:// with " in front, which is used on Windows for image path
       QString::fromLatin1(
           "(?:(?:https?|ftps?|[^\"]file|ssh|mms|svn(?:\\+ssh)?|git|dict|nntp|"
-          "ircs?|rsync|smb|apt)://)[^\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
+          "ircs?|rsync|smb|apt)://)[^\\[\\s\\]]+(/[^\\s\\].,:;?]*([.,:;?]"
           "[^\\s\\].,:;?]+)*)?[^\\]\\)\\\\\\s]"));
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
