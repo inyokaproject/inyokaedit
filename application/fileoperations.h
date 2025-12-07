@@ -21,7 +21,7 @@ class FileOperations : public QObject {
   Q_OBJECT
 
  public:
-  FileOperations(QWidget *pParent, QTabWidget *pTabWidget, Settings *pSettings,
+  FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
                  const QString &sPreviewFile, const QString &sUserDataDir,
                  const QStringList &sListTplMacros, QObject *pObj = nullptr);
 
@@ -48,6 +48,7 @@ class FileOperations : public QObject {
 #ifdef USEQTWEBENGINE
   void printPdfPreview();
 #endif
+  void updateEditorSettings();
 
   void copy();
   void cut();
@@ -75,11 +76,8 @@ class FileOperations : public QObject {
 
  private slots:
   void clearRecentFiles();
-
   void changedDocTab(int nIndex);
   bool closeDocument(int nIndex);
-
-  void updateEditorSettings();
   void saveDocumentAuto();
 
  private:

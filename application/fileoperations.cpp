@@ -23,13 +23,13 @@
 #include "./texteditor.h"
 
 FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
-                               Settings *pSettings, const QString &sPreviewFile,
+                               const QString &sPreviewFile,
                                const QString &sUserDataDir,
                                const QStringList &sListTplMacros, QObject *pObj)
     : m_pParent(pParent),
       m_pDocumentTabs(pTabWidget),
       m_pCurrentEditor(nullptr),
-      m_pSettings(pSettings),
+      m_pSettings(Settings::instance()),
       m_sPreviewFile(sPreviewFile),
 #ifdef USEQTWEBENGINE
       m_pPreviewWebView(nullptr),
@@ -67,7 +67,7 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
           &FileOperations::closeDocument);
 
   // Generate recent files list
-  for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
+  for (int i = 0; i < Settings::MAX_RECENT_FILES; i++) {
     if (i < m_pSettings->getRecentFiles().size()) {
       m_LastOpenedFilesAct << new QAction(m_pSettings->getRecentFiles().at(i),
                                           this);
@@ -87,9 +87,6 @@ FileOperations::FileOperations(QWidget *pParent, QTabWidget *pTabWidget,
 
   connect(m_pClearRecentFilesAct, &QAction::triggered, this,
           &FileOperations::clearRecentFiles);
-
-  connect(m_pSettings, &Settings::updateEditorSettings, this,
-          &FileOperations::updateEditorSettings);
 }
 
 // ----------------------------------------------------------------------------
@@ -684,12 +681,12 @@ void FileOperations::updateRecentFiles(const QString &sFileName) {
     sListTmp.push_front(sFileName);
 
     // Remove all entries from end, if list is too long
-    while (sListTmp.size() > m_pSettings->getMaxNumOfRecentFiles() ||
+    while (sListTmp.size() > Settings::MAX_RECENT_FILES ||
            sListTmp.size() > m_pSettings->getNumOfRecentFiles()) {
       sListTmp.removeLast();
     }
 
-    for (int i = 0; i < m_pSettings->getMaxNumOfRecentFiles(); i++) {
+    for (int i = 0; i < Settings::MAX_RECENT_FILES; i++) {
       // Set list menu entries
       if (i < sListTmp.size()) {
         m_LastOpenedFilesAct.at(i)->setText(sListTmp.at(i));

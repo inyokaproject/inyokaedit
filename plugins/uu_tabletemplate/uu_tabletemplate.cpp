@@ -143,6 +143,8 @@ void Uu_TableTemplate::initPlugin(QWidget *pParent, TextEditor *pEditor,
           &Uu_TableTemplate::accept);
   connect(m_pUi->buttonBox, &QDialogButtonBox::rejected, m_pDialog,
           &QDialog::reject);
+
+  this->changeLanguage();
 }
 
 // ----------------------------------------------------------------------------
@@ -159,8 +161,10 @@ auto Uu_TableTemplate::getPluginVersion() const -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_TableTemplate::installTranslator(const QString &sLang) {
-  qApp->removeTranslator(&m_translator);
+auto Uu_TableTemplate::getTranslator(const QString &sLang) -> QTranslator * {
+  if (sLang.isEmpty()) {
+    return nullptr;
+  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
                          sLang + ".qm")) {
@@ -173,16 +177,13 @@ void Uu_TableTemplate::installTranslator(const QString &sLang) {
                  << m_sSharePath + "/lang/" +
                         QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
                         ".qm";
-      return;
+      return nullptr;
     }
   }
-
-  if (qApp->installTranslator(&m_translator) || "en" == sLang) {
-    m_pUi->retranslateUi(m_pDialog);
-  } else {
-    qWarning() << "Translator could not be installed!";
-  }
+  return &m_translator;
 }
+
+void Uu_TableTemplate::changeLanguage() { m_pUi->retranslateUi(m_pDialog); }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

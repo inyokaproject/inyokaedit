@@ -6,6 +6,7 @@
 #ifndef APPLICATION_IEDITORPLUGIN_H_
 #define APPLICATION_IEDITORPLUGIN_H_
 
+#include <QTranslator>
 #include <QtPlugin>
 
 class QDir;
@@ -22,7 +23,7 @@ class IEditorPlugin {
                           const bool &bIsDarkTheme) = 0;
   virtual QString getPluginName() const = 0;
   virtual QString getPluginVersion() const = 0;
-  virtual void installTranslator(const QString &sLang) = 0;
+  virtual QTranslator *getTranslator(const QString &sLang) = 0;
   virtual QString getCaption() const = 0;
   virtual QIcon getIcon() const = 0;
   virtual bool includeMenu() const = 0;
@@ -34,6 +35,7 @@ class IEditorPlugin {
  public slots:
   virtual void callPlugin() = 0;     // Execute manually
   virtual void executePlugin() = 0;  // Execute DIRECTLY after loading it!
+  virtual void changeLanguage() = 0;
   virtual void showSettings() = 0;
   virtual void showAbout() = 0;
 };

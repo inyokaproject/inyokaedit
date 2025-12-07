@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project(uu_tabletemplate
-    VERSION 1.5.0
+    VERSION 1.5.1
     DESCRIPTION "ubuntuusers.de table template plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

@@ -20,7 +20,7 @@ class Plugins : public QObject {
           const QStringList &sListDisabledPlugins, const QDir &userDataDir,
           const QString &sSharePath, const bool bDarkScheme,
           QObject *pObj = nullptr);
-  void loadPlugins(const QString &sLang);
+  void loadPlugins();
   void setCurrentEditor(TextEditor *pEditor);
   void setEditorlist(const QList<TextEditor *> &listEditors);
 
@@ -32,6 +32,7 @@ class Plugins : public QObject {
                         const QList<QObject *> &PluginObjList);
   void addMenuToolbarEntries(const QList<QAction *> &ToolbarEntries,
                              QList<QAction *> MenueEntries);
+  void retranslateUI();
 
  private:
   QWidget *m_pParent;

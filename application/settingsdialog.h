@@ -7,8 +7,7 @@
 #include <QDialog>
 
 #include "./ieditorplugin.h"  // Cannot use forward declaration (since Qt 6)
-
-class Settings;
+#include "./settings.h"
 
 namespace Ui {
 class SettingsDialog;
@@ -18,35 +17,30 @@ class SettingsDialog : public QDialog {
   Q_OBJECT
 
  public:
-  SettingsDialog(Settings *pSettings, const QString &sSharePath,
-                 QWidget *pParent = nullptr);
+  SettingsDialog(QWidget *pParent = nullptr);
   virtual ~SettingsDialog();
 
  public slots:
   void accept() override;
   void reject() override;
-  void updateUiLang();
   void getAvailablePlugins(const QList<IEditorPlugin *> &Plugins,
                            const QList<QObject *> &PluginObjList);
 
  signals:
-  void changeLang(const QString &sLang);
-  void updatedSettings();
+  void changeGuiLanguage(const QString &sLanguage);
+  void updateEditorSettings();
 
  protected:
   auto eventFilter(QObject *obj, QEvent *event) -> bool override;
-
- private slots:
-  void changedCommunity(int nIndex);
+  void changeEvent(QEvent *pEvent) override;
 
  private:
   auto searchTranslations() -> QStringList;
+  void readSettings();
 
   Ui::SettingsDialog *m_pUi;
   Settings *m_pSettings;
   const QString m_sSharePath;
-  QString m_sGuiLang;
-  QString m_sCommunity;
 
   QList<IEditorPlugin *> m_listPlugins;
   QList<QPushButton *> m_listPluginSettingsButtons;

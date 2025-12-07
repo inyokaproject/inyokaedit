@@ -11,6 +11,7 @@
 #include <QtGlobal>
 
 #include "./inyokaedit.h"
+#include "./settings.h"
 
 static QFile logfile;
 static QTextStream out(&logfile);
@@ -73,6 +74,7 @@ auto main(int argc, char *argv[]) -> int {
     sSharePath = app.applicationDirPath() + "/../share/" +
                  app.applicationName().toLower();
   }
+  Settings::instance()->setSharePath(sSharePath);
 
   const QString sDebugFile(QStringLiteral("debug.log"));
   if (!userDataDir.exists()) {
@@ -92,7 +94,7 @@ auto main(int argc, char *argv[]) -> int {
     sArg = sListArgs.at(0);
   }
 
-  InyokaEdit myInyokaEdit(userDataDir, sSharePath, sArg);
+  InyokaEdit myInyokaEdit(userDataDir, sArg);
   myInyokaEdit.show();
   int nRet = app.exec();
 

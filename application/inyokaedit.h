@@ -21,12 +21,14 @@ class Download;
 class FileOperations;
 class Parser;
 class Plugins;
-class Settings;
 class Session;
 class Templates;
 class TextEditor;
 class Upload;
 class Utils;
+
+#include "./settings.h"
+#include "./settingsdialog.h"
 
 namespace Ui {
 class InyokaEdit;
@@ -36,7 +38,7 @@ class InyokaEdit : public QMainWindow {
   Q_OBJECT
 
  public:
-  explicit InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
+  explicit InyokaEdit(const QDir &userDataDir,
                       const QString &sArg = QLatin1String(""),
                       QWidget *parent = nullptr);
   ~InyokaEdit();
@@ -54,7 +56,8 @@ class InyokaEdit : public QMainWindow {
   auto eventFilter(QObject *pObj, QEvent *pEvent) -> bool override;
 
  signals:
-  void updateUiLang();
+  void updateUiLang(const QString &sLanguage);
+  void retranslate();
 
  private slots:
   void loadLanguage(const QString &sLang);
@@ -86,8 +89,6 @@ class InyokaEdit : public QMainWindow {
   void clearXmlMenus();
   void createXmlMenus();
   void deleteAutoSaveBackups();
-  void readSettings();
-  void writeSettings();
   static auto switchTranslator(QTranslator *translator, const QString &sFile,
                                const QString &sPath = QLatin1String(""))
       -> bool;
@@ -102,6 +103,7 @@ class InyokaEdit : public QMainWindow {
   Plugins *m_pPlugins{};
   Parser *m_pParser{};
   Settings *m_pSettings{};
+  SettingsDialog *m_pSettingsDialog{};
   Session *m_pSession{};
   Download *m_pDownloadModule{};
   Upload *m_pUploadModule{};

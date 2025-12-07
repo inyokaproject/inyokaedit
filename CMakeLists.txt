@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.14)
 project(InyokaEdit
-    VERSION 0.28.3
+    VERSION 0.28.4
     DESCRIPTION "Editor for Inyoka based portals"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
     LANGUAGES C CXX

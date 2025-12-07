@@ -53,6 +53,8 @@ void SpellChecker_Hunspell::initPlugin(QWidget *pParent, TextEditor *pEditor,
       m_pSettings->value(QStringLiteral("Inyoka/Community"), "ubuntuusers_de")
           .toString();
   m_pSettings->endGroup();
+
+  this->changeLanguage();
 }
 
 // ----------------------------------------------------------------------------
@@ -69,8 +71,11 @@ auto SpellChecker_Hunspell::getPluginVersion() const -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
-  qApp->removeTranslator(&m_translator);
+auto SpellChecker_Hunspell::getTranslator(const QString &sLang)
+    -> QTranslator * {
+  if (sLang.isEmpty()) {
+    return nullptr;
+  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
                          sLang + ".qm")) {
@@ -83,13 +88,14 @@ void SpellChecker_Hunspell::installTranslator(const QString &sLang) {
                  << m_sSharePath + "/lang/" +
                         QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
                         ".qm";
-      return;
+      return nullptr;
     }
   }
+  return &m_translator;
+}
 
-  if (!qApp->installTranslator(&m_translator) && "en" != sLang) {
-    qWarning() << "Translator could not be installed!";
-  }
+void SpellChecker_Hunspell::changeLanguage() {
+  // m_pUi->retranslateUi(m_pDialog);
 }
 
 // ----------------------------------------------------------------------------

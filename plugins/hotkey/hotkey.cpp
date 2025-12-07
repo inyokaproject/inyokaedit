@@ -36,6 +36,7 @@ void Hotkey::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   this->loadHotkeyEntries();
   this->buildUi(m_pParent);  // After loading hotkey entries
+  this->changeLanguage();
 
   connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this, &Hotkey::accept);
   connect(m_pDialog, &QDialog::rejected, this, &Hotkey::reject);
@@ -55,8 +56,10 @@ auto Hotkey::getPluginVersion() const -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Hotkey::installTranslator(const QString &sLang) {
-  qApp->removeTranslator(&m_translator);
+auto Hotkey::getTranslator(const QString &sLang) -> QTranslator * {
+  if (sLang.isEmpty()) {
+    return nullptr;
+  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
                          sLang + ".qm")) {
@@ -69,16 +72,13 @@ void Hotkey::installTranslator(const QString &sLang) {
                  << m_sSharePath + "/lang/" +
                         QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
                         ".qm";
-      return;
+      return nullptr;
     }
   }
-
-  if (qApp->installTranslator(&m_translator) || "en" == sLang) {
-    m_pUi->retranslateUi(m_pDialog);
-  } else {
-    qWarning() << "Translator could not be installed!";
-  }
+  return &m_translator;
 }
+
+void Hotkey::changeLanguage() { m_pUi->retranslateUi(m_pDialog); }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

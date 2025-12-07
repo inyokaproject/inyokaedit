@@ -6,144 +6,108 @@
 
 #include <QDir>
 #include <QFont>
+#include <QSettings>
+#include <QWidget>
 
 #include "./ieditorplugin.h"  // Cannot use forward declaration (since Qt 6)
-
-class QSettings;
-
-class SettingsDialog;
 
 class Settings : public QObject {
   Q_OBJECT
 
  public:
-  Settings(QWidget *pParent, const QString &sSharePath,
-           QObject *pObj = nullptr);
-  ~Settings();
-
-  // Load / save application settings
-  void readSettings(const QString &sSharePath);
-  void writeSettings(const QByteArray &WinGeometry, const QByteArray &WinState,
-                     const QByteArray &SplitterState = nullptr);
-
-  void setLastOpenedDir(const QString &sLastDir);
+  static Settings *instance();
+  auto getSharePath() const -> QString;
+  void setSharePath(const QString &sPath);
 
   // General
-  auto getGuiLanguage() const -> QString;
+  auto getGuiLanguage() -> QString;
+  void setGuiLanguage(const QString &sGuiLanguage);
   auto getCodeCompletion() const -> bool;
+  void setCodeCompletion(const bool bCodeCompletion);
   auto getSyntaxCheck() const -> bool;
+  void setSyntaxCheck(const bool bSyntaxCheck);
   auto getAutomaticImageDownload() const -> bool;
+  void setAutomaticImageDownload(const bool bAutoImageDownload);
   auto getPreviewHorizontal() const -> bool;
+  void setPreviewHorizontal(const bool bPreviewHorizontal);
   auto getLastOpenedDir() const -> QDir;
+  void setLastOpenedDir(const QString &sLastDir);
   auto getCheckLinks() const -> bool;
+  void setCheckLinks(const bool bCheckLinks);
   auto getAutoSave() const -> quint32;
+  void setAutoSave(const quint32 nAutosave);
   auto getReloadPreviewKey() const -> qint32;
+  void setReloadPreviewKey(const QString &sReloadPreviewKey);
   auto getTimedPreview() const -> quint32;
+  void setTimedPreview(const quint32 nTimedPreview);
   auto getSyncScrollbars() const -> bool;
+  void setSyncScrollbars(const bool bSyncScrollbars);
   auto getWindowsCheckUpdate() const -> bool;
+  void setWindowsCheckUpdate(const bool bWinCheckUpdate);
   auto getPygmentize() const -> QString;
+  void setPygmentize(const QString &sPygmentize);
 
   // Inyoka community
-  auto getInyokaCommunity() const -> QString;
+  auto getInyokaCommunity() -> QString;
+  void setInyokaCommunity(const QString &sCommunity);
   auto getInyokaUrl() const -> QString;
   auto getInyokaConstructionArea() const -> QString;
   auto getInyokaCookieDomain() const -> QString;
   auto getInyokaLoginUrl() const -> QString;
   auto getInyokaUser() const -> QString;
+  void setInyokaUser(const QString &sInyokaUser);
   auto getInyokaPassword() const -> QString;
+  void setInyokaPassword(const QString &sInyokaPassword);
 
   // Font
-  auto getEditorFont() const -> QFont;
+  auto getEditorFont() -> QFont;
+  void setEditorFont(const QFont EditorFont);
 
   // Window state
   auto getWindowState() const -> QByteArray;
   auto getWindowGeometry() const -> QByteArray;
   auto getSplitterState() const -> QByteArray;
+  void saveWindowStates(const QByteArray &WinGeometry,
+                        const QByteArray &WinState,
+                        const QByteArray &SplitterState = nullptr);
   auto isDarkScheme() const -> bool;
 
   // Recent files
   auto getNumOfRecentFiles() const -> quint16;
-  static auto getMaxNumOfRecentFiles() -> quint16;
+  void setNumOfRecentFiles(const quint16 nNumOfRecentFiles);
   auto getRecentFiles() const -> QStringList;
   void setRecentFiles(const QStringList &sListNewRecent);
 
   // Proxy
   auto getProxyHostName() const -> QString;
+  void setProxyHostName(const QString &sProxyHostName);
   auto getProxyPort() const -> quint16;
+  void setProxyPort(const quint16 nProxyPort);
   auto getProxyUserName() const -> QString;
+  void setProxyUserName(const QString &sProxyUserName);
   auto getProxyPassword() const -> QString;
+  void setProxyPassword(const QString &sProxyPassword);
 
   // Plugins
   auto getDisabledPlugins() const -> QStringList;
+  void setDisabledPlugins(const QStringList &sListDisabledPlugins);
 
-  // Allow SettingsDialog to access private members
-  friend class SettingsDialog;
-
- public slots:
-  void setWindowsCheckUpdate(const bool bValue);
-
- signals:
-  void showSettingsDialog();
-  void changeLang(const QString &sLang);
-  void updateUiLang();
-  void updateEditorSettings();
-  void availablePlugins(const QList<IEditorPlugin *> &PluginList,
-                        const QList<QObject *> &PluginObjList);
+  static const quint16 MAX_RECENT_FILES = 10;
 
  private:
   void removeObsolete();
+  void readInyokaCommunityFile(const QString &sCommunity);
 
-  QSettings *m_pSettings;
-  SettingsDialog *m_pSettingsDialog;
+  explicit Settings(QWidget *pParent = nullptr);
   QWidget *m_pParent;
-
-  // General
-  QString m_sGuiLanguage;
-  bool m_bCodeCompletion{};
-  bool m_bSyntaxCheck{};
-  bool m_bPreviewSplitHorizontal{};
-  QDir m_LastOpenedDir;
-  bool m_bAutomaticImageDownload{};
-  bool m_bCheckLinks{};
-  quint32 m_nAutosave{};
-  QString m_sReloadPreviewKey;
-  quint32 m_nTimedPreview{};
-  bool m_bSyncScrollbars{};
-  bool m_bWinCheckUpdate{};
-  QString m_sPygmentize;
+  QSettings m_settings;
+  QString m_sSharePath;
 
   // Inyoka community
-  QString m_sInyokaCommunity;
   QString m_sInyokaUrl;
   QString m_sInyokaLoginUrl;
   QString m_sInyokaConstArea;
   QString m_sInyokaCookieDomain;
-  QString m_sInyokaUser;
-  QString m_sInyokaPassword;
-
-  // Font
-  QFont m_EditorFont;
-  QString m_sFontFamily;
-  qreal m_nFontsize{};
-
-  // Window state
-  QByteArray m_aWindowState;
-  QByteArray m_aWindowGeometry;
-  QByteArray m_aSplitterState;
-
-  // Last opened
-  static const quint16 m_cMAXFILES = 10;
-  qint32 m_nMaxLastOpenedFiles{};
-  QStringList m_sListRecentFiles;
-
-  // Proxy
-  QString m_sProxyHostName;
-  quint16 m_nProxyPort{};
-  QString m_sProxyUserName;
-  QString m_sProxyPassword;
-
-  // Plugins
-  QStringList m_sListDisabledPlugins;
 };
 
 #endif  // APPLICATION_SETTINGS_H_

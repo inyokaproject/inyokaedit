@@ -48,12 +48,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   } else {
     m_sStyleFile = QStringLiteral("standard-style");
   }
-  // Check for old entry
-  if (!m_pSettings->value(QStringLiteral("Style"), "").toString().isEmpty()) {
-    m_sStyleFile = m_pSettings->value(QStringLiteral("Style"), "").toString();
-  }
-  m_pSettings->remove(QStringLiteral("Style"));
-  // New plugin entry
+
   m_pSettings->beginGroup("Plugin_" + QStringLiteral(PLUGIN_NAME));
   if (!m_pSettings->value(QStringLiteral("Style"), "").toString().isEmpty()) {
     m_sStyleFile = m_pSettings->value(QStringLiteral("Style"), "").toString();
@@ -71,6 +66,7 @@ void Highlighter::initPlugin(QWidget *pParent, TextEditor *pEditor,
   this->defineRules();
 
   this->buildUi(pParent);  // After loading template entries
+  this->changeLanguage();
 }
 
 // ----------------------------------------------------------------------------
@@ -87,8 +83,10 @@ auto Highlighter::getPluginVersion() const -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Highlighter::installTranslator(const QString &sLang) {
-  qApp->removeTranslator(&m_translator);
+auto Highlighter::getTranslator(const QString &sLang) -> QTranslator * {
+  if (sLang.isEmpty()) {
+    return nullptr;
+  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
                          sLang + ".qm")) {
@@ -101,27 +99,25 @@ void Highlighter::installTranslator(const QString &sLang) {
                  << m_sSharePath + "/lang/" +
                         QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
                         ".qm";
-      return;
+      return nullptr;
     }
   }
+  return &m_translator;
+}
 
-  if (qApp->installTranslator(&m_translator) || "en" == sLang) {
-    m_pUi->retranslateUi(m_pDialog);
+void Highlighter::changeLanguage() {
+  m_pUi->retranslateUi(m_pDialog);
 
-    QStringList sListHeader;
-    sListHeader << tr("Color") << tr("Bold") << tr("Italic")
-                << tr("Background");
-    m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
-    sListHeader.clear();
-    sListHeader << tr("Background") << tr("Text color") << tr("Text formatting")
-                << tr("Heading") << tr("Hyperlink") << tr("InterWiki")
-                << tr("Macro") << tr("Parser") << tr("List") << tr("Table line")
-                << tr("Table cell format") << tr("ImgMap") << tr("Misc")
-                << tr("Comment") << tr("Syntax error");
-    m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
-  } else {
-    qWarning() << "Translator could not be installed!";
-  }
+  QStringList sListHeader;
+  sListHeader << tr("Color") << tr("Bold") << tr("Italic") << tr("Background");
+  m_pUi->styleTable->setHorizontalHeaderLabels(sListHeader);
+  sListHeader.clear();
+  sListHeader << tr("Background") << tr("Text color") << tr("Text formatting")
+              << tr("Heading") << tr("Hyperlink") << tr("InterWiki")
+              << tr("Macro") << tr("Parser") << tr("List") << tr("Table line")
+              << tr("Table cell format") << tr("ImgMap") << tr("Misc")
+              << tr("Comment") << tr("Syntax error");
+  m_pUi->styleTable->setVerticalHeaderLabels(sListHeader);
 }
 
 // ----------------------------------------------------------------------------

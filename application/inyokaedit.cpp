@@ -28,7 +28,6 @@
 #include "./parser/parser.h"
 #include "./plugins.h"
 #include "./session.h"
-#include "./settings.h"
 #include "./templates/templates.h"
 #include "./texteditor.h"
 #include "./upload.h"
@@ -36,12 +35,13 @@
 #include "./xmlparser.h"
 #include "ui_inyokaedit.h"
 
-InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
-                       const QString &sArg, QWidget *parent)
+InyokaEdit::InyokaEdit(const QDir &userDataDir, const QString &sArg,
+                       QWidget *parent)
     : QMainWindow(parent),
       m_pUi(new Ui::InyokaEdit),
       m_sCurrLang(QLatin1String("")),
-      m_sSharePath(sharePath.absolutePath()),
+      m_pSettings(Settings::instance()),
+      m_sSharePath(Settings::instance()->getSharePath()),
       m_UserDataDir(userDataDir),
       m_sPreviewFile(m_UserDataDir.absolutePath() + "/tmpinyoka.html"),
       m_tmpPreviewImgDir(m_UserDataDir.absolutePath() + "/tmpImages"),
@@ -52,7 +52,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
       m_bReloadPreviewBlocked(false) {
   m_pUi->setupUi(this);
 
-  if (!sharePath.exists()) {
+  if (!QDir(m_sSharePath).exists()) {
     QMessageBox::warning(nullptr, QStringLiteral("Warning"),
                          QStringLiteral("App share folder not found!"));
     qWarning() << "Share folder does not exist:" << m_sSharePath;
@@ -93,7 +93,7 @@ InyokaEdit::InyokaEdit(const QDir &userDataDir, const QDir &sharePath,
     m_pFileOperations->loadFile(sArg, true);
   }
 
-  m_pPlugins->loadPlugins(m_pSettings->getGuiLanguage());
+  m_pPlugins->loadPlugins();
   this->updateEditorSettings();
   this->deleteAutoSaveBackups();
   m_pCurrentEditor->setFocus();
@@ -108,10 +108,7 @@ InyokaEdit::~InyokaEdit() {
 // ----------------------------------------------------------------------------
 
 void InyokaEdit::createObjects() {
-  m_pSettings = new Settings(this, m_sSharePath);
   m_pUtils = new Utils(this);
-  connect(m_pUtils, &Utils::setWindowsUpdateCheck, m_pSettings,
-          &Settings::setWindowsCheckUpdate);
   if (m_pSettings->isDarkScheme()) {
     QIcon::setThemeName(QStringLiteral("dark"));
   } else {
@@ -132,10 +129,10 @@ void InyokaEdit::createObjects() {
                              "the application."));
     exit(-2);
   }
-  connect(m_pSettings, &Settings::changeLang, this, &InyokaEdit::loadLanguage);
-  connect(this, &InyokaEdit::updateUiLang, m_pSettings,
-          &Settings::updateUiLang);
-  this->loadLanguage(m_pSettings->getGuiLanguage());
+
+  m_pSettingsDialog = new SettingsDialog(this);
+  connect(m_pSettingsDialog, &SettingsDialog::changeGuiLanguage, this,
+          &InyokaEdit::loadLanguage);
 
   // Has to be created before parser
   m_pTemplates = new Templates(m_pSettings->getInyokaCommunity(), m_sSharePath,
@@ -167,9 +164,11 @@ void InyokaEdit::createObjects() {
   // Attention: Currently tab order is fixed (same as m_pListEditors)
   m_pDocumentTabs->setMovable(false);
 
-  m_pFileOperations = new FileOperations(
-      this, m_pDocumentTabs, m_pSettings, m_sPreviewFile,
-      m_UserDataDir.absolutePath(), m_pTemplates->getAllBoilerplates());
+  m_pFileOperations = new FileOperations(this, m_pDocumentTabs, m_sPreviewFile,
+                                         m_UserDataDir.absolutePath(),
+                                         m_pTemplates->getAllBoilerplates());
+  connect(m_pSettingsDialog, &SettingsDialog::updateEditorSettings,
+          m_pFileOperations, &FileOperations::updateEditorSettings);
   m_pCurrentEditor = m_pFileOperations->getCurrentEditor();
 
   connect(m_pFileOperations, &FileOperations::callPreview, this,
@@ -182,11 +181,12 @@ void InyokaEdit::createObjects() {
   m_pPlugins =
       new Plugins(this, m_pCurrentEditor, m_pSettings->getDisabledPlugins(),
                   m_UserDataDir, m_sSharePath, m_pSettings->isDarkScheme());
-  connect(m_pSettings, &Settings::changeLang, m_pPlugins, &Plugins::changeLang);
+  connect(this, &InyokaEdit::updateUiLang, m_pPlugins, &Plugins::changeLang);
+  connect(this, &InyokaEdit::retranslate, m_pPlugins, &Plugins::retranslateUI);
   connect(m_pPlugins, &Plugins::addMenuToolbarEntries, this,
           &InyokaEdit::addPluginsButtons);
-  connect(m_pPlugins, &Plugins::availablePlugins, m_pSettings,
-          &Settings::availablePlugins);
+  connect(m_pPlugins, &Plugins::availablePlugins, m_pSettingsDialog,
+          &SettingsDialog::getAvailablePlugins);
 
   this->setCurrentEditor();
 
@@ -206,6 +206,8 @@ void InyokaEdit::createObjects() {
 
   m_pWebview->installEventFilter(this);
 #endif
+
+  this->loadLanguage(m_pSettings->getGuiLanguage());
 }
 
 // ----------------------------------------------------------------------------
@@ -245,7 +247,7 @@ void InyokaEdit::setupEditor() {
   setCentralWidget(m_pWidgetSplitter);
   m_pWidgetSplitter->restoreState(m_pSettings->getSplitterState());
 
-  connect(m_pSettings, &Settings::updateEditorSettings, this,
+  connect(m_pSettingsDialog, &SettingsDialog::updateEditorSettings, this,
           &InyokaEdit::updateEditorSettings);
   connect(m_pFileOperations, &FileOperations::changedNumberOfEditors, this,
           &InyokaEdit::changedNumberOfEditors);
@@ -395,8 +397,8 @@ void InyokaEdit::createActions() {
           &InyokaEdit::deleteTempImages);
 
   // Show settings dialog
-  connect(m_pUi->preferencesAct, &QAction::triggered, m_pSettings,
-          &Settings::showSettingsDialog);
+  connect(m_pUi->preferencesAct, &QAction::triggered, m_pSettingsDialog,
+          &SettingsDialog::showNormal);
 
   // ------------------------------------------------------------------------
 
@@ -555,6 +557,11 @@ void InyokaEdit::createXmlMenus() {
 
   this->clearXmlMenus();
 
+  QString sLang(m_pSettings->getGuiLanguage());
+  if (sLang.contains('_')) {  // Convert de_DE to de
+    sLang = sLang.section('_', 0, 0);
+  }
+
   // Check share and user path
   for (const auto &sPath : std::as_const(sListFolders)) {
     // Search for menu/drop-down/toolbar
@@ -565,18 +572,16 @@ void InyokaEdit::createXmlMenus() {
             sPath + "/community/" + m_pSettings->getInyokaCommunity() + "/xml/";
         // File name e.g. menu_1_de.xml
         xmlFile.setFileName(sTmpPath + sObj + "_" + QString::number(n) + "_" +
-                            m_pSettings->getGuiLanguage() + ".xml");
+                            sLang + ".xml");
 
-        if (!xmlFile.exists() &&
-            m_pSettings->getGuiLanguage() != QLatin1String("en")) {
+        if (!xmlFile.exists() && sLang != QLatin1String("en")) {
           if (1 == n && sPath == m_sSharePath) {
             qWarning() << "Xml menu file not found:" << xmlFile.fileName()
                        << "- Trying to load English fallback.";
           }
           // Try English fallback
           QString sTemp(xmlFile.fileName());
-          sTemp.replace("_" + m_pSettings->getGuiLanguage() + ".xml",
-                        QLatin1String("_en.xml"));
+          sTemp.replace("_" + sLang + ".xml", QLatin1String("_en.xml"));
           xmlFile.setFileName(sTemp);
         }
 
@@ -1036,9 +1041,7 @@ void InyokaEdit::updateEditorSettings() {
   m_colorSyntaxError = InyokaEdit::getHighlightErrorColor();
 
   // Setting proxy if available
-  Utils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
-                  m_pSettings->getProxyUserName(),
-                  m_pSettings->getProxyPassword());
+  Utils::setProxy();
 }
 
 // ----------------------------------------------------------------------------
@@ -1230,6 +1233,9 @@ void InyokaEdit::loadLanguage(const QString &sLang) {
           &m_translator, qApp->applicationName().toLower() + "_" + sLang,
           m_sSharePath + "/lang");
     }
+
+    emit updateUiLang(m_pSettings->getGuiLanguage());
+    emit retranslate();
   }
   m_pUi->retranslateUi(this);
 }
@@ -1255,9 +1261,10 @@ auto InyokaEdit::switchTranslator(QTranslator *translator, const QString &sFile,
 void InyokaEdit::changeEvent(QEvent *pEvent) {
   if (nullptr != pEvent) {
     if (QEvent::LanguageChange == pEvent->type()) {
+      qDebug() << "LanguageChange triggered";
       m_pUi->retranslateUi(this);
       this->createXmlMenus();
-      emit updateUiLang();
+      emit retranslate();
     }
   }
   QMainWindow::changeEvent(pEvent);
@@ -1352,8 +1359,8 @@ void InyokaEdit::showAbout() {
 // Close event (File -> Close or X)
 void InyokaEdit::closeEvent(QCloseEvent *pEvent) {
   if (m_pFileOperations->closeAllmaybeSave()) {
-    m_pSettings->writeSettings(saveGeometry(), saveState(),
-                               m_pWidgetSplitter->saveState());
+    m_pSettings->saveWindowStates(saveGeometry(), saveState(),
+                                  m_pWidgetSplitter->saveState());
     pEvent->accept();
   } else {
     pEvent->ignore();

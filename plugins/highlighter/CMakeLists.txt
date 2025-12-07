@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project(highlighter
-    VERSION 1.4.2
+    VERSION 1.4.3
     DESCRIPTION "Syntax highlighter plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

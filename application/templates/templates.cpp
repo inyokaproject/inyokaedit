@@ -7,7 +7,6 @@
 #include <QDebug>
 #include <QDir>
 #include <QMessageBox>
-#include <QSettings>
 
 Templates::Templates(const QString &sCommunity, const QString &sSharePath,
                      const QString &sUserDataDir) {

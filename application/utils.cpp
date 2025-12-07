@@ -16,6 +16,8 @@
 #include <QPushButton>
 #include <QVersionNumber>
 
+#include "./settings.h"
+
 Utils::Utils(QWidget *pParent, QObject *pParentObj) : m_pParent(pParent) {
   Q_UNUSED(pParentObj)
   m_NwManager = new QNetworkAccessManager(this);
@@ -48,16 +50,18 @@ auto Utils::getOnlineState() -> bool {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Utils::setProxy(const QString &sHostName, const quint16 nPort,
-                     const QString &sUser, const QString &sPassword) {
-  if (!sHostName.isEmpty() && 0 != nPort) {
+void Utils::setProxy() {
+  Settings *pSettings(Settings::instance());
+  if (!pSettings->getProxyHostName().isEmpty() &&
+      0 != pSettings->getProxyPort()) {
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName(sHostName);
-    proxy.setPort(nPort);
-    if (!sUser.isEmpty() && !sPassword.isEmpty()) {
-      proxy.setUser(sUser);
-      proxy.setPassword(sPassword);
+    proxy.setHostName(pSettings->getProxyHostName());
+    proxy.setPort(pSettings->getProxyPort());
+    if (!pSettings->getProxyUserName().isEmpty() &&
+        !pSettings->getProxyPassword().isEmpty()) {
+      proxy.setUser(pSettings->getProxyUserName());
+      proxy.setPassword(pSettings->getProxyPassword());
     }
     QNetworkProxy::setApplicationProxy(proxy);
   } else {
@@ -118,7 +122,7 @@ void Utils::replyFinished(QNetworkReply *pReply) {
 
         if (msgBox->clickedButton() == noDontAskAgainButton) {
           qDebug() << "Don't want to download an update and DON'T ASK AGAIN!";
-          emit this->setWindowsUpdateCheck(false);
+          Settings::instance()->setWindowsCheckUpdate(false);
           return;
         }
         if (msgBox->clickedButton() == yesButton) {

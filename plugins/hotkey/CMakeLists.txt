@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project(hotkey
-    VERSION 1.3.0
+    VERSION 1.3.1
     DESCRIPTION "Hotkey plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

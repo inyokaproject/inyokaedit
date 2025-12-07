@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project(spellchecker-hunspell
-    VERSION 1.4.1
+    VERSION 1.4.2
     DESCRIPTION "Hunspell based spell checker plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

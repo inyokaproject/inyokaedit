@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project(uu_knowledgebox
-    VERSION 1.3.0
+    VERSION 1.3.1
     DESCRIPTION "ubuntuusers.de knowledge box selection plugin for InyokaEdit"
     HOMEPAGE_URL "https://github.com/inyokaproject/inyokaedit"
 )

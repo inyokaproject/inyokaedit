@@ -36,6 +36,7 @@ void Uu_KnowledgeBox::initPlugin(QWidget *pParent, TextEditor *pEditor,
 
   this->loadTemplateEntries();
   this->buildUi(m_pParent);  // After loading template entries
+  this->changeLanguage();
 
   connect(m_pUi->buttonBox, &QDialogButtonBox::accepted, this,
           &Uu_KnowledgeBox::accept);
@@ -60,8 +61,10 @@ auto Uu_KnowledgeBox::getPluginVersion() const -> QString {
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
-  qApp->removeTranslator(&m_translator);
+auto Uu_KnowledgeBox::getTranslator(const QString &sLang) -> QTranslator * {
+  if (sLang.isEmpty()) {
+    return nullptr;
+  }
 
   if (!m_translator.load(":/" + QStringLiteral(PLUGIN_NAME).toLower() + "_" +
                          sLang + ".qm")) {
@@ -74,16 +77,13 @@ void Uu_KnowledgeBox::installTranslator(const QString &sLang) {
                  << m_sSharePath + "/lang/" +
                         QStringLiteral(PLUGIN_NAME).toLower() + "_" + sLang +
                         ".qm";
-      return;
+      return nullptr;
     }
   }
-
-  if (qApp->installTranslator(&m_translator) || "en" == sLang) {
-    m_pUi->retranslateUi(m_pDialog);
-  } else {
-    qWarning() << "Translator could not be installed!";
-  }
+  return &m_translator;
 }
+
+void Uu_KnowledgeBox::changeLanguage() { m_pUi->retranslateUi(m_pDialog); }
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------

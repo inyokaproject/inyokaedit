@@ -90,7 +90,7 @@ Plugins::Plugins(QWidget *pParent, TextEditor *pEditor,
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Plugins::loadPlugins(const QString &sLang) {
+void Plugins::loadPlugins() {
   m_PluginMenuEntries.clear();
   m_PluginToolbarEntries.clear();
 
@@ -103,7 +103,6 @@ void Plugins::loadPlugins(const QString &sLang) {
 
     m_listPlugins.at(i)->initPlugin(m_pParent, m_pEditor, m_userDataDir,
                                     m_sSharePath, m_bDarkScheme);
-    m_listPlugins.at(i)->installTranslator(sLang);
 
     QString sMenu(m_listPlugins.at(i)->getCaption());
     QIcon ico(m_listPlugins.at(i)->getIcon());
@@ -126,6 +125,11 @@ void Plugins::loadPlugins(const QString &sLang) {
                     ->callPlugin();
               });
     }
+
+    connect(this, &Plugins::retranslateUI, m_listPluginObjects.at(i), [=]() {
+      qobject_cast<IEditorPlugin *>(m_listPluginObjects.at(i))
+          ->changeLanguage();
+    });
 
     m_listPlugins.at(i)->executePlugin();
 
@@ -166,7 +170,18 @@ void Plugins::setEditorlist(const QList<TextEditor *> &listEditors) {
 void Plugins::changeLang(const QString &sLang) {
   for (auto &plugin : m_listPlugins) {
     if (!m_sListDisabledPlugins.contains(plugin->getPluginName())) {
-      plugin->installTranslator(sLang);
+      // plugin->installTranslator(sLang);
+      QTranslator *trans = plugin->getTranslator("");
+      if (trans) qApp->removeTranslator(trans);
+    }
+  }
+
+  for (auto &plugin : m_listPlugins) {
+    if (!m_sListDisabledPlugins.contains(plugin->getPluginName())) {
+      QTranslator *trans = plugin->getTranslator(sLang);
+      if (trans && trans->isEmpty() == false) {
+        qApp->installTranslator(trans);
+      }
     }
   }
 }

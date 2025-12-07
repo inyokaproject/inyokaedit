@@ -38,7 +38,7 @@ class SpellChecker_Hunspell : public QObject, IEditorPlugin {
                   const bool &bIsDarkTheme) override;
   auto getPluginName() const -> QString override;
   auto getPluginVersion() const -> QString override;
-  void installTranslator(const QString &sLang) override;
+  auto getTranslator(const QString &sLang) -> QTranslator * override;
   auto getCaption() const -> QString override;
   auto getIcon() const -> QIcon override;
   auto includeMenu() const -> bool override;
@@ -50,6 +50,7 @@ class SpellChecker_Hunspell : public QObject, IEditorPlugin {
  public slots:
   void callPlugin() override;
   void executePlugin() override;
+  void changeLanguage() override;
   void showSettings() override;
   void showAbout() override;
 
