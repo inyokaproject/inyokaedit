@@ -168,15 +168,15 @@ void Settings::setAutoSave(const quint32 nAutosave) {
 
 auto Settings::getReloadPreviewKey() const -> qint32 {
 #ifdef NOPREVIEW
-  return QStringLiteral("0x0");
+  QString sReloadKey(QStringLiteral("0x0"));
 #else
   // 0x01000004 = Qt::Key_Return
   QString sReloadKey(
       m_settings.value(QStringLiteral("ReloadPreviewKey"), "0x01000004")
           .toString());
+#endif
   return sReloadKey.remove(QStringLiteral("0x"), Qt::CaseInsensitive)
       .toInt(nullptr, 16);
-#endif
 }
 void Settings::setReloadPreviewKey(const QString &sReloadPreviewKey) {
   QString sReloadKey = sReloadPreviewKey;
