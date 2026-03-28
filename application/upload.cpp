@@ -242,9 +242,18 @@ void Upload::requestUpload() {
   QHttpPart timePart;
   timePart.setHeader(QNetworkRequest::ContentDispositionHeader,
                      QVariant("form-data; name=\"edit_time\""));
-  timePart.setBody(QDateTime::currentDateTimeUtc()
-                       .toString(QStringLiteral("yyyy-MM-dd hh:mm:ss.zzzzzz"))
-                       .toLatin1());
+  QDateTime utc = QDateTime::currentDateTimeUtc();
+  int offset = utc.offsetFromUtc() / 60;  // Offset in minutes since Epoch
+  QString sign = offset >= 0 ? "+" : "-";
+  int absOffset = qAbs(offset);
+  QString sOffset = QString("%1%2:%3")
+                        .arg(sign)
+                        .arg(absOffset / 60, 2, 10, QChar('0'))
+                        .arg(absOffset % 60, 2, 10, QChar('0'));
+  timePart.setBody(
+      QDateTime::currentDateTimeUtc()
+          .toString(QStringLiteral("yyyy-MM-dd hh:mm:ss.zzzzzz") + sOffset)
+          .toLatin1());
 
   QHttpPart revPart;
   revPart.setHeader(QNetworkRequest::ContentDispositionHeader,
