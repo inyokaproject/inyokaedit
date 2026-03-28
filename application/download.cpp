@@ -155,15 +155,16 @@ void Download::replyFinished(QNetworkReply *pReply) {
     return;
   }
 
-  // No error
-  QUrl url;
   // qDebug() << "Downloading URL: " << pReply->url().toString();
 
   // If the URL is not empty, we're being redirected
   if (!m_urlRedirectedTo.isEmpty()) {
-    url = m_urlRedirectedTo;
-    qDebug() << "Redirected to: " + url.toString();
-    this->downloadArticle(url.toString() + "a/export/raw/" + m_sRevision);
+    QUrl originalUrl = pReply->request().url();  // Base-URL
+    QUrl redirectUrl = m_urlRedirectedTo;
+    QUrl absoluteRedirectUrl =
+        originalUrl.resolved(redirectUrl);  // Relative URL
+    qDebug() << "Redirected to: " + absoluteRedirectUrl.toString();
+    this->downloadArticle(absoluteRedirectUrl.toString() + m_sRevision);
   } else {
     m_urlRedirectedTo.clear();
     QString sTmpArticle = QString::fromUtf8(pData->readAll());
@@ -252,13 +253,11 @@ auto Download::redirectUrl(const QUrl &possibleRedirectUrl,
   QUrl redirectUrl;
   if (!possibleRedirectUrl.isEmpty() && possibleRedirectUrl != oldRedirectUrl) {
     redirectUrl = possibleRedirectUrl;
-    m_sSitename = redirectUrl.toString().mid(m_sInyokaUrl.size() + 1);
+    m_sSitename = redirectUrl.toString();
     if (m_sSitename.startsWith('/')) {
       m_sSitename.remove(0, 1);
     }
-    if (m_sSitename.endsWith('/')) {
-      m_sSitename.remove(m_sSitename.length() - 1, 1);
-    }
+    m_sSitename = m_sSitename.left(m_sSitename.indexOf("/a/export/raw/"));
     qDebug() << "Set new site name:" << m_sSitename;
   } else {
     m_urlRedirectedTo.clear();
