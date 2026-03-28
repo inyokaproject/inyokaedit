@@ -61,6 +61,7 @@ class ProvisionalTplParser {
   static auto parseStatusIcon(const QStringList &sListArgs) -> QString;
   auto parseTable(const QStringList &sListArgs) -> QString;
   auto parseTested(const QStringList &sListArgs) -> QString;
+  auto parseTestedGeneralSince(const QStringList &sListArgs) -> QString;
   auto parseTestedUT(const QStringList &sListArgs) -> QString;
   static auto parseUnderConst(const QStringList &sListArgs) -> QString;
   static auto parseWarning(const QStringList &sListArgs) -> QString;

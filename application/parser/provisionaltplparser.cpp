@@ -154,6 +154,9 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
     if (sTemplate == QString::fromUtf8("Getestet").toLower()) {
       return this->parseTested(sArgs);
     }
+    if (sTemplate == QString::fromUtf8("Getestet-general-ab").toLower()) {
+      return this->parseTestedGeneralSince(sArgs);
+    }
     if (sTemplate == QString::fromUtf8("UT").toLower()) {
       return this->parseTestedUT(sArgs);
     }
@@ -2070,6 +2073,35 @@ auto ProvisionalTplParser::parseTested(const QStringList &sListArgs)
       "box tested_for",
       QString::fromUtf8(
           "Dieser Artikel wurde für die folgenden Ubuntu-Versionen getestet:"),
+      sOutput);
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto ProvisionalTplParser::parseTestedGeneralSince(const QStringList &sListArgs)
+    -> QString {
+  QString sOutput("");
+  if (!sListArgs.isEmpty()) {
+    sOutput =
+        QString::fromUtf8(
+            "Dieser Artikel wurde für die Ubuntu-Version [:%1:] "
+            "getestet. Es wird erwartet, dass er im wesentlichen auch mit "
+            "darauf folgenden Versionen anwendbar ist. Bitte melde "
+            "abweichendes Verhalten in der Diskussion zu diesem Artikel.")
+            .arg(sListArgs.at(0)) +
+        "\n#getestet: general\n";
+
+    sOutput += "\n";
+
+  } else {
+    sOutput = QString::fromUtf8("\n#tag: ungetestet\n");
+  }
+
+  return ProvisionalTplParser::insertBox(
+      "box tested_for",
+      QString::fromUtf8("Dieser Artikel gilt größtenteils unabhängig von der "
+                        "Ubuntu-Version."),
       sOutput);
 }
 
