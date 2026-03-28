@@ -19,6 +19,7 @@
     <element name="Inhaltsverzeichnis" insert="Inhaltsverzeichnis.macro" icon="" />
     <element name="Experten-Markierung" insert="Fortgeschritten.tpl" icon="" />
     <element name="Infobox" insert="Infobox.tpl" icon="" />
+    <element name="Getestet general ab" insert="Getestet-general-ab.tpl" icon="" />
     <element name="Getestet Ubuntu Touch" insert="UT.tpl" icon="" />
   </group>
   <group name="B&amp;ilder">
