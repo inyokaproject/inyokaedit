@@ -499,14 +499,19 @@ void Settings::saveWindowStates(const QByteArray &WinGeometry,
 
 auto Settings::isDarkScheme() const -> bool {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-  if (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) {
+  auto colorScheme = QGuiApplication::styleHints()->colorScheme();
+  if (colorScheme == Qt::ColorScheme::Dark) {
     return true;
+  }
+  if (colorScheme == Qt::ColorScheme::Light) {
+    return false;
   }
 #endif
 
   // Fallback: If window is darker than text
-  if (m_pParent->window()->palette().window().color().lightnessF() <
-      m_pParent->window()->palette().windowText().color().lightnessF()) {
+  const QPalette &appPalette = QApplication::palette();
+  if (appPalette.window().color().lightnessF() <
+      appPalette.windowText().color().lightnessF()) {
     return true;
   }
 
