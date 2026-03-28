@@ -6,7 +6,7 @@ on:
 
 env:
   BUILD_TYPE: Release
-  QT_VERSION: '6.10.1'
+  QT_VERSION: '6.10.3'
   
 jobs:
   Windows_Qt6:
