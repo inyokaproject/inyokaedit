@@ -1,13 +1,14 @@
-inyokaedit (0.28.4-2) noble; urgency=low
+inyokaedit (0.28.4-3) noble; urgency=low
 
   [ Thorsten Roth ]
   * Add Getestet-general-ab template.
+  * Align with Inyoka changes: Fix redirects; fix upload.
   * Refactor settings to singleton.
   * CI updates.
   * Replace Doxygen headers with SPDX tags.
   * Bump miniz and nuspell versions.
 
- -- Thorsten Roth <elthoro@gmx.de>  Sat, 28 Mar 2026 17:22:00 +0200
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 29 Mar 2026 14:02:00 +0200
 
 inyokaedit (0.28.3-7) noble; urgency=low
 
