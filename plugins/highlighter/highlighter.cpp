@@ -489,12 +489,11 @@ void Highlighter::getTranslations() {
   } else {
     QTextStream in(&fiMacros);
     QString tmpLine;
-    QStringList tmpList;
 
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.trimmed().isEmpty()) {
-        tmpList = tmpLine.split(QStringLiteral("="));
+        QStringList tmpList = tmpLine.split(QStringLiteral("="));
         if (2 == tmpList.size()) {
           const QStringList tmpList2(tmpList[1].split(QStringLiteral(",")));
           for (const auto &s : tmpList2) {

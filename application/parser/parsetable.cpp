@@ -52,7 +52,6 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
   QString sRet(QLatin1String(""));
   QStringList sListCells;
   QString sLine;
-  QString sCell;
   QString sFormating(QLatin1String(""));
   QString sTmpStyle(QLatin1String(""));
   QRegularExpressionMatch match;
@@ -70,7 +69,6 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
       QStringLiteral("cellclass=\\\"[\\w.%\\-]+\\\""));
   static QRegularExpression cellStylePattern(
       QStringLiteral("cellstyle=\\\"[\\w\\s:;%#\\-=]+\\\""));
-  bool bCellStyle;
 
   static QRegularExpression connectCells(QStringLiteral("-\\d{1,2}"));
   static QRegularExpression connectRows(QStringLiteral("\\|\\d{1,2}"));
@@ -82,8 +80,8 @@ auto ParseTable::createTable(const QStringList &sListLines) -> QString {
 
     sListCells = sLine.split(QStringLiteral("||"));
     for (int nCell = 0; nCell < sListCells.size(); nCell++) {
-      sCell = sListCells[nCell];
-      bCellStyle = false;
+      QString sCell = sListCells[nCell];
+      bool bCellStyle = false;
 
       // Look for formatting
       if ((match = formatPattern.match(sCell)).hasMatch()) {

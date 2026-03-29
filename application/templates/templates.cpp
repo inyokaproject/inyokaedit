@@ -52,8 +52,6 @@ void Templates::initTemplates(const QString &sTplPath) {
   QString tmpLine;
   QString sTempTplLangText(QLatin1String(""));
   QString sTempMacro(QLatin1String(""));
-  bool bFoundMacro;
-  bool bFoundTpl;
 
   // Get template files
   const QFileInfoList fiListTplFiles =
@@ -63,8 +61,8 @@ void Templates::initTemplates(const QString &sTplPath) {
       // qDebug() << fi.absoluteFilePath();
       TplFile.setFileName(fi.absoluteFilePath());
       if (TplFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        bFoundMacro = false;
-        bFoundTpl = false;
+        bool bFoundMacro = false;
+        bool bFoundTpl = false;
         sTempTplLangText.clear();
         sTempMacro.clear();
         QTextStream in(&TplFile);
@@ -161,14 +159,12 @@ void Templates::initMap(const QString &sFile, const QChar cSplit,
   } else {
     QTextStream in(&MapFile);
     QString tmpLine;
-    QString sKey;
-    QString sValue;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) && !tmpLine.isEmpty()) {
-        sKey = tmpLine.section(cSplit, 0, 0)
-                   .trimmed();  // Split at first occurrence
-        sValue =
+        QString sKey = tmpLine.section(cSplit, 0, 0)
+                           .trimmed();  // Split at first occurrence
+        QString sValue =
             tmpLine.section(cSplit, 1).trimmed();  // Second part after match
         if (!sKey.isEmpty() && !sValue.isEmpty() && !map->contains(sKey)) {
           map->insert(sKey, sValue);
@@ -193,14 +189,12 @@ void Templates::initTxtMap(const QString &sFile, const QChar cSplit,
   } else {
     QTextStream in(&MapFile);
     QString tmpLine;
-    QString sKey;
-    QString sValue;
     while (!in.atEnd()) {
       tmpLine = in.readLine().trimmed();
       if (!tmpLine.startsWith(QLatin1String("#")) && !tmpLine.isEmpty()) {
-        sKey = tmpLine.section(cSplit, 0, 0)
-                   .trimmed();  // Split at first occurrence
-        sValue =
+        QString sKey = tmpLine.section(cSplit, 0, 0)
+                           .trimmed();  // Split at first occurrence
+        QString sValue =
             tmpLine.section(cSplit, 1).trimmed();  // Second part after match
         if (!sKey.isEmpty() && !sValue.isEmpty() &&
             !map->first.contains(sKey)) {

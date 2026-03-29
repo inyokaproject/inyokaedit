@@ -1212,14 +1212,14 @@ auto ProvisionalTplParser::parseKeys(const QStringList &sListArgs) -> QString {
 auto ProvisionalTplParser::parseKnowledge(const QStringList &sListArgs)
     -> QString {
   QString sOutput("");
-  QString sTmp;
   for (int i = 0; i < sListArgs.length(); i++) {
     sOutput += "\n 1. [[Anker(source-" + QString::number(i + 1) + ")]]";
     if (sListArgs[i].contains(",")) {
       sOutput += sListArgs[i].left(sListArgs[i].indexOf(",")).trimmed();
-      sTmp = sListArgs[i]
-                 .right(sListArgs[i].length() - sListArgs[i].indexOf(","))
-                 .trimmed();
+      QString sTmp =
+          sListArgs[i]
+              .right(sListArgs[i].length() - sListArgs[i].indexOf(","))
+              .trimmed();
       sOutput += sTmp;
     } else {
       sOutput += sListArgs[i];
@@ -1771,10 +1771,9 @@ auto ProvisionalTplParser::parseSidebar(const QStringList &sListArgs)
 auto ProvisionalTplParser::parseStatusIcon(const QStringList &sListArgs)
     -> QString {
   QString sOutput("");
-  QString sTmp;
   for (int i = 0; i < sListArgs.size(); i++) {
     if (sListArgs.size() - 1 == i) {
-      sTmp = sListArgs[i];
+      QString sTmp = sListArgs[i];
       if (sListArgs[i].contains("ja")) {
         sTmp.replace("ja", "[[Bild(Wiki/Vorlagen/StatusIcon/ja.png)]] ");
         sOutput += sTmp + " ";
@@ -1837,9 +1836,7 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
   static QRegularExpression tableStylePattern(
       QStringLiteral("tablestyle=\\\"[\\w\\s:;%#\\-]+\\\""));
 
-  int nLength;
   QString sTmpCellStyle;
-  QString sStyleInfo;
   QString sTmpTD;
 
   for (int i = 1; i < sArgs.length(); i++) {
@@ -1882,8 +1879,8 @@ auto ProvisionalTplParser::parseTable(const QStringList &sListArgs) -> QString {
           !sArgs[i].trimmed().startsWith("<span") && !bTextformat) {
         int nIndex = match.capturedStart();
         bool bCellStyleWasSet = false;
-        nLength = match.capturedLength();
-        sStyleInfo = match.captured();
+        int nLength = match.capturedLength();
+        QString sStyleInfo = match.captured();
 
         // Start tr
         if (i == 1 || sArgs[i - 1] == "+++" ||

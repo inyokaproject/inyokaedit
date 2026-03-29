@@ -160,9 +160,8 @@ void Download::replyFinished(QNetworkReply *pReply) {
   // If the URL is not empty, we're being redirected
   if (!m_urlRedirectedTo.isEmpty()) {
     QUrl originalUrl = pReply->request().url();  // Base-URL
-    QUrl redirectUrl = m_urlRedirectedTo;
     QUrl absoluteRedirectUrl =
-        originalUrl.resolved(redirectUrl);  // Relative URL
+        originalUrl.resolved(m_urlRedirectedTo);  // Relative URL
     qDebug() << "Redirected to: " + absoluteRedirectUrl.toString();
     this->downloadArticle(absoluteRedirectUrl.toString() + m_sRevision);
   } else {

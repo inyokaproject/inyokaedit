@@ -343,8 +343,6 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
           QRegularExpression::CaseInsensitiveOption);
   QString sMacro;
   QString sSpaces;
-  QString sTmp;
-  quint16 nCurrentLevel;
   static QRegularExpression rmHead(QStringLiteral("#{1,5}\\d#{1,5}"));
 
   // Replace characters for valid links (ä, ü, ö, spaces)
@@ -378,13 +376,13 @@ void Macros::replaceTableOfContents(QTextDocument *pRawDoc,
 
     sMacro = "<div class=\"toc\">\n<div class=\"head\">" + sTrans + "</div>\n";
     for (int i = 0; i < sListHeadlines.size(); i++) {
-      sTmp = sListHeadlines[i];
+      QString sTmp = sListHeadlines[i];
       sTmp.remove(rmHead);
       sListHeadlines[i]
           .remove(sListHeadlines[i].length() - sTmp.length(), sTmp.length())
           .remove(QStringLiteral("#"));
 
-      nCurrentLevel = sListHeadlines[i].toUShort();
+      quint16 nCurrentLevel = sListHeadlines[i].toUShort();
       sSpaces.fill(' ', nCurrentLevel);
 
       if (nCurrentLevel > 0 && nCurrentLevel <= nTOCLevel) {

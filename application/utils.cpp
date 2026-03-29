@@ -108,10 +108,10 @@ void Utils::replyFinished(QNetworkReply *pReply) {
                                "Do you want to download the latest version?")
                                 .arg(qApp->applicationName()),
                             QMessageBox::NoButton, m_pParent);
-        QPushButton *noDontAskAgainButton =
+        const QPushButton *noDontAskAgainButton =
             msgBox->addButton(tr("No, don't ask again!"), QMessageBox::NoRole);
         QPushButton *noButton = msgBox->addButton(QMessageBox::No);
-        QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
+        const QPushButton *yesButton = msgBox->addButton(QMessageBox::Yes);
 
         msgBox->setDefaultButton(noButton);
         msgBox->exec();

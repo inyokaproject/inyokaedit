@@ -550,7 +550,6 @@ void InyokaEdit::createXmlMenus() {
   QFile xmlFile;
   QList<QAction *> tmplListActions;
   QStringList sListFolders;
-  QString sTmpPath;
   sListFolders << m_sSharePath << m_UserDataDir.absolutePath();
   QStringList sListObjects;
   sListObjects << QStringLiteral("menu") << QStringLiteral("dropdown")
@@ -570,7 +569,7 @@ void InyokaEdit::createXmlMenus() {
     for (const auto &sObj : std::as_const(sListObjects)) {
       // Search for max 9 files
       for (int n = 1; n < MAXFILES; n++) {
-        sTmpPath =
+        QString sTmpPath =
             sPath + "/community/" + m_pSettings->getInyokaCommunity() + "/xml/";
         // File name e.g. menu_1_de.xml
         xmlFile.setFileName(sTmpPath + sObj + "_" + QString::number(n) + "_" +

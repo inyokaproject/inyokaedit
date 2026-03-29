@@ -87,23 +87,21 @@ void ParseLinks::replaceHyperlinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  int nLength;
   QString sLink;
-  int nSpace;
 
   while ((match = findHyperlink.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
 
     // Found end of link
     if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
-      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
+      int nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
       // qDebug() << "FOUND: " << sLink;
 
       sLink.remove(QStringLiteral("["));
       sLink.remove(QStringLiteral("]"));
 
-      nSpace = sLink.indexOf(QLatin1String(" "), 0);
+      int nSpace = sLink.indexOf(QLatin1String(" "), 0);
       // Link with description
       if (nSpace != -1) {
         QString sHref = sLink;
@@ -138,7 +136,6 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  int nLength;
   QString sLink;
   QString sLinkURL;
   bool bIsOnline(Utils::getOnlineState());
@@ -148,7 +145,7 @@ void ParseLinks::replaceInyokaWikiLinks(QTextDocument *pRawDoc) {
 
     // Found end of link
     if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
-      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
+      int nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
       if (2 <= sLink.count(QStringLiteral(":"))) {
         // qDebug() << "FOUND: " << sLink;
@@ -238,7 +235,6 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  int nLength;
   QString sLink;
   QStringList sListLink;
   QString sClass;
@@ -262,7 +258,7 @@ void ParseLinks::replaceInterwikiLinks(QTextDocument *pRawDoc) {
 
     // Found end of link
     if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
-      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
+      int nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
       if (2 <= sLink.count(QStringLiteral(":"))) {
         sLink.remove(QStringLiteral("["));
@@ -331,21 +327,19 @@ void ParseLinks::replaceAnchorLinks(QTextDocument *pRawDoc) {
   QString sDoc(pRawDoc->toPlainText());
   QRegularExpressionMatch match;
   int nIndex = 0;
-  int nLength;
   QString sLink;
-  int nSplit;
 
   while ((match = findAnchorLink.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
 
     // Found end of link
     if (sDoc.indexOf(QLatin1String("]"), nIndex) != -1) {
-      nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
+      int nLength = sDoc.indexOf(QLatin1String("]"), nIndex) - nIndex + 1;
       sLink = sDoc.mid(nIndex, nLength);
 
       sLink.remove(QStringLiteral("[#"));
       sLink.remove(QStringLiteral("]"));
-      nSplit = sLink.indexOf(QLatin1String(" "));
+      int nSplit = sLink.indexOf(QLatin1String(" "));
       // qDebug() << sLink.mid(0, nSplit)
       //          << sLink.mid(nSplit + 1 , nLength);
 

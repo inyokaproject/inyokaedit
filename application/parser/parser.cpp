@@ -427,14 +427,14 @@ void Parser::filterEscapedChars(QTextDocument *pRawDoc) {
                                     QRegularExpression::CaseInsensitiveOption);
   QRegularExpressionMatch match;
   int nIndex = 0;
-  unsigned int nNoTranslate;
 
   while ((match = pattern.match(sDoc, nIndex)).hasMatch()) {
     nIndex = match.capturedStart();
     QString sEscChar = match.captured(0);
     if ("\\\\" != sEscChar) {
       sEscChar.remove(0, 1);  // Remove escape char
-      nNoTranslate = static_cast<unsigned int>(m_sListNoTranslate.size());
+      unsigned int nNoTranslate =
+          static_cast<unsigned int>(m_sListNoTranslate.size());
       m_sListNoTranslate << sEscChar;
 
       sEscChar = "%%NO_TRANSLATE_" + QString::number(nNoTranslate) + "%%";
@@ -529,7 +529,6 @@ void Parser::replaceHorLines(QTextDocument *pRawDoc) {
 
 auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
   QString sDoc(pRawDoc->toPlainText());
-  QString sLine;
   QString sTags(QLatin1String(""));
   QStringList sListTags;
 
@@ -539,7 +538,7 @@ auto Parser::generateTags(QTextDocument *pRawDoc) -> QString {
        block = block.next()) {
     if (block.text().trimmed().startsWith(QLatin1String("#tag:")) ||
         block.text().trimmed().startsWith(QLatin1String("# tag:"))) {
-      sLine = block.text();
+      QString sLine = block.text();
       sTags = block.text().trimmed();
       sTags.remove(QStringLiteral("#tag:"));
       sTags.remove(QStringLiteral("# tag:"));
@@ -607,8 +606,6 @@ void Parser::replaceFlags(QTextDocument *pRawDoc) {
 
 void Parser::replaceQuotes(QTextDocument *pRawDoc) {
   QString sDoc(QLatin1String(""));
-  QString sLine;
-  quint16 nQuotes;
   static QRegularExpression rmQuote(QStringLiteral("^>*"));
 
   // Go through each text block
@@ -616,8 +613,8 @@ void Parser::replaceQuotes(QTextDocument *pRawDoc) {
        block.isValid() && !(pRawDoc->lastBlock() < block);
        block = block.next()) {
     if (block.text().startsWith(QLatin1String(">"))) {
-      sLine = block.text().trimmed();
-      nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
+      QString sLine = block.text().trimmed();
+      quint16 nQuotes = static_cast<quint16>(sLine.count(QStringLiteral(">")));
       sLine.remove(rmQuote);
       for (int n = 0; n < nQuotes; n++) {
         sLine = "<blockquote>" + sLine + "</blockquote>";

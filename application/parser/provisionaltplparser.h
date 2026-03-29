@@ -52,7 +52,7 @@ class ProvisionalTplParser {
   static auto parseOverview2(const QStringList &sListArgs) -> QString;
   static auto parsePackage(const QStringList &sListArgs) -> QString;
   auto parsePipInstall(const QStringList &sListArgs) -> QString;
-  auto parsePipxInstall(const QStringList &sListArgs) -> QString;
+  static auto parsePipxInstall(const QStringList &sListArgs) -> QString;
   static auto parsePkgInstall(const QStringList &sListArgs) -> QString;
   auto parsePkgInstallBut(const QStringList &sListArgs) -> QString;
   static auto parsePPA(const QStringList &sListArgs) -> QString;
@@ -61,7 +61,7 @@ class ProvisionalTplParser {
   static auto parseStatusIcon(const QStringList &sListArgs) -> QString;
   auto parseTable(const QStringList &sListArgs) -> QString;
   auto parseTested(const QStringList &sListArgs) -> QString;
-  auto parseTestedGeneralSince(const QStringList &sListArgs) -> QString;
+  static auto parseTestedGeneralSince(const QStringList &sListArgs) -> QString;
   auto parseTestedUT(const QStringList &sListArgs) -> QString;
   static auto parseUnderConst(const QStringList &sListArgs) -> QString;
   static auto parseWarning(const QStringList &sListArgs) -> QString;
