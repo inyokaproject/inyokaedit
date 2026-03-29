@@ -2082,27 +2082,28 @@ auto ProvisionalTplParser::parseTested(const QStringList &sListArgs)
 auto ProvisionalTplParser::parseTestedGeneralSince(const QStringList &sListArgs)
     -> QString {
   QString sOutput("");
+  QString sTag("");
+
   if (!sListArgs.isEmpty()) {
-    sOutput =
-        QString::fromUtf8(
-            "Dieser Artikel wurde für die Ubuntu-Version [:%1:] "
-            "getestet. Es wird erwartet, dass er im wesentlichen auch mit "
-            "darauf folgenden Versionen anwendbar ist. Bitte melde "
-            "abweichendes Verhalten in der Diskussion zu diesem Artikel.")
-            .arg(sListArgs.at(0)) +
-        "\n#getestet: general\n";
-
-    sOutput += "\n";
-
+    sOutput = QString::fromUtf8(
+                  "Dieser Artikel wurde für die Ubuntu-Version [:%1:] "
+                  "getestet. Es wird erwartet, dass er wesentlich auch auf "
+                  "nachfolgende Versionen anwendbar ist. Bitte melde "
+                  "abweichendes Verhalten in der Diskussion zu diesem Artikel.")
+                  .arg(sListArgs.at(0)) +
+              "\n";
+    // sTag = "\n#getestet: general\n";
   } else {
-    sOutput = QString::fromUtf8("\n#tag: ungetestet\n");
+    sTag = "\n#tag: ungetestet\n";
   }
 
   return ProvisionalTplParser::insertBox(
-      "box tested_for",
-      QString::fromUtf8("Dieser Artikel gilt größtenteils unabhängig von der "
-                        "Ubuntu-Version."),
-      sOutput);
+             "box tested_for",
+             QString::fromUtf8(
+                 "Dieser Artikel gilt größtenteils unabhängig von der "
+                 "Ubuntu-Version."),
+             sOutput) +
+         sTag;
 }
 
 // ----------------------------------------------------------------------------
