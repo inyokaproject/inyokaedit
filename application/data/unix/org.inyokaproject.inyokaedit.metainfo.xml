@@ -37,11 +37,12 @@
   <content_rating type="oars-1.0" />
   
   <releases>
-    <release version="0.28.4" date="2026-03-28">
+    <release version="0.28.4" date="2026-03-29">
       <description>
         <p>Changes:</p>
         <ul>
           <li>Add Getestet-general-ab template.</li>
+          <li>Align with Inyoka changes: Fix redirects; fix upload.</li>
           <li>Refactor settings to singleton.</li>
           <li>CI updates.</li>
           <li>Replace Doxygen headers with SPDX tags.</li>
