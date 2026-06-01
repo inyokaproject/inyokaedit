@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
+#include <QNetworkProxyFactory>
 #include <QSslSocket>
 #include <QStandardPaths>
 #include <QTextStream>
@@ -36,6 +37,7 @@ auto main(int argc, char *argv[]) -> int {
       QStringLiteral("inyokaedit"), QIcon(QStringLiteral(":/inyokaedit.png"))));
   app.setDesktopFileName(QStringLiteral("org.inyokaproject.inyokaedit"));
 #endif
+  QNetworkProxyFactory::setUseSystemConfiguration(true);
 
   QCommandLineParser cmdparser;
   cmdparser.setApplicationDescription(QStringLiteral(APP_DESC));

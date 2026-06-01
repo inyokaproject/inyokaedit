@@ -123,12 +123,6 @@ void SettingsDialog::readSettings() {
   m_pUi->inyokaUserEdit->setText(m_pSettings->getInyokaUser());
   m_pUi->inyokaPasswordEdit->setText(m_pSettings->getInyokaPassword());
 
-  // Proxy
-  m_pUi->proxyHostNameEdit->setText(m_pSettings->getProxyHostName());
-  m_pUi->proxyPortSpinBox->setValue(m_pSettings->getProxyPort());
-  m_pUi->proxyUserNameEdit->setText(m_pSettings->getProxyUserName());
-  m_pUi->proxyPasswordEdit->setText(m_pSettings->getProxyPassword());
-
   // Recent files
   m_pUi->numberRecentFilesEdit->setValue(
       static_cast<quint16>(m_pSettings->getNumOfRecentFiles()));
@@ -179,13 +173,6 @@ void SettingsDialog::accept() {
 
   // Recent files
   m_pSettings->setNumOfRecentFiles(m_pUi->numberRecentFilesEdit->value());
-
-  // Proxy
-  m_pSettings->setProxyHostName(m_pUi->proxyHostNameEdit->text().trimmed());
-  m_pSettings->setProxyPort(
-      static_cast<quint16>(m_pUi->proxyPortSpinBox->value()));
-  m_pSettings->setProxyUserName(m_pUi->proxyUserNameEdit->text().trimmed());
-  m_pSettings->setProxyPassword(m_pUi->proxyPasswordEdit->text().trimmed());
 
   // Plugins
   QStringList oldDisabledPlugins(m_pSettings->getDisabledPlugins());

@@ -10,7 +10,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QNetworkProxy>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QPushButton>
@@ -42,26 +41,6 @@ auto Utils::getOnlineState() -> bool {
   } else {
     qDebug() << "NO internet connection available!";
     return false;
-  }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
-void Utils::setProxy(const QString &sHostName, const quint16 nPort,
-                     const QString &sUser, const QString &sPassword) {
-  if (!sHostName.isEmpty() && 0 != nPort) {
-    QNetworkProxy proxy;
-    proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName(sHostName);
-    proxy.setPort(nPort);
-    if (!sUser.isEmpty() && !sPassword.isEmpty()) {
-      proxy.setUser(sUser);
-      proxy.setPassword(sPassword);
-    }
-    QNetworkProxy::setApplicationProxy(proxy);
-  } else {
-    QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
   }
 }
 

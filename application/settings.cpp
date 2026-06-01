@@ -57,6 +57,9 @@ void Settings::removeObsolete() {
   m_settings.remove(QStringLiteral("ConstructionArea"));
   m_settings.remove(QStringLiteral("Inyoka/ConstructionArea"));
   m_settings.remove(QStringLiteral("Window/DarkThreshold"));
+  m_settings.beginGroup(QStringLiteral("Proxy"));
+  m_settings.remove(QLatin1String(""));
+  m_settings.endGroup();
   m_settings.beginGroup(QStringLiteral("FindDialog"));
   m_settings.remove(QLatin1String(""));
   m_settings.endGroup();
@@ -409,46 +412,6 @@ void Settings::setRecentFiles(const QStringList &sListNewRecent) {
       m_settings.setValue("RecentFiles/File_" + QString::number(i), "");
     }
   }
-}
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-// Proxy
-
-auto Settings::getProxyHostName() const -> QString {
-  return m_settings.value(QStringLiteral("Proxy/HostName"), "").toString();
-}
-void Settings::setProxyHostName(const QString &sProxyHostName) {
-  m_settings.setValue(QStringLiteral("Proxy/HostName"), sProxyHostName);
-}
-
-auto Settings::getProxyPort() const -> quint16 {
-  return static_cast<quint16>(
-      m_settings.value(QStringLiteral("Proxy/Port"), "").toUInt());
-}
-void Settings::setProxyPort(const quint16 nProxyPort) {
-  if (0 == nProxyPort) {
-    m_settings.setValue(QStringLiteral("Proxy/Port"), "");
-  } else {
-    m_settings.setValue(QStringLiteral("Proxy/Port"), nProxyPort);
-  }
-}
-
-auto Settings::getProxyUserName() const -> QString {
-  return m_settings.value(QStringLiteral("Proxy/UserName"), "").toString();
-}
-void Settings::setProxyUserName(const QString &sProxyUserName) {
-  m_settings.setValue(QStringLiteral("Proxy/UserName"), sProxyUserName);
-}
-
-auto Settings::getProxyPassword() const -> QString {
-  return QString::fromLatin1(QByteArray::fromBase64(
-      m_settings.value(QStringLiteral("Proxy/Password"), "").toByteArray()));
-}
-void Settings::setProxyPassword(const QString &sProxyPassword) {
-  QByteArray ba;
-  ba.append(sProxyPassword.toUtf8());
-  m_settings.setValue(QStringLiteral("Proxy/Password"), ba.toBase64());
 }
 
 // ----------------------------------------------------------------------------

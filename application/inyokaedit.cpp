@@ -1040,11 +1040,6 @@ void InyokaEdit::updateEditorSettings() {
   m_pPlugins->setEditorlist(m_pFileOperations->getEditors());
 
   m_colorSyntaxError = InyokaEdit::getHighlightErrorColor();
-
-  // Setting proxy if available
-  Utils::setProxy(m_pSettings->getProxyHostName(), m_pSettings->getProxyPort(),
-                  m_pSettings->getProxyUserName(),
-                  m_pSettings->getProxyPassword());
 }
 
 // ----------------------------------------------------------------------------

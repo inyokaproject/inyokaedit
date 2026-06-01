@@ -77,16 +77,6 @@ class Settings : public QObject {
   auto getRecentFiles() const -> QStringList;
   void setRecentFiles(const QStringList &sListNewRecent);
 
-  // Proxy
-  auto getProxyHostName() const -> QString;
-  void setProxyHostName(const QString &sProxyHostName);
-  auto getProxyPort() const -> quint16;
-  void setProxyPort(const quint16 nProxyPort);
-  auto getProxyUserName() const -> QString;
-  void setProxyUserName(const QString &sProxyUserName);
-  auto getProxyPassword() const -> QString;
-  void setProxyPassword(const QString &sProxyPassword);
-
   // Plugins
   auto getDisabledPlugins() const -> QStringList;
   void setDisabledPlugins(const QStringList &sListDisabledPlugins);
