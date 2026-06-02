@@ -1,5 +1,6 @@
 archwiki,https://wiki.archlinux.org/index.php/
 askubuntu,https://askubuntu.com/questions/
+man,https://manpages.ubuntu.com/search?q=
 bitbucket,https://bitbucket.org/
 blogspot,https://PAGE.blogspot.de/
 box,https://app.box.com/
@@ -7,6 +8,7 @@ bug,https://launchpad.net/bugs/
 calendar,https://ubuntuusers.de/calendar/
 canonical,https://www.canonical.com/
 canonicalsubdomain,https://PAGE.canonical.com/
+man_de,https://manpages.ubuntu.com/search?q=
 category,https://forum.ubuntuusers.de/category/
 debian,https://wiki.debian.org/
 debianbug,https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=
@@ -46,8 +48,6 @@ linuxgaming,https://wiki.linuxgaming.de/index.php/
 lpcode,https://code.launchpad.net/
 lpuser,https://launchpad.net/~
 lubuntu,https://lubuntu.net/
-man,https://manpages.ubuntu.com/cgi-bin/search.py?lr=lang_en&q=
-man_de,https://manpages.ubuntu.com/cgi-bin/search.py?lr=lang_de&q=
 ml,https://lists.ubuntu.com/archives/
 moby,https://www.mobygames.com/game/
 moddb,https://www.moddb.com/
