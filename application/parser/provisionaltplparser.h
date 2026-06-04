@@ -27,6 +27,7 @@ class ProvisionalTplParser {
   static auto parseBuilddeps(const QStringList &sListArgs) -> QString;
   static auto parseCode(const QStringList &sListArgs) -> QString;
   static auto parseCopy(const QStringList &sListArgs) -> QString;
+  static auto parseCoreutils() -> QString;
   static auto parseExperts(const QStringList &sListArgs) -> QString;
   static auto parseFixme(const QStringList &sListArgs) -> QString;
   static auto parseForeignAuth(const QStringList &sListArgs) -> QString;
@@ -57,6 +58,7 @@ class ProvisionalTplParser {
   auto parsePkgInstallBut(const QStringList &sListArgs) -> QString;
   static auto parsePPA(const QStringList &sListArgs) -> QString;
   static auto parseProjects(const QStringList &sListArgs) -> QString;
+  auto parseRust(const QStringList &sListArgs) -> QString;
   static auto parseSidebar(const QStringList &sListArgs) -> QString;
   static auto parseStatusIcon(const QStringList &sListArgs) -> QString;
   auto parseTable(const QStringList &sListArgs) -> QString;

@@ -52,6 +52,9 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
     if (sTemplate == QString::fromUtf8("Kopie").toLower()) {
       return ProvisionalTplParser::parseCopy(sArgs);
     }
+    if (sTemplate == QString::fromUtf8("Coreutils").toLower()) {
+      return ProvisionalTplParser::parseCoreutils();
+    }
     if (sTemplate == QString::fromUtf8("Experten").toLower()) {
       return ProvisionalTplParser::parseExperts(sArgs);
     }
@@ -141,6 +144,9 @@ auto ProvisionalTplParser::parseTpl(const QStringList &sListArgs,
     }
     if (sTemplate == QString::fromUtf8("Projekte").toLower()) {
       return ProvisionalTplParser::parseProjects(sArgs);
+    }
+    if (sTemplate == QString::fromUtf8("Rust").toLower()) {
+      return ProvisionalTplParser::parseRust(sArgs);
     }
     if (sTemplate == QString::fromUtf8("Seitenleiste").toLower()) {
       return ProvisionalTplParser::parseSidebar(sArgs);
@@ -272,6 +278,22 @@ auto ProvisionalTplParser::parseCopy(const QStringList &sListArgs) -> QString {
                  "konkreten Anliegen an das Support-Forum. Änderungen am "
                  "Artikel bitte nur in %1!"))
       .arg("[:Baustelle/" + sLink.replace(" ", "_") + ":]");
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto ProvisionalTplParser::parseCoreutils() -> QString {
+  return " * Bis Ubuntu [:24.04:] ist das Programm im essentiellen Paket "
+         "'''coreutils''' enthalten und deshalb auf jedem System installiert. "
+         "Diese Variante beruht auf den altbekannten GNU-Utilities.\n"
+         " * Ab [:25.10:] ist das Paket [packages:coreutils:] {en} jedoch ein "
+         "Metapaket, welches alternativ durch  [packages:gnu-coreutils:] {en} "
+         "oder [packages:rust-coreutils:] {en} oder weitere befriedigt werden "
+         "kann.\n"
+         " * Ab [:26.04:] sind die '''rust-coreutils''' als Standard "
+         "vorausgewählt. Siehe Artikel [:rust-coreutils:] zur Umstellung auf "
+         "die GNU-Utilities.";
 }
 
 // ----------------------------------------------------------------------------
@@ -1708,6 +1730,81 @@ auto ProvisionalTplParser::parseProjects(const QStringList &sListArgs)
   }
 
   return sOutput + "</tbody></table>";
+}
+
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+auto ProvisionalTplParser::parseRust(const QStringList &sListArgs) -> QString {
+  QStringList sArgs(sListArgs);
+  QString sOutput("");
+
+  if (sArgs.isEmpty()) {
+    sOutput =
+        "Dieser Artikel beschreibt die alte Implementation des Programms.";
+  } else if (sArgs.size() == 1) {
+    if (!sArgs[0].trimmed().isEmpty()) {
+      sOutput =
+          "Dieser Artikel beschreibt die neue Implementierung in Rust des "
+          "Programms.";
+    }
+  } else if (sArgs.size() > 4) {
+    bool bNew = !sArgs[0].trimmed().remove('\'').isEmpty();
+    QString sOldPackage = sArgs[1].remove('\'').trimmed();
+    QString sNewPackage = sArgs[2].remove('\'').trimmed();
+    QString sNewSince = sArgs[3].remove('\'').trimmed();
+    QString sNewPreferredSince = sArgs[4].remove('\'').trimmed();
+    bool bRemark = false;
+    if (sArgs.size() > 5) {
+      bRemark = !sArgs[5].trimmed().remove('\'').isEmpty();
+    }
+
+    if (bNew) {
+      sOutput =
+          "Dieser Artikel beschreibt die neue Implementierung in Rust des "
+          "Programms aus dem Paket [packages:" +
+          sNewPackage + ":] {en}. Diese Version wird bei Ubuntu ab " +
+          sNewPreferredSince + " als Standard bevorzugt. ";
+    } else {
+      if (sOldPackage.isEmpty()) {
+        sOutput =
+            "Dieser Artikel beschreibt die alte Implementation des Programms. "
+            "Ab Ubuntu " +
+            sNewSince + " ist auch mit Paket [packages:" + sNewPackage +
+            ":] {en} eine neue Implementierung in der Programmiersprache Rust "
+            "für Ubuntu verfügbar, und ab Ubuntu Version " +
+            sNewPreferredSince +
+            " wird die Implementierung in Rust als Standard bevorzugt.";
+      } else {
+        sOutput =
+            "Dieser Artikel beschreibt die alte Implementation des Programms "
+            "aus dem Paket [packages:" +
+            sOldPackage + ":] {en}. Ab Ubuntu " + sNewSince +
+            " ist auch mit Paket [packages:" + sNewPackage +
+            ":] {en} eine neue Implementierung in der Programmiersprache Rust "
+            "für Ubuntu verfügbar, und ab Ubuntu Version " +
+            sNewPreferredSince +
+            " wird die Implementierung in Rust als Standard bevorzugt.";
+      }
+
+      sOutput +=
+          "\n\nDie Implementierung in Rust strebt Funktionsgleichheit mit der "
+          "alten Implementierung an. ";
+      if (bRemark) {
+        sOutput +=
+            "Es wurden bereits kleine Abweichungen bekannt. Zur Zeit ist nicht "
+            "vorhersehbar, ob diese Abweichungen bestehen bleiben.";
+      } else {
+        sOutput += "Es können aber kleine Abweichungen auftreten.";
+      }
+      sOutput +=
+          " Dies bedeutet, dass das hier Beschriebene von der am eigenen "
+          "Rechner vorgefundenen Situation abweichen kann.";
+    }
+  }
+
+  return ProvisionalTplParser::insertBox(
+      "box notice", QString::fromUtf8("Hinweis:"), sOutput);
 }
 
 // ----------------------------------------------------------------------------
