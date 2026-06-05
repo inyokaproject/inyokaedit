@@ -130,6 +130,9 @@ Quokka
 resolute
 Resolute
 Raccoon
+stonking
+Stonking
+Stingray
 Ubuntu
 Kubuntu
 Xubuntu
