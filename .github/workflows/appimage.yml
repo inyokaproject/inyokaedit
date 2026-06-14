@@ -29,12 +29,12 @@ jobs:
        chmod a+x linuxdeploy-"$ARCH".AppImage
        LINUXDEPLOY_BIN=${PWD}/linuxdeploy-"$ARCH".AppImage
 
-    - name: Download linuxdeployqt-plugin-appimage
+    - name: Download linuxdeploy-plugin-appimage
       run: |
        wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-"$ARCH".AppImage"
        chmod a+x linuxdeploy-plugin-appimage-"$ARCH".AppImage
 
-    - name: Download linuxdeployqt-plugin-qt
+    - name: Download linuxdeploy-plugin-qt
       run: |
        wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-"$ARCH".AppImage"
        chmod a+x linuxdeploy-plugin-qt-"$ARCH".AppImage

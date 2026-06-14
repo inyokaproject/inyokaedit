@@ -33,6 +33,7 @@ SettingsDialog::SettingsDialog(QWidget *pParent)
     sListCommunities << fi.fileName();
   }
   m_pUi->CommunityCombo->addItems(sListCommunities);
+  m_pUi->GuiLangCombo->addItems(this->searchTranslations());
 
   this->readSettings();
 
@@ -70,13 +71,13 @@ void SettingsDialog::showEvent(QShowEvent *pEvent) {
 
 void SettingsDialog::readSettings() {
   // General settings
-  m_pUi->GuiLangCombo->addItems(this->searchTranslations());
   if (-1 != m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage())) {
     m_pUi->GuiLangCombo->setCurrentIndex(
         m_pUi->GuiLangCombo->findText(m_pSettings->getGuiLanguage()));
   } else {
     m_pUi->GuiLangCombo->setCurrentIndex(
         m_pUi->GuiLangCombo->findText(QStringLiteral("auto")));
+    m_pSettings->setGuiLanguage(QStringLiteral("auto"));
   }
 
   m_pUi->codeCompletionCheck->setChecked(m_pSettings->getCodeCompletion());
