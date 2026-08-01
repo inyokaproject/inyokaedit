@@ -42,6 +42,7 @@
         <p>Changes:</p>
         <ul>
           <li>Add Coreutils and Rust template.</li>
+          <li>Fix: Fix image/attachment download.</li>
           <li>Fix: Init translation combo only once.</li>
           <li>Use system proxy settings.</li>
           <li>Bump miniz version.</li>
