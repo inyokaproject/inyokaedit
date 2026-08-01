@@ -1,3 +1,13 @@
+inyokaedit (0.28.5-0) noble; urgency=low
+
+  [ Thorsten Roth ]
+  * Add Coreutils and Rust template.
+  * Fix: Init translation combo only once.
+  * Use system proxy settings.
+  * Bump miniz version.
+
+ -- Thorsten Roth <elthoro@gmx.de>  Sun, 02 Aug 2026 15:04:00 +0200
+
 inyokaedit (0.28.4-3) noble; urgency=low
 
   [ Thorsten Roth ]
