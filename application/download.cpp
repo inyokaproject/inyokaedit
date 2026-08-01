@@ -207,7 +207,7 @@ void Download::replyFinished(QNetworkReply *pReply) {
           // Remove windows specific newline \r
           sListMetadata.last().remove(QStringLiteral("\r"));
           sListMetadata.last() =
-              m_sInyokaUrl + "/_image?target=" + sListMetadata.last();
+              m_sInyokaUrl + "/_attachment?target=" + sListMetadata.last();
 
           // qDebug() << sListMetadata.last();
         }
