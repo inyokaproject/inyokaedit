@@ -2,6 +2,7 @@ inyokaedit (0.28.5-0) noble; urgency=low
 
   [ Thorsten Roth ]
   * Add Coreutils and Rust template.
+  * Fix: Image/attachment download.
   * Fix: Init translation combo only once.
   * Use system proxy settings.
   * Bump miniz version.
